@@ -25,6 +25,7 @@ class CreateClientsTable extends Migration
             $table->string('contactemail')->unique();
             $table->string('contactphone')->unique();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
