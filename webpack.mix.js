@@ -1,4 +1,5 @@
-let mix = require('laravel-mix');
+const { mix } = require('laravel-mix');
+var path = require('path');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,5 +12,15 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+mix
+    .js('resources/assets/js/app.js', 'public/assets/js')
+    .sass('resources/assets/sass/core.scss', 'public/assets/css')
+    .sass('resources/assets/sass/style.scss', 'public/assets/css')
+    .webpackConfig({
+        resolve: {
+            alias: {
+                'jquery': path.join( __dirname, 'node_modules/jquery/dist/jquery' ),
+            }
+        }
+    })
+    .version();

@@ -26,6 +26,7 @@ class CreatePaymentsTable extends Migration
                 ->references('id')->on('clients')
                 ->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
