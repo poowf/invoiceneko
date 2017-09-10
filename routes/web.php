@@ -12,3 +12,6 @@
 */
 
 Route::get('/', 'MainController@getMain')->name('main');
+
+/* Invoice */
+Route::get('/invoice/create', 'InvoiceController@create')->name('invoice.create');

@@ -9,7 +9,7 @@
                         </div>
                     </div>
                     <div class="col l4 offset-l2 s12">
-                        <p class="grey-text text-lighten-3">Chipd is not a Company. Yet.</p>
+                        <p class="grey-text text-lighten-3">InvoicePlz is not a Company. Yet.</p>
                         <ul>
                             <li><a class="grey-text text-lighten-3" href="">THESE</a></li>
                             <li><a class="grey-text text-lighten-3" href="">NOT</a></li>
@@ -35,7 +35,7 @@
                             <a href="https://www.twitter.com/"><li><i class="fa fa-twitter" aria-hidden="true"></i></li></a>
                             <a href="https://www.instagram.com/"><li><i class="fa fa-instagram" aria-hidden="true"></i></li></a>
                         </ul>
-                        <p>© 2016 Chipd</p>
+                        <p>© 2016 InvoicePlz</p>
                     </div>
                     <div class="footer-totop">
                         <a id="return-to-top" href="javascript:;"><div class="totop-link"><i class="material-icons md-36">keyboard_arrow_up</i></div></a>
