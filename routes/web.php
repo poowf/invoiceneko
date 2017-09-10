@@ -11,5 +11,4 @@
 |
 */
 
-
 Route::get('/', 'MainController@getMain')->name('main');
