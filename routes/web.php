@@ -44,6 +44,14 @@ Route::post('/company/create', 'CompanyController@store')->name('company.store')
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/dashboard', 'MainController@dashboard')->name('dashboard');
 
+    /* User */
+    Route::get('/user/edit', 'UserController@edit')->name('user.edit');
+    Route::patch('/user/edit', 'UserController@update')->name('user.update');
+
+    /* Company */
+    Route::get('/company/edit', 'CompanyController@edit')->name('company.edit');
+    Route::patch('/company/edit', 'CompanyController@update')->name('company.update');
+
     /* Client */
     Route::get('/clients', 'ClientController@index')->name('client.index');
     Route::get('/client/create', 'ClientController@create')->name('client.create');

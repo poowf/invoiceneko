@@ -68,6 +68,8 @@ class InvoiceController extends Controller
             $invoiceitem->save();
         }
 
+        flash('Invoice Created', 'success');
+
         return redirect()->back();
     }
 
@@ -168,7 +170,9 @@ class InvoiceController extends Controller
             $invoiceitem->save();
         }
 
-        return redirect()->back();
+        flash('Invoice Updated', 'success');
+
+        return redirect()->route('invoice.index');
     }
 
     /**

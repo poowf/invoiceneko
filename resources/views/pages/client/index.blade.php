@@ -20,7 +20,7 @@
         <div class="row">
             <div class="col s12">
                 <div class="card-panel">
-                    <table class="responsive-table striped">
+                    <table id="client-container" class="responsive-table striped">
                         <thead>
                         <tr>
                             <th>Company Name</th>
@@ -53,12 +53,35 @@
             </div>
         </div>
     </div>
+
+    <div id="delete-confirmation" class="modal">
+        <div class="modal-content">
+            <p>Delete Invoice?</p>
+        </div>
+        <div class="modal-footer">
+            <form id="delete-client-form" method="post" class="null-form">
+                {{ method_field('DELETE') }}
+                {{ csrf_field() }}
+                <button class="modal-action waves-effect black-text waves-green btn-flat btn-deletemodal client-confirm-delete-btn" type="submit">Delete</button>
+            </form>
+            <a href="javascript:;" class=" modal-action modal-close waves-effect black-text waves-red btn-flat btn-deletemodal">Cancel</a>
+        </div>
+    </div>
 @stop
 
 @section("scripts")
     <script type="text/javascript">
         "use strict";
         $(function() {
+
+            $('.modal').modal();
+
+            $('#client-container').on('click', '.client-delete-btn', function (event) {
+                event.preventDefault();
+                var clientid = $(this).attr('data-id');
+                $('#delete-client-form').attr('action', '/client/' + clientid + '/destroy');
+                $('#delete-confirmation').modal('open');
+            });
         });
     </script>
 @stop

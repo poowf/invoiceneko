@@ -87,10 +87,14 @@ class CompanyController extends Controller
             $user->company_id = $company->id;
             $user->save();
 
+            flash('You can now sign in', 'success');
+
             return redirect()->route('auth.show');
         }
         else
         {
+            flash('Something went wrong', 'error');
+
             return redirect()->route('user.create');
         }
     }
@@ -98,10 +102,9 @@ class CompanyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
         //
     }
@@ -109,33 +112,73 @@ class CompanyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
+        $company = auth()->user()->ownedcompany;
+        return view('pages.company.edit', compact('company'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $company = auth()->user()->ownedcompany;
+        $company->fill($request->all());
+        $company->save();
+
+        $storedirectory = '/perm_store/company/' . $company->id . '/photos/';
+
+        if(!File::exists(public_path('/perm_store/company/' . $company->id . '/photos/'))) {
+            File::makeDirectory(public_path('/perm_store/company/' . $company->id . '/photos/'), 0775, true);
+        }
+
+        if ($request->file('logo'))
+        {
+            $file = $request->file('logo');
+            $uuid = str_random(25);
+            $filename = $uuid . '.jpg';
+
+            if (!file_exists(public_path($storedirectory . '/logo_' . $filename)))
+                Image::make($file)->save(public_path($storedirectory . '/logo_' . $filename));
+
+            $filepath = $storedirectory . '/logo_' . $filename;
+
+            $company->logo = $filepath;
+        }
+
+        if ($request->file('smlogo'))
+        {
+            $file = $request->file('smlogo');
+            $uuid = str_random(25);
+            $filename = $uuid . '.jpg';
+
+            if (!file_exists(public_path($storedirectory . '/smlogo_' . $filename)))
+                Image::make($file)->save(public_path($storedirectory . '/smlogo_' . $filename));
+
+            $filepath = $storedirectory . '/smlogo_' . $filename;
+
+            $company->smlogo = $filepath;
+        }
+
+        $company->save();
+
+        flash('Company Updated', 'success');
+
+        return redirect()->back();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
         //
     }
