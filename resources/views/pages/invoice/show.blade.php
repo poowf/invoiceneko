@@ -30,10 +30,10 @@
                     <div class="row invoice-data" style="position: relative; margin-bottom: 320px;">
                         <div class="col-xs-5 invoice-person" style="position: absolute; left: 0; padding: 0 15px; ">
                             <span class="name" style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">Bill To: </span>
-                            <span style="font-size: 18px; line-height: 26px; display: block;">Developer and Designer</span>
-                            <span style="font-size: 18px; line-height: 26px; display: block;">donny@designer.co</span>
-                            <span style="font-size: 18px; line-height: 26px; display: block;">661 Bubby Street</span>
-                            <span style="font-size: 18px; line-height: 26px; display: block;">United States</span>
+                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->companyname }}</span>
+                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->contactname }}</span>
+                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->address }}</span>
+                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->contactphone }}</span>
                         </div>
                         <div class="col-xs-2 invoice-payment-direction" style="position: absolute; padding-top: 10px; left: 0; right:0; text-align: center;">
                             <img src="{{ asset('/assets/img/lefttoright.png') }}" width="80" height="80" />
@@ -54,61 +54,42 @@
                                         Description
                                     </th>
                                     <th style="padding: 0; text-align: right; padding-bottom: 8px; border-bottom: 1px solid #f0f0f0; width: 17%;" class="hours">
-                                        Hours
+                                        Quantity
                                     </th>
                                     <th style="padding: 0; text-align: right; padding-bottom: 8px; border-bottom: 1px solid #f0f0f0; width: 15%;" class="amount">
                                         Amount
                                     </th>
                                 </tr>
-                                <tr>
-                                    <td class="description" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0;">
-                                        Web design (Etiam sagittis metus sit amet mauris gravida hendrerit)
-                                    </td>
-                                    <td class="hours" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
-                                        60
-                                    </td>
-                                    <td class="amount" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
-                                        $4,200.00
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="description" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0;">
-                                        Responsive design (Etiam sagittis metus sit amet mauris gravida hendrerit)
-                                    </td>
-                                    <td class="hours" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
-                                        10
-                                    </td>
-                                    <td class="amount" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
-                                        $1,500.00
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="description" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0;">
-                                        Logo design (Cras faucibus tincidunt elit id rhoncus.)
-                                    </td>
-                                    <td class="hours" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
-                                        12
-                                    </td>
-                                    <td class="amount" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
-                                        $1,700.00
-                                    </td>
-                                </tr>
+                                @foreach($invoice->items as $key => $item)
+                                    <tr>
+                                        <td class="description" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0;">
+                                            <span style="display: block; font-weight: 700;">{{ $item->name }}</span>
+                                            {{ $item->description }}
+                                        </td>
+                                        <td class="quantity" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
+                                            {{ $item->quantity }}
+                                        </td>
+                                        <td class="amount" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
+                                            {{ $item->price }}
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 <tr>
                                     <td style="padding: 20px 0;"></td>
                                     <td class="summary" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; color: #aaaaaa;">
                                         Subtotal
                                     </td>
                                     <td class="amount" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
-                                        $7,400,00
+                                        {{ $invoice->calculatetotal() }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="padding: 20px 0;"></td>
                                     <td class="summary" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; color: #aaaaaa;">
-                                        Discount (20%)
+                                        Tax (0%)
                                     </td>
                                     <td class="amount" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
-                                        $1,480,00
+                                        $0,00
                                     </td>
                                 </tr>
                                 <tr>
@@ -117,7 +98,7 @@
                                         Total
                                     </td>
                                     <td class="amount total-value" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right; font-size: 22px; color: #4da6a6;">
-                                        $5,920
+                                        {{ $invoice->calculatetotal() }}
                                     </td>
                                 </tr>
                                 </tbody>

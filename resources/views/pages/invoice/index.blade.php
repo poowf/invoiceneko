@@ -39,9 +39,13 @@
                                 <td>{{ $invoice->client->contactemail }}</td>
                                 <td>{{ $invoice->client->contactphone }}</td>
                                 <td>
-                                    <a href="{{ route('invoice.show', [ 'invoice' => $invoice->id ]) }}"><i class="material-icons">open_in_new</i></a>
-                                    <a href="#"><i class="material-icons">mode_edit</i></a>
-                                    <a href="#"><i class="material-icons">delete</i></a>
+                                    <a href="{{ route('invoice.show', [ 'invoice' => $invoice->id ] ) }}"><i class="material-icons">open_in_new</i></a>
+                                    <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}"><i class="material-icons">mode_edit</i></a>
+                                    <form method="post" action="{{ route('invoice.destroy', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
+                                        {{ method_field('DELETE') }}
+                                        {{ csrf_field() }}
+                                        <button class="null-btn" type="submit"><i class="material-icons">delete</i></button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach

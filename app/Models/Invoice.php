@@ -38,4 +38,20 @@ class Invoice extends Model
         return $this->hasMany('App\Models\InvoiceItem', 'invoice_id');
     }
 
+    public function calculatetotal()
+    {
+        $items = $this->items;
+
+        $total = 0;
+
+        foreach($items as $item)
+        {
+            $itemtotal = $item->quantity * $item->price;
+
+            $total += $itemtotal;
+        }
+        setlocale(LC_MONETARY, 'en_US.UTF-8');
+        return money_format('%.2n', $total);
+    }
+
 }

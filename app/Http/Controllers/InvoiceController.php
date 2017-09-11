@@ -123,7 +123,12 @@ class InvoiceController extends Controller
      */
     public function edit(Invoice $invoice)
     {
-        //
+        $company = auth()->user()->company;
+        $clients = $company->clients;
+
+        $invoice->date = Carbon::createFromFormat('Y-m-d H:i:s',$invoice->date)->format('Y-m-d');
+
+        return view('pages.invoice.edit', compact('invoice', 'clients'));
     }
 
     /**
@@ -135,7 +140,34 @@ class InvoiceController extends Controller
      */
     public function update(Request $request, Invoice $invoice)
     {
-        //
+        $duedate = Carbon::createFromFormat('j F, Y', $request->input('date'))->addDays($request->input('netdays'));
+        $invoice->date = Carbon::createFromFormat('j F, Y', $request->input('date'))->toDateTimeString();
+        $invoice->netdays = $request->input('netdays');
+        $invoice->duedate = $duedate;
+        $invoice->save();
+
+
+        //Need to rewrite this to check for id instead of force deleting.
+        $items = $invoice->items;
+
+        foreach($items as $item)
+        {
+            $item->delete();
+        }
+
+
+        foreach($request->input('item_name') as $key => $item)
+        {
+            $invoiceitem = new InvoiceItem;
+            $invoiceitem->name = $item;
+            $invoiceitem->description = $request->input('item_description')[$key];
+            $invoiceitem->quantity   = $request->input('item_quantity')[$key];
+            $invoiceitem->price = $request->input('item_price')[$key];
+            $invoiceitem->invoice_id = $invoice->id;
+            $invoiceitem->save();
+        }
+
+        return redirect()->back();
     }
 
     /**
@@ -146,6 +178,8 @@ class InvoiceController extends Controller
      */
     public function destroy(Invoice $invoice)
     {
-        //
+        $invoice->delete();
+
+        return $redirect()->back();
     }
 }
