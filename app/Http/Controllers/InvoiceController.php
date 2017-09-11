@@ -180,6 +180,6 @@ class InvoiceController extends Controller
     {
         $invoice->delete();
 
-        return $redirect()->back();
+        return redirect()->back();
     }
 }

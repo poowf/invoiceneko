@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col s12">
                 <div class="card-panel">
-                    <table class="responsive-table striped">
+                    <table id="invoice-container" class="responsive-table striped">
                         <thead>
                         <tr>
                             <th>Invoice ID</th>
@@ -41,11 +41,7 @@
                                 <td>
                                     <a href="{{ route('invoice.show', [ 'invoice' => $invoice->id ] ) }}"><i class="material-icons">open_in_new</i></a>
                                     <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}"><i class="material-icons">mode_edit</i></a>
-                                    <form method="post" action="{{ route('invoice.destroy', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
-                                        {{ method_field('DELETE') }}
-                                        {{ csrf_field() }}
-                                        <button class="null-btn" type="submit"><i class="material-icons">delete</i></button>
-                                    </form>
+                                    <a href="#" data-id="{{ $invoice->id }}" class="invoice-delete-btn"><i class="material-icons">delete</i></a>
                                 </td>
                             </tr>
                         @endforeach
@@ -55,12 +51,34 @@
             </div>
         </div>
     </div>
+    <div id="delete-confirmation" class="modal">
+        <div class="modal-content">
+            <p>Delete Invoice?</p>
+        </div>
+        <div class="modal-footer">
+            <form id="delete-invoice-form" method="post" class="null-form">
+                {{ method_field('DELETE') }}
+                {{ csrf_field() }}
+                <button class="modal-action waves-effect black-text waves-green btn-flat btn-deletemodal invoice-confirm-delete-btn" type="submit">Delete</button>
+            </form>
+            <a href="javascript:;" class=" modal-action modal-close waves-effect black-text waves-red btn-flat btn-deletemodal">Cancel</a>
+        </div>
+    </div>
 @stop
 
 @section("scripts")
     <script type="text/javascript">
         "use strict";
         $(function() {
+            $('.modal').modal();
+
+            $('#invoice-container').on('click', '.invoice-delete-btn', function (event) {
+                event.preventDefault();
+                console.log("hello");
+                var invoiceid = $(this).attr('data-id');
+                $('#delete-invoice-form').attr('action', '/invoice/' + invoiceid + '/destroy');
+                $('#delete-confirmation').modal('open');
+            });
         });
     </script>
 @stop
