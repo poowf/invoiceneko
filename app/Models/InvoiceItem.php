@@ -17,7 +17,7 @@ class InvoiceItem extends Model
     protected $table = 'invoice_items';
 
     /**
-     * Get the user's first name.
+     * Get the price.
      *
      * @param  string  $value
      * @return string

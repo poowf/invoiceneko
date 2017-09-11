@@ -139,7 +139,6 @@
                 })
                 .on('field:error', function(velem) {
                     if (velem.$element.is('select')) {
-                        console.log(velem.$element);
                         velem.$element.siblings('.selectize-control').removeClass('valid').addClass('invalid');
 
                         //velem.$element.parent('.select-wrapper').removeClass('valid').addClass('invalid');
