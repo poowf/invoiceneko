@@ -22,7 +22,7 @@
                                         <li>
                                             <form method="post" action="{{ route('auth.destroy') }}">
                                                 {{ csrf_field() }}
-                                                <button class="signmeout-btn signout-btn" type="submit">Sign Out</button>
+                                                <button class="signmeout-btn signout-btn null-btn" type="submit">Sign Out</button>
                                             </form>
                                         </li>
                                     </ul>
@@ -42,7 +42,7 @@
                                         <li>
                                             <form method="post" action="{{ route('auth.destroy') }}">
                                                 {{ csrf_field() }}
-                                                <button class="signmeout-btn signout-mobile-btn" type="submit">Sign Out</button>
+                                                <button class="signmeout-btn signout-mobile-btn null-btn" type="submit">Sign Out</button>
                                             </form>
                                         </li>
                                     </ul>

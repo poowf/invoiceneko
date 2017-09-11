@@ -216,21 +216,35 @@ dd::after {
   display: none;
 }
 
+.null-form {
+  display: inline-block;
+}
+
+.null-btn {
+  border: none;
+  background-color: transparent;
+}
+
+#delete-confirmation {
+  max-width: 300px;
+  top: 30% !important;
+}
+
 /* Accents */
 
 .btn-theme {
-  background-color: #ec4747;
+  background-color: #299a9a;
 }
 
 .btn-theme:hover,
 .btn-theme:focus {
-  background-color: #ec4747;
+  background-color: #299a9a;
   -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
           box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
 }
 
 .btn-link {
-  background-color: #ec4747 !important;
+  background-color: #299a9a !important;
 }
 
 .btn-link:hover,
@@ -280,20 +294,20 @@ dd::after {
 }
 
 .tabs .tab a {
-  color: #ec3535;
+  color: #4da6a6;
 }
 
 .tabs .tab a:hover,
 .tabs .tab a.active {
-  color: #ec3535;
+  color: #4da6a6;
 }
 
 .tabs .indicator {
-  background-color: #ec3535;
+  background-color: #4da6a6;
 }
 
 .collection .collection-item.active {
-  background-color: #ec3535;
+  background-color: #4da6a6;
   color: #fff;
 }
 
@@ -313,7 +327,7 @@ dd::after {
 
 .side-nav a:hover,
 .side-nav a:focus {
-  color: #ec4747;
+  color: #299a9a;
 }
 
 .side-nav a.btn,
@@ -350,8 +364,8 @@ dd::after {
 }
 
 [type="radio"]:checked + label:after {
-  border: 2px solid #ec4747;
-  background-color: #ec4747;
+  border: 2px solid #299a9a;
+  background-color: #299a9a;
 }
 
 :root input:not([type]):focus:not([readonly]),
@@ -366,9 +380,9 @@ dd::after {
 :root input[type=number]:focus:not([readonly]),
 :root input[type=search]:focus:not([readonly]),
 :root textarea.materialize-textarea:focus:not([readonly]) {
-  border-bottom: 1px solid #ec4747;
-  -webkit-box-shadow: 0 1px 0 0 #ec4747;
-          box-shadow: 0 1px 0 0 #ec4747;
+  border-bottom: 1px solid #299a9a;
+  -webkit-box-shadow: 0 1px 0 0 #299a9a;
+          box-shadow: 0 1px 0 0 #299a9a;
 }
 
 :root input:not([type]):focus:not([readonly]) + label,
@@ -383,7 +397,7 @@ dd::after {
 :root input[type=number]:focus:not([readonly]) + label,
 :root input[type=search]:focus:not([readonly]) + label,
 :root textarea.materialize-textarea:focus:not([readonly]) + label {
-  color: #ec4747;
+  color: #299a9a;
 }
 
 .input-field label.label-validation {
@@ -550,11 +564,11 @@ textarea.valid + label:after {
 }
 
 .switch label input[type=checkbox]:checked + .lever {
-  background-color: #ec4747;
+  background-color: #299a9a;
 }
 
 .switch label input[type=checkbox]:checked + .lever:after {
-  background-color: #ec4747;
+  background-color: #299a9a;
 }
 
 #toast-container .toast {
@@ -667,8 +681,6 @@ nav .signout-btn {
   padding: 14px 16px;
   margin: 0;
   text-decoration: none;
-  border: none;
-  background-color: transparent;
 }
 
 .side-nav .signout-mobile-btn {
@@ -684,7 +696,7 @@ nav .signout-btn {
 
 footer.page-footer {
   margin-top: 0;
-  background-color: #ec4747;
+  background-color: #299a9a;
 }
 
 footer.page-footer .footer-main {
@@ -779,7 +791,7 @@ footer .footer-follow p {
 footer.page-footer .footer-copyright {
   height: 200px;
   position: relative;
-  background-color: #ec3535;
+  background-color: #4da6a6;
 }
 
 /* Everything Else */
