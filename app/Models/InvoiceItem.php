@@ -15,4 +15,16 @@ class InvoiceItem extends Model
      * @var string
      */
     protected $table = 'invoice_items';
+
+    /**
+     * Get the user's first name.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getPriceAttribute($value)
+    {
+        setlocale(LC_MONETARY, 'en_US.UTF-8');
+        return money_format('%!.2n', $value);
+    }
 }

@@ -9,22 +9,22 @@
 <div class="invoice" style="background-color: #ffffff; padding: 50px 50px 20px; color: #8c8c8c;">
     <div class="row invoice-header" style="position: relative; margin-bottom: 160px;">
         <div class="col-xs-7" style="position: absolute; left: 0; padding: 0 15px;">
-            <div class="invoice-logo" style="height: 106px; min-width: 204px; background-image: url('{{ asset('/assets/img/top_logo.png') }}'); background-repeat: no-repeat; background-position: 0;"></div>
+            <div class="invoice-logo" style="height: 106px; min-width: 204px; background-image: url('{{ asset($invoice->company->logo) }}'); background-repeat: no-repeat; background-position: 0;"></div>
         </div>
-        <div class="col-xs-5 invoice-order" style="position: absolute; right: 0; padding: 0 15px; text-align: left;">
+        <div class="col-xs-5 invoice-order" style="position: absolute; right: 0; padding: 0 15px; text-align: right;">
             <span class="invoice-id" style="display: block; font-size: 30px; line-height: 30px; margin-bottom: 10px;">Invoice #{{ $invoice->invoiceid }}</span>
             <span class="incoice-date" style="display: block; font-size: 18px; line-height: 30px;">Invoice Date: {{ $invoice->date }}</span>
             <span class="incoice-duedate" style="display: block; font-size: 18px; line-height: 30px;">Payment Due: {{ $invoice->date }}</span>
-            <span class="incoice-duedate" style="display: block; font-size: 18px; line-height: 30px;">Payment Terms: Net {{ $invoice->netdays }}</span>
+            <span class="incoice-netdays" style="display: block; font-size: 18px; line-height: 30px;">Payment Terms: Net {{ $invoice->netdays }}</span>
         </div>
     </div>
     <div class="row invoice-data" style="position: relative; margin-bottom: 320px;">
         <div class="col-xs-5 invoice-person" style="position: absolute; left: 0; padding: 0 15px; ">
             <span class="name" style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">Bill To: </span>
-            <span style="font-size: 18px; line-height: 26px; display: block;">Developer and Designer</span>
-            <span style="font-size: 18px; line-height: 26px; display: block;">donny@designer.co</span>
-            <span style="font-size: 18px; line-height: 26px; display: block;">661 Bubby Street</span>
-            <span style="font-size: 18px; line-height: 26px; display: block;">United States</span>
+            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->companyname }}</span>
+            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->contactname }}</span>
+            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->address }}</span>
+            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->contactphone }}</span>
         </div>
         <div class="col-xs-2 invoice-payment-direction" style="position: absolute; padding-top: 10px; left: 0; right:0; text-align: center;">
             <img src="{{ asset('/assets/img/lefttoright.png') }}" width="80" height="80" />
@@ -51,55 +51,36 @@
                         Amount
                     </th>
                 </tr>
-                <tr>
-                    <td class="description" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0;">
-                        Web design (Etiam sagittis metus sit amet mauris gravida hendrerit)
-                    </td>
-                    <td class="hours" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
-                        60
-                    </td>
-                    <td class="amount" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
-                        $4,200.00
-                    </td>
-                </tr>
-                <tr>
-                    <td class="description" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0;">
-                        Responsive design (Etiam sagittis metus sit amet mauris gravida hendrerit)
-                    </td>
-                    <td class="hours" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
-                        10
-                    </td>
-                    <td class="amount" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
-                        $1,500.00
-                    </td>
-                </tr>
-                <tr>
-                    <td class="description" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0;">
-                        Logo design (Cras faucibus tincidunt elit id rhoncus.)
-                    </td>
-                    <td class="hours" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
-                        12
-                    </td>
-                    <td class="amount" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
-                        $1,700.00
-                    </td>
-                </tr>
+                @foreach($invoice->items as $key => $item)
+                    <tr>
+                        <td class="description" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0;">
+                            <span style="display: block; font-weight: 700;">{{ $item->name }}</span>
+                            {{ $item->description }}
+                        </td>
+                        <td class="quantity" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
+                            {{ $item->quantity }}
+                        </td>
+                        <td class="amount" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
+                            ${{ $item->price }}
+                        </td>
+                    </tr>
+                @endforeach
                 <tr>
                     <td style="padding: 20px 0;"></td>
                     <td class="summary" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; color: #aaaaaa;">
                         Subtotal
                     </td>
                     <td class="amount" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
-                        $7,400,00
+                        ${{ $invoice->calculatetotal() }}
                     </td>
                 </tr>
                 <tr>
                     <td style="padding: 20px 0;"></td>
                     <td class="summary" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; color: #aaaaaa;">
-                        Discount (20%)
+                        Tax (0%)
                     </td>
                     <td class="amount" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
-                        $1,480,00
+                        $0,00
                     </td>
                 </tr>
                 <tr>
@@ -108,7 +89,7 @@
                         Total
                     </td>
                     <td class="amount total-value" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right; font-size: 22px; color: #4da6a6;">
-                        $5,920
+                        ${{ $invoice->calculatetotal() }}
                     </td>
                 </tr>
                 </tbody>
@@ -133,7 +114,7 @@
     </div>
     <div class="row invoice-company-info" style="margin-bottom: 70px;">
         <div class="col-sm-6 col-md-2 logo" style="position: relative; display: block; width: 100%;  text-align: center;">
-            <img src="{{ asset('/assets/img/small_logo.png') }}" alt="Logo-symbol" width="100" height="100" style="border: 0; vertical-align: middle;">
+            <img src="{{ asset($invoice->company->smlogo) }}" alt="Logo-symbol" width="100" height="100" style="border: 0; vertical-align: middle;">
         </div>
         <div style="margin-top: 20px;">
             <div class="col-sm-6 col-md-4 summary" style="display: inline-block; width: 29.5%; padding: 0 15px; line-height: 16px; text-align: center;">

@@ -42,6 +42,11 @@ class Invoice extends Model
         return $this->belongsTo('App\Models\Client', 'client_id');
     }
 
+    public function company()
+    {
+        return $this->belongsTo('App\Models\Company', 'company_id');
+    }
+
     public function items()
     {
         return $this->hasMany('App\Models\InvoiceItem', 'invoice_id');
@@ -60,7 +65,7 @@ class Invoice extends Model
             $total += $itemtotal;
         }
         setlocale(LC_MONETARY, 'en_US.UTF-8');
-        return money_format('%.2n', $total);
+        return money_format('%!.2n', $total);
     }
 
     public function statusText()

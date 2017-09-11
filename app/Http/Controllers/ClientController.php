@@ -41,7 +41,7 @@ class ClientController extends Controller
     {
         $client = new Client;
         $client->fill($request->all());
-        $client->company_id = $auth()->user()->company_id;
+        $client->company_id = auth()->user()->company_id;
         $client->save();
 
         return redirect()->route('main');
