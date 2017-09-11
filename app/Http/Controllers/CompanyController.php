@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Company;
+use App\Models\User;
+use Debugbar;
+use File;
+use Image;
 
 class CompanyController extends Controller
 {
@@ -35,17 +39,55 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
+
         if ($request->session()->has('user_id')) {
+            Debugbar::info("fired");
             $company = new Company;
             $company->fill($request->all());
             $company->user_id = $request->session()->pull('user_id');
+            $company->save();
+
+            $storedirectory = '/perm_store/company/' . $company->id . '/photos/';
+
+            if(!File::exists(public_path('/perm_store/company/' . $company->id . '/photos/'))) {
+                File::makeDirectory(public_path('/perm_store/company/' . $company->id . '/photos/'), 0775, true);
+            }
+
+            if ($request->file('logo'))
+            {
+                $file = $request->file('logo');
+                $uuid = str_random(25);
+                $filename = $uuid . '.jpg';
+
+                if (!file_exists(public_path($storedirectory . '/logo_' . $filename)))
+                    Image::make($file)->save(public_path($storedirectory . '/logo_' . $filename));
+
+                $filepath = $storedirectory . '/logo_' . $filename;
+
+                $company->logo = $filepath;
+            }
+
+            if ($request->file('smlogo'))
+            {
+                $file = $request->file('smlogo');
+                $uuid = str_random(25);
+                $filename = $uuid . '.jpg';
+
+                if (!file_exists(public_path($storedirectory . '/smlogo_' . $filename)))
+                    Image::make($file)->save(public_path($storedirectory . '/smlogo_' . $filename));
+
+                $filepath = $storedirectory . '/smlogo_' . $filename;
+
+                $company->smlogo = $filepath;
+            }
+
             $company->save();
 
             $user = User::find($company->user_id);
             $user->company_id = $company->id;
             $user->save();
 
-            return redirect()->route('main');
+            return redirect()->route('auth.show');
         }
         else
         {

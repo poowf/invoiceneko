@@ -5,6 +5,7 @@
 /vendor
 /.idea
 /.vagrant
+/public/perm_store/*
 Homestead.json
 Homestead.yaml
 npm-debug.log
