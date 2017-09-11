@@ -667,6 +667,8 @@ nav .signout-btn {
   padding: 14px 16px;
   margin: 0;
   text-decoration: none;
+  border: none;
+  background-color: transparent;
 }
 
 .side-nav .signout-mobile-btn {

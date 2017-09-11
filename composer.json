@@ -6,7 +6,12 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
+        "barryvdh/laravel-snappy": "^0.4.0",
+        "doctrine/dbal": "^2.5",
+        "fedeisas/laravel-mail-css-inliner": "^2.2",
         "fideloper/proxy": "~3.3",
+        "guzzlehttp/guzzle": "^6.3",
+        "laracasts/flash": "^3.0",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0"
     },

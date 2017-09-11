@@ -6,6 +6,9 @@ use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use Illuminate\Http\Request;
 
+use PDF;
+use Carbon\Carbon;
+
 class InvoiceController extends Controller
 {
     /**
@@ -15,7 +18,10 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        //
+        $company = auth()->user()->company;
+        $invoices = $company->invoices;
+
+        return view('pages.invoice.index', compact('invoices'));
     }
 
     /**
@@ -25,7 +31,12 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        return view('pages.invoice.create');
+        $company = auth()->user()->company;
+        $clients = $company->clients;
+        $invoicenumber = $company->invoices()->count();
+        $invoicenumber = sprintf('%06d', ++$invoicenumber);
+
+        return view('pages.invoice.create', compact('company', 'invoicenumber', 'clients'));
     }
 
     /**
@@ -37,8 +48,25 @@ class InvoiceController extends Controller
     public function store(Request $request)
     {
         $invoice = new Invoice;
-        $invoice->fill($request->all());
+        $invoice->invoiceid = $request->input('invoiceid');
+        $duedate = Carbon::createFromFormat('j F, Y', $request->input('date'))->addDays($request->input('netdays'));
+        $invoice->date = Carbon::createFromFormat('j F, Y', $request->input('date'))->toDateTimeString();
+        $invoice->netdays = $request->input('netdays');
+        $invoice->duedate = $duedate;
+        $invoice->client_id = $request->input('client_id');
+        $invoice->company_id = auth()->user()->company_id;
         $invoice->save();
+
+        foreach($request->input('item_name') as $key => $item)
+        {
+            $invoiceitem = new InvoiceItem;
+            $invoiceitem->name = $item;
+            $invoiceitem->description = $request->input('item_description')[$key];
+            $invoiceitem->quantity   = $request->input('item_quantity')[$key];
+            $invoiceitem->price = $request->input('item_price')[$key];
+            $invoiceitem->invoice_id = $invoice->id;
+            $invoiceitem->save();
+        }
 
         return redirect()->back();
     }
@@ -51,7 +79,40 @@ class InvoiceController extends Controller
      */
     public function show(Invoice $invoice)
     {
-        //
+        $invoice->date = Carbon::createFromFormat('Y-m-d H:i:s',$invoice->date)->format('j F, Y');
+        $invoice->duedate = Carbon::createFromFormat('Y-m-d H:i:s',$invoice->duedate)->format('j F, Y');
+
+        return view('pages.invoice.show', compact('invoice'));
+    }
+
+    /**
+     * Display the print version specified resource.
+     *
+     * @param  \App\Models\Invoice  $invoice
+     * @return \Illuminate\Http\Response
+     */
+    public function printview(Invoice $invoice)
+    {
+        $invoice->date = Carbon::createFromFormat('Y-m-d H:i:s',$invoice->date)->format('j F, Y');
+        $invoice->duedate = Carbon::createFromFormat('Y-m-d H:i:s',$invoice->duedate)->format('j F, Y');
+
+        $pdf = PDF::loadView('pdf.invoice', compact('invoice'));
+        return $pdf->inline(str_slug($invoice->invoiceid) . 'test.pdf');
+    }
+
+    /**
+     * Download the specified resource.
+     *
+     * @param  \App\Models\Invoice  $invoice
+     * @return \Illuminate\Http\Response
+     */
+    public function download(Invoice $invoice)
+    {
+        $invoice->date = Carbon::createFromFormat('Y-m-d H:i:s',$invoice->date)->format('j F, Y');
+        $invoice->duedate = Carbon::createFromFormat('Y-m-d H:i:s',$invoice->duedate)->format('j F, Y');
+
+        $pdf = PDF::loadView('pdf.invoice', compact('invoice'));
+        return $pdf->download(str_slug($invoice->invoiceid) . '.pdf');
     }
 
     /**

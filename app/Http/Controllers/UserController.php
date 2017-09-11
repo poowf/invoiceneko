@@ -24,7 +24,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.user.create');
     }
 
     /**
@@ -35,7 +35,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = new User;
+        $user->fill($request->all());
+        $user->save();
+
+        $request->session()->put('user_id', $user->id);
+
+        return redirect()->route('company.create');
     }
 
     /**
