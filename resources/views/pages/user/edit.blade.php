@@ -10,48 +10,52 @@
     <div class="container">
         <div class="row">
             <div class="col s12">
-                <h3>Sign Up</h3>
+                <h3>Settings</h3>
             </div>
         </div>
         <div class="row">
-            <div class="col s12">
-                <form id="signup" method="post" enctype="multipart/form-data">
+            <div class="col s12 m3 xl2">
+                @include("partials/sidenav")
+            </div>
+            <div class="col s12 m9 xl10">
+                <form id="edit-profile" method="post" enctype="multipart/form-data">
                     <div class="card-panel">
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="name" name="name" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ old('name') }}">
+                                <input id="name" name="name" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ auth()->user()->name }}">
                                 <label for="name" class="label-validation">Name</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="username" name="username" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ old('username') }}">
+                                <input id="username" name="username" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ auth()->user()->username }}">
                                 <label for="username" class="label-validation">Username</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="email" name="email" type="email" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('email') }}">
+                                <input id="email" name="email" type="email" data-parsley-required="true" data-parsley-trigger="change" value="{{ auth()->user()->email }}">
                                 <label for="email" class="label-validation">Email</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="password" name="password" type="password" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="6">
+                                <input id="password" name="password" type="password" data-parsley-required="false" data-parsley-trigger="change" data-parsley-minlength="6">
                                 <label for="password" class="label-validation">Password</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="password_confirmation" name="password_confirmation" type="password" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="6" data-parsley-equalto="#password">
+                                <input id="password_confirmation" name="password_confirmation" type="password" data-parsley-required="false" data-parsley-trigger="change" data-parsley-minlength="6" data-parsley-equalto="#password">
                                 <label for="password" class="label-validation">Password Confirmation</label>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
+                            {{ method_field('PATCH') }}
                             {{ csrf_field() }}
-                            <button class="btn waves-effect waves-light col s2 offset-s10" type="submit" name="action">Next</button>
+                            <button class="btn waves-effect waves-light col s2 offset-s10" type="submit" name="action">Update</button>
                         </div>
                     </div>
                 </form>
@@ -64,7 +68,7 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            $('#signup').parsley({
+            $('#edit-profile').parsley({
                 successClass: 'valid',
                 errorClass: 'invalid',
                 errorsContainer: function (velem) {
@@ -75,15 +79,16 @@
                 errorsWrapper: '',
                 errorTemplate: ''
             })
-                .on('field:validated', function(velem) {
+            .on('field:validated', function(velem) {
 
-                })
-                .on('field:success', function(velem) {
+            })
+            .on('field:success', function(velem) {
 
-                })
-                .on('field:error', function(velem) {
-
-                });
+            })
+            .on('field:error', function(velem) {
+            })
+            .on('form:submit', function(velem) {
+            });
         });
     </script>
 @stop

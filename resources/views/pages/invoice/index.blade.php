@@ -86,7 +86,6 @@
 
             $('#invoice-container').on('click', '.invoice-delete-btn', function (event) {
                 event.preventDefault();
-                console.log("hello");
                 var invoiceid = $(this).attr('data-id');
                 $('#delete-invoice-form').attr('action', '/invoice/' + invoiceid + '/destroy');
                 $('#delete-confirmation').modal('open');

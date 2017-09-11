@@ -9,7 +9,7 @@
 <div class="invoice" style="background-color: #ffffff; padding: 50px 50px 20px; color: #8c8c8c;">
     <div class="row invoice-header" style="position: relative; margin-bottom: 160px;">
         <div class="col-xs-7" style="position: absolute; left: 0; padding: 0 15px;">
-            <div class="invoice-logo" style="height: 106px; min-width: 204px; background-image: url('{{ asset('/assets/img/top_logo.png') }}'); background-repeat: no-repeat; background-position: 0;"></div>
+            <div class="invoice-logo" style="height: 110px; width: 210px; background-image: url('{{ asset('/assets/img/top_logo.png') }}'); background-repeat: no-repeat; background-position: 0;"></div>
         </div>
         <div class="col-xs-5 invoice-order" style="position: absolute; right: 0; padding: 0 15px; text-align: right;">
             <span class="invoice-id" style="display: block; font-size: 30px; line-height: 30px; margin-bottom: 10px;">Invoice #{{ $invoice->invoiceid }}</span>

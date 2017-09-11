@@ -44,7 +44,9 @@ class ClientController extends Controller
         $client->company_id = auth()->user()->company_id;
         $client->save();
 
-        return redirect()->route('main');
+        flash('Invoice Created', 'success');
+
+        return redirect()->back();
     }
 
     /**
@@ -82,7 +84,9 @@ class ClientController extends Controller
         $client->fill($request->all());
         $client->save();
 
-        return redirect()->route('main');
+        flash('Client Updated', 'success');
+
+        return redirect()->route('client.index');
     }
 
     /**

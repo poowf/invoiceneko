@@ -15,7 +15,7 @@
         </div>
         <div class="row">
             <div class="col s12">
-                <form id="signup" method="post" enctype="multipart/form-data">
+                <form id="create-company" method="post" enctype="multipart/form-data">
                     <div class="card-panel">
                         <div class="row">
                             <div class="input-field col s12">
@@ -43,7 +43,7 @@
                                         <input id="logo" name="logo" type="file" accept="image/*" data-maxsize="10M"/>
                                     </div>
                                     <div class="file-path-wrapper">
-                                        <input id="logofp" name="logofp" class="file-path validate" type="text" data-parsley-required="true" data-parsley-fileuploaded="true" data-parsley-trigger="change" placeholder="Company Logo"/>
+                                        <input id="logofp" name="logofp" class="file-path validate" type="text" data-parsley-required="false" data-parsley-fileuploaded="true" data-parsley-trigger="change" placeholder="Company Logo"/>
                                     </div>
                                 </div>
                                 <label for="logo" class="label-validation">
@@ -59,7 +59,7 @@
                                         <input id="smlogo" name="smlogo" type="file" accept="image/*" data-maxsize="10M"/>
                                     </div>
                                     <div class="file-path-wrapper">
-                                        <input id="smlogofp" name="smlogofp" class="file-path validate" type="text" data-parsley-required="true" data-parsley-fileuploaded="true" data-parsley-trigger="change" placeholder="Small Company Logo"/>
+                                        <input id="smlogofp" name="smlogofp" class="file-path validate" type="text" data-parsley-required="false" data-parsley-fileuploaded="true" data-parsley-trigger="change" placeholder="Small Company Logo"/>
                                     </div>
                                 </div>
                                 <label for="smlogo" class="label-validation">
@@ -84,6 +84,26 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
+            $('#create-company').parsley({
+                successClass: 'valid',
+                errorClass: 'invalid',
+                errorsContainer: function (velem) {
+                    var $errelem = velem.$element.siblings('label');
+                    $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
+                    return true;
+                },
+                errorsWrapper: '',
+                errorTemplate: ''
+            })
+                .on('field:validated', function(velem) {
+
+                })
+                .on('field:success', function(velem) {
+
+                })
+                .on('field:error', function(velem) {
+
+                });
         });
     </script>
 @stop

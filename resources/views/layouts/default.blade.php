@@ -27,6 +27,27 @@
 <script>
     "use strict";
     $(function() {
+
+        $(document).on('click', '#toast-container .toast', function() {
+            $(this).fadeOut(function(){
+                $(this).remove();
+            });
+        });
+
+        @if(session()->has('flash_notification'))
+            @foreach (session('flash_notification', collect())->toArray() as $message)
+                @if ($message['overlay'])
+                    @include('flash::modal', [
+                        'modalClass' => 'flash-modal',
+                        'title'      => $message['title'],
+                        'body'       => $message['message']
+                    ])
+                @else
+                    Materialize.toast('{!! $message['message'] !!}', '5000', '{{ $message['level'] }}') // 5000 is the duration of the toast, replace with text for unlimited duration
+                @endif
+            @endforeach
+        {{ session()->forget('flash_notification') }}
+        @endif
         $(".button-collapse").sideNav();
     });
 </script>

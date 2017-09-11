@@ -3,7 +3,6 @@
 @section("head")
     <title>Invoice Plz</title>
     <style>
-
     </style>
 @stop
 
@@ -16,7 +15,7 @@
         </div>
         <div class="row">
             <div class="col s12">
-                <form id="signup" method="post" enctype="multipart/form-data">
+                <form id="create-invoice" method="post" enctype="multipart/form-data">
                 <div class="card-panel">
                     <div class="row">
                         <div class="input-field col s12">
@@ -38,7 +37,7 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <select id="client_id" name="client_id" data-parsley-required="true" data-parsley-trigger="change">
+                            <select id="client_id" name="client_id" class="test" data-parsley-required="true" data-parsley-trigger="change">
                                 <option disabled="" selected="selected" value="">Pick a Client</option>
                                 @foreach($clients as $client)
                                     <option value="{{ $client->id }}">{{ $client->companyname }}</option>
@@ -116,6 +115,41 @@
                 var invoiceitem = '<div id="invoice_item_' + count + '" class="card-panel"> <div class="row"> <div class="input-field col s8"> <input id="item_name" name="item_name[]" type="text" data-parsley-required="true" data-parsley-trigger="change"> <label for="item_name" class="label-validation">Name</label> </div> <div class="input-field col s2"> <input id="item_quantity" name="item_quantity[]" type="number" data-parsley-required="true" data-parsley-trigger="change"> <label for="item_quantity" class="label-validation">Quantity</label> </div> <div class="input-field col s2"> <input id="item_price" name="item_price[]" type="number" data-parsley-required="true" data-parsley-trigger="change"> <label for="item_price" class="label-validation">Price</label> </div> <div class="input-field col s12"> <textarea id="item_description" name="item_description[]" class="materialize-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Description"></textarea> <label for="item_description" class="label-validation">Description</label> </div> </div> </div>';
                 $('#' + elementid).append(invoiceitem);
             }
+
+            $('#create-invoice').parsley({
+                successClass: 'valid',
+                errorClass: 'invalid',
+                errorsContainer: function (velem) {
+                    var $errelem = velem.$element.siblings('label');
+                    $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
+                    return true;
+                },
+                errorsWrapper: '',
+                errorTemplate: ''
+            })
+                .on('field:validated', function(velem) {
+
+                })
+                .on('field:success', function(velem) {
+                    if (velem.$element.is('select')) {
+                        velem.$element.siblings('.selectize-control').removeClass('invalid').addClass('valid');
+                        //velem.$element.parent('.select-wrapper').removeClass('invalid').addClass('valid');
+                        //velem.$element.siblings('.select-dropdown').removeClass('invalid').addClass('valid');
+                    }
+                })
+                .on('field:error', function(velem) {
+                    if (velem.$element.is('select')) {
+                        console.log(velem.$element);
+                        velem.$element.siblings('.selectize-control').removeClass('valid').addClass('invalid');
+
+                        //velem.$element.parent('.select-wrapper').removeClass('valid').addClass('invalid');
+                        //velem.$element.siblings('.select-dropdown').removeClass('valid').addClass('invalid');
+                        //velem.$element.parent('.select-wrapper').siblings('label').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
+                    }
+                })
+                .on('form:submit', function(velem) {
+
+                });
         });
     </script>
 @stop

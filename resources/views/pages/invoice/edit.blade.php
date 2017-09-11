@@ -10,12 +10,12 @@
     <div class="container">
         <div class="row">
             <div class="col s12">
-                <h3>Create Invoice</h3>
+                <h3>Edit Invoice</h3>
             </div>
         </div>
         <div class="row">
             <div class="col s12">
-                <form id="update-invoice" method="post" enctype="multipart/form-data">
+                <form id="edit-invoice" method="post" enctype="multipart/form-data">
                     <div class="card-panel">
                         <div class="row">
                             <div class="input-field col s12">
@@ -180,6 +180,30 @@
                     $('#delete-confirmation').children().children('.invoice-item-confirm-delete-btn').attr('data-count', '');
                 });
             });
+
+            $('#edit-invoice').parsley({
+                successClass: 'valid',
+                errorClass: 'invalid',
+                errorsContainer: function (velem) {
+                    var $errelem = velem.$element.siblings('label');
+                    $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
+                    return true;
+                },
+                errorsWrapper: '',
+                errorTemplate: ''
+            })
+                .on('field:validated', function(velem) {
+
+                })
+                .on('field:success', function(velem) {
+
+                })
+                .on('field:error', function(velem) {
+
+                })
+                .on('form:submit', function(velem) {
+
+                });
         });
     </script>
 @stop
