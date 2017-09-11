@@ -55,7 +55,8 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-        //
+        $invoices = $client->invoices;
+        return view('pages.client.show', compact('client', 'invoices'));
     }
 
     /**
@@ -66,7 +67,7 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
-        //
+        return view('pages.client.edit', compact('client'));
     }
 
     /**
@@ -78,7 +79,10 @@ class ClientController extends Controller
      */
     public function update(Request $request, Client $client)
     {
-        //
+        $client->fill($request->all());
+        $client->save();
+
+        return redirect()->route('main');
     }
 
     /**
@@ -89,6 +93,8 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        //
+        $client->delete();
+
+        return redirect()->back();
     }
 }

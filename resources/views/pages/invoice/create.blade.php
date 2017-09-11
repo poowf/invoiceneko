@@ -3,33 +3,7 @@
 @section("head")
     <title>Invoice Plz</title>
     <style>
-        .selectize-control {
-            margin-top: 12px;
-        }
-        .selectize-dropdown, .selectize-input, .selectize-input input {
-            font-size: 1rem;
-        }
 
-        .selectize-control.single .selectize-input {
-            border: none;
-            box-shadow: none;
-            border-bottom: 1px solid #9e9e9e;
-            border-radius: 0;
-        }
-        .selectize-control.single .selectize-input input {
-            height: auto;
-        }
-        .selectize-dropdown {
-            border: none;
-            border-radius: 0;
-            box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
-        }
-
-        .selectize-dropdown [data-selectable], .selectize-dropdown .optgroup-header {
-            min-height: 50px;
-            line-height: 50px;
-            padding: 0 8px;
-        }
     </style>
 @stop
 

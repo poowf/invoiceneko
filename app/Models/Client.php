@@ -31,4 +31,9 @@ class Client extends Model
         'contactemail',
         'contactphone',
     ];
+
+    public function invoices()
+    {
+        return $this->hasMany('App\Models\Invoice', 'client_id');
+    }
 }

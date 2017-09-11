@@ -5,9 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use Carbon\Carbon;
+
 class Invoice extends Model
 {
     use SoftDeletes;
+
+    const STATUS_UNPAID = 0;
+    const STATUS_PAID = 1;
 
     /**
      * The database table used by the model.
@@ -26,6 +31,10 @@ class Invoice extends Model
         'date',
         'duedate',
         'netdays',
+    ];
+
+    protected $attributes = [
+        'status' => self::STATUS_UNPAID
     ];
 
     public function client()
@@ -52,6 +61,35 @@ class Invoice extends Model
         }
         setlocale(LC_MONETARY, 'en_US.UTF-8');
         return money_format('%.2n', $total);
+    }
+
+    public function statusText()
+    {
+        $status = $this->status;
+
+        switch($status)
+        {
+            default:
+                $textstatus = "Unpaid";
+            break;
+            case 0:
+                $textstatus = "Unpaid";
+            break;
+            case 1:
+                $textstatus = "Paid";
+            break;
+        }
+
+        return $textstatus;
+    }
+
+    public function scopeOverdue($query)
+    {
+        $now = Carbon::now();
+
+        return $query
+            ->where('duedate', '<=', $now)
+            ->where('status', self::STATUS_UNPAID);
     }
 
 }

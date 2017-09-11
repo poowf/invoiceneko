@@ -79,10 +79,11 @@ class InvoiceController extends Controller
      */
     public function show(Invoice $invoice)
     {
+        $client = $invoice->client;
         $invoice->date = Carbon::createFromFormat('Y-m-d H:i:s',$invoice->date)->format('j F, Y');
         $invoice->duedate = Carbon::createFromFormat('Y-m-d H:i:s',$invoice->duedate)->format('j F, Y');
 
-        return view('pages.invoice.show', compact('invoice'));
+        return view('pages.invoice.show', compact('invoice', 'client'));
     }
 
     /**

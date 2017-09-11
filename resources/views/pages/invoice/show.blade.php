@@ -3,14 +3,53 @@
 @section("head")
     <title>Invoice Plz</title>
     <style>
+
     </style>
 @stop
 
 @section("content")
     <div class="container">
         <div class="row">
-            <div class="col s12">
+            <div class="col s6">
                 <h3>Invoice</h3>
+            </div>
+            <div class="col s6 mtop30 right">
+                <a class="btn btn-lg btn-default" href="{{ route('invoice.download', [ 'invoice' => $invoice->id] ) }}">
+                    Save PDF
+                </a>
+                <a class="btn btn-lg btn-default" href="{{ route('invoice.printview', [ 'invoice' => $invoice->id] ) }}">
+                    Print
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <h3>Details</h3>
+                <div class="card-panel">
+                    <dt>Company Name</dt>
+                    <dd>{{ $client->companyname }}</dd>
+                    <dt>Company Address</dt>
+                    <dd>{{ $client->address }}</dd>
+                    <dt>Company Nickname</dt>
+                    <dd>{{ $client->nickname or '' }}</dd>
+                    <dt>Company Registration Number</dt>
+                    <dd>{{ $client->crn }}
+                    <dt>Contact Name</dt>
+                    <dd>{{ $client->contactname or '-' }}</dd>
+                    <dt>Contact Email</dt>
+                    <dd>{{ $client->contactemail or '-' }}</dd>
+                    <dt>Contact Phone</dt>
+                    <dd>{{ $client->contactphone or '-' }}</dd>
+                    <dt>Status</dt>
+                    <dd>
+                        @if ($invoice->status == 0)
+                            <span class="alt-badge error">{{ $invoice->statustext() }}</span>
+                        @elseif ($invoice->status == 1)
+                            <span class="alt-badge success">{{ $invoice->statustext() }}</span>
+                        @endif
+                    </dd>
+                    </dl>
+                </div>
             </div>
         </div>
         <div class="row">
