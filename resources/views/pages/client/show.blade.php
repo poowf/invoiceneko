@@ -9,12 +9,29 @@
 @section("content")
     <div class="container">
         <div class="row">
-            <div class="col s6">
-                <h3>Invoices</h3>
+            <div class="col s12">
+                <h3>Client Details</h3>
             </div>
-
-            <div class="col s6 right mtop30">
-                <a href="{{ route('invoice.create') }}" class="btn waves-effect waves-red">Create</a>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <div class="card-panel">
+                    <dt>Company Name</dt>
+                    <dd>{{ $client->companyname }}</dd>
+                    <dt>Company Address</dt>
+                    <dd>{{ $client->address }}</dd>
+                    <dt>Company Nickname</dt>
+                    <dd>{{ $client->nickname or '' }}</dd>
+                    <dt>Company Registration Number</dt>
+                    <dd>{{ $client->crn }}
+                    <dt>Contact Name</dt>
+                    <dd>{{ $client->contactname or '-' }}</dd>
+                    <dt>Contact Email</dt>
+                    <dd>{{ $client->contactemail or '-' }}</dd>
+                    <dt>Contact Phone</dt>
+                    <dd>{{ $client->contactphone or '-' }}</dd>
+                    </dl>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -26,9 +43,7 @@
                             <th>Invoice ID</th>
                             <th>Date</th>
                             <th>Due Date</th>
-                            <th>Client Name</th>
-                            <th>Client Email</th>
-                            <th>Client Phone</th>
+                            <th>Terms</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -40,9 +55,7 @@
                                 <td>{{ $invoice->invoiceid }}</td>
                                 <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->date)->format('j F, Y') }}</td>
                                 <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y') }}</td>
-                                <td>{{ $invoice->client->contactname }}</td>
-                                <td>{{ $invoice->client->contactemail }}</td>
-                                <td>{{ $invoice->client->contactphone }}</td>
+                                <td>Net {{ $invoice->netdays }}</td>
                                 <td>
                                     @if ($invoice->status == 0)
                                         <span class="alt-badge error">{{ $invoice->statustext() }}</span>
@@ -63,34 +76,12 @@
             </div>
         </div>
     </div>
-    <div id="delete-confirmation" class="modal">
-        <div class="modal-content">
-            <p>Delete Invoice?</p>
-        </div>
-        <div class="modal-footer">
-            <form id="delete-invoice-form" method="post" class="null-form">
-                {{ method_field('DELETE') }}
-                {{ csrf_field() }}
-                <button class="modal-action waves-effect black-text waves-green btn-flat btn-deletemodal invoice-confirm-delete-btn" type="submit">Delete</button>
-            </form>
-            <a href="javascript:;" class=" modal-action modal-close waves-effect black-text waves-red btn-flat btn-deletemodal">Cancel</a>
-        </div>
-    </div>
 @stop
 
 @section("scripts")
     <script type="text/javascript">
         "use strict";
         $(function() {
-            $('.modal').modal();
-
-            $('#invoice-container').on('click', '.invoice-delete-btn', function (event) {
-                event.preventDefault();
-                console.log("hello");
-                var invoiceid = $(this).attr('data-id');
-                $('#delete-invoice-form').attr('action', '/invoice/' + invoiceid + '/destroy');
-                $('#delete-confirmation').modal('open');
-            });
         });
     </script>
 @stop

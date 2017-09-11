@@ -9,8 +9,12 @@
 @section("content")
     <div class="container">
         <div class="row">
-            <div class="col s12">
+            <div class="col s6">
                 <h3>Clients</h3>
+            </div>
+
+            <div class="col s6 right mtop30">
+                <a href="{{ route('client.create') }}" class="btn waves-effect waves-red">Create</a>
             </div>
         </div>
         <div class="row">
@@ -37,9 +41,9 @@
                                 <td>{{ $client->contactemail }}</td>
                                 <td>{{ $client->contactphone }}</td>
                                 <td>
-                                    <a href="#"><i class="material-icons">open_in_new</i></a>
-                                    <a href="#"><i class="material-icons">mode_edit</i></a>
-                                    <a href="#"><i class="material-icons">delete</i></a>
+                                    <a href="{{ route('client.show', [ 'client' => $client ] ) }}"><i class="material-icons">open_in_new</i></a>
+                                    <a href="{{ route('client.edit', [ 'client' => $client ] ) }}"><i class="material-icons">mode_edit</i></a>
+                                    <a href="#" data-id="{{ $client->id }}" class="client-delete-btn"><i class="material-icons">delete</i></a>
                                 </td>
                             </tr>
                         @endforeach

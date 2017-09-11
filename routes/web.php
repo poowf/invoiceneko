@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'MainController@getMain')->name('main');
+Route::get('/', 'MainController@main')->name('main');
 
 Route::get('/sendinv', 'MainController@testMail')->name('t.mail');
 
@@ -42,10 +42,16 @@ Route::post('/company/create', 'CompanyController@store')->name('company.store')
 
 
 Route::group(['middleware' => ['auth']], function() {
+    Route::get('/dashboard', 'MainController@dashboard')->name('dashboard');
+
     /* Client */
     Route::get('/clients', 'ClientController@index')->name('client.index');
     Route::get('/client/create', 'ClientController@create')->name('client.create');
     Route::post('/client/create', 'ClientController@store')->name('client.store');
+    Route::get('/client/{client}', 'ClientController@show')->name('client.show');
+    Route::get('/client/{client}/edit', 'ClientController@edit')->name('client.edit');
+    Route::patch('/client/{client}/edit', 'ClientController@update')->name('client.update');
+    Route::delete('/client/{client}/destroy', 'ClientController@destroy')->name('client.destroy');
 
     /* Invoice */
     Route::get('/invoices', 'InvoiceController@index')->name('invoice.index');

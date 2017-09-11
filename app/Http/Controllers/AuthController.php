@@ -31,7 +31,7 @@ class AuthController extends Controller
         ];
 
         if (Auth::attempt($creds, $remember)) {
-            return redirect()->intended('/');
+            return redirect()->intended('/dashboard');
         }
 
         flash('Invalid Credentials', 'danger');

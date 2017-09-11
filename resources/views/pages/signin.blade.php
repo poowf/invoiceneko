@@ -11,7 +11,7 @@
         <div class="container content-main-authentication">
             <div class="login-container z-depth-1">
                 <div class="avatar">
-                    <img src="{{ asset('assets/img/avatar.png') }}" width="150" height="150">
+                    <img src="{{ asset('assets/img/avatar-alt.png') }}" width="150" height="150">
                 </div>
                 <hr><br>
                 <div class="form-box">

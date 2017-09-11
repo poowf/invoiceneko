@@ -10,9 +10,16 @@ use Illuminate\Support\Facades\Mail;
 
 class MainController extends Controller
 {
-    public function getMain()
+    public function main()
     {
         return view('pages.main');
+    }
+
+    public function dashboard()
+    {
+        $overdueinvoices = Invoice::query()->overdue()->get();
+
+        return view('pages.dashboard', compact('overdueinvoices'));
     }
 
     public function testMail(Request $request)

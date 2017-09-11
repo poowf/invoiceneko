@@ -27,6 +27,7 @@
 <script>
     "use strict";
     $(function() {
+        $(".button-collapse").sideNav();
     });
 </script>
 </body>
