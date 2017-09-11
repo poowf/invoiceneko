@@ -44,7 +44,7 @@ class ClientController extends Controller
         $client->company_id = auth()->user()->company_id;
         $client->save();
 
-        flash('Invoice Created', 'success');
+        flash('Client Created', 'success');
 
         return redirect()->back();
     }
@@ -98,6 +98,8 @@ class ClientController extends Controller
     public function destroy(Client $client)
     {
         $client->delete();
+
+        flash('Client Deleted', 'success');
 
         return redirect()->back();
     }

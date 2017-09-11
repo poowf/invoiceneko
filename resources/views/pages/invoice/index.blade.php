@@ -24,7 +24,7 @@
                         <thead>
                         <tr>
                             <th>Invoice ID</th>
-                            <th>Date</th>
+                            <th>Amount</th>
                             <th>Due Date</th>
                             <th>Client Name</th>
                             <th>Client Email</th>
@@ -38,7 +38,7 @@
                         @foreach($invoices as $key => $invoice)
                             <tr>
                                 <td>{{ $invoice->invoiceid }}</td>
-                                <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->date)->format('j F, Y') }}</td>
+                                <td>${{ $invoice->calculatetotal()  }}</td>
                                 <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y') }}</td>
                                 <td>{{ $invoice->client->contactname }}</td>
                                 <td>{{ $invoice->client->contactemail }}</td>

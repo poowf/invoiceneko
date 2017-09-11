@@ -129,8 +129,6 @@ class InvoiceController extends Controller
         $company = auth()->user()->company;
         $clients = $company->clients;
 
-        $invoice->date = Carbon::createFromFormat('Y-m-d H:i:s',$invoice->date)->format('Y-m-d');
-
         return view('pages.invoice.edit', compact('invoice', 'clients'));
     }
 
@@ -184,6 +182,8 @@ class InvoiceController extends Controller
     public function destroy(Invoice $invoice)
     {
         $invoice->delete();
+
+        flash('Invoice Deleted', 'success');
 
         return redirect()->back();
     }

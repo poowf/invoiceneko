@@ -296,6 +296,18 @@ dd::after {
   padding: 0 8px;
 }
 
+.selectize-control.valid .selectize-input {
+  border-bottom: 1px solid #4CAF50;
+  -webkit-box-shadow: 0 1px 0 0 #4CAF50;
+  box-shadow: 0 1px 0 0 #4CAF50;
+}
+
+.selectize-control.invalid .selectize-input {
+  border-bottom: 1px solid #F44336;
+  -webkit-box-shadow: 0 1px 0 0 #F44336;
+  box-shadow: 0 1px 0 0 #F44336;
+}
+
 /* Accents */
 
 .btn-theme {
@@ -747,6 +759,8 @@ nav .signout-btn {
   padding: 14px 16px;
   margin: 0;
   text-decoration: none;
+  width: 100%;
+  text-align: left;
 }
 
 .side-nav .signout-mobile-btn {
@@ -756,6 +770,8 @@ nav .signout-btn {
   height: 48px;
   line-height: 48px;
   padding: 0 32px;
+  width: 100%;
+  text-align: left;
 }
 
 /* Footer */

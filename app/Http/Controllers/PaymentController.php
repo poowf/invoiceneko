@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Payment;
 use Illuminate\Http\Request;
+use App\Models\Payment;
+use App\Models\Invoice;
+use Carbon\Carbon;
 
 class PaymentController extends Controller
 {
@@ -14,7 +16,9 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        //
+        $payments = Payment::all();
+
+        return view('pages.payment.index', compact('payments'));
     }
 
     /**
@@ -24,7 +28,7 @@ class PaymentController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.payment.create');
     }
 
     /**
@@ -33,9 +37,50 @@ class PaymentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Invoice $invoice, Request $request)
     {
-        //
+        $payment = new Payment;
+        $payment->fill($request->all());
+        $payment->receiveddate = Carbon::createFromFormat('j F, Y', $request->input('receiveddate'))->toDateTimeString();
+        $payment->invoice_id = $invoice->id;
+        $payment->client_id = $invoice->client->id;
+        $payment->save();
+
+        flash('Payment Created', 'success');
+
+        return redirect()->route('payment.index');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createsolo()
+    {
+        $invoices = Invoice::all();
+
+        return view('pages.payment.createsolo', compact('invoices'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storesolo(Request $request)
+    {
+        $payment = new Payment;
+        $payment->fill($request->all());
+        $payment->receiveddate = Carbon::createFromFormat('j F, Y', $request->input('receiveddate'))->toDateTimeString();
+        $payment->invoice_id = $request->input('invoice_id');
+        $payment->client_id = Invoice::find($request->input('invoice_id'))->client->id;
+        $payment->save();
+
+        flash('Payment Created', 'success');
+
+        return redirect()->route('payment.index');
     }
 
     /**
@@ -46,7 +91,7 @@ class PaymentController extends Controller
      */
     public function show(Payment $payment)
     {
-        //
+        return view('pages.payment.show', compact('payment'));
     }
 
     /**
@@ -57,7 +102,7 @@ class PaymentController extends Controller
      */
     public function edit(Payment $payment)
     {
-        //
+        return view('pages.payment.edit', compact('payment'));
     }
 
     /**
@@ -69,7 +114,13 @@ class PaymentController extends Controller
      */
     public function update(Request $request, Payment $payment)
     {
-        //
+        $payment->fill($request->all());
+        $payment->receiveddate = Carbon::createFromFormat('j F, Y', $request->input('receiveddate'))->toDateTimeString();
+        $payment->save();
+
+        flash('Payment Updated', 'success');
+
+        return redirect()->route('payment.index');
     }
 
     /**
@@ -80,6 +131,10 @@ class PaymentController extends Controller
      */
     public function destroy(Payment $payment)
     {
-        //
+        $payment->delete();
+
+        flash('Payment Deleted', 'success');
+
+        return redirect()->back();
     }
 }

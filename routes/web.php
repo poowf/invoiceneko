@@ -72,8 +72,18 @@ Route::group(['middleware' => ['auth']], function() {
     Route::patch('/invoice/{invoice}/edit', 'InvoiceController@update')->name('invoice.update');
     Route::delete('/invoice/{invoice}/destroy', 'InvoiceController@destroy')->name('invoice.destroy');
 
-
     /* InvoiceItem */
     Route::delete('/invoice/item/{invoiceitem}/destroy', 'InvoiceItemController@destroy')->name('invoice.item.destroy');
+
+    /* Payment */
+    Route::get('/payments', 'PaymentController@index')->name('payment.index');
+    Route::get('/invoice/{invoice}/payment/create', 'PaymentController@create')->name('payment.create');
+    Route::post('/invoice/{invoice}/payment/create', 'PaymentController@store')->name('payment.store');
+    Route::get('/payment/create', 'PaymentController@createsolo')->name('payment.createsolo');
+    Route::post('/payment/create', 'PaymentController@storesolo')->name('payment.storesolo');
+    Route::get('/payment/{payment}', 'PaymentController@show')->name('payment.show');
+    Route::get('/payment/{payment}/edit', 'PaymentController@edit')->name('payment.edit');
+    Route::patch('/payment/{payment}/edit', 'PaymentController@update')->name('payment.update');
+    Route::delete('/payment/{payment}/destroy', 'PaymentController@destroy')->name('payment.destroy');
 
 });
