@@ -57,13 +57,13 @@
                 <div class="invoice" style="background-color: #ffffff; padding: 50px 50px 20px; color: #8c8c8c;">
                     <div class="row invoice-header" style="position: relative; margin-bottom: 160px;">
                         <div class="col-xs-7" style="position: absolute; left: 0; padding: 0 15px;">
-                            <div class="invoice-logo" style="height: 106px; min-width: 204px; background-image: url('{{ asset('/assets/img/top_logo.png') }}'); background-repeat: no-repeat; background-position: 0;"></div>
+                            <div class="invoice-logo" style="height: 106px; min-width: 204px; background-image: url('{{ $invoice->company->logo }}'); background-repeat: no-repeat; background-position: 0;"></div>
                         </div>
                         <div class="col-xs-5 invoice-order" style="position: absolute; right: 0; padding: 0 15px; text-align: left;">
                             <span class="invoice-id" style="display: block; font-size: 30px; line-height: 30px; margin-bottom: 10px;">Invoice #{{ $invoice->invoiceid }}</span>
                             <span class="incoice-date" style="display: block; font-size: 18px; line-height: 30px;">Invoice Date: {{ $invoice->date }}</span>
                             <span class="incoice-duedate" style="display: block; font-size: 18px; line-height: 30px;">Payment Due: {{ $invoice->date }}</span>
-                            <span class="incoice-duedate" style="display: block; font-size: 18px; line-height: 30px;">Payment Terms: Net {{ $invoice->netdays }}</span>
+                            <span class="incoice-netdays" style="display: block; font-size: 18px; line-height: 30px;">Payment Terms: Net {{ $invoice->netdays }}</span>
                         </div>
                     </div>
                     <div class="row invoice-data" style="position: relative; margin-bottom: 320px;">
@@ -109,7 +109,7 @@
                                             {{ $item->quantity }}
                                         </td>
                                         <td class="amount" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
-                                            {{ $item->price }}
+                                            ${{ $item->price }}
                                         </td>
                                     </tr>
                                 @endforeach
@@ -119,7 +119,7 @@
                                         Subtotal
                                     </td>
                                     <td class="amount" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
-                                        {{ $invoice->calculatetotal() }}
+                                        ${{ $invoice->calculatetotal() }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -137,7 +137,7 @@
                                         Total
                                     </td>
                                     <td class="amount total-value" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right; font-size: 22px; color: #4da6a6;">
-                                        {{ $invoice->calculatetotal() }}
+                                        ${{ $invoice->calculatetotal() }}
                                     </td>
                                 </tr>
                                 </tbody>
@@ -162,7 +162,7 @@
                     </div>
                     <div class="row invoice-company-info" style="margin-bottom: 70px;">
                         <div class="col-sm-6 col-md-2 logo" style="position: relative; display: block; width: 100%;  text-align: center;">
-                            <img src="{{ asset('/assets/img/small_logo.png') }}" alt="Logo-symbol" width="100" height="100" style="border: 0; vertical-align: middle;">
+                            <img src="{{ $invoice->company->smlogo }}" alt="Logo-symbol" width="100" height="100" style="border: 0; vertical-align: middle;">
                         </div>
                         <div style="margin-top: 20px;">
                             <div class="col-sm-6 col-md-4 summary" style="display: inline-block; width: 33%; padding: 0 15px; line-height: 16px; text-align: center;">
