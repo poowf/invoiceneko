@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Client;
 use Illuminate\Http\Request;
+use App\Models\Client;
+use App\Models\Company;
 
 class ClientController extends Controller
 {
@@ -14,7 +15,10 @@ class ClientController extends Controller
      */
     public function index()
     {
-        //
+        $company = Company::find(auth()->user()->company_id);
+        $clients = $company->clients;
+
+        return view('pages.client.index', compact('clients'));
     }
 
     /**
@@ -24,7 +28,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.client.create');
     }
 
     /**
@@ -35,7 +39,12 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $client = new Client;
+        $client->fill($request->all());
+        $client->company_id = $auth()->user()->company_id;
+        $client->save();
+
+        return redirect()->route('main');
     }
 
     /**

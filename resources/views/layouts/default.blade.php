@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{ mix('/assets/css/core.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ mix('/assets/css/style.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ mix('/assets/css/selectize.css') }}" rel="stylesheet" type="text/css">
     @yield("head")
     <script>
         window.Laravel = {!! json_encode([

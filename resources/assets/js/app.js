@@ -32,3 +32,6 @@ window.$ = window.jQuery = require('jquery');
 //window.Laravel = { csrfToken: $('meta[name=csrf-token]').attr("content") };
 
 require('materialize-css');
+require('selectize');
+require('intl-tel-input');
+require('parsleyjs');

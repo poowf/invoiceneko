@@ -13,20 +13,22 @@
 
                             <ul class="right hide-on-med-and-down">
                                 @if(Auth::check())
+                                    <li><a href="{{ route('invoice.index') }}">Invoices</a></li>
+                                    <li><a href="{{ route('client.index') }}">Clients</a></li>
                                     <li><a class="waves-effect waves-dark btn-link btn dropdown-button" href="javascript:;" data-beloworigin="true" data-activates="dropdown1">My Account<i class="material-icons right" style="line-height: 35px;">arrow_drop_down</i></a></li>
                                     <ul id="dropdown1" class="dropdown-content" style="margin-left: 15px;">
                                         @if(Auth::user()->type == 0)<li><a href="#">Backend</a></li>@endif
                                         <li><a href="">Settings</a></li>
                                         <li>
-                                            <form method="post" action="#">
+                                            <form method="post" action="{{ route('auth.destroy') }}">
                                                 {{ csrf_field() }}
-                                                <a href="#" class="signmeout-btn signout-btn">Sign Out</a>
+                                                <button class="signmeout-btn signout-btn" type="submit">Sign Out</button>
                                             </form>
                                         </li>
                                     </ul>
                                 @else
-                                    <li><a href="#">Sign In</a></li>
-                                    <li><a href="#">Sign Up</a></li>
+                                    <li><a href="{{ route('auth.show') }}">Sign In</a></li>
+                                    <li><a href="{{ route('user.create') }}">Sign Up</a></li>
                                 @endif
                             </ul>
                             <ul class="side-nav" id="mobile-demo">
@@ -38,15 +40,15 @@
                                         @if(Auth::user()->type == 0)<li><a href="">Backend</a></li>@endif
                                         <li><a href="">Settings</a></li>
                                         <li>
-                                            <form method="post" action="#">
+                                            <form method="post" action="{{ route('auth.destroy') }}">
                                                 {{ csrf_field() }}
-                                                <a href="#" class="signmeout-btn signout-mobile-btn">Sign Out</a>
+                                                <button class="signmeout-btn signout-mobile-btn" type="submit">Sign Out</button>
                                             </form>
                                         </li>
                                     </ul>
                                 @else
-                                    <li><a href="#">Sign In</a></li>
-                                    <li><a href="#">Sign Up</a></li>
+                                    <li><a href="{{ route('auth.show') }}">Sign In</a></li>
+                                    <li><a href="{{ route('user.create') }}">Sign Up</a></li>
                                 @endif
                             </ul>
                         </div>

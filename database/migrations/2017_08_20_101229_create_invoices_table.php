@@ -17,9 +17,8 @@ class CreateInvoicesTable extends Migration
             $table->increments('id');
             $table->string('invoiceid');
             $table->dateTime('date');
-            $table->dateTime('duedate');
             $table->integer('netdays');
-            $table->text('items');
+            $table->dateTime('duedate');
             $table->integer('client_id')->unsigned();
             $table->foreign('client_id')
                 ->references('id')->on('clients')

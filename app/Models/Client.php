@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Client extends Model
 {
@@ -14,4 +15,20 @@ class Client extends Model
      * @var string
      */
     protected $table = 'clients';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'companyname',
+        'address',
+        'nickname',
+        'crn',
+        'contactname',
+        'contactgender',
+        'contactemail',
+        'contactphone',
+    ];
 }
