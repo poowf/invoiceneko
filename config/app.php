@@ -177,6 +177,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        Barryvdh\Debugbar\ServiceProvider::class,
+
     ],
 
     /*
@@ -229,6 +231,7 @@ return [
         //Added Facades
         'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
         'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ],
 
 ];

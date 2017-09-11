@@ -35,6 +35,38 @@
                                 <label for="crn" class="label-validation">Registration Number</label>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <div class="file-field input-field">
+                                    <div class="btn btn-link">
+                                        <span>File</span>
+                                        <input id="logo" name="logo" type="file" accept="image/*" data-maxsize="10M"/>
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        <input id="logofp" name="logofp" class="file-path validate" type="text" data-parsley-required="true" data-parsley-fileuploaded="true" data-parsley-trigger="change" placeholder="Company Logo"/>
+                                    </div>
+                                </div>
+                                <label for="logo" class="label-validation">
+                                    Logo
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <div class="file-field input-field">
+                                    <div class="btn btn-link">
+                                        <span>File</span>
+                                        <input id="smlogo" name="smlogo" type="file" accept="image/*" data-maxsize="10M"/>
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        <input id="smlogofp" name="smlogofp" class="file-path validate" type="text" data-parsley-required="true" data-parsley-fileuploaded="true" data-parsley-trigger="change" placeholder="Small Company Logo"/>
+                                    </div>
+                                </div>
+                                <label for="smlogo" class="label-validation">
+                                    Small Logo
+                                </label>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
