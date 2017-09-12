@@ -16,7 +16,9 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $payments = Payment::all();
+        $company = auth()->user()->company;
+
+        $payments = $company->payments;
 
         return view('pages.payment.index', compact('payments'));
     }
@@ -44,6 +46,7 @@ class PaymentController extends Controller
         $payment->receiveddate = Carbon::createFromFormat('j F, Y', $request->input('receiveddate'))->toDateTimeString();
         $payment->invoice_id = $invoice->id;
         $payment->client_id = $invoice->client->id;
+        $payment->company_id = $invoice->company_id;
         $payment->save();
 
         flash('Payment Created', 'success');
@@ -58,7 +61,9 @@ class PaymentController extends Controller
      */
     public function createsolo()
     {
-        $invoices = Invoice::all();
+        $company = auth()->user()->company;
+
+        $invoices = $company->invoices;
 
         return view('pages.payment.createsolo', compact('invoices'));
     }
@@ -75,7 +80,8 @@ class PaymentController extends Controller
         $payment->fill($request->all());
         $payment->receiveddate = Carbon::createFromFormat('j F, Y', $request->input('receiveddate'))->toDateTimeString();
         $payment->invoice_id = $request->input('invoice_id');
-        $payment->client_id = Invoice::find($request->input('invoice_id'))->client->id;
+        $payment->client_id = Invoice::find($request->input('invoice_id'))->client_id;
+        $payment->company_id = Invoice::find($request->input('invoice_id'))->company_id;
         $payment->save();
 
         flash('Payment Created', 'success');
