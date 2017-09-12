@@ -77,7 +77,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <button data-id="{{ $item->id }}"  data-count="{{ $key }}" class="invoice-item-delete-btn btn waves-effect waves-light col s2 offset-s10 red">Delete</button>
+                                    <button data-id="{{ $item->id }}"  data-count="{{ $key }}" class="invoice-item-delete-btn btn waves-effect waves-light col s12 m2 offset-m10 red">Delete</button>
                                 </div>
                             </div>
                         @endforeach
@@ -86,7 +86,7 @@
                         <div class="input-field col s12">
                             {{ method_field('PATCH') }}
                             {{ csrf_field() }}
-                            <button class="btn waves-effect waves-light col s2 offset-s10" type="submit" name="action">Update</button>
+                            <button class="btn waves-effect waves-light col s12 m2 offset-m10" type="submit" name="action">Update</button>
                         </div>
                     </div>
                 </form>

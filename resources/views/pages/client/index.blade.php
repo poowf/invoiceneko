@@ -19,7 +19,7 @@
         </div>
         <div class="row">
             <div class="col s12">
-                <div class="card-panel">
+                <div class="card-panel flex">
                     <table id="client-container" class="responsive-table striped">
                         <thead>
                         <tr>

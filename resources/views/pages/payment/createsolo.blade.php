@@ -56,7 +56,7 @@
                     <div class="row">
                         <div class="input-field col s12">
                             {{ csrf_field() }}
-                            <button class="btn waves-effect waves-light col s2 offset-s10" type="submit" name="action">Submit</button>
+                            <button class="btn waves-effect waves-light col s12 m2 offset-m10" type="submit" name="action">Submit</button>
                         </div>
                     </div>
                 </form>

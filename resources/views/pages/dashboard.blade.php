@@ -20,7 +20,7 @@
             </div>
             <div class="col s12 m8">
                 <h3>Overdue Invoices</h3>
-                <div class="card-panel">
+                <div class="card-panel flex">
                     <table class="responsive-table">
                         <thead>
                         <tr>
