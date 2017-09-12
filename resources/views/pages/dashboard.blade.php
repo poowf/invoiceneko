@@ -15,7 +15,7 @@
             <div class="col s12 m4">
                 <h3>Welcome</h3>
                 <div class="card-panel">
-                    Hello {{ auth()->user()->name }}
+                    Hello {{ $user->name or '' }}
                 </div>
             </div>
             <div class="col s12 m8">

@@ -17,9 +17,10 @@ class MainController extends Controller
 
     public function dashboard()
     {
+        $user = auth()->user();
         $overdueinvoices = Invoice::query()->overdue()->get();
 
-        return view('pages.dashboard', compact('overdueinvoices'));
+        return view('pages.dashboard', compact('user', 'overdueinvoices'));
     }
 
     public function testMail(Request $request)
