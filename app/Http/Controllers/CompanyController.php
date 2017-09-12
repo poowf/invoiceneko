@@ -41,7 +41,6 @@ class CompanyController extends Controller
     {
 
         if ($request->session()->has('user_id')) {
-            Debugbar::info("fired");
             $company = new Company;
             $company->fill($request->all());
             $company->user_id = $request->session()->pull('user_id');
@@ -128,7 +127,19 @@ class CompanyController extends Controller
      */
     public function update(Request $request)
     {
-        $company = auth()->user()->ownedcompany;
+        $isnew = false;
+
+        if (auth()->user()->ownedcompany)
+        {
+            $company = auth()->user()->ownedcompany;
+        }
+        else
+        {
+            $company = new Company;
+            $company->user_id = auth()->user()->id;
+            $isnew = true;
+        }
+
         $company->fill($request->all());
         $company->save();
 
@@ -167,6 +178,13 @@ class CompanyController extends Controller
         }
 
         $company->save();
+
+        if ($isnew)
+        {
+            $user = User::find($company->user_id);
+            $user->company_id = $company->id;
+            $user->save();
+        }
 
         flash('Company Updated', 'success');
 
