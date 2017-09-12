@@ -35,7 +35,7 @@
                             <a href="https://www.twitter.com/"><li><i class="fa fa-twitter" aria-hidden="true"></i></li></a>
                             <a href="https://www.instagram.com/"><li><i class="fa fa-instagram" aria-hidden="true"></i></li></a>
                         </ul>
-                        <p>© 2016 InvoicePlz</p>
+                        <p>© 2017 InvoicePlz</p>
                     </div>
                     <div class="footer-totop">
                         <a id="return-to-top" href="javascript:;"><div class="totop-link"><i class="material-icons md-36">keyboard_arrow_up</i></div></a>
