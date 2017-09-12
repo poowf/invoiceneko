@@ -164,6 +164,16 @@ dd::after {
   margin-left: 15px;
 }
 
+.pall20 {
+  padding: 20px;
+}
+
+.flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
 .left {
   text-align: left;
 }

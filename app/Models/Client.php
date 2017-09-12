@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Iatstuti\Database\Support\CascadeSoftDeletes;
 
 class Client extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, CascadeSoftDeletes;
 
     /**
      * The database table used by the model.
@@ -30,6 +31,10 @@ class Client extends Model
         'contactgender',
         'contactemail',
         'contactphone',
+    ];
+
+    protected $cascadeDeletes = [
+        'invoices',
     ];
 
     public function invoices()
