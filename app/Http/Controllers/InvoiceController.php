@@ -70,7 +70,7 @@ class InvoiceController extends Controller
 
         flash('Invoice Created', 'success');
 
-        return redirect()->back();
+        return redirect()->route('invoice.index');
     }
 
     /**
