@@ -46,7 +46,7 @@ class ClientController extends Controller
 
         flash('Client Created', 'success');
 
-        return redirect()->back();
+        return redirect()->route('client.index');
     }
 
     /**
