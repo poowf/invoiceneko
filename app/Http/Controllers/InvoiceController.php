@@ -36,7 +36,14 @@ class InvoiceController extends Controller
         $invoicenumber = $company->invoices()->count();
         $invoicenumber = sprintf('%06d', ++$invoicenumber);
 
-        return view('pages.invoice.create', compact('company', 'invoicenumber', 'clients'));
+        if ($company->clients->count() == 0)
+        {
+            return view('pages.invoice.noclients');
+        }
+        else
+        {
+            return view('pages.invoice.create', compact('company', 'invoicenumber', 'clients'));
+        }
     }
 
     /**
