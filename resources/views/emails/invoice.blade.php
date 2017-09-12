@@ -9,7 +9,7 @@
 <div class="invoice" style="background-color: #ffffff; padding: 50px 50px 20px; color: #8c8c8c;">
     <div class="row invoice-header" style="position: relative; margin-bottom: 160px;">
         <div class="col-xs-7" style="position: absolute; left: 0; padding: 0 15px;">
-            <div class="invoice-logo" style="height: 110px; width: 210px; background-image: url('{{ asset('/assets/img/top_logo.png') }}'); background-repeat: no-repeat; background-position: 0;"></div>
+            <div class="invoice-logo" style="height: 110px; min-width: 210px; background-image: url('{{ asset($invoice->company->logo) }}'); background-repeat: no-repeat; background-position: 0;"></div>
         </div>
         <div class="col-xs-5 invoice-order" style="position: absolute; right: 0; padding: 0 15px; text-align: right;">
             <span class="invoice-id" style="display: block; font-size: 30px; line-height: 30px; margin-bottom: 10px;">Invoice #{{ $invoice->invoiceid }}</span>
@@ -30,9 +30,9 @@
             <img src="{{ asset('/assets/img/lefttoright.png') }}" width="80" height="80" />
         </div>
         <div class="col-xs-5 invoice-person" style="position: absolute; right: 0; padding: 0 15px; text-align: left;">
-            <span class="name" style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">Poowf Labs LLP</span>
-            <span style="font-size: 18px; line-height: 26px; display: block;">Zane J. Chua</span>
-            <span style="font-size: 18px; line-height: 26px; display: block;">zane@poowf.com</span>
+            <span class="name" style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">{{ $invoice->company->name or 'No Company Name' }}</span>
+            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->owner->name or 'No Company Owner Name' }}</span>
+            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->owner->email or 'No Company Owner Email' }}</span>
         </div>
     </div>
     <div class="row">
@@ -114,21 +114,21 @@
     </div>
     <div class="row invoice-company-info" style="margin-bottom: 70px;">
         <div class="col-sm-6 col-md-2 logo" style="position: relative; display: block; width: 100%;  text-align: center;">
-            <img src="{{ asset('/assets/img/small_logo.png') }}" alt="Logo-symbol" width="100" height="100" style="border: 0; vertical-align: middle;">
+            <img src="{{ asset($invoice->company->smlogo) }}" alt="Logo-symbol" width="100" height="100" style="border: 0; vertical-align: middle;">
         </div>
         <div style="margin-top: 20px;">
             <div class="col-sm-6 col-md-4 summary" style="display: inline-block; width: 29.5%; padding: 0 15px; line-height: 16px; text-align: center;">
-                <span class="title" style="color: #8c8c8c; font-size: 14px; line-height: 21px; font-weight: 700;">Poowf Labs LLP</span>
-                <p style="font-size: inherit; margin: 0 0 15px; line-height: 16px;">Blowing up circuit boards everyday</p>
+                <span class="title" style="color: #8c8c8c; font-size: 14px; line-height: 21px; font-weight: 700;">{{ $invoice->company->name or 'No Company Name' }}</span>
+                <p style="font-size: inherit; margin: 0 0 15px; line-height: 16px;"></p>
             </div>
             <div class="col-sm-6 col-md-3 phone" style="display: inline-block; width: 29.5%; padding: 0 15px; border-left: 2px solid #e0e0e0; text-align: center;">
                 <ul class="list-unstyled" style="margin-top: 0; margin-bottom: 9px; line-height: 20px; padding-left: 0; list-style: none;">
-                    <li>+65 8511 8687</li>
+                    <li> {{ $invoice->company->phone or 'No Phone Number' }}</li>
                 </ul>
             </div>
             <div class="col-sm-6 col-md-3 email" style="display: inline-block; width: 29.5%; padding: 0 15px; border-left: 2px solid #e0e0e0; text-align: center;">
                 <ul class="list-unstyled" style="margin-top: 0; margin-bottom: 9px; line-height: 20px; padding-left: 0; list-style: none;">
-                    <li>hello@poowf.com</li>
+                    <li>{{ $invoice->company->email or 'No Email' }}</li>
                 </ul>
             </div>
         </div>

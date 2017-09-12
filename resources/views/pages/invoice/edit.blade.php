@@ -19,19 +19,19 @@
                     <div class="card-panel">
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="invoiceid" name="invoiceid" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ $invoice->invoiceid }}" disabled>
+                                <input id="invoiceid" name="invoiceid" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ $invoice->invoiceid or '' }}" disabled>
                                 <label for="invoiceid" class="label-validation">Invoice ID</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="date" name="date" class="datepicker" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ $invoice->date  }}">
+                                <input id="date" name="date" class="datepicker" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ $invoice->date or Carbon\Carbon::now()->toDateTimeString()  }}">
                                 <label for="date" class="label-validation">Date</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="netdays" name="netdays" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ $invoice->netdays }}">
+                                <input id="netdays" name="netdays" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ $invoice->netdays or '' }}">
                                 <label for="netdays" class="label-validation">Net Days</label>
                             </div>
                         </div>
@@ -40,7 +40,7 @@
                                 <select id="client_id" name="client_id" data-parsley-required="true" data-parsley-trigger="change" disabled>
                                     <option disabled="" selected="selected" value="">Pick a Client</option>
                                     @foreach($clients as $client)
-                                        <option value="{{ $client->id }}" @if($invoice->client_id == $client->id) selected @endif>{{ $client->companyname }}</option>
+                                        <option value="{{ $client->id }}" @if($invoice->client_id == $client->id) selected @endif>{{ $client->companyname or '' }}</option>
                                     @endforeach
                                 </select>
                                 <label for="client_id" class="label-validation">Client</label>
@@ -60,19 +60,19 @@
                             <div id="invoice_item_{{ $key }}" class="card-panel">
                                 <div class="row">
                                     <div class="input-field col s8">
-                                        <input id="item_name" name="item_name[]" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ $item->name }}">
+                                        <input id="item_name" name="item_name[]" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ $item->name or '' }}">
                                         <label for="item_name" class="label-validation">Name</label>
                                     </div>
                                     <div class="input-field col s2">
-                                        <input id="item_quantity" name="item_quantity[]" type="number" data-parsley-required="true" data-parsley-trigger="change" value="{{ $item->quantity }}">
+                                        <input id="item_quantity" name="item_quantity[]" type="number" data-parsley-required="true" data-parsley-trigger="change" value="{{ $item->quantity or '' }}">
                                         <label for="item_quantity" class="label-validation">Quantity</label>
                                     </div>
                                     <div class="input-field col s2">
-                                        <input id="item_price" name="item_price[]" type="number" data-parsley-required="true" data-parsley-trigger="change" value="{{ $item->price }}">
+                                        <input id="item_price" name="item_price[]" type="number" data-parsley-required="true" data-parsley-trigger="change" value="{{ $item->price or '' }}">
                                         <label for="item_price" class="label-validation">Price</label>
                                     </div>
                                     <div class="input-field col s12">
-                                        <textarea id="item_description" name="item_description[]" class="materialize-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Description">{{ $item->description }}</textarea>
+                                        <textarea id="item_description" name="item_description[]" class="materialize-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Description">{{ $item->description or '' }}</textarea>
                                         <label for="item_description" class="label-validation">Description</label>
                                     </div>
                                 </div>
