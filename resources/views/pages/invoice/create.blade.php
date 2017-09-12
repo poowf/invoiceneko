@@ -24,14 +24,12 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="input-field col s12">
-                            <input id="date" name="date" class="datepicker" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('date') }}">
+                        <div class="input-field col s12 m6">
+                            <input id="date" name="date" class="datepicker" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('date') }}" placeholder="Date">
                             <label for="date" class="label-validation">Date</label>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input id="netdays" name="netdays" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('netdays') }}">
+                        <div class="input-field col s12 m6">
+                            <input id="netdays" name="netdays" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('netdays') }}" placeholder="Net Days">
                             <label for="netdays" class="label-validation">Net Days</label>
                         </div>
                     </div>
@@ -59,15 +57,15 @@
                     <div id="invoice_item_0" class="card-panel">
                         <div class="row">
                             <div class="input-field col s8">
-                                <input id="item_name" name="item_name[]" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('item_name') }}">
+                                <input id="item_name" name="item_name[]" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('item_name') }}" placeholder="Item Name">
                                 <label for="item_name" class="label-validation">Name</label>
                             </div>
                             <div class="input-field col s2">
-                                <input id="item_quantity" name="item_quantity[]" type="number" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('item_quantity') }}">
+                                <input id="item_quantity" name="item_quantity[]" type="number" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('item_quantity') }}" placeholder="Item Quantity">
                                 <label for="item_quantity" class="label-validation">Quantity</label>
                             </div>
                             <div class="input-field col s2">
-                                <input id="item_price" name="item_price[]" type="number" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('item_price') }}">
+                                <input id="item_price" name="item_price[]" type="number" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('item_price') }}" placeholder="Item Price">
                                 <label for="item_price" class="label-validation">Price</label>
                             </div>
                             <div class="input-field col s12">

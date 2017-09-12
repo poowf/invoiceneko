@@ -18,13 +18,13 @@
                     <form id="signin" method="post">
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="username" name="username" type="text" data-parsley-required="true" data-parsley-trigger="change">
-                                <label for="username" class="label-validation">Email</label>
+                                <input id="username" name="username" type="text" data-parsley-required="true" data-parsley-trigger="change" placeholder="Username/Email">
+                                <label for="username" class="label-validation">Username/Email</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="password" name="password" type="password" data-parsley-required="true" data-parsley-trigger="change">
+                                <input id="password" name="password" type="password" data-parsley-required="true" data-parsley-trigger="change" placeholder="Password">
                                 <label for="password" class="label-validation">Password</label>
                             </div>
                         </div>

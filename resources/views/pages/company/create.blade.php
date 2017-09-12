@@ -19,25 +19,25 @@
                     <div class="card-panel">
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="name" name="name" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ old('name') }}">
+                                <input id="name" name="name" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ old('name') }}" placeholder="Company Name">
                                 <label for="name" class="label-validation">Company Name</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="slug" name="slug" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('slug') }}">
+                                <input id="slug" name="slug" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('slug') }}" placeholder="Company Slug">
                                 <label for="slug" class="label-validation">Company Slug</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="crn" name="crn" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="6">
+                                <input id="crn" name="crn" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ old('crn') }}" placeholder="Company Registration Number">
                                 <label for="crn" class="label-validation">Company Registration Number</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="email" name="email" type="email" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('email') }}">
+                                <input id="email" name="email" type="email" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('email') }}" placeholder="Company Email">
                                 <label for="email" class="label-validation">Company Email</label>
                             </div>
                         </div>
