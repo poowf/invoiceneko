@@ -19,19 +19,19 @@
                     <div class="card-panel">
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="amount" name="amount" type="number" data-parsley-required="true" data-parsley-trigger="change"  value="{{ old('amount') }}">
+                                <input id="amount" name="amount" type="number" data-parsley-required="true" data-parsley-trigger="change"  value="{{ old('amount') }}" placeholder="Payment Amount">
                                 <label for="amount" class="label-validation">Amount</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="receiveddate" name="receiveddate" class="datepicker" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ old('receiveddate') }}">
+                                <input id="receiveddate" name="receiveddate" class="datepicker" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ old('receiveddate') }}" placeholder="Payment Date">
                                 <label for="receiveddate" class="label-validation">Received Date</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="mode" name="mode" type="text" data-parsley-required="false" data-parsley-trigger="change" value="{{ old('mode') }}">
+                                <input id="mode" name="mode" type="text" data-parsley-required="false" data-parsley-trigger="change" value="{{ old('mode') }}" placeholder="Payment Mode">
                                 <label for="mode" class="label-validation">Payment Mode</label>
                             </div>
                         </div>
