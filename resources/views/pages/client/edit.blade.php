@@ -19,43 +19,43 @@
                     <div class="card-panel">
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="companyname" name="companyname" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ $client->companyname }}">
+                                <input id="companyname" name="companyname" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ $client->companyname or '' }}">
                                 <label for="companyname" class="label-validation">Company Name</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="address" name="address" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ $client->address }}">
+                                <input id="address" name="address" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ $client->address or '' }}">
                                 <label for="address" class="label-validation">Company Address</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="nickname" name="nickname" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ $client->nickname }}">
+                                <input id="nickname" name="nickname" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ $client->nickname or '' }}">
                                 <label for="nickname" class="label-validation">Company Nickname</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="crn" name="crn" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ $client->crn }}">
+                                <input id="crn" name="crn" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ $client->crn or '' }}">
                                 <label for="crn" class="label-validation">Company Registration Number</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="contactname" name="contactname" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ $client->contactname }}">
+                                <input id="contactname" name="contactname" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ $client->contactname or '' }}">
                                 <label for="contactname" class="label-validation">Contact Name</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="contactemail" name="contactemail" type="email" data-parsley-required="true" data-parsley-trigger="change" value="{{ $client->contactemail }}">
+                                <input id="contactemail" name="contactemail" type="email" data-parsley-required="true" data-parsley-trigger="change" value="{{ $client->contactemail or '' }}">
                                 <label for="contactemail" class="label-validation">Contact Email</label>
                             </div>
                         </div>
                         <div class="row pbtm20">
                             <div class="input-field col s12">
-                                <input id="fphone" name="fphone" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$" data-parsley-phone-format="#fphone" value="{{ $client->contactphone }}">
+                                <input id="fphone" name="fphone" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$" data-parsley-phone-format="#fphone" value="{{ $client->contactphone or '' }}">
                                 <input id="contactphone" name="contactphone" class="form-control" type="hidden" data-parsley-required="true" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$">
                                 <label for="fphone" class="manual-validation">Phone</label>
                             </div>

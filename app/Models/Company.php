@@ -26,6 +26,8 @@ class Company extends Model
         'name',
         'slug',
         'crn',
+        'phone',
+        'email',
     ];
 
     public function invoices()
@@ -36,5 +38,10 @@ class Company extends Model
     public function clients()
     {
         return $this->hasMany('App\Models\Client', 'company_id');
+    }
+
+    public function owner()
+    {
+        return $this->belongsTo('App\Models\User', 'user_id');
     }
 }
