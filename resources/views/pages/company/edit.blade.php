@@ -166,6 +166,37 @@
                 }
             });
 
+            $("#fphone").intlTelInput({
+                initialCountry: "sg",
+                utilsScript: "/assets/js/utils.js"
+            });
+
+            $( "#fphone" ).focusin(function() {
+                $(this).parent().siblings('.manual-validation').addClass('black-text');
+            });
+
+            $( "#fphone" ).focusout(function() {
+                $(this).parent().siblings('.manual-validation').removeClass('black-text');
+            });
+
+            window.Parsley
+                .addValidator('phoneFormat', {
+                    requirementType: 'string',
+                    validateString: function(value, elementid) {
+                        if($(elementid).intlTelInput("isValidNumber"))
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    },
+                    messages: {
+                        en: 'This is an invalid phone number format'
+                    }
+                });
+
             $('#edit-company').parsley({
                 successClass: 'valid',
                 errorClass: 'invalid',
