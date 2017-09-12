@@ -43,7 +43,7 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="contactname" name="contactname" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ old('contactname') }}">
+                                <input id="contactname" name="contactname" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ old('contactname') }}">
                                 <label for="contactname" class="label-validation">Contact Name</label>
                             </div>
                         </div>
