@@ -40,6 +40,11 @@ class Company extends Model
         return $this->hasMany('App\Models\Client', 'company_id');
     }
 
+    public function payments()
+    {
+        return $this->hasMany('App\Models\Payment', 'company_id');
+    }
+
     public function owner()
     {
         return $this->belongsTo('App\Models\User', 'user_id');
