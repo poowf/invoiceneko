@@ -242,6 +242,11 @@ dd::after {
 
 /* Modifications for Elements */
 
+.mini-container {
+  margin: 0 auto;
+  width: 90%;
+}
+
 .alt-badge {
   font-size: 1rem;
   line-height: inherit;

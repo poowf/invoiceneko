@@ -12,8 +12,9 @@ class Invoice extends Model
 {
     use SoftDeletes, CascadeSoftDeletes;
 
-    const STATUS_UNPAID = 0;
-    const STATUS_PAID = 1;
+    const STATUS_OPEN = 0;
+    const STATUS_CLOSED = 1;
+    const STATUS_VOID = 5;
 
     /**
      * The database table used by the model.
@@ -35,7 +36,7 @@ class Invoice extends Model
     ];
 
     protected $attributes = [
-        'status' => self::STATUS_UNPAID
+        'status' => self::STATUS_OPEN
     ];
 
     protected $cascadeDeletes = [
@@ -105,7 +106,7 @@ class Invoice extends Model
 
         return $query
             ->where('duedate', '<=', $now)
-            ->where('status', self::STATUS_UNPAID);
+            ->where('status', self::STATUS_OPEN);
     }
 
 }

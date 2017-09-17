@@ -24,10 +24,17 @@ class Client extends Model
      */
     protected $fillable = [
         'companyname',
+        'phone',
         'address',
+        'address_second',
+        'zipcode',
+        'country',
         'nickname',
         'crn',
-        'contactname',
+        'website',
+        'contactsalutation',
+        'contactfirstname',
+        'contactlastname',
         'contactgender',
         'contactemail',
         'contactphone',
@@ -40,5 +47,11 @@ class Client extends Model
     public function invoices()
     {
         return $this->hasMany('App\Models\Invoice', 'client_id');
+    }
+
+    public function scopeDuplicateCheck($query, $companyname)
+    {
+        return $query
+            ->where('companyname', $companyname);
     }
 }

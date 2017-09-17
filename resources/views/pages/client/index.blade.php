@@ -7,7 +7,7 @@
 @stop
 
 @section("content")
-    <div class="container">
+    <div class="mini-container">
         <div class="row">
             <div class="col s6">
                 <h3>Clients</h3>

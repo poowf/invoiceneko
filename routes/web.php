@@ -30,8 +30,6 @@ Route::post('/forgot', 'AuthController@postForgotPassword')->name('forgot');
 Route::get('/reset/{token}', 'AuthController@getResetPassword')->name('reset');
 Route::post('/reset/{token}', 'AuthController@postResetPassword')->name('reset');
 
-
-
 /* User */
 Route::get('/user/create', 'UserController@create')->name('user.create');
 Route::post('/user/create', 'UserController@store')->name('user.store');
@@ -41,8 +39,16 @@ Route::get('/company/create', 'CompanyController@create')->name('company.create'
 Route::post('/company/create', 'CompanyController@store')->name('company.store');
 
 
+
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/dashboard', 'MainController@dashboard')->name('dashboard');
+
+    /* Migration */
+    Route::get('/migration/', 'DataMigrationController@create')->name('migration.create');
+    Route::post('/migration/import/contact', 'DataMigrationController@storecontact')->name('migration.import.contact');
+    Route::post('/migration/import/invoice', 'DataMigrationController@storeinvoice')->name('migration.import.invoice');
+    Route::post('/migration/import/payment', 'DataMigrationController@storepayment')->name('migration.import.payment');
+
 
     /* User */
     Route::get('/user/edit', 'UserController@edit')->name('user.edit');

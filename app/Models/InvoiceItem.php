@@ -28,4 +28,15 @@ class InvoiceItem extends Model
         setlocale(LC_MONETARY, 'en_US.UTF-8');
         return money_format('%!.2n', $value);
     }
+
+
+    public function scopeDuplicateCheck($query, $name, $description, $price, $quantity, $invoiceid)
+    {
+        return $query
+            ->where('name', $name)
+            ->where('description', $description)
+            ->where('price', $price)
+            ->where('quantity', $quantity)
+            ->where('invoice_id', $invoiceid);
+    }
 }
