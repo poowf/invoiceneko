@@ -49,4 +49,15 @@ class Payment extends Model
     {
         return $this->belongsTo('App\Models\Client', 'client_id');
     }
+
+    public function scopeDuplicateCheck($query, $amount, $receiveddate, $mode, $invoiceid, $clientid, $companyid)
+    {
+        return $query
+            ->where('amount', $amount)
+            ->where('receiveddate', $receiveddate)
+            ->where('mode', $mode)
+            ->where('invoice_id', $invoiceid)
+            ->where('client_id', $clientid)
+            ->where('company_id', $companyid);
+    }
 }

@@ -7,7 +7,7 @@
 @stop
 
 @section("content")
-    <div class="container">
+    <div class="mini-container">
         <div class="row">
             <div class="col s6">
                 <h3>Invoices</h3>
@@ -27,7 +27,6 @@
                             <th>Amount</th>
                             <th>Due Date</th>
                             <th>Client Name</th>
-                            <th>Client Email</th>
                             <th>Client Phone</th>
                             <th>Status</th>
                             <th>Action</th>
@@ -40,8 +39,7 @@
                                 <td>{{ $invoice->invoiceid }}</td>
                                 <td>${{ $invoice->calculatetotal()  }}</td>
                                 <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y') }}</td>
-                                <td>{{ $invoice->client->contactname }}</td>
-                                <td>{{ $invoice->client->contactemail }}</td>
+                                <td>{{ $invoice->client->companyname }}</td>
                                 <td>{{ $invoice->client->contactphone }}</td>
                                 <td>
                                     @if ($invoice->status == 0)
