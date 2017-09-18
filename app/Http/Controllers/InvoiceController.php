@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
+use App\Models\OldInvoice;
+use App\Models\OldInvoiceItem;
+use App\Models\InvoiceHistory;
 use Illuminate\Http\Request;
 
+use Log;
 use PDF;
 use Carbon\Carbon;
 
@@ -56,8 +60,8 @@ class InvoiceController extends Controller
     {
         $invoice = new Invoice;
         $invoice->invoiceid = $request->input('invoiceid');
-        $duedate = Carbon::createFromFormat('j F, Y', $request->input('date'))->addDays($request->input('netdays'));
-        $invoice->date = Carbon::createFromFormat('j F, Y', $request->input('date'))->toDateTimeString();
+        $duedate = Carbon::createFromFormat('j F, Y', $request->input('date'))->addDays($request->input('netdays'))->startOfDay()->toDateTimeString();
+        $invoice->date = Carbon::createFromFormat('j F, Y', $request->input('date'))->startOfDay()->toDateTimeString();
         $invoice->netdays = $request->input('netdays');
         $invoice->duedate = $duedate;
         $invoice->client_id = $request->input('client_id');
@@ -89,10 +93,11 @@ class InvoiceController extends Controller
     public function show(Invoice $invoice)
     {
         $client = $invoice->client;
-        $invoice->date = Carbon::createFromFormat('Y-m-d H:i:s',$invoice->date)->format('j F, Y');
-        $invoice->duedate = Carbon::createFromFormat('Y-m-d H:i:s',$invoice->duedate)->format('j F, Y');
+        $invoice->date = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->date)->format('j F, Y');
+        $invoice->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y');
+        $histories = $invoice->history()->orderBy('created_at', 'desc')->get();
 
-        return view('pages.invoice.show', compact('invoice', 'client'));
+        return view('pages.invoice.show', compact('invoice', 'client', 'histories'));
     }
 
     /**
@@ -103,8 +108,8 @@ class InvoiceController extends Controller
      */
     public function printview(Invoice $invoice)
     {
-        $invoice->date = Carbon::createFromFormat('Y-m-d H:i:s',$invoice->date)->format('j F, Y');
-        $invoice->duedate = Carbon::createFromFormat('Y-m-d H:i:s',$invoice->duedate)->format('j F, Y');
+        $invoice->date = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->date)->format('j F, Y');
+        $invoice->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y');
 
         $pdf = PDF::loadView('pdf.invoice', compact('invoice'));
         return $pdf->inline(str_slug($invoice->invoiceid) . 'test.pdf');
@@ -118,8 +123,8 @@ class InvoiceController extends Controller
      */
     public function download(Invoice $invoice)
     {
-        $invoice->date = Carbon::createFromFormat('Y-m-d H:i:s',$invoice->date)->format('j F, Y');
-        $invoice->duedate = Carbon::createFromFormat('Y-m-d H:i:s',$invoice->duedate)->format('j F, Y');
+        $invoice->date = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->date)->format('j F, Y');
+        $invoice->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y');
 
         $pdf = PDF::loadView('pdf.invoice', compact('invoice'));
         return $pdf->download(str_slug($invoice->invoiceid) . '.pdf');
@@ -148,26 +153,56 @@ class InvoiceController extends Controller
      */
     public function update(Request $request, Invoice $invoice)
     {
-        $duedate = Carbon::createFromFormat('j F, Y', $request->input('date'))->addDays($request->input('netdays'));
-        $invoice->date = Carbon::createFromFormat('j F, Y', $request->input('date'))->toDateTimeString();
+        $duedate = Carbon::createFromFormat('j F, Y', $request->input('date'))->addDays($request->input('netdays'))->startOfDay()->toDateTimeString();
+        $invoice->date = Carbon::createFromFormat('j F, Y', $request->input('date'))->startOfDay()->toDateTimeString();
         $invoice->netdays = $request->input('netdays');
         $invoice->duedate = $duedate;
+
+        $ismodified = false;
+
+
+        foreach($request->input('item_name') as $key => $itemname)
+        {
+            $invoiceitem = InvoiceItem::find($request->input('item_id')[$key]);
+            $ismodified = $invoiceitem->modified($itemname, $request->input('item_description')[$key], $request->input('item_quantity')[$key], $request->input('item_price')[$key]);
+
+            if ($ismodified)
+            {
+                break;
+            }
+        }
+
+
+        if($invoice->isDirty() || $ismodified){
+            $originalinvoice = $invoice->getOriginal();
+            $originalitems = $invoice->items;
+
+            $oldinvoice = new OldInvoice;
+            $oldinvoice->fill($originalinvoice);
+            $oldinvoice->save();
+
+            $invoicehistory = new InvoiceHistory;
+            $invoicehistory->invoice_id = $originalinvoice["id"];
+            $invoicehistory->oldinvoice_id = $oldinvoice->id;
+            $invoicehistory->save();
+
+            foreach($originalitems as $item)
+            {
+                $oldinvoiceitem = new OldInvoiceItem;
+                $oldinvoiceitem->fill($item->toArray());
+                $oldinvoiceitem->oldinvoice_id = $oldinvoice->id;
+                $oldinvoiceitem->save();
+            }
+        }
+
         $invoice->save();
 
 
         //Need to rewrite this to check for id instead of force deleting.
-        $items = $invoice->items;
-
-        foreach($items as $item)
+        foreach($request->input('item_name') as $key => $itemname)
         {
-            $item->delete();
-        }
-
-
-        foreach($request->input('item_name') as $key => $item)
-        {
-            $invoiceitem = new InvoiceItem;
-            $invoiceitem->name = $item;
+            $invoiceitem = InvoiceItem::find($request->input('item_id')[$key]);
+            $invoiceitem->name = $itemname;
             $invoiceitem->description = $request->input('item_description')[$key];
             $invoiceitem->quantity   = $request->input('item_quantity')[$key];
             $invoiceitem->price = $request->input('item_price')[$key];
