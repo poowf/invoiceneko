@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Log;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
@@ -17,24 +18,45 @@ class InvoiceItem extends Model
      */
     protected $table = 'invoice_items';
 
-    /**
-     * Get the price.
-     *
-     * @param  string  $value
-     * @return string
-     */
-    public function getPriceAttribute($value)
+    public function moneyFormatPrice()
     {
         setlocale(LC_MONETARY, 'en_US.UTF-8');
-        return money_format('%!.2n', $value);
+        return money_format('%!.2n', $this->price);
+    }
+
+    public function modified($name, $description, $quantity, $price)
+    {
+        $ismodified = false;
+        $original = $this;
+        $price = number_format($price, 3, '.', '');
+
+        if($original->name != $name)
+        {
+            $ismodified = true;
+        }
+
+        if($original->description != $description)
+        {
+            $ismodified = true;
+        }
+
+        if($original->quantity != $quantity)
+        {
+            $ismodified = true;
+        }
+
+        if($original->price != $price)
+        {
+            $ismodified = true;
+        }
+
+        return $ismodified;
     }
 
 
-    public function scopeDuplicateCheck($query, $name, $description, $price, $quantity, $invoiceid)
+    public function scopeDuplicateCheck($query, $price, $quantity, $invoiceid)
     {
         return $query
-            ->where('name', $name)
-            ->where('description', $description)
             ->where('price', $price)
             ->where('quantity', $quantity)
             ->where('invoice_id', $invoiceid);

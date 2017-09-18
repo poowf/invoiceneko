@@ -58,19 +58,20 @@
                             <div id="invoice_item_{{ $key }}" class="card-panel">
                                 <div class="row">
                                     <div class="input-field col s8">
-                                        <input id="item_name" name="item_name[]" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ $item->name or '' }}" placeholder="Item Name">
+                                        <input name="item_id[]" type="hidden" data-parsley-required="true" data-parsley-trigger="change" value="{{ $item->id or '' }}">
+                                        <input name="item_name[]" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ $item->name or '' }}" placeholder="Item Name">
                                         <label for="item_name" class="label-validation">Name</label>
                                     </div>
                                     <div class="input-field col s2">
-                                        <input id="item_quantity" name="item_quantity[]" type="number" data-parsley-required="true" data-parsley-trigger="change" value="{{ $item->quantity or '' }}" placeholder="Item Quantity">
+                                        <input name="item_quantity[]" type="number" data-parsley-required="true" data-parsley-trigger="change" value="{{ $item->quantity or '' }}" placeholder="Item Quantity">
                                         <label for="item_quantity" class="label-validation">Quantity</label>
                                     </div>
                                     <div class="input-field col s2">
-                                        <input id="item_price" name="item_price[]" type="number" data-parsley-required="true" data-parsley-trigger="change" value="{{ $item->price or '' }}" placeholder="Item Price">
+                                        <input name="item_price[]" type="number" data-parsley-required="true" data-parsley-trigger="change" value="{{ $item->price or '' }}" placeholder="Item Price">
                                         <label for="item_price" class="label-validation">Price</label>
                                     </div>
                                     <div class="input-field col s12">
-                                        <textarea id="item_description" name="item_description[]" class="materialize-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Description">{{ $item->description or '' }}</textarea>
+                                        <textarea name="item_description[]" class="materialize-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Description">{{ $item->description or '' }}</textarea>
                                         <label for="item_description" class="label-validation">Description</label>
                                     </div>
                                 </div>

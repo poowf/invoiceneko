@@ -142,7 +142,7 @@ class DataMigrationController extends Controller
                         self::createInvoiceItem($row->item_name, $row->item_desc, $row->item_price, $row->quantity, $invoice->id);
                     }
                 }
-                catch(\Exception $e) {
+                catch(Exception $e) {
                     $errorscollection->push($row->invoice_number . ' could not be imported');
                     continue;
                     // All other exceptions
@@ -159,7 +159,9 @@ class DataMigrationController extends Controller
     public function createInvoiceItem($name, $description, $price, $quantity, $invoiceid)
     {
         $invoiceitem = InvoiceItem::query();
-        if (!$invoiceitem->duplicatecheck($name, $description, $price, $quantity, $invoiceid)->first())
+        $price = number_format($price, 3, '.', '');
+        $quantity = intval($quantity);
+        if (!$invoiceitem->duplicatecheck($price, $quantity, $invoiceid)->first())
         {
             $invitem = new InvoiceItem;
             $invitem->name = (is_null($name) ? "Item" : $name);
@@ -194,10 +196,12 @@ class DataMigrationController extends Controller
 
                     $payment = Payment::query();
 
-                    if (!$payment->duplicatecheck($row->amount, $row->date, $row->mode, $invoice->id, $invoice->client->id, $auth_companyid)->first())
+                    $amount = number_format($row->amount, 3, '.', '');
+
+                    if (!$payment->duplicatecheck($amount, $row->date, $invoice->id, $invoice->client->id, $auth_companyid)->first())
                     {
                         $payment = new Payment;
-                        $payment->amount = $row->amount;
+                        $payment->amount = $amount;
                         $payment->receiveddate = $row->date;
                         $payment->notes = $row->description . " " . $row->reference_number;
                         $payment->mode = $row->mode;

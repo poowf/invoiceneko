@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePaymentsTable extends Migration
+class CreateOldInvoicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,20 @@ class CreatePaymentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('old_invoices', function (Blueprint $table) {
             $table->increments('id');
-            $table->double('amount', 15, 3);
-            $table->dateTime('receiveddate');
-            $table->integer('invoice_id')->unsigned();
+            $table->string('invoiceid');
+            $table->dateTime('date');
+            $table->integer('netdays');
+            $table->dateTime('duedate');
+            $table->integer('status');
             $table->integer('client_id')->unsigned();
-            $table->foreign('invoice_id')
-                ->references('id')->on('invoices')
-                ->onDelete('cascade');
+            $table->integer('company_id')->unsigned();
             $table->foreign('client_id')
                 ->references('id')->on('clients')
+                ->onDelete('cascade');
+            $table->foreign('company_id')
+                ->references('id')->on('companies')
                 ->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
@@ -37,6 +40,6 @@ class CreatePaymentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('old_invoices');
     }
 }

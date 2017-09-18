@@ -6,9 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
 
-use Carbon\Carbon;
-
-class Invoice extends Model
+class OldInvoice extends Model
 {
     use SoftDeletes, CascadeSoftDeletes;
 
@@ -21,7 +19,7 @@ class Invoice extends Model
      *
      * @var string
      */
-    protected $table = 'invoices';
+    protected $table = 'old_invoices';
 
     /**
      * The attributes that are mass assignable.
@@ -32,7 +30,10 @@ class Invoice extends Model
         'invoiceid',
         'date',
         'duedate',
+        'status',
         'netdays',
+        'client_id',
+        'company_id',
     ];
 
     protected $attributes = [
@@ -40,9 +41,13 @@ class Invoice extends Model
     ];
 
     protected $cascadeDeletes = [
-        'items',
-        'payments',
+        'olditems'
     ];
+
+    public function items()
+    {
+        return $this->hasMany('App\Models\OldInvoiceItem', 'oldinvoice_id');
+    }
 
     public function client()
     {
@@ -54,19 +59,9 @@ class Invoice extends Model
         return $this->belongsTo('App\Models\Company', 'company_id');
     }
 
-    public function items()
-    {
-        return $this->hasMany('App\Models\InvoiceItem', 'invoice_id');
-    }
-
-    public function payments()
-    {
-        return $this->hasMany('App\Models\Payment', 'invoice_id');
-    }
-
     public function history()
     {
-        return $this->hasMany('App\Models\InvoiceHistory', 'invoice_id');
+        return $this->hasOne('App\Models\InvoiceHistory', 'oldinvoice_id');
     }
 
     public function calculatetotal()
@@ -84,34 +79,4 @@ class Invoice extends Model
         setlocale(LC_MONETARY, 'en_US.UTF-8');
         return money_format('%!.2n', $total);
     }
-
-    public function statusText()
-    {
-        $status = $this->status;
-
-        switch($status)
-        {
-            default:
-                $textstatus = "Unpaid";
-            break;
-            case 0:
-                $textstatus = "Unpaid";
-            break;
-            case 1:
-                $textstatus = "Paid";
-            break;
-        }
-
-        return $textstatus;
-    }
-
-    public function scopeOverdue($query)
-    {
-        $now = Carbon::now();
-
-        return $query
-            ->where('duedate', '<=', $now)
-            ->where('status', self::STATUS_OPEN);
-    }
-
 }

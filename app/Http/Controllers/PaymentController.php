@@ -43,7 +43,7 @@ class PaymentController extends Controller
     {
         $payment = new Payment;
         $payment->fill($request->all());
-        $payment->receiveddate = Carbon::createFromFormat('j F, Y', $request->input('receiveddate'))->toDateTimeString();
+        $payment->receiveddate = Carbon::createFromFormat('j F, Y', $request->input('receiveddate'))->startOfDay()->toDateTimeString();
         $payment->invoice_id = $invoice->id;
         $payment->client_id = $invoice->client->id;
         $payment->company_id = $invoice->company_id;
@@ -78,7 +78,7 @@ class PaymentController extends Controller
     {
         $payment = new Payment;
         $payment->fill($request->all());
-        $payment->receiveddate = Carbon::createFromFormat('j F, Y', $request->input('receiveddate'))->toDateTimeString();
+        $payment->receiveddate = Carbon::createFromFormat('j F, Y', $request->input('receiveddate'))->startOfDay()->toDateTimeString();
         $payment->invoice_id = $request->input('invoice_id');
         $payment->client_id = Invoice::find($request->input('invoice_id'))->client_id;
         $payment->company_id = Invoice::find($request->input('invoice_id'))->company_id;
@@ -121,7 +121,7 @@ class PaymentController extends Controller
     public function update(Request $request, Payment $payment)
     {
         $payment->fill($request->all());
-        $payment->receiveddate = Carbon::createFromFormat('j F, Y', $request->input('receiveddate'))->toDateTimeString();
+        $payment->receiveddate = Carbon::createFromFormat('j F, Y', $request->input('receiveddate'))->startOfDay()->toDateTimeString();
         $payment->save();
 
         flash('Payment Updated', 'success');
