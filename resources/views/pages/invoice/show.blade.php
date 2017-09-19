@@ -25,7 +25,59 @@
             </div>
         </div>
         <div class="row">
-            <div class="col s12 m6">
+            <div class="col s12 l6">
+                <h3>Details</h3>
+                <div class="card-panel">
+                    <dt>Company Name</dt>
+                    <dd>{{ $client->companyname }}</dd>
+                    <dt>Company Address</dt>
+                    <dd>{{ $client->address }}</dd>
+                    <dt>Company Nickname</dt>
+                    <dd>{{ $client->nickname or '' }}</dd>
+                    <dt>Company Registration Number</dt>
+                    <dd>{{ $client->crn }}
+                    <dt>Contact Name</dt>
+                    <dd>{{ $client->contactname or '-' }}</dd>
+                    <dt>Contact Email</dt>
+                    <dd>{{ $client->contactemail or '-' }}</dd>
+                    <dt>Contact Phone</dt>
+                    <dd>{{ $client->contactphone or '-' }}</dd>
+                    <dt>Status</dt>
+                    <dd>
+                        @if ($invoice->status == 0)
+                            <span class="alt-badge error">{{ $invoice->statustext() }}</span>
+                        @elseif ($invoice->status == 1)
+                            <span class="alt-badge success">{{ $invoice->statustext() }}</span>
+                        @endif
+                    </dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="col s12 l6">
+                <h3>Change History</h3>
+                <div class="card-panel flex">
+                    <table id="history-container" class="responsive-table striped">
+                        <thead>
+                        <tr>
+                            <th>Date of Invoice</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        @foreach($histories as $key => $history)
+                            <tr>
+                                <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $history->created_at)->format('j F, Y, h:i:s a') }}</td>
+                                <td>
+                                    <a href="{{ route('invoice.old.show', [ 'oldinvoice' => $history->oldinvoice_id ] ) }}"><i class="material-icons">open_in_new</i></a>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col s12 l8 offset-l2">
                 <h3>Invoice</h3>
                 <div class="invoice" style="background-color: #ffffff; padding: 50px 50px 20px; color: #8c8c8c;">
                     <div class="row invoice-header" style="position: relative; margin-bottom: 160px;">
@@ -169,58 +221,6 @@
                             --}}
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col s12 m6">
-                <h3>Details</h3>
-                <div class="card-panel">
-                    <dt>Company Name</dt>
-                    <dd>{{ $client->companyname }}</dd>
-                    <dt>Company Address</dt>
-                    <dd>{{ $client->address }}</dd>
-                    <dt>Company Nickname</dt>
-                    <dd>{{ $client->nickname or '' }}</dd>
-                    <dt>Company Registration Number</dt>
-                    <dd>{{ $client->crn }}
-                    <dt>Contact Name</dt>
-                    <dd>{{ $client->contactname or '-' }}</dd>
-                    <dt>Contact Email</dt>
-                    <dd>{{ $client->contactemail or '-' }}</dd>
-                    <dt>Contact Phone</dt>
-                    <dd>{{ $client->contactphone or '-' }}</dd>
-                    <dt>Status</dt>
-                    <dd>
-                        @if ($invoice->status == 0)
-                            <span class="alt-badge error">{{ $invoice->statustext() }}</span>
-                        @elseif ($invoice->status == 1)
-                            <span class="alt-badge success">{{ $invoice->statustext() }}</span>
-                        @endif
-                    </dd>
-                    </dl>
-                </div>
-            </div>
-            <div class="col s12 m6">
-                <h3>Change History</h3>
-                <div class="card-panel flex">
-                    <table id="history-container" class="responsive-table striped">
-                        <thead>
-                        <tr>
-                            <th>Date of Invoice</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-                        @foreach($histories as $key => $history)
-                            <tr>
-                                <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $history->created_at)->format('j F, Y, h:i:s a') }}</td>
-                                <td>
-                                    <a href="{{ route('invoice.old.show', [ 'oldinvoice' => $history->oldinvoice_id ] ) }}"><i class="material-icons">open_in_new</i></a>
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>
