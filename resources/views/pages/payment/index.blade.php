@@ -1,7 +1,7 @@
 @extends("layouts/default")
 
 @section("head")
-    <title>Invoice Plz</title>
+    <title>{{ config('app.name') }}</title>
     <style>
     </style>
 @stop
@@ -34,7 +34,7 @@
                         <tbody>
                         @foreach($payments as $key => $payment)
                             <tr>
-                                <td>{{ $payment->invoice->invoiceid }}</td>
+                                <td>{{ $payment->invoice->nice_invoice_id }}</td>
                                 <td>{{ $payment->client->companyname }}</td>
                                 <td>${{ $payment->amount }}</td>
                                 <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $payment->receiveddate)->format('j F, Y') }}</td>

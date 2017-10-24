@@ -19,8 +19,8 @@ class CreateOldInvoiceItemsTable extends Migration
             $table->text('description')->nullable();
             $table->integer('quantity');
             $table->double('price', 15, 3);
-            $table->integer('oldinvoice_id')->unsigned();
-            $table->foreign('oldinvoice_id')
+            $table->integer('old_invoice_id')->unsigned();
+            $table->foreign('old_invoice_id')
                 ->references('id')->on('old_invoices')
                 ->onDelete('cascade');
             $table->timestamps();

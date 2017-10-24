@@ -1,7 +1,7 @@
 @extends("layouts/default")
 
 @section("head")
-    <title>Invoice Plz</title>
+    <title>{{ config('app.name') }}</title>
     <style>
         .logo-display-container, .smlogo-display-container {
             display: inline-block;

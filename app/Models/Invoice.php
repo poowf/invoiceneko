@@ -29,7 +29,7 @@ class Invoice extends Model
      * @var array
      */
     protected $fillable = [
-        'invoiceid',
+        'nice_invoice_id',
         'date',
         'duedate',
         'netdays',
@@ -66,7 +66,12 @@ class Invoice extends Model
 
     public function history()
     {
-        return $this->hasMany('App\Models\InvoiceHistory', 'invoice_id');
+        return $this->hasMany(OldInvoice::class);
+    }
+
+    public function owns($model)
+    {
+        return $this->id == $model->invoice_id;
     }
 
     public function calculatetotal()

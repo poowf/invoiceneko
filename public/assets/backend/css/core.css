@@ -1,0 +1,196 @@
+:root .dropzone {
+    position: relative;
+    border: 2px dashed #c3c3c3;
+    padding: 70px 60px 80px;
+    background: transparent; }
+:root .dropzone .icon {
+    background-color: #e6e6e6;
+    border-radius: 50%;
+    display: inline-block;
+    height: 100px;
+    width: 100px;
+    margin-bottom: 15px;
+    padding: 20px;
+    text-align: center; }
+:root .dropzone .icon span {
+    font-size: 60px;
+    color: #696767; }
+:root .dropzone h2 {
+    margin-bottom: 30px;
+    font-size: 40px;
+    font-weight: 300; }
+:root .dropzone .note {
+    font-size: 16px; }
+
+:root .dropzone-mobile-trigger {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0; }
+:root .dropzone .dz-preview .dz-success-mark svg path {
+    fill: #4CAF50;
+}
+:root .dropzone .dz-preview .dz-error-mark svg  path {
+    fill: #F44336;
+}
+:root .select2-container--default .select2-selection--single, :root .select2-container--default .select2-selection--multiple {
+    border: 1px solid #d5d8de;
+    border-radius: 2px; }
+
+:root .select2-container--default .select2-selection--single {
+    height: 48px; }
+:root .select2-container--default .select2-selection--single .select2-selection__rendered {
+    padding: 0 15px;
+    height: 46px;
+    line-height: 46px;
+    font-size: 14px;
+    color: #404040; }
+:root .select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 46px;
+    width: 30px; }
+:root .select2-container--default .select2-selection--single .select2-selection__arrow b {
+    border: 0;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0; }
+:root .select2-container--default .select2-selection--single .select2-selection__arrow b:after {
+    content: "\F35D";
+    font-family: "Material Design Icons";
+    font-size: 25px;
+    font-weight: normal;
+    line-height: 46px;
+    color: #404040; }
+
+:root .select2-container--default .select2-selection--multiple {
+    min-height: 46px; }
+:root .select2-container--default .select2-selection--multiple .select2-selection__rendered {
+    padding: 4px 12px; }
+:root .select2-container--default .select2-selection--multiple .select2-selection__choice {
+    border-radius: 0;
+    background-color: #f2f2f2;
+    color: #5a5a5a;
+    border-width: 0;
+    padding: 4px 6px;
+    line-height: 18px; }
+:root .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    color: #666666;
+    margin-right: 3px; }
+:root .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
+    color: #4d4d4d; }
+:root .select2-container--default .select2-selection--multiple .select2-search--inline .select2-search__field {
+    line-height: 26px; }
+
+:root .select2-container--default:root .select2-container--default.select2-container--focus .select2-selection--multiple {
+    border: 1px solid #d5d8de; }
+
+:root .select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b:after {
+    content: "\f2f9"; }
+
+:root .select2-container--default .select2-results__group {
+    font-size: 12px;
+    color: #5a5a5a; }
+
+:root .select2-container--default .select2-results__option {
+    padding: 10px 6px; }
+
+:root .select2-container--default .select2-results__option[aria-selected="true"] {
+    background-color: #f7f7f7; }
+
+:root .select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #4285f4; }
+
+:root .select2-container--default .select2-dropdown {
+    border-width: 1px;
+    border-color: #d5d8de; }
+:root .select2-container--default .select2-dropdown--above {
+    border-radius: 2px 2px 0 0;
+    -webkit-box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.12); }
+:root .select2-container--default .select2-dropdown--below {
+    border-radius: 0 0 2px 2px;
+    -webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12); }
+
+:root .select2-container--default .select2-search--dropdown {
+    background-color: #f2f3f4;
+    border-bottom: 1px solid #d5d8de; }
+:root .select2-container--default .select2-search--dropdown .select2-search__field {
+    background-color: transparent;
+    border-width: 0;
+    outline: none; }
+
+.imageupload-display-container {
+    display: inline-block;
+}
+
+.imageupload-display-container img {
+    max-height: 150px;
+    max-width: 150px;
+    margin-top: 15px;
+
+    object-fit: cover;
+    object-position: center right;
+}
+
+.imageupload-display-container span.text-content {
+    width: 150px;
+    padding: 10px 0;
+    margin-top: 15px;
+    background: rgba(0,0,0,0.5);
+    color: white;
+    cursor: pointer;
+    display: table;
+    position: absolute;
+    top: 0;
+    opacity: 0;
+    -webkit-transition: opacity 500ms;
+    -moz-transition: opacity 500ms;
+    -o-transition: opacity 500ms;
+    transition: opacity 500ms;
+}
+
+.imageupload-display-container span.text-content span {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.imageupload-display-container:hover span.text-content {
+    opacity: 1;
+}
+
+dt {
+    float: left;
+    margin-right: 10%;
+    max-width: 40%;
+    font-weight: bold;
+}
+
+dd {
+    color: grey;
+    margin-left: 30%;
+    margin-bottom: 1.25em;
+}
+
+dd::after {
+    content: " ";
+    display: block;
+    clear: left;
+}
+
+img {
+    max-width: 100%;
+    max-height: 300px;
+}
+
+.designless-btn {
+    padding: 0;
+    background: transparent;
+    border-color: transparent
+}
+.inline {
+    display: inline;
+}

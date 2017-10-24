@@ -1,13 +1,13 @@
 @extends("layouts/default")
 
 @section("head")
-    <title>Invoice Plz</title>
+    <title>{{ config('app.name') }}</title>
     <style>
     </style>
 @stop
 
 @section("content")
-    <div class="container">
+    <div class="mini-container">
         <div class="row mtop30">
             <div class="col s12">
                 <h2>Dashboard</h2>
@@ -35,7 +35,7 @@
                         <tbody>
                         @foreach($overdueinvoices as $invoice)
                             <tr>
-                                <td>{{ $invoice->invoiceid }}</td>
+                                <td>{{ $invoice->nice_invoice_id }}</td>
                                 <td>{{ $invoice->client->companyname }}</td>
                                 <td>{{ $invoice->calculatetotal() }}</td>
                                 <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y') }}</td>

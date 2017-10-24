@@ -30,9 +30,21 @@ return [
     ],
 
     'stripe' => [
-        'model' => App\User::class,
+        'model' => App\Models\User::class,
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
+    ],
+
+    'facebook' => [
+        'client_id' => env('SOCIALITE_FACEBOOK_CLIENTID'),
+        'client_secret' => env('SOCIALITE_FACEBOOK_SECRET'),
+        'redirect' => env('SOCIALITE_FACEBOOK_REDIRECT'),
+    ],
+
+    'google' => [
+        'client_id' => env('SOCIALITE_GOOGLE_CLIENTID'),
+        'client_secret' => env('SOCIALITE_GOOGLE_SECRET'),
+        'redirect' => env('SOCIALITE_GOOGLE_REDIRECT'),
     ],
 
 ];

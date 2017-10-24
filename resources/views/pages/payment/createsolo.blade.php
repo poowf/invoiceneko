@@ -1,7 +1,7 @@
 @extends("layouts/default")
 
 @section("head")
-    <title>Invoice Plz</title>
+    <title>{{ config('app.name') }}</title>
     <style>
     </style>
 @stop
@@ -22,7 +22,7 @@
                                 <select id="invoice_id" name="invoice_id" class="test" data-parsley-required="true" data-parsley-trigger="change">
                                     <option disabled="" selected="selected" value="">Pick an Invoice</option>
                                     @foreach($invoices as $invoice)
-                                        <option value="{{ $invoice->id }}">{{ $invoice->invoiceid }}</option>
+                                        <option value="{{ $invoice->id }}">{{ $invoice->nice_invoice_id }}</option>
                                     @endforeach
                                 </select>
                                 <label for="invoice_id" class="label-validation">Invoice ID</label>

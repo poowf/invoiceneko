@@ -1,7 +1,7 @@
 @extends("layouts/default")
 
 @section("head")
-    <title>Invoice Plz</title>
+    <title>{{ config('app.name') }}</title>
     <style>
     </style>
 @stop
@@ -19,8 +19,8 @@
                     <div class="card-panel">
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="invoiceid" name="invoiceid" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ $invoice->invoiceid or '' }}" disabled>
-                                <label for="invoiceid" class="label-validation">Invoice ID</label>
+                                <input id="nice_invoice_id" name="nice_invoice_id" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ $invoice->nice_invoice_id or '' }}" disabled>
+                                <label for="nice_invoice_id" class="label-validation">Invoice ID</label>
                             </div>
                         </div>
                         <div class="row">
