@@ -1,0 +1,70 @@
+<?php
+
+namespace App\Policies;
+
+use App\Models\User;
+use App\App\Models\InvoiceItem;
+use Illuminate\Auth\Access\HandlesAuthorization;
+
+class InvoiceItemPolicy
+{
+    use HandlesAuthorization;
+
+    public function __construct()
+    {
+    }
+
+    public function before($user, $ability)
+    {
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
+    }
+
+    /**
+     * Determine whether the user can view the invoiceItem.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\App\Models\InvoiceItem  $invoiceItem
+     * @return mixed
+     */
+    public function view(User $user, InvoiceItem $invoiceItem)
+    {
+        //
+    }
+
+    /**
+     * Determine whether the user can create invoiceItems.
+     *
+     * @param  \App\Models\User  $user
+     * @return mixed
+     */
+    public function create(User $user)
+    {
+        //
+    }
+
+    /**
+     * Determine whether the user can update the invoiceItem.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\App\Models\InvoiceItem  $invoiceItem
+     * @return mixed
+     */
+    public function update(User $user, InvoiceItem $invoiceItem)
+    {
+        //
+    }
+
+    /**
+     * Determine whether the user can delete the invoiceItem.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\App\Models\InvoiceItem  $invoiceItem
+     * @return mixed
+     */
+    public function delete(User $user, InvoiceItem $invoiceItem)
+    {
+        //
+    }
+}

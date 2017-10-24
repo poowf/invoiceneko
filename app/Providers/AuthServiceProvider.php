@@ -13,7 +13,16 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Model' => 'App\Policies\ModelPolicy',
+        'App\Models\Client' => 'App\Policies\ClientPolicy',
+        'App\Models\Company' => 'App\Policies\CompanyPolicy',
+        'App\Models\InvoiceItem' => 'App\Policies\InvoiceItemPolicy',
+        'App\Models\Invoice' => 'App\Policies\InvoicePolicy',
+        'App\Models\OldInvoiceItem' => 'App\Policies\OldInvoiceItemPolicy',
+        'App\Models\OldInvoice' => 'App\Policies\OldInvoicePolicy',
+        'App\Models\Payment' => 'App\Policies\PaymentPolicy',
+        'App\Models\Permission' => 'App\Policies\PermissionPolicy',
+        'App\Models\Role' => 'App\Policies\RolePolicy',
+        'App\Models\User' => 'App\Policies\UserPolicy',
     ];
 
     /**
@@ -25,6 +34,6 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+
     }
 }

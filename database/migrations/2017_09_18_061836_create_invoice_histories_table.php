@@ -35,6 +35,6 @@ class CreateInvoiceHistoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('invoice_history');
+        Schema::dropIfExists('invoice_histories');
     }
 }

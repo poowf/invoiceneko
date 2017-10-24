@@ -27,7 +27,7 @@ class OldInvoice extends Model
      * @var array
      */
     protected $fillable = [
-        'invoiceid',
+        'nice_invoice_id',
         'date',
         'duedate',
         'status',
@@ -46,7 +46,7 @@ class OldInvoice extends Model
 
     public function items()
     {
-        return $this->hasMany('App\Models\OldInvoiceItem', 'oldinvoice_id');
+        return $this->hasMany('App\Models\OldInvoiceItem', 'old_invoice_id');
     }
 
     public function client()
@@ -59,9 +59,9 @@ class OldInvoice extends Model
         return $this->belongsTo('App\Models\Company', 'company_id');
     }
 
-    public function history()
+    public function current_invoice()
     {
-        return $this->hasOne('App\Models\InvoiceHistory', 'oldinvoice_id');
+        return $this->belongsTo('App\Models\Invoice', 'invoice_id');
     }
 
     public function calculatetotal()

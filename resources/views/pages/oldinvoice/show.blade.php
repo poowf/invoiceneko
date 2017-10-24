@@ -1,7 +1,7 @@
 @extends("layouts/default")
 
 @section("head")
-    <title>Invoice Plz</title>
+    <title>{{ config('app.name') }}</title>
     <style>
 
     </style>
@@ -11,7 +11,7 @@
     <div class="mini-container">
         <div class="row">
             <div class="col s6 mtop30">
-                <a class="btn btn-lg btn-default" href="{{ route('invoice.show', [ 'invoice' => $invoice->history->invoice_id] ) }}">
+                <a class="btn btn-lg btn-default" href="{{ route('invoice.show', [ 'invoice' => $invoice->invoice_id] ) }}">
                     Back
                 </a>
             </div>
@@ -33,7 +33,7 @@
                             <div class="invoice-logo" style="height: 110px; min-width: 210px; background-image: url('{{ $invoice->company->logo }}'); background-repeat: no-repeat; background-position: 0;"></div>
                         </div>
                         <div class="col-xs-5 invoice-order" style="position: absolute; right: 0; padding: 0 15px; text-align: left;">
-                            <span class="invoice-id" style="display: block; font-size: 30px; line-height: 30px; margin-bottom: 10px;">Invoice #{{ $invoice->invoiceid }}</span>
+                            <span class="invoice-id" style="display: block; font-size: 30px; line-height: 30px; margin-bottom: 10px;">Invoice #{{ $invoice->nice_invoice_id }}</span>
                             <span class="incoice-date" style="display: block; font-size: 18px; line-height: 30px;">Invoice Date: {{ $invoice->date }}</span>
                             <span class="incoice-duedate" style="display: block; font-size: 18px; line-height: 30px;">Payment Due: {{ $invoice->duedate }}</span>
                             <span class="incoice-netdays" style="display: block; font-size: 18px; line-height: 30px;">Payment Terms: Net {{ $invoice->netdays }}</span>

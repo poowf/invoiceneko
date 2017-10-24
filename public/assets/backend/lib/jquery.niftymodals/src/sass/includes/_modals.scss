@@ -1,0 +1,123 @@
+/* General styles for the modal */
+
+/* 
+Styles for the html/body for special modal where we want 3d effects
+Note that we need a container wrapping all content on the page for the 
+perspective effects (not including the modals and the overlay).
+*/
+
+//Body styles to allow verticall scrolling
+.#{$modal-prefix}-open {
+	overflow: hidden;
+}
+
+.#{$modal-prefix}-perspective,
+.#{$modal-prefix}-perspective body {
+	height: 100%;
+	overflow: hidden;
+}
+
+.#{$modal-prefix}-perspective body  {
+	background: #222;
+	-webkit-perspective: 600px;
+	-moz-perspective: 600px;
+	perspective: 600px;
+}
+
+.#{$modal-prefix}-container {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: $modal-zindex;
+	visibility: hidden;
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+
+.#{$modal-prefix}-show {
+	visibility: visible;
+	overflow-x: hidden;
+	overflow-y: auto;
+	z-index: $modal-zindex + 1;
+}
+
+.#{$modal-prefix}-overlay {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	visibility: hidden;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+	opacity: 0;
+	background: $modal-overlay-bg;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+.#{$modal-prefix}-show ~ .#{$modal-prefix}-overlay {
+	opacity: 1;
+	visibility: visible;
+}
+
+// Measure scrollbar width for padding body during modal show/hide
+.#{$modal-prefix}-scrollbar-measure {
+  position: absolute;
+  top: -9999px;
+  width: 50px;
+  height: 50px;
+  overflow: scroll;
+}
+
+/* Content styles */
+.#{$modal-prefix}-content {
+	color: #fff;
+	background: #e74c3c;
+	position: relative;
+	border-radius: 3px;
+	margin: 30px auto;
+	max-width: 630px;
+	min-width: 320px;
+}
+
+.#{$modal-prefix}-content h3 {
+	margin: 0;
+	padding: 0.4em;
+	text-align: center;
+	font-size: 2.4em;
+	font-weight: 300;
+	opacity: 0.8;
+	background: rgba(0,0,0,0.1);
+	border-radius: 3px 3px 0 0;
+}
+
+.#{$modal-prefix}-content > div {
+	padding: 15px 40px 30px;
+	margin: 0;
+	font-weight: 300;
+	font-size: 1.15em;
+}
+
+.#{$modal-prefix}-content > div p {
+	margin: 0;
+	padding: 10px 0;
+}
+
+.#{$modal-prefix}-content > div ul {
+	margin: 0;
+	padding: 0 0 30px 20px;
+}
+
+.#{$modal-prefix}-content > div ul li {
+	padding: 5px 0;
+}
+
+.#{$modal-prefix}-content button {
+	display: block;
+	margin: 0 auto;
+	font-size: 0.8em;
+}

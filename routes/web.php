@@ -84,8 +84,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/oldinvoice/{oldinvoice}/printview', 'OldInvoiceController@printview')->name('invoice.old.printview');
 
 
-    /* InvoiceHistory */
-    Route::get('/invoice/{invoice}/history', 'InvoiceHistoryController@show')->name('invoice.history.show');
+    /* Invoice History */
+    Route::get('/invoice/{invoice}/history', 'InvoiceController@history')->name('invoice.history.show');
 
 
     /* InvoiceItem */

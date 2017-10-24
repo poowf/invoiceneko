@@ -6,7 +6,6 @@ use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use App\Models\OldInvoice;
 use App\Models\OldInvoiceItem;
-use App\Models\InvoiceHistory;
 use Illuminate\Http\Request;
 
 use Log;
@@ -161,10 +160,10 @@ class InvoiceController extends Controller
         $ismodified = false;
 
 
-        foreach($request->input('item_name') as $key => $itemname)
+        foreach($request->input('item_id') as $key => $itemid)
         {
-            $invoiceitem = InvoiceItem::find($request->input('item_id')[$key]);
-            $ismodified = $invoiceitem->modified($itemname, $request->input('item_description')[$key], $request->input('item_quantity')[$key], $request->input('item_price')[$key]);
+            $invoiceitem = InvoiceItem::find($itemid);
+            $ismodified = $invoiceitem->modified($request->input('item_name')[$key], $request->input('item_description')[$key], $request->input('item_quantity')[$key], $request->input('item_price')[$key]);
 
             if ($ismodified)
             {
@@ -179,29 +178,30 @@ class InvoiceController extends Controller
 
             $oldinvoice = new OldInvoice;
             $oldinvoice->fill($originalinvoice);
-            $oldinvoice->save();
 
-            $invoicehistory = new InvoiceHistory;
-            $invoicehistory->invoice_id = $originalinvoice["id"];
-            $invoicehistory->oldinvoice_id = $oldinvoice->id;
-            $invoicehistory->save();
+            $invoice->history()->save($oldinvoice);
 
             foreach($originalitems as $item)
             {
                 $oldinvoiceitem = new OldInvoiceItem;
                 $oldinvoiceitem->fill($item->toArray());
-                $oldinvoiceitem->oldinvoice_id = $oldinvoice->id;
+                $oldinvoiceitem->old_invoice_id = $oldinvoice->id;
                 $oldinvoiceitem->save();
             }
         }
 
         $invoice->save();
 
-
-        //Need to rewrite this to check for id instead of force deleting.
         foreach($request->input('item_name') as $key => $itemname)
         {
-            $invoiceitem = InvoiceItem::find($request->input('item_id')[$key]);
+            if (isset($request->input('item_id')[$key]))
+            {
+                $invoiceitem = InvoiceItem::find($request->input('item_id')[$key]);
+            }
+            else
+            {
+                $invoiceitem = new InvoiceItem;
+            }
             $invoiceitem->name = $itemname;
             $invoiceitem->description = $request->input('item_description')[$key];
             $invoiceitem->quantity   = $request->input('item_quantity')[$key];
@@ -228,5 +228,15 @@ class InvoiceController extends Controller
         flash('Invoice Deleted', 'success');
 
         return redirect()->back();
+    }
+
+    public function history(Invoice $invoice)
+    {
+        $client = $invoice->client;
+        $invoice->date = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->date)->format('j F, Y');
+        $invoice->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y');
+        $histories = $invoice->history()->orderBy('created_at', 'desc')->get();
+
+        return view('pages.invoice.history', compact('invoice', 'client', 'histories'));
     }
 }

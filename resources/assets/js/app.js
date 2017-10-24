@@ -35,3 +35,4 @@ require('materialize-css');
 require('selectize');
 require('intl-tel-input');
 require('parsleyjs');
+require('slick-carousel');

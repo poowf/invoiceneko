@@ -1,9 +1,17 @@
 @extends("layouts/default")
 
 @section("head")
-    <title>Invoice Plz</title>
+    <title>{{ config('app.name') }}</title>
     <style>
+        :root .card.single-history {
+            overflow: hidden;
+            margin: 0px 20px;
+            padding: 35px;
+            text-align: center;
+        }
 
+        .single-history-wrapper {
+        }
     </style>
 @stop
 
@@ -27,7 +35,7 @@
         <div class="row">
             <div class="col s12 l6">
                 <h3>Details</h3>
-                <div class="card-panel">
+                <div id="details-panel" class="card-panel">
                     <dt>Company Name</dt>
                     <dd>{{ $client->companyname }}</dd>
                     <dt>Company Address</dt>
@@ -55,26 +63,15 @@
             </div>
             <div class="col s12 l6">
                 <h3>Change History</h3>
-                <div class="card-panel flex">
-                    <table id="history-container" class="responsive-table striped">
-                        <thead>
-                        <tr>
-                            <th>Date of Invoice</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-                        @foreach($histories as $key => $history)
-                            <tr>
-                                <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $history->created_at)->format('j F, Y, h:i:s a') }}</td>
-                                <td>
-                                    <a href="{{ route('invoice.old.show', [ 'oldinvoice' => $history->oldinvoice_id ] ) }}"><i class="material-icons">open_in_new</i></a>
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
+                <div id="change-history-container" class="change-history-container">
+                    @foreach($histories as $key => $history)
+                        <div class="single-history-wrapper">
+                            <div class="card single-history">
+                                <p>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $history->created_at)->format('j F, Y, h:i:s a') }}</p>
+                                <a href="{{ route('invoice.old.show', [ 'oldinvoice' => $history->id ] ) }}"><i class="material-icons">remove_red_eye</i></a>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
             <div class="col s12 l8 offset-l2">
@@ -85,7 +82,7 @@
                             <div class="invoice-logo" style="height: 110px; min-width: 210px; background-image: url('{{ $invoice->company->logo }}'); background-repeat: no-repeat; background-position: 0;"></div>
                         </div>
                         <div class="col-xs-5 invoice-order" style="position: absolute; right: 0; padding: 0 15px; text-align: left;">
-                            <span class="invoice-id" style="display: block; font-size: 30px; line-height: 30px; margin-bottom: 10px;">Invoice #{{ $invoice->invoiceid }}</span>
+                            <span class="invoice-id" style="display: block; font-size: 30px; line-height: 30px; margin-bottom: 10px;">Invoice #{{ $invoice->nice_invoice_id }}</span>
                             <span class="incoice-date" style="display: block; font-size: 18px; line-height: 30px;">Invoice Date: {{ $invoice->date }}</span>
                             <span class="incoice-duedate" style="display: block; font-size: 18px; line-height: 30px;">Payment Due: {{ $invoice->duedate }}</span>
                             <span class="incoice-netdays" style="display: block; font-size: 18px; line-height: 30px;">Payment Terms: Net {{ $invoice->netdays }}</span>
@@ -231,6 +228,48 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
+
+            $('#change-history-container').on('init', function(event, slick, direction){
+                var height = $('#details-panel').outerHeight();
+                console.log($(this).find('.single-history').css('height', height));
+                // left
+            });
+
+            $('#change-history-container').slick({
+                // normal options...
+                infinite: false,
+                arrows: false,
+                dots: true,
+                slidesToShow: 4,
+                adaptiveHeight: false,
+                responsive: [
+                    {
+                        breakpoint: 1024,
+                        settings: {
+                            slidesToShow: 3,
+                            slidesToScroll: 3,
+                            dots: true
+                        }
+                    },
+                    {
+                        breakpoint: 600,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 2
+                        }
+                    },
+                    {
+                        breakpoint: 480,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1
+                        }
+                    }
+                    // You can unslick at a given breakpoint now by adding:
+                    // settings: "unslick"
+                    // instead of a settings object
+                ]
+            });
         });
     </script>
 @stop

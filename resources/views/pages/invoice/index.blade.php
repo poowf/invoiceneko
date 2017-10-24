@@ -1,7 +1,7 @@
 @extends("layouts/default")
 
 @section("head")
-    <title>Invoice Plz</title>
+    <title>{{ config('app.name') }}</title>
     <style>
     </style>
 @stop
@@ -36,7 +36,7 @@
                         <tbody>
                         @foreach($invoices as $key => $invoice)
                             <tr>
-                                <td>{{ $invoice->invoiceid }}</td>
+                                <td>{{ $invoice->nice_invoice_id }}</td>
                                 <td>${{ $invoice->calculatetotal()  }}</td>
                                 <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y') }}</td>
                                 <td>{{ $invoice->client->companyname }}</td>
@@ -49,8 +49,9 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('invoice.show', [ 'invoice' => $invoice->id ] ) }}"><i class="material-icons">open_in_new</i></a>
+                                    <a href="{{ route('invoice.show', [ 'invoice' => $invoice->id ] ) }}"><i class="material-icons">remove_red_eye</i></a>
                                     <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}"><i class="material-icons">mode_edit</i></a>
+                                    <a href="{{ route('invoice.history.show', [ 'invoice' => $invoice->id ] ) }}"><i class="material-icons">history</i></a>
                                     <a href="#" data-id="{{ $invoice->id }}" class="invoice-delete-btn"><i class="material-icons">delete</i></a>
                                 </td>
                             </tr>

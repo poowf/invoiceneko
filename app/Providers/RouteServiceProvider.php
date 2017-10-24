@@ -23,14 +23,33 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
-        parent::boot();
-
+        Route::model('client', 'App\Models\Client');
+        Route::model('company', 'App\Models\Company');
         Route::model('invoice', 'App\Models\Invoice');
         Route::model('invoiceitem', 'App\Models\InvoiceItem');
         Route::model('oldinvoice', 'App\Models\OldInvoice');
-        Route::model('client', 'App\Models\Client');
+        Route::model('oldinvoiceitem', 'App\Models\OldInvoiceItem');
+        Route::model('payment', 'App\Models\Payment');
+        Route::model('permission', 'App\Models\Permission');
+        Route::model('role', 'App\Models\Role');
+        Route::model('user', 'App\Models\User');
+
+
+        Route::pattern('token', '([A-Za-z0-9]+)');
+        Route::pattern('client', '([A-Za-z0-9]+)');
+        Route::pattern('company', '([A-Za-z0-9]+)');
+        Route::pattern('invoice', '([A-Za-z0-9]+)');
+        Route::pattern('invoiceitem', '([A-Za-z0-9]+)');
+        Route::pattern('oldinvoice', '([A-Za-z0-9]+)');
+        Route::pattern('oldinvoiceitem', '([A-Za-z0-9]+)');
+        Route::pattern('payment', '([A-Za-z0-9]+)');
+        Route::pattern('permission', '([A-Za-z0-9]+)');
+        Route::pattern('role', '([A-Za-z0-9]+)');
+        Route::pattern('user', '([A-Za-z0-9]+)');
+
+        parent::boot();
+
+
     }
 
     /**
