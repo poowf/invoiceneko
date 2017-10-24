@@ -40,14 +40,20 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="password" name="password" type="password" data-parsley-required="false" data-parsley-trigger="change" data-parsley-minlength="6" placeholder="Password">
-                                <label for="password" class="label-validation">Password</label>
+                                <input id="password" name="password" type="password" data-parsley-required="true" data-parsley-trigger="change">
+                                <label for="password" class="label-validation">Existing Password</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="password_confirmation" name="password_confirmation" type="password" data-parsley-required="false" data-parsley-trigger="change" data-parsley-minlength="6" data-parsley-equalto="#password" placeholder="Confirm Password">
-                                <label for="password" class="label-validation">Password Confirmation</label>
+                                <input id="newpassword" name="newpassword" type="password" data-parsley-trigger="change">
+                                <label for="newpassword" class="label-validation">New Password</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="newpassword_confirmation" name="newpassword_confirmation" type="password" data-parsley-trigger="change" data-parsley-equalto="#newpassword">
+                                <label for="newpassword_confirmation" class="label-validation">New Password Confirmation</label>
                             </div>
                         </div>
                     </div>
