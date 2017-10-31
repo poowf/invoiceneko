@@ -13,7 +13,7 @@ class CreateClientRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,22 @@ class CreateClientRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'companyname' => 'required',
+            'phone' => '',
+            'block' => '',
+            'street' => '',
+            'unitnumber' => '',
+            'postalcode' => '',
+            'country' => '',
+            'nickname' => '',
+            'crn' => '',
+            'website' => '',
+            'contactsalutation' => 'required',
+            'contactfirstname' => 'required',
+            'contactlastname' => '',
+            'contactgender' => '',
+            'contactemail' => 'required',
+            'contactphone' => '',
         ];
     }
 }

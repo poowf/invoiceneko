@@ -15,9 +15,9 @@ class CreateCompanyAddressesTable extends Migration
     {
         Schema::create('company_addresses', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('block');
+            $table->string('block')->nullable();
             $table->string('street');
-            $table->string('unitnumber');
+            $table->string('unitnumber')->nullable();
             $table->string('postalcode');
             $table->integer('buildingtype');
             $table->integer('company_id')->unsigned()->nullable();

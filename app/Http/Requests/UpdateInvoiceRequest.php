@@ -13,7 +13,7 @@ class UpdateInvoiceRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class UpdateInvoiceRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'nice_invoice_id' => 'required',
+            'date' => 'required',
+            'duedate' => 'required',
+            'netdays' => 'required',
         ];
     }
 }

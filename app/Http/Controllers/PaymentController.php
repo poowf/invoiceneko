@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePaymentRequest;
+use App\Http\Requests\CreateSoloPaymentRequest;
+use App\Http\Requests\UpdatePaymentRequest;
+use App\Library\Poowf\Unicorn;
 use Illuminate\Http\Request;
 use App\Models\Payment;
 use App\Models\Invoice;
@@ -17,8 +21,7 @@ class PaymentController extends Controller
     public function index()
     {
         $company = auth()->user()->company;
-
-        $payments = $company->payments;
+        $payments = Unicorn::ifExists($company, 'payments');
 
         return view('pages.payment.index', compact('payments'));
     }
@@ -39,7 +42,7 @@ class PaymentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Invoice $invoice, Request $request)
+    public function store(CreatePaymentRequest $request, Invoice $invoice)
     {
         $payment = new Payment;
         $payment->fill($request->all());
@@ -74,7 +77,7 @@ class PaymentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function storesolo(Request $request)
+    public function storesolo(CreateSoloPaymentRequest $request)
     {
         $payment = new Payment;
         $payment->fill($request->all());
@@ -118,7 +121,7 @@ class PaymentController extends Controller
      * @param  \App\Models\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Payment $payment)
+    public function update(UpdatePaymentRequest $request, Payment $payment)
     {
         $payment->fill($request->all());
         $payment->receiveddate = Carbon::createFromFormat('j F, Y', $request->input('receiveddate'))->startOfDay()->toDateTimeString();

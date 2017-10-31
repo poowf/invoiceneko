@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Library\Poowf\Unicorn;
 use Illuminate\Http\Request;
 
 use App\Models\Invoice;
@@ -19,9 +20,14 @@ class MainController extends Controller
     {
         $user = auth()->user();
         $company = auth()->user()->company;
-        $overdueinvoices = $company->invoices()->overdue()->get();
+        $overdueinvoices = Unicorn::ifExists($company, 'invoices()->overdue()->get()');
 
         return view('pages.dashboard', compact('user', 'overdueinvoices'));
+    }
+
+    public function nocompany()
+    {
+        return view('pages.nocompany');
     }
 
     public function testMail(Request $request)

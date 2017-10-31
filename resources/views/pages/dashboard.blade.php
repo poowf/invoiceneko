@@ -33,17 +33,19 @@
                         </thead>
 
                         <tbody>
-                        @foreach($overdueinvoices as $invoice)
-                            <tr>
-                                <td>{{ $invoice->nice_invoice_id }}</td>
-                                <td>{{ $invoice->client->companyname }}</td>
-                                <td>{{ $invoice->calculatetotal() }}</td>
-                                <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y') }}</td>
-                                <td>
-                                    <a href="{{ route('invoice.show', [ 'invoice' => $invoice->id ])  }}" class="btn waves-effect waves-light">View</a>
-                                </td>
-                            </tr>
-                        @endforeach
+                            @if($overdueinvoices)
+                                @foreach($overdueinvoices as $invoice)
+                                    <tr>
+                                        <td>{{ $invoice->nice_invoice_id }}</td>
+                                        <td>{{ $invoice->client->companyname }}</td>
+                                        <td>{{ $invoice->calculatetotal() }}</td>
+                                        <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y') }}</td>
+                                        <td>
+                                            <a href="{{ route('invoice.show', [ 'invoice' => $invoice->id ])  }}" class="btn waves-effect waves-light">View</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateInvoiceRequest;
+use App\Http\Requests\UpdateInvoiceRequest;
+use App\Library\Poowf\Unicorn;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use App\Models\OldInvoice;
@@ -22,7 +25,7 @@ class InvoiceController extends Controller
     public function index()
     {
         $company = auth()->user()->company;
-        $invoices = $company->invoices;
+        $invoices = Unicorn::ifExists($company, 'invoices');
 
         return view('pages.invoice.index', compact('invoices'));
     }
@@ -35,17 +38,25 @@ class InvoiceController extends Controller
     public function create()
     {
         $company = auth()->user()->company;
-        $clients = $company->clients;
-        $invoicenumber = $company->invoices()->count();
-        $invoicenumber = sprintf('%06d', ++$invoicenumber);
+        $clients = Unicorn::ifExists($company, 'clients');
 
-        if ($company->clients->count() == 0)
+        if($company)
         {
-            return view('pages.invoice.noclients');
+            $invoicenumber = $company->invoices()->count();
+            $invoicenumber = sprintf('%06d', ++$invoicenumber);
+
+            if ($company->clients->count() == 0)
+            {
+                return view('pages.invoice.noclients');
+            }
+            else
+            {
+                return view('pages.invoice.create', compact('company', 'invoicenumber', 'clients'));
+            }
         }
         else
         {
-            return view('pages.invoice.create', compact('company', 'invoicenumber', 'clients'));
+            return view('pages.invoice.nocompany');
         }
     }
 
@@ -55,7 +66,7 @@ class InvoiceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateInvoiceRequest $request)
     {
         $invoice = new Invoice;
         $invoice->invoiceid = $request->input('invoiceid');
@@ -150,7 +161,7 @@ class InvoiceController extends Controller
      * @param  \App\Models\Invoice  $invoice
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Invoice $invoice)
+    public function update(UpdateInvoiceRequest $request, Invoice $invoice)
     {
         $duedate = Carbon::createFromFormat('j F, Y', $request->input('date'))->addDays($request->input('netdays'))->startOfDay()->toDateTimeString();
         $invoice->date = Carbon::createFromFormat('j F, Y', $request->input('date'))->startOfDay()->toDateTimeString();

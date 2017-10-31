@@ -19,6 +19,14 @@ class CompanyAddress extends Model
 
     public $timestamps = true;
 
+    protected $fillable = [
+        'block',
+        'street',
+        'unitnumber',
+        'postalcode',
+        'buildingtype',
+    ];
+
     const BUILDINGTYPE_RESIDENTIAL = 1;
     const BUILDINGTYPE_BUSINESS = 2;
 
