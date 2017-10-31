@@ -25,12 +25,6 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="slug" name="slug" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('slug') }}" placeholder="Company Slug">
-                                <label for="slug" class="label-validation">Company Slug</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
                                 <input id="crn" name="crn" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ old('crn') }}" placeholder="Company Registration Number">
                                 <label for="crn" class="label-validation">Company Registration Number</label>
                             </div>

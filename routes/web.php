@@ -58,6 +58,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/company/edit', 'CompanyController@edit')->name('company.edit');
     Route::patch('/company/edit', 'CompanyController@update')->name('company.update');
 
+    /* CompanyAddress */
+    Route::get('/company/addresss/edit', 'CompanyAddressController@edit')->name('company.address.edit');
+    Route::patch('/company/addresss/edit', 'CompanyAddressController@update')->name('company.address.update');
+
     /* Client */
     Route::get('/clients', 'ClientController@index')->name('client.index');
     Route::get('/client/create', 'ClientController@create')->name('client.create');
