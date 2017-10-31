@@ -32,8 +32,8 @@
                         <p>FOLLOW US ON</p>
                         <ul>
                             <a href="https://www.facebook.com/"><li><i class="mdi mdi-facebook" aria-hidden="true"></i></li></a>
-                            <a href="https://www.twitter.com/"><li><i class="fa fa-twitter" aria-hidden="true"></i></li></a>
-                            <a href="https://www.instagram.com/"><li><i class="fa fa-instagram" aria-hidden="true"></i></li></a>
+                            <a href="https://www.twitter.com/"><li><i class="mdi mdi-twitter" aria-hidden="true"></i></li></a>
+                            <a href="https://www.instagram.com/"><li><i class="mdi mdi-instagram" aria-hidden="true"></i></li></a>
                         </ul>
                         <p>© 2017 InvoicePlz</p>
                     </div>

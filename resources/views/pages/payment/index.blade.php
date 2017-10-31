@@ -32,19 +32,21 @@
                         </thead>
 
                         <tbody>
-                        @foreach($payments as $key => $payment)
-                            <tr>
-                                <td>{{ $payment->invoice->nice_invoice_id }}</td>
-                                <td>{{ $payment->client->companyname }}</td>
-                                <td>${{ $payment->amount }}</td>
-                                <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $payment->receiveddate)->format('j F, Y') }}</td>
-                                <td>
-                                    <a href="{{ route('payment.show', [ 'payment' => $payment ] ) }}"><i class="material-icons">open_in_new</i></a>
-                                    <a href="{{ route('payment.edit', [ 'payment' => $payment ] ) }}"><i class="material-icons">mode_edit</i></a>
-                                    <a href="#" data-id="{{ $payment->id }}" class="payment-delete-btn"><i class="material-icons">delete</i></a>
-                                </td>
-                            </tr>
-                        @endforeach
+                            @if($payments)
+                                @foreach($payments as $key => $payment)
+                                    <tr>
+                                        <td>{{ $payment->invoice->nice_invoice_id }}</td>
+                                        <td>{{ $payment->client->companyname }}</td>
+                                        <td>${{ $payment->amount }}</td>
+                                        <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $payment->receiveddate)->format('j F, Y') }}</td>
+                                        <td>
+                                            <a href="{{ route('payment.show', [ 'payment' => $payment ] ) }}"><i class="material-icons">open_in_new</i></a>
+                                            <a href="{{ route('payment.edit', [ 'payment' => $payment ] ) }}"><i class="material-icons">mode_edit</i></a>
+                                            <a href="#" data-id="{{ $payment->id }}" class="payment-delete-btn"><i class="material-icons">delete</i></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>

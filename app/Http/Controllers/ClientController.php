@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateClientRequest;
+use App\Http\Requests\UpdateClientRequest;
+use App\Library\Poowf\Unicorn;
 use Illuminate\Http\Request;
 use App\Models\Client;
 use App\Models\Company;
@@ -15,8 +18,8 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $company = Company::find(auth()->user()->company_id);
-        $clients = $company->clients;
+        $company = auth()->user()->company;
+        $clients = Unicorn::ifExists($company, 'clients');
 
         return view('pages.client.index', compact('clients'));
     }
@@ -37,7 +40,7 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateClientRequest $request)
     {
         $client = new Client;
         $client->fill($request->all());
@@ -79,7 +82,7 @@ class ClientController extends Controller
      * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Client $client)
+    public function update(UpdateClientRequest $request, Client $client)
     {
         $client->fill($request->all());
         $client->save();

@@ -27,6 +27,13 @@
 <script>
     "use strict";
     $(function() {
+        $(".button-collapse").sideNav();
+
+        $('#return-to-top').click(function() {      // When arrow is clicked
+            $('body,html').animate({
+                scrollTop : 0                       // Scroll to top of body
+            }, 800);
+        });
 
         $(document).on('click', '#toast-container .toast', function() {
             $(this).fadeOut(function(){
@@ -48,7 +55,14 @@
             @endforeach
         {{ session()->forget('flash_notification') }}
         @endif
-        $(".button-collapse").sideNav();
+
+        @if (count($errors) > 0)
+            @foreach($errors->toArray() as $key => $error)
+                $('#{{ $key }}').addClass('invalid');
+                $('#{{ $key }}').siblings('label').attr('data-error', "{!! $error[0] !!}");
+                Materialize.toast("{!! $error[0] !!}", 5000, 'error');
+            @endforeach
+        @endif
     });
 </script>
 </body>

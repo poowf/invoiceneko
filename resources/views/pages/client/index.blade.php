@@ -48,20 +48,22 @@
                         </thead>
 
                         <tbody>
-                        @foreach($clients as $key => $client)
-                            <tr class="single-client-row">
-                                <td>{{ $client->companyname }}</td>
-                                <td>{{ $client->crn }}</td>
-                                <td>{{ $client->contactname }}</td>
-                                <td>{{ $client->contactemail }}</td>
-                                <td>{{ $client->contactphone }}</td>
-                                <td>
-                                    <a href="{{ route('client.show', [ 'client' => $client ] ) }}"><i class="material-icons">remove_red_eye</i></a>
-                                    <a href="{{ route('client.edit', [ 'client' => $client ] ) }}"><i class="material-icons">mode_edit</i></a>
-                                    <a href="#" data-id="{{ $client->id }}" class="client-delete-btn"><i class="material-icons">delete</i></a>
-                                </td>
-                            </tr>
-                        @endforeach
+                            @if($clients)
+                                @foreach($clients as $key => $client)
+                                    <tr class="single-client-row">
+                                        <td>{{ $client->companyname }}</td>
+                                        <td>{{ $client->crn }}</td>
+                                        <td>{{ $client->contactname }}</td>
+                                        <td>{{ $client->contactemail }}</td>
+                                        <td>{{ $client->contactphone }}</td>
+                                        <td>
+                                            <a href="{{ route('client.show', [ 'client' => $client ] ) }}"><i class="material-icons">remove_red_eye</i></a>
+                                            <a href="{{ route('client.edit', [ 'client' => $client ] ) }}"><i class="material-icons">mode_edit</i></a>
+                                            <a href="#" data-id="{{ $client->id }}" class="client-delete-btn"><i class="material-icons">delete</i></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>

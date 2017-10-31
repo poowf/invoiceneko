@@ -1,7 +1,7 @@
 @extends("layouts/error")
 
 @section("head")
-    <title>Chipd</title>
+    <title>{{ config('app.name') }}</title>
     <style>
     </style>
 @stop
@@ -15,7 +15,7 @@
                     <div class="error-description">You need at least one client to create an invoice</div>
                     <div class="error-goback-text">Maybe you should create a client first?</div>
                     <div class="error-goback-button mbtm30"><a href="{{ route('client.create') }}" class="btn btn-xl btn-primary btn-link">Create a Client</a></div>
-                    <div class="footer">&copy; 2017 InvoicePlz</div>
+                    <div class="footer">&copy; 2017 {{ config('app.name') }}</div>
                 </div>
             </div>
         </div>

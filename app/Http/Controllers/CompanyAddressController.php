@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Library\Poowf\Unicorn;
+use App\Models\Company;
 use App\Models\CompanyAddress;
 use Illuminate\Http\Request;
+use App\Http\Requests\UpdateCompanyAddressRequest;
 
 class CompanyAddressController extends Controller
 {
@@ -52,13 +55,15 @@ class CompanyAddressController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\CompanyAddress  $companyAddress
      * @return \Illuminate\Http\Response
      */
     public function edit()
     {
-        $companyaddress = auth()->user()->ownedcompany->addresss;
-        return view('pages.company.address.edit', compact('companyaddress'));
+        $ownedcompany = auth()->user()->ownedcompany;
+
+        $companyaddress = Unicorn::ifExists($ownedcompany, 'address');
+
+        return view('pages.company.address.edit', compact('companyaddress', 'ownedcompany'));
     }
 
     /**
@@ -68,9 +73,20 @@ class CompanyAddressController extends Controller
      * @param  \App\Models\CompanyAddress  $companyAddress
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CompanyAddress $companyAddress)
+    public function update(UpdateCompanyAddressRequest $request)
     {
-        //
+        $ownedcompany = auth()->user()->ownedcompany;
+        $companyaddress = Unicorn::ifExists($ownedcompany, 'address');
+
+        if(!$companyaddress)
+        {
+           $companyaddress = new CompanyAddress;
+        }
+
+        $companyaddress->fill($request->all());
+        $companyaddress->save();
+
+        return redirect()->back();
     }
 
     /**
