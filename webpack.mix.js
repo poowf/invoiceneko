@@ -14,6 +14,7 @@ let path = require('path');
 
 mix
     .js('resources/assets/js/app.js', 'public/assets/js')
+    .js('node_modules/mark.js/dist/jquery.mark.min.js', 'public/assets/js')
     .sass('resources/assets/sass/core.scss', 'public/assets/css')
     .sass('resources/assets/sass/style.scss', 'public/assets/css')
     .less('node_modules/selectize/dist/less/selectize.less', 'public/assets/css')

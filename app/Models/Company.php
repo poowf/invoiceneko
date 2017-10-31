@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\UniqueSlug;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
 
 class Company extends Model
 {
-    use SoftDeletes, CascadeSoftDeletes;
+    use SoftDeletes, CascadeSoftDeletes, UniqueSlug;
 
     /**
      * The database table used by the model.
@@ -24,11 +25,20 @@ class Company extends Model
      */
     protected $fillable = [
         'name',
-        'slug',
         'crn',
         'phone',
         'email',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($company) {
+            $company->slug = str_slug($company->name);
+            static::generateSlug($company);
+        });
+    }
 
     public function invoices()
     {
@@ -48,5 +58,10 @@ class Company extends Model
     public function owner()
     {
         return $this->belongsTo('App\Models\User', 'user_id');
+    }
+
+    public function address()
+    {
+        return $this->hasOne('App\Models\CompanyAddress', 'company_id');
     }
 }
