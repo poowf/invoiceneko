@@ -18,43 +18,69 @@
                 <form id="edit-client" method="post" enctype="multipart/form-data">
                     <div class="card-panel">
                         <div class="row">
+                            <div class="col s12">
+                                <h5>Details</h5>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="input-field col s12 m6">
-                                <input id="companyname" name="companyname" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ $client->companyname or '' }}" placeholder="Client Company Name">
-                                <label for="companyname" class="label-validation">Company Name</label>
+                                <input id="companyname" name="companyname" type="text" data-parsley-required="true"  data-parsley-trigger="change" data-parsley-minlength="4" value="{{ $client->companyname or '' }}" placeholder="Client Company Name">
+                                <label for="companyname" class="label-validation">Client Company Name</label>
                             </div>
                             <div class="input-field col s12 m6">
-                                <input id="nickname" name="nickname" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ $client->nickname or '' }}" placeholder="Client Nickname">
-                                <label for="nickname" class="label-validation">Company Nickname</label>
+                                <input id="nickname" name="nickname" type="text" data-parsley-trigger="change" value="{{ $client->nickname or '' }}" placeholder="Client Nickname">
+                                <label for="nickname" class="label-validation">Client Nickname</label>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="input-field col s12">
-                                <input id="address" name="address" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ $client->address or '' }}" placeholder="Client Address">
-                                <label for="address" class="label-validation">Company Address</label>
+                            <div class="input-field col s12 m6">
+                                <input id="country" name="country" type="text" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ $client->country or '' }}" placeholder="Client Country">
+                                <label for="country" class="label-validation">Client Country</label>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <input id="cphone" name="cphone" type="text" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$" data-parsley-phone-format="#cphone" value="{{ $client->phone or '' }}">
+                                <input id="phone" name="phone" class="form-control" type="hidden" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$">
+                                <label for="cphone" class="manual-validation">Phone</label>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="input-field col s12">
-                                <input id="address_second" name="address_second" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ $client->address_second or '' }}" placeholder="Client Address Second">
-                                <label for="address_second" class="label-validation">Company Address Second</label>
+                            <div class="input-field col s6">
+                                <input id="crn" name="crn" type="text" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ $client->crn or '' }}" placeholder="Client Company Registration Number">
+                                <label for="crn" class="label-validation">Client Company Registration Number</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="website" name="website" type="text" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ $client->website or '' }}" placeholder="Client Website">
+                                <label for="website" class="label-validation">Client Website</label>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="input-field col s12">
-                                <input id="zipcode" name="zipcode" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ $client->zipcode or '' }}" placeholder="Client Zipcode">
-                                <label for="zipcode" class="label-validation">Company Zipcode</label>
+                            <div class="col s12">
+                                <h5>Address</h5>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="input-field col s12">
-                                <input id="country" name="country" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ $client->country or '' }}" placeholder="Client Country">
-                                <label for="country" class="label-validation">Company Country</label>
+                            <div class="input-field col s6">
+                                <input id="block" name="block" type="text" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ $client->block or '' }}" placeholder="Client Block">
+                                <label for="block" class="label-validation">Client Block</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="street" name="street" type="text" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ $client->street or '' }}" placeholder="Client Street">
+                                <label for="street" class="label-validation">Client Street</label>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="input-field col s12">
-                                <input id="crn" name="crn" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ $client->crn or '' }}" placeholder="Client Company Registration Number">
-                                <label for="crn" class="label-validation">Company Registration Number</label>
+                            <div class="input-field col s6">
+                                <input id="unitnumber" name="unitnumber" type="text" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ $client->unitnumber or '' }}" placeholder="Client Unit Number">
+                                <label for="unitnumber" class="label-validation">Client Unit Number</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="postalcode" name="postalcode" type="text" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ $client->postalcode or '' }}" placeholder="Client Postal Code">
+                                <label for="postalcode" class="label-validation">Client Postal Code</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <h5>Contact</h5>
                             </div>
                         </div>
                         <div class="row">
@@ -67,14 +93,14 @@
                                 <label for="contactfirstname" class="label-validation">Contact First Name</label>
                             </div>
                             <div class="input-field col s12 m5">
-                                <input id="contactlastname" name="contactlastname" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ $client->contactlastname or '' }}" placeholder="Client Contact Last Name">
+                                <input id="contactlastname" name="contactlastname" type="text" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ $client->contactlastname or '' }}" placeholder="Client Contact Last Name">
                                 <label for="contactlastname" class="label-validation">Contact Last Name</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12 m6">
-                                <input id="fphone" name="fphone" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$" data-parsley-phone-format="#fphone" value="{{ $client->contactphone or '' }}">
-                                <input id="contactphone" name="contactphone" class="form-control" type="hidden" data-parsley-required="true" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$">
+                                <input id="fphone" name="fphone" type="text" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$" data-parsley-phone-format="#fphone" value="{{ $client->contactphone or '' }}">
+                                <input id="contactphone" name="contactphone" class="form-control" type="hidden" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$">
                                 <label for="fphone" class="manual-validation">Phone</label>
                             </div>
                             <div class="input-field col s12 m6">
@@ -85,9 +111,8 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            {{ method_field('PATCH') }}
                             {{ csrf_field() }}
-                            <button class="btn waves-effect waves-light col s12 m2 offset-m10" type="submit" name="action">Update</button>
+                            <button class="btn waves-effect waves-light col s12 m2 offset-m10" type="submit" name="action">Create</button>
                         </div>
                     </div>
                 </form>
@@ -101,6 +126,11 @@
         "use strict";
         $(function() {
             $("#fphone").intlTelInput({
+                initialCountry: "sg",
+                utilsScript: "/assets/js/utils.js"
+            });
+
+            $("#cphone").intlTelInput({
                 initialCountry: "sg",
                 utilsScript: "/assets/js/utils.js"
             });
@@ -150,7 +180,7 @@
                     {
                         velem.$element.parent('').siblings('label').removeClass('invalid').addClass('valid');
                     }
-                    else if (velem.$element.is('#fphone'))
+                    else if (velem.$element.is('#fphone') || velem.$element.is('#cphone'))
                     {
                         velem.$element.parent('').siblings('label').removeClass('invalid').addClass('valid');
                     }
@@ -161,13 +191,14 @@
                         velem.$element.parent('').siblings('label').removeClass('valid').addClass('invalid');
                         velem.$element.parent('').siblings('label').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
                     }
-                    else if (velem.$element.is('#fphone'))
+                    else if (velem.$element.is('#fphone') || velem.$element.is('#cphone'))
                     {
                         velem.$element.parent('').siblings('label').removeClass('valid').addClass('invalid');
                         velem.$element.parent('').siblings('label').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
                     }
                 })
                 .on('form:submit', function(velem) {
+                    $("#phone").val($("#cphone").intlTelInput("getNumber"));
                     $("#contactphone").val($("#fphone").intlTelInput("getNumber"));
                 });
         });

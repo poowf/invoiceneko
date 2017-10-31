@@ -43,9 +43,8 @@ class DataMigrationController extends Controller
                         $client->phone = $row->phone;
                         $client->website = $row->website;
                         $client->nickname = $row->display_name;
-                        $client->address = $row->billing_address;
-                        $client->address_second = $row->billing_street2;
-                        $client->zipcode = $row->billing_code;
+                        $client->street = $row->billing_address . $row->billing_street2;
+                        $client->postalcode = $row->billing_code;
                         $client->country = $row->billing_country;
                         $client->crn = (is_null($row->customfield_value1) ? null : $row->customfield_value1);
                         $client->contactsalutation = $row->salutation;
