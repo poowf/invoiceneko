@@ -12,8 +12,10 @@ class Invoice extends Model
 {
     use SoftDeletes, CascadeSoftDeletes;
 
-    const STATUS_OPEN = 0;
-    const STATUS_CLOSED = 1;
+    const STATUS_DRAFT = 1;
+    const STATUS_OPEN = 2;
+    const STATUS_CLOSED = 3;
+    const STATUS_OVERDUE = 4;
     const STATUS_VOID = 5;
 
     /**
@@ -29,7 +31,6 @@ class Invoice extends Model
      * @var array
      */
     protected $fillable = [
-        'nice_invoice_id',
         'date',
         'duedate',
         'netdays',
@@ -43,6 +44,12 @@ class Invoice extends Model
         'items',
         'payments',
     ];
+
+    public function getTotalMoneyFormatAttribute()
+    {
+        setlocale(LC_MONETARY, 'en_US.UTF-8');
+        return money_format('%!.2n', $this->total);
+    }
 
     public function client()
     {
@@ -74,7 +81,7 @@ class Invoice extends Model
         return $this->id == $model->invoice_id;
     }
 
-    public function calculatetotal()
+    public function calculatetotal($moneyformat = true)
     {
         $items = $this->items;
 
@@ -86,8 +93,21 @@ class Invoice extends Model
 
             $total += $itemtotal;
         }
-        setlocale(LC_MONETARY, 'en_US.UTF-8');
-        return money_format('%!.2n', $total);
+        if ($moneyformat)
+        {
+            setlocale(LC_MONETARY, 'en_US.UTF-8');
+            return money_format('%!.2n', $total);
+        }
+        else
+        {
+            return $total;
+        }
+    }
+
+    public function setInvoiceTotal()
+    {
+        $this->total = self::calculatetotal(false);
+        $this->save();
     }
 
     public function statusText()
@@ -97,14 +117,20 @@ class Invoice extends Model
         switch($status)
         {
             default:
-                $textstatus = "Unpaid";
+                $textstatus = "Pending";
             break;
-            case 0:
-                $textstatus = "Unpaid";
-            break;
-            case 1:
+            case self::STATUS_DRAFT:
+                $textstatus = "Draft";
+                break;
+            case self::STATUS_OPEN:
+                $textstatus = "Pending";
+                break;
+            case self::STATUS_OVERDUE:
+                $textstatus = "Overdue";
+                break;
+            case self::STATUS_CLOSED:
                 $textstatus = "Paid";
-            break;
+                break;
         }
 
         return $textstatus;
@@ -116,7 +142,25 @@ class Invoice extends Model
 
         return $query
             ->where('duedate', '<=', $now)
+            ->whereIn('status', [self::STATUS_OPEN, self::STATUS_OVERDUE]);
+    }
+
+    public function scopeDraft($query)
+    {
+        return $query
+            ->where('status', self::STATUS_DRAFT);
+    }
+
+    public function scopePending($query)
+    {
+        return $query
             ->where('status', self::STATUS_OPEN);
+    }
+
+    public function scopePaid($query)
+    {
+        return $query
+            ->where('status', self::STATUS_CLOSED);
     }
 
 }

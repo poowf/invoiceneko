@@ -36,3 +36,4 @@ require('selectize');
 require('intl-tel-input');
 require('parsleyjs');
 require('slick-carousel');
+require('mark.js');

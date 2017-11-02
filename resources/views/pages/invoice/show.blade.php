@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col s12 l6">
+            <div class="col s12 l4">
                 <h3>Details</h3>
                 <div id="details-panel" class="card-panel">
                     <dt>Company Name</dt>
@@ -52,29 +52,43 @@
                     <dd>{{ $client->contactphone or '-' }}</dd>
                     <dt>Status</dt>
                     <dd>
-                        @if ($invoice->status == 0)
+                        @if ($invoice->status == App\Models\Invoice::STATUS_OVERDUE)
                             <span class="alt-badge error">{{ $invoice->statustext() }}</span>
-                        @elseif ($invoice->status == 1)
+                        @elseif ($invoice->status == App\Models\Invoice::STATUS_DRAFT)
+                            <span class="alt-badge">{{ $invoice->statustext() }}</span>
+                        @elseif ($invoice->status == App\Models\Invoice::STATUS_OPEN)
+                            <span class="alt-badge warning">{{ $invoice->statustext() }}</span>
+                        @elseif ($invoice->status == App\Models\Invoice::STATUS_CLOSED)
                             <span class="alt-badge success">{{ $invoice->statustext() }}</span>
                         @endif
                     </dd>
                     </dl>
                 </div>
-            </div>
-            <div class="col s12 l6">
                 <h3>Change History</h3>
                 <div id="change-history-container" class="change-history-container">
+                    <div class="single-history-wrapper">
+                        <div class="card single-history">
+                            <h6>Date/Time</h6>
+                            <p class="mtop20">{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->created_at)->format('j F, Y') }}</p>
+                            <p>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->created_at)->format('h:i:s a') }}</p>
+                            <span class="alt-badge info mtop20">Current Version</span>
+                            <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="btn btn-theme full-width mtop20">Edit</a>
+                        </div>
+                    </div>
                     @foreach($histories as $key => $history)
                         <div class="single-history-wrapper">
                             <div class="card single-history">
-                                <p>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $history->created_at)->format('j F, Y, h:i:s a') }}</p>
-                                <a href="{{ route('invoice.old.show', [ 'oldinvoice' => $history->id ] ) }}"><i class="material-icons">remove_red_eye</i></a>
+                                <h6>Date/Time</h6>
+                                <p class="mtop20">{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $history->created_at)->format('j F, Y') }}</p>
+                                <p>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $history->created_at)->format('h:i:s a') }}</p>
+                                <span class="alt-badge warning mtop20">Past Version</span>
+                                <a href="{{ route('invoice.old.show', [ 'oldinvoice' => $history->id ] ) }}" class="btn btn-theme full-width mtop20">View</a>
                             </div>
                         </div>
                     @endforeach
                 </div>
             </div>
-            <div class="col s12 l8 offset-l2">
+            <div class="col s12 l8">
                 <h3>Invoice</h3>
                 <div class="invoice" style="background-color: #ffffff; padding: 50px 50px 20px; color: #8c8c8c;">
                     <div class="row invoice-header" style="position: relative; margin-bottom: 160px;">
@@ -101,8 +115,14 @@
                         </div>
                         <div class="col-xs-5 invoice-person" style="position: absolute; right: 0; padding: 0 15px; text-align: left;">
                             <span class="name" style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">{{ $invoice->company->name or 'No Company Name' }}</span>
-                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->owner->name or 'No Company Owner Name' }}</span>
-                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->owner->email or 'No Company Owner Email' }}</span>
+                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->owner->full_name or 'No Company Owner Name' }}</span>
+                            @if($invoice->company->address)
+                                <span style="font-size: 18px; line-height: 26px; display: block;">@if($invoice->company->address->block){{ $invoice->company->address->block }} @endif {{ $invoice->company->address->street or 'No Street' }}</span>
+                                @if($invoice->company->address->unitnumber)<span style="font-size: 18px; line-height: 26px; display: block;">#{{ $invoice->company->address->unitnumber }}</span>@endif
+                                <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->address->postalcode or 'No Postal Code' }}</span>
+                            @else
+                                <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->owner->email or 'No Company Owner Email' }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="row">
@@ -110,58 +130,58 @@
                              style="position: relative; padding: 0 15px;">
                             <table class="invoice-details" style="border-collapse: collapse; border-spacing: 0; background-color: transparent; width: 100%; font-size: 16px;">
                                 <tbody>
-                                <tr>
-                                    <th style="padding: 0; padding-bottom: 8px; border-bottom: 1px solid #f0f0f0; text-align: left; width: 60%;">
-                                        Description
-                                    </th>
-                                    <th style="padding: 0; text-align: right; padding-bottom: 8px; border-bottom: 1px solid #f0f0f0; width: 17%;" class="hours">
-                                        Quantity
-                                    </th>
-                                    <th style="padding: 0; text-align: right; padding-bottom: 8px; border-bottom: 1px solid #f0f0f0; width: 15%;" class="amount">
-                                        Amount
-                                    </th>
-                                </tr>
-                                @foreach($invoice->items as $key => $item)
                                     <tr>
-                                        <td class="description" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0;">
-                                            <span style="display: block; font-weight: 700;">{{ $item->name }}</span>
-                                            {{ $item->description }}
-                                        </td>
-                                        <td class="quantity" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
-                                            {{ $item->quantity }}
+                                        <th style="padding: 0; padding-bottom: 8px; border-bottom: 1px solid #f0f0f0; text-align: left; width: 60%;">
+                                            Description
+                                        </th>
+                                        <th style="padding: 0; text-align: right; padding-bottom: 8px; border-bottom: 1px solid #f0f0f0; width: 17%;" class="hours">
+                                            Quantity
+                                        </th>
+                                        <th style="padding: 0; text-align: right; padding-bottom: 8px; border-bottom: 1px solid #f0f0f0; width: 15%;" class="amount">
+                                            Amount
+                                        </th>
+                                    </tr>
+                                    @foreach($invoice->items as $key => $item)
+                                        <tr>
+                                            <td class="description" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0;">
+                                                <span style="display: block; font-weight: 700;">{{ $item->name }}</span>
+                                                {{ $item->description }}
+                                            </td>
+                                            <td class="quantity" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
+                                                {{ $item->quantity }}
+                                            </td>
+                                            <td class="amount" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
+                                                ${{ $item->moneyformatprice() }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    <tr>
+                                        <td style="padding: 20px 0;"></td>
+                                        <td class="summary" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; color: #aaaaaa;">
+                                            Subtotal
                                         </td>
                                         <td class="amount" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
-                                            ${{ $item->moneyformatprice() }}
+                                            ${{ $invoice->calculatetotal() }}
                                         </td>
                                     </tr>
-                                @endforeach
-                                <tr>
-                                    <td style="padding: 20px 0;"></td>
-                                    <td class="summary" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; color: #aaaaaa;">
-                                        Subtotal
-                                    </td>
-                                    <td class="amount" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
-                                        ${{ $invoice->calculatetotal() }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 20px 0;"></td>
-                                    <td class="summary" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; color: #aaaaaa;">
-                                        Tax (0%)
-                                    </td>
-                                    <td class="amount" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
-                                        $0,00
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 20px 0;"></td>
-                                    <td class="summary total" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; color: #8c8c8c; font-weight: 700;">
-                                        Total
-                                    </td>
-                                    <td class="amount total-value" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right; font-size: 22px; color: #4da6a6;">
-                                        ${{ $invoice->calculatetotal() }}
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td style="padding: 20px 0;"></td>
+                                        <td class="summary" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; color: #aaaaaa;">
+                                            Tax (0%)
+                                        </td>
+                                        <td class="amount" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
+                                            $0,00
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 20px 0;"></td>
+                                        <td class="summary total" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; color: #8c8c8c; font-weight: 700;">
+                                            Total
+                                        </td>
+                                        <td class="amount total-value" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right; font-size: 22px; color: #4da6a6;">
+                                            ${{ $invoice->calculatetotal() }}
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -240,22 +260,40 @@
                 infinite: false,
                 arrows: false,
                 dots: true,
-                slidesToShow: 4,
+                slidesToShow: 3,
+                slidesToScroll: 3,
                 adaptiveHeight: false,
                 responsive: [
                     {
-                        breakpoint: 1024,
+                        breakpoint: 1900,
                         settings: {
-                            slidesToShow: 3,
-                            slidesToScroll: 3,
+                            slidesToShow: 2,
+                            slidesToScroll: 2,
                             dots: true
                         }
                     },
                     {
-                        breakpoint: 600,
+                        breakpoint: 1600,
                         settings: {
                             slidesToShow: 2,
-                            slidesToScroll: 2
+                            slidesToScroll: 2,
+                            dots: true
+                        }
+                    },
+                    {
+                        breakpoint: 1200,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1,
+                            dots: true
+                        }
+                    },
+                    {
+                        breakpoint: 993,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 2,
+                            dots: true
                         }
                     },
                     {

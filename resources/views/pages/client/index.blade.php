@@ -3,16 +3,32 @@
 @section("head")
     <title>{{ config('app.name') }}</title>
     <style>
-        mark {
-            background: #fff2c3;
-            color: inherit;
-            padding: 5px;
+        .single-client-card .card-content {
+            height: 130px;
+            overflow: hidden;
+        }
+
+        .single-client-card .card-content .card-title {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            -webkit-transition: 2s;
+            -moz-transition: 2s;
+            transition: 2s;
+            -webkit-transition-timing-function: linear;
+            -moz-transition-timing-function: linear;
+            transition-timing-function: linear;
+            max-height: 32px;
+        }
+
+        .single-client-card .card-content .card-title:hover {
+            margin-left: -50%;
         }
     </style>
 @stop
 
 @section("content")
-    <div class="mini-container">
+    <div class="full-width">
         <div class="row">
             <div class="col s6">
                 <h3>Clients</h3>
@@ -24,50 +40,51 @@
         </div>
         <div class="row">
             <div class="col s12">
-                <div class="card-panel">
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input id="search-input" name="search-input" type="text" placeholder="Search">
-                            <label for="search-input" class="label-validation">Search</label>
-                        </div>
+                <div class="card-panel" style="padding: 2px;">
+                    <input id="search-input" class="card-input" name="search-input" type="text" placeholder="Search">
+                </div>
+            </div>
+        </div>
+        <div id="client-container" class="">
+            @if($clients)
+                <div class="row">
+                    <div class="col s12">
+                        @foreach($clients as $key => $client)
+                            <div class="col s12 m4 l3 xl2 single-client-card">
+                                <div class="card">
+                                    <div class="card-image waves-effect waves-block waves-light">
+                                        <img class="activator" src="http://placehold.it/100x100">
+                                    </div>
+                                    <div class="card-content">
+                                        <span class="card-title activator grey-text text-darken-4">@if($client->nickname) {{ $client->nickname }} @else {{ $client->companyname }} @endif</span><i class="material-icons right">more_vert</i>
+                                        <p><a href="#">{{ $client->companyname }}</a></p>
+                                    </div>
+                                    <div class="card-reveal">
+                                        <span class="card-title grey-text text-darken-4">Company Details<i class="material-icons right">close</i></span>
+                                        <dl>
+                                            <dt>Name</dt>
+                                            <dd>{{ $client->companyname }}</dd>
+                                            <dt>Registration Number</dt>
+                                            <dd>{{ $client->crn }}</dd>
+                                            <dt>Contact Name</dt>
+                                            <dd>{{ $client->contactname }}</dd>
+                                            <dt>Contact Email</dt>
+                                            <dd>{{ $client->contactemail }}</dd>
+                                            <dt>Contact Phone</dt>
+                                            <dd>{{ $client->contactphone }}</dd>
+                                        </dl>
+                                        <span class="card-title grey-text text-darken-4 mtop20">Actions</span>
+                                        <a href="{{ route('client.show', [ 'client' => $client ] ) }}" class="btn btn-theme full-width mbth5">More Info</a>
+                                        <a href="{{ route('client.edit', [ 'client' => $client ] ) }}" class="btn btn-theme full-width mbth5">Edit</a>
+                                        <a href="#" data-id="{{ $client->id }}" class="btn btn-theme client-delete-btn full-width mbth5">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
-            </div>
-            <div class="col s12">
-                <div class="card-panel flex">
-                    <table id="client-container" class="responsive-table striped">
-                        <thead>
-                        <tr>
-                            <th>Company Name</th>
-                            <th>Registration Number</th>
-                            <th>Contact Name</th>
-                            <th>Contact Email</th>
-                            <th>Contact Phone</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
 
-                        <tbody>
-                            @if($clients)
-                                @foreach($clients as $key => $client)
-                                    <tr class="single-client-row">
-                                        <td>{{ $client->companyname }}</td>
-                                        <td>{{ $client->crn }}</td>
-                                        <td>{{ $client->contactname }}</td>
-                                        <td>{{ $client->contactemail }}</td>
-                                        <td>{{ $client->contactphone }}</td>
-                                        <td>
-                                            <a href="{{ route('client.show', [ 'client' => $client ] ) }}"><i class="material-icons">remove_red_eye</i></a>
-                                            <a href="{{ route('client.edit', [ 'client' => $client ] ) }}"><i class="material-icons">mode_edit</i></a>
-                                            <a href="#" data-id="{{ $client->id }}" class="client-delete-btn"><i class="material-icons">delete</i></a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @endif
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            @endif
         </div>
     </div>
 
@@ -102,7 +119,7 @@
             });
 
             var inputBox = $('#search-input');
-            var context = $('#client-container .single-client-row');
+            var context = $('#client-container .single-client-card');
 
             inputBox.on("input", function() {
                 var term = $(this).val();

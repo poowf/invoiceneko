@@ -20,7 +20,8 @@ class MainController extends Controller
     {
         $user = auth()->user();
         $company = auth()->user()->company;
-        $overdueinvoices = Unicorn::ifExists($company, 'invoices()->overdue()->get()');
+        $overdueinvoices = Unicorn::ifExists($company, 'invoices()->overdue()->take(10)->get()');
+        $overdueinvoices = $company->invoices()->overdue()->take(10)->get();
 
         return view('pages.dashboard', compact('user', 'overdueinvoices'));
     }

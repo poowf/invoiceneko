@@ -37,9 +37,9 @@
                         </div>
                         <div class="row pbtm20">
                             <div class="input-field col s12">
-                                <input id="fphone" name="fphone" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$" data-parsley-phone-format="#fphone" value="{{ old('phone') }}">
+                                <input id="cphone" name="cphone" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$" data-parsley-phone-format="#cphone" value="{{ old('phone') }}">
                                 <input id="phone" name="phone" class="form-control" type="hidden" data-parsley-required="true" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$">
-                                <label for="fphone" class="manual-validation">Company Phone</label>
+                                <label for="cphone" class="manual-validation">Company Phone</label>
                             </div>
                         </div>
                         <div class="row">
@@ -91,16 +91,16 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            $("#fphone").intlTelInput({
+            $("#cphone").intlTelInput({
                 initialCountry: "sg",
                 utilsScript: "/assets/js/utils.js"
             });
 
-            $( "#fphone" ).focusin(function() {
+            $( "#cphone" ).focusin(function() {
                 $(this).parent().siblings('.manual-validation').addClass('black-text');
             });
 
-            $( "#fphone" ).focusout(function() {
+            $( "#cphone" ).focusout(function() {
                 $(this).parent().siblings('.manual-validation').removeClass('black-text');
             });
 
@@ -137,20 +137,20 @@
 
                 })
                 .on('field:success', function(velem) {
-                    if (velem.$element.is('#fphone'))
+                    if (velem.$element.is('#cphone'))
                     {
                         velem.$element.parent('').siblings('label').removeClass('invalid').addClass('valid');
                     }
                 })
                 .on('field:error', function(velem) {
-                    if (velem.$element.is('#fphone'))
+                    if (velem.$element.is('#cphone'))
                     {
                         velem.$element.parent('').siblings('label').removeClass('valid').addClass('invalid');
                         velem.$element.parent('').siblings('label').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
                     }
                 })
                 .on('form:submit', function(velem) {
-                    $("#phone").val($("#fphone").intlTelInput("getNumber"));
+                    $("#phone").val($("#cphone").intlTelInput("getNumber"));
                 });
         });
     </script>

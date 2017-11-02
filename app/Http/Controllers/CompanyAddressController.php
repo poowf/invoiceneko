@@ -61,7 +61,7 @@ class CompanyAddressController extends Controller
     {
         $ownedcompany = auth()->user()->ownedcompany;
 
-        $companyaddress = Unicorn::ifExists($ownedcompany, 'address');
+        $companyaddress = $ownedcompany->address;
 
         return view('pages.company.address.edit', compact('companyaddress', 'ownedcompany'));
     }
@@ -76,7 +76,7 @@ class CompanyAddressController extends Controller
     public function update(UpdateCompanyAddressRequest $request)
     {
         $ownedcompany = auth()->user()->ownedcompany;
-        $companyaddress = Unicorn::ifExists($ownedcompany, 'address');
+        $companyaddress = $ownedcompany->address;
 
         if(!$companyaddress)
         {
@@ -84,7 +84,7 @@ class CompanyAddressController extends Controller
         }
 
         $companyaddress->fill($request->all());
-        $companyaddress->save();
+        $ownedcompany->address()->save($companyaddress);
 
         return redirect()->back();
     }
