@@ -26,8 +26,12 @@ class InvoiceController extends Controller
     {
         $company = auth()->user()->company;
         $invoices = Unicorn::ifExists($company, 'invoices');
+        $overdue = $company->invoices()->with(['client'])->overdue()->get();
+        $pending = $company->invoices()->with(['client'])->pending()->get();
+        $draft = $company->invoices()->with(['client'])->draft()->get();
+        $paid = $company->invoices()->with(['client'])->paid()->get();
 
-        return view('pages.invoice.index', compact('invoices'));
+        return view('pages.invoice.index', compact('overdue', 'pending', 'draft', 'paid'));
     }
 
     /**
@@ -69,7 +73,7 @@ class InvoiceController extends Controller
     public function store(CreateInvoiceRequest $request)
     {
         $invoice = new Invoice;
-        $invoice->invoiceid = $request->input('invoiceid');
+        $invoice->nice_invoice_id = $request->input('nice_invoice_id');
         $duedate = Carbon::createFromFormat('j F, Y', $request->input('date'))->addDays($request->input('netdays'))->startOfDay()->toDateTimeString();
         $invoice->date = Carbon::createFromFormat('j F, Y', $request->input('date'))->startOfDay()->toDateTimeString();
         $invoice->netdays = $request->input('netdays');
@@ -88,6 +92,8 @@ class InvoiceController extends Controller
             $invoiceitem->invoice_id = $invoice->id;
             $invoiceitem->save();
         }
+
+        $invoice->setInvoiceTotal();
 
         flash('Invoice Created', 'success');
 
@@ -122,7 +128,7 @@ class InvoiceController extends Controller
         $invoice->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y');
 
         $pdf = PDF::loadView('pdf.invoice', compact('invoice'));
-        return $pdf->inline(str_slug($invoice->invoiceid) . 'test.pdf');
+        return $pdf->inline(str_slug($invoice->nice_invoice_id) . 'test.pdf');
     }
 
     /**
@@ -137,7 +143,7 @@ class InvoiceController extends Controller
         $invoice->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y');
 
         $pdf = PDF::loadView('pdf.invoice', compact('invoice'));
-        return $pdf->download(str_slug($invoice->invoiceid) . '.pdf');
+        return $pdf->download(str_slug($invoice->nice_invoice_id) . '.pdf');
     }
 
     /**
@@ -220,6 +226,8 @@ class InvoiceController extends Controller
             $invoiceitem->invoice_id = $invoice->id;
             $invoiceitem->save();
         }
+
+        $invoice->setInvoiceTotal();
 
         flash('Invoice Updated', 'success');
 

@@ -52,7 +52,7 @@
                         </div>
                         <div class="col-xs-5 invoice-person" style="position: absolute; right: 0; padding: 0 15px; text-align: left;">
                             <span class="name" style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">{{ $invoice->company->name or 'No Company Name' }}</span>
-                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->owner->name or 'No Company Owner Name' }}</span>
+                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->owner->full_name or 'No Company Owner Name' }}</span>
                             <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->owner->email or 'No Company Owner Email' }}</span>
                         </div>
                     </div>

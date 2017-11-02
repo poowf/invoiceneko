@@ -10,9 +10,6 @@ body {
   color: #2C2C2C;
   font-family: "Roboto", sans-serif;
   font-weight: 400;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
   min-height: 100vh;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
@@ -28,6 +25,30 @@ h4,
 h5,
 h6 {
   font-weight: 700;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 2.5rem;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+h4 {
+  font-size: 1.8rem;
+}
+
+h5 {
+  font-size: 1.5rem;
+}
+
+h6 {
+  font-size: 1.3rem;
 }
 
 p {
@@ -73,8 +94,24 @@ dd::after {
   clear: left;
 }
 
+mark {
+  background: #fff2c3;
+  color: inherit;
+  padding: 2px;
+}
+
 .no-margin {
   margin: 0 !important;
+}
+
+.mbth5 {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.mbth10 {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .mbth20 {
@@ -271,6 +308,32 @@ dd::after {
   text-align: center;
   line-height: 22px;
   height: 22px;
+}
+
+:root:root .card-panel .card-input {
+  border: 0;
+  margin: 0;
+  padding: 5px;
+  padding-left: 20px;
+  font-size: 1.2em;
+}
+
+:root:root .card-panel .card-input:focus {
+  border: 0;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.prefix-inline {
+  position: absolute;
+  top: 10px;
+  font-size: 1.1rem;
+  -webkit-transition: color .2s;
+  transition: color .2s;
+}
+
+.input-field .prefix-inline ~ input {
+  padding-left: 22px;
 }
 
 /* Selectize */
@@ -877,7 +940,7 @@ footer .footer-follow ul li {
 
 footer .footer-follow ul li i {
   display: block;
-  margin-top: 12px;
+  margin-top: 6px;
 }
 
 footer .footer-follow p {
@@ -893,6 +956,17 @@ footer.page-footer .footer-copyright {
 
 /* Everything Else */
 
+label.rbtn-label {
+  display: block;
+  width: 100%;
+  font-size: 0.88rem;
+}
+
+.rbtn {
+  display: inline-block;
+  margin-right: 15px;
+}
+
 label.rbtn-label:after {
   display: block;
   content: "";
@@ -906,14 +980,14 @@ label.rbtn-label.valid:after {
   content: attr(data-success);
   color: #4CAF50;
   opacity: 1;
-  margin-top: -20px;
+  margin-top: 30px;
 }
 
 label.rbtn-label.invalid:after {
   content: attr(data-error);
   color: #F44336;
   opacity: 1;
-  margin-top: -20px;
+  margin-top: 30px;
 }
 
 .intl-tel-input {

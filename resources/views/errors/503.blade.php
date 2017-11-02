@@ -13,7 +13,7 @@
                 <div class="error-container v-center">
                     <h2>Error 503 - Server Maintenance</h2>
                     <div class="error-description">We will be right back</div>
-                    <div class="footer">&copy; 2017 Chipd</div>
+                    <div class="footer">&copy; 2017 {{ config('app.name') }}</div>
                 </div>
             </div>
         </div>

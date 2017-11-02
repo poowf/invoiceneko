@@ -3,11 +3,27 @@
 @section("head")
     <title>{{ config('app.name') }}</title>
     <style>
+        .card-panel.tab-panel {
+            margin-top: 0;
+        }
+        .tab {
+            background-color: #299a9a;
+        }
+        .tabs .tab a {
+            color: #cbdede;
+        }
+        .tabs .tab a:hover, .tabs .tab a.active {
+            color: #fff;
+        }
+        .tabs .indicator {
+            height: 5px;
+            background-color: #FFD264;
+        }
     </style>
 @stop
 
 @section("content")
-    <div class="mini-container">
+    <div class="full-width">
         <div class="row">
             <div class="col s6">
                 <h3>Invoices</h3>
@@ -19,47 +35,210 @@
         </div>
         <div class="row">
             <div class="col s12">
-                <div class="card-panel flex">
-                    <table id="invoice-container" class="responsive-table striped">
+                <div class="card-panel" style="padding: 2px;">
+                    <input id="search-input" class="card-input" name="search-input" type="text" placeholder="Search">
+                </div>
+            </div>
+        </div>
+        <div id="invoice-container" class="row">
+            <div class="col s12">
+                <ul class="tabs tabs-fixed-width">
+                    <li class="tab col s3"><a class="active" href="#invoice-overdue">Overdue</a></li>
+                    <li class="tab col s3"><a href="#invoice-pending">Pending</a></li>
+                    <li class="tab col s3"><a href="#invoice-draft">Draft</a></li>
+                    <li class="tab col s3"><a href="#invoice-paid">Paid</a></li>
+                </ul>
+            </div>
+            <div id="invoice-overdue" class="col s12">
+                <div class="card-panel tab-panel">
+                    <table id="overdue-container" class="responsive-table striped">
                         <thead>
-                        <tr>
-                            <th>Invoice ID</th>
-                            <th>Amount</th>
-                            <th>Due Date</th>
-                            <th>Client Name</th>
-                            <th>Client Phone</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
+                            <tr>
+                                <th>Invoice ID</th>
+                                <th>Amount</th>
+                                <th>Due Date</th>
+                                <th>Client Name</th>
+                                <th>Client Phone</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
                         </thead>
 
                         <tbody>
-                            @if($invoices)
-                                @foreach($invoices as $key => $invoice)
-                                    <tr>
+                            @if($overdue)
+                                @foreach($overdue as $key => $invoice)
+                                    <tr class="single-invoice-row">
                                         <td>{{ $invoice->nice_invoice_id }}</td>
-                                        <td>${{ $invoice->calculatetotal()  }}</td>
+                                        <td>${{ $invoice->totalmoneyformat  }}</td>
                                         <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y') }}</td>
                                         <td>{{ $invoice->client->companyname }}</td>
                                         <td>{{ $invoice->client->contactphone }}</td>
                                         <td>
-                                            @if ($invoice->status == 0)
+                                            @if ($invoice->status == App\Models\Invoice::STATUS_OVERDUE)
                                                 <span class="alt-badge error">{{ $invoice->statustext() }}</span>
-                                            @elseif ($invoice->status == 1)
+                                            @elseif ($invoice->status == App\Models\Invoice::STATUS_DRAFT)
+                                                <span class="alt-badge">{{ $invoice->statustext() }}</span>
+                                            @elseif ($invoice->status == App\Models\Invoice::STATUS_OPEN)
+                                                <span class="alt-badge warning">{{ $invoice->statustext() }}</span>
+                                            @elseif ($invoice->status == App\Models\Invoice::STATUS_CLOSED)
                                                 <span class="alt-badge success">{{ $invoice->statustext() }}</span>
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{ route('invoice.show', [ 'invoice' => $invoice->id ] ) }}"><i class="material-icons">remove_red_eye</i></a>
-                                            <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}"><i class="material-icons">mode_edit</i></a>
-                                            <a href="{{ route('invoice.history.show', [ 'invoice' => $invoice->id ] ) }}"><i class="material-icons">history</i></a>
-                                            <a href="#" data-id="{{ $invoice->id }}" class="invoice-delete-btn"><i class="material-icons">delete</i></a>
+                                            <a href="{{ route('invoice.show', [ 'invoice' => $invoice->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Invoice"><i class="material-icons">remove_red_eye</i></a>
+                                            <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Invoice"><i class="material-icons">mode_edit</i></a>
+                                            <a href="{{ route('invoice.history.show', [ 'invoice' => $invoice->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Invoice History"><i class="material-icons">history</i></a>
+                                            <a href="#" data-id="{{ $invoice->id }}" class="invoice-delete-btn tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Invoice"><i class="material-icons">delete</i></a>
                                         </td>
                                     </tr>
                                 @endforeach
                             @endif
                         </tbody>
                     </table>
+                </div>
+            </div>
+            <div id="invoice-pending" class="col s12">
+                <div class="card-panel tab-panel">
+                    @if($pending)
+                        <table id="pending-container" class="responsive-table striped">
+                        <thead>
+                            <tr>
+                                <th>Invoice ID</th>
+                                <th>Amount</th>
+                                <th>Due Date</th>
+                                <th>Client Name</th>
+                                <th>Client Phone</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                        @foreach($pending as $key => $invoice)
+                            <tr class="single-invoice-row">
+                                <td>{{ $invoice->nice_invoice_id }}</td>
+                                <td>${{ $invoice->totalmoneyformat }}</td>
+                                <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y') }}</td>
+                                <td>{{ $invoice->client->companyname }}</td>
+                                <td>{{ $invoice->client->contactphone }}</td>
+                                <td>
+                                    @if ($invoice->status == App\Models\Invoice::STATUS_OVERDUE)
+                                        <span class="alt-badge error">{{ $invoice->statustext() }}</span>
+                                    @elseif ($invoice->status == App\Models\Invoice::STATUS_DRAFT)
+                                        <span class="alt-badge">{{ $invoice->statustext() }}</span>
+                                    @elseif ($invoice->status == App\Models\Invoice::STATUS_OPEN)
+                                        <span class="alt-badge warning">{{ $invoice->statustext() }}</span>
+                                    @elseif ($invoice->status == App\Models\Invoice::STATUS_CLOSED)
+                                        <span class="alt-badge success">{{ $invoice->statustext() }}</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{ route('invoice.show', [ 'invoice' => $invoice->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Invoice"><i class="material-icons">remove_red_eye</i></a>
+                                    <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Invoice"><i class="material-icons">mode_edit</i></a>
+                                    <a href="{{ route('invoice.history.show', [ 'invoice' => $invoice->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Invoice History"><i class="material-icons">history</i></a>
+                                    <a href="#" data-id="{{ $invoice->id }}" class="invoice-delete-btn tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Invoice"><i class="material-icons">delete</i></a>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                    @endif
+                </div>
+            </div>
+            <div id="invoice-draft" class="col s12">
+                <div class="card-panel tab-panel">
+                    @if($draft)
+                        <table id="draft-container" class="responsive-table striped">
+                        <thead>
+                            <tr>
+                                <th>Invoice ID</th>
+                                <th>Amount</th>
+                                <th>Due Date</th>
+                                <th>Client Name</th>
+                                <th>Client Phone</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                        @foreach($draft as $key => $invoice)
+                            <tr class="single-invoice-row">
+                                <td>{{ $invoice->nice_invoice_id }}</td>
+                                <td>${{ $invoice->totalmoneyformat  }}</td>
+                                <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y') }}</td>
+                                <td>{{ $invoice->client->companyname }}</td>
+                                <td>{{ $invoice->client->contactphone }}</td>
+                                <td>
+                                    @if ($invoice->status == App\Models\Invoice::STATUS_OVERDUE)
+                                        <span class="alt-badge error">{{ $invoice->statustext() }}</span>
+                                    @elseif ($invoice->status == App\Models\Invoice::STATUS_DRAFT)
+                                        <span class="alt-badge">{{ $invoice->statustext() }}</span>
+                                    @elseif ($invoice->status == App\Models\Invoice::STATUS_OPEN)
+                                        <span class="alt-badge warning">{{ $invoice->statustext() }}</span>
+                                    @elseif ($invoice->status == App\Models\Invoice::STATUS_CLOSED)
+                                        <span class="alt-badge success">{{ $invoice->statustext() }}</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{ route('invoice.show', [ 'invoice' => $invoice->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Invoice"><i class="material-icons">remove_red_eye</i></a>
+                                    <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Invoice"><i class="material-icons">mode_edit</i></a>
+                                    <a href="{{ route('invoice.history.show', [ 'invoice' => $invoice->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Invoice History"><i class="material-icons">history</i></a>
+                                    <a href="#" data-id="{{ $invoice->id }}" class="invoice-delete-btn tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Invoice"><i class="material-icons">delete</i></a>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                    @endif
+                </div>
+            </div>
+            <div id="invoice-paid" class="col s12">
+                <div class="card-panel tab-panel">
+                    @if($paid)
+                        <table id="paid-container" class="responsive-table striped">
+                        <thead>
+                            <tr>
+                                <th>Invoice ID</th>
+                                <th>Amount</th>
+                                <th>Due Date</th>
+                                <th>Client Name</th>
+                                <th>Client Phone</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                        @foreach($paid as $key => $invoice)
+                            <tr class="single-invoice-row">
+                                <td>{{ $invoice->nice_invoice_id }}</td>
+                                <td>${{ $invoice->totalmoneyformat  }}</td>
+                                <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y') }}</td>
+                                <td>{{ $invoice->client->companyname }}</td>
+                                <td>{{ $invoice->client->contactphone }}</td>
+                                <td>
+                                    @if ($invoice->status == App\Models\Invoice::STATUS_OVERDUE)
+                                        <span class="alt-badge error">{{ $invoice->statustext() }}</span>
+                                    @elseif ($invoice->status == App\Models\Invoice::STATUS_DRAFT)
+                                        <span class="alt-badge">{{ $invoice->statustext() }}</span>
+                                    @elseif ($invoice->status == App\Models\Invoice::STATUS_OPEN)
+                                        <span class="alt-badge warning">{{ $invoice->statustext() }}</span>
+                                    @elseif ($invoice->status == App\Models\Invoice::STATUS_CLOSED)
+                                        <span class="alt-badge success">{{ $invoice->statustext() }}</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{ route('invoice.show', [ 'invoice' => $invoice->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Invoice"><i class="material-icons">remove_red_eye</i></a>
+                                    <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Invoice"><i class="material-icons">mode_edit</i></a>
+                                    <a href="{{ route('invoice.history.show', [ 'invoice' => $invoice->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Invoice History"><i class="material-icons">history</i></a>
+                                    <a href="#" data-id="{{ $invoice->id }}" class="invoice-delete-btn tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Invoice"><i class="material-icons">delete</i></a>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                    @endif
                 </div>
             </div>
         </div>
@@ -80,6 +259,7 @@
 @stop
 
 @section("scripts")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.0/jquery.mark.min.js" integrity="sha256-1iYR6/Bs+CrdUVeCpCmb4JcYVWvvCUEgpSU7HS5xhsY=" crossorigin="anonymous"></script>
     <script type="text/javascript">
         "use strict";
         $(function() {
@@ -90,6 +270,22 @@
                 var invoiceid = $(this).attr('data-id');
                 $('#delete-invoice-form').attr('action', '/invoice/' + invoiceid + '/destroy');
                 $('#delete-confirmation').modal('open');
+            });
+
+            var inputBox = $('#search-input');
+            var context = $('#invoice-container .single-invoice-row');
+
+            inputBox.on("input", function() {
+                var term = $(this).val();
+                context.unmark().show();
+                if (term != "") {
+                    console.log(term);
+                    context.mark(term, {
+                        done: function() {
+                            context.not(":has(mark)").hide();
+                        }
+                    });
+                }
             });
         });
     </script>

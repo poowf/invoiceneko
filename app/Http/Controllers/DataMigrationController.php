@@ -96,7 +96,7 @@ class DataMigrationController extends Controller
 
                     $auth_companyid = auth()->user()->company_id;
 
-                    if ($invoice = Invoice::where('invoiceid', $row->invoice_number)->where('company_id', $auth_companyid)->first())
+                    if ($invoice = Invoice::where('nice_invoice_id', $row->invoice_number)->where('company_id', $auth_companyid)->first())
                     {
                         self::createInvoiceItem($row->item_name, $row->item_desc, $row->item_price, $row->quantity, $invoice->id);
                     }
@@ -107,7 +107,7 @@ class DataMigrationController extends Controller
                         $client = Client::where('companyname', 'LIKE', '%' . $companyname . '%')->where('company_id', $auth_companyid)->first();
 
                         $invoice = new Invoice;
-                        $invoice->invoiceid = $row->invoice_number;
+                        $invoice->nice_invoice_id = $row->invoice_number;
                         $invoice->date = $row->invoice_date;
                         $invoice->duedate = $row->due_date;
                         $invoice->netdays = $row->payment_terms;
@@ -120,13 +120,13 @@ class DataMigrationController extends Controller
                                 $invoice->status = Invoice::STATUS_OPEN;
                                 break;
                             case "Overdue":
-                                $invoice->status = Invoice::STATUS_OPEN;
+                                $invoice->status = Invoice::STATUS_OVERDUE;
                                 break;
                             case "Closed":
                                 $invoice->status = Invoice::STATUS_CLOSED;
                                 break;
                             case "Draft":
-                                $invoice->status = Invoice::STATUS_OPEN;
+                                $invoice->status = Invoice::STATUS_DRAFT;
                                 break;
                             case "Void":
                                 $invoice->status = Invoice::STATUS_VOID;
@@ -140,6 +140,8 @@ class DataMigrationController extends Controller
 
                         self::createInvoiceItem($row->item_name, $row->item_desc, $row->item_price, $row->quantity, $invoice->id);
                     }
+
+                    $invoice->setInvoiceTotal();
                 }
                 catch(Exception $e) {
                     $errorscollection->push($row->invoice_number . ' could not be imported');
@@ -149,7 +151,6 @@ class DataMigrationController extends Controller
                 }
 
             }
-
         });
 
         return redirect()->route('migration.create')->with(compact('errorscollection'));
@@ -191,7 +192,7 @@ class DataMigrationController extends Controller
                 try {
                     $auth_companyid = auth()->user()->company_id;
 
-                    $invoice = Invoice::where('invoiceid', $row->invoice_number)->where('company_id', $auth_companyid)->first();
+                    $invoice = Invoice::where('nice_invoice_id', $row->invoice_number)->where('company_id', $auth_companyid)->first();
 
                     $payment = Payment::query();
 

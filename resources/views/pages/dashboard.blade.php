@@ -7,7 +7,7 @@
 @stop
 
 @section("content")
-    <div class="mini-container">
+    <div class="full-width">
         <div class="row mtop30">
             <div class="col s12">
                 <h2>Dashboard</h2>
@@ -15,10 +15,16 @@
             <div class="col s12 m4">
                 <h3>Welcome</h3>
                 <div class="card-panel">
-                    Hello {{ $user->name or '' }}
+                    Hello {{ $user->full_name or '' }}
                 </div>
             </div>
             <div class="col s12 m8">
+                <h3>Welcome</h3>
+                <div class="card-panel">
+                    Hello {{ $user->full_name or '' }}
+                </div>
+            </div>
+            <div class="col s12">
                 <h3>Overdue Invoices</h3>
                 <div class="card-panel flex">
                     <table class="responsive-table">
@@ -38,7 +44,7 @@
                                     <tr>
                                         <td>{{ $invoice->nice_invoice_id }}</td>
                                         <td>{{ $invoice->client->companyname }}</td>
-                                        <td>{{ $invoice->calculatetotal() }}</td>
+                                        <td>${{ $invoice->calculatetotal() }}</td>
                                         <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y') }}</td>
                                         <td>
                                             <a href="{{ route('invoice.show', [ 'invoice' => $invoice->id ])  }}" class="btn waves-effect waves-light">View</a>

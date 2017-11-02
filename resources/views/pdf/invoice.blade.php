@@ -31,8 +31,14 @@
         </div>
         <div class="col-xs-5 invoice-person" style="position: absolute; right: 0; padding: 0 15px; text-align: left;">
             <span class="name" style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">{{ $invoice->company->name or 'No Company Name' }}</span>
-            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->owner->name or 'No Company Owner Name' }}</span>
-            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->owner->email or 'No Company Owner Email' }}</span>
+            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->owner->full_name or 'No Company Owner Name' }}</span>
+            @if($invoice->company->address)
+                <span style="font-size: 18px; line-height: 26px; display: block;">@if($invoice->company->address->block){{ $invoice->company->address->block }} @endif {{ $invoice->company->address->street or 'No Street' }}</span>
+                @if($invoice->company->address->unitnumber)<span style="font-size: 18px; line-height: 26px; display: block;">#{{ $invoice->company->address->unitnumber }}</span>@endif
+                <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->address->postalcode or 'No Postal Code' }}</span>
+            @else
+                <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->owner->email or 'No Company Owner Email' }}</span>
+            @endif
         </div>
     </div>
     <div class="row">

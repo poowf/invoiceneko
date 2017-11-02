@@ -22,6 +22,7 @@ class PaymentController extends Controller
     {
         $company = auth()->user()->company;
         $payments = Unicorn::ifExists($company, 'payments');
+        $payments = $company->payments()->with(['invoice', 'client'])->get();
 
         return view('pages.payment.index', compact('payments'));
     }

@@ -7,7 +7,7 @@
 @stop
 
 @section("content")
-    <div class="mini-container">
+    <div class="full-width">
         <div class="row">
             <div class="col s6">
                 <h3>Payments</h3>
@@ -15,6 +15,13 @@
 
             <div class="col s6 right mtop30">
                 <a href="{{ route('payment.createsolo') }}" class="btn waves-effect waves-red">Create</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <div class="card-panel" style="padding: 2px;">
+                    <input id="search-input" class="card-input" name="search-input" type="text" placeholder="Search">
+                </div>
             </div>
         </div>
         <div class="row">
@@ -34,7 +41,7 @@
                         <tbody>
                             @if($payments)
                                 @foreach($payments as $key => $payment)
-                                    <tr>
+                                    <tr class="single-payment-row">
                                         <td>{{ $payment->invoice->nice_invoice_id }}</td>
                                         <td>{{ $payment->client->companyname }}</td>
                                         <td>${{ $payment->amount }}</td>
@@ -70,6 +77,7 @@
 @stop
 
 @section("scripts")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.0/jquery.mark.min.js" integrity="sha256-1iYR6/Bs+CrdUVeCpCmb4JcYVWvvCUEgpSU7HS5xhsY=" crossorigin="anonymous"></script>
     <script type="text/javascript">
         "use strict";
         $(function() {
@@ -81,6 +89,22 @@
                 var paymentid = $(this).attr('data-id');
                 $('#delete-payment-form').attr('action', '/payment/' + paymentid + '/destroy');
                 $('#delete-confirmation').modal('open');
+            });
+
+            var inputBox = $('#search-input');
+            var context = $('#payment-container .single-payment-row');
+
+            inputBox.on("input", function() {
+                var term = $(this).val();
+                context.unmark().show();
+                if (term != "") {
+                    console.log(term);
+                    context.mark(term, {
+                        done: function() {
+                            context.not(":has(mark)").hide();
+                        }
+                    });
+                }
             });
         });
     </script>
