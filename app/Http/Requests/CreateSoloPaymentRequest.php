@@ -24,9 +24,10 @@ class CreateSoloPaymentRequest extends FormRequest
     public function rules()
     {
         return [
+            'invoice_id' => 'required',
             'amount' => 'required',
+            'receiveddate' => 'required',
             'mode' => 'required',
-            'notes' => 'required',
         ];
     }
 }

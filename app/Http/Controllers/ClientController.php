@@ -19,7 +19,7 @@ class ClientController extends Controller
     public function index()
     {
         $company = auth()->user()->company;
-        $clients = Unicorn::ifExists($company, 'clients');
+        $clients = $company->clients;
 
         return view('pages.client.index', compact('clients'));
     }
@@ -31,7 +31,9 @@ class ClientController extends Controller
      */
     public function create()
     {
-        return view('pages.client.create');
+        $countries = countries();
+
+        return view('pages.client.create', compact('countries'));
     }
 
     /**
@@ -72,7 +74,9 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
-        return view('pages.client.edit', compact('client'));
+        $countries = countries();
+
+        return view('pages.client.edit', compact('client', 'countries'));
     }
 
     /**

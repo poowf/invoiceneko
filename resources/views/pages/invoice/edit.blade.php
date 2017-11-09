@@ -71,7 +71,7 @@
                                         <label for="item_price" class="label-validation">Price</label>
                                     </div>
                                     <div class="input-field col s12">
-                                        <textarea name="item_description[]" class="materialize-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Description">{{ $item->description or '' }}</textarea>
+                                        <textarea id="item_description" name="item_description[]" class="trumbowyg-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Description">{{ $item->description or '' }}</textarea>
                                         <label for="item_description" class="label-validation">Description</label>
                                     </div>
                                 </div>
@@ -109,6 +109,8 @@
         $(function() {
             var invoiceitemcount = 0;
 
+            $('.trumbowyg-textarea').trumbowyg();
+
             var picker = $('#date').pickadate({
                 formatSubmit: 'yyyy-mm-dd',
                 selectMonths: true, // Creates a dropdown to control month
@@ -128,8 +130,9 @@
             });
 
             function initInvoiceItem(count, elementid) {
-                var invoiceitem = '<div id="invoice_item_' + count + '" class="card-panel"> <div class="row"> <div class="input-field col s8"> <input id="item_name" name="item_name[]" type="text" data-parsley-required="true" data-parsley-trigger="change"> <label for="item_name" class="label-validation">Name</label> </div> <div class="input-field col s2"> <input id="item_quantity" name="item_quantity[]" type="number" data-parsley-required="true" data-parsley-trigger="change"> <label for="item_quantity" class="label-validation">Quantity</label> </div> <div class="input-field col s2"> <input id="item_price" name="item_price[]" type="number" data-parsley-required="true" data-parsley-trigger="change"> <label for="item_price" class="label-validation">Price</label> </div> <div class="input-field col s12"> <textarea id="item_description" name="item_description[]" class="materialize-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Description"></textarea> <label for="item_description" class="label-validation">Description</label> </div> </div> </div>';
+                var invoiceitem = '<div id="invoice_item_' + count + '" class="card-panel"> <div class="row"> <div class="input-field col s8"> <input id="item_name" name="item_name[]" type="text" data-parsley-required="true" data-parsley-trigger="change"> <label for="item_name" class="label-validation">Name</label> </div> <div class="input-field col s2"> <input id="item_quantity" name="item_quantity[]" type="number" data-parsley-required="true" data-parsley-trigger="change"> <label for="item_quantity" class="label-validation">Quantity</label> </div> <div class="input-field col s2"> <input id="item_price" name="item_price[]" type="number" data-parsley-required="true" data-parsley-trigger="change"> <label for="item_price" class="label-validation">Price</label> </div> <div class="input-field col s12"> <textarea id="item_description" name="item_description[]" class="trumbowyg-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Description"></textarea> <label for="item_description" class="label-validation">Description</label> </div> </div> </div>';
                 $('#' + elementid).append(invoiceitem);
+                $('.trumbowyg-textarea').trumbowyg();
             }
 
             $('#invoice-items-container').on('click', '.invoice-item-delete-btn', function (event) {

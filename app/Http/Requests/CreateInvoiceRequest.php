@@ -26,8 +26,7 @@ class CreateInvoiceRequest extends FormRequest
         return [
             'nice_invoice_id' => 'required',
             'date' => 'required',
-            'duedate' => 'required',
-            'netdays' => 'required',
+            'client_id' => 'required',
         ];
     }
 }

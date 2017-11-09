@@ -53,8 +53,11 @@ Route::group(['middleware' => ['auth']], function() {
     Route::patch('/company/edit', 'CompanyController@update')->name('company.update');
 
     /* CompanyAddress */
-    Route::get('/company/addresss/edit', 'CompanyAddressController@edit')->name('company.address.edit');
-    Route::patch('/company/addresss/edit', 'CompanyAddressController@update')->name('company.address.update');
+    Route::get('/company/address/edit', 'CompanyAddressController@edit')->name('company.address.edit');
+    Route::patch('/company/address/edit', 'CompanyAddressController@update')->name('company.address.update');
+
+    Route::get('/company/settings/edit', 'CompanySettingsController@edit')->name('company.settings.edit');
+    Route::patch('/company/settings/edit', 'CompanySettingsController@update')->name('company.settings.update');
 
     Route::group(['middleware' => ['hascompany']], function() {
 

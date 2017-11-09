@@ -10,7 +10,7 @@
     <div class="container">
         <div class="row">
             <div class="col s12">
-                <h3>Settings</h3>
+                <h3>Profile</h3>
             </div>
         </div>
         <div class="row">

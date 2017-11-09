@@ -34,10 +34,10 @@ class Payment extends Model
      * @param  string  $value
      * @return string
      */
-    public function getAmountAttribute($value)
+    public function getMoneyAmountAttribute()
     {
         setlocale(LC_MONETARY, 'en_US.UTF-8');
-        return money_format('%!.2n', $value);
+        return money_format('%!.2n', $this->amount);
     }
 
     public function invoice()
