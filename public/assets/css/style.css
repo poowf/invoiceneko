@@ -334,6 +334,7 @@ mark {
 
 .input-field .prefix-inline ~ input {
   padding-left: 22px;
+  width: calc(100% - 22px);
 }
 
 /* Selectize */
@@ -354,6 +355,7 @@ mark {
           box-shadow: none;
   border-bottom: 1px solid #9e9e9e;
   border-radius: 0;
+  padding-left: 0;
 }
 
 .selectize-control.single .selectize-input input {

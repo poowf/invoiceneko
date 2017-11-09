@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use Illuminate\Support\Facades\Hash;
 use Log;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -78,15 +79,23 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request)
     {
         $user = auth()->user();
-        $user->fill($request->all());
 
-        if ($request->has("password") && $request->input("password") !== null) {
-            $user->password = $request->input("password");
+        if (Hash::check($request->input('password'), $user->password)) {
+            $user->fill($request->all());
+
+            if ($request->has('newpassword') && $request->input('newpassword') != null) {
+                $newpass = $request->input('newpassword');
+                $user->password = $newpass;
+            }
+
+            if (!$user->save()) {
+                flash('Failed to Update Profile', 'error');
+                return redirect()->back();
+            } else {
+                flash('Successfully Updated Profile', 'success');
+                return redirect()->back();
+            }
         }
-
-        $user->save();
-
-        flash('Settings Updated', 'success');
 
         return redirect()->back();
     }

@@ -64,4 +64,9 @@ class Company extends Model
     {
         return $this->hasOne('App\Models\CompanyAddress', 'company_id');
     }
+
+    public function settings()
+    {
+        return $this->hasOne('App\Models\CompanySettings', 'company_id');
+    }
 }

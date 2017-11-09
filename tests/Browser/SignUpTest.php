@@ -24,7 +24,7 @@ class SignUpTest extends DuskTestCase
                 ->type('full_name', $faker->name)
                 ->type('username', str_random(10))
                 ->type('email', $faker->unique()->safeEmail)
-                ->type('fphone', '+65' . $faker->randomNumber(8))
+                ->type('fphone', '+659' . $faker->randomNumber(7))
                 ->click('label[for="gender-male"]')
                 ->type('password', 'secret')
                 ->type('password_confirmation', 'secret')
@@ -33,7 +33,7 @@ class SignUpTest extends DuskTestCase
                 ->type('name', $faker->company)
                 ->type('crn', $faker->ean8)
                 ->type('email', $faker->unique()->companyEmail)
-                ->type('cphone', '+65' . $faker->randomNumber(8))
+                ->type('cphone', '+658' . $faker->randomNumber(7))
                 ->press('CREATE')
                 ->assertPathIs('/signin');
         });

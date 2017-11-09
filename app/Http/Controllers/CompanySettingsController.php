@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Library\Poowf\Unicorn;
-use App\Models\Company;
-use App\Models\CompanyAddress;
+use App\Http\Requests\UpdateCompanySettingsRequest;
+use App\Models\CompanySettings;
 use Illuminate\Http\Request;
-use App\Http\Requests\UpdateCompanyAddressRequest;
 
-class CompanyAddressController extends Controller
+class CompanySettingsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -44,10 +42,10 @@ class CompanyAddressController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\CompanyAddress  $companyAddress
+     * @param  \App\Models\CompanySettings  $companySettings
      * @return \Illuminate\Http\Response
      */
-    public function show(CompanyAddress $companyAddress)
+    public function show(CompanySettings $companySettings)
     {
         //
     }
@@ -63,36 +61,34 @@ class CompanyAddressController extends Controller
 
         if($ownedcompany)
         {
-            $companyaddress = $ownedcompany->address;
+            $companysettings = $ownedcompany->settings;
         }
         else
         {
-            $companyaddress = null;
+            $companysettings = null;
         }
 
 
-        return view('pages.company.address.edit', compact('companyaddress', 'ownedcompany'));
+        return view('pages.company.settings.edit', compact('companysettings', 'ownedcompany'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\CompanyAddress  $companyAddress
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCompanyAddressRequest $request)
+    public function update(UpdateCompanySettingsRequest $request)
     {
         $ownedcompany = auth()->user()->ownedcompany;
-        $companyaddress = $ownedcompany->address;
+        $companysettings = $ownedcompany->settings;
 
-        if(!$companyaddress)
+        if(!$companysettings)
         {
-           $companyaddress = new CompanyAddress;
+            $companysettings = new CompanySettings;
         }
 
-        $companyaddress->fill($request->all());
-        $ownedcompany->address()->save($companyaddress);
+        $companysettings->fill($request->all());
+        $ownedcompany->settings()->save($companysettings);
 
         return redirect()->back();
     }
@@ -100,10 +96,10 @@ class CompanyAddressController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\CompanyAddress  $companyAddress
+     * @param  \App\Models\CompanySettings  $companySettings
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CompanyAddress $companyAddress)
+    public function destroy(CompanySettings $companySettings)
     {
         //
     }

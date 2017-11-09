@@ -25,7 +25,6 @@ class InvoiceController extends Controller
     public function index()
     {
         $company = auth()->user()->company;
-        $invoices = Unicorn::ifExists($company, 'invoices');
         $overdue = $company->invoices()->with(['client'])->overdue()->get();
         $pending = $company->invoices()->with(['client'])->pending()->get();
         $draft = $company->invoices()->with(['client'])->draft()->get();
@@ -42,7 +41,7 @@ class InvoiceController extends Controller
     public function create()
     {
         $company = auth()->user()->company;
-        $clients = Unicorn::ifExists($company, 'clients');
+        $clients = $company->clients;
 
         if($company)
         {

@@ -57,7 +57,7 @@ class CompanyController extends Controller
             {
                 $file = $request->file('logo');
                 $uuid = str_random(25);
-                $filename = $uuid . '.jpg';
+                $filename = $uuid . '.png';
 
                 if (!file_exists(public_path($storedirectory . '/logo_' . $filename)))
                     Image::make($file)->save(public_path($storedirectory . '/logo_' . $filename));
@@ -71,7 +71,7 @@ class CompanyController extends Controller
             {
                 $file = $request->file('smlogo');
                 $uuid = str_random(25);
-                $filename = $uuid . '.jpg';
+                $filename = $uuid . '.png';
 
                 if (!file_exists(public_path($storedirectory . '/smlogo_' . $filename)))
                     Image::make($file)->save(public_path($storedirectory . '/smlogo_' . $filename));
@@ -154,7 +154,7 @@ class CompanyController extends Controller
         {
             $file = $request->file('logo');
             $uuid = str_random(25);
-            $filename = $uuid . '.jpg';
+            $filename = $uuid . '.png';
 
             if (!file_exists(public_path($storedirectory . '/logo_' . $filename)))
                 Image::make($file)->save(public_path($storedirectory . '/logo_' . $filename));
@@ -168,7 +168,7 @@ class CompanyController extends Controller
         {
             $file = $request->file('smlogo');
             $uuid = str_random(25);
-            $filename = $uuid . '.jpg';
+            $filename = $uuid . '.png';
 
             if (!file_exists(public_path($storedirectory . '/smlogo_' . $filename)))
                 Image::make($file)->save(public_path($storedirectory . '/smlogo_' . $filename));

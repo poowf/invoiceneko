@@ -34,7 +34,7 @@ class CreateClientRequest extends FormRequest
             'nickname' => '',
             'crn' => '',
             'website' => '',
-            'contactsalutation' => 'required',
+            'contactsalutation' => 'required|in:mr,mrs,mdm,miss',
             'contactfirstname' => 'required',
             'contactlastname' => '',
             'contactgender' => '',

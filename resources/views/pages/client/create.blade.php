@@ -34,7 +34,12 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12 m6">
-                                <input id="country" name="country" type="text" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ old('country') }}" placeholder="Client Country">
+                                <select id="country" name="country" data-parsley-trigger="change">
+                                    <option disabled="" selected="selected" value="">Client Country</option>
+                                    @foreach($countries as $country)
+                                        <option value="{{ $country['name'] }}" @if(old('country') == $country['name']) selected @endif> {{ $country['name'] }}</option>
+                                    @endforeach
+                                </select>
                                 <label for="country" class="label-validation">Client Country</label>
                             </div>
                             <div class="input-field col s12 m6">
@@ -60,21 +65,22 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s6">
-                                <input id="block" name="block" type="text" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ old('block') }}" placeholder="Client Block">
+                                <input id="block" name="block" type="text" data-parsley-trigger="change" value="{{ old('block') }}" placeholder="Client Block">
                                 <label for="block" class="label-validation">Client Block</label>
                             </div>
                             <div class="input-field col s6">
-                                <input id="street" name="street" type="text" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ old('street') }}" placeholder="Client Street">
+                                <input id="street" name="street" type="text" data-parsley-trigger="change" value="{{ old('street') }}" placeholder="Client Street">
                                 <label for="street" class="label-validation">Client Street</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s6">
-                                <input id="unitnumber" name="unitnumber" type="text" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ old('unitnumber') }}" placeholder="Client Unit Number">
+                                <i class="mdi mdi-pound prefix-inline"></i>
+                                <input id="unitnumber" name="unitnumber" type="text" data-parsley-trigger="change" value="{{ old('unitnumber') }}" placeholder="Client Unit Number">
                                 <label for="unitnumber" class="label-validation">Client Unit Number</label>
                             </div>
                             <div class="input-field col s6">
-                                <input id="postalcode" name="postalcode" type="text" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ old('postalcode') }}" placeholder="Client Postal Code">
+                                <input id="postalcode" name="postalcode" type="text" data-parsley-trigger="change" value="{{ old('postalcode') }}" placeholder="Client Postal Code">
                                 <label for="postalcode" class="label-validation">Client Postal Code</label>
                             </div>
                         </div>
@@ -85,7 +91,13 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12 m2">
-                                <input id="contactsalutation" name="contactsalutation" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ old('contactsalutation') }}" placeholder="Client Contact Salutation">
+                                <select id="contactsalutation" name="contactsalutation" data-parsley-trigger="change">
+                                    <option disabled="" selected="selected" value="">Client Contact Salutation</option>
+                                    <option value="mr" @if(old('contactsalutation') == "mr") selected @endif>Mr.</option>
+                                    <option value="mrs" @if(old('contactsalutation') == "mrs") selected @endif>Mrs.</option>
+                                    <option value="mdm" @if(old('contactsalutation') == "mdm") selected @endif>Mdm.</option>
+                                    <option value="miss" @if(old('contactsalutation') == "miss") selected @endif>Miss.</option>
+                                </select>
                                 <label for="contactsalutation" class="label-validation">Contact Salutation</label>
                             </div>
                             <div class="input-field col s12 m5">
@@ -125,6 +137,9 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
+            $('#country').selectize({});
+            $('#contactsalutation').selectize({});
+
             $("#fphone").intlTelInput({
                 initialCountry: "sg",
                 utilsScript: "/assets/js/utils.js"

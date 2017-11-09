@@ -45,6 +45,11 @@ class Client extends Model
         'invoices',
     ];
 
+    public function getContactNameAttribute()
+    {
+        return "{$this->contactfirstname} {$this->contactlastname}";
+    }
+
     public function invoices()
     {
         return $this->hasMany('App\Models\Invoice', 'client_id');

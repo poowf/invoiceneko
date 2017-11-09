@@ -18,12 +18,18 @@
                 <div class="card-panel">
                     <dt>Company Name</dt>
                     <dd>{{ $client->companyname }}</dd>
-                    <dt>Company Address</dt>
-                    <dd>{{ $client->address }}</dd>
+                    <dt>Company Block</dt>
+                    <dd>{{ $client->block or '-' }}</dd>
+                    <dt>Company Street</dt>
+                    <dd>{{ $client->street or '-' }}</dd>
+                    <dt>Company Unit Number</dt>
+                    <dd>{{ $client->unitnumber or '-' }}</dd>
+                    <dt>Company Postal Code</dt>
+                    <dd>{{ $client->postalcode or '-' }}</dd>
                     <dt>Company Nickname</dt>
                     <dd>{{ $client->nickname or '' }}</dd>
                     <dt>Company Registration Number</dt>
-                    <dd>{{ $client->crn }}
+                    <dd>{{ $client->crn or '-' }}
                     <dt>Contact Name</dt>
                     <dd>{{ $client->contactname or '-' }}</dd>
                     <dt>Contact Email</dt>

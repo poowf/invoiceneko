@@ -26,17 +26,4 @@ class Unicorn
             return true;
         }
     }
-
-    public static function ifExists($model, $key)
-    {
-        if($model)
-        {
-            return $model->{$key};
-        }
-        else
-        {
-            return null;
-        }
-    }
-
 }

@@ -19,7 +19,7 @@
                     <div class="card-panel">
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="amount" name="amount" type="number" data-parsley-required="true" data-parsley-trigger="change"  value="{{ $payment->amount or '' }}" placeholder="Payment Amount">
+                                <input id="amount" name="amount" type="number" data-parsley-required="true" data-parsley-trigger="change"  value="{{ $payment->amount or '' }}" placeholder="Payment Amount {{ $payment->amount or '' }}">
                                 <label for="amount" class="label-validation">Amount</label>
                             </div>
                         </div>
@@ -31,13 +31,13 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="mode" name="mode" type="text" data-parsley-required="false" data-parsley-trigger="change" value="{{ $payment->mode or '' }}" placeholder="Payment Mode">
+                                <input id="mode" name="mode" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ $payment->mode or '' }}" placeholder="Payment Mode">
                                 <label for="mode" class="label-validation">Payment Mode</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <textarea id="notes" name="notes" class="materialize-textarea" data-parsley-required="false" data-parsley-trigger="change" placeholder="Notes">{{ $payment->notes or '' }}</textarea>
+                                <textarea id="notes" name="notes" class="materialize-textarea" data-parsley-trigger="change" placeholder="Notes">{{ $payment->notes or '' }}</textarea>
                                 <label for="notes" class="label-validation">Notes</label>
                             </div>
                         </div>

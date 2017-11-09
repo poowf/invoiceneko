@@ -25,8 +25,8 @@ class UpdatePaymentRequest extends FormRequest
     {
         return [
             'amount' => 'required',
+            'receiveddate' => 'required',
             'mode' => 'required',
-            'notes' => 'required',
         ];
     }
 }

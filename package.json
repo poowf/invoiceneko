@@ -22,12 +22,14 @@
     "yarn": "^1.2.1"
   },
   "dependencies": {
+    "flag-icon-css": "^2.8.0",
     "intl-tel-input": "^12.1.2",
     "less": "^2.7.2",
     "less-loader": "^4.0.5",
     "mark.js": "^8.11.0",
     "materialize-css": "^0.100.2",
     "parsleyjs": "^2.8.0",
-    "selectize": "^0.12.4"
+    "selectize": "^0.12.4",
+    "trumbowyg": "^2.8.1"
   }
 }
