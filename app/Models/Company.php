@@ -38,6 +38,11 @@ class Company extends Model
             $company->slug = str_slug($company->name);
             static::generateSlug($company);
         });
+
+        //Auto Creation of Cart per User;
+        static::created(function ($company) {
+            $company->settings()->save(new CompanySettings);
+        });
     }
 
     public function invoices()

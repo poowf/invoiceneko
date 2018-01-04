@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        div.page
+        {
+            page-break-before: always;
+            page-break-inside: avoid;
+        }
+    </style>
 </head>
 <body style="margin: 0; font-family: 'Roboto', Arial, sans-serif;font-size: 13px;">
 <div class="invoice" style="background-color: #ffffff; padding: 50px 50px 20px; color: #8c8c8c;">
@@ -22,11 +29,9 @@
         <div class="invoice-person" style="position: absolute; left: 0; padding: 0 15px; ">
             <span class="name" style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">Bill To: </span>
             <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->companyname }}</span>
-            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->contactname }}</span>
             <span style="font-size: 18px; line-height: 26px; display: block;">@if($invoice->client->block){{ $invoice->client->block }} @endif {{ $invoice->client->street or 'No Street' }}</span>
             @if($invoice->client->unitnumber)<span style="font-size: 18px; line-height: 26px; display: block;">#{{ $invoice->client->unitnumber }}</span>@endif
             <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->country or 'No Country' }} {{ $invoice->client->postalcode or 'No Postal Code' }}</span>
-            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->contactphone }}</span>
         </div>
         <div class="invoice-payment-direction" style="position: absolute; padding-top: 10px; left: 0; right:0; text-align: center;">
             <img src="{{ asset('/assets/img/lefttoright.png') }}" width="80" height="80" />
@@ -53,7 +58,7 @@
                         Description
                     </th>
                     <th style="padding: 0; text-align: right; padding-bottom: 8px; border-bottom: 1px solid #f0f0f0; width: 17%;" class="hours">
-                        Hours
+                        Quantity
                     </th>
                     <th style="padding: 0; text-align: right; padding-bottom: 8px; border-bottom: 1px solid #f0f0f0; width: 15%;" class="amount">
                         Amount
@@ -104,12 +109,6 @@
             </table>
         </div>
     </div>
-    <div class="row">
-        <div class="invoice-message" style="position: relative; padding: 0 15px; font-size: 16px; margin-bottom: 62px;">
-            <span class="title" style="font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 12px;">Terms & Conditions</span>
-            {!! $invoice->company->settings->invoice_conditions !!}
-        </div>
-    </div>
     <div class="row invoice-company-info" style="margin-bottom: 70px;">
         <div class="logo" style="position: relative; display: block; width: 100%;  text-align: center;">
             <img src="{{ asset($invoice->company->smlogo) }}" alt="Logo-symbol" width="100" height="100" style="border: 0; vertical-align: middle;">
@@ -129,6 +128,12 @@
                     <li>{{ $invoice->company->email or 'No Email' }}</li>
                 </ul>
             </div>
+        </div>
+    </div>
+    <div class="page row">
+        <div class="invoice-message" style="position: relative; padding: 0 15px; font-size: 16px; padding-top: 62px; margin-bottom: 62px;">
+            <span class="title" style="font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 12px;">Terms & Conditions</span>
+            {!! $invoice->company->settings->invoice_conditions !!}
         </div>
     </div>
 </div>

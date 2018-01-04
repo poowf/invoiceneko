@@ -12,6 +12,7 @@
 
         .single-history-wrapper {
         }
+
     </style>
 @stop
 
@@ -104,11 +105,9 @@
                         <div class="col-xs-5 invoice-person" style="position: absolute; left: 0; padding: 0 15px; ">
                             <span class="name" style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">Bill To: </span>
                             <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->companyname }}</span>
-                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->contactname }}</span>
                             <span style="font-size: 18px; line-height: 26px; display: block;">@if($invoice->client->block){{ $invoice->client->block }} @endif {{ $invoice->client->street or 'No Street' }}</span>
                             @if($invoice->client->unitnumber)<span style="font-size: 18px; line-height: 26px; display: block;">#{{ $invoice->client->unitnumber }}</span>@endif
                             <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->country or 'No Country' }} {{ $invoice->client->postalcode or 'No Postal Code' }}</span>
-                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->contactphone }}</span>
                         </div>
                         <div class="col-xs-2 invoice-payment-direction" style="position: absolute; padding-top: 10px; left: 0; right:0; text-align: center;">
                             <img src="{{ asset('/assets/img/lefttoright.png') }}" width="80" height="80" />

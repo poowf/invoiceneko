@@ -101,11 +101,11 @@
                                 <label for="contactsalutation" class="label-validation">Contact Salutation</label>
                             </div>
                             <div class="input-field col s12 m5">
-                                <input id="contactfirstname" name="contactfirstname" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ $client->contactfirstname or '' }}" placeholder="Client Contact First Name">
+                                <input id="contactfirstname" name="contactfirstname" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ $client->contactfirstname or '' }}" placeholder="Client Contact First Name">
                                 <label for="contactfirstname" class="label-validation">Contact First Name</label>
                             </div>
                             <div class="input-field col s12 m5">
-                                <input id="contactlastname" name="contactlastname" type="text" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ $client->contactlastname or '' }}" placeholder="Client Contact Last Name">
+                                <input id="contactlastname" name="contactlastname" type="text" data-parsley-trigger="change" value="{{ $client->contactlastname or '' }}" placeholder="Client Contact Last Name">
                                 <label for="contactlastname" class="label-validation">Contact Last Name</label>
                             </div>
                         </div>
@@ -125,7 +125,7 @@
                         <div class="input-field col s12">
                             {{ method_field('PATCH') }}
                             {{ csrf_field() }}
-                            <button class="btn waves-effect waves-light col s12 m2 offset-m10" type="submit" name="action">Create</button>
+                            <button class="btn waves-effect waves-light col s12 m2 offset-m10" type="submit" name="action">Update</button>
                         </div>
                     </div>
                 </form>

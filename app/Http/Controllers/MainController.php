@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Invoice;
 use App\Mail\InvoiceMail;
 use Illuminate\Support\Facades\Mail;
+use PDF;
 
 class MainController extends Controller
 {
@@ -42,5 +43,16 @@ class MainController extends Controller
         $invoice = Invoice::find(1);
 
         Mail::to(auth()->user())->send(new InvoiceMail($invoice));
+    }
+
+    public function viewChart()
+    {
+        return view('pdf.charts');
+    }
+
+    public function pviewChart()
+    {
+        $pdf = PDF::loadView('pdf.charts');
+        return $pdf->inline(str_random(10) . 'test.pdf');
     }
 }

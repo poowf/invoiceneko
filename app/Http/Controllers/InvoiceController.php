@@ -96,7 +96,7 @@ class InvoiceController extends Controller
 
         flash('Invoice Created', 'success');
 
-        return redirect()->route('invoice.index');
+        return redirect()->route('invoice.show', [ 'invoice' => $invoice->id ]);
     }
 
     /**
@@ -226,11 +226,13 @@ class InvoiceController extends Controller
             $invoiceitem->save();
         }
 
+        $invoice = $invoice->fresh();
+
         $invoice->setInvoiceTotal();
 
         flash('Invoice Updated', 'success');
 
-        return redirect()->route('invoice.index');
+        return redirect()->route('invoice.show', [ 'invoice' => $invoice->id ]);
     }
 
     /**

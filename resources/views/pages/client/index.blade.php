@@ -90,7 +90,7 @@
 
     <div id="delete-confirmation" class="modal">
         <div class="modal-content">
-            <p>Delete Invoice?</p>
+            <p>Delete Client?</p>
         </div>
         <div class="modal-footer">
             <form id="delete-client-form" method="post" class="null-form">

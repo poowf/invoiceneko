@@ -15,6 +15,7 @@ class CreateCompanySettingsTable extends Migration
     {
         Schema::create('company_settings', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('invoice_prefix')->nullable();
             $table->text('invoice_conditions')->nullable();
             $table->integer('company_id')->unsigned();
             $table->foreign('company_id')
