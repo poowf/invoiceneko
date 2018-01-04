@@ -189,6 +189,7 @@
                 errorsContainer: function (velem) {
                     var $errelem = velem.$element.siblings('label');
                     $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
+                    console.log(window.Parsley.getErrorMessage(velem.validationResult[0].assert));
                     return true;
                 },
                 errorsWrapper: '',

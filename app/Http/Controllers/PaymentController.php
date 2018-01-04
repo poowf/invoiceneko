@@ -52,6 +52,14 @@ class PaymentController extends Controller
         $payment->company_id = $invoice->company_id;
         $payment->save();
 
+        $invoice = $invoice->fresh();
+
+        if($invoice->calculateremainder() == "0.0")
+        {
+            $invoice->status = Invoice::STATUS_CLOSED;
+            $invoice->save();
+        }
+
         flash('Payment Created', 'success');
 
         return redirect()->route('payment.index');
@@ -82,10 +90,21 @@ class PaymentController extends Controller
         $payment = new Payment;
         $payment->fill($request->all());
         $payment->receiveddate = Carbon::createFromFormat('j F, Y', $request->input('receiveddate'))->startOfDay()->toDateTimeString();
+
+        $invoice = Invoice::find($request->input('invoice_id'));
+
         $payment->invoice_id = $request->input('invoice_id');
-        $payment->client_id = Invoice::find($request->input('invoice_id'))->client_id;
-        $payment->company_id = Invoice::find($request->input('invoice_id'))->company_id;
+        $payment->client_id = $invoice->client_id;
+        $payment->company_id = $invoice->company_id;
         $payment->save();
+
+        $invoice = $invoice->fresh();
+
+        if($invoice->calculateremainder() == "0.0")
+        {
+            $invoice->status = Invoice::STATUS_CLOSED;
+            $invoice->save();
+        }
 
         flash('Payment Created', 'success');
 

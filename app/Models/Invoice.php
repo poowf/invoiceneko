@@ -110,6 +110,19 @@ class Invoice extends Model
         $this->save();
     }
 
+    public function calculateremainder()
+    {
+        $payments = $this->payments;
+        $total = $this->total;
+
+        foreach($payments as $payment)
+        {
+            $total -= $payment->amount;
+        }
+
+        return $total;
+    }
+
     public function statusText()
     {
         $status = $this->status;

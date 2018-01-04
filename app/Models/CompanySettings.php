@@ -20,6 +20,7 @@ class CompanySettings extends Model
     public $timestamps = true;
 
     protected $fillable = [
+        'invoice_prefix',
         'invoice_conditions',
     ];
 

@@ -22,6 +22,7 @@
     "yarn": "^1.2.1"
   },
   "dependencies": {
+    "chartist": "^0.11.0",
     "flag-icon-css": "^2.8.0",
     "intl-tel-input": "^12.1.2",
     "less": "^2.7.2",

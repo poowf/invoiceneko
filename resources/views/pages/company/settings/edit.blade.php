@@ -61,8 +61,14 @@
                     <div class="card-panel">
                         <div class="row">
                             <div class="input-field col s12">
+                                <input id="invoice_prefix" name="invoice_prefix" type="text" data-parsley-trigger="change" data-parsley-minlength="2" value="{{ $companysettings->invoice_prefix or '' }}" placeholder="Invoice Prefix">
+                                <label for="invoice_prefix" class="label-validation">Invoice Prefix</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
                                 <textarea id="invoice_conditions" name="invoice_conditions" class="trumbowyg-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Invoice Conditions">{!! $companysettings->invoice_conditions !!}</textarea>
-                                <label for="name" class="label-validation">Invoice Conditions</label>
+                                <label for="invoice_conditions" class="label-validation">Invoice Conditions</label>
                             </div>
                         </div>
                     </div>

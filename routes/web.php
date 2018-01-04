@@ -15,6 +15,8 @@ Route::get('/', 'MainController@main')->name('main');
 
 Route::get('/sendinv', 'MainController@testMail')->name('t.mail');
 
+Route::get('/chart/view', 'MainController@viewChart')->name('chart.view');
+Route::get('/chart/pview', 'MainController@pviewChart')->name('chart.pview');
 
 Route::get('/sinvoice', function() {
     $invoice = App\Models\Invoice::find(1);

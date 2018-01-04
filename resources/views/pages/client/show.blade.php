@@ -49,7 +49,7 @@
                             <th>Invoice ID</th>
                             <th>Date</th>
                             <th>Due Date</th>
-                            <th>Terms</th>
+                            <th>Amount</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -61,11 +61,15 @@
                                 <td>{{ $invoice->nice_invoice_id }}</td>
                                 <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->date)->format('j F, Y') }}</td>
                                 <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y') }}</td>
-                                <td>Net {{ $invoice->netdays }}</td>
+                                <td>${{ $invoice->totalmoneyformat }}</td>
                                 <td>
-                                    @if ($invoice->status == 0)
+                                    @if ($invoice->status == App\Models\Invoice::STATUS_OVERDUE)
                                         <span class="alt-badge error">{{ $invoice->statustext() }}</span>
-                                    @elseif ($invoice->status == 1)
+                                    @elseif ($invoice->status == App\Models\Invoice::STATUS_DRAFT)
+                                        <span class="alt-badge">{{ $invoice->statustext() }}</span>
+                                    @elseif ($invoice->status == App\Models\Invoice::STATUS_OPEN)
+                                        <span class="alt-badge warning">{{ $invoice->statustext() }}</span>
+                                    @elseif ($invoice->status == App\Models\Invoice::STATUS_CLOSED)
                                         <span class="alt-badge success">{{ $invoice->statustext() }}</span>
                                     @endif
                                 </td>
