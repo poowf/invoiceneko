@@ -38,4 +38,4 @@ require('parsleyjs');
 require('slick-carousel');
 require('mark.js');
 require('trumbowyg');
-require('trumbowyg/plugins/cleanpaste/trumbowyg.cleanpaste');
+//require('trumbowyg/plugins/cleanpaste/trumbowyg.cleanpaste');
