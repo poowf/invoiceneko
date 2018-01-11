@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Log;
 use App\Traits\UniqueSlug;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -39,15 +40,35 @@ class Company extends Model
             static::generateSlug($company);
         });
 
-        //Auto Creation of Cart per User;
+        //Auto Creation of Settings per Company;
         static::created(function ($company) {
-            $company->settings()->save(new CompanySettings);
+            $settings = new CompanySettings;
+            $settings->invoice_prefix = str_slug($company->name);
+            $company->settings()->save($settings);
         });
     }
 
     public function invoices()
     {
         return $this->hasMany('App\Models\Invoice', 'company_id');
+    }
+
+    public function lastinvoice()
+    {
+        return $this->hasOne('App\Models\Invoice')->latest()->limit(1)->first();
+    }
+
+    public function niceInvoiceID()
+    {
+        $invoice = $this->lastinvoice();
+
+        $nice_invoice_id = $invoice->nice_invoice_id;
+
+        $currentindex = preg_split('#^.*-#s', $nice_invoice_id);
+
+        $currentindex[1] += 1;
+
+        return sprintf('%06d', $currentindex[1]);
     }
 
     public function clients()

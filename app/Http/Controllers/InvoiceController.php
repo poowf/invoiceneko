@@ -45,8 +45,7 @@ class InvoiceController extends Controller
 
         if($company)
         {
-            $invoicenumber = $company->invoices()->count();
-            $invoicenumber = sprintf('%06d', ++$invoicenumber);
+            $invoicenumber = $company->niceinvoiceid();
 
             if ($company->clients->count() == 0)
             {
@@ -71,14 +70,16 @@ class InvoiceController extends Controller
      */
     public function store(CreateInvoiceRequest $request)
     {
+        $company = auth()->user()->company;
+
         $invoice = new Invoice;
-        $invoice->nice_invoice_id = $request->input('nice_invoice_id');
+        $invoice->nice_invoice_id = $company->settings->invoice_prefix . '-' . $company->niceinvoiceid();
         $duedate = Carbon::createFromFormat('j F, Y', $request->input('date'))->addDays($request->input('netdays'))->startOfDay()->toDateTimeString();
         $invoice->date = Carbon::createFromFormat('j F, Y', $request->input('date'))->startOfDay()->toDateTimeString();
         $invoice->netdays = $request->input('netdays');
         $invoice->duedate = $duedate;
         $invoice->client_id = $request->input('client_id');
-        $invoice->company_id = auth()->user()->company_id;
+        $invoice->company_id = $company->id;
         $invoice->save();
 
         foreach($request->input('item_name') as $key => $item)
@@ -271,6 +272,7 @@ class InvoiceController extends Controller
 
         if($company)
         {
+
             if ($company->clients->count() == 0)
             {
                 return view('pages.invoice.noclients');
