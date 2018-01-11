@@ -1,7 +1,7 @@
 @extends("layouts/default")
 
 @section("head")
-    <title>InvoicePlz | Sign In</title>
+    <title>{{ config('app.name') }} | Sign In</title>
     <style>
     </style>
 @stop

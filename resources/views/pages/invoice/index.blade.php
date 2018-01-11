@@ -30,7 +30,8 @@
             </div>
 
             <div class="col s6 right mtop30">
-                <a href="{{ route('invoice.create') }}" class="btn waves-effect waves-red">Create</a>
+                <a href="{{ route('invoice.create') }}" class="btn btn-link waves-effect waves-dark">Create</a>
+                <a href="{{ route('invoice.adhoc.create') }}" class="btn btn-link waves-effect waves-dark disabled">Create Ad-Hoc</a>
             </div>
         </div>
         <div class="row">

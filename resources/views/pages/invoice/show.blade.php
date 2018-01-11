@@ -20,13 +20,13 @@
     <div class="mini-container">
         <div class="row">
             <div class="col s12 mtop30 right">
-                <a class="btn btn-lg btn-default" href="{{ route('payment.create', [ 'invoice' => $invoice->id] ) }}">
+                <a class="btn btn-link waves-effect waves-dark" href="{{ route('payment.create', [ 'invoice' => $invoice->id] ) }}">
                     Log Payment
                 </a>
-                <a class="btn btn-lg btn-default" href="{{ route('invoice.download', [ 'invoice' => $invoice->id] ) }}">
+                <a class="btn btn-link waves-effect waves-dark" href="{{ route('invoice.download', [ 'invoice' => $invoice->id] ) }}">
                     Save PDF
                 </a>
-                <a class="btn btn-lg btn-default" href="{{ route('invoice.printview', [ 'invoice' => $invoice->id] ) }}">
+                <a class="btn btn-link waves-effect waves-dark" href="{{ route('invoice.printview', [ 'invoice' => $invoice->id] ) }}">
                     Print
                 </a>
             </div>

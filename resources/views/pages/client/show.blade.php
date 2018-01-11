@@ -9,8 +9,11 @@
 @section("content")
     <div class="container">
         <div class="row">
-            <div class="col s12">
+            <div class="col s6">
                 <h3>Client Details</h3>
+            </div>
+            <div class="col s6 right">
+                <a href="{{ route('client.invoice.create', [ 'client' => $client->id ]) }}" class="btn btn-link waves-effect waves-dark mtop30">Create Invoice</a>
             </div>
         </div>
         <div class="row">

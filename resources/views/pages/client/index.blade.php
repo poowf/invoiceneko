@@ -50,7 +50,7 @@
                 <div class="row">
                     <div class="col s12">
                         @foreach($clients as $key => $client)
-                            <div class="col s12 m4 l3 xl2 single-client-card">
+                            <div class="col s12 m4 l4 xl3 single-client-card">
                                 <div class="card">
                                     <div class="card-image waves-effect waves-block waves-light">
                                         <img class="activator" src="http://placehold.it/100x100">

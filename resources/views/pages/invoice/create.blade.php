@@ -38,7 +38,7 @@
                             <select id="client_id" name="client_id" class="test" data-parsley-required="true" data-parsley-trigger="change">
                                 <option disabled="" selected="selected" value="">Pick a Client</option>
                                 @foreach($clients as $client)
-                                    <option value="{{ $client->id }}">{{ $client->companyname }}</option>
+                                    <option value="{{ $client->id }}" @if(old('client_id') == $client->id) selected @endif>{{ $client->companyname }}</option>
                                 @endforeach
                             </select>
                             <label for="client_id" class="label-validation">Client</label>
