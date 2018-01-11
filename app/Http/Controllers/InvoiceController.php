@@ -259,4 +259,34 @@ class InvoiceController extends Controller
 
         return view('pages.invoice.history', compact('invoice', 'client', 'histories'));
     }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function adhoccreate()
+    {
+        $company = auth()->user()->company;
+
+        if($company)
+        {
+            if ($company->clients->count() == 0)
+            {
+                return view('pages.invoice.noclients');
+            }
+            else
+            {
+                $invoicenumber = $company->invoices()->count();
+                $invoicenumber = sprintf('%06d', ++$invoicenumber);
+                $countries = countries();
+
+                return view('pages.invoice.adhoccreate', compact('company', 'invoicenumber', 'countries'));
+            }
+        }
+        else
+        {
+            return view('pages.invoice.nocompany');
+        }
+    }
 }

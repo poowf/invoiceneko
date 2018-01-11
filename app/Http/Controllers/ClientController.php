@@ -110,4 +110,12 @@ class ClientController extends Controller
 
         return redirect()->back();
     }
+
+    public function invoicecreate(Client $client)
+    {
+        return redirect()->route('invoice.create')->withInput([
+            'client_id' => $client->id
+        ]);
+    }
+
 }

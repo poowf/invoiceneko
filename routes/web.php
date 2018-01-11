@@ -74,6 +74,7 @@ Route::group(['middleware' => ['auth']], function() {
         /* Clients */
         Route::get('/clients', 'ClientController@index')->name('client.index');
         Route::get('/client/create', 'ClientController@create')->name('client.create');
+        Route::get('/client/{client}/invoicecreate', 'ClientController@invoicecreate')->name('client.invoice.create');
         Route::post('/client/create', 'ClientController@store')->name('client.store');
         Route::get('/client/{client}', 'ClientController@show')->name('client.show');
         Route::get('/client/{client}/edit', 'ClientController@edit')->name('client.edit');
@@ -90,6 +91,9 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('/invoice/{invoice}/edit', 'InvoiceController@edit')->name('invoice.edit');
         Route::patch('/invoice/{invoice}/edit', 'InvoiceController@update')->name('invoice.update');
         Route::delete('/invoice/{invoice}/destroy', 'InvoiceController@destroy')->name('invoice.destroy');
+
+        Route::get('/invoice/adhoc/create', 'InvoiceController@adhoccreate')->name('invoice.adhoc.create');
+
 
         /* OldInvoice */
         Route::get('/oldinvoice/{oldinvoice}', 'OldInvoiceController@show')->name('invoice.old.show');
