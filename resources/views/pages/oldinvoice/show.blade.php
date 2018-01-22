@@ -76,7 +76,7 @@
                                     <tr>
                                         <td class="description" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0;">
                                             <span style="display: block; font-weight: 700;">{{ $item->name }}</span>
-                                            {{ $item->description }}
+                                            {!! $item->description !!}
                                         </td>
                                         <td class="quantity" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
                                             {{ $item->quantity }}

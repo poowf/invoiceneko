@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Traits\AuthHelper;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
 
 class ResetPasswordController extends Controller
 {

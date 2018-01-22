@@ -27,10 +27,10 @@ Route::get('/sinvoice', function() {
 Route::get('/signin', 'AuthController@show')->name('auth.show');
 Route::post('/signin', 'AuthController@process')->name('auth.process');
 Route::post('/signout', 'AuthController@destroy')->name('auth.destroy');
-Route::get('/forgot', 'AuthController@getForgotPassword')->name('forgot');
-Route::post('/forgot', 'AuthController@postForgotPassword')->name('forgot');
-Route::get('/reset/{token}', 'AuthController@getResetPassword')->name('reset');
-Route::post('/reset/{token}', 'AuthController@postResetPassword')->name('reset');
+Route::get('/forgot', 'ForgotPasswordController@show')->name('forgot');
+Route::post('/forgot', 'ForgotPasswordController@process')->name('forgot');
+Route::get('/reset/{token}', 'ResetPasswordController@show')->name('reset');
+Route::post('/reset/{token}', 'ResetPasswordController@process')->name('reset');
 
 /* User */
 Route::get('/user/create', 'UserController@create')->name('user.create');
