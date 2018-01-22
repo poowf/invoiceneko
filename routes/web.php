@@ -13,36 +13,27 @@
 
 Route::get('/', 'MainController@main')->name('main');
 
-Route::get('/sendinv', 'MainController@testMail')->name('t.mail');
+Route::group(['middleware' => ['guest']], function() {
+    /* Auth */
+    Route::get('/signin', 'AuthController@show')->name('auth.show');
+    Route::post('/signin', 'AuthController@process')->name('auth.process');
+    Route::get('/forgot', 'ForgotPasswordController@show')->name('forgot');
+    Route::post('/forgot', 'ForgotPasswordController@process')->name('forgot');
+    Route::get('/reset/{token}', 'ResetPasswordController@show')->name('reset');
+    Route::post('/reset/{token}', 'ResetPasswordController@process')->name('reset');
 
-Route::get('/chart/view', 'MainController@viewChart')->name('chart.view');
-Route::get('/chart/pview', 'MainController@pviewChart')->name('chart.pview');
+    /* User */
+    Route::get('/user/create', 'UserController@create')->name('user.create');
+    Route::post('/user/create', 'UserController@store')->name('user.store');
 
-Route::get('/sinvoice', function() {
-    $invoice = App\Models\Invoice::find(1);
-    return new App\Mail\InvoiceMail($invoice);
+    /* Company */
+    Route::get('/company/create', 'CompanyController@create')->name('company.create');
+    Route::post('/company/create', 'CompanyController@store')->name('company.store');
 });
 
-/* Auth */
-Route::get('/signin', 'AuthController@show')->name('auth.show');
-Route::post('/signin', 'AuthController@process')->name('auth.process');
-Route::post('/signout', 'AuthController@destroy')->name('auth.destroy');
-Route::get('/forgot', 'ForgotPasswordController@show')->name('forgot');
-Route::post('/forgot', 'ForgotPasswordController@process')->name('forgot');
-Route::get('/reset/{token}', 'ResetPasswordController@show')->name('reset');
-Route::post('/reset/{token}', 'ResetPasswordController@process')->name('reset');
-
-/* User */
-Route::get('/user/create', 'UserController@create')->name('user.create');
-Route::post('/user/create', 'UserController@store')->name('user.store');
-
-/* Company */
-Route::get('/company/create', 'CompanyController@create')->name('company.create');
-Route::post('/company/create', 'CompanyController@store')->name('company.store');
-
-
-
 Route::group(['middleware' => ['auth']], function() {
+    Route::post('/signout', 'AuthController@destroy')->name('auth.destroy');
+
     Route::get('/errors/nocompany', 'MainController@nocompany')->name('nocompany');
     Route::get('/dashboard', 'MainController@dashboard')->name('dashboard');
 
@@ -63,13 +54,11 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::group(['middleware' => ['hascompany']], function() {
 
-
         /* Migration */
         Route::get('/migration/', 'DataMigrationController@create')->name('migration.create');
         Route::post('/migration/import/contact', 'DataMigrationController@storecontact')->name('migration.import.contact');
         Route::post('/migration/import/invoice', 'DataMigrationController@storeinvoice')->name('migration.import.invoice');
         Route::post('/migration/import/payment', 'DataMigrationController@storepayment')->name('migration.import.payment');
-
 
         /* Clients */
         Route::get('/clients', 'ClientController@index')->name('client.index');
@@ -94,16 +83,13 @@ Route::group(['middleware' => ['auth']], function() {
 
         Route::get('/invoice/adhoc/create', 'InvoiceController@adhoccreate')->name('invoice.adhoc.create');
 
-
         /* OldInvoice */
         Route::get('/oldinvoice/{oldinvoice}', 'OldInvoiceController@show')->name('invoice.old.show');
         Route::get('/oldinvoice/{oldinvoice}/download', 'OldInvoiceController@download')->name('invoice.old.download');
         Route::get('/oldinvoice/{oldinvoice}/printview', 'OldInvoiceController@printview')->name('invoice.old.printview');
 
-
         /* Invoice History */
         Route::get('/invoice/{invoice}/history', 'InvoiceController@history')->name('invoice.history.show');
-
 
         /* InvoiceItem */
         Route::delete('/invoice/item/{invoiceitem}/destroy', 'InvoiceItemController@destroy')->name('invoice.item.destroy');
