@@ -86,6 +86,29 @@
                         </div>
                     @endforeach
                 </div>
+                <h3>Payment History</h3>
+                <div id="payment-history-container" class="payment-history-container">
+                    <div class="card-panel">
+                        <table class="responsive-table">
+                          <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Mode</th>
+                                <th>Amount</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @foreach($payments as $key => $payment)
+                            <tr>
+                              <td>{{ $payment->date_format }}</td>
+                              <td>{{ $payment->mode }}</td>
+                              <td>S${{ $payment->money_format }}</td>
+                            </tr>
+                            @endforeach
+                          </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
             <div class="col s12 l8">
                 <h3>Invoice</h3>

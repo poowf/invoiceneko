@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
 
+use Carbon\Carbon;
+
 class Payment extends Model
 {
     use SoftDeletes, CascadeSoftDeletes;
@@ -34,11 +36,17 @@ class Payment extends Model
      * @param  string  $value
      * @return string
      */
-    public function getMoneyAmountAttribute()
+    public function getMoneyFormatAttribute()
     {
         setlocale(LC_MONETARY, 'en_US.UTF-8');
         return money_format('%!.2n', $this->amount);
     }
+
+    public function getDateFormatAttribute()
+    {
+        return Carbon::createFromFormat('Y-m-d H:i:s', $this->receiveddate)->format('j F, Y');
+    }
+
 
     public function invoice()
     {
