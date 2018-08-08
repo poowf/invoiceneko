@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\App\Models\Client;
+use App\Models\Client;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ClientPolicy
@@ -25,7 +25,7 @@ class ClientPolicy
      * Determine whether the user can view the client.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\App\Models\Client  $client
+     * @param  \App\Models\Client  $client
      * @return mixed
      */
     public function view(User $user, Client $client)
@@ -48,7 +48,7 @@ class ClientPolicy
      * Determine whether the user can update the client.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\App\Models\Client  $client
+     * @param  \App\Models\Client  $client
      * @return mixed
      */
     public function update(User $user, Client $client)
@@ -60,7 +60,7 @@ class ClientPolicy
      * Determine whether the user can delete the client.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\App\Models\Client  $client
+     * @param  \App\Models\Client  $client
      * @return mixed
      */
     public function delete(User $user, Client $client)

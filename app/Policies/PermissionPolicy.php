@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\App\Models\Permission;
+use App\Models\Permission;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class PermissionPolicy
@@ -25,7 +25,7 @@ class PermissionPolicy
      * Determine whether the user can view the permission.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\App\Models\Permission  $permission
+     * @param  \App\Models\Permission  $permission
      * @return mixed
      */
     public function view(User $user, Permission $permission)
@@ -48,7 +48,7 @@ class PermissionPolicy
      * Determine whether the user can update the permission.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\App\Models\Permission  $permission
+     * @param  \App\Models\Permission  $permission
      * @return mixed
      */
     public function update(User $user, Permission $permission)
@@ -60,7 +60,7 @@ class PermissionPolicy
      * Determine whether the user can delete the permission.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\App\Models\Permission  $permission
+     * @param  \App\Models\Permission  $permission
      * @return mixed
      */
     public function delete(User $user, Permission $permission)
