@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\App\Models\OldInvoice;
+use App\Models\OldInvoice;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class OldInvoicePolicy
@@ -25,7 +25,7 @@ class OldInvoicePolicy
      * Determine whether the user can view the oldInvoice.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\App\Models\OldInvoice  $oldInvoice
+     * @param  \App\Models\OldInvoice  $oldInvoice
      * @return mixed
      */
     public function view(User $user, OldInvoice $oldInvoice)
@@ -48,7 +48,7 @@ class OldInvoicePolicy
      * Determine whether the user can update the oldInvoice.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\App\Models\OldInvoice  $oldInvoice
+     * @param  \App\Models\OldInvoice  $oldInvoice
      * @return mixed
      */
     public function update(User $user, OldInvoice $oldInvoice)
@@ -60,7 +60,7 @@ class OldInvoicePolicy
      * Determine whether the user can delete the oldInvoice.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\App\Models\OldInvoice  $oldInvoice
+     * @param  \App\Models\OldInvoice  $oldInvoice
      * @return mixed
      */
     public function delete(User $user, OldInvoice $oldInvoice)
