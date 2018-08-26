@@ -5,9 +5,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{{ mix('/assets/css/materialize.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ mix('/assets/css/core.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ mix('/assets/css/style.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ mix('/assets/css/selectize.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ mix('/assets/css/trumbowyg.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ mix('/assets/css/materialdesignicons.css') }}" rel="stylesheet" type="text/css">
     @yield("head")
     <script>
         window.Laravel = {!! json_encode([
@@ -22,13 +24,20 @@
 
 @include("partials/footer")
 
+<script type="text/javascript" src="{{ mix('/assets/js/manifest.js') }}"></script>
+<script type="text/javascript" src="{{ mix('/assets/js/vendor.js') }}"></script>
 <script type="text/javascript" src="{{ mix('/assets/js/app.js') }}"></script>
 
 @yield("scripts")
 <script>
     "use strict";
     $(function() {
-        $(".button-collapse").sideNav();
+        $('.collapsible').collapsible();
+        $('.sidenav').sidenav();
+        $('.tabs').tabs();
+        $('.dropdown-trigger').dropdown({
+            coverTrigger: false
+        });
 
         $('#return-to-top').click(function() {      // When arrow is clicked
             $('body,html').animate({
@@ -51,17 +60,18 @@
                         'body'       => $message['message']
                     ])
                 @else
-                    Materialize.toast('{!! $message['message'] !!}', '5000', '{{ $message['level'] }}') // 5000 is the duration of the toast, replace with text for unlimited duration
+                    {{-- 5000 is the duration of the toast, replace with text for unlimited duration --}}
+                    M.toast({ html: "{!! $message['message'] !!}", displayLength: "poowf", classes: "{{ $message['level'] }}"});
                 @endif
             @endforeach
-        {{ session()->forget('flash_notification') }}
+            {{ session()->forget('flash_notification') }}
         @endif
 
         @if (count($errors) > 0)
             @foreach($errors->toArray() as $key => $error)
                 $('#{{ $key }}').addClass('invalid');
-                $('#{{ $key }}').siblings('label').attr('data-error', "{!! $error[0] !!}");
-                Materialize.toast("{!! $error[0] !!}", 5000, 'error');
+                $('#{{ $key }}').siblings('span.helper-text').attr('data-error', "{!! $error[0] !!}");
+                M.toast({ html: "{!! $error[0] !!}", displayLength: "5000", classes: "error"});
             @endforeach
         @endif
     });

@@ -23,7 +23,7 @@
 @stop
 
 @section("content")
-    <div class="full-width">
+    <div class="wide-container">
         <div class="row">
             <div class="col s6">
                 <h3>Invoices</h3>

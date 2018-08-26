@@ -5,7 +5,7 @@
                 <div class="row">
                     <div class="col l12">
                         <div class="nav-wrapper">
-                            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                            <a href="#" data-target="mobile-menu" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                             <a href="{{ route('main') }}" class="logo"><img src="{{ asset('assets/img/logo.png') }}" alt="Invoice Plz"></a>
                             <ul class="left hide-on-med-and-down">
                                 <li><a href="{{ route('main') }}">Home</a></li>
@@ -33,7 +33,7 @@
                                     <li><a href="{{ route('user.create') }}">Sign Up</a></li>
                                 @endif
                             </ul>
-                            <ul class="side-nav" id="mobile-demo">
+                            <ul class="sidenav" id="mobile-menu">
                                 <li><a href="{{ route('main') }}">HOME</a></li>
                                 <hr>
                                 @if(Auth::check())

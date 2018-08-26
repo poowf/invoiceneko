@@ -79,7 +79,10 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('/invoice/{invoice}/printview', 'InvoiceController@printview')->name('invoice.printview');
         Route::get('/invoice/{invoice}/edit', 'InvoiceController@edit')->name('invoice.edit');
         Route::patch('/invoice/{invoice}/edit', 'InvoiceController@update')->name('invoice.update');
+        Route::patch('/invoice/{invoice}/archive', 'InvoiceController@archive')->name('invoice.archive');
+        Route::patch('/invoice/{invoice}/expire', 'InvoiceController@destroy')->name('invoice.archive');
         Route::delete('/invoice/{invoice}/destroy', 'InvoiceController@destroy')->name('invoice.destroy');
+
 
         Route::get('/invoice/adhoc/create', 'InvoiceController@adhoccreate')->name('invoice.adhoc.create');
 

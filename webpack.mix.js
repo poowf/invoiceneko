@@ -1,5 +1,7 @@
 let mix = require('laravel-mix');
-let path = require('path');
+const ImageminPlugin = require('imagemin-webpack-plugin').default;
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const imageminMozjpeg = require('imagemin-mozjpeg');
 
 /*
  |--------------------------------------------------------------------------
@@ -13,17 +15,49 @@ let path = require('path');
  */
 
 mix
-    .js('resources/assets/js/app.js', 'public/assets/js')
-    .sass('resources/assets/sass/core.scss', 'public/assets/css')
-    .sass('resources/assets/sass/style.scss', 'public/assets/css')
-    .less('node_modules/selectize/dist/less/selectize.less', 'public/assets/css')
-    .webpackConfig({
-        resolve: {
-            alias: {
-                'jquery': path.join( __dirname, 'node_modules/jquery/dist/jquery' ),
-            }
+    .setPublicPath('public')
+    .options({
+        fileLoaderDirs: {
+            fonts: 'assets/fonts'
         }
     })
+    .webpackConfig({
+        plugins: [
+            new CopyWebpackPlugin([{
+                from: 'resources/assets/images',
+                to: 'assets/img', // Laravel mix will place this in 'public/img'
+            }]),
+            new ImageminPlugin({
+                test: /\.(jpe?g|png|gif|svg)$/i,
+                plugins: [
+                    imageminMozjpeg({
+                        quality: 100,
+                    })
+                ]
+            })
+        ]
+    })
+
+    .js('resources/assets/js/app.js', 'assets/js')
+    .js('node_modules/trumbowyg/dist/plugins/colors/trumbowyg.colors.min.js', 'assets/js')
+    .js('node_modules/trumbowyg/dist/plugins/cleanpaste/trumbowyg.cleanpaste.min.js', 'assets/js')
+    .js('node_modules/trumbowyg/dist/plugins/fontsize/trumbowyg.fontsize.min.js', 'assets/js')
+    .js('node_modules/trumbowyg/dist/plugins/history/trumbowyg.history.min.js', 'assets/js')
+    .js('node_modules/intl-tel-input/build/js/intlTelInput.js', 'assets/js')
+    .js('node_modules/intl-tel-input/build/js/utils.js', 'assets/js')
+    .sass('resources/assets/sass/core.scss', 'public/assets/css')
+    .sass('resources/assets/sass/style.scss', 'public/assets/css')
+    .sass('node_modules/materialize-css/sass/materialize.scss', 'assets/css')
+    .sass('node_modules/@mdi/font/scss/materialdesignicons.scss', 'assets/css')
+    .sass('node_modules/trumbowyg/dist/ui/sass/trumbowyg.scss', 'assets/css')
+    .sass('node_modules/trumbowyg/dist/plugins/colors/ui/sass/trumbowyg.colors.scss', 'assets/css')
+    .sass('node_modules/slick-carousel/slick/slick.scss', 'assets/css')
+    .sass('node_modules/slick-carousel/slick/slick-theme.scss', 'assets/css')
+    .less('node_modules/selectize/dist/less/selectize.less', 'public/assets/css')
+    .copy('node_modules/intl-tel-input/build/css/intlTelInput.css', 'public/assets/css/intlTelInput.css')
+    .copy('node_modules/intl-tel-input/build/img/flags.png', 'public/assets/img/flags.png')
+    .copy('node_modules/intl-tel-input/build/img/flags@2x.png', 'public/assets/img/flags@2x.png')
+    .extract(['jquery'])
     .browserSync({
         //Browser Sync does not do any host or php processing, it just proxies the connection to the backend web server.
         //Port defines what port that browsersync will run on and it's basically a wrapper so that browsersync can be ran
