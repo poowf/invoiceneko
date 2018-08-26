@@ -193,6 +193,11 @@ mark {
   display: flex;
 }
 
+.flex.row > [class*='col'] {
+  display: flex;
+  flex-direction: column;
+}
+
 .left {
   text-align: left;
 }
@@ -260,12 +265,15 @@ mark {
 }
 
 /* Modifications for Elements */
+.wide-container {
+  margin: 0 auto;
+  width: 95%;
+}
 
 .mini-container {
   margin: 0 auto;
   width: 90%;
 }
-
 
 .alt-badge {
   font-size: 1rem;
@@ -361,13 +369,24 @@ mark {
 
 /* Accents */
 
+.theme-text {
+  color: #299a9a !important;
+}
+
+.sidenav .collapsible-body > ul:not(.collapsible) > li.active, .sidenav.sidenav-fixed .collapsible-body > ul:not(.collapsible) > li.active {
+  background-color: #299a9a;
+}
+
+.pagination li.active {
+  background-color: #299a9a;
+}
+
 .btn-theme {
   background-color: #299a9a;
 }
 
 .btn-theme:hover, .btn-theme:focus {
   background-color: #299a9a;
-
   box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
 }
 
@@ -466,6 +485,16 @@ mark {
   background-color: #2196F3;
 }
 
+.sidenav li > a {
+  font-weight: normal;
+}
+
+.sidenav li > a > i.material-icons {
+  font-size: 30px;
+  color: #fff;
+  margin: 0px;
+}
+
 .dropdown-button + .dropdown-content li > a, .dropdown-button + .dropdown-content li > span {
   color: #000;
 }
@@ -483,6 +512,8 @@ mark {
 :root input:not([type]):focus:not([readonly]) + label, :root input[type=text]:focus:not([readonly]) + label, :root input[type=password]:focus:not([readonly]) + label, :root input[type=email]:focus:not([readonly]) + label, :root input[type=url]:focus:not([readonly]) + label, :root input[type=time]:focus:not([readonly]) + label, :root input[type=date]:focus:not([readonly]) + label, :root input[type=datetime-local]:focus:not([readonly]) + label, :root input[type=tel]:focus:not([readonly]) + label, :root input[type=number]:focus:not([readonly]) + label, :root input[type=search]:focus:not([readonly]) + label, :root textarea.materialize-textarea:focus:not([readonly]) + label {
   color: #299a9a;
 }
+
+/* Element Modifications */
 
 .input-field label.label-validation {
   /*width: 99%;*/
@@ -515,81 +546,6 @@ input[type=text].input-label-text.invalid + label:after {
   color: #F44336;
 }
 
-.input-field label.manual-validation {
-  font-size: 1.1rem;
-  /*font-size: 0.95rem;*/
-  /*transform: translateY(-140%);*/
-  -webkit-transform: translateY(-14px) scale(0.8);
-  transform: translateY(-14px) scale(0.8);
-  -webkit-transform-origin: 0 0;
-  transform-origin: 0 0;
-  width: 100%;
-  top: 7px;
-}
-
-.input-field label.manual-validation:after {
-  display: block;
-  content: "";
-  position: absolute;
-  opacity: 0;
-  transition: .2s opacity ease-out, .2s color ease-out;
-  margin-top: 45px;
-}
-
-.input-field label.manual-validation.file:after {
-  margin-top: 60px;
-}
-
-.input-field label.manual-validation.valid:after {
-  content: attr(data-success);
-  color: #4CAF50;
-  opacity: 1;
-}
-
-.input-field label.manual-validation.invalid:after {
-  content: attr(data-error);
-  color: #F44336;
-  opacity: 1;
-}
-
-.select2.select2-container.select2-container--default.valid {
-  border-bottom: 1px solid #4CAF50;
-  box-shadow: 0 1px 0 0 #4CAF50;
-}
-
-.select2.select2-container.select2-container--default.invalid {
-  border-bottom: 1px solid #F44336;
-  box-shadow: 0 1px 0 0 #F44336;
-}
-
-.select2.select2-container.select2-container--default + label {
-  width: 100%;
-  font-size: 0.95rem;
-  transform: translateY(-140%);
-  text-align: left;
-}
-
-.select2.select2-container.select2-container--default + label:after {
-  display: block;
-  content: "";
-  position: absolute;
-  top: 65px;
-  opacity: 0;
-  transition: .2s opacity ease-out, .2s color ease-out;
-}
-
-.select2.select2-container.select2-container--default.valid + label:after {
-  content: attr(data-success);
-  color: #4CAF50;
-  opacity: 1;
-}
-
-.select2.select2-container.select2-container--default.invalid + label:after {
-  content: attr(data-error);
-  color: #F44336;
-  opacity: 1;
-}
-
 .datepicker.picker__input.valid + .picker + label:after {
   content: attr(data-success);
   color: #4CAF50;
@@ -609,19 +565,6 @@ input[type=text].input-label-text.invalid + label:after {
   top: 65px;
   opacity: 0;
   transition: .2s opacity ease-out, .2s color ease-out;
-}
-
-.input-field textarea + .froala-label {
-  font-size: 0.95rem;
-  top: 110%;
-}
-
-.fr-view.invalid {
-  border: solid #F44336 2px;
-}
-
-.fr-view.valid {
-  border: solid #4CAF50 2px;
 }
 
 textarea + label:after {
@@ -667,6 +610,16 @@ textarea.valid + label:after {
 
 .toast.info, .alt-badge.info {
   background-color: #0091ea;
+}
+
+.input-field .character-counter {
+  position: absolute;
+  right: 12px;
+}
+
+.input-field .helper-text {
+  position: absolute;
+  width: 100%;
 }
 
 /* Fonts */
@@ -878,7 +831,22 @@ label.rbtn-label.invalid:after {
 }
 
 .intl-tel-input {
-  width: calc(100% - 48px);
+  margin: 0 0 8px 0;
+  width: calc(100% - 56px);
+}
+
+.intl-tel-input ~ .helper-text[data-error] {
+  color: transparent;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+.intl-tel-input ~ .helper-text.invalid[data-error]:after {
+  content: attr(data-error);
+  color: #F44336;
 }
 
 /* Sign In Page */

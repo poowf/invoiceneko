@@ -33,9 +33,7 @@ window.$ = window.jQuery = require('jquery');
 
 require('materialize-css');
 require('selectize');
-require('intl-tel-input');
 require('parsleyjs');
 require('slick-carousel');
 require('mark.js');
 require('trumbowyg');
-//require('trumbowyg/plugins/cleanpaste/trumbowyg.cleanpaste');

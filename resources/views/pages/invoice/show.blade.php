@@ -14,6 +14,8 @@
         }
 
     </style>
+    <link href="{{ mix('/assets/css/slick.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ mix('/assets/css/slick-theme.css') }}" rel="stylesheet" type="text/css">
 @stop
 
 @section("content")
@@ -28,6 +30,16 @@
                 </a>
                 <a class="btn btn-link waves-effect waves-dark" href="{{ route('invoice.printview', [ 'invoice' => $invoice->id] ) }}">
                     Print
+                </a>
+            </div>
+        </div>
+        <div id="invoice-action-container" class="row" style="margin-bottom: 0;">
+            <div class="col s12 right">
+                <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="btn orange darken-1 waves-effect waves-dark">
+                    Edit
+                </a>
+                <a href="#" data-id="{{ $invoice->id }}" class="invoice-delete-btn btn red waves-effect waves-dark">
+                    Delete
                 </a>
             </div>
         </div>
@@ -257,6 +269,20 @@
             </div>
         </div>
     </div>
+
+    <div id="delete-confirmation" class="modal">
+        <div class="modal-content">
+            <p>Delete Invoice?</p>
+        </div>
+        <div class="modal-footer">
+            <form id="delete-invoice-form" method="post" class="null-form">
+                {{ method_field('DELETE') }}
+                {{ csrf_field() }}
+                <button class="modal-action waves-effect black-text waves-green btn-flat btn-deletemodal invoice-confirm-delete-btn" type="submit">Delete</button>
+            </form>
+            <a href="javascript:;" class=" modal-action modal-close waves-effect black-text waves-red btn-flat btn-deletemodal">Cancel</a>
+        </div>
+    </div>
 @stop
 
 @section("scripts")
@@ -268,6 +294,13 @@
                 var height = $('#details-panel').outerHeight();
                 console.log($(this).find('.single-history').css('height', height));
                 // left
+            });
+
+            $('#invoice-action-container').on('click', '.invoice-delete-btn', function (event) {
+                event.preventDefault();
+                var invoiceid = $(this).attr('data-id');
+                $('#delete-invoice-form').attr('action', '/invoice/' + invoiceid + '/destroy');
+                $('#delete-confirmation').modal('open');
             });
 
             $('#change-history-container').slick({

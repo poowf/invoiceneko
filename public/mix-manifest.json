@@ -1,6 +1,23 @@
 {
-    "/assets/js/app.js": "/assets/js/app.js?id=088b817068d248453be6",
-    "/assets/css/core.css": "/assets/css/core.css?id=eceb982c2f91ec149cb4",
-    "/assets/css/style.css": "/assets/css/style.css?id=cf35f57a8960132ca9ec",
-    "/assets/css/selectize.css": "/assets/css/selectize.css?id=86d8a223c5e68811a7ff"
+    "/assets/js/app.js": "/assets/js/app.js?id=309b5e24239934d30b83",
+    "/assets/css/selectize.css": "/assets/css/selectize.css?id=567e90bc0f0fb17a6074",
+    "/assets/css/core.css": "/assets/css/core.css?id=2d6ffdc9e1192a5830ca",
+    "/assets/css/style.css": "/assets/css/style.css?id=75b3fe58ba553c4185b0",
+    "/assets/css/materialize.css": "/assets/css/materialize.css?id=669d4ee60358ea408b59",
+    "/assets/css/materialdesignicons.css": "/assets/css/materialdesignicons.css?id=421305528933fe14b84e",
+    "/assets/css/trumbowyg.css": "/assets/css/trumbowyg.css?id=a726c3f24d485756f93b",
+    "/assets/css/trumbowyg.colors.css": "/assets/css/trumbowyg.colors.css?id=cb6fbf1c8d95703c966a",
+    "/assets/css/slick.css": "/assets/css/slick.css?id=75be7a0dd5baefd3a579",
+    "/assets/css/slick-theme.css": "/assets/css/slick-theme.css?id=2940bde0748e147df168",
+    "/assets/js/trumbowyg.history.min.js": "/assets/js/trumbowyg.history.min.js?id=6afd18b6f6164b46b246",
+    "/assets/js/trumbowyg.fontsize.min.js": "/assets/js/trumbowyg.fontsize.min.js?id=f024d978b3668c5f63e1",
+    "/assets/js/trumbowyg.colors.min.js": "/assets/js/trumbowyg.colors.min.js?id=6d4ec565b24e67302509",
+    "/assets/js/trumbowyg.cleanpaste.min.js": "/assets/js/trumbowyg.cleanpaste.min.js?id=e9efb217a6786ef90374",
+    "/assets/js/vendor.js": "/assets/js/vendor.js?id=ac91cd1c0a08a0bc612f",
+    "/assets/js/utils.js": "/assets/js/utils.js?id=d6ece8c18869cf12da1c",
+    "/assets/js/intlTelInput.js": "/assets/js/intlTelInput.js?id=f0366c4dc8949499b597",
+    "/assets/js/manifest.js": "/assets/js/manifest.js?id=53eba20bb93f839e9785",
+    "/assets/css/intlTelInput.css": "/assets/css/intlTelInput.css?id=421ea9b92ad7e24c46b5",
+    "/assets/img/flags.png": "/assets/img/flags.png?id=c709320e2ea44df94fdb",
+    "/assets/img/flags@2x.png": "/assets/img/flags@2x.png?id=2bca6dd4bc3e3f2bc185"
 }
