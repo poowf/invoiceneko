@@ -12,31 +12,31 @@
   "devDependencies": {
     "axios": "^0.18",
     "bootstrap": "^4.0.0",
-    "browser-sync": "^2.24.6",
+    "browser-sync": "^2.24.7",
     "browser-sync-webpack-plugin": "^2.2.2",
     "copy-webpack-plugin": "^4.5.2",
     "cross-env": "^5.1",
     "imagemin-mozjpeg": "^7.0.0",
-    "imagemin-webpack-plugin": "^2.2.0",
+    "imagemin-webpack-plugin": "^2.3.0",
     "jquery": "^3.3.1",
     "laravel-mix": "^2.0",
     "less": "^2.7.2",
     "less-loader": "^4.0.5",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.11",
     "popper.js": "^1.12",
     "vue": "^2.5.2"
   },
   "dependencies": {
-    "@mdi/font": "^2.6.95",
+    "@mdi/font": "^2.8.94",
     "chartist": "^0.11.0",
     "dropzone": "^5.5.1",
-    "flag-icon-css": "^3.0.0",
-    "intl-tel-input": "^13.0.2",
+    "flag-icon-css": "^3.2.0",
+    "intl-tel-input": "^13.0.4",
     "mark.js": "^8.11.1",
-    "materialize-css": "^1.0.0-rc.2",
+    "materialize-css": "^1.0.0",
     "parsleyjs": "^2.8.1",
     "selectize": "^0.12.6",
     "slick-carousel": "^1.8.1",
-    "trumbowyg": "^2.10.0"
+    "trumbowyg": "^2.11.0"
   }
 }

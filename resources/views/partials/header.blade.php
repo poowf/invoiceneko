@@ -17,8 +17,8 @@
                                     <li><a href="{{ route('invoice.index') }}">Invoices</a></li>
                                     <li><a href="{{ route('client.index') }}">Clients</a></li>
                                     <li><a href="{{ route('payment.index') }}">Payments</a></li>
-                                    <li><a class="waves-effect waves-dark btn-link btn dropdown-button" href="javascript:;" data-beloworigin="true" data-activates="dropdown1">My Account<i class="material-icons right" style="line-height: 35px;">arrow_drop_down</i></a></li>
-                                    <ul id="dropdown1" class="dropdown-content" style="margin-left: 15px;">
+                                    <li><a class="waves-effect waves-dark btn-link btn dropdown-trigger" href="javascript:;" data-target="dropdown-navigation">My Account<i class="material-icons right" style="line-height: 35px;">arrow_drop_down</i></a></li>
+                                    <ul id="dropdown-navigation" class="dropdown-content" style="margin-left: 15px;">
                                         <li><a href="{{ route('company.edit') }}">Company</a></li>
                                         <li><a href="{{ route('company.settings.edit') }}">Settings</a></li>
                                         <li>
@@ -41,8 +41,8 @@
                                     <li><a href="{{ route('invoice.index') }}">Invoices</a></li>
                                     <li><a href="{{ route('client.index') }}">Clients</a></li>
                                     <li><a href="{{ route('payment.index') }}">Payments</a></li>
-                                    <li><a class="waves-effect waves-dark btn-link btn dropdown-button" href="javascript:;" data-beloworigin="true" data-activates="dropdown2">My Account<i class="material-icons right">arrow_drop_down</i></a></li>
-                                    <ul id="dropdown2" class="dropdown-content" style="margin-left: 10px; margin-top: 15px;">
+                                    <li><a class="waves-effect waves-dark btn-link btn dropdown-trigger" href="javascript:;" data-target="dropdown-mobile-navigation">My Account<i class="material-icons right">arrow_drop_down</i></a></li>
+                                    <ul id="dropdown-mobile-navigation" class="dropdown-content" style="margin-left: 10px; margin-top: 15px;">
                                         <li><a href="{{ route('company.edit') }}">Company</a></li>
                                         <li><a href="{{ route('company.settings.edit') }}">Settings</a></li>
                                         <li>

@@ -58,14 +58,14 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            $('.datepicker').pickadate({
-                formatSubmit: 'yyyy-mm-dd',
-                selectMonths: true, // Creates a dropdown to control month
-                selectYears: 15, // Creates a dropdown of 15 years to control year,
-                today: 'Today',
-                clear: 'Clear',
-                close: 'Ok',
-                closeOnSelect: true // Close upon selecting a date,
+            $('.datepicker').datepicker({
+                autoClose: 'false',
+                format: 'd mmmm, yyyy',
+                yearRange: [1950, 2018],
+                onSelect: function() {
+                    // var date = $(this)[0].formats.yyyy() + '-' + $(this)[0].formats.mm() + '-' + $(this)[0].formats.dd()
+                    // $('#receiveddate').val(date);
+                }
             });
 
             $('#create-payment').parsley({

@@ -42,11 +42,16 @@ class Payment extends Model
         return money_format('%!.2n', $this->amount);
     }
 
+    public function getPercentageAttribute()
+    {
+        $invoiceTotal = $this->invoice->total;
+        return money_format('%!.2n', ($this->amount/$invoiceTotal)*100);
+    }
+
     public function getDateFormatAttribute()
     {
         return Carbon::createFromFormat('Y-m-d H:i:s', $this->receiveddate)->format('j F, Y');
     }
-
 
     public function invoice()
     {

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Log;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
@@ -17,6 +18,8 @@ class Invoice extends Model
     const STATUS_CLOSED = 3;
     const STATUS_OVERDUE = 4;
     const STATUS_VOID = 5;
+    const STATUS_ARCHIVED = 6;
+    const STATUS_WRITTENOFF = 7;
 
     /**
      * The database table used by the model.
@@ -143,6 +146,12 @@ class Invoice extends Model
                 break;
             case self::STATUS_CLOSED:
                 $textstatus = "Paid";
+                break;
+            case self::STATUS_ARCHIVED:
+                $textstatus = "Archived";
+                break;
+            case self::STATUS_WRITTENOFF:
+                $textstatus = "Written Off";
                 break;
         }
 

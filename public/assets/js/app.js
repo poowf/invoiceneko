@@ -1086,7 +1086,7 @@ return Mark;
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
- * Materialize v1.0.0-rc.2 (http://materializecss.com)
+ * Materialize v1.0.0 (http://materializecss.com)
  * Copyright 2014-2017 Materialize
  * MIT License (https://raw.githubusercontent.com/Dogfalo/materialize/master/LICENSE)
  */
@@ -2171,6 +2171,8 @@ if (true) {
   }
   exports.default = M;
 }
+
+M.version = '1.0.0';
 
 M.keys = {
   TAB: 9,
@@ -3595,7 +3597,11 @@ $jscomp.polyfill = function (e, r, p, m) {
           var $activatableElement = $(focusedElement).find('a, button').first();
 
           // Click a or button tag if exists, otherwise click li tag
-          !!$activatableElement.length ? $activatableElement[0].click() : focusedElement.click();
+          if (!!$activatableElement.length) {
+            $activatableElement[0].click();
+          } else if (!!focusedElement) {
+            focusedElement.click();
+          }
 
           // Close dropdown on ESC
         } else if (e.which === M.keys.ESC && this.isOpen) {
@@ -3775,8 +3781,7 @@ $jscomp.polyfill = function (e, r, p, m) {
 
             // onOpenEnd callback
             if (typeof _this11.options.onOpenEnd === 'function') {
-              var elem = anim.animatables[0].target;
-              _this11.options.onOpenEnd.call(elem, _this11.el);
+              _this11.options.onOpenEnd.call(_this11, _this11.el);
             }
           }
         });
@@ -3807,7 +3812,6 @@ $jscomp.polyfill = function (e, r, p, m) {
 
             // onCloseEnd callback
             if (typeof _this12.options.onCloseEnd === 'function') {
-              var elem = anim.animatables[0].target;
               _this12.options.onCloseEnd.call(_this12, _this12.el);
             }
           }
@@ -3937,7 +3941,7 @@ $jscomp.polyfill = function (e, r, p, m) {
 
   Dropdown._dropdowns = [];
 
-  window.M.Dropdown = Dropdown;
+  M.Dropdown = Dropdown;
 
   if (M.jQueryLoaded) {
     M.initializeJqueryWrapper(Dropdown, 'dropdown', 'M_Dropdown');
@@ -5508,7 +5512,7 @@ $jscomp.polyfill = function (e, r, p, m) {
     return Tabs;
   }(Component);
 
-  window.M.Tabs = Tabs;
+  M.Tabs = Tabs;
 
   if (M.jQueryLoaded) {
     M.initializeJqueryWrapper(Tabs, 'tabs', 'M_Tabs');
@@ -7178,7 +7182,7 @@ $jscomp.polyfill = function (e, r, p, m) {
 
   Sidenav._sidenavs = [];
 
-  window.M.Sidenav = Sidenav;
+  M.Sidenav = Sidenav;
 
   if (M.jQueryLoaded) {
     M.initializeJqueryWrapper(Sidenav, 'sidenav', 'M_Sidenav');
@@ -12921,10 +12925,20 @@ $jscomp.polyfill = function (e, r, p, m) {
           // Add callback for centering selected option when dropdown content is scrollable
           dropdownOptions.onOpenEnd = function (el) {
             var selectedOption = $(_this71.dropdownOptions).find('.selected').first();
-            if (_this71.dropdown.isScrollable && selectedOption.length) {
-              var scrollOffset = selectedOption[0].getBoundingClientRect().top - _this71.dropdownOptions.getBoundingClientRect().top; // scroll to selected option
-              scrollOffset -= _this71.dropdownOptions.clientHeight / 2; // center in dropdown
-              _this71.dropdownOptions.scrollTop = scrollOffset;
+
+            if (selectedOption.length) {
+              // Focus selected option in dropdown
+              M.keyDown = true;
+              _this71.dropdown.focusedIndex = selectedOption.index();
+              _this71.dropdown._focusFocusedItem();
+              M.keyDown = false;
+
+              // Handle scrolling to selected option
+              if (_this71.dropdown.isScrollable) {
+                var scrollOffset = selectedOption[0].getBoundingClientRect().top - _this71.dropdownOptions.getBoundingClientRect().top; // scroll to selected option
+                scrollOffset -= _this71.dropdownOptions.clientHeight / 2; // center in dropdown
+                _this71.dropdownOptions.scrollTop = scrollOffset;
+              }
             }
           };
 
@@ -22931,7 +22945,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 /***/ (function(module, exports) {
 
 /**
- * Trumbowyg v2.10.0 - A lightweight WYSIWYG editor
+ * Trumbowyg v2.11.0 - A lightweight WYSIWYG editor
  * Trumbowyg core file
  * ------------------------
  * @link http://alex-d.github.io/Trumbowyg
@@ -23211,7 +23225,8 @@ Object.defineProperty(jQuery.trumbowyg, 'defaultOptions', {
             };
         t.btnsDef = {
             viewHTML: {
-                fn: 'toggle'
+                fn: 'toggle',
+                class: 'trumbowyg-not-disable',
             },
 
             undo: {
@@ -24190,7 +24205,7 @@ Object.defineProperty(jQuery.trumbowyg, 'defaultOptions', {
                     return false;
                 }
 
-                var link = $(['<a href="', v.url, '">', v.text || v.url, '</a>'].join(''));
+                var link = $(['<a href="', url, '">', v.text || v.url, '</a>'].join(''));
 
                 if (!t.o.minimalLinks) {
                     if (v.title.length > 0) {
@@ -24213,12 +24228,12 @@ Object.defineProperty(jQuery.trumbowyg, 'defaultOptions', {
                 return url;
             }
 
-            const VALID_LINK_PREFIX = /^([a-z][-+.a-z0-9]*:|\/|#)/i;
+            var VALID_LINK_PREFIX = /^([a-z][-+.a-z0-9]*:|\/|#)/i;
             if (VALID_LINK_PREFIX.test(url)) {
                 return url;
             }
 
-            const SIMPLE_EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            var SIMPLE_EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (SIMPLE_EMAIL_REGEX.test(url)) {
                 return 'mailto:' + url;
             }
@@ -24582,7 +24597,7 @@ Object.defineProperty(jQuery.trumbowyg, 'defaultOptions', {
                 }
 
                 t.openModalInsert(t.lang.insertImage, options, function (v) {
-                    if (v.src !== base64) {
+                    if (v.url !== base64) {
                         $img.attr({
                             src: v.url
                         });

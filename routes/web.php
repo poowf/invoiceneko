@@ -80,7 +80,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('/invoice/{invoice}/edit', 'InvoiceController@edit')->name('invoice.edit');
         Route::patch('/invoice/{invoice}/edit', 'InvoiceController@update')->name('invoice.update');
         Route::patch('/invoice/{invoice}/archive', 'InvoiceController@archive')->name('invoice.archive');
-        Route::patch('/invoice/{invoice}/expire', 'InvoiceController@destroy')->name('invoice.archive');
+        Route::patch('/invoice/{invoice}/writeoff', 'InvoiceController@writeoff')->name('invoice.writeoff');
         Route::delete('/invoice/{invoice}/destroy', 'InvoiceController@destroy')->name('invoice.destroy');
 
 
