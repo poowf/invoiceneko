@@ -34,6 +34,34 @@ class InvoiceController extends Controller
     }
 
     /**
+     * Set the Invoice to Archived
+     *
+     * @param Invoice $invoice
+     * @return \Illuminate\Http\Response
+     */
+    public function archive(Invoice $invoice)
+    {
+        $invoice->status = Invoice::STATUS_ARCHIVED;
+        $invoice->save();
+
+        return redirect()->route('invoice.show', [ 'invoice' => $invoice->id ]);
+    }
+
+    /**
+     * Set the Invoice to Written Off
+     *
+     * @param Invoice $invoice
+     * @return \Illuminate\Http\Response
+     */
+    public function writeoff(Invoice $invoice)
+    {
+        $invoice->status = Invoice::STATUS_WRITTENOFF;
+        $invoice->save();
+
+        return redirect()->route('invoice.show', [ 'invoice' => $invoice->id ]);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

@@ -89,7 +89,12 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            $('.trumbowyg-textarea').trumbowyg();
+            $('.trumbowyg-textarea').trumbowyg({
+                svgPath: '/assets/fonts/trumbowygicons.svg',
+                removeformatPasted: true,
+                resetCss: true,
+                autogrow: true,
+            });
 
             $('#edit-company-settings').parsley({
                 successClass: 'valid',

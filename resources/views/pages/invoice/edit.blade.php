@@ -110,7 +110,10 @@
             var invoiceitemcount = 0;
 
             $('.trumbowyg-textarea').trumbowyg({
-                removeformatPasted: true
+                svgPath: '/assets/fonts/trumbowygicons.svg',
+                removeformatPasted: true,
+                resetCss: true,
+                autogrow: true,
             });
 
             var picker = $('#date').pickadate({

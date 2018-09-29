@@ -35,7 +35,17 @@
         </div>
         <div id="invoice-action-container" class="row" style="margin-bottom: 0;">
             <div class="col s12 right">
-                <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="btn orange darken-1 waves-effect waves-dark">
+                <form method="post" action="{{ route('invoice.writeoff', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
+                    {{ method_field('PATCH') }}
+                    {{ csrf_field() }}
+                    <button class="btn deep-orange darken-2 waves-effect waves-dark null-btn" type="submit">Write Off</button>
+                </form>
+                <form method="post" action="{{ route('invoice.archive', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
+                    {{ method_field('PATCH') }}
+                    {{ csrf_field() }}
+                    <button class="btn amber darken-2 waves-effect waves-dark null-btn" type="submit">Archive</button>
+                </form>
+                <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="btn light-blue waves-effect waves-dark">
                     Edit
                 </a>
                 <a href="#" data-id="{{ $invoice->id }}" class="invoice-delete-btn btn red waves-effect waves-dark">
@@ -71,6 +81,10 @@
                             <span class="alt-badge warning">{{ $invoice->statustext() }}</span>
                         @elseif ($invoice->status == App\Models\Invoice::STATUS_CLOSED)
                             <span class="alt-badge success">{{ $invoice->statustext() }}</span>
+                        @elseif ($invoice->status == App\Models\Invoice::STATUS_ARCHIVED)
+                            <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
+                        @elseif ($invoice->status == App\Models\Invoice::STATUS_WRITTENOFF)
+                            <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
                         @endif
                     </dd>
                     </dl>
@@ -102,22 +116,24 @@
                 <div id="payment-history-container" class="payment-history-container">
                     <div class="card-panel">
                         <table class="responsive-table">
-                          <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Mode</th>
-                                <th>Amount</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            @foreach($payments as $key => $payment)
-                            <tr>
-                              <td>{{ $payment->date_format }}</td>
-                              <td>{{ $payment->mode }}</td>
-                              <td>S${{ $payment->money_format }}</td>
-                            </tr>
-                            @endforeach
-                          </tbody>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Mode</th>
+                                    <th>Amount</th>
+                                    <th>Percentage of Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($payments as $key => $payment)
+                                    <tr>
+                                        <td>{{ $payment->date_format }}</td>
+                                        <td>{{ $payment->mode }}</td>
+                                        <td>S${{ $payment->money_format }}</td>
+                                        <td><span class="alt-badge teal lighten-1">{{ $payment->percentage }}%</span></td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
                         </table>
                     </div>
                 </div>

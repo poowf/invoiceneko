@@ -257,6 +257,7 @@ mark {
 .null-btn {
   border: none;
   background-color: transparent;
+  cursor: pointer;
 }
 
 #delete-confirmation {
@@ -340,10 +341,20 @@ mark {
   border-bottom: 1px solid #9e9e9e;
   border-radius: 0;
   padding-left: 0;
+  height: 3rem;
 }
+
 .selectize-control.single .selectize-input input {
-  height: auto;
+  height: 2.8rem;
+  border: none;
+  outline: none;
 }
+
+.selectize-control.single .selectize-input .item {
+  height: 2.8rem;
+  line-height: 2.8rem;
+}
+
 .selectize-dropdown {
   border: none;
   border-radius: 0;
@@ -354,6 +365,11 @@ mark {
   min-height: 50px;
   line-height: 50px;
   padding: 0 8px;
+  cursor: pointer;
+}
+
+.selectize-dropdown [data-selectable]:hover {
+  background-color: #f1f1f1;
 }
 
 .selectize-control.valid .selectize-input {
@@ -361,6 +377,7 @@ mark {
   -webkit-box-shadow: 0 1px 0 0 #4CAF50;
   box-shadow: 0 1px 0 0 #4CAF50;
 }
+
 .selectize-control.invalid .selectize-input {
   border-bottom: 1px solid #F44336;
   -webkit-box-shadow: 0 1px 0 0 #F44336;
@@ -495,7 +512,7 @@ mark {
   margin: 0px;
 }
 
-.dropdown-button + .dropdown-content li > a, .dropdown-button + .dropdown-content li > span {
+.dropdown-trigger + .dropdown-content li > a, .dropdown-trigger + .dropdown-content li > span {
   color: #000;
 }
 
@@ -546,25 +563,8 @@ input[type=text].input-label-text.invalid + label:after {
   color: #F44336;
 }
 
-.datepicker.picker__input.valid + .picker + label:after {
-  content: attr(data-success);
-  color: #4CAF50;
-  opacity: 1;
-}
-
-.datepicker.picker__input.invalid + .picker + label:after {
-  content: attr(data-error);
-  color: #F44336;
-  opacity: 1;
-}
-
-.datepicker.picker__input + .picker + label:after {
-  display: block;
-  content: "";
-  position: absolute;
-  top: 65px;
-  opacity: 0;
-  transition: .2s opacity ease-out, .2s color ease-out;
+.datepicker-controls .select-month input {
+  width: 90px;
 }
 
 textarea + label:after {
