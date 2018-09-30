@@ -2,6 +2,7 @@
 
 @section("head")
     <title>{{ config('app.name') }}</title>
+    <link href="{{ mix('/assets/css/intlTelInput.css') }}" rel="stylesheet" type="text/css">
     <style>
         .logo-display-container, .smlogo-display-container {
             display: inline-block;
@@ -83,25 +84,28 @@
                             <div class="input-field col s12">
                                 <input id="name" name="name" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ $company->name or '' }}" placeholder="Company Name">
                                 <label for="name" class="label-validation">Company Name</label>
+                                <span class="helper-text"></span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
                                 <input id="crn" name="crn" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ $company->crn or '' }}" placeholder="Company Registration Number">
                                 <label for="crn" class="label-validation">Company Registration Number</label>
+                                <span class="helper-text"></span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
                                 <input id="email" name="email" type="email" data-parsley-required="true" data-parsley-trigger="change" value="{{ $company->email or '' }}" placeholder="Company Email">
                                 <label for="email" class="label-validation">Company Email</label>
+                                <span class="helper-text"></span>
                             </div>
                         </div>
                         <div class="row pbtm20">
                             <div class="input-field col s12">
-                                <input id="fphone" name="fphone" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$" data-parsley-phone-format="#fphone" value="{{ $company->phone or '' }}">
-                                <input id="phone" name="phone" class="form-control" type="hidden" data-parsley-required="true" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$">
-                                <label for="fphone" class="manual-validation">Company Phone</label>
+                                <input id="phone" name="phone" type="text" data-parsley-required="false" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$" data-parsley-phone-format="#phone" value="{{ $company->phone }}">
+                                <label for="phone" class="label-validation">Phone</label>
+                                <span class="helper-text"></span>
                             </div>
                         </div>
                     </div>
@@ -119,6 +123,8 @@
 @stop
 
 @section("scripts")
+    <script type="text/javascript" src="{{ mix('/assets/js/intlTelInput.js') }}"></script>
+
     <script type="text/javascript">
         "use strict";
         $(function() {
@@ -160,17 +166,17 @@
                 }
             });
 
-            $("#fphone").intlTelInput({
+            $("#phone").intlTelInput({
                 initialCountry: "sg",
                 utilsScript: "/assets/js/utils.js"
             });
 
-            $( "#fphone" ).focusin(function() {
-                $(this).parent().siblings('.manual-validation').addClass('black-text');
+            $("#phone").focusin(function() {
+                $(this).parent().siblings('.label-validation').addClass('theme-text');
             });
 
-            $( "#fphone" ).focusout(function() {
-                $(this).parent().siblings('.manual-validation').removeClass('black-text');
+            $("#phone").focusout(function() {
+                $(this).parent().siblings('.label-validation').removeClass('theme-text');
             });
 
             window.Parsley
@@ -195,7 +201,7 @@
                 successClass: 'valid',
                 errorClass: 'invalid',
                 errorsContainer: function (velem) {
-                    var $errelem = velem.$element.siblings('label');
+                    let $errelem = velem.$element.siblings('span.helper-text');
                     $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
                     return true;
                 },
@@ -206,20 +212,26 @@
 
                 })
                 .on('field:success', function(velem) {
-                    if (velem.$element.is('#fphone'))
+                    if (velem.$element.is(':radio'))
+                    {
+                        velem.$element.parent('').siblings('label').removeClass('invalid').addClass('valid');
+                    }
+                    else if (velem.$element.is('#phone'))
                     {
                         velem.$element.parent('').siblings('label').removeClass('invalid').addClass('valid');
                     }
                 })
                 .on('field:error', function(velem) {
-                    if (velem.$element.is('#fphone'))
+                    if (velem.$element.is(':radio'))
                     {
                         velem.$element.parent('').siblings('label').removeClass('valid').addClass('invalid');
                         velem.$element.parent('').siblings('label').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
                     }
-                })
-                .on('form:submit', function(velem) {
-                    $("#phone").val($("#fphone").intlTelInput("getNumber"));
+                    else if (velem.$element.is('#phone'))
+                    {
+                        velem.$element.parent('').siblings('span.helper-text').removeClass('valid').addClass('invalid');
+                        velem.$element.parent('').siblings('span.helper-text').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
+                    }
                 });
         });
     </script>

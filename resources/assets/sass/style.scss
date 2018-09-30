@@ -849,6 +849,14 @@ label.rbtn-label.invalid:after {
   color: #F44336;
 }
 
+.intl-tel-input .flag-container {
+  outline: none;
+}
+
+.intl-tel-input .selected-flag {
+  outline: none;
+}
+
 /* Sign In Page */
 .login-container {
   position: relative;

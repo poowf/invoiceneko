@@ -63,12 +63,14 @@
                             <div class="input-field col s12">
                                 <input id="invoice_prefix" name="invoice_prefix" type="text" data-parsley-trigger="change" data-parsley-minlength="2" value="{{ $companysettings->invoice_prefix or '' }}" placeholder="Invoice Prefix">
                                 <label for="invoice_prefix" class="label-validation">Invoice Prefix</label>
+                                <span class="helper-text"></span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
                                 <textarea id="invoice_conditions" name="invoice_conditions" class="trumbowyg-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Invoice Conditions">{!! $companysettings->invoice_conditions !!}</textarea>
                                 <label for="invoice_conditions" class="label-validation">Invoice Conditions</label>
+                                <span class="helper-text"></span>
                             </div>
                         </div>
                     </div>
@@ -100,7 +102,7 @@
                 successClass: 'valid',
                 errorClass: 'invalid',
                 errorsContainer: function (velem) {
-                    var $errelem = velem.$element.siblings('label');
+                    let $errelem = velem.$element.siblings('span.helper-text');
                     $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
                     return true;
                 },
@@ -111,20 +113,17 @@
 
                 })
                 .on('field:success', function(velem) {
-                    if (velem.$element.is('#fphone'))
+                    if (velem.$element.is('#phone'))
                     {
                         velem.$element.parent('').siblings('label').removeClass('invalid').addClass('valid');
                     }
                 })
                 .on('field:error', function(velem) {
-                    if (velem.$element.is('#fphone'))
+                    if (velem.$element.is('#phone'))
                     {
-                        velem.$element.parent('').siblings('label').removeClass('valid').addClass('invalid');
-                        velem.$element.parent('').siblings('label').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
+                        velem.$element.parent('').siblings('span.helper-text').removeClass('valid').addClass('invalid');
+                        velem.$element.parent('').siblings('span.helper-text').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
                     }
-                })
-                .on('form:submit', function(velem) {
-                    $("#phone").val($("#fphone").intlTelInput("getNumber"));
                 });
         });
     </script>

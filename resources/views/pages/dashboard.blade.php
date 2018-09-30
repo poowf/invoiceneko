@@ -7,7 +7,7 @@
 @stop
 
 @section("content")
-    <div class="full-width">
+    <div class="wide-container">
         <div class="row mtop30">
             <div class="col s12">
                 <h2>Dashboard</h2>
