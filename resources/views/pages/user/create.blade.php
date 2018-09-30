@@ -21,37 +21,42 @@
                             <div class="input-field col s12">
                                 <input id="username" name="username" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ old('username') }}" placeholder="Username">
                                 <label for="username" class="label-validation">Username</label>
+                                <span class="helper-text"></span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
                                 <input id="email" name="email" type="email" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('email') }}" placeholder="Email">
                                 <label for="email" class="label-validation">Email</label>
+                                <span class="helper-text"></span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
                                 <input id="password" name="password" type="password" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="6" placeholder="Password">
                                 <label for="password" class="label-validation">Password</label>
+                                <span class="helper-text"></span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
                                 <input id="password_confirmation" name="password_confirmation" type="password" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="6" data-parsley-equalto="#password" placeholder="Confirm Password">
                                 <label for="password" class="label-validation">Password Confirmation</label>
+                                <span class="helper-text"></span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
                                 <input id="full_name" name="full_name" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ old('full_name') }}" placeholder="Name">
                                 <label for="full_name" class="label-validation">Full Name</label>
+                                <span class="helper-text"></span>
                             </div>
                         </div>
                         <div class="row pbtm20">
                             <div class="input-field col s12">
-                                <input id="fphone" name="fphone" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$" data-parsley-phone-format="#fphone" value="{{ old('phone') }}">
-                                <input id="phone" name="phone" class="form-control" type="hidden" data-parsley-required="true" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$">
-                                <label for="fphone" class="manual-validation">Phone</label>
+                                <input id="phone" name="phone" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$" data-parsley-phone-format="#phone" value="{{ old('phone') }}">
+                                <label for="phone" class="manual-validation">Phone</label>
+                                <span class="helper-text"></span>
                             </div>
                         </div>
                         <div class="row">
@@ -84,17 +89,17 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            $("#fphone").intlTelInput({
+            $("#phone").intlTelInput({
                 initialCountry: "sg",
                 utilsScript: "/assets/js/utils.js"
             });
 
-            $( "#fphone" ).focusin(function() {
-                $(this).parent().siblings('.manual-validation').addClass('black-text');
+            $( "#phone" ).focusin(function() {
+                $(this).parent().siblings('.label-validation').addClass('theme-text');
             });
 
-            $( "#fphone" ).focusout(function() {
-                $(this).parent().siblings('.manual-validation').removeClass('black-text');
+            $( "#phone" ).focusout(function() {
+                $(this).parent().siblings('.label-validation').removeClass('theme-text');
             });
 
             window.Parsley
@@ -119,7 +124,7 @@
                 successClass: 'valid',
                 errorClass: 'invalid',
                 errorsContainer: function (velem) {
-                    var $errelem = velem.$element.siblings('label');
+                    let $errelem = velem.$element.siblings('span.helper-text');
                     $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
                     return true;
                 },
@@ -134,7 +139,7 @@
                     {
                         velem.$element.parent('').siblings('label').removeClass('invalid').addClass('valid');
                     }
-                    else if (velem.$element.is('#fphone'))
+                    else if (velem.$element.is('#phone'))
                     {
                         velem.$element.parent('').siblings('label').removeClass('invalid').addClass('valid');
                     }
@@ -145,14 +150,13 @@
                         velem.$element.parent('').siblings('label').removeClass('valid').addClass('invalid');
                         velem.$element.parent('').siblings('label').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
                     }
-                    else if (velem.$element.is('#fphone'))
+                    else if (velem.$element.is('#phone'))
                     {
                         velem.$element.parent('').siblings('label').removeClass('valid').addClass('invalid');
                         velem.$element.parent('').siblings('label').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
                     }
                 })
                 .on('form:submit', function(velem) {
-                    $("#phone").val($("#fphone").intlTelInput("getNumber"));
                 });
         });
     </script>

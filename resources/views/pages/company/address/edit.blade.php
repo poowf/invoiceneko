@@ -86,7 +86,7 @@
         $(function() {
 
             @if(!$ownedcompany)
-                Materialize.toast('You need to fill in your company information first', 'meow', 'error');
+                M.toast({ html: "You need to fill in your company information first", displayLength: "poowf", classes: "error"});
             @endif
 
 
@@ -94,7 +94,7 @@
                 successClass: 'valid',
                 errorClass: 'invalid',
                 errorsContainer: function (velem) {
-                    var $errelem = velem.$element.siblings('label');
+                    let $errelem = velem.$element.siblings('span.helper-text');
                     $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
                     return true;
                 },
