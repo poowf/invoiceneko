@@ -70,10 +70,11 @@ class InvoiceController extends Controller
      */
     public function share(Invoice $invoice)
     {
-        $invoice->share_token = Uuid::generate(4);
+        $token = Uuid::generate(4);
+        $invoice->share_token = $token;
         $invoice->save();
 
-        return redirect()->route('invoice.show', [ 'invoice' => $invoice->id ]);
+        return $token;
     }
 
     public function showwithtoken(Request $request)

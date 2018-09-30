@@ -35,6 +35,7 @@
         $('.collapsible').collapsible();
         $('.sidenav').sidenav();
         $('.tabs').tabs();
+        $('.modal').modal();
         $('.dropdown-trigger').dropdown({
             coverTrigger: false
         });
