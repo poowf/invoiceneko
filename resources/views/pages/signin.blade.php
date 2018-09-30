@@ -20,12 +20,14 @@
                             <div class="input-field col s12">
                                 <input id="username" name="username" type="text" data-parsley-required="true" data-parsley-trigger="change" placeholder="Username/Email">
                                 <label for="username" class="label-validation">Username/Email</label>
+                                <span class="helper-text"></span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
                                 <input id="password" name="password" type="password" data-parsley-required="true" data-parsley-trigger="change" placeholder="Password">
                                 <label for="password" class="label-validation">Password</label>
+                                <span class="helper-text"></span>
                             </div>
                         </div>
                         <div class="rembme switch">
@@ -52,7 +54,7 @@
                 successClass: 'valid',
                 errorClass: 'invalid',
                 errorsContainer: function (velem) {
-                    var $errelem = velem.$element.siblings('label');
+                    let $errelem = velem.$element.siblings('span.helper-text');
                     $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
                     return true;
                 },

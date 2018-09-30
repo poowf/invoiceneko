@@ -251,7 +251,7 @@
                 successClass: 'valid',
                 errorClass: 'invalid',
                 errorsContainer: function (velem) {
-                    var $errelem = velem.$element.siblings('label');
+                    let $errelem = velem.$element.siblings('span.helper-text');
                     $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
                     return true;
                 },

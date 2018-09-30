@@ -21,18 +21,21 @@
                             <div class="input-field col s12">
                                 <input id="email" name="email" type="email" data-parsley-required="true" data-parsley-trigger="change">
                                 <label for="email" class="label-validation">Email</label>
+                                <span class="helper-text"></span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
                                 <input id="password" name="password" type="password" data-parsley-required="true" data-parsley-trigger="change">
                                 <label for="password" class="label-validation">Password</label>
+                                <span class="helper-text"></span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
                                 <input id="password_confirmation" name="password_confirmation" type="password" data-parsley-required="true" data-parsley-trigger="change">
                                 <label for="password" class="label-validation">Password Confirmation</label>
+                                <span class="helper-text"></span>
                             </div>
                         </div>
                         <input type="hidden" name="token" value="{{ $token }}">
@@ -53,7 +56,7 @@
                 successClass: 'valid',
                 errorClass: 'invalid',
                 errorsContainer: function (velem) {
-                    var $errelem = velem.$element.siblings('label');
+                    let $errelem = velem.$element.siblings('span.helper-text');
                     $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
                     return true;
                 },

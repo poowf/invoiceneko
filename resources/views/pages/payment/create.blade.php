@@ -21,24 +21,28 @@
                             <div class="input-field col s12">
                                 <input id="amount" name="amount" type="number" data-parsley-required="true" data-parsley-trigger="change"  value="{{ old('amount') }}" placeholder="Payment Amount">
                                 <label for="amount" class="label-validation">Amount</label>
+                                <span class="helper-text"></span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
                                 <input id="receiveddate" name="receiveddate" class="datepicker" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ old('receiveddate') }}" placeholder="Payment Date">
                                 <label for="receiveddate" class="label-validation">Received Date</label>
+                                <span class="helper-text"></span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
                                 <input id="mode" name="mode" type="text" data-parsley-required="false" data-parsley-trigger="change" value="{{ old('mode') }}" placeholder="Payment Mode">
                                 <label for="mode" class="label-validation">Payment Mode</label>
+                                <span class="helper-text"></span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
                                 <textarea id="notes" name="notes" class="materialize-textarea" data-parsley-required="false" data-parsley-trigger="change" placeholder="Notes">{{ old('notes') }}</textarea>
                                 <label for="notes" class="label-validation">Notes</label>
+                                <span class="helper-text"></span>
                             </div>
                         </div>
                     </div>
@@ -72,7 +76,7 @@
                 successClass: 'valid',
                 errorClass: 'invalid',
                 errorsContainer: function (velem) {
-                    var $errelem = velem.$element.siblings('label');
+                    let $errelem = velem.$element.siblings('span.helper-text');
                     $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
                     return true;
                 },

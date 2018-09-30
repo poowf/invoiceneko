@@ -27,10 +27,12 @@
                             <div class="input-field col s12 m6">
                                 <input id="date" name="date" class="datepicker" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ $invoice->date or Carbon\Carbon::now()->toDateTimeString()  }}" placeholder="Date">
                                 <label for="date" class="label-validation">Date</label>
+                                <span class="helper-text"></span>
                             </div>
                             <div class="input-field col s12 m6">
                                 <input id="netdays" name="netdays" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ $invoice->netdays or '' }}" placeholder="Net Days">
                                 <label for="netdays" class="label-validation">Net Days</label>
+                                <span class="helper-text"></span>
                             </div>
                         </div>
                         <div class="row">
@@ -61,18 +63,22 @@
                                         <input name="item_id[]" type="hidden" data-parsley-required="true" data-parsley-trigger="change" value="{{ $item->id or '' }}">
                                         <input name="item_name[]" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ $item->name or '' }}" placeholder="Item Name">
                                         <label for="item_name" class="label-validation">Name</label>
+                                        <span class="helper-text"></span>
                                     </div>
                                     <div class="input-field col s2">
                                         <input name="item_quantity[]" type="number" data-parsley-required="true" data-parsley-trigger="change" value="{{ $item->quantity or '' }}" placeholder="Item Quantity">
                                         <label for="item_quantity" class="label-validation">Quantity</label>
+                                        <span class="helper-text"></span>
                                     </div>
                                     <div class="input-field col s2">
                                         <input name="item_price[]" type="number" data-parsley-required="true" data-parsley-trigger="change" value="{{ $item->price or '' }}" placeholder="Item Price">
                                         <label for="item_price" class="label-validation">Price</label>
+                                        <span class="helper-text"></span>
                                     </div>
                                     <div class="input-field col s12">
                                         <textarea id="item_description" name="item_description[]" class="trumbowyg-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Description">{{ $item->description or '' }}</textarea>
                                         <label for="item_description" class="label-validation">Description</label>
+                                        <span class="helper-text"></span>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -116,16 +122,17 @@
                 autogrow: true,
             });
 
-            var picker = $('#date').pickadate({
-                formatSubmit: 'yyyy-mm-dd',
-                selectMonths: true, // Creates a dropdown to control month
-                selectYears: 15, // Creates a dropdown of 15 years to control year,
-                today: 'Today',
-                clear: 'Clear',
-                close: 'Ok',
-                closeOnSelect: true // Close upon selecting a date,
-            }).pickadate('picker');
-            picker.set('select', '{{ $invoice->date }}', { format: 'yyyy-mm-dd' });
+            $('.datepicker').datepicker({
+                autoClose: 'false',
+                format: 'd mmmm, yyyy',
+                yearRange: [1950, 2018],
+                defaultDate: new Date("{{ $invoice->date }}"),
+                setDefaultDate: true,
+                onSelect: function() {
+                    // var date = $(this)[0].formats.yyyy() + '-' + $(this)[0].formats.mm() + '-' + $(this)[0].formats.dd()
+                    // $('#receiveddate').val(date);
+                }
+            });
 
             $('#client_id').selectize();
             $('.modal').modal();
@@ -135,7 +142,7 @@
             });
 
             function initInvoiceItem(count, elementid) {
-                var invoiceitem = '<div id="invoice_item_' + count + '" class="card-panel"> <div class="row"> <div class="input-field col s8"> <input id="item_name" name="item_name[]" type="text" data-parsley-required="true" data-parsley-trigger="change"> <label for="item_name" class="label-validation">Name</label> </div> <div class="input-field col s2"> <input id="item_quantity" name="item_quantity[]" type="number" data-parsley-required="true" data-parsley-trigger="change"> <label for="item_quantity" class="label-validation">Quantity</label> </div> <div class="input-field col s2"> <input id="item_price" name="item_price[]" type="number" data-parsley-required="true" data-parsley-trigger="change"> <label for="item_price" class="label-validation">Price</label> </div> <div class="input-field col s12"> <textarea id="item_description" name="item_description[]" class="trumbowyg-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Description"></textarea> <label for="item_description" class="label-validation">Description</label> </div> </div> </div>';
+                let invoiceitem = '<div id="invoice_item_' + count + '" class="card-panel"><div class="row"><div class="input-field col s8"> <input id="item_name" name="item_name[]" type="text" data-parsley-required="true" data-parsley-trigger="change"> <label for="item_name" class="label-validation">Name</label></div><div class="input-field col s2"> <input id="item_quantity" name="item_quantity[]" type="number" data-parsley-required="true" data-parsley-trigger="change"> <label for="item_quantity" class="label-validation">Quantity</label></div><div class="input-field col s2"> <input id="item_price" name="item_price[]" type="number" data-parsley-required="true" data-parsley-trigger="change"> <label for="item_price" class="label-validation">Price</label></div><div class="input-field col s12"><textarea id="item_description" name="item_description[]" class="trumbowyg-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Description"></textarea><label for="item_description" class="label-validation">Description</label></div></div><div class="row"> <button data-id="false" data-count="' + count + '" class="invoice-item-delete-btn btn waves-effect waves-light col s12 m2 offset-m10 red">Delete</button></div></div>';
                 $('#' + elementid).append(invoiceitem);
                 $('.trumbowyg-textarea').trumbowyg({
                     removeformatPasted: true
@@ -159,7 +166,7 @@
                 var itemid = $(this).attr('data-id');
                 var count = $(this).attr('data-count');
 
-                if (typeof itemid !== typeof undefined && itemid !== false) {
+                if (typeof itemid !== typeof undefined && itemid !== false && itemid !== "false") {
                     var deleteinvoiceitemreq = $.ajax({
                         type: "DELETE",
                         url: "/invoice/item/" + itemid + "/destroy",
@@ -194,9 +201,8 @@
                 successClass: 'valid',
                 errorClass: 'invalid',
                 errorsContainer: function (velem) {
-                    var $errelem = velem.$element.siblings('label');
+                    let $errelem = velem.$element.siblings('span.helper-text');
                     $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                    console.log(window.Parsley.getErrorMessage(velem.validationResult[0].assert));
                     return true;
                 },
                 errorsWrapper: '',

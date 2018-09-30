@@ -355,7 +355,7 @@ mark {
 /* Selectize */
 
 .selectize-control {
-  margin-top: 12px;
+  margin-top: 1px;
 }
 
 .selectize-dropdown,
@@ -378,11 +378,16 @@ mark {
   height: 2.8rem;
   border: none;
   outline: none;
+  position: absolute !important;
+  left: 10px !important;
+  background-color: transparent;
+  top: 0px;
 }
 
 .selectize-control.single .selectize-input .item {
   height: 2.8rem;
   line-height: 2.8rem;
+  margin-left: 4px;
 }
 
 .selectize-dropdown {
@@ -390,6 +395,9 @@ mark {
   border-radius: 0;
   -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
           box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  background-color: #ffffff;
+  z-index: 12;
 }
 
 .selectize-dropdown [data-selectable],
@@ -414,6 +422,13 @@ mark {
   border-bottom: 1px solid #F44336;
   -webkit-box-shadow: 0 1px 0 0 #F44336;
   box-shadow: 0 1px 0 0 #F44336;
+}
+
+.selectize-control.invalid ~ .helper-text:after {
+  content: attr(data-error);
+  color: #F44336;
+  opacity: 1;
+  margin-top: 8px;
 }
 
 /* Accents */
