@@ -16,7 +16,7 @@
                     <div class="error-goback-text">Would you like to go home?</div>
                     <div class="error-goback-button"><a href="{{ route('main') }}" class="btn btn-xl btn-primary btn-link">Let's go
                             home</a></div>
-                    <div class="footer">&copy; 2017 {{ config('app.name') }}</div>
+                    <div class="footer">&copy; {{ date('Y') }} {{ config('app.name') }}</div>
                 </div>
             </div>
         </div>

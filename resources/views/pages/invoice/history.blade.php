@@ -49,10 +49,18 @@
                     <dd>{{ $client->contactphone or '-' }}</dd>
                     <dt>Status</dt>
                     <dd>
-                        @if ($invoice->status == 0)
+                        @if ($invoice->status == App\Models\Invoice::STATUS_OVERDUE)
                             <span class="alt-badge error">{{ $invoice->statustext() }}</span>
-                        @elseif ($invoice->status == 1)
+                        @elseif ($invoice->status == App\Models\Invoice::STATUS_DRAFT)
+                            <span class="alt-badge">{{ $invoice->statustext() }}</span>
+                        @elseif ($invoice->status == App\Models\Invoice::STATUS_OPEN)
+                            <span class="alt-badge warning">{{ $invoice->statustext() }}</span>
+                        @elseif ($invoice->status == App\Models\Invoice::STATUS_CLOSED)
                             <span class="alt-badge success">{{ $invoice->statustext() }}</span>
+                        @elseif ($invoice->status == App\Models\Invoice::STATUS_ARCHIVED)
+                            <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
+                        @elseif ($invoice->status == App\Models\Invoice::STATUS_WRITTENOFF)
+                            <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
                         @endif
                     </dd>
                     </dl>

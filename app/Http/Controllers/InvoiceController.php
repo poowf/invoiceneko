@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 
 use Log;
 use PDF;
+use Uuid;
 use Carbon\Carbon;
 
 class InvoiceController extends Controller
@@ -59,6 +60,33 @@ class InvoiceController extends Controller
         $invoice->save();
 
         return redirect()->route('invoice.show', [ 'invoice' => $invoice->id ]);
+    }
+
+    /**
+     * Set the Invoice to Written Off
+     *
+     * @param Invoice $invoice
+     * @return \Illuminate\Http\Response
+     */
+    public function share(Invoice $invoice)
+    {
+        $invoice->share_token = Uuid::generate(4);
+        $invoice->save();
+
+        return redirect()->route('invoice.show', [ 'invoice' => $invoice->id ]);
+    }
+
+    public function showwithtoken(Request $request)
+    {
+        $token = $request->input('token');
+        $invoice = Invoice::where('share_token', $token)->first();
+        abort_unless($invoice, 404);
+
+        $invoice->date = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->date)->format('j F, Y');
+        $invoice->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y');
+
+        $pdf = PDF::loadView('pdf.invoice', compact('invoice'));
+        return $pdf->inline(str_slug($invoice->nice_invoice_id) . '.pdf');
     }
 
     /**
