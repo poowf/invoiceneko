@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'MainController@main')->name('main');
+Route::get('/invoice/view', 'InvoiceController@showwithtoken')->name('invoice.token');
 
 Route::group(['middleware' => ['guest']], function() {
     /* Auth */
@@ -81,6 +82,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::patch('/invoice/{invoice}/edit', 'InvoiceController@update')->name('invoice.update');
         Route::patch('/invoice/{invoice}/archive', 'InvoiceController@archive')->name('invoice.archive');
         Route::patch('/invoice/{invoice}/writeoff', 'InvoiceController@writeoff')->name('invoice.writeoff');
+        Route::patch('/invoice/{invoice}/share', 'InvoiceController@share')->name('invoice.share');
         Route::delete('/invoice/{invoice}/destroy', 'InvoiceController@destroy')->name('invoice.destroy');
 
 

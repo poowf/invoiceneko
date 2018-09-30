@@ -111,7 +111,7 @@
     </div>
     <div class="row invoice-company-info" style="margin-bottom: 70px;">
         <div class="logo" style="position: relative; display: block; width: 100%;  text-align: center;">
-            <img src="{{ asset($invoice->company->smlogo) }}" alt="Logo-symbol" width="100" height="100" style="border: 0; vertical-align: middle;">
+            <img src="{{ asset($invoice->company->smlogo) }}" alt="Company Logo" width="100" height="100" style="border: 0; vertical-align: middle;">
         </div>
         <div style="margin-top: 20px;">
             <div class="summary" style="display: inline-block; width: 29.5%; padding: 0 15px; line-height: 16px; text-align: center;">

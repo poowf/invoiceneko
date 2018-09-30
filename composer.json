@@ -18,7 +18,8 @@
         "laravel/tinker": "^1.0",
         "laravelista/ekko": "^1.5",
         "maatwebsite/excel": "~2.1.0",
-        "rinvex/country": "^3.1"
+        "rinvex/country": "^3.1",
+        "webpatser/laravel-uuid": "2.*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.1",

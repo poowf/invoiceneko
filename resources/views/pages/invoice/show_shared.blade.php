@@ -19,17 +19,9 @@
 @stop
 
 @section("content")
-    <div class="mini-container">
+    <div class="container">
         <div class="row">
             <div class="col s12 mtop30 right">
-                <a class="btn btn-link waves-effect waves-dark" href="{{ route('payment.create', [ 'invoice' => $invoice->id] ) }}">
-                    Log Payment
-                </a>
-                <form method="post" action="{{ route('invoice.share', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
-                    {{ method_field('PATCH') }}
-                    {{ csrf_field() }}
-                    <button class="btn btn-link waves-effect waves-dark null-btn" type="submit">Share</button>
-                </form>
                 <a class="btn btn-link waves-effect waves-dark" href="{{ route('invoice.download', [ 'invoice' => $invoice->id] ) }}">
                     Save PDF
                 </a>
@@ -38,112 +30,8 @@
                 </a>
             </div>
         </div>
-        <div id="invoice-action-container" class="row" style="margin-bottom: 0;">
-            <div class="col s12 right">
-                <form method="post" action="{{ route('invoice.writeoff', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
-                    {{ method_field('PATCH') }}
-                    {{ csrf_field() }}
-                    <button class="btn deep-orange darken-2 waves-effect waves-dark null-btn" type="submit">Write Off</button>
-                </form>
-                <form method="post" action="{{ route('invoice.archive', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
-                    {{ method_field('PATCH') }}
-                    {{ csrf_field() }}
-                    <button class="btn amber darken-2 waves-effect waves-dark null-btn" type="submit">Archive</button>
-                </form>
-                <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="btn light-blue waves-effect waves-dark">
-                    Edit
-                </a>
-                <a href="#" data-id="{{ $invoice->id }}" class="invoice-delete-btn btn red waves-effect waves-dark">
-                    Delete
-                </a>
-            </div>
-        </div>
         <div class="row">
-            <div class="col s12 l4">
-                <h3>Details</h3>
-                <div id="details-panel" class="card-panel">
-                    <dt>Company Name</dt>
-                    <dd>{{ $client->companyname }}</dd>
-                    <dt>Company Address</dt>
-                    <dd>{{ $client->address }}</dd>
-                    <dt>Company Nickname</dt>
-                    <dd>{{ $client->nickname or '' }}</dd>
-                    <dt>Company Registration Number</dt>
-                    <dd>{{ $client->crn }}
-                    <dt>Contact Name</dt>
-                    <dd>{{ $client->contactname or '-' }}</dd>
-                    <dt>Contact Email</dt>
-                    <dd>{{ $client->contactemail or '-' }}</dd>
-                    <dt>Contact Phone</dt>
-                    <dd>{{ $client->contactphone or '-' }}</dd>
-                    <dt>Status</dt>
-                    <dd>
-                        @if ($invoice->status == App\Models\Invoice::STATUS_OVERDUE)
-                            <span class="alt-badge error">{{ $invoice->statustext() }}</span>
-                        @elseif ($invoice->status == App\Models\Invoice::STATUS_DRAFT)
-                            <span class="alt-badge">{{ $invoice->statustext() }}</span>
-                        @elseif ($invoice->status == App\Models\Invoice::STATUS_OPEN)
-                            <span class="alt-badge warning">{{ $invoice->statustext() }}</span>
-                        @elseif ($invoice->status == App\Models\Invoice::STATUS_CLOSED)
-                            <span class="alt-badge success">{{ $invoice->statustext() }}</span>
-                        @elseif ($invoice->status == App\Models\Invoice::STATUS_ARCHIVED)
-                            <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
-                        @elseif ($invoice->status == App\Models\Invoice::STATUS_WRITTENOFF)
-                            <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
-                        @endif
-                    </dd>
-                    </dl>
-                </div>
-                <h3>Change History</h3>
-                <div id="change-history-container" class="change-history-container">
-                    <div class="single-history-wrapper">
-                        <div class="card single-history">
-                            <h6>Date/Time</h6>
-                            <p class="mtop20">{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->created_at)->format('j F, Y') }}</p>
-                            <p>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->created_at)->format('h:i:s a') }}</p>
-                            <span class="alt-badge info mtop20">Current Version</span>
-                            <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="btn btn-theme full-width mtop20">Edit</a>
-                        </div>
-                    </div>
-                    @foreach($histories as $key => $history)
-                        <div class="single-history-wrapper">
-                            <div class="card single-history">
-                                <h6>Date/Time</h6>
-                                <p class="mtop20">{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $history->created_at)->format('j F, Y') }}</p>
-                                <p>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $history->created_at)->format('h:i:s a') }}</p>
-                                <span class="alt-badge warning mtop20">Past Version</span>
-                                <a href="{{ route('invoice.old.show', [ 'oldinvoice' => $history->id ] ) }}" class="btn btn-theme full-width mtop20">View</a>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-                <h3>Payment History</h3>
-                <div id="payment-history-container" class="payment-history-container">
-                    <div class="card-panel">
-                        <table class="responsive-table">
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Mode</th>
-                                    <th>Amount</th>
-                                    <th>Percentage of Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($payments as $key => $payment)
-                                    <tr>
-                                        <td>{{ $payment->date_format }}</td>
-                                        <td>{{ $payment->mode }}</td>
-                                        <td>S${{ $payment->money_format }}</td>
-                                        <td><span class="alt-badge teal lighten-1">{{ $payment->percentage }}%</span></td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="col s12 l8">
+            <div class="col s12">
                 <h3>Invoice</h3>
                 <div class="invoice" style="background-color: #ffffff; padding: 50px 50px 20px; color: #8c8c8c;">
                     <div class="row invoice-header" style="position: relative; margin-bottom: 160px;">
@@ -290,93 +178,12 @@
             </div>
         </div>
     </div>
-
-    <div id="delete-confirmation" class="modal">
-        <div class="modal-content">
-            <p>Delete Invoice?</p>
-        </div>
-        <div class="modal-footer">
-            <form id="delete-invoice-form" method="post" class="null-form">
-                {{ method_field('DELETE') }}
-                {{ csrf_field() }}
-                <button class="modal-action waves-effect black-text waves-green btn-flat btn-deletemodal invoice-confirm-delete-btn" type="submit">Delete</button>
-            </form>
-            <a href="javascript:;" class=" modal-action modal-close waves-effect black-text waves-red btn-flat btn-deletemodal">Cancel</a>
-        </div>
-    </div>
 @stop
 
 @section("scripts")
     <script type="text/javascript">
         "use strict";
         $(function() {
-
-            $('#change-history-container').on('init', function(event, slick, direction){
-                var height = $('#details-panel').outerHeight();
-                console.log($(this).find('.single-history').css('height', height));
-                // left
-            });
-
-            $('#invoice-action-container').on('click', '.invoice-delete-btn', function (event) {
-                event.preventDefault();
-                var invoiceid = $(this).attr('data-id');
-                $('#delete-invoice-form').attr('action', '/invoice/' + invoiceid + '/destroy');
-                $('#delete-confirmation').modal('open');
-            });
-
-            $('#change-history-container').slick({
-                // normal options...
-                infinite: false,
-                arrows: false,
-                dots: true,
-                slidesToShow: 3,
-                slidesToScroll: 3,
-                adaptiveHeight: false,
-                responsive: [
-                    {
-                        breakpoint: 1900,
-                        settings: {
-                            slidesToShow: 2,
-                            slidesToScroll: 2,
-                            dots: true
-                        }
-                    },
-                    {
-                        breakpoint: 1600,
-                        settings: {
-                            slidesToShow: 2,
-                            slidesToScroll: 2,
-                            dots: true
-                        }
-                    },
-                    {
-                        breakpoint: 1200,
-                        settings: {
-                            slidesToShow: 1,
-                            slidesToScroll: 1,
-                            dots: true
-                        }
-                    },
-                    {
-                        breakpoint: 993,
-                        settings: {
-                            slidesToShow: 2,
-                            slidesToScroll: 2,
-                            dots: true
-                        }
-                    },
-                    {
-                        breakpoint: 480,
-                        settings: {
-                            slidesToShow: 1,
-                            slidesToScroll: 1
-                        }
-                    }
-                    // You can unslick at a given breakpoint now by adding:
-                    // settings: "unslick"
-                    // instead of a settings object
-                ]
-            });
         });
     </script>
 @stop

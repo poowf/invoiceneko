@@ -17,7 +17,7 @@
                     <div class="error-description">Are you sure you have the access rights to this page?</div>
                     <div class="error-goback-text">Would you like to go home?</div>
                     <div class="error-goback-button mbtm30"><a href="{{ route('main') }}" class="btn btn-xl btn-primary btn-link">Let's go home</a></div>
-                    <div class="footer">&copy; 2017 {{ config('app.name') }}</div>
+                    <div class="footer">&copy; {{ date('Y') }} {{ config('app.name') }}</div>
                 </div>
             </div>
         </div>
