@@ -17,7 +17,7 @@
             <div class="col s12">
                 <div class="card-panel">
                     <dt>Payment Amount</dt>
-                    <dd>${{ $payment->moneyamount or '-' }}</dd>
+                    <dd>${{ $payment->moneyformat or '-' }}</dd>
                     <dt>Payment Date</dt>
                     <dd>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $payment->receiveddate)->format('j F, Y') }}</dd>
                     <dt>Payment Mode</dt>
