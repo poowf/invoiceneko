@@ -20,16 +20,14 @@
 
 @section("content")
     <div class="mini-container">
-        <div class="row">
+        <div id="top-action-container" class="row">
             <div class="col s12 mtop30 right">
                 <a class="btn btn-link waves-effect waves-dark" href="{{ route('payment.create', [ 'invoice' => $invoice->id] ) }}">
                     Log Payment
                 </a>
-                <form method="post" action="{{ route('invoice.share', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
-                    {{ method_field('PATCH') }}
-                    {{ csrf_field() }}
-                    <button class="btn btn-link waves-effect waves-dark null-btn" type="submit">Share</button>
-                </form>
+                <a href="#" data-id="{{ $invoice->id }}" class="invoice-share-btn btn btn-link waves-effect waves-dark">
+                    Share
+                </a>
                 <a class="btn btn-link waves-effect waves-dark" href="{{ route('invoice.download', [ 'invoice' => $invoice->id] ) }}">
                     Save PDF
                 </a>
@@ -304,6 +302,20 @@
             <a href="javascript:;" class=" modal-action modal-close waves-effect black-text waves-red btn-flat btn-deletemodal">Cancel</a>
         </div>
     </div>
+
+    <div id="shared-details" class="modal">
+        <div class="modal-content">
+            <div class="left">
+                <h5>Share</h5>
+            </div>
+            <div class="right">
+                <a href="#" data-id="{{ $invoice->id }}" class="invoice-regenerate-btn btn btn-link waves-effect waves-dark">
+                    Regenerate Link
+                </a>
+            </div>
+            <input id="shared-link" type="text" value="{{ route('invoice.token', [ 'token' => $invoice->share_token] ) }}">
+        </div>
+    </div>
 @stop
 
 @section("scripts")
@@ -312,14 +324,32 @@
         $(function() {
 
             $('#change-history-container').on('init', function(event, slick, direction){
-                var height = $('#details-panel').outerHeight();
+                let height = $('#details-panel').outerHeight();
                 console.log($(this).find('.single-history').css('height', height));
                 // left
             });
 
+            $('#top-action-container').on('click', '.invoice-share-btn', function (event) {
+                event.preventDefault();
+                if($('#shared-link').val() == "")
+                {
+                    getSharedLink();
+                }
+                else
+                {
+                    $('#shared-details').modal('open');
+                }
+            });
+
+            $('#shared-details').on('click', '.invoice-regenerate-btn', function (event) {
+                event.preventDefault();
+                getSharedLink();
+            });
+
+
             $('#invoice-action-container').on('click', '.invoice-delete-btn', function (event) {
                 event.preventDefault();
-                var invoiceid = $(this).attr('data-id');
+                let invoiceid = $(this).attr('data-id');
                 $('#delete-invoice-form').attr('action', '/invoice/' + invoiceid + '/destroy');
                 $('#delete-confirmation').modal('open');
             });
@@ -377,6 +407,21 @@
                     // instead of a settings object
                 ]
             });
+
+            function getSharedLink()
+            {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    method: "PATCH",
+                    url: "{{ route('invoice.share', [ 'invoice' => $invoice->id]) }}",
+                })
+                .done(function(data) {
+                    $('#shared-link').val("{{ route('invoice.token') }}?token=" + data);
+                    $('#shared-details').modal('open');
+                });
+            }
         });
     </script>
 @stop
