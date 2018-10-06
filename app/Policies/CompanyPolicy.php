@@ -30,7 +30,7 @@ class CompanyPolicy
      */
     public function view(User $user, Company $company)
     {
-        //
+        return $user->isOfCompany($company->id);
     }
 
     /**
@@ -53,7 +53,7 @@ class CompanyPolicy
      */
     public function update(User $user, Company $company)
     {
-        //
+        return $company->isOwner($user);
     }
 
     /**
@@ -65,6 +65,6 @@ class CompanyPolicy
      */
     public function delete(User $user, Company $company)
     {
-        //
+        return $company->isOwner($user);
     }
 }

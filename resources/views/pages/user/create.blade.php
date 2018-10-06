@@ -63,12 +63,16 @@
                             <div class="col s12 left">
                                 <label id="rbtn-label" class="rbtn-label" for="gender">Gender</label>
                                 <p class="rbtn">
-                                    <input id="gender-male" name="gender" type="radio" value="male" data-parsley-required="true" data-parsley-trigger="change" @if(old('gender') == "male") checked @endif>
-                                    <label for="gender-male">Male</label>
+                                    <label>
+                                        <input id="gender-male" name="gender" type="radio" value="male" data-parsley-required="true" data-parsley-trigger="change" @if(old('gender') == "male") checked @endif>
+                                        <span>Male</span>
+                                    </label>
                                 </p>
                                 <p class="rbtn">
-                                    <input id="gender-female" name="gender" type="radio" value="female" @if(old('gender') == "female") checked @endif>
-                                    <label for="gender-female">Female</label>
+                                    <label>
+                                        <input id="gender-female" name="gender" type="radio" value="female" @if(old('gender') == "female") checked @endif>
+                                        <span>Female</span>
+                                    </label>
                                 </p>
                             </div>
                         </div>

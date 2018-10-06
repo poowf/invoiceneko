@@ -18,6 +18,11 @@ class InvoiceItem extends Model
      */
     protected $table = 'invoice_items';
 
+    public function invoice()
+    {
+        return $this->belongsTo('App\Models\Invoice', 'invoice_id');
+    }
+
     public function moneyFormatPrice()
     {
         setlocale(LC_MONETARY, 'en_US.UTF-8');

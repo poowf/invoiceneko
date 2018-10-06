@@ -30,7 +30,7 @@ class OldInvoicePolicy
      */
     public function view(User $user, OldInvoice $oldInvoice)
     {
-        //
+        return $user->isOfCompany($oldInvoice->company_id);
     }
 
     /**
@@ -53,7 +53,7 @@ class OldInvoicePolicy
      */
     public function update(User $user, OldInvoice $oldInvoice)
     {
-        //
+        return $user->isOfCompany($oldInvoice->company_id);
     }
 
     /**
@@ -65,6 +65,6 @@ class OldInvoicePolicy
      */
     public function delete(User $user, OldInvoice $oldInvoice)
     {
-        //
+        return $user->isOfCompany($oldInvoice->company_id);
     }
 }

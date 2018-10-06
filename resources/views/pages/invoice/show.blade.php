@@ -63,9 +63,9 @@
                     <dt>Company Name</dt>
                     <dd>{{ $client->companyname }}</dd>
                     <dt>Company Address</dt>
-                    <dd>{{ $client->address }}</dd>
+                    <dd>{{ $client->address or '-' }}</dd>
                     <dt>Company Nickname</dt>
-                    <dd>{{ $client->nickname or '' }}</dd>
+                    <dd>{{ $client->nickname or '-' }}</dd>
                     <dt>Company Registration Number</dt>
                     <dd>{{ $client->crn }}
                     <dt>Contact Name</dt>

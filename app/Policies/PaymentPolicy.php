@@ -30,7 +30,7 @@ class PaymentPolicy
      */
     public function view(User $user, Payment $payment)
     {
-        //
+        return $user->isOfCompany($payment->company_id);
     }
 
     /**
@@ -53,7 +53,7 @@ class PaymentPolicy
      */
     public function update(User $user, Payment $payment)
     {
-        //
+        return $user->isOfCompany($payment->company_id);
     }
 
     /**
@@ -65,6 +65,6 @@ class PaymentPolicy
      */
     public function delete(User $user, Payment $payment)
     {
-        //
+        return $user->isOfCompany($payment->company_id);
     }
 }

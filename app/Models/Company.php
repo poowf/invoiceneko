@@ -71,6 +71,11 @@ class Company extends Model
         return sprintf('%06d', $currentindex[1]);
     }
 
+    public function isOwner(User $user)
+    {
+        return $this->user_id == $user->id;
+    }
+
     public function clients()
     {
         return $this->hasMany('App\Models\Client', 'company_id');
