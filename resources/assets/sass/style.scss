@@ -346,16 +346,14 @@ mark {
 }
 
 .selectize-control.single .selectize-input input {
-  height: 2.8rem;
-  border: none;
-  outline: none;
-  position: absolute !important;
-  left: 10px !important;
-  background-color: transparent;
-  top: 0px;
-}
+   height: 2.8rem;
+   border: none;
+   outline: none;
+   background-color: transparent;
+ }
 
 .selectize-control.single .selectize-input .item {
+  display: inline-block;
   height: 2.8rem;
   line-height: 2.8rem;
   margin-left: 4px;
@@ -377,7 +375,7 @@ mark {
   cursor: pointer;
 }
 
-.selectize-dropdown [data-selectable]:hover {
+.selectize-dropdown [data-selectable].active {
   background-color: #f1f1f1;
 }
 

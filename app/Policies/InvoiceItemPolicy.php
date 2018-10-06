@@ -30,7 +30,7 @@ class InvoiceItemPolicy
      */
     public function view(User $user, InvoiceItem $invoiceItem)
     {
-        //
+        return $user->isOfCompany($invoiceItem->invoice->company_id);
     }
 
     /**
@@ -53,7 +53,7 @@ class InvoiceItemPolicy
      */
     public function update(User $user, InvoiceItem $invoiceItem)
     {
-        //
+        return $user->isOfCompany($invoiceItem->invoice->company_id);
     }
 
     /**
@@ -65,6 +65,6 @@ class InvoiceItemPolicy
      */
     public function delete(User $user, InvoiceItem $invoiceItem)
     {
-        //
+        return $user->isOfCompany($invoiceItem->invoice->company_id);
     }
 }

@@ -30,7 +30,7 @@ class ClientPolicy
      */
     public function view(User $user, Client $client)
     {
-        //
+        return $user->isOfCompany($client->company_id);
     }
 
     /**
@@ -53,7 +53,7 @@ class ClientPolicy
      */
     public function update(User $user, Client $client)
     {
-        //
+        return $user->isOfCompany($client->company_id);
     }
 
     /**
@@ -65,6 +65,6 @@ class ClientPolicy
      */
     public function delete(User $user, Client $client)
     {
-        //
+        return $user->isOfCompany($client->company_id);
     }
 }

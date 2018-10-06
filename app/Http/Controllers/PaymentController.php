@@ -62,7 +62,7 @@ class PaymentController extends Controller
 
         flash('Payment Created', 'success');
 
-        return redirect()->route('payment.index');
+        return redirect()->route('invoice.show', ['invoice' => $invoice->id]);
     }
 
     /**

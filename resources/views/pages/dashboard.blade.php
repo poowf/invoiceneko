@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="col s12 m8">
-                <h3>Welcome</h3>
+                <h3>Summary</h3>
                 <div class="card-panel">
                     Hello {{ $user->full_name or '' }}
                 </div>

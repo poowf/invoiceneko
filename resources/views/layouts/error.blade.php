@@ -32,6 +32,35 @@
             text-align: center;
         }
 
+        .btn {
+            border: none;
+            border-radius: 2px;
+            display: inline-block;
+            height: 36px;
+            line-height: 36px;
+            padding: 0 16px;
+            text-transform: uppercase;
+            vertical-align: middle;
+            -webkit-tap-highlight-color: transparent;
+            font-size: 14px;
+            outline: 0;
+            text-decoration: none;
+            color: #fff;
+            background-color: #26a69a;
+            text-align: center;
+            letter-spacing: .5px;
+            -webkit-transition: background-color .2s ease-out;
+            transition: background-color .2s ease-out;
+            cursor: pointer;
+        }
+
+        .btn-xl {
+            height: 54px;
+            line-height: 54px;
+            font-size: 15px;
+            padding: 0 28px;
+        }
+
         .btn-link {
             background-color: #26a69a !important;
         }

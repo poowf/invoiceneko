@@ -14,6 +14,7 @@
                             <ul class="right hide-on-med-and-down">
                                 @if(Auth::check())
                                     <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                                    <li><a href="{{ route('quotes.index') }}">Quotes</a></li>
                                     <li><a href="{{ route('invoice.index') }}">Invoices</a></li>
                                     <li><a href="{{ route('client.index') }}">Clients</a></li>
                                     <li><a href="{{ route('payment.index') }}">Payments</a></li>
@@ -38,6 +39,7 @@
                                 <hr>
                                 @if(Auth::check())
                                     <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                                    <li><a href="{{ route('quotes.index') }}">Quotes</a></li>
                                     <li><a href="{{ route('invoice.index') }}">Invoices</a></li>
                                     <li><a href="{{ route('client.index') }}">Clients</a></li>
                                     <li><a href="{{ route('payment.index') }}">Payments</a></li>

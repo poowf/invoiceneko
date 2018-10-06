@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Notifications\ResetPasswordNotification;
+use App\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -11,6 +12,8 @@ use Iatstuti\Database\Support\CascadeSoftDeletes;
 class User extends Authenticatable
 {
     use Notifiable, SoftDeletes, CascadeSoftDeletes;
+
+    use HasRoles;
 
     /**
      * The database table used by the model.
@@ -92,6 +95,11 @@ class User extends Authenticatable
     public function owns($model)
     {
         return $this->id == $model->user_id;
+    }
+
+    public function isOfCompany($company_id)
+    {
+        return $this->company_id == $company_id;
     }
 
     public function isSuperAdmin()
