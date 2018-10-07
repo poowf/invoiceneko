@@ -35,7 +35,7 @@
             </div>
 
             <div class="col s6 right mtop30">
-                <a href="{{ route('client.create') }}" class="btn waves-effect waves-red">Create</a>
+                <a href="{{ route('client.create') }}" class="btn waves-effect waves-dark">Create</a>
             </div>
         </div>
         <div class="row">

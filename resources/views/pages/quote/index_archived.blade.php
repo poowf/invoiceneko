@@ -33,7 +33,6 @@
             </div>
 
             <div class="col s6 right mtop30">
-                <a href="{{ route('quote.create') }}" class="btn btn-link waves-effect waves-dark">Create</a>
             </div>
         </div>
         <div class="row">

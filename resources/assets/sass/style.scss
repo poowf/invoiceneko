@@ -258,6 +258,8 @@ mark {
   border: none;
   background-color: transparent;
   cursor: pointer;
+  font-family: "Roboto", sans-serif;
+  padding: 0px;
 }
 
 #delete-confirmation {
@@ -519,6 +521,10 @@ mark {
   background-color: #2196F3;
 }
 
+.sidenav-trigger {
+  color: #000000;
+}
+
 .sidenav li > a {
   font-weight: normal;
 }
@@ -527,6 +533,10 @@ mark {
   font-size: 30px;
   color: #fff;
   margin: 0px;
+}
+
+.sidenav li > form {
+  padding: 0 32px;
 }
 
 .dropdown-trigger + .dropdown-content li > a, .dropdown-trigger + .dropdown-content li > span {
