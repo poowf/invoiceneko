@@ -83,6 +83,10 @@
                                                 <span class="alt-badge warning">{{ $invoice->statustext() }}</span>
                                             @elseif ($invoice->status == App\Models\Invoice::STATUS_CLOSED)
                                                 <span class="alt-badge success">{{ $invoice->statustext() }}</span>
+                                            @elseif ($invoice->status == App\Models\Invoice::STATUS_ARCHIVED)
+                                                <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
+                                            @elseif ($invoice->status == App\Models\Invoice::STATUS_WRITTENOFF)
+                                                <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
                                             @endif
                                         </td>
                                         <td>
@@ -131,6 +135,10 @@
                                         <span class="alt-badge warning">{{ $invoice->statustext() }}</span>
                                     @elseif ($invoice->status == App\Models\Invoice::STATUS_CLOSED)
                                         <span class="alt-badge success">{{ $invoice->statustext() }}</span>
+                                    @elseif ($invoice->status == App\Models\Invoice::STATUS_ARCHIVED)
+                                        <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
+                                    @elseif ($invoice->status == App\Models\Invoice::STATUS_WRITTENOFF)
+                                        <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
                                     @endif
                                 </td>
                                 <td>
@@ -179,6 +187,10 @@
                                         <span class="alt-badge warning">{{ $invoice->statustext() }}</span>
                                     @elseif ($invoice->status == App\Models\Invoice::STATUS_CLOSED)
                                         <span class="alt-badge success">{{ $invoice->statustext() }}</span>
+                                    @elseif ($invoice->status == App\Models\Invoice::STATUS_ARCHIVED)
+                                        <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
+                                    @elseif ($invoice->status == App\Models\Invoice::STATUS_WRITTENOFF)
+                                        <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
                                     @endif
                                 </td>
                                 <td>
@@ -227,6 +239,10 @@
                                         <span class="alt-badge warning">{{ $invoice->statustext() }}</span>
                                     @elseif ($invoice->status == App\Models\Invoice::STATUS_CLOSED)
                                         <span class="alt-badge success">{{ $invoice->statustext() }}</span>
+                                    @elseif ($invoice->status == App\Models\Invoice::STATUS_ARCHIVED)
+                                        <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
+                                    @elseif ($invoice->status == App\Models\Invoice::STATUS_WRITTENOFF)
+                                        <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
                                     @endif
                                 </td>
                                 <td>

@@ -30,7 +30,7 @@
                     <dt>Company Postal Code</dt>
                     <dd>{{ $client->postalcode or '-' }}</dd>
                     <dt>Company Nickname</dt>
-                    <dd>{{ $client->nickname or '' }}</dd>
+                    <dd>{{ $client->nickname or '-' }}</dd>
                     <dt>Company Registration Number</dt>
                     <dd>{{ $client->crn or '-' }}
                     <dt>Contact Name</dt>

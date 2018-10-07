@@ -48,6 +48,11 @@ class Company extends Model
         });
     }
 
+    public function quotes()
+    {
+        return $this->hasMany('App\Models\Quote', 'company_id');
+    }
+
     public function invoices()
     {
         return $this->hasMany('App\Models\Invoice', 'company_id');
@@ -58,17 +63,46 @@ class Company extends Model
         return $this->hasOne('App\Models\Invoice')->latest()->limit(1)->first();
     }
 
+    public function lastquote()
+    {
+        return $this->hasOne('App\Models\Quote')->latest()->limit(1)->first();
+    }
+
+
     public function niceInvoiceID()
     {
         $invoice = $this->lastinvoice();
+        $invoiceIndex = 1;
 
-        $nice_invoice_id = $invoice->nice_invoice_id;
+        if ($invoice)
+        {
+            $nice_invoice_id = $invoice->nice_invoice_id;
 
-        $currentindex = preg_split('#^.*-#s', $nice_invoice_id);
+            $currentindex = preg_split('#^.*-#s', $nice_invoice_id);
 
-        $currentindex[1] += 1;
+            $currentindex[1] += 1;
+            $invoiceIndex = $currentindex[1];
+        }
 
-        return sprintf('%06d', $currentindex[1]);
+        return sprintf('%06d', $invoiceIndex);
+    }
+
+    public function niceQuoteID()
+    {
+        $quote = $this->lastquote();
+        $quoteIndex = 1;
+
+        if ($quote)
+        {
+            $nice_quote_id = $quote->nice_quote_id;
+
+            $currentindex = preg_split('#^.*-#s', $nice_quote_id);
+
+            $currentindex[1] += 1;
+            $quoteIndex = $currentindex[1];
+        }
+
+        return sprintf('%06d', $quoteIndex);
     }
 
     public function isOwner(User $user)

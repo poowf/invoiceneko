@@ -366,6 +366,9 @@ mark {
   position: absolute;
   background-color: #ffffff;
   z-index: 12;
+  max-height: 400px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .selectize-dropdown [data-selectable], .selectize-dropdown .optgroup-header {

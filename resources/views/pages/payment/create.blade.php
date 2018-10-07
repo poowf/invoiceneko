@@ -19,7 +19,7 @@
                     <div class="card-panel">
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="amount" name="amount" type="number" data-parsley-required="true" data-parsley-trigger="change"  value="{{ old('amount') }}" placeholder="Payment Amount">
+                                <input id="amount" name="amount" type="number" step="any" data-parsley-required="true" data-parsley-trigger="change"  value="{{ old('amount') }}" placeholder="Payment Amount">
                                 <label for="amount" class="label-validation">Amount</label>
                                 <span class="helper-text"></span>
                             </div>
@@ -79,6 +79,10 @@
                     // var date = $(this)[0].formats.yyyy() + '-' + $(this)[0].formats.mm() + '-' + $(this)[0].formats.dd()
                     // $('#receiveddate').val(date);
                 }
+            });
+
+            $('#amount').on('change', function(){
+                $(this).val(parseFloat($(this).val()).toFixed(2));
             });
 
             $('#create-payment').parsley({

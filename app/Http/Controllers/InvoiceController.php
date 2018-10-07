@@ -9,6 +9,8 @@ use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use App\Models\OldInvoice;
 use App\Models\OldInvoiceItem;
+use App\Models\Quote;
+use App\Models\QuoteItem;
 use Illuminate\Http\Request;
 
 use Log;
@@ -63,7 +65,7 @@ class InvoiceController extends Controller
     }
 
     /**
-     * Set the Invoice to Written Off
+     * Set the Invoice Share Token
      *
      * @param Invoice $invoice
      * @return \Illuminate\Http\Response
@@ -77,6 +79,10 @@ class InvoiceController extends Controller
         return $token;
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function showwithtoken(Request $request)
     {
         $token = $request->input('token');
@@ -158,6 +164,45 @@ class InvoiceController extends Controller
     }
 
     /**
+     * @param Invoice $invoice
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
+    public function convertToQuote(Invoice $invoice)
+    {
+        $company = auth()->user()->company;
+
+        $quote = new Quote;
+        $quote->nice_quote_id = $company->settings->invoice_prefix . 'Q-' . $company->nicequoteid();
+        $quote->date = $invoice->date;
+        $quote->netdays = $invoice->netdays;
+        $quote->duedate = $invoice->duedate;
+        $quote->client_id = $invoice->client_id;
+        $quote->company_id = $company->id;
+        $quote->status = Quote::STATUS_DRAFT;
+        $quote->save();
+
+        foreach($invoice->items as $key => $item)
+        {
+            $quoteitem = new QuoteItem;
+            $quoteitem->name = $item->name;
+            $quoteitem->description = $item->description;
+            $quoteitem->quantity   = $item->quantity;
+            $quoteitem->price = $item->price;
+            $quoteitem->quote_id = $quote->id;
+            $quoteitem->save();
+        }
+
+        $quote->setQuoteTotal();
+
+        $invoice->delete();
+
+        flash('Quote Created', 'success');
+
+        return redirect()->route('quote.show', [ 'quote' => $quote->id ]);
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  \App\Models\Invoice  $invoice
@@ -221,8 +266,8 @@ class InvoiceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Invoice  $invoice
+     * @param UpdateInvoiceRequest $request
+     * @param  \App\Models\Invoice $invoice
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateInvoiceRequest $request, Invoice $invoice)
@@ -297,8 +342,9 @@ class InvoiceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Invoice  $invoice
+     * @param  \App\Models\Invoice $invoice
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(Invoice $invoice)
     {
@@ -309,6 +355,10 @@ class InvoiceController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * @param Invoice $invoice
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function history(Invoice $invoice)
     {
         $client = $invoice->client;

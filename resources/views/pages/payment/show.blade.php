@@ -26,10 +26,16 @@
                     <dd>{{ $payment->notes or '-' }}</dd>
                     <dt>Company Name</dt>
                     <dd>{{ $payment->client->companyname }}</dd>
-                    <dt>Company Address</dt>
-                    <dd>{{ $payment->client->address }}</dd>
+                    <dt>Company Block</dt>
+                    <dd>{{ $payment->client->block or '-' }}</dd>
+                    <dt>Company Street</dt>
+                    <dd>{{ $payment->client->street or '-' }}</dd>
+                    <dt>Company Unit Number</dt>
+                    <dd>{{ $payment->client->unitnumber or '-' }}</dd>
+                    <dt>Company Postal Code</dt>
+                    <dd>{{ $payment->client->postalcode or '-' }}</dd>
                     <dt>Company Nickname</dt>
-                    <dd>{{ $payment->client->nickname or '' }}</dd>
+                    <dd>{{ $payment->client->nickname or '-' }}</dd>
                     <dt>Company Registration Number</dt>
                     <dd>{{ $payment->client->crn }}</dd>
                     </dl>
