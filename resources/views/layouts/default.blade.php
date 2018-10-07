@@ -34,6 +34,7 @@
     $(function() {
         $('.collapsible').collapsible();
         $('.sidenav').sidenav();
+        $('.tooltipped').tooltip();
         $('.tabs').tabs();
         $('.modal').modal();
         $('.dropdown-trigger').dropdown({

@@ -13,6 +13,7 @@
 
 Route::get('/', 'MainController@main')->name('main');
 Route::get('/invoice/view', 'InvoiceController@showwithtoken')->name('invoice.token');
+Route::get('/quote/view', 'QuoteController@showwithtoken')->name('quote.token');
 
 Route::group(['middleware' => ['guest']], function() {
     /* Auth */
@@ -76,6 +77,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('/invoice/create', 'InvoiceController@create')->name('invoice.create');
         Route::post('/invoice/create', 'InvoiceController@store')->name('invoice.store');
         Route::get('/invoice/{invoice}', 'InvoiceController@show')->name('invoice.show')->middleware('can:view,invoice');
+        Route::post('/invoice/{invoice}/convert', 'InvoiceController@convertToQuote')->name('invoice.convert')->middleware('can:view,invoice');
         Route::get('/invoice/{invoice}/download', 'InvoiceController@download')->name('invoice.download')->middleware('can:view,invoice');
         Route::get('/invoice/{invoice}/printview', 'InvoiceController@printview')->name('invoice.printview')->middleware('can:view,invoice');
         Route::get('/invoice/{invoice}/edit', 'InvoiceController@edit')->name('invoice.edit')->middleware('can:update,invoice');
@@ -89,6 +91,19 @@ Route::group(['middleware' => ['auth']], function() {
 
         /* Quotes */
         Route::get('/quotes', 'QuoteController@index')->name('quotes.index');
+        Route::get('/quotes/archived', 'QuoteController@index_archived')->name('quotes.index.archived');
+        Route::get('/quote/create', 'QuoteController@create')->name('quote.create');
+        Route::post('/quote/create', 'QuoteController@store')->name('quote.store');
+        Route::get('/quote/{quote}', 'QuoteController@show')->name('quote.show')->middleware('can:view,quote');
+        Route::post('/quote/{quote}/convert', 'QuoteController@convertToInvoice')->name('quote.convert')->middleware('can:view,quote');
+        Route::get('/quote/{quote}/download', 'QuoteController@download')->name('quote.download')->middleware('can:view,quote');
+        Route::get('/quote/{quote}/printview', 'QuoteController@printview')->name('quote.printview')->middleware('can:view,quote');
+        Route::get('/quote/{quote}/edit', 'QuoteController@edit')->name('quote.edit')->middleware('can:update,quote');
+        Route::patch('/quote/{quote}/edit', 'QuoteController@update')->name('quote.update')->middleware('can:update,quote');
+        Route::patch('/quote/{quote}/archive', 'QuoteController@archive')->name('quote.archive')->middleware('can:update,quote');
+        Route::patch('/quote/{quote}/writeoff', 'QuoteController@writeoff')->name('quote.writeoff')->middleware('can:update,quote');
+        Route::patch('/quote/{quote}/share', 'QuoteController@share')->name('quote.share')->middleware('can:view,quote');
+        Route::delete('/quote/{quote}/destroy', 'QuoteController@destroy')->name('quote.destroy')->middleware('can:delete,quote');
 
         /* OldInvoice */
         Route::get('/oldinvoice/{oldinvoice}', 'OldInvoiceController@show')->name('invoice.old.show')->middleware('can:view,oldinvoice');

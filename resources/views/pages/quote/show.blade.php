@@ -22,40 +22,32 @@
     <div class="mini-container">
         <div id="top-action-container" class="row">
             <div class="col s12 mtop30 right">
-                <a class="btn btn-link waves-effect waves-dark" href="{{ route('payment.create', [ 'invoice' => $invoice->id] ) }}">
-                    Log Payment
-                </a>
-                <a href="#" data-id="{{ $invoice->id }}" class="invoice-share-btn btn btn-link waves-effect waves-dark">
+                <a href="#" data-id="{{ $quote->id }}" class="quote-share-btn btn btn-link waves-effect waves-dark">
                     Share
                 </a>
-                <a class="btn btn-link waves-effect waves-dark" href="{{ route('invoice.download', [ 'invoice' => $invoice->id] ) }}">
+                <a class="btn btn-link waves-effect waves-dark" href="{{ route('quote.download', [ 'quote' => $quote->id] ) }}">
                     Save PDF
                 </a>
-                <a class="btn btn-link waves-effect waves-dark" href="{{ route('invoice.printview', [ 'invoice' => $invoice->id] ) }}">
+                <a class="btn btn-link waves-effect waves-dark" href="{{ route('quote.printview', [ 'quote' => $quote->id] ) }}">
                     Print
                 </a>
             </div>
         </div>
-        <div id="invoice-action-container" class="row" style="margin-bottom: 0;">
+        <div id="quote-action-container" class="row" style="margin-bottom: 0;">
             <div class="col s12 right">
-                <form method="post" action="{{ route('invoice.convert', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
+                <form method="post" action="{{ route('quote.convert', [ 'quote' => $quote->id ] ) }}" class="null-form">
                     {{ csrf_field() }}
-                    <button class="btn btn-link waves-effect waves-dark null-btn" type="submit">Convert back to Quote</button>
+                    <button class="btn btn-link waves-effect waves-dark null-btn" type="submit">Convert to Invoice</button>
                 </form>
-                <form method="post" action="{{ route('invoice.writeoff', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
-                    {{ method_field('PATCH') }}
-                    {{ csrf_field() }}
-                    <button class="btn deep-orange darken-2 waves-effect waves-dark null-btn" type="submit">Write Off</button>
-                </form>
-                <form method="post" action="{{ route('invoice.archive', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
+                <form method="post" action="{{ route('quote.archive', [ 'quote' => $quote->id ] ) }}" class="null-form">
                     {{ method_field('PATCH') }}
                     {{ csrf_field() }}
                     <button class="btn amber darken-2 waves-effect waves-dark null-btn" type="submit">Archive</button>
                 </form>
-                <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="btn light-blue waves-effect waves-dark">
+                <a href="{{ route('quote.edit', [ 'quote' => $quote->id ] ) }}" class="btn light-blue waves-effect waves-dark">
                     Edit
                 </a>
-                <a href="#" data-id="{{ $invoice->id }}" class="invoice-delete-btn btn red waves-effect waves-dark">
+                <a href="#" data-id="{{ $quote->id }}" class="quote-delete-btn btn red waves-effect waves-dark">
                     Delete
                 </a>
             </div>
@@ -86,113 +78,60 @@
                     <dd>{{ $client->contactphone or '-' }}</dd>
                     <dt>Status</dt>
                     <dd>
-                        @if ($invoice->status == App\Models\Invoice::STATUS_OVERDUE)
-                            <span class="alt-badge error">{{ $invoice->statustext() }}</span>
-                        @elseif ($invoice->status == App\Models\Invoice::STATUS_DRAFT)
-                            <span class="alt-badge">{{ $invoice->statustext() }}</span>
-                        @elseif ($invoice->status == App\Models\Invoice::STATUS_OPEN)
-                            <span class="alt-badge warning">{{ $invoice->statustext() }}</span>
-                        @elseif ($invoice->status == App\Models\Invoice::STATUS_CLOSED)
-                            <span class="alt-badge success">{{ $invoice->statustext() }}</span>
-                        @elseif ($invoice->status == App\Models\Invoice::STATUS_ARCHIVED)
-                            <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
-                        @elseif ($invoice->status == App\Models\Invoice::STATUS_WRITTENOFF)
-                            <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
+                        @if ($quote->status == App\Models\Quote::STATUS_DRAFT)
+                            <span class="alt-badge">{{ $quote->statustext() }}</span>
+                        @elseif ($quote->status == App\Models\Quote::STATUS_OPEN)
+                            <span class="alt-badge success">{{ $quote->statustext() }}</span>
+                        @elseif ($quote->status == App\Models\Quote::STATUS_EXPIRED)
+                            <span class="alt-badge error">{{ $quote->statustext() }}</span>
+                        @elseif ($quote->status == App\Models\Quote::STATUS_ARCHIVED)
+                            <span class="alt-badge warning">{{ $quote->statustext() }}</span>
                         @endif
                     </dd>
                     </dl>
                 </div>
-                <h3>Change History</h3>
-                <div id="change-history-container" class="change-history-container">
-                    <div class="single-history-wrapper">
-                        <div class="card single-history">
-                            <h6>Date/Time</h6>
-                            <p class="mtop20">{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->created_at)->format('j F, Y') }}</p>
-                            <p>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->created_at)->format('h:i:s a') }}</p>
-                            <span class="alt-badge info mtop20">Current Version</span>
-                            <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="btn btn-theme full-width mtop20">Edit</a>
-                        </div>
-                    </div>
-                    @foreach($histories as $key => $history)
-                        <div class="single-history-wrapper">
-                            <div class="card single-history">
-                                <h6>Date/Time</h6>
-                                <p class="mtop20">{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $history->created_at)->format('j F, Y') }}</p>
-                                <p>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $history->created_at)->format('h:i:s a') }}</p>
-                                <span class="alt-badge warning mtop20">Past Version</span>
-                                <a href="{{ route('invoice.old.show', [ 'oldinvoice' => $history->id ] ) }}" class="btn btn-theme full-width mtop20">View</a>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-                <h3>Payment History</h3>
-                <div id="payment-history-container" class="payment-history-container">
-                    <div class="card-panel">
-                        <table class="responsive-table">
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Mode</th>
-                                    <th>Amount</th>
-                                    <th>Percentage of Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($payments as $key => $payment)
-                                    <tr>
-                                        <td>{{ $payment->date_format }}</td>
-                                        <td>{{ $payment->mode }}</td>
-                                        <td>S${{ $payment->money_format }}</td>
-                                        <td><span class="alt-badge teal lighten-1">{{ $payment->percentage }}%</span></td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
             </div>
             <div class="col s12 l8">
-                <h3>Invoice</h3>
-                <div class="invoice" style="background-color: #ffffff; padding: 50px 50px 20px; color: #8c8c8c;">
-                    <div class="row invoice-header" style="position: relative; margin-bottom: 160px;">
+                <h3>Quote</h3>
+                <div class="quote" style="background-color: #ffffff; padding: 50px 50px 20px; color: #8c8c8c;">
+                    <div class="row quote-header" style="position: relative; margin-bottom: 160px;">
                         <div class="col-xs-7" style="position: absolute; left: 0; padding: 0 15px;">
-                            <div class="invoice-logo" style="height: 110px; min-width: 210px; background-image: url('{{ $invoice->company->logo }}'); background-repeat: no-repeat; background-position: 0;"></div>
+                            <div class="quote-logo" style="height: 110px; min-width: 210px; background-image: url('{{ $quote->company->logo }}'); background-repeat: no-repeat; background-position: 0;"></div>
                         </div>
-                        <div class="col-xs-5 invoice-order" style="position: absolute; right: 0; padding: 0 15px; text-align: left;">
-                            <span class="invoice-id" style="display: block; font-size: 30px; line-height: 30px; margin-bottom: 10px;">Invoice #{{ $invoice->nice_invoice_id }}</span>
-                            <span class="invoice-date" style="display: block; font-size: 18px; line-height: 30px; text-align: right;">Invoice Date: {{ $invoice->date }}</span>
-                            <span class="invoice-duedate" style="display: block; font-size: 18px; line-height: 30px; text-align: right;">Payment Due: {{ $invoice->duedate }}</span>
-                            <span class="invoice-netdays" style="display: block; font-size: 18px; line-height: 30px; text-align: right;">Payment Terms: Net {{ $invoice->netdays }}</span>
+                        <div class="col-xs-5 quote-order" style="position: absolute; right: 0; padding: 0 15px; text-align: left;">
+                            <span class="quote-id" style="display: block; font-size: 30px; line-height: 30px; margin-bottom: 10px;">Quote #{{ $quote->nice_quote_id }}</span>
+                            <span class="quote-date" style="display: block; font-size: 18px; line-height: 30px; text-align: right;">Quote Date: {{ $quote->date }}</span>
+                            <span class="quote-duedate" style="display: block; font-size: 18px; line-height: 30px; text-align: right;">Quote Expires: {{ $quote->duedate }}</span>
                         </div>
                     </div>
-                    <div class="row invoice-data" style="position: relative; margin-bottom: 320px;">
-                        <div class="col-xs-5 invoice-person" style="position: absolute; left: 0; padding: 0 15px; ">
-                            <span class="name" style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">Bill To: </span>
-                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->companyname }}</span>
-                            <span style="font-size: 18px; line-height: 26px; display: block;">@if($invoice->client->block){{ $invoice->client->block }} @endif {{ $invoice->client->street or 'No Street' }}</span>
-                            @if($invoice->client->unitnumber)<span style="font-size: 18px; line-height: 26px; display: block;">#{{ $invoice->client->unitnumber }}</span>@endif
-                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->country or 'No Country' }} {{ $invoice->client->postalcode or 'No Postal Code' }}</span>
+                    <div class="row quote-data" style="position: relative; margin-bottom: 320px;">
+                        <div class="col-xs-5 quote-person" style="position: absolute; left: 0; padding: 0 15px; ">
+                            <span class="name" style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">Prepared For: </span>
+                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $quote->client->companyname }}</span>
+                            <span style="font-size: 18px; line-height: 26px; display: block;">@if($quote->client->block){{ $quote->client->block }} @endif {{ $quote->client->street or 'No Street' }}</span>
+                            @if($quote->client->unitnumber)<span style="font-size: 18px; line-height: 26px; display: block;">#{{ $quote->client->unitnumber }}</span>@endif
+                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $quote->client->country or 'No Country' }} {{ $quote->client->postalcode or 'No Postal Code' }}</span>
                         </div>
-                        <div class="col-xs-2 invoice-payment-direction" style="position: absolute; padding-top: 10px; left: 0; right:0; text-align: center;">
+                        <div class="col-xs-2 quote-payment-direction" style="position: absolute; padding-top: 10px; left: 0; right:0; text-align: center;">
                             <img src="{{ asset('/assets/img/lefttoright.png') }}" width="80" height="80" />
                         </div>
-                        <div class="col-xs-5 invoice-person" style="position: absolute; right: 0; padding: 0 15px; text-align: left;">
-                            <span class="name" style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">{{ $invoice->company->name or 'No Company Name' }}</span>
-                            <span style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">{{ $invoice->company->crn or 'No Company Registration Number' }}</span>
-                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->owner->full_name or 'No Company Owner Name' }}</span>
-                            @if($invoice->company->address)
-                                <span style="font-size: 18px; line-height: 26px; display: block;">@if($invoice->company->address->block){{ $invoice->company->address->block }} @endif {{ $invoice->company->address->street or 'No Street' }}</span>
-                                @if($invoice->company->address->unitnumber)<span style="font-size: 18px; line-height: 26px; display: block;">#{{ $invoice->company->address->unitnumber }}</span>@endif
-                                <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->address->postalcode or 'No Postal Code' }}</span>
+                        <div class="col-xs-5 quote-person" style="position: absolute; right: 0; padding: 0 15px; text-align: left;">
+                            <span class="name" style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">{{ $quote->company->name or 'No Company Name' }}</span>
+                            <span style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">{{ $quote->company->crn or 'No Company Registration Number' }}</span>
+                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $quote->company->owner->full_name or 'No Company Owner Name' }}</span>
+                            @if($quote->company->address)
+                                <span style="font-size: 18px; line-height: 26px; display: block;">@if($quote->company->address->block){{ $quote->company->address->block }} @endif {{ $quote->company->address->street or 'No Street' }}</span>
+                                @if($quote->company->address->unitnumber)<span style="font-size: 18px; line-height: 26px; display: block;">#{{ $quote->company->address->unitnumber }}</span>@endif
+                                <span style="font-size: 18px; line-height: 26px; display: block;">{{ $quote->company->address->postalcode or 'No Postal Code' }}</span>
                             @else
-                                <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->owner->email or 'No Company Owner Email' }}</span>
+                                <span style="font-size: 18px; line-height: 26px; display: block;">{{ $quote->company->owner->email or 'No Company Owner Email' }}</span>
                             @endif
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12"
                              style="position: relative; padding: 0 15px;">
-                            <table class="invoice-details" style="border-collapse: collapse; border-spacing: 0; background-color: transparent; width: 100%; font-size: 16px;">
+                            <table class="quote-details" style="border-collapse: collapse; border-spacing: 0; background-color: transparent; width: 100%; font-size: 16px;">
                                 <tbody>
                                     <tr>
                                         <th style="padding: 0; padding-bottom: 8px; border-bottom: 1px solid #f0f0f0; text-align: left; width: 60%;">
@@ -205,7 +144,7 @@
                                             Amount
                                         </th>
                                     </tr>
-                                    @foreach($invoice->items as $key => $item)
+                                    @foreach($quote->items as $key => $item)
                                         <tr>
                                             <td class="description" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0;">
                                                 <span style="display: block; font-weight: 700;">{{ $item->name }}</span>
@@ -225,7 +164,7 @@
                                             Subtotal
                                         </td>
                                         <td class="amount" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
-                                            ${{ $invoice->calculatetotal() }}
+                                            ${{ $quote->calculatetotal() }}
                                         </td>
                                     </tr>
                                     <tr>
@@ -243,7 +182,7 @@
                                             Total
                                         </td>
                                         <td class="amount total-value" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right; font-size: 22px; color: #4da6a6;">
-                                            ${{ $invoice->calculatetotal() }}
+                                            ${{ $quote->calculatetotal() }}
                                         </td>
                                     </tr>
                                 </tbody>
@@ -251,40 +190,40 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col s12 invoice-message" style="position: relative; padding: 0 15px; font-size: 16px; margin-bottom: 62px;">
+                        <div class="col s12 quote-message" style="position: relative; padding: 0 15px; font-size: 16px; margin-bottom: 62px;">
                             <span class="title" style="font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 12px;">Terms & Conditions</span>
-                            {!! $invoice->company->settings->invoice_conditions !!}
+                            {!! $quote->company->settings->quote_conditions !!}
                         </div>
                     </div>
-                    <div class="row invoice-company-info" style="margin-bottom: 70px;">
+                    <div class="row quote-company-info" style="margin-bottom: 70px;">
                         <div class="logo" style="position: relative; display: block; width: 100%;  text-align: center;">
-                            <img src="{{ $invoice->company->smlogo }}" alt="Logo-symbol" width="100" height="100" style="border: 0; vertical-align: middle;">
+                            <img src="{{ $quote->company->smlogo }}" alt="Logo-symbol" width="100" height="100" style="border: 0; vertical-align: middle;">
                         </div>
                         <div style="margin-top: 20px;">
                             <div class="row">
                                 <div class="col s6 m4 summary" style="display: inline-block; padding: 0 15px; line-height: 16px; text-align: center;">
-                                    <span class="title" style="color: #8c8c8c; font-size: 14px; line-height: 21px; font-weight: 700;">{{ $invoice->company->name or 'No Company Name' }}</span>
+                                    <span class="title" style="color: #8c8c8c; font-size: 14px; line-height: 21px; font-weight: 700;">{{ $quote->company->name or 'No Company Name' }}</span>
                                     <p style="font-size: inherit; margin: 0 0 15px; line-height: 16px;"></p>
                                 </div>
                                 <div class="col s6 m4 phone" style="display: inline-block; padding: 0 15px; border-left: 2px solid #e0e0e0; text-align: center;">
                                     <ul class="list-unstyled" style="margin-top: 0; margin-bottom: 9px; line-height: 20px; padding-left: 0; list-style: none;">
-                                        <li> {{ $invoice->company->phone or 'No Phone Number' }}</li>
+                                        <li> {{ $quote->company->phone or 'No Phone Number' }}</li>
                                     </ul>
                                 </div>
                                 <div class="col s6 m4 email" style="display: inline-block; padding: 0 15px; border-left: 2px solid #e0e0e0; text-align: center;">
                                     <ul class="list-unstyled" style="margin-top: 0; margin-bottom: 9px; line-height: 20px; padding-left: 0; list-style: none;">
-                                        <li>{{ $invoice->company->email or 'No Email' }}</li>
+                                        <li>{{ $quote->company->email or 'No Email' }}</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row invoice-footer" style="text-align: center;">
+                    <div class="row quote-footer" style="text-align: center;">
                         <div class="col s12" style="position: relative; padding: 0 15px;">
-                            <a class="btn btn-lg btn-space btn-default" style="-webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05); border: 1px solid transparent; color: #404040; background-color: #fff; border-color: #dedede; padding: 0 12px; line-height: 38px; border-radius: 3px; font-weight: 700; margin-right: 5px; margin-bottom: 5px; min-width: 96px; font-size: 14px;" href="{{ route('invoice.download', [ 'invoice' => $invoice->id] ) }}">
+                            <a class="btn btn-lg btn-space btn-default" style="-webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05); border: 1px solid transparent; color: #404040; background-color: #fff; border-color: #dedede; padding: 0 12px; line-height: 38px; border-radius: 3px; font-weight: 700; margin-right: 5px; margin-bottom: 5px; min-width: 96px; font-size: 14px;" href="{{ route('quote.download', [ 'quote' => $quote->id] ) }}">
                                 Save PDF
                             </a>
-                            <a class="btn btn-lg btn-space btn-default" style="-webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05); border: 1px solid transparent; color: #404040; background-color: #fff; border-color: #dedede; padding: 0 12px; line-height: 38px; border-radius: 3px; font-weight: 700; margin-right: 5px; margin-bottom: 5px; min-width: 96px; font-size: 14px;" href="{{ route('invoice.printview', [ 'invoice' => $invoice->id] ) }}">
+                            <a class="btn btn-lg btn-space btn-default" style="-webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05); border: 1px solid transparent; color: #404040; background-color: #fff; border-color: #dedede; padding: 0 12px; line-height: 38px; border-radius: 3px; font-weight: 700; margin-right: 5px; margin-bottom: 5px; min-width: 96px; font-size: 14px;" href="{{ route('quote.printview', [ 'quote' => $quote->id] ) }}">
                                 Print
                             </a>
                             {{--
@@ -301,13 +240,13 @@
 
     <div id="delete-confirmation" class="modal">
         <div class="modal-content">
-            <p>Delete Invoice?</p>
+            <p>Delete Quote?</p>
         </div>
         <div class="modal-footer">
-            <form id="delete-invoice-form" method="post" class="null-form">
+            <form id="delete-quote-form" method="post" class="null-form">
                 {{ method_field('DELETE') }}
                 {{ csrf_field() }}
-                <button class="modal-action waves-effect black-text waves-green btn-flat btn-deletemodal invoice-confirm-delete-btn" type="submit">Delete</button>
+                <button class="modal-action waves-effect black-text waves-green btn-flat btn-deletemodal quote-confirm-delete-btn" type="submit">Delete</button>
             </form>
             <a href="javascript:;" class=" modal-action modal-close waves-effect black-text waves-red btn-flat btn-deletemodal">Cancel</a>
         </div>
@@ -319,11 +258,11 @@
                 <h5>Share</h5>
             </div>
             <div class="right">
-                <a href="#" data-id="{{ $invoice->id }}" class="invoice-regenerate-btn btn btn-link waves-effect waves-dark">
+                <a href="#" data-id="{{ $quote->id }}" class="quote-regenerate-btn btn btn-link waves-effect waves-dark">
                     Regenerate Link
                 </a>
             </div>
-            <input id="shared-link" type="text" value="{{ route('invoice.token', [ 'token' => $invoice->share_token] ) }}">
+            <input id="shared-link" type="text" value="{{ route('quote.token', [ 'token' => $quote->share_token] ) }}">
         </div>
     </div>
 @stop
@@ -339,7 +278,7 @@
                 // left
             });
 
-            $('#top-action-container').on('click', '.invoice-share-btn', function (event) {
+            $('#top-action-container').on('click', '.quote-share-btn', function (event) {
                 event.preventDefault();
                 if($('#shared-link').val() == "")
                 {
@@ -351,16 +290,16 @@
                 }
             });
 
-            $('#shared-details').on('click', '.invoice-regenerate-btn', function (event) {
+            $('#shared-details').on('click', '.quote-regenerate-btn', function (event) {
                 event.preventDefault();
                 getSharedLink();
             });
 
 
-            $('#invoice-action-container').on('click', '.invoice-delete-btn', function (event) {
+            $('#quote-action-container').on('click', '.quote-delete-btn', function (event) {
                 event.preventDefault();
-                let invoiceid = $(this).attr('data-id');
-                $('#delete-invoice-form').attr('action', '/invoice/' + invoiceid + '/destroy');
+                let quoteid = $(this).attr('data-id');
+                $('#delete-quote-form').attr('action', '/quote/' + quoteid + '/destroy');
                 $('#delete-confirmation').modal('open');
             });
 
@@ -425,10 +364,10 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     method: "PATCH",
-                    url: "{{ route('invoice.share', [ 'invoice' => $invoice->id]) }}",
+                    url: "{{ route('quote.share', [ 'quote' => $quote->id]) }}",
                 })
                 .done(function(data) {
-                    $('#shared-link').val("{{ route('invoice.token') }}?token=" + data);
+                    $('#shared-link').val("{{ route('quote.token') }}?token=" + data);
                     $('#shared-details').modal('open');
                 });
             }
