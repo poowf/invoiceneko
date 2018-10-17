@@ -128,7 +128,7 @@ class InvoiceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param CreateInvoiceRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(CreateInvoiceRequest $request)
@@ -213,7 +213,7 @@ class InvoiceController extends Controller
         $client = $invoice->client;
         $invoice->date = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->date)->format('j F, Y');
         $invoice->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y');
-        $histories = $invoice->history()->orderBy('created_at', 'desc')->get();
+        $histories = $invoice->history()->orderBy('updated_at', 'desc')->get();
         $payments = $invoice->payments;
 
         return view('pages.invoice.show', compact('invoice', 'client', 'histories', 'payments'));
@@ -291,7 +291,6 @@ class InvoiceController extends Controller
             }
         }
 
-
         if($invoice->isDirty() || $ismodified){
             $originalinvoice = $invoice->getOriginal();
             $originalitems = $invoice->items;
@@ -299,7 +298,11 @@ class InvoiceController extends Controller
             $oldinvoice = new OldInvoice;
             $oldinvoice->fill($originalinvoice);
 
+            $oldinvoice->created_at = $originalinvoice['created_at'];
+            $oldinvoice->updated_at = $originalinvoice['updated_at'];
+
             $invoice->history()->save($oldinvoice);
+            $invoice->touch();
 
             foreach($originalitems as $item)
             {

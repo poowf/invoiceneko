@@ -107,8 +107,8 @@
                     <div class="single-history-wrapper">
                         <div class="card single-history">
                             <h6>Date/Time</h6>
-                            <p class="mtop20">{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->created_at)->format('j F, Y') }}</p>
-                            <p>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->created_at)->format('h:i:s a') }}</p>
+                            <p class="mtop20">{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->updated_at)->format('j F, Y') }}</p>
+                            <p>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->updated_at)->format('h:i:s a') }}</p>
                             <span class="alt-badge info mtop20">Current Version</span>
                             <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="btn btn-theme full-width mtop20">Edit</a>
                         </div>
@@ -117,8 +117,8 @@
                         <div class="single-history-wrapper">
                             <div class="card single-history">
                                 <h6>Date/Time</h6>
-                                <p class="mtop20">{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $history->created_at)->format('j F, Y') }}</p>
-                                <p>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $history->created_at)->format('h:i:s a') }}</p>
+                                <p class="mtop20">{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $history->updated_at)->format('j F, Y') }}</p>
+                                <p>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $history->updated_at)->format('h:i:s a') }}</p>
                                 <span class="alt-badge warning mtop20">Past Version</span>
                                 <a href="{{ route('invoice.old.show', [ 'oldinvoice' => $history->id ] ) }}" class="btn btn-theme full-width mtop20">View</a>
                             </div>
