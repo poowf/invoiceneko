@@ -143,7 +143,7 @@ class InvoiceController extends Controller
         $company = auth()->user()->company;
 
         $invoice = new Invoice;
-        $invoice->nice_invoice_id = $company->settings->invoice_prefix . '-' . $company->niceinvoiceid();
+        $invoice->nice_invoice_id = $company->niceinvoiceid();
         $duedate = Carbon::createFromFormat('j F, Y', $request->input('date'))->addDays($request->input('netdays'))->startOfDay()->toDateTimeString();
         $invoice->date = Carbon::createFromFormat('j F, Y', $request->input('date'))->startOfDay()->toDateTimeString();
         $invoice->netdays = $request->input('netdays');
@@ -180,7 +180,7 @@ class InvoiceController extends Controller
         $company = auth()->user()->company;
 
         $quote = new Quote;
-        $quote->nice_quote_id = $company->settings->invoice_prefix . 'Q-' . $company->nicequoteid();
+        $quote->nice_quote_id = $company->nicequoteid();
         $quote->date = $invoice->date;
         $quote->netdays = $invoice->netdays;
         $quote->duedate = $invoice->duedate;
@@ -397,8 +397,7 @@ class InvoiceController extends Controller
             }
             else
             {
-                $invoicenumber = $company->invoices()->count();
-                $invoicenumber = sprintf('%06d', ++$invoicenumber);
+                $invoicenumber = $company->niceinvoiceid();
                 $countries = countries();
 
                 return view('pages.invoice.adhoccreate', compact('company', 'invoicenumber', 'countries'));

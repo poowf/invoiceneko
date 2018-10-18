@@ -39,6 +39,10 @@
                     {{ csrf_field() }}
                     <button class="btn btn-link waves-effect waves-dark null-btn" type="submit">Convert to Invoice</button>
                 </form>
+                <form method="post" action="{{ route('quote.duplicate', [ 'quote' => $quote->id ] ) }}" class="null-form">
+                    {{ csrf_field() }}
+                    <button class="btn blue darken-3 waves-effect waves-dark null-btn" type="submit">Clone</button>
+                </form>
                 <form method="post" action="{{ route('quote.archive', [ 'quote' => $quote->id ] ) }}" class="null-form">
                     {{ method_field('PATCH') }}
                     {{ csrf_field() }}

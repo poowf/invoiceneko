@@ -129,6 +129,12 @@
                     </div>
                 </div>
             </div>
+            <div class="page row">
+                <div class="invoice-message" style="position: relative; padding: 0 15px; font-size: 16px; padding-top: 62px; margin-bottom: 62px;">
+                    <span class="title" style="font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 12px;">Terms & Conditions</span>
+                    {!! $quote->company->settings->quote_conditions !!}
+                </div>
+            </div>
         </div>
     </body>
 </html>

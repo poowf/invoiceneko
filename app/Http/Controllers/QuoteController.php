@@ -90,6 +90,13 @@ class QuoteController extends Controller
         return $pdf->inline(str_slug($quote->nice_quote_id) . '.pdf');
     }
 
+    public function duplicate(Quote $quote)
+    {
+        $duplicatedQuote = $quote->duplicate();
+        flash('Quote has been Cloned Sucessfully', "success");
+        return redirect()->route('quote.show', ['quote' => $duplicatedQuote->id]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -130,7 +137,7 @@ class QuoteController extends Controller
         $company = auth()->user()->company;
 
         $quote = new Quote;
-        $quote->nice_quote_id = $company->settings->invoice_prefix . 'Q-' . $company->nicequoteid();
+        $quote->nice_quote_id = $company->nicequoteid();
         $duedate = Carbon::createFromFormat('j F, Y', $request->input('date'))->addDays($request->input('netdays'))->startOfDay()->toDateTimeString();
         $quote->date = Carbon::createFromFormat('j F, Y', $request->input('date'))->startOfDay()->toDateTimeString();
         $quote->netdays = $request->input('netdays');

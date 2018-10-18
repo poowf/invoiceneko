@@ -44,6 +44,9 @@ class Company extends Model
         static::created(function ($company) {
             $settings = new CompanySettings;
             $settings->invoice_prefix = str_slug($company->name);
+            $settings->quote_prefix = str_slug($company->name) . 'Q';
+            $settings->invoice_conditions = "Terms & Conditions for your Invoice";
+            $settings->quote_conditions = "Terms & Conditions for your Quote";
             $company->settings()->save($settings);
         });
     }
@@ -71,38 +74,30 @@ class Company extends Model
 
     public function niceInvoiceID()
     {
-        $invoice = $this->lastinvoice();
-        $invoiceIndex = 1;
-
-        if ($invoice)
+        $companysettings = $this->settings;
+        if($companysettings->invoice_prefix)
         {
-            $nice_invoice_id = $invoice->nice_invoice_id;
-
-            $currentindex = preg_split('#^.*-#s', $nice_invoice_id);
-
-            $currentindex[1] += 1;
-            $invoiceIndex = $currentindex[1];
+            $prefix = $companysettings->invoice_prefix . '-';
         }
-
-        return sprintf('%06d', $invoiceIndex);
+        else
+        {
+            $prefix = $this->slug . '-';
+        }
+        return $prefix . sprintf('%06d', $this->invoice_index);
     }
 
     public function niceQuoteID()
     {
-        $quote = $this->lastquote();
-        $quoteIndex = 1;
-
-        if ($quote)
+        $companysettings = $this->settings;
+        if($companysettings->quote_prefix)
         {
-            $nice_quote_id = $quote->nice_quote_id;
-
-            $currentindex = preg_split('#^.*-#s', $nice_quote_id);
-
-            $currentindex[1] += 1;
-            $quoteIndex = $currentindex[1];
+            $prefix = $companysettings->quote_prefix . '-';
         }
-
-        return sprintf('%06d', $quoteIndex);
+        else
+        {
+            $prefix = $this->slug . 'Q-';
+        }
+        return $prefix . sprintf('%06d', $this->quote_index);
     }
 
     public function isOwner(User $user)

@@ -39,6 +39,18 @@ class Invoice extends Model
         'netdays',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        //Auto Creation of Settings per Company;
+        static::created(function ($invoice) {
+            $company = $invoice->company;
+            $company->invoice_index = $company->invoice_index + 1;
+            $company->save();
+        });
+    }
+
     protected $attributes = [
         'status' => self::STATUS_OPEN
     ];
@@ -160,7 +172,13 @@ class Invoice extends Model
 
     public function duplicate()
     {
+        $company = $this->company;
         $cloned = $this->replicate();
+        $cloned->nice_invoice_id = $company->niceinvoiceid();
+        $cloned->date = Carbon::now();
+        $duedate = Carbon::now()->addDays($this->netdays)->startOfDay()->toDateTimeString();
+        $cloned->duedate = $duedate;
+        $cloned->status = self::STATUS_DRAFT;
         $cloned->save();
 
         foreach($this->items as $item)

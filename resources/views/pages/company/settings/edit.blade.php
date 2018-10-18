@@ -68,8 +68,22 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
+                                <input id="quote_prefix" name="quote_prefix" type="text" data-parsley-trigger="change" data-parsley-minlength="2" value="{{ $companysettings->quote_prefix or '' }}" placeholder="Quote Prefix">
+                                <label for="quote_prefix" class="label-validation">Quote Prefix</label>
+                                <span class="helper-text"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
                                 <textarea id="invoice_conditions" name="invoice_conditions" class="trumbowyg-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Invoice Conditions">@if(isset($companysettings->invoice_conditions)){!! $companysettings->invoice_conditions !!}@else @endif</textarea>
                                 <label for="invoice_conditions" class="label-validation">Invoice Conditions</label>
+                                <span class="helper-text"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <textarea id="quote_conditions" name="quote_conditions" class="trumbowyg-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Quote Conditions">@if(isset($companysettings->quote_conditions)){!! $companysettings->quote_conditions !!}@else @endif</textarea>
+                                <label for="quote_conditions" class="label-validation">Quote Conditions</label>
                                 <span class="helper-text"></span>
                             </div>
                         </div>

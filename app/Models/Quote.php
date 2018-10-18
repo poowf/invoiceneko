@@ -37,6 +37,18 @@ class Quote extends Model
         'netdays',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        //Auto Creation of Settings per Company;
+        static::created(function ($quote) {
+            $company = $quote->company;
+            $company->quote_index = $company->quote_index + 1;
+            $company->save();
+        });
+    }
+
     protected $attributes = [
         'status' => self::STATUS_OPEN
     ];
@@ -125,6 +137,27 @@ class Quote extends Model
         }
 
         return $textstatus;
+    }
+
+    public function duplicate()
+    {
+        $company = $this->company;
+        $cloned = $this->replicate();
+        $cloned->nice_quote_id = $company->nicequoteid();
+        $cloned->date = Carbon::now();
+        $duedate = Carbon::now()->addDays($this->netdays)->startOfDay()->toDateTimeString();
+        $cloned->duedate = $duedate;
+        $cloned->status = self::STATUS_DRAFT;
+        $cloned->save();
+
+        foreach($this->items as $item)
+        {
+            $clonedrelation = $item->replicate();
+            $clonedrelation->save();
+            $cloned->items()->save($clonedrelation);
+        }
+
+        return $cloned;
     }
 
     public function scopeDraft($query)

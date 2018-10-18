@@ -11,12 +11,12 @@
 |
 */
 
-Route::get('/', 'MainController@main')->name('main');
 Route::get('/invoice/view', 'InvoiceController@showwithtoken')->name('invoice.token');
 Route::get('/quote/view', 'QuoteController@showwithtoken')->name('quote.token');
 
 Route::group(['middleware' => ['guest']], function() {
     /* Auth */
+    Route::get('/', 'AuthController@show')->name('main');
     Route::get('/signin', 'AuthController@show')->name('auth.show');
     Route::post('/signin', 'AuthController@process')->name('auth.process');
     Route::get('/forgot', 'ForgotPasswordController@show')->name('forgot');
@@ -96,6 +96,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('/quote/create', 'QuoteController@create')->name('quote.create');
         Route::post('/quote/create', 'QuoteController@store')->name('quote.store');
         Route::get('/quote/{quote}', 'QuoteController@show')->name('quote.show')->middleware('can:view,quote');
+        Route::post('/quote/{quote}/duplicate', 'QuoteController@duplicate')->name('quote.duplicate')->middleware('can:update,quote');
         Route::post('/quote/{quote}/convert', 'QuoteController@convertToInvoice')->name('quote.convert')->middleware('can:view,quote');
         Route::get('/quote/{quote}/download', 'QuoteController@download')->name('quote.download')->middleware('can:view,quote');
         Route::get('/quote/{quote}/printview', 'QuoteController@printview')->name('quote.printview')->middleware('can:view,quote');
