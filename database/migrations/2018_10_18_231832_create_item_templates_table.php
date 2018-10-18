@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInvoiceItemTemplatesTable extends Migration
+class CreateItemTemplatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateInvoiceItemTemplatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('invoice_item_templates', function (Blueprint $table) {
+        Schema::create('item_templates', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->text('description')->nullable();
@@ -35,6 +35,6 @@ class CreateInvoiceItemTemplatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('invoice_item_templates');
+        Schema::dropIfExists('item_templates');
     }
 }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\InvoiceItemTemplate;
+use App\Models\ItemTemplate;
 use Illuminate\Http\Request;
 
-class InvoiceItemTemplateController extends Controller
+class ItemTemplateController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class InvoiceItemTemplateController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\InvoiceItemTemplate  $invoiceItemTemplate
+     * @param  \App\Models\ItemTemplate  $invoiceItemTemplate
      * @return \Illuminate\Http\Response
      */
-    public function show(InvoiceItemTemplate $invoiceItemTemplate)
+    public function show(ItemTemplate $invoiceItemTemplate)
     {
         //
     }
@@ -52,10 +52,10 @@ class InvoiceItemTemplateController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\InvoiceItemTemplate  $invoiceItemTemplate
+     * @param  \App\Models\ItemTemplate  $invoiceItemTemplate
      * @return \Illuminate\Http\Response
      */
-    public function edit(InvoiceItemTemplate $invoiceItemTemplate)
+    public function edit(ItemTemplate $invoiceItemTemplate)
     {
         //
     }
@@ -64,10 +64,10 @@ class InvoiceItemTemplateController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\InvoiceItemTemplate  $invoiceItemTemplate
+     * @param  \App\Models\ItemTemplate  $invoiceItemTemplate
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, InvoiceItemTemplate $invoiceItemTemplate)
+    public function update(Request $request, ItemTemplate $invoiceItemTemplate)
     {
         //
     }
@@ -75,10 +75,10 @@ class InvoiceItemTemplateController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\InvoiceItemTemplate  $invoiceItemTemplate
+     * @param  \App\Models\ItemTemplate  $invoiceItemTemplate
      * @return \Illuminate\Http\Response
      */
-    public function destroy(InvoiceItemTemplate $invoiceItemTemplate)
+    public function destroy(ItemTemplate $invoiceItemTemplate)
     {
         //
     }
