@@ -255,10 +255,17 @@ mark {
 }
 
 .null-btn {
+  outline: none;
   border: none;
   background-color: transparent;
   cursor: pointer;
   font-family: "Roboto", sans-serif;
+}
+
+.null-btn:active, .null-btn:focus {
+  outline: none;
+  border: none;
+  background-color: transparent;
 }
 
 #delete-confirmation {
