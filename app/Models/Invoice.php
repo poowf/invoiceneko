@@ -158,6 +158,21 @@ class Invoice extends Model
         return $textstatus;
     }
 
+    public function duplicate()
+    {
+        $cloned = $this->replicate();
+        $cloned->save();
+
+        foreach($this->items as $item)
+        {
+            $clonedrelation = $item->replicate();
+            $clonedrelation->save();
+            $cloned->items()->save($clonedrelation);
+        }
+
+        return $cloned;
+    }
+
     public function scopeOverdue($query)
     {
         $now = Carbon::now();
