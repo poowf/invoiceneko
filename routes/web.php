@@ -77,7 +77,6 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('/invoice/create', 'InvoiceController@create')->name('invoice.create');
         Route::post('/invoice/create', 'InvoiceController@store')->name('invoice.store');
         Route::get('/invoice/{invoice}', 'InvoiceController@show')->name('invoice.show')->middleware('can:view,invoice');
-        Route::post('/invoice/{invoice}/duplicate', 'InvoiceController@duplicate')->name('invoice.duplicate')->middleware('can:update,invoice');
         Route::post('/invoice/{invoice}/convert', 'InvoiceController@convertToQuote')->name('invoice.convert')->middleware('can:view,invoice');
         Route::get('/invoice/{invoice}/download', 'InvoiceController@download')->name('invoice.download')->middleware('can:view,invoice');
         Route::get('/invoice/{invoice}/printview', 'InvoiceController@printview')->name('invoice.printview')->middleware('can:view,invoice');

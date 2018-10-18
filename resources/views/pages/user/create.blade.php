@@ -2,8 +2,6 @@
 
 @section("head")
     <title>{{ config('app.name') }}</title>
-    <link href="{{ mix('/assets/css/intlTelInput.css') }}" rel="stylesheet" type="text/css">
-
     <style>
     </style>
 @stop
@@ -57,7 +55,7 @@
                         <div class="row pbtm20">
                             <div class="input-field col s12">
                                 <input id="phone" name="phone" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$" data-parsley-phone-format="#phone" value="{{ old('phone') }}">
-                                <label for="phone" class="label-validation">Phone</label>
+                                <label for="phone" class="manual-validation">Phone</label>
                                 <span class="helper-text"></span>
                             </div>
                         </div>
@@ -92,8 +90,6 @@
 @stop
 
 @section("scripts")
-    <script type="text/javascript" src="{{ mix('/assets/js/intlTelInput.js') }}"></script>
-
     <script type="text/javascript">
         "use strict";
         $(function() {

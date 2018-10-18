@@ -68,7 +68,7 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <textarea id="invoice_conditions" name="invoice_conditions" class="trumbowyg-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Invoice Conditions">@if(isset($companysettings->invoice_conditions)){!! $companysettings->invoice_conditions !!}@else @endif</textarea>
+                                <textarea id="invoice_conditions" name="invoice_conditions" class="trumbowyg-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Invoice Conditions">{!! $companysettings->invoice_conditions !!}</textarea>
                                 <label for="invoice_conditions" class="label-validation">Invoice Conditions</label>
                                 <span class="helper-text"></span>
                             </div>

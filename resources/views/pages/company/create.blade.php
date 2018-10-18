@@ -42,7 +42,7 @@
                         <div class="row pbtm20">
                             <div class="input-field col s12">
                                 <input id="phone" name="phone" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$" data-parsley-phone-format="#phone" value="{{ old('phone') }}">
-                                <label for="phone" class="label-validation">Company Phone</label>
+                                <label for="phone" class="manual-validation">Company Phone</label>
                                 <span class="helper-text"></span>
                             </div>
                         </div>
