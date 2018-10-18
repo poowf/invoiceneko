@@ -63,7 +63,7 @@
                         <div class="row">
                             <div class="logo-container input-field col s12">
                                 <label for="logo-display" class="label-validation">Logo</label>
-                                <div class="logo-display-container tooltipped" data-position="top" data-delay="50" data-tooltip="Recommended Size: 210 (W) x 110 (H) with White Background (Optional)">
+                                <div class="logo-display-container tooltipped" data-position="left" data-delay="50" data-tooltip="Recommended Size: 210 (W) x 110 (H) with White Background (Optional)">
                                     <img id="logo-display" src="{{ $company->logo or 'https://placehold.it/210x110' }}" height="100">
                                     <span class="text-content"><span id="logo-upload">Change?</span></span>
                                 </div>
@@ -73,7 +73,7 @@
                         <div class="row">
                             <div class="smlogo-container input-field col s12">
                                 <label for="smlogo-display" class="label-validation">Small Logo</label>
-                                <div class="smlogo-display-container tooltipped" data-position="top" data-delay="50" data-tooltip="Recommended Size: 80 (W) x 80 (H) with White Background (Optional)">
+                                <div class="smlogo-display-container tooltipped" data-position="left" data-delay="50" data-tooltip="Recommended Size: 80 (W) x 80 (H) with White Background (Optional)">
                                     <img id="smlogo-display" src="{{ $company->smlogo or 'https://placehold.it/80x80' }}" height="100">
                                     <span class="text-content"><span id="smlogo-upload">Change?</span></span>
                                 </div>
@@ -103,7 +103,7 @@
                         </div>
                         <div class="row pbtm20">
                             <div class="input-field col s12">
-                                <input id="phone" name="phone" type="text" data-parsley-required="false" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$" data-parsley-phone-format="#phone" value="{{ $company->phone or '' }}">
+                                <input id="phone" name="phone" type="text" data-parsley-required="false" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$" data-parsley-phone-format="#phone" value="{{ $company->phone }}">
                                 <label for="phone" class="label-validation">Phone</label>
                                 <span class="helper-text"></span>
                             </div>

@@ -96,13 +96,6 @@ class InvoiceController extends Controller
         return $pdf->inline(str_slug($invoice->nice_invoice_id) . '.pdf');
     }
 
-    public function duplicate(Invoice $invoice)
-    {
-        $duplicatedInvoice = $invoice->duplicate();
-        flash('Invoice has been Cloned Sucessfully', "success");
-        return redirect()->route('invoice.show', ['invoice' => $duplicatedInvoice->id]);
-    }
-
     /**
      * Show the form for creating a new resource.
      *
