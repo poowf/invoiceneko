@@ -7,15 +7,16 @@ use App\Http\Requests\UpdateCompanyRequest;
 use Illuminate\Http\Request;
 use App\Models\Company;
 use App\Models\User;
-use File;
+use Storage;
 use Image;
+use Log;
 
 class CompanyController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function index()
     {
@@ -35,7 +36,7 @@ class CompanyController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param CreateCompanyRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(CreateCompanyRequest $request)
@@ -49,9 +50,7 @@ class CompanyController extends Controller
 
             $storedirectory = '/perm_store/company/' . $company->id . '/photos/';
 
-            if(!File::exists(public_path('/perm_store/company/' . $company->id . '/photos/'))) {
-                File::makeDirectory(public_path('/perm_store/company/' . $company->id . '/photos/'), 0775, true);
-            }
+            Storage::makeDirectory($storedirectory);
 
             if ($request->file('logo'))
             {
@@ -59,10 +58,15 @@ class CompanyController extends Controller
                 $uuid = str_random(25);
                 $filename = $uuid . '.png';
 
-                if (!file_exists(public_path($storedirectory . '/logo_' . $filename)))
-                    Image::make($file)->save(public_path($storedirectory . '/logo_' . $filename));
+                if (!Storage::exists($storedirectory . 'logo_' . $filename))
+                {
+                    $image = Image::make($file)->fit(420, 220, function ($constraint) {
+                        $constraint->upsize();
+                    }, 'center');
+                    Storage::put($storedirectory . 'logo_' . $filename, $image->stream('jpg')->detach());
+                }
 
-                $filepath = $storedirectory . '/logo_' . $filename;
+                $filepath = $storedirectory . 'logo_' . $filename;
 
                 $company->logo = $filepath;
             }
@@ -73,10 +77,15 @@ class CompanyController extends Controller
                 $uuid = str_random(25);
                 $filename = $uuid . '.png';
 
-                if (!file_exists(public_path($storedirectory . '/smlogo_' . $filename)))
-                    Image::make($file)->save(public_path($storedirectory . '/smlogo_' . $filename));
+                if (!Storage::exists($storedirectory . 'smlogo_' . $filename))
+                {
+                    $image = Image::make($file)->fit(200, 200, function ($constraint) {
+                        $constraint->upsize();
+                    }, 'center');
+                    Storage::put($storedirectory . 'smlogo_' . $filename, $image->stream('jpg')->detach());
+                }
 
-                $filepath = $storedirectory . '/smlogo_' . $filename;
+                $filepath = $storedirectory . 'smlogo_' . $filename;
 
                 $company->smlogo = $filepath;
             }
@@ -102,7 +111,7 @@ class CompanyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function show()
     {
@@ -123,7 +132,7 @@ class CompanyController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param UpdateCompanyRequest $request
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateCompanyRequest $request)
@@ -145,10 +154,7 @@ class CompanyController extends Controller
         $company->save();
 
         $storedirectory = '/perm_store/company/' . $company->id . '/photos/';
-
-        if(!File::exists(public_path('/perm_store/company/' . $company->id . '/photos/'))) {
-            File::makeDirectory(public_path('/perm_store/company/' . $company->id . '/photos/'), 0775, true);
-        }
+        Storage::makeDirectory($storedirectory);
 
         if ($request->file('logo'))
         {
@@ -156,10 +162,15 @@ class CompanyController extends Controller
             $uuid = str_random(25);
             $filename = $uuid . '.png';
 
-            if (!file_exists(public_path($storedirectory . '/logo_' . $filename)))
-                Image::make($file)->save(public_path($storedirectory . '/logo_' . $filename));
+            if (!Storage::exists($storedirectory . 'logo_' . $filename))
+            {
+                $image = Image::make($file)->fit(420, 220, function ($constraint) {
+                    $constraint->upsize();
+                }, 'center');
+                Storage::put($storedirectory . 'logo_' . $filename, $image->stream('jpg')->detach());
+            }
 
-            $filepath = $storedirectory . '/logo_' . $filename;
+            $filepath = $storedirectory . 'logo_' . $filename;
 
             $company->logo = $filepath;
         }
@@ -170,10 +181,15 @@ class CompanyController extends Controller
             $uuid = str_random(25);
             $filename = $uuid . '.png';
 
-            if (!file_exists(public_path($storedirectory . '/smlogo_' . $filename)))
-                Image::make($file)->save(public_path($storedirectory . '/smlogo_' . $filename));
+            if (!Storage::exists($storedirectory . 'smlogo_' . $filename))
+            {
+                $image = Image::make($file)->fit(200, 200, function ($constraint) {
+                    $constraint->upsize();
+                }, 'center');
+                Storage::put($storedirectory . 'smlogo_' . $filename, $image->stream('jpg')->detach());
+            }
 
-            $filepath = $storedirectory . '/smlogo_' . $filename;
+            $filepath = $storedirectory . 'smlogo_' . $filename;
 
             $company->smlogo = $filepath;
         }
@@ -195,7 +211,7 @@ class CompanyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function destroy()
     {
