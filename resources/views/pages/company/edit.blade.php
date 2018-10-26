@@ -232,6 +232,9 @@
                         velem.$element.parent('').siblings('span.helper-text').removeClass('valid').addClass('invalid');
                         velem.$element.parent('').siblings('span.helper-text').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
                     }
+                })
+                .on('form:submit', function(velem) {
+                    $("#phone").val($("#phone").intlTelInput("getNumber"));
                 });
         });
     </script>

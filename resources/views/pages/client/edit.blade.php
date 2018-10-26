@@ -176,6 +176,14 @@
                 $(this).parent().siblings('.label-validation').removeClass('theme-text');
             });
 
+            $( "#contactphone" ).focusin(function() {
+                $(this).parent().siblings('.label-validation').addClass('theme-text');
+            });
+
+            $( "#contactphone" ).focusout(function() {
+                $(this).parent().siblings('.label-validation').removeClass('theme-text');
+            });
+
             window.Parsley
                 .addValidator('phoneFormat', {
                     requirementType: 'string',
@@ -231,6 +239,8 @@
                     }
                 })
                 .on('form:submit', function(velem) {
+                    $("#phone").val($("#phone").intlTelInput("getNumber"));
+                    $("#contactphone").val($("#contactphone").intlTelInput("getNumber"));
                 });
         });
     </script>
