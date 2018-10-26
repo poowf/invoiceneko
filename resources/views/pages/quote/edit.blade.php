@@ -30,7 +30,7 @@
                                 <span class="helper-text"></span>
                             </div>
                             <div class="input-field col s12 m6">
-                                <input id="netdays" name="netdays" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ $quote->netdays or '' }}" placeholder="Net Days">
+                                <input id="netdays" name="netdays" type="number" data-parsley-required="true" data-parsley-trigger="change" value="{{ $quote->netdays or '' }}" placeholder="Net Days">
                                 <label for="netdays" class="label-validation">Net Days</label>
                                 <span class="helper-text"></span>
                             </div>

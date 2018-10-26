@@ -30,7 +30,7 @@
                             <span class="helper-text"></span>
                         </div>
                         <div class="input-field col s12 m6">
-                            <input id="netdays" name="netdays" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('netdays') }}" placeholder="Net Days">
+                            <input id="netdays" name="netdays" type="number" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('netdays') }}" placeholder="Net Days">
                             <label for="netdays" class="label-validation">Net Days</label>
                             <span class="helper-text"></span>
                         </div>
@@ -191,8 +191,6 @@
             }
 
             function setItemTemplate(element, itemtemplate) {
-                console.log(itemtemplate.name);
-                console.log(element);
                 element.val(itemtemplate.name);
                 let quantityElement = element.parentsUntil(".card-panel").find('.item-quantity-input');
                 let priceElement = element.parentsUntil(".card-panel").find('.item-price-input');
