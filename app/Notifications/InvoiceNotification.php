@@ -7,8 +7,8 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Support\Facades\Log;
 use PDF;
+use Carbon\Carbon;
 
 class InvoiceNotification extends Notification implements ShouldQueue
 {
@@ -34,7 +34,7 @@ class InvoiceNotification extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -72,7 +72,8 @@ class InvoiceNotification extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            //
+            'invoice_id' => $this->invoice->nice_invoice_id,
+            'clientname' => $this->invoice->client->companyname
         ];
     }
 }
