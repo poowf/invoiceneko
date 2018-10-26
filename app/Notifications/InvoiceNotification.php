@@ -72,7 +72,8 @@ class InvoiceNotification extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'invoice_id' => $this->invoice->nice_invoice_id,
+            'invoice_id' => $this->invoice->id,
+            'nice_invoice_id' => $this->invoice->nice_invoice_id,
             'clientname' => $this->invoice->client->companyname
         ];
     }
