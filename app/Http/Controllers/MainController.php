@@ -14,7 +14,7 @@ class MainController extends Controller
 {
     public function main()
     {
-        return view('pages.main');
+        return redirect()->route('auth.show');
     }
 
     public function dashboard()
