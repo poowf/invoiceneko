@@ -164,7 +164,7 @@
                 <div class="invoice" style="background-color: #ffffff; padding: 50px 50px 20px; color: #8c8c8c;">
                     <div class="row invoice-header" style="position: relative; margin-bottom: 50px;">
                         <div class="col-xs-7" style="position: relative; left: 0; padding: 0 15px; width: 50%; float: left;">
-                            <div class="invoice-logo" style="height: 110px; min-width: 210px; background-image: url('{{ \App\Library\Poowf\Unicorn::getStorageFile($invoice->company->logo, [210, 110]) }} '); background-repeat: no-repeat; background-position: 0;"></div>
+                            <div class="invoice-logo" style="height: 110px; min-width: 210px; background-image: url('{{ \App\Library\Poowf\Unicorn::getStorageFile($invoice->company->logo, [210, 110]) }}'); background-repeat: no-repeat; background-position: 0; background-size: contain;"></div>
                         </div>
                         <div class="col-xs-5 invoice-order" style="position: relative; padding: 0 15px; text-align: right; width: 50%; float: left;">
                             <span class="invoice-id" style="display: block; font-size: 30px; line-height: 30px; margin-bottom: 10px;">Invoice #{{ $invoice->nice_invoice_id }}</span>
