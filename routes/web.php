@@ -16,7 +16,7 @@ Route::get('/quote/view', 'QuoteController@showwithtoken')->name('quote.token');
 
 Route::group(['middleware' => ['guest']], function() {
     /* Auth */
-    Route::get('/', 'AuthController@show')->name('main');
+    Route::get('/', 'MainController@main')->name('main');
     Route::get('/signin', 'AuthController@show')->name('auth.show');
     Route::post('/signin', 'AuthController@process')->name('auth.process');
     Route::get('/forgot', 'ForgotPasswordController@show')->name('forgot');

@@ -2,16 +2,20 @@
 
 namespace App\Models;
 
-use Log;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
 
+use Uuid;
+use Log;
 use Carbon\Carbon;
 
 class Invoice extends Model
 {
     use SoftDeletes, CascadeSoftDeletes;
+    use Notifiable;
 
     const STATUS_DRAFT = 1;
     const STATUS_OPEN = 2;
@@ -59,6 +63,17 @@ class Invoice extends Model
         'items',
         'payments',
     ];
+
+    /**
+     * Route notifications for the mail channel.
+     *
+     * @param  \Illuminate\Notifications\Notification  $notification
+     * @return string
+     */
+    public function routeNotificationForMail($notification)
+    {
+        return $this->client->contactemail;
+    }
 
     public function getTotalMoneyFormatAttribute()
     {
@@ -189,6 +204,38 @@ class Invoice extends Model
         }
 
         return $cloned;
+    }
+
+    public function generateShareToken($regenerate = false)
+    {
+        if ($regenerate)
+        {
+            $token = Uuid::generate(4);
+            $this->share_token = $token;
+        }
+        else
+        {
+            if($this->share_token)
+            {
+                $token = $this->share_token;
+            }
+            else
+            {
+                $token = Uuid::generate(4);
+                $this->share_token = $token;
+            }
+        }
+
+        $this->save();
+
+        return $token;
+    }
+
+    public function sendEmailNotification()
+    {
+        Mail::to($this->client->contactemail)
+            ->cc($this->company->owner->email)
+            ->send(new InvoiceMail($this));
     }
 
     public function scopeOverdue($query)
