@@ -86,7 +86,7 @@ class QuoteController extends Controller
         $quote->date = Carbon::createFromFormat('Y-m-d H:i:s', $quote->date)->format('j F, Y');
         $quote->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $quote->duedate)->format('j F, Y');
 
-        $pdf = PDF::loadView('pdf.quote', compact('quote'));
+        $pdf = $quote->generatePDFView();
         return $pdf->inline(str_slug($quote->nice_quote_id) . '.pdf');
     }
 
@@ -229,7 +229,8 @@ class QuoteController extends Controller
         $quote->date = Carbon::createFromFormat('Y-m-d H:i:s', $quote->date)->format('j F, Y');
         $quote->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $quote->duedate)->format('j F, Y');
 
-        $pdf = PDF::loadView('pdf.quote', compact('quote'));
+        $pdf = $quote->generatePDFView();
+
         return $pdf->inline(str_slug($quote->nice_quote_id) . 'quote.pdf');
     }
 
@@ -244,7 +245,8 @@ class QuoteController extends Controller
         $quote->date = Carbon::createFromFormat('Y-m-d H:i:s', $quote->date)->format('j F, Y');
         $quote->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $quote->duedate)->format('j F, Y');
 
-        $pdf = PDF::loadView('pdf.quote', compact('quote'));
+        $pdf = $quote->generatePDFView();
+
         return $pdf->download(str_slug($quote->nice_quote_id) . '.pdf');
     }
 

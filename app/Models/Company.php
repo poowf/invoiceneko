@@ -51,27 +51,6 @@ class Company extends Model
         });
     }
 
-    public function quotes()
-    {
-        return $this->hasMany('App\Models\Quote', 'company_id');
-    }
-
-    public function invoices()
-    {
-        return $this->hasMany('App\Models\Invoice', 'company_id');
-    }
-
-    public function lastinvoice()
-    {
-        return $this->hasOne('App\Models\Invoice')->latest()->limit(1)->first();
-    }
-
-    public function lastquote()
-    {
-        return $this->hasOne('App\Models\Quote')->latest()->limit(1)->first();
-    }
-
-
     public function niceInvoiceID()
     {
         $companysettings = $this->settings;
@@ -103,6 +82,31 @@ class Company extends Model
     public function isOwner(User $user)
     {
         return $this->user_id == $user->id;
+    }
+
+    public function lastinvoice()
+    {
+        return $this->hasOne('App\Models\Invoice')->latest()->limit(1)->first();
+    }
+
+    public function lastquote()
+    {
+        return $this->hasOne('App\Models\Quote')->latest()->limit(1)->first();
+    }
+
+    public function quotes()
+    {
+        return $this->hasMany('App\Models\Quote', 'company_id');
+    }
+
+    public function invoices()
+    {
+        return $this->hasMany('App\Models\Invoice', 'company_id');
+    }
+
+    public function itemtemplates()
+    {
+        return $this->hasMany('App\Models\ItemTemplate', 'company_id');
     }
 
     public function clients()

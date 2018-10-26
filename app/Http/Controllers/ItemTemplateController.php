@@ -14,7 +14,10 @@ class ItemTemplateController extends Controller
      */
     public function index()
     {
-        //
+        $company = auth()->user()->company;
+        $itemtemplates = $company->itemtemplates()->get();
+
+        return view('pages.itemtemplate.index', compact('itemtemplates'));
     }
 
     /**
@@ -24,7 +27,16 @@ class ItemTemplateController extends Controller
      */
     public function create()
     {
-        //
+        $company = auth()->user()->company;
+
+        if($company)
+        {
+            return view('pages.itemtemplate.create');
+        }
+        else
+        {
+            return view('pages.invoice.nocompany');
+        }
     }
 
     /**
@@ -35,51 +47,90 @@ class ItemTemplateController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $company = auth()->user()->company;
+
+        $itemtemplate = new ItemTemplate;
+        $itemtemplate->fill($request->all());
+        $company->itemtemplates()->save($itemtemplate);
+
+        flash('Item Template Created', 'success');
+
+        return redirect()->route('itemtemplate.show', [ 'itemtemplate' => $itemtemplate->id ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ItemTemplate  $invoiceItemTemplate
+     * @param  \App\Models\ItemTemplate  $itemtemplate
      * @return \Illuminate\Http\Response
      */
-    public function show(ItemTemplate $invoiceItemTemplate)
+    public function show(ItemTemplate $itemtemplate)
     {
-        //
+        return view('pages.itemtemplate.show', compact('itemtemplate'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ItemTemplate  $invoiceItemTemplate
+     * @param  \App\Models\ItemTemplate  $itemtemplate
      * @return \Illuminate\Http\Response
      */
-    public function edit(ItemTemplate $invoiceItemTemplate)
+    public function edit(ItemTemplate $itemtemplate)
     {
-        //
+        return view('pages.itemtemplate.edit', compact('itemtemplate'));
+
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ItemTemplate  $invoiceItemTemplate
+     * @param  \App\Models\ItemTemplate  $itemtemplate
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ItemTemplate $invoiceItemTemplate)
+    public function update(Request $request, ItemTemplate $itemtemplate)
     {
-        //
+        $company = auth()->user()->company;
+
+        $itemtemplate->fill($request->all());
+        $company->itemtemplates()->save($itemtemplate);
+
+        flash('Item Template Updated', 'success');
+
+        return redirect()->route('itemtemplate.show', [ 'itemtemplate' => $itemtemplate->id ]);
+    }
+
+    /**
+     * Retrieve the itemtemplate and return as object
+     *
+     * @param  \App\Models\ItemTemplate $itemtemplate
+     * @return ItemTemplate
+     */
+    public function retrieve(ItemTemplate $itemtemplate)
+    {
+        return response()->json($itemtemplate);
+    }
+
+    public function duplicate(ItemTemplate $itemtemplate)
+    {
+        $duplicatedItemTemplate = $itemtemplate->duplicate();
+        flash('Item Template has been Cloned Sucessfully', "success");
+        return redirect()->route('itemtemplate.show', ['itemtemplate' => $duplicatedItemTemplate->id]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ItemTemplate  $invoiceItemTemplate
+     * @param  \App\Models\ItemTemplate $itemtemplate
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
-    public function destroy(ItemTemplate $invoiceItemTemplate)
+    public function destroy(ItemTemplate $itemtemplate)
     {
-        //
+        $itemtemplate->delete();
+
+        flash('Item Template Deleted', 'success');
+
+        return redirect()->back();
     }
 }

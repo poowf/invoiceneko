@@ -160,6 +160,19 @@ class Quote extends Model
         return $cloned;
     }
 
+    public function generatePDFView()
+    {
+        $quote = $this;
+        $pdf = PDF::loadView('pdf.quote', compact('quote'))
+            ->setPaper('a4')
+            ->setOption('margin-bottom', '0mm')
+            ->setOption('margin-top', '0mm')
+            ->setOption('margin-right', '0mm')
+            ->setOption('margin-left', '0mm');
+
+        return $pdf;
+    }
+
     public function scopeDraft($query)
     {
         return $query

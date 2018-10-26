@@ -53,7 +53,7 @@
                             <div class="col s12 m4 l4 xl3 single-client-card">
                                 <div class="card">
                                     <div class="card-image waves-effect waves-block waves-light">
-                                        <img class="activator" src="//via.placeholder.com/250x250">
+                                        <img class="activator" src="{{ \App\Library\Poowf\Unicorn::getStorageFile($client->logo, [250,250]) }}">
                                     </div>
                                     <div class="card-content">
                                         <span class="card-title activator grey-text text-darken-4">@if($client->nickname) {{ $client->nickname }} @else {{ $client->companyname }} @endif</span><i class="material-icons right">more_vert</i>

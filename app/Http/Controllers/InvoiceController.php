@@ -11,6 +11,7 @@ use App\Models\OldInvoice;
 use App\Models\OldInvoiceItem;
 use App\Models\Quote;
 use App\Models\QuoteItem;
+use App\Notifications\InvoiceNotification;
 use Illuminate\Http\Request;
 
 use Log;
@@ -78,6 +79,20 @@ class InvoiceController extends Controller
     }
 
     /**
+     * Send Invoice Notification
+     *
+     * @param Invoice $invoice
+     * @return \Illuminate\Http\Response
+     */
+    public function sendnotification(Invoice $invoice)
+    {
+        $invoice->notify(new InvoiceNotification($invoice));
+        flash('An email notification has been sent to the client', "success");
+
+        return redirect()->back();
+    }
+
+    /**
      * @param Request $request
      * @return mixed
      */
@@ -90,7 +105,7 @@ class InvoiceController extends Controller
         $invoice->date = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->date)->format('j F, Y');
         $invoice->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y');
 
-        $pdf = PDF::loadView('pdf.invoice', compact('invoice'));
+        $pdf = $invoice->generatePDFView();
         return $pdf->inline(str_slug($invoice->nice_invoice_id) . '.pdf');
     }
 
@@ -110,6 +125,7 @@ class InvoiceController extends Controller
     {
         $company = auth()->user()->company;
         $clients = $company->clients;
+        $itemtemplates = $company->itemtemplates;
 
         if($company)
         {
@@ -121,7 +137,7 @@ class InvoiceController extends Controller
             }
             else
             {
-                return view('pages.invoice.create', compact('company', 'invoicenumber', 'clients'));
+                return view('pages.invoice.create', compact('company', 'invoicenumber', 'clients', 'itemtemplates'));
             }
         }
         else
@@ -235,7 +251,8 @@ class InvoiceController extends Controller
         $invoice->date = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->date)->format('j F, Y');
         $invoice->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y');
 
-        $pdf = PDF::loadView('pdf.invoice', compact('invoice'));
+        $pdf = $invoice->generatePDFView();
+
         return $pdf->inline(str_slug($invoice->nice_invoice_id) . 'test.pdf');
     }
 
@@ -250,7 +267,7 @@ class InvoiceController extends Controller
         $invoice->date = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->date)->format('j F, Y');
         $invoice->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y');
 
-        $pdf = PDF::loadView('pdf.invoice', compact('invoice'));
+        $pdf = $invoice->generatePDFView();
         return $pdf->download(str_slug($invoice->nice_invoice_id) . '.pdf');
     }
 

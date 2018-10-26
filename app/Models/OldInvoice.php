@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
+use PDF;
 
 class OldInvoice extends Model
 {
@@ -78,5 +79,18 @@ class OldInvoice extends Model
         }
         setlocale(LC_MONETARY, 'en_US.UTF-8');
         return money_format('%!.2n', $total);
+    }
+
+    public function generatePDFView()
+    {
+        $invoice = $this;
+        $pdf = PDF::loadView('pdf.invoice', compact('invoice'))
+            ->setPaper('a4')
+            ->setOption('margin-bottom', '0mm')
+            ->setOption('margin-top', '0mm')
+            ->setOption('margin-right', '0mm')
+            ->setOption('margin-left', '0mm');
+
+        return $pdf;
     }
 }

@@ -106,6 +106,10 @@ mark {
   margin: 0 !important;
 }
 
+.no-bold {
+  font-weight: normal;
+}
+
 .mbth5 {
   margin-top: 5px;
   margin-bottom: 5px;
@@ -367,6 +371,14 @@ mark {
   margin-left: 4px;
 }
 
+.selectize-control.multi .selectize-input .item {
+  background-color: #eaeaea;
+  padding: 0.5rem;
+  height: 2rem;
+  line-height: 1rem;
+  margin-top: 0.6rem;
+}
+
 .selectize-dropdown {
   border: none;
   border-radius: 0;
@@ -495,36 +507,6 @@ mark {
 
 .collection a.collection-item {
   color: #000;
-}
-
-.side-nav li {
-  float: none;
-  line-height: 65px;
-}
-
-.side-nav a {
-  height: 65px;
-  line-height: 65px;
-}
-
-.side-nav a:hover, .side-nav a:focus {
-  color: #299a9a
-}
-
-.side-nav a.btn, .side-nav a.btn-large, .side-nav a.btn-large, .side-nav a.btn-floating {
-  color: #fff;
-}
-
-.side-nav a.btn:hover, .side-nav a.btn:focus, .side-nav a.btn-large:hover, .side-nav a.btn-large:hover {
-  background-color: #2196F3;
-}
-
-.side-nav a.btn, .side-nav a.btn-large, .side-nav a.btn-large, .side-nav a.btn-floating {
-  color: #fff;
-}
-
-.side-nav a.btn:hover, .side-nav a.btn:focus, .side-nav a.btn-large:hover, .side-nav a.btn-large:hover {
-  background-color: #2196F3;
 }
 
 .sidenav-trigger {
@@ -699,6 +681,10 @@ nav .logo img {
   max-width: 100%;
 }
 
+nav .logo h6 {
+  display: inline-block;
+}
+
 nav ul {
   line-height: 80px;
 }
@@ -719,17 +705,6 @@ nav .signout-btn {
   padding: 14px 16px;
   margin: 0;
   text-decoration: none;
-  width: 100%;
-  text-align: left;
-}
-
-.side-nav .signout-mobile-btn {
-  display: block;
-  font-size: 14px;
-  font-weight: 500;
-  height: 48px;
-  line-height: 48px;
-  padding: 0 32px;
   width: 100%;
   text-align: left;
 }
