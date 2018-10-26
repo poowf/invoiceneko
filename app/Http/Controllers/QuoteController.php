@@ -106,6 +106,7 @@ class QuoteController extends Controller
     {
         $company = auth()->user()->company;
         $clients = $company->clients;
+        $itemtemplates = $company->itemtemplates;
 
         if($company)
         {
@@ -117,7 +118,7 @@ class QuoteController extends Controller
             }
             else
             {
-                return view('pages.quote.create', compact('company', 'quotenumber', 'clients'));
+                return view('pages.quote.create', compact('company', 'quotenumber', 'clients', 'itemtemplates'));
             }
         }
         else
