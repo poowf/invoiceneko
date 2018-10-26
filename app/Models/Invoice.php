@@ -10,6 +10,7 @@ use Iatstuti\Database\Support\CascadeSoftDeletes;
 
 use Uuid;
 use Log;
+use PDF;
 use Carbon\Carbon;
 
 class Invoice extends Model
@@ -229,6 +230,19 @@ class Invoice extends Model
         $this->save();
 
         return $token;
+    }
+
+    public function generatePDFView()
+    {
+        $invoice = $this;
+        $pdf = PDF::loadView('pdf.invoice', compact('invoice'))
+            ->setPaper('a4')
+            ->setOption('margin-bottom', '0mm')
+            ->setOption('margin-top', '0mm')
+            ->setOption('margin-right', '0mm')
+            ->setOption('margin-left', '0mm');
+
+        return $pdf;
     }
 
     public function sendEmailNotification()

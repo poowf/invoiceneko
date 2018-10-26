@@ -65,12 +65,12 @@ Route::group(['middleware' => ['auth']], function() {
         /* Clients */
         Route::get('/clients', 'ClientController@index')->name('client.index');
         Route::get('/client/create', 'ClientController@create')->name('client.create');
-        Route::get('/client/{client}/invoicecreate', 'ClientController@invoicecreate')->name('client.invoice.create');
+        Route::get('/client/{client}/invoicecreate', 'ClientController@invoicecreate')->name('client.invoice.create')->middleware('can:update,client');
         Route::post('/client/create', 'ClientController@store')->name('client.store');
-        Route::get('/client/{client}', 'ClientController@show')->name('client.show');
-        Route::get('/client/{client}/edit', 'ClientController@edit')->name('client.edit');
-        Route::patch('/client/{client}/edit', 'ClientController@update')->name('client.update');
-        Route::delete('/client/{client}/destroy', 'ClientController@destroy')->name('client.destroy');
+        Route::get('/client/{client}', 'ClientController@show')->name('client.show')->middleware('can:view,client');
+        Route::get('/client/{client}/edit', 'ClientController@edit')->name('client.edit')->middleware('can:update,client');
+        Route::patch('/client/{client}/edit', 'ClientController@update')->name('client.update')->middleware('can:update,client');
+        Route::delete('/client/{client}/destroy', 'ClientController@destroy')->name('client.destroy')->middleware('can:delete,client');
 
         /* Invoice */
         Route::get('/invoices', 'InvoiceController@index')->name('invoice.index');
@@ -86,6 +86,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::patch('/invoice/{invoice}/archive', 'InvoiceController@archive')->name('invoice.archive')->middleware('can:update,invoice');
         Route::patch('/invoice/{invoice}/writeoff', 'InvoiceController@writeoff')->name('invoice.writeoff')->middleware('can:update,invoice');
         Route::patch('/invoice/{invoice}/share', 'InvoiceController@share')->name('invoice.share')->middleware('can:view,invoice');
+        Route::post('/invoice/{invoice}/send', 'InvoiceController@sendnotification')->name('invoice.send')->middleware('can:view,invoice');
         Route::delete('/invoice/{invoice}/destroy', 'InvoiceController@destroy')->name('invoice.destroy')->middleware('can:delete,invoice');
 
         Route::get('/invoice/adhoc/create', 'InvoiceController@adhoccreate')->name('invoice.adhoc.create');
@@ -117,6 +118,18 @@ Route::group(['middleware' => ['auth']], function() {
 
         /* InvoiceItem */
         Route::delete('/invoice/item/{invoiceitem}/destroy', 'InvoiceItemController@destroy')->name('invoice.item.destroy')->middleware('can:delete,invoiceitem');
+
+        /* ItemTemplate */
+        Route::get('/itemtemplates', 'ItemTemplateController@index')->name('itemtemplate.index');
+        Route::get('/itemtemplate/create', 'ItemTemplateController@create')->name('itemtemplate.create');
+        Route::post('/itemtemplate/create', 'ItemTemplateController@store')->name('itemtemplate.store');
+        Route::get('/itemtemplate/{itemtemplate}', 'ItemTemplateController@show')->name('itemtemplate.show')->middleware('can:view,itemtemplate');
+        Route::get('/itemtemplate/{itemtemplate}/retrieve', 'ItemTemplateController@retrieve')->name('itemtemplate.retrieve')->middleware('can:view,itemtemplate');
+        Route::post('/itemtemplate/{itemtemplate}/duplicate', 'ItemTemplateController@duplicate')->name('itemtemplate.duplicate')->middleware('can:update,itemtemplate');
+        Route::get('/itemtemplate/{itemtemplate}/download', 'ItemTemplateController@download')->name('itemtemplate.download')->middleware('can:view,itemtemplate');
+        Route::get('/itemtemplate/{itemtemplate}/edit', 'ItemTemplateController@edit')->name('itemtemplate.edit')->middleware('can:update,itemtemplate');
+        Route::patch('/itemtemplate/{itemtemplate}/edit', 'ItemTemplateController@update')->name('itemtemplate.update')->middleware('can:update,itemtemplate');
+        Route::delete('/itemtemplate/{itemtemplate}/destroy', 'ItemTemplateController@destroy')->name('itemtemplate.destroy')->middleware('can:delete,itemtemplate');
 
         /* Payment */
         Route::get('/payments', 'PaymentController@index')->name('payment.index');

@@ -7,9 +7,10 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\Log;
 use PDF;
 
-class NewInvoiceNotification extends Notification implements ShouldQueue
+class InvoiceNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -47,17 +48,19 @@ class NewInvoiceNotification extends Notification implements ShouldQueue
         $invoice = $this->invoice;
         $company = $invoice->company;
         $client = $invoice->client;
-        $pdf = PDF::loadView('pdf.invoice', compact('invoice'));
-        $token = $invoice->generateShareToken();
+        $pdf = $invoice->generatePDFView();
+        //Cast to string to ensure only a string is returned
+        $token = (string) $invoice->generateShareToken();
         $url = route('invoice.token', ['token' => $token]);
+        $invoice_slug = str_slug($invoice->nice_invoice_id) . '.pdf';
 
         return (new MailMessage)
-                    ->subject("New Invoice #{$invoice->nice_invoiceid} from {$company->name}")
-                    ->greeting('Hello!')
+                    ->subject("New Invoice #{$invoice->nice_invoice_id} from {$company->name}")
+                    ->greeting("Hello {$client->companyname}!")
                     ->line('You have a new Invoice.')
                     ->action('View Invoice', $url)
                     ->line('Thank you for using our application!')
-                    ->attachData($pdf->inline(str_slug($invoice->nice_invoice_id) . '.pdf'));
+                    ->attachData($pdf->inline($invoice_slug), $invoice_slug);
     }
 
     /**
