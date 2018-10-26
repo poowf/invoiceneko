@@ -165,6 +165,7 @@
                     }
                 })
                 .on('form:submit', function(velem) {
+                    $("#phone").val($("#phone").intlTelInput("getNumber"));
                 });
         });
     </script>
