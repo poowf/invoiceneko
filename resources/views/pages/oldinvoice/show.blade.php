@@ -28,32 +28,41 @@
             <div class="col s12">
                 <h3>Old Invoice</h3>
                 <div class="invoice" style="background-color: #ffffff; padding: 50px 50px 20px; color: #8c8c8c;">
-                    <div class="row invoice-header" style="position: relative; margin-bottom: 160px;">
-                        <div class="col-xs-7" style="position: absolute; left: 0; padding: 0 15px;">
-                            <div class="invoice-logo" style="height: 110px; min-width: 210px; background-image: url('{{ $invoice->company->logo }}'); background-repeat: no-repeat; background-position: 0;"></div>
+                    <div class="row invoice-header" style="position: relative; margin-bottom: 50px;">
+                        <div class="col-xs-7" style="position: relative; left: 0; padding: 0 15px; width: 50%; float: left;">
+                            <div class="invoice-logo" style="height: 110px; min-width: 210px; background-image: url('{{ \App\Library\Poowf\Unicorn::getStorageFile($invoice->company->logo, [210, 110]) }}'); background-repeat: no-repeat; background-position: 0; background-size: contain;"></div>
                         </div>
-                        <div class="col-xs-5 invoice-order" style="position: absolute; right: 0; padding: 0 15px; text-align: left;">
+                        <div class="col-xs-5 invoice-order" style="position: relative; padding: 0 15px; text-align: right; width: 50%; float: left;">
                             <span class="invoice-id" style="display: block; font-size: 30px; line-height: 30px; margin-bottom: 10px;">Invoice #{{ $invoice->nice_invoice_id }}</span>
-                            <span class="incoice-date" style="display: block; font-size: 18px; line-height: 30px;">Invoice Date: {{ $invoice->date }}</span>
-                            <span class="incoice-duedate" style="display: block; font-size: 18px; line-height: 30px;">Payment Due: {{ $invoice->duedate }}</span>
-                            <span class="incoice-netdays" style="display: block; font-size: 18px; line-height: 30px;">Payment Terms: Net {{ $invoice->netdays }}</span>
+                            <span class="invoice-date" style="display: block; font-size: 18px; line-height: 30px;">Invoice Date: {{ $invoice->date }}</span>
+                            <span class="invoice-duedate" style="display: block; font-size: 18px; line-height: 30px;">Payment Due: {{ $invoice->duedate }}</span>
+                            <span class="invoice-netdays" style="display: block; font-size: 18px; line-height: 30px;">Payment Terms: Net {{ $invoice->netdays }}</span>
                         </div>
                     </div>
-                    <div class="row invoice-data" style="position: relative; margin-bottom: 320px;">
-                        <div class="col-xs-5 invoice-person" style="position: absolute; left: 0; padding: 0 15px; ">
+                    <div class="row invoice-data" style="position: relative; margin-bottom: 50px;">
+                        <div class="col-xs-5 invoice-person" style="position: relative; left: 0; padding: 0 15px; width:45%; float: left; text-align: left;">
                             <span class="name" style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">Bill To: </span>
                             <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->companyname }}</span>
-                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->contactname }}</span>
-                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->address }}</span>
-                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->contactphone }}</span>
+                            <span style="font-size: 18px; line-height: 26px; display: block;">@if($invoice->client->block){{ $invoice->client->block }} @endif {{ $invoice->client->street or 'No Street' }}</span>
+                            @if($invoice->client->unitnumber)<span style="font-size: 18px; line-height: 26px; display: block;">#{{ $invoice->client->unitnumber }}</span>@endif
+                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->country or 'No Country' }} {{ $invoice->client->postalcode or 'No Postal Code' }}</span>
                         </div>
-                        <div class="col-xs-2 invoice-payment-direction" style="position: absolute; padding-top: 10px; left: 0; right:0; text-align: center;">
+                        <div class="col-xs-2 invoice-payment-direction" style="position: relative; padding-top: 10px; width: 10%; float: left; text-align: center;">
                             <img src="{{ asset('/assets/img/lefttoright.png') }}" width="80" height="80" />
                         </div>
-                        <div class="col-xs-5 invoice-person" style="position: absolute; right: 0; padding: 0 15px; text-align: left;">
-                            <span class="name" style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">{{ $invoice->company->name or 'No Company Name' }}</span>
-                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->owner->full_name or 'No Company Owner Name' }}</span>
-                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->owner->email or 'No Company Owner Email' }}</span>
+                        <div class="col-xs-5 invoice-person" style="position: relative; padding: 0 15px; width: 45%; float: left;">
+                            <div class="" style="float: right; text-align: left;">
+                                <span class="name" style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">{{ $invoice->company->name or 'No Company Name' }}</span>
+                                <span style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">{{ $invoice->company->crn or 'No Company Registration Number' }}</span>
+                                <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->owner->full_name or 'No Company Owner Name' }}</span>
+                                @if($invoice->company->address)
+                                    <span style="font-size: 18px; line-height: 26px; display: block;">@if($invoice->company->address->block){{ $invoice->company->address->block }} @endif {{ $invoice->company->address->street or 'No Street' }}</span>
+                                    @if($invoice->company->address->unitnumber)<span style="font-size: 18px; line-height: 26px; display: block;">#{{ $invoice->company->address->unitnumber }}</span>@endif
+                                    <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->address->postalcode or 'No Postal Code' }}</span>
+                                @else
+                                    <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->owner->email or 'No Company Owner Email' }}</span>
+                                @endif
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -135,7 +144,7 @@
                     </div>
                     <div class="row invoice-company-info" style="margin-bottom: 70px;">
                         <div class="col-sm-6 col-md-2 logo" style="position: relative; display: block; width: 100%;  text-align: center;">
-                            <img src="{{ $invoice->company->smlogo }}" alt="Logo-symbol" width="100" height="100" style="border: 0; vertical-align: middle;">
+                            <img src="{{ \App\Library\Poowf\Unicorn::getStorageFile($invoice->company->smlogo, [100,100]) }}" alt="Logo-symbol" width="100" height="100" style="border: 0; vertical-align: middle;">
                         </div>
                         <div style="margin-top: 20px;">
                             <div class="col-sm-6 col-md-4 summary" style="display: inline-block; width: 29.5%; padding: 0 15px; line-height: 16px; text-align: center;">
