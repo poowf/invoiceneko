@@ -61,6 +61,7 @@ class InvoiceController extends Controller
     {
         $invoice->archived = true;
         $invoice->save();
+        flash('Invoice has been archived successfully', "success");
 
         return redirect()->route('invoice.show', [ 'invoice' => $invoice->id ]);
     }

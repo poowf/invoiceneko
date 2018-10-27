@@ -54,6 +54,7 @@ class QuoteController extends Controller
     {
         $quote->archived = true;
         $quote->save();
+        flash('Quote has been archived successfully', "success");
 
         return redirect()->route('quote.show', [ 'quote' => $quote->id ]);
     }

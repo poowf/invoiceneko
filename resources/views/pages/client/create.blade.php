@@ -25,6 +25,22 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="input-field col s12">
+                                <div class="file-field input-field">
+                                    <div class="btn btn-link tooltipped" data-position="left" data-delay="50" data-tooltip="Recommended Size: 500 (W) x 500 (H) with White Background (Optional)">
+                                        <span>File</span>
+                                        <input id="logo" name="logo" type="file" accept="image/*" data-maxsize="10M"/>
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        <input id="logofp" name="logofp" class="file-path validate" type="text" data-parsley-required="false" data-parsley-fileuploaded="true" data-parsley-trigger="change" placeholder="Client Logo"/>
+                                    </div>
+                                </div>
+                                <label for="logo" class="label-validation">
+                                    Logo
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="input-field col s12 m6">
                                 <input id="companyname" name="companyname" type="text" data-parsley-required="true"  data-parsley-trigger="change" data-parsley-minlength="4" value="{{ old('companyname') }}" placeholder="Client Company Name">
                                 <label for="companyname" class="label-validation">Client Company Name</label>
