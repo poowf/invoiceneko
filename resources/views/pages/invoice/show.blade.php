@@ -73,43 +73,43 @@
                 <i class="large material-icons">menu</i>
             </a>
             <ul>
-                <li>
-                    <a class="btn btn-large btn-link waves-effect waves-dark" href="{{ route('payment.create', [ 'invoice' => $invoice->id] ) }}">
+                <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Log Payment">
+                    <a class="btn btn-link waves-effect waves-dark" href="{{ route('payment.create', [ 'invoice' => $invoice->id] ) }}">
                         <i class="material-icons">attach_money</i>
                     </a>
                 </li>
-                <li>
+                <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Duplicate Invoice">
                     <form method="post" action="{{ route('invoice.duplicate', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
                         {{ csrf_field() }}
-                        <button class="btn btn-large blue darken-3 waves-effect waves-dark null-btn" type="submit">
+                        <button class="btn blue darken-3 waves-effect waves-dark null-btn" type="submit">
                             <i class="material-icons">control_point_duplicate</i>
                         </button>
                     </form>
                 </li>
-                <li>
+                <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Send Notification">
                     <form method="post" action="{{ route('invoice.send', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
                         {{ csrf_field() }}
-                        <button class="btn btn-large blue-grey waves-effect waves-dark null-btn" type="submit">
+                        <button class="btn blue-grey waves-effect waves-dark null-btn" type="submit">
                             <i class="material-icons">contact_mail</i>
                         </button>
                     </form>
                 </li>
-                <li>
+                <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Archive Invoice">
                     <form method="post" action="{{ route('invoice.archive', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
                         {{ method_field('PATCH') }}
                         {{ csrf_field() }}
-                        <button class="btn btn-large amber darken-2 waves-effect waves-dark null-btn" type="submit">
+                        <button class="btn amber darken-2 waves-effect waves-dark null-btn" type="submit">
                             <i class="material-icons">archive</i>
                         </button>
                     </form>
                 </li>
-                <li>
-                    <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="btn btn-large light-blue waves-effect waves-dark">
+                <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Invoice">
+                    <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="btn light-blue waves-effect waves-dark">
                         <i class="material-icons">edit</i>
                     </a>
                 </li>
-                <li>
-                    <a href="#" data-id="{{ $invoice->id }}" class="invoice-delete-btn btn btn-large red waves-effect waves-dark">
+                <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Invoice">
+                    <a href="#" data-id="{{ $invoice->id }}" class="invoice-delete-btn btn red waves-effect waves-dark">
                         <i class="material-icons">delete</i>
                     </a>
                 </li>

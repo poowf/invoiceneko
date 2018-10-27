@@ -61,30 +61,30 @@
                 <i class="large material-icons">menu</i>
             </a>
             <ul>
-                <li>
+                <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Duplicate Quote">
                     <form method="post" action="{{ route('quote.duplicate', [ 'quote' => $quote->id ] ) }}" class="null-form">
                         {{ csrf_field() }}
-                        <button class="btn btn-large blue darken-3 waves-effect waves-dark null-btn" type="submit">
+                        <button class="btn blue darken-3 waves-effect waves-dark null-btn" type="submit">
                             <i class="material-icons">control_point_duplicate</i>
                         </button>
                     </form>
                 </li>
-                <li>
+                <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Archive Quote">
                     <form method="post" action="{{ route('quote.archive', [ 'quote' => $quote->id ] ) }}" class="null-form">
                         {{ method_field('PATCH') }}
                         {{ csrf_field() }}
-                        <button class="btn btn-large amber darken-2 waves-effect waves-dark null-btn" type="submit">
+                        <button class="btn amber darken-2 waves-effect waves-dark null-btn" type="submit">
                             <i class="material-icons">archive</i>
                         </button>
                     </form>
                 </li>
-                <li>
-                    <a href="{{ route('quote.edit', [ 'quote' => $quote->id ] ) }}" class="btn btn-large light-blue waves-effect waves-dark">
+                <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Quote">
+                    <a href="{{ route('quote.edit', [ 'quote' => $quote->id ] ) }}" class="btn light-blue waves-effect waves-dark">
                         <i class="material-icons">edit</i>
                     </a>
                 </li>
-                <li>
-                    <a href="#" data-id="{{ $quote->id }}" class="quote-delete-btn btn btn-large red waves-effect waves-dark">
+                <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Quote">
+                    <a href="#" data-id="{{ $quote->id }}" class="quote-delete-btn btn red waves-effect waves-dark">
                         <i class="material-icons">delete</i>
                     </a>
                 </li>
