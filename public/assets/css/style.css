@@ -811,16 +811,15 @@ nav .sidenav-trigger i {
   margin: 0px;
 }
 
-.sidenav li > form {
-  padding: 0 32px;
-}
-
-.sidenav li > form > button {
-  padding: 0;
-}
-
 .sidenav hr {
   margin: 0;
+}
+
+.sidenav .signout-mobile-btn {
+  width: 100%;
+  padding: 0 32px;
+  line-height: 50px;
+  text-align: left;
 }
 
 .fixed-action-btn.toolbar ul li .null-btn {
