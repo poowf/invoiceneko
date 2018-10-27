@@ -13,7 +13,7 @@ class OldInvoiceController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function index()
     {
@@ -23,7 +23,7 @@ class OldInvoiceController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function create()
     {
@@ -33,8 +33,8 @@ class OldInvoiceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request $request
+     * @return void
      */
     public function store(Request $request)
     {
@@ -59,7 +59,7 @@ class OldInvoiceController extends Controller
     /**
      * Display the print version specified resource.
      *
-     * @param  \App\Models\Invoice  $invoice
+     * @param \App\Models\OldInvoice $invoice
      * @return \Illuminate\Http\Response
      */
     public function printview(OldInvoice $invoice)
@@ -74,7 +74,7 @@ class OldInvoiceController extends Controller
     /**
      * Download the specified resource.
      *
-     * @param  \App\Models\Invoice  $invoice
+     * @param \App\Models\OldInvoice $invoice
      * @return \Illuminate\Http\Response
      */
     public function download(OldInvoice $invoice)
@@ -89,8 +89,8 @@ class OldInvoiceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\OldInvoice  $invoice
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\OldInvoice $invoice
+     * @return void
      */
     public function edit(OldInvoice $invoice)
     {
@@ -100,9 +100,9 @@ class OldInvoiceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\OldInvoice  $invoice
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Models\OldInvoice $invoice
+     * @return void
      */
     public function update(Request $request, OldInvoice $invoice)
     {
@@ -112,8 +112,8 @@ class OldInvoiceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\OldInvoice  $invoice
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\OldInvoice $invoice
+     * @return void
      */
     public function destroy(OldInvoice $invoice)
     {

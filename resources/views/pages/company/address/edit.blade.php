@@ -51,7 +51,7 @@
                         </div>
                         <div class="row">
                             <div class="col s12">
-                                <label id="rbtn-label" class="rbtn-label" for="gender">Building Type</label>
+                                <label id="rbtn-label" class="rbtn-label" for="buildingtype">Building Type</label>
                                 <p class="rbtn">
                                     <label for="buildingtype-residential">
                                         <input id="buildingtype-residential" name="buildingtype" type="radio" value="{{ \App\Models\CompanyAddress::BUILDINGTYPE_RESIDENTIAL }}"  data-parsley-required="true" data-parsley-trigger="change" @if($companyaddress) @if($companyaddress->buildingtype == \App\Models\CompanyAddress::BUILDINGTYPE_RESIDENTIAL) checked @endif @endif @if(!$ownedcompany) disabled @endif>
@@ -64,6 +64,7 @@
                                         <span>Business</span>
                                     </label>
                                 </p>
+                                <span class="helper-text manual-validation"></span>
                             </div>
                         </div>
                     </div>
@@ -106,14 +107,14 @@
                 .on('field:success', function(velem) {
                     if (velem.$element.is(':radio'))
                     {
-                        velem.$element.parent('').siblings('label').removeClass('invalid').addClass('valid');
+                        velem.$element.parentsUntil('.row').find('span.helper-text').removeClass('invalid').addClass('valid');
                     }
                 })
                 .on('field:error', function(velem) {
                     if (velem.$element.is(':radio'))
                     {
-                        velem.$element.parent('').siblings('label').removeClass('valid').addClass('invalid');
-                        velem.$element.parent('').siblings('label').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
+                        velem.$element.parentsUntil('.row').find('span.helper-text').removeClass('valid').addClass('invalid');
+                        velem.$element.parentsUntil('.row').find('span.helper-text').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
                     }
                 })
                 .on('form:submit', function(velem) {

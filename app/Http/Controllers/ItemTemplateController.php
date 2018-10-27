@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateItemTemplateRequest;
+use App\Http\Requests\UpdateItemTemplateRequest;
 use App\Models\ItemTemplate;
 use Illuminate\Http\Request;
 
@@ -42,10 +44,10 @@ class ItemTemplateController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param CreateItemTemplateRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateItemTemplateRequest $request)
     {
         $company = auth()->user()->company;
 
@@ -84,11 +86,11 @@ class ItemTemplateController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ItemTemplate  $itemtemplate
+     * @param UpdateItemTemplateRequest $request
+     * @param  \App\Models\ItemTemplate $itemtemplate
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ItemTemplate $itemtemplate)
+    public function update(UpdateItemTemplateRequest $request, ItemTemplate $itemtemplate)
     {
         $company = auth()->user()->company;
 

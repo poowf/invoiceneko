@@ -377,6 +377,30 @@ mark {
   width: calc(100% - 22px);
 }
 
+.helper-text.manual-validation {
+  color: transparent;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+  min-height: 18px;
+  display: block;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.helper-text.manual-validation::after {
+  content: attr(data-error);
+  color: #F44336;
+  opacity: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 /* Selectize */
 
 .selectize-control {
