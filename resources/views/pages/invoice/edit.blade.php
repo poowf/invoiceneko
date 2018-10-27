@@ -75,7 +75,7 @@
                                         <label for="item_price" class="label-validation">Price</label>
                                         <span class="helper-text"></span>
                                     </div>
-                                    <div class="input-field col s12">
+                                    <div class="input-field col s12 mtop30">
                                         <textarea id="item_description" name="item_description[]" class="trumbowyg-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Description">{{ $item->description ?? '' }}</textarea>
                                         <label for="item_description" class="label-validation">Description</label>
                                         <span class="helper-text"></span>
@@ -142,7 +142,7 @@
             });
 
             function initInvoiceItem(count, elementid) {
-                let invoiceitem = '<div id="invoice_item_' + count + '" class="card-panel"><div class="row"><div class="input-field col s12 l8"> <input id="item_name" name="item_name[]" type="text" data-parsley-required="true" data-parsley-trigger="change"> <label for="item_name" class="label-validation">Name</label></div><div class="input-field col s6 l2"> <input id="item_quantity" name="item_quantity[]" type="number" data-parsley-required="true" data-parsley-trigger="change"> <label for="item_quantity" class="label-validation">Quantity</label></div><div class="input-field col s6 l2"> <input id="item_price" name="item_price[]" type="number" data-parsley-required="true" data-parsley-trigger="change"> <label for="item_price" class="label-validation">Price</label></div><div class="input-field col s12"><textarea id="item_description" name="item_description[]" class="trumbowyg-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Description"></textarea><label for="item_description" class="label-validation">Description</label></div></div><div class="row"> <button data-id="false" data-count="' + count + '" class="invoice-item-delete-btn btn waves-effect waves-light col s12 m3 offset-m9 red">Delete</button></div></div>';
+                let invoiceitem = '<div id="invoice_item_' + count + '" class="card-panel"><div class="row"><div class="input-field col s12 l8"> <input id="item_name" name="item_name[]" type="text" data-parsley-required="true" data-parsley-trigger="change"> <label for="item_name" class="label-validation">Name</label> <span class="helper-text"></span></div><div class="input-field col s6 l2"> <input id="item_quantity" name="item_quantity[]" type="number" data-parsley-required="true" data-parsley-trigger="change"> <label for="item_quantity" class="label-validation">Quantity</label> <span class="helper-text"></span></div><div class="input-field col s6 l2"> <input id="item_price" name="item_price[]" type="number" data-parsley-required="true" data-parsley-trigger="change"> <label for="item_price" class="label-validation">Price</label> <span class="helper-text"></span></div><div class="input-field col s12 mtop30"><textarea id="item_description" name="item_description[]" class="trumbowyg-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Description"></textarea><label for="item_description" class="label-validation">Description</label> <span class="helper-text"></span></div></div><div class="row"> <button data-id="false" data-count="' + count + '" class="invoice-item-delete-btn btn waves-effect waves-light col s12 m3 offset-m9 red">Delete</button></div></div>';
                 $('#' + elementid).append(invoiceitem);
                 $('.trumbowyg-textarea').trumbowyg({
                     svgPath: '/assets/fonts/trumbowygicons.svg',
@@ -220,17 +220,11 @@
                 .on('field:success', function(velem) {
                     if (velem.$element.is('select')) {
                         velem.$element.siblings('.selectize-control').removeClass('invalid').addClass('valid');
-                        //velem.$element.parent('.select-wrapper').removeClass('invalid').addClass('valid');
-                        //velem.$element.siblings('.select-dropdown').removeClass('invalid').addClass('valid');
                     }
                 })
                 .on('field:error', function(velem) {
                     if (velem.$element.is('select')) {
                         velem.$element.siblings('.selectize-control').removeClass('valid').addClass('invalid');
-
-                        //velem.$element.parent('.select-wrapper').removeClass('valid').addClass('invalid');
-                        //velem.$element.siblings('.select-dropdown').removeClass('valid').addClass('invalid');
-                        //velem.$element.parent('.select-wrapper').siblings('label').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
                     }
                 })
                 .on('form:submit', function(velem) {

@@ -25,7 +25,7 @@ class UpdateInvoiceRequest extends FormRequest
     {
         return [
             'date' => 'required',
-            'netdays' => 'required',
+            'netdays' => 'required|numeric',
         ];
     }
 }

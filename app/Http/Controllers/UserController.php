@@ -14,7 +14,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function index()
     {
@@ -34,7 +34,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param CreateUserRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(CreateUserRequest $request)
@@ -52,7 +52,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function show()
     {
@@ -73,7 +73,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param UpdateUserRequest $request
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateUserRequest $request)
@@ -103,7 +103,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function destroy()
     {

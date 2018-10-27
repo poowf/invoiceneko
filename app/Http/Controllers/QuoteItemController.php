@@ -10,7 +10,7 @@ class QuoteItemController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function index()
     {
@@ -20,7 +20,7 @@ class QuoteItemController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function create()
     {
@@ -30,8 +30,8 @@ class QuoteItemController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request $request
+     * @return void
      */
     public function store(Request $request)
     {
@@ -41,8 +41,8 @@ class QuoteItemController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\QuoteItem  $quoteItem
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\QuoteItem $quoteItem
+     * @return void
      */
     public function show(QuoteItem $quoteItem)
     {
@@ -52,8 +52,8 @@ class QuoteItemController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\QuoteItem  $quoteItem
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\QuoteItem $quoteItem
+     * @return void
      */
     public function edit(QuoteItem $quoteItem)
     {
@@ -63,9 +63,9 @@ class QuoteItemController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\QuoteItem  $quoteItem
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Models\QuoteItem $quoteItem
+     * @return void
      */
     public function update(Request $request, QuoteItem $quoteItem)
     {

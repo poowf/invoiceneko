@@ -291,22 +291,13 @@
 
                 })
                 .on('field:success', function(velem) {
-                    if (velem.$element.is(':radio'))
-                    {
-                        velem.$element.parent('').siblings('label').removeClass('invalid').addClass('valid');
-                    }
-                    else if (velem.$element.is('#contactphone') || velem.$element.is('#phone'))
+                    if (velem.$element.is('#contactphone') || velem.$element.is('#phone'))
                     {
                         velem.$element.parent('').siblings('label').removeClass('invalid').addClass('valid');
                     }
                 })
                 .on('field:error', function(velem) {
-                    if (velem.$element.is(':radio'))
-                    {
-                        velem.$element.parent('').siblings('label').removeClass('valid').addClass('invalid');
-                        velem.$element.parent('').siblings('label').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                    }
-                    else if (velem.$element.is('#contactphone') || velem.$element.is('#phone'))
+                    if (velem.$element.is('#contactphone') || velem.$element.is('#phone'))
                     {
                         velem.$element.parent('').siblings('label').removeClass('valid').addClass('invalid');
                         velem.$element.parent('').siblings('label').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));

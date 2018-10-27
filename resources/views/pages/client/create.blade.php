@@ -118,7 +118,7 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12 m2">
-                                <select id="contactsalutation" name="contactsalutation" data-parsley-trigger="change">
+                                <select id="contactsalutation" name="contactsalutation" data-parsley-required="true" data-parsley-trigger="change">
                                     <option disabled="" selected="selected" value="">Client Contact Salutation</option>
                                     <option value="mr" @if(old('contactsalutation') == "mr") selected @endif>Mr.</option>
                                     <option value="mrs" @if(old('contactsalutation') == "mrs") selected @endif>Mrs.</option>
@@ -232,9 +232,8 @@
 
                 })
                 .on('field:success', function(velem) {
-                    if (velem.$element.is(':radio'))
-                    {
-                        velem.$element.parent('').siblings('label').removeClass('invalid').addClass('valid');
+                    if (velem.$element.is('select')) {
+                        velem.$element.siblings('.selectize-control').removeClass('invalid').addClass('valid');
                     }
                     else if (velem.$element.is('#phone') || velem.$element.is('#contactphone'))
                     {
@@ -242,10 +241,8 @@
                     }
                 })
                 .on('field:error', function(velem) {
-                    if (velem.$element.is(':radio'))
-                    {
-                        velem.$element.parent('').siblings('label').removeClass('valid').addClass('invalid');
-                        velem.$element.parent('').siblings('label').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
+                    if (velem.$element.is('select')) {
+                        velem.$element.siblings('.selectize-control').removeClass('valid').addClass('invalid');
                     }
                     else if (velem.$element.is('#phone') || velem.$element.is('#contactphone'))
                     {

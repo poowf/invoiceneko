@@ -76,6 +76,7 @@
                                         <span>Female</span>
                                     </label>
                                 </p>
+                                <span class="helper-text manual-validation"></span>
                             </div>
                         </div>
                     </div>
@@ -145,7 +146,7 @@
                 .on('field:success', function(velem) {
                     if (velem.$element.is(':radio'))
                     {
-                        velem.$element.parent('').siblings('label').removeClass('invalid').addClass('valid');
+                        velem.$element.parentsUntil('.row').find('span.helper-text').removeClass('invalid').addClass('valid');
                     }
                     else if (velem.$element.is('#phone'))
                     {
@@ -155,8 +156,8 @@
                 .on('field:error', function(velem) {
                     if (velem.$element.is(':radio'))
                     {
-                        velem.$element.parent('').siblings('label').removeClass('valid').addClass('invalid');
-                        velem.$element.parent('').siblings('label').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
+                        velem.$element.parentsUntil('.row').find('span.helper-text').removeClass('valid').addClass('invalid');
+                        velem.$element.parentsUntil('.row').find('span.helper-text').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
                     }
                     else if (velem.$element.is('#phone'))
                     {
