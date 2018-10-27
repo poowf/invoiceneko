@@ -15,6 +15,7 @@ class SignUpTest extends DuskTestCase
      * A Dusk test example.
      *
      * @return void
+     * @throws \Throwable
      */
     public function test_creating_a_user_and_company()
     {

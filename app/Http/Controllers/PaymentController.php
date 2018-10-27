@@ -33,7 +33,23 @@ class PaymentController extends Controller
      */
     public function create()
     {
-        return view('pages.payment.create');
+        $company = auth()->user()->company;
+
+        if($company)
+        {
+            if ($company->invoices->count() == 0)
+            {
+                return view('pages.payment.noinvoices');
+            }
+            else
+            {
+                return view('pages.payment.create');
+            }
+        }
+        else
+        {
+            return view('pages.invoice.nocompany');
+        }
     }
 
     /**

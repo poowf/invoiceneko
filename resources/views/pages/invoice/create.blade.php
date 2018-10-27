@@ -19,7 +19,7 @@
                 <div class="card-panel">
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="nice_invoice_id" name="nice_invoice_id" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ $invoicenumber or '' }}">
+                            <input id="nice_invoice_id" name="nice_invoice_id" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ $invoicenumber ?? '' }}">
                             <label for="nice_invoice_id" class="label-validation">Invoice ID</label>
                         </div>
                     </div>

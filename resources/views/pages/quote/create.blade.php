@@ -19,7 +19,7 @@
                 <div class="card-panel">
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="nice_quote_id" name="nice_quote_id" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ $quotenumber or '' }}">
+                            <input id="nice_quote_id" name="nice_quote_id" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ $quotenumber ?? '' }}">
                             <label for="nice_quote_id" class="label-validation">Quote ID</label>
                         </div>
                     </div>

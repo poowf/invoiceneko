@@ -22,23 +22,23 @@
                     <dt>Company Name</dt>
                     <dd>{{ $client->companyname }}</dd>
                     <dt>Company Block</dt>
-                    <dd>{{ $client->block or '-' }}</dd>
+                    <dd>{{ $client->block ?? '-' }}</dd>
                     <dt>Company Street</dt>
-                    <dd>{{ $client->street or '-' }}</dd>
+                    <dd>{{ $client->street ?? '-' }}</dd>
                     <dt>Company Unit Number</dt>
-                    <dd>{{ $client->unitnumber or '-' }}</dd>
+                    <dd>{{ $client->unitnumber ?? '-' }}</dd>
                     <dt>Company Postal Code</dt>
-                    <dd>{{ $client->postalcode or '-' }}</dd>
+                    <dd>{{ $client->postalcode ?? '-' }}</dd>
                     <dt>Company Nickname</dt>
-                    <dd>{{ $client->nickname or '-' }}</dd>
+                    <dd>{{ $client->nickname ?? '-' }}</dd>
                     <dt>Company Registration Number</dt>
-                    <dd>{{ $client->crn or '-' }}
+                    <dd>{{ $client->crn ?? '-' }}
                     <dt>Contact Name</dt>
-                    <dd>{{ $client->contactname or '-' }}</dd>
+                    <dd>{{ $client->contactname ?? '-' }}</dd>
                     <dt>Contact Email</dt>
-                    <dd>{{ $client->contactemail or '-' }}</dd>
+                    <dd>{{ $client->contactemail ?? '-' }}</dd>
                     <dt>Contact Phone</dt>
-                    <dd>{{ $client->contactphone or '-' }}</dd>
+                    <dd>{{ $client->contactphone ?? '-' }}</dd>
                     </dl>
                 </div>
             </div>
