@@ -29,13 +29,27 @@ class InvoiceController extends Controller
     public function index()
     {
         $company = auth()->user()->company;
-        $overdue = $company->invoices()->with(['client'])->overdue()->get();
-        $pending = $company->invoices()->with(['client'])->pending()->get();
-        $draft = $company->invoices()->with(['client'])->draft()->get();
-        $paid = $company->invoices()->with(['client'])->paid()->get();
+        $overdue = $company->invoices()->with(['client'])->overdue()->notarchived()->get();
+        $pending = $company->invoices()->with(['client'])->pending()->notarchived()->get();
+        $draft = $company->invoices()->with(['client'])->draft()->notarchived()->get();
+        $paid = $company->invoices()->with(['client'])->paid()->notarchived()->get();
 
         return view('pages.invoice.index', compact('overdue', 'pending', 'draft', 'paid'));
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index_archived()
+    {
+        $company = auth()->user()->company;
+        $invoices = $company->invoices()->archived()->with(['client'])->get();
+
+        return view('pages.invoice.index_archived', compact('invoices'));
+    }
+
 
     /**
      * Set the Invoice to Archived
@@ -45,7 +59,7 @@ class InvoiceController extends Controller
      */
     public function archive(Invoice $invoice)
     {
-        $invoice->status = Invoice::STATUS_ARCHIVED;
+        $invoice->archived = true;
         $invoice->save();
 
         return redirect()->route('invoice.show', [ 'invoice' => $invoice->id ]);

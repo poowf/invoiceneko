@@ -31,6 +31,7 @@ class OldInvoice extends Model
         'nice_invoice_id',
         'date',
         'duedate',
+        'total',
         'status',
         'netdays',
         'client_id',
@@ -65,7 +66,7 @@ class OldInvoice extends Model
         return $this->belongsTo('App\Models\Invoice', 'invoice_id');
     }
 
-    public function calculatetotal()
+    public function calculatetotal($moneyformat = true)
     {
         $items = $this->items;
 
@@ -77,8 +78,21 @@ class OldInvoice extends Model
 
             $total += $itemtotal;
         }
-        setlocale(LC_MONETARY, 'en_US.UTF-8');
-        return money_format('%!.2n', $total);
+        if ($moneyformat)
+        {
+            setlocale(LC_MONETARY, 'en_US.UTF-8');
+            return money_format('%!.2n', $total);
+        }
+        else
+        {
+            return $total;
+        }
+    }
+
+    public function setInvoiceTotal()
+    {
+        $this->total = self::calculatetotal(false);
+        $this->save();
     }
 
     public function generatePDFView()

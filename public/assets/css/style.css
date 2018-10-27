@@ -177,6 +177,10 @@ mark {
   margin-top: 60px;
 }
 
+.mbtm0 {
+  margin-bottom: 0px;
+}
+
 .mbtm10 {
   margin-bottom: 10px;
 }
@@ -274,6 +278,10 @@ mark {
 
 .desktop-only {
   display: none;
+}
+
+.mobile-only {
+  display: block;
 }
 
 .null-form {
@@ -459,6 +467,10 @@ mark {
   color: #299a9a !important;
 }
 
+.sidenav-trigger {
+  color: #000000;
+}
+
 .sidenav .collapsible-body > ul:not(.collapsible) > li.active,
 .sidenav.sidenav-fixed .collapsible-body > ul:not(.collapsible) > li.active {
   background-color: #299a9a;
@@ -549,28 +561,6 @@ mark {
 
 .collection a.collection-item {
   color: #000;
-}
-
-.sidenav-trigger {
-  color: #000000;
-}
-
-.sidenav li > a {
-  font-weight: normal;
-}
-
-.sidenav li > a > i.material-icons {
-  font-size: 30px;
-  color: #fff;
-  margin: 0px;
-}
-
-.sidenav li > form {
-  padding: 0 32px;
-}
-
-.sidenav li > form > button {
-  padding: 0;
 }
 
 .dropdown-trigger + .dropdown-content li > a,
@@ -803,6 +793,52 @@ nav .signout-btn {
   text-decoration: none;
   width: 100%;
   text-align: left;
+}
+
+nav .sidenav-trigger i {
+  height: 80px;
+  line-height: 80px;
+  font-size: 28px;
+}
+
+.sidenav li > a {
+  font-weight: normal;
+}
+
+.sidenav li > a > i.material-icons {
+  font-size: 30px;
+  color: #fff;
+  margin: 0px;
+}
+
+.sidenav li > form {
+  padding: 0 32px;
+}
+
+.sidenav li > form > button {
+  padding: 0;
+}
+
+.sidenav hr {
+  margin: 0;
+}
+
+.fixed-action-btn.toolbar ul li .null-btn {
+  display: block;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  color: #fff;
+  line-height: 56px;
+  z-index: 1;
+}
+
+.fixed-action-btn.toolbar ul li .null-form {
+  width: 100%;
 }
 
 /* Footer */
@@ -1101,6 +1137,10 @@ nav .button-collapse i {
 @media only screen and (min-width: 993px) {
   .desktop-only {
     display: block;
+  }
+
+  .mobile-only {
+    display: none;
   }
 
   img.force-image-size {

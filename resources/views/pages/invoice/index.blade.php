@@ -32,6 +32,7 @@
             <div class="col s6 right mtop30">
                 <a href="{{ route('invoice.create') }}" class="btn btn-link waves-effect waves-dark">Create</a>
                 <a href="{{ route('invoice.adhoc.create') }}" class="btn btn-link waves-effect waves-dark disabled">Create Ad-Hoc</a>
+                <a href="{{ route('invoice.index.archived') }}" class="btn btn-link waves-effect waves-dark">Archived Invoices</a>
             </div>
         </div>
         <div class="row">
@@ -51,7 +52,7 @@
                 </ul>
             </div>
             <div id="invoice-overdue" class="col s12">
-                <div class="card-panel tab-panel">
+                <div class="card-panel tab-panel flex">
                     <table id="overdue-container" class="responsive-table striped">
                         <thead>
                             <tr>
@@ -83,8 +84,6 @@
                                                 <span class="alt-badge warning">{{ $invoice->statustext() }}</span>
                                             @elseif ($invoice->status == App\Models\Invoice::STATUS_CLOSED)
                                                 <span class="alt-badge success">{{ $invoice->statustext() }}</span>
-                                            @elseif ($invoice->status == App\Models\Invoice::STATUS_ARCHIVED)
-                                                <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
                                             @elseif ($invoice->status == App\Models\Invoice::STATUS_WRITTENOFF)
                                                 <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
                                             @endif
@@ -107,7 +106,7 @@
                 </div>
             </div>
             <div id="invoice-pending" class="col s12">
-                <div class="card-panel tab-panel">
+                <div class="card-panel tab-panel flex">
                     @if($pending)
                         <table id="pending-container" class="responsive-table striped">
                         <thead>
@@ -139,8 +138,6 @@
                                         <span class="alt-badge warning">{{ $invoice->statustext() }}</span>
                                     @elseif ($invoice->status == App\Models\Invoice::STATUS_CLOSED)
                                         <span class="alt-badge success">{{ $invoice->statustext() }}</span>
-                                    @elseif ($invoice->status == App\Models\Invoice::STATUS_ARCHIVED)
-                                        <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
                                     @elseif ($invoice->status == App\Models\Invoice::STATUS_WRITTENOFF)
                                         <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
                                     @endif
@@ -163,7 +160,7 @@
                 </div>
             </div>
             <div id="invoice-draft" class="col s12">
-                <div class="card-panel tab-panel">
+                <div class="card-panel tab-panel flex">
                     @if($draft)
                         <table id="draft-container" class="responsive-table striped">
                         <thead>
@@ -195,8 +192,6 @@
                                         <span class="alt-badge warning">{{ $invoice->statustext() }}</span>
                                     @elseif ($invoice->status == App\Models\Invoice::STATUS_CLOSED)
                                         <span class="alt-badge success">{{ $invoice->statustext() }}</span>
-                                    @elseif ($invoice->status == App\Models\Invoice::STATUS_ARCHIVED)
-                                        <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
                                     @elseif ($invoice->status == App\Models\Invoice::STATUS_WRITTENOFF)
                                         <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
                                     @endif
@@ -219,7 +214,7 @@
                 </div>
             </div>
             <div id="invoice-paid" class="col s12">
-                <div class="card-panel tab-panel">
+                <div class="card-panel tab-panel flex">
                     @if($paid)
                         <table id="paid-container" class="responsive-table striped">
                         <thead>
@@ -251,8 +246,6 @@
                                         <span class="alt-badge warning">{{ $invoice->statustext() }}</span>
                                     @elseif ($invoice->status == App\Models\Invoice::STATUS_CLOSED)
                                         <span class="alt-badge success">{{ $invoice->statustext() }}</span>
-                                    @elseif ($invoice->status == App\Models\Invoice::STATUS_ARCHIVED)
-                                        <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
                                     @elseif ($invoice->status == App\Models\Invoice::STATUS_WRITTENOFF)
                                         <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
                                     @endif
