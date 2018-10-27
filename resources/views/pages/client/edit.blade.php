@@ -5,6 +5,51 @@
     <link href="{{ mix('/assets/css/intlTelInput.css') }}" rel="stylesheet" type="text/css">
 
     <style>
+        .logo-display-container {
+            display: inline-block;
+        }
+
+        .logo-display-container img {
+            margin-top: 15px;
+            object-fit: cover;
+            object-position: center right;
+        }
+
+        .logo-display-container img {
+            width: 250px;
+            height: 250px;
+        }
+
+        .logo-display-container span.text-content {
+            width: 250px;
+        }
+
+        span.text-content {
+            width: 300px;
+            padding: 10px 0;
+            margin-top: 15px;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            cursor: pointer;
+            display: table;
+            position: absolute;
+            top: 0;
+            opacity: 0;
+            -webkit-transition: opacity 500ms;
+            -moz-transition: opacity 500ms;
+            -o-transition: opacity 500ms;
+            transition: opacity 500ms;
+        }
+
+        span.text-content span {
+            display: table-cell;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .logo-display-container:hover span.text-content {
+            opacity: 1;
+        }
     </style>
 @stop
 
@@ -22,6 +67,16 @@
                         <div class="row">
                             <div class="col s12">
                                 <h5>Details</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="logo-container input-field col s12">
+                                <label for="logo-display" class="label-validation">Logo</label>
+                                <div class="logo-display-container tooltipped" data-position="top" data-delay="50" data-tooltip="Recommended Size: 500 (W) x 500 (H) with White Background (Optional)">
+                                    <img id="logo-display" src="@if($client){{ \App\Library\Poowf\Unicorn::getStorageFile($client->logo, [500, 500]) }}@else{!! '//via.placeholder.com/500x500' !!}@endif">
+                                    <span class="text-content"><span id="logo-upload">Change?</span></span>
+                                </div>
+                                <input id="logo" name="logo" type="file" accept="image/*" style="display: none;" data-maxsize="10M">
                             </div>
                         </div>
                         <div class="row">
@@ -182,6 +237,25 @@
 
             $( "#contactphone" ).focusout(function() {
                 $(this).parent().siblings('.label-validation').removeClass('theme-text');
+            });
+
+            $('#logo-upload').click(function(){
+                $('#logo').click();
+            });
+
+            $("#logo").on("change", function()
+            {
+                var files = !!this.files ? this.files : [];
+                if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
+
+                if (/^image/.test( files[0].type)){ // only image file
+                    var reader = new FileReader(); // instance of the FileReader
+                    reader.readAsDataURL(files[0]); // read the local file
+
+                    reader.onloadend = function(){ // set image data as background of div
+                        $("#logo-display").attr("src", this.result);
+                    }
+                }
             });
 
             window.Parsley

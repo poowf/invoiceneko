@@ -695,6 +695,10 @@ textarea.valid + label:after {
   background-color: #0091ea;
 }
 
+.input-field {
+  margin-bottom: 0px;
+}
+
 .input-field .character-counter {
   position: absolute;
   right: 12px;
