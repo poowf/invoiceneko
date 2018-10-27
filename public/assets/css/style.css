@@ -94,6 +94,10 @@ dd::after {
   clear: left;
 }
 
+strong {
+  font-weight: 700;
+}
+
 mark {
   background: #fff2c3;
   color: inherit;

@@ -113,7 +113,7 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            var invoiceitemcount = 0;
+            let invoiceitemcount = {{ ($invoice->items()->count() - 1) ?? 0 }};
 
             $('.trumbowyg-textarea').trumbowyg({
                 svgPath: '/assets/fonts/trumbowygicons.svg',
@@ -150,6 +150,9 @@
                     resetCss: true,
                     autogrow: true,
                 });
+                $('html, body').animate({
+                    scrollTop: $("#invoice_item_" + count).offset().top
+                }, 500, 'linear');
             }
 
             $('#invoice-items-container').on('click', '.invoice-item-delete-btn', function (event) {

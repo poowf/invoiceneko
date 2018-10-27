@@ -113,7 +113,8 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            var quoteitemcount = 0;
+            let quoteitemcount = {{ ($quote->items()->count() - 1) ?? 0 }};
+
 
             $('.trumbowyg-textarea').trumbowyg({
                 svgPath: '/assets/fonts/trumbowygicons.svg',
@@ -150,6 +151,9 @@
                     resetCss: true,
                     autogrow: true,
                 });
+                $('html, body').animate({
+                    scrollTop: $("#quote_item_" + count).offset().top
+                }, 500, 'linear');
             }
 
             $('#quote-items-container').on('click', '.quote-item-delete-btn', function (event) {
