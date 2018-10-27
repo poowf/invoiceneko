@@ -54,12 +54,12 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="input-field col s6">
+                            <div class="input-field col s12 m6">
                                 <input id="crn" name="crn" type="text" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ old('crn') }}" placeholder="Client Company Registration Number">
                                 <label for="crn" class="label-validation">Client Company Registration Number</label>
                                 <span class="helper-text"></span>
                             </div>
-                            <div class="input-field col s6">
+                            <div class="input-field col s12 m6">
                                 <input id="website" name="website" type="text" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ old('website') }}" placeholder="Client Website">
                                 <label for="website" class="label-validation">Client Website</label>
                                 <span class="helper-text"></span>

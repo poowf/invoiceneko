@@ -59,19 +59,19 @@
                 <div id="invoice-items-container">
                     <div id="invoice_item_0" class="card-panel">
                         <div class="row">
-                            <div class="input-field col s8">
+                            <div class="input-field col s12 l8">
                                 <select id="item_name_0" name="item_name[]" class="item-list-selector selectize-custom" data-parsley-required="true" data-parsley-trigger="change">
                                     <option disabled="" selected="selected" value="">Pick an Item or Create a new one</option>
                                 </select>
                                 <label for="item_name_0" class="label-validation">Name</label>
                                 <span class="helper-text"></span>
                             </div>
-                            <div class="input-field col s2">
+                            <div class="input-field col s6 l2">
                                 <input id="item_quantity_0" name="item_quantity[]" class="item-quantity-input" type="number" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('item_quantity') }}" placeholder="Item Quantity">
                                 <label for="item_quantity_0" class="label-validation">Quantity</label>
                                 <span class="helper-text"></span>
                             </div>
-                            <div class="input-field col s2">
+                            <div class="input-field col s6 l2">
                                 <input id="item_price_0" name="item_price[]" class="item-price-input" type="number" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('item_price') }}" placeholder="Item Price">
                                 <label for="item_price_0" class="label-validation">Price</label>
                                 <span class="helper-text"></span>
@@ -163,7 +163,7 @@
             }
 
             function initInvoiceItem(count, elementid) {
-                let invoiceitem = '<div id="invoice_item_' + count + '" class="card-panel"><div class="row"><div class="input-field col s8"> <select id="item_name_' + count + '" name="item_name[]" class="item-list-selector selectize-custom" data-parsley-required="true" data-parsley-trigger="change"><option disabled="" selected="selected" value="">Pick an Item or Create a new one</option> </select> <label for="item_name_' + count + '" class="label-validation">Name</label> <span class="helper-text"></span></div><div class="input-field col s2"> <input id="item_quantity_' + count + '" name="item_quantity[]" class="item-quantity-input" type="number" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Quantity"> <label for="item_quantity_' + count + '" class="label-validation">Quantity</label> <span class="helper-text"></span></div><div class="input-field col s2"> <input id="item_price_' + count + '" name="item_price[]" class="item-price-input" type="number" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Price"> <label for="item_price_' + count + '" class="label-validation">Price</label> <span class="helper-text"></span></div><div class="input-field col s12"><textarea id="item_description_' + count + '" name="item_description[]" class="item-description-textarea trumbowyg-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Description"></textarea><label for="item_description_' + count + '" class="label-validation">Description</label> <span class="helper-text"></span></div></div><div class="row"> <button data-id="false" data-count="' + count + '" class="invoice-item-delete-btn btn waves-effect waves-light col s12 m3 offset-m9 red">Delete</button></div></div>';
+                let invoiceitem = '<div id="invoice_item_' + count + '" class="card-panel"><div class="row"><div class="input-field col s12 l8"> <select id="item_name_' + count + '" name="item_name[]" class="item-list-selector selectize-custom" data-parsley-required="true" data-parsley-trigger="change"><option disabled="" selected="selected" value="">Pick an Item or Create a new one</option> </select> <label for="item_name_' + count + '" class="label-validation">Name</label> <span class="helper-text"></span></div><div class="input-field col s6 l2"> <input id="item_quantity_' + count + '" name="item_quantity[]" class="item-quantity-input" type="number" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Quantity"> <label for="item_quantity_' + count + '" class="label-validation">Quantity</label> <span class="helper-text"></span></div><div class="input-field col s6 l2"> <input id="item_price_' + count + '" name="item_price[]" class="item-price-input" type="number" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Price"> <label for="item_price_' + count + '" class="label-validation">Price</label> <span class="helper-text"></span></div><div class="input-field col s12"><textarea id="item_description_' + count + '" name="item_description[]" class="item-description-textarea trumbowyg-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Description"></textarea><label for="item_description_' + count + '" class="label-validation">Description</label> <span class="helper-text"></span></div></div><div class="row"> <button data-id="false" data-count="' + count + '" class="invoice-item-delete-btn btn waves-effect waves-light col s12 m3 offset-m9 red">Delete</button></div></div>';
                 $('#' + elementid).append(invoiceitem);
                 initElements();
             }

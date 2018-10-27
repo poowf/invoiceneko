@@ -18,17 +18,17 @@
                 <form id="create-itemtemplate" method="post" enctype="multipart/form-data">
                     <div class="card-panel">
                         <div class="row">
-                            <div class="input-field col s8">
+                            <div class="input-field col s12 l8">
                                 <input id="name" name="name" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('name') }}" placeholder="Item Name">
                                 <label for="name" class="label-validation">Name</label>
                                 <span class="helper-text"></span>
                             </div>
-                            <div class="input-field col s2">
+                            <div class="input-field col s6 l2">
                                 <input id="quantity" name="quantity" type="number" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('quantity') }}" placeholder="Item Quantity">
                                 <label for="quantity" class="label-validation">Quantity</label>
                                 <span class="helper-text"></span>
                             </div>
-                            <div class="input-field col s2">
+                            <div class="input-field col s6 l2">
                                 <input id="price" name="price" type="number" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('price') }}" placeholder="Item Price">
                                 <label for="price" class="label-validation">Price</label>
                                 <span class="helper-text"></span>
