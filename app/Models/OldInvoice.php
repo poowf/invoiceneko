@@ -66,10 +66,9 @@ class OldInvoice extends Model
         return $this->belongsTo('App\Models\Invoice', 'invoice_id');
     }
 
-    public function calculatetotal($moneyformat = true)
+    public function calculatesubtotal($moneyformat = true)
     {
         $items = $this->items;
-
         $total = 0;
 
         foreach($items as $item)
@@ -78,6 +77,57 @@ class OldInvoice extends Model
 
             $total += $itemtotal;
         }
+
+        if ($moneyformat)
+        {
+            setlocale(LC_MONETARY, 'en_US.UTF-8');
+            return money_format('%!.2n', $total);
+        }
+        else
+        {
+            return $total;
+        }
+    }
+
+    public function calculatetax($moneyformat = true)
+    {
+        $companysettings = $this->company->settings;
+        $tax = 0;
+
+        if($companysettings->tax && $companysettings->tax != 0)
+        {
+            $tax = $companysettings->tax;
+        }
+
+        $subtotal = $this->calculatesubtotal(false);
+
+        $tax = ($subtotal * $tax)/100;
+
+        if ($moneyformat)
+        {
+            setlocale(LC_MONETARY, 'en_US.UTF-8');
+            return money_format('%!.2n', $tax);
+        }
+        else
+        {
+            return $tax;
+        }
+    }
+
+    public function calculatetotal($moneyformat = true)
+    {
+        $companysettings = $this->company->settings;
+        $tax = 0;
+
+        if($companysettings->tax && $companysettings->tax != 0)
+        {
+            $tax = $companysettings->tax;
+        }
+
+        $subtotal = $this->calculatesubtotal(false);
+
+        $total = ($subtotal * (100 + $tax))/100;
+
         if ($moneyformat)
         {
             setlocale(LC_MONETARY, 'en_US.UTF-8');

@@ -3,45 +3,6 @@
 @section("head")
     <title>{{ config('app.name') }}</title>
     <style>
-        .logo-display-container, .smlogo-display-container {
-            display: inline-block;
-        }
-
-        .logo-display-container img, .smlogo-display-container img {
-            max-height: 100px;
-            max-width: 250px;
-            margin-top: 15px;
-
-            object-fit: cover;
-            object-position: center right;
-        }
-
-        span.text-content {
-            width: 300px;
-            padding: 10px 0;
-            margin-top: 15px;
-            background: rgba(0,0,0,0.5);
-            color: white;
-            cursor: pointer;
-            display: table;
-            position: absolute;
-            top: 0;
-            opacity: 0;
-            -webkit-transition: opacity 500ms;
-            -moz-transition: opacity 500ms;
-            -o-transition: opacity 500ms;
-            transition: opacity 500ms;
-        }
-
-        span.text-content span {
-            display: table-cell;
-            text-align: center;
-            vertical-align: middle;
-        }
-
-        .logo-display-container:hover span.text-content, .smlogo-display-container:hover span.text-content {
-            opacity: 1;
-        }
     </style>
 @stop
 
@@ -59,6 +20,13 @@
             <div class="col s12 m9 xl10">
                 <form id="edit-company-settings" method="post" enctype="multipart/form-data">
                     <div class="card-panel">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="tax" name="tax" type="number" data-parsley-trigger="change" value="{{ $companysettings->tax ?? '' }}" placeholder="Company Tax %">
+                                <label for="tax" class="label-validation">Company Tax %</label>
+                                <span class="helper-text"></span>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="input-field col s12">
                                 <input id="invoice_prefix" name="invoice_prefix" type="text" data-parsley-trigger="change" data-parsley-minlength="2" value="{{ $companysettings->invoice_prefix ?? '' }}" placeholder="Invoice Prefix">
