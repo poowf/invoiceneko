@@ -203,16 +203,16 @@
                                             Subtotal
                                         </td>
                                         <td class="amount" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
-                                            ${{ $quote->calculatetotal() }}
+                                            ${{ $quote->calculatesubtotal() }}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td style="padding: 20px 0;"></td>
                                         <td class="summary" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; color: #aaaaaa;">
-                                            Tax (0%)
+                                            Tax ({{ $quote->company->settings->tax ?? 0 }}%)
                                         </td>
                                         <td class="amount" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
-                                            $0,00
+                                            ${{ $quote->calculatetax() }}
                                         </td>
                                     </tr>
                                     <tr>

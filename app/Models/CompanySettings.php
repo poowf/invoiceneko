@@ -24,6 +24,7 @@ class CompanySettings extends Model
         'quote_prefix',
         'invoice_conditions',
         'quote_conditions',
+        'tax'
     ];
 
     public function company()
