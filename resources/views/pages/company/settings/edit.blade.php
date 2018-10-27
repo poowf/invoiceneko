@@ -61,14 +61,14 @@
                     <div class="card-panel">
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="invoice_prefix" name="invoice_prefix" type="text" data-parsley-trigger="change" data-parsley-minlength="2" value="{{ $companysettings->invoice_prefix or '' }}" placeholder="Invoice Prefix">
+                                <input id="invoice_prefix" name="invoice_prefix" type="text" data-parsley-trigger="change" data-parsley-minlength="2" value="{{ $companysettings->invoice_prefix ?? '' }}" placeholder="Invoice Prefix">
                                 <label for="invoice_prefix" class="label-validation">Invoice Prefix</label>
                                 <span class="helper-text"></span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="quote_prefix" name="quote_prefix" type="text" data-parsley-trigger="change" data-parsley-minlength="2" value="{{ $companysettings->quote_prefix or '' }}" placeholder="Quote Prefix">
+                                <input id="quote_prefix" name="quote_prefix" type="text" data-parsley-trigger="change" data-parsley-minlength="2" value="{{ $companysettings->quote_prefix ?? '' }}" placeholder="Quote Prefix">
                                 <label for="quote_prefix" class="label-validation">Quote Prefix</label>
                                 <span class="helper-text"></span>
                             </div>

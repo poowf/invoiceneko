@@ -21,11 +21,11 @@
             <div class="col s12">
                 <div class="card-panel">
                     <dt>Name</dt>
-                    <dd>{{ $itemtemplate->name or '-'}}</dd>
+                    <dd>{{ $itemtemplate->name ?? '-'}}</dd>
                     <dt>Quantity</dt>
-                    <dd>{{ $itemtemplate->quantity or '-' }}</dd>
+                    <dd>{{ $itemtemplate->quantity ?? '-' }}</dd>
                     <dt>Price</dt>
-                    <dd>{{ $itemtemplate->price or '-' }}</dd>
+                    <dd>{{ $itemtemplate->price ?? '-' }}</dd>
                     <dt>Description</dt>
                     <dd>{!! $itemtemplate->description !!}</dd>
                     </dl>

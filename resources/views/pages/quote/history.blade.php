@@ -38,15 +38,15 @@
                     <dt>Company Address</dt>
                     <dd>{{ $client->address }}</dd>
                     <dt>Company Nickname</dt>
-                    <dd>{{ $client->nickname or '' }}</dd>
+                    <dd>{{ $client->nickname ?? '' }}</dd>
                     <dt>Company Registration Number</dt>
                     <dd>{{ $client->crn }}
                     <dt>Contact Name</dt>
-                    <dd>{{ $client->contactname or '-' }}</dd>
+                    <dd>{{ $client->contactname ?? '-' }}</dd>
                     <dt>Contact Email</dt>
-                    <dd>{{ $client->contactemail or '-' }}</dd>
+                    <dd>{{ $client->contactemail ?? '-' }}</dd>
                     <dt>Contact Phone</dt>
-                    <dd>{{ $client->contactphone or '-' }}</dd>
+                    <dd>{{ $client->contactphone ?? '-' }}</dd>
                     <dt>Status</dt>
                     <dd>
                         @if ($invoice->status == App\Models\Invoice::STATUS_OVERDUE)

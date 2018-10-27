@@ -75,23 +75,23 @@
                     <dt>Company Name</dt>
                     <dd>{{ $client->companyname }}</dd>
                     <dt>Company Block</dt>
-                    <dd>{{ $client->block or '-' }}</dd>
+                    <dd>{{ $client->block ?? '-' }}</dd>
                     <dt>Company Street</dt>
-                    <dd>{{ $client->street or '-' }}</dd>
+                    <dd>{{ $client->street ?? '-' }}</dd>
                     <dt>Company Unit Number</dt>
-                    <dd>{{ $client->unitnumber or '-' }}</dd>
+                    <dd>{{ $client->unitnumber ?? '-' }}</dd>
                     <dt>Company Postal Code</dt>
-                    <dd>{{ $client->postalcode or '-' }}</dd>
+                    <dd>{{ $client->postalcode ?? '-' }}</dd>
                     <dt>Company Nickname</dt>
-                    <dd>{{ $client->nickname or '-' }}</dd>
+                    <dd>{{ $client->nickname ?? '-' }}</dd>
                     <dt>Company Registration Number</dt>
                     <dd>{{ $client->crn }}
                     <dt>Contact Name</dt>
-                    <dd>{{ $client->contactname or '-' }}</dd>
+                    <dd>{{ $client->contactname ?? '-' }}</dd>
                     <dt>Contact Email</dt>
-                    <dd>{{ $client->contactemail or '-' }}</dd>
+                    <dd>{{ $client->contactemail ?? '-' }}</dd>
                     <dt>Contact Phone</dt>
-                    <dd>{{ $client->contactphone or '-' }}</dd>
+                    <dd>{{ $client->contactphone ?? '-' }}</dd>
                     <dt>Status</dt>
                     <dd>
                         @if ($invoice->status == App\Models\Invoice::STATUS_OVERDUE)
@@ -177,24 +177,24 @@
                         <div class="col-xs-5 invoice-person" style="position: relative; left: 0; padding: 0 15px; width:45%; float: left; text-align: left;">
                             <span class="name" style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">Bill To: </span>
                             <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->companyname }}</span>
-                            <span style="font-size: 18px; line-height: 26px; display: block;">@if($invoice->client->block){{ $invoice->client->block }} @endif {{ $invoice->client->street or 'No Street' }}</span>
+                            <span style="font-size: 18px; line-height: 26px; display: block;">@if($invoice->client->block){{ $invoice->client->block }} @endif {{ $invoice->client->street ?? 'No Street' }}</span>
                             @if($invoice->client->unitnumber)<span style="font-size: 18px; line-height: 26px; display: block;">#{{ $invoice->client->unitnumber }}</span>@endif
-                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->country or 'No Country' }} {{ $invoice->client->postalcode or 'No Postal Code' }}</span>
+                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->country ?? 'No Country' }} {{ $invoice->client->postalcode ?? 'No Postal Code' }}</span>
                         </div>
                         <div class="col-xs-2 invoice-payment-direction" style="position: relative; padding-top: 10px; width: 10%; float: left; text-align: center;">
                             <img src="{{ asset('/assets/img/lefttoright.png') }}" width="80" height="80" />
                         </div>
                         <div class="col-xs-5 invoice-person" style="position: relative; padding: 0 15px; width: 45%; float: left;">
                             <div class="" style="float: right; text-align: left;">
-                                <span class="name" style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">{{ $invoice->company->name or 'No Company Name' }}</span>
-                                <span style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">{{ $invoice->company->crn or 'No Company Registration Number' }}</span>
-                                <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->owner->full_name or 'No Company Owner Name' }}</span>
+                                <span class="name" style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">{{ $invoice->company->name ?? 'No Company Name' }}</span>
+                                <span style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">{{ $invoice->company->crn ?? 'No Company Registration Number' }}</span>
+                                <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->owner->full_name ?? 'No Company Owner Name' }}</span>
                                 @if($invoice->company->address)
-                                    <span style="font-size: 18px; line-height: 26px; display: block;">@if($invoice->company->address->block){{ $invoice->company->address->block }} @endif {{ $invoice->company->address->street or 'No Street' }}</span>
+                                    <span style="font-size: 18px; line-height: 26px; display: block;">@if($invoice->company->address->block){{ $invoice->company->address->block }} @endif {{ $invoice->company->address->street ?? 'No Street' }}</span>
                                     @if($invoice->company->address->unitnumber)<span style="font-size: 18px; line-height: 26px; display: block;">#{{ $invoice->company->address->unitnumber }}</span>@endif
-                                    <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->address->postalcode or 'No Postal Code' }}</span>
+                                    <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->address->postalcode ?? 'No Postal Code' }}</span>
                                 @else
-                                    <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->owner->email or 'No Company Owner Email' }}</span>
+                                    <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->owner->email ?? 'No Company Owner Email' }}</span>
                                 @endif
                             </div>
                         </div>
@@ -266,17 +266,17 @@
                         <div style="margin-top: 20px;">
                             <div class="row">
                                 <div class="col s6 m4 summary" style="display: inline-block; padding: 0 15px; line-height: 16px; text-align: center;">
-                                    <span class="title" style="color: #8c8c8c; font-size: 14px; line-height: 21px; font-weight: 700;">{{ $invoice->company->name or 'No Company Name' }}</span>
+                                    <span class="title" style="color: #8c8c8c; font-size: 14px; line-height: 21px; font-weight: 700;">{{ $invoice->company->name ?? 'No Company Name' }}</span>
                                     <p style="font-size: inherit; margin: 0 0 15px; line-height: 16px;"></p>
                                 </div>
                                 <div class="col s6 m4 phone" style="display: inline-block; padding: 0 15px; border-left: 2px solid #e0e0e0; text-align: center;">
                                     <ul class="list-unstyled" style="margin-top: 0; margin-bottom: 9px; line-height: 20px; padding-left: 0; list-style: none;">
-                                        <li> {{ $invoice->company->phone or 'No Phone Number' }}</li>
+                                        <li> {{ $invoice->company->phone ?? 'No Phone Number' }}</li>
                                     </ul>
                                 </div>
                                 <div class="col s6 m4 email" style="display: inline-block; padding: 0 15px; border-left: 2px solid #e0e0e0; text-align: center;">
                                     <ul class="list-unstyled" style="margin-top: 0; margin-bottom: 9px; line-height: 20px; padding-left: 0; list-style: none;">
-                                        <li>{{ $invoice->company->email or 'No Email' }}</li>
+                                        <li>{{ $invoice->company->email ?? 'No Email' }}</li>
                                     </ul>
                                 </div>
                             </div>
