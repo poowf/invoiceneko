@@ -23,7 +23,6 @@ class Invoice extends Model
     const STATUS_CLOSED = 3;
     const STATUS_OVERDUE = 4;
     const STATUS_VOID = 5;
-    const STATUS_ARCHIVED = 6;
     const STATUS_WRITTENOFF = 7;
 
     /**
@@ -175,9 +174,6 @@ class Invoice extends Model
             case self::STATUS_CLOSED:
                 $textstatus = "Paid";
                 break;
-            case self::STATUS_ARCHIVED:
-                $textstatus = "Archived";
-                break;
             case self::STATUS_WRITTENOFF:
                 $textstatus = "Written Off";
                 break;
@@ -261,22 +257,34 @@ class Invoice extends Model
             ->whereIn('status', [self::STATUS_OPEN, self::STATUS_OVERDUE]);
     }
 
-    public function scopeDraft($query)
-    {
-        return $query
-            ->where('status', self::STATUS_DRAFT);
-    }
-
     public function scopePending($query)
     {
         return $query
             ->where('status', self::STATUS_OPEN);
     }
 
+    public function scopeDraft($query)
+    {
+        return $query
+            ->where('status', self::STATUS_DRAFT);
+    }
+
     public function scopePaid($query)
     {
         return $query
             ->where('status', self::STATUS_CLOSED);
+    }
+
+    public function scopeArchived($query)
+    {
+        return $query
+            ->where('archived', true);
+    }
+
+    public function scopeNotArchived($query)
+    {
+        return $query
+            ->where('archived', false);
     }
 
 }

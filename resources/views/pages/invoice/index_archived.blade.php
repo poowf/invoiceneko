@@ -19,7 +19,7 @@
             height: 5px;
             background-color: #FFD264;
         }
-        #quote-container {
+        #invoice-container {
             margin: 0px;
         }
     </style>
@@ -29,7 +29,7 @@
     <div class="wide-container">
         <div class="row">
             <div class="col s6">
-                <h3>Archived Quotes</h3>
+                <h3>Archived Invoices</h3>
             </div>
 
             <div class="col s6 right mtop30">
@@ -41,12 +41,12 @@
                     <input id="search-input" class="card-input" name="search-input" type="text" placeholder="Search">
                 </div>
 
-                <div id="quote-container" class="row">
+                <div id="invoice-container" class="row">
                     <div class="card-panel" >
-                        <table id="quotes-table" class="responsive-table striped">
+                        <table id="invoices-table" class="responsive-table striped">
                             <thead>
                                 <tr>
-                                    <th>Quote ID</th>
+                                    <th>Invoice ID</th>
                                     <th>Amount</th>
                                     <th>Due Date</th>
                                     <th>Client Name</th>
@@ -57,28 +57,30 @@
                             </thead>
 
                             <tbody>
-                                @foreach($quotes as $key => $quote)
-                                    <tr class="single-quote-row">
-                                        <td>{{ $quote->nice_quote_id }}</td>
-                                        <td>${{ $quote->totalmoneyformat  }}</td>
-                                        <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $quote->duedate)->format('j F, Y') }}</td>
-                                        <td>{{ $quote->client->companyname }}</td>
-                                        <td>{{ $quote->client->contactphone }}</td>
+                                @foreach($invoices as $key => $invoice)
+                                    <tr class="single-invoice-row">
+                                        <td>{{ $invoice->nice_invoice_id }}</td>
+                                        <td>${{ $invoice->totalmoneyformat  }}</td>
+                                        <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y') }}</td>
+                                        <td>{{ $invoice->client->companyname }}</td>
+                                        <td>{{ $invoice->client->contactphone }}</td>
                                         <td>
-                                            @if ($quote->status == App\Models\Quote::STATUS_DRAFT)
-                                                <span class="alt-badge">{{ $quote->statustext() }}</span>
-                                            @elseif ($quote->status == App\Models\Quote::STATUS_OPEN)
-                                                <span class="alt-badge warning">{{ $quote->statustext() }}</span>
-                                            @elseif ($quote->status == App\Models\Quote::STATUS_EXPIRED)
-                                                <span class="alt-badge error">{{ $quote->statustext() }}</span>
-                                            @elseif ($quote->status == App\Models\Quote::STATUS_COMPLETED)
-                                                <span class="alt-badge success">{{ $quote->statustext() }}</span>
+                                            @if ($invoice->status == App\Models\Invoice::STATUS_OVERDUE)
+                                                <span class="alt-badge error">{{ $invoice->statustext() }}</span>
+                                            @elseif ($invoice->status == App\Models\Invoice::STATUS_DRAFT)
+                                                <span class="alt-badge">{{ $invoice->statustext() }}</span>
+                                            @elseif ($invoice->status == App\Models\Invoice::STATUS_OPEN)
+                                                <span class="alt-badge warning">{{ $invoice->statustext() }}</span>
+                                            @elseif ($invoice->status == App\Models\Invoice::STATUS_CLOSED)
+                                                <span class="alt-badge success">{{ $invoice->statustext() }}</span>
+                                            @elseif ($invoice->status == App\Models\Invoice::STATUS_WRITTENOFF)
+                                                <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{ route('quote.show', [ 'quote' => $quote->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Quote"><i class="material-icons">remove_red_eye</i></a>
-                                            <a href="{{ route('quote.edit', [ 'quote' => $quote->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Quote"><i class="material-icons">mode_edit</i></a>
-                                            <a href="#" data-id="{{ $quote->id }}" class="quote-delete-btn tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Quote"><i class="material-icons">delete</i></a>
+                                            <a href="{{ route('invoice.show', [ 'invoice' => $invoice->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Invoice"><i class="material-icons">remove_red_eye</i></a>
+                                            <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Invoice"><i class="material-icons">mode_edit</i></a>
+                                            <a href="#" data-id="{{ $invoice->id }}" class="invoice-delete-btn tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Invoice"><i class="material-icons">delete</i></a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -91,13 +93,13 @@
     </div>
     <div id="delete-confirmation" class="modal">
         <div class="modal-content">
-            <p>Delete Quote?</p>
+            <p>Delete Invoice?</p>
         </div>
         <div class="modal-footer">
-            <form id="delete-quote-form" method="post" class="null-form">
+            <form id="delete-invoice-form" method="post" class="null-form">
                 {{ method_field('DELETE') }}
                 {{ csrf_field() }}
-                <button class="modal-action waves-effect black-text waves-green btn-flat btn-deletemodal quote-confirm-delete-btn" type="submit">Delete</button>
+                <button class="modal-action waves-effect black-text waves-green btn-flat btn-deletemodal invoice-confirm-delete-btn" type="submit">Delete</button>
             </form>
             <a href="javascript:;" class=" modal-action modal-close waves-effect black-text waves-red btn-flat btn-deletemodal">Cancel</a>
         </div>
@@ -111,15 +113,15 @@
         $(function() {
             $('.modal').modal();
 
-            $('#quote-container').on('click', '.quote-delete-btn', function (event) {
+            $('#invoice-container').on('click', '.invoice-delete-btn', function (event) {
                 event.preventDefault();
-                var quoteid = $(this).attr('data-id');
-                $('#delete-quote-form').attr('action', '/quote/' + quoteid + '/destroy');
+                var invoiceid = $(this).attr('data-id');
+                $('#delete-invoice-form').attr('action', '/invoice/' + invoiceid + '/destroy');
                 $('#delete-confirmation').modal('open');
             });
 
             var inputBox = $('#search-input');
-            var context = $('#quote-container .single-quote-row');
+            var context = $('#invoice-container .single-invoice-row');
 
             inputBox.on("input", function() {
                 var term = $(this).val();

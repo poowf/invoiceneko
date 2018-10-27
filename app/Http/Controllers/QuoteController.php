@@ -52,7 +52,7 @@ class QuoteController extends Controller
      */
     public function archive(Quote $quote)
     {
-        $quote->status = Quote::STATUS_ARCHIVED;
+        $quote->archived = true;
         $quote->save();
 
         return redirect()->route('quote.show', [ 'quote' => $quote->id ]);
@@ -196,7 +196,8 @@ class QuoteController extends Controller
 
         $invoice->setInvoiceTotal();
 
-        $quote->status = Quote::STATUS_ARCHIVED;
+        $quote->status = Quote::STATUS_COMPLETED;
+        $quote->archived = true;
         $quote->save();
 
         flash('Invoice Created', 'success');

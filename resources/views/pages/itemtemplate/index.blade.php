@@ -43,7 +43,7 @@
                 </div>
 
                 <div id="itemtemplate-container" class="row">
-                    <div class="card-panel" >
+                    <div class="card-panel flex">
                         <table id="itemtemplates-table" class="responsive-table striped">
                             <thead>
                                 <tr>

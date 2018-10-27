@@ -10,11 +10,6 @@
 @section("content")
     <div class="mini-container">
         <div class="row">
-            <div class="col s6 mtop30">
-                <a class="btn btn-lg btn-default" href="{{ route('invoice.show', [ 'invoice' => $invoice->invoice_id] ) }}">
-                    Back
-                </a>
-            </div>
             <div class="col s6 mtop30 right">
                 <a class="btn btn-lg btn-default" href="{{ route('invoice.old.download', [ 'invoice' => $invoice->id] ) }}">
                     Save PDF

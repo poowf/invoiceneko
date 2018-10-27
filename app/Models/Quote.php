@@ -16,7 +16,7 @@ class Quote extends Model
     const STATUS_DRAFT = 1;
     const STATUS_OPEN = 2;
     const STATUS_EXPIRED = 3;
-    const STATUS_ARCHIVED = 4;
+    const STATUS_COMPLETED = 4;
 
 
     /**
@@ -131,8 +131,8 @@ class Quote extends Model
             case self::STATUS_EXPIRED:
                 $textstatus = "Expired";
                 break;
-            case self::STATUS_ARCHIVED:
-                $textstatus = "Archived";
+            case self::STATUS_COMPLETED:
+                $textstatus = "Completed";
                 break;
         }
 
@@ -194,17 +194,13 @@ class Quote extends Model
     public function scopeArchived($query)
     {
         return $query
-            ->where('status', self::STATUS_ARCHIVED);
+            ->where('archived', true);
     }
 
     public function scopeNotArchived($query)
     {
         return $query
-            ->whereIn('status', [
-                self::STATUS_DRAFT,
-                self::STATUS_OPEN,
-                self::STATUS_EXPIRED
-            ]);
+            ->where('archived', false);
     }
 
 }

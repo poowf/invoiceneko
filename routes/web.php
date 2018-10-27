@@ -74,6 +74,7 @@ Route::group(['middleware' => ['auth']], function() {
 
         /* Invoice */
         Route::get('/invoices', 'InvoiceController@index')->name('invoice.index');
+        Route::get('/invoices/archived', 'InvoiceController@index_archived')->name('invoice.index.archived');
         Route::get('/invoice/create', 'InvoiceController@create')->name('invoice.create');
         Route::post('/invoice/create', 'InvoiceController@store')->name('invoice.store');
         Route::get('/invoice/{invoice}', 'InvoiceController@show')->name('invoice.show')->middleware('can:view,invoice');

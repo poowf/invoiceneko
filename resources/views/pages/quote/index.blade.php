@@ -44,7 +44,7 @@
                 </div>
 
                 <div id="quote-container" class="row">
-                    <div class="card-panel" >
+                    <div class="card-panel flex">
                         <table id="quotes-table" class="responsive-table striped">
                             <thead>
                                 <tr>
@@ -70,11 +70,11 @@
                                             @if ($quote->status == App\Models\Quote::STATUS_DRAFT)
                                                 <span class="alt-badge">{{ $quote->statustext() }}</span>
                                             @elseif ($quote->status == App\Models\Quote::STATUS_OPEN)
-                                                <span class="alt-badge success">{{ $quote->statustext() }}</span>
+                                                <span class="alt-badge warning">{{ $quote->statustext() }}</span>
                                             @elseif ($quote->status == App\Models\Quote::STATUS_EXPIRED)
                                                 <span class="alt-badge error">{{ $quote->statustext() }}</span>
-                                            @elseif ($quote->status == App\Models\Quote::STATUS_ARCHIVED)
-                                                <span class="alt-badge warning">{{ $quote->statustext() }}</span>
+                                            @elseif ($quote->status == App\Models\Quote::STATUS_COMPLETED)
+                                                <span class="alt-badge success">{{ $quote->statustext() }}</span>
                                             @endif
                                         </td>
                                         <td>

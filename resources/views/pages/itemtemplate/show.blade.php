@@ -20,14 +20,15 @@
         <div class="row">
             <div class="col s12">
                 <div class="card-panel">
-                    <dt>Name</dt>
-                    <dd>{{ $itemtemplate->name ?? '-'}}</dd>
-                    <dt>Quantity</dt>
-                    <dd>{{ $itemtemplate->quantity ?? '-' }}</dd>
-                    <dt>Price</dt>
-                    <dd>{{ $itemtemplate->price ?? '-' }}</dd>
-                    <dt>Description</dt>
-                    <dd>{!! $itemtemplate->description !!}</dd>
+                    <dl>
+                        <dt>Name</dt>
+                        <dd>{{ $itemtemplate->name ?? '-'}}</dd>
+                        <dt>Quantity</dt>
+                        <dd>{{ $itemtemplate->quantity ?? '-' }}</dd>
+                        <dt>Price</dt>
+                        <dd>{{ $itemtemplate->price ?? '-' }}</dd>
+                        <dt>Description</dt>
+                        <dd>{!! $itemtemplate->description !!}</dd>
                     </dl>
                 </div>
             </div>

@@ -20,7 +20,7 @@
 
 @section("content")
     <div class="mini-container">
-        <div id="top-action-container" class="row">
+        <div id="top-action-container" class="row desktop-only">
             <div class="col s12 mtop30 right">
                 <form method="post" action="{{ route('invoice.send', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
                     {{ csrf_field() }}
@@ -40,7 +40,7 @@
                 </a>
             </div>
         </div>
-        <div id="invoice-action-container" class="row" style="margin-bottom: 0;">
+        <div id="invoice-action-container" class="row mbtm0 desktop-only">
             <div class="col s12 right">
                 <form method="post" action="{{ route('invoice.convert', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
                     {{ csrf_field() }}
@@ -68,46 +68,92 @@
                 </a>
             </div>
         </div>
+        <div class="fixed-action-btn toolbar mobile-only">
+            <a class="btn-floating btn-large btn-large red">
+                <i class="large material-icons">menu</i>
+            </a>
+            <ul>
+                <li>
+                    <a class="btn btn-large btn-link waves-effect waves-dark" href="{{ route('payment.create', [ 'invoice' => $invoice->id] ) }}">
+                        <i class="material-icons">attach_money</i>
+                    </a>
+                </li>
+                <li>
+                    <form method="post" action="{{ route('invoice.duplicate', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
+                        {{ csrf_field() }}
+                        <button class="btn btn-large blue darken-3 waves-effect waves-dark null-btn" type="submit">
+                            <i class="material-icons">control_point_duplicate</i>
+                        </button>
+                    </form>
+                </li>
+                <li>
+                    <form method="post" action="{{ route('invoice.send', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
+                        {{ csrf_field() }}
+                        <button class="btn btn-large blue-grey waves-effect waves-dark null-btn" type="submit">
+                            <i class="material-icons">contact_mail</i>
+                        </button>
+                    </form>
+                </li>
+                <li>
+                    <form method="post" action="{{ route('invoice.archive', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
+                        {{ method_field('PATCH') }}
+                        {{ csrf_field() }}
+                        <button class="btn btn-large amber darken-2 waves-effect waves-dark null-btn" type="submit">
+                            <i class="material-icons">archive</i>
+                        </button>
+                    </form>
+                </li>
+                <li>
+                    <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="btn btn-large light-blue waves-effect waves-dark">
+                        <i class="material-icons">edit</i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-id="{{ $invoice->id }}" class="invoice-delete-btn btn btn-large red waves-effect waves-dark">
+                        <i class="material-icons">delete</i>
+                    </a>
+                </li>
+            </ul>
+        </div>
         <div class="row">
             <div class="col s12 l4">
                 <h3>Details</h3>
                 <div id="details-panel" class="card-panel">
-                    <dt>Company Name</dt>
-                    <dd>{{ $client->companyname }}</dd>
-                    <dt>Company Block</dt>
-                    <dd>{{ $client->block ?? '-' }}</dd>
-                    <dt>Company Street</dt>
-                    <dd>{{ $client->street ?? '-' }}</dd>
-                    <dt>Company Unit Number</dt>
-                    <dd>{{ $client->unitnumber ?? '-' }}</dd>
-                    <dt>Company Postal Code</dt>
-                    <dd>{{ $client->postalcode ?? '-' }}</dd>
-                    <dt>Company Nickname</dt>
-                    <dd>{{ $client->nickname ?? '-' }}</dd>
-                    <dt>Company Registration Number</dt>
-                    <dd>{{ $client->crn }}
-                    <dt>Contact Name</dt>
-                    <dd>{{ $client->contactname ?? '-' }}</dd>
-                    <dt>Contact Email</dt>
-                    <dd>{{ $client->contactemail ?? '-' }}</dd>
-                    <dt>Contact Phone</dt>
-                    <dd>{{ $client->contactphone ?? '-' }}</dd>
-                    <dt>Status</dt>
-                    <dd>
-                        @if ($invoice->status == App\Models\Invoice::STATUS_OVERDUE)
-                            <span class="alt-badge error">{{ $invoice->statustext() }}</span>
-                        @elseif ($invoice->status == App\Models\Invoice::STATUS_DRAFT)
-                            <span class="alt-badge">{{ $invoice->statustext() }}</span>
-                        @elseif ($invoice->status == App\Models\Invoice::STATUS_OPEN)
-                            <span class="alt-badge warning">{{ $invoice->statustext() }}</span>
-                        @elseif ($invoice->status == App\Models\Invoice::STATUS_CLOSED)
-                            <span class="alt-badge success">{{ $invoice->statustext() }}</span>
-                        @elseif ($invoice->status == App\Models\Invoice::STATUS_ARCHIVED)
-                            <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
-                        @elseif ($invoice->status == App\Models\Invoice::STATUS_WRITTENOFF)
-                            <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
-                        @endif
-                    </dd>
+                    <dl>
+                        <dt>Company Name</dt>
+                        <dd>{{ $client->companyname }}</dd>
+                        <dt>Company Block</dt>
+                        <dd>{{ $client->block ?? '-' }}</dd>
+                        <dt>Company Street</dt>
+                        <dd>{{ $client->street ?? '-' }}</dd>
+                        <dt>Company Unit Number</dt>
+                        <dd>{{ $client->unitnumber ?? '-' }}</dd>
+                        <dt>Company Postal Code</dt>
+                        <dd>{{ $client->postalcode ?? '-' }}</dd>
+                        <dt>Company Nickname</dt>
+                        <dd>{{ $client->nickname ?? '-' }}</dd>
+                        <dt>Company Registration Number</dt>
+                        <dd>{{ $client->crn }}
+                        <dt>Contact Name</dt>
+                        <dd>{{ $client->contactname ?? '-' }}</dd>
+                        <dt>Contact Email</dt>
+                        <dd>{{ $client->contactemail ?? '-' }}</dd>
+                        <dt>Contact Phone</dt>
+                        <dd>{{ $client->contactphone ?? '-' }}</dd>
+                        <dt>Status</dt>
+                        <dd>
+                            @if ($invoice->status == App\Models\Invoice::STATUS_OVERDUE)
+                                <span class="alt-badge error">{{ $invoice->statustext() }}</span>
+                            @elseif ($invoice->status == App\Models\Invoice::STATUS_DRAFT)
+                                <span class="alt-badge">{{ $invoice->statustext() }}</span>
+                            @elseif ($invoice->status == App\Models\Invoice::STATUS_OPEN)
+                                <span class="alt-badge warning">{{ $invoice->statustext() }}</span>
+                            @elseif ($invoice->status == App\Models\Invoice::STATUS_CLOSED)
+                                <span class="alt-badge success">{{ $invoice->statustext() }}</span>
+                            @elseif ($invoice->status == App\Models\Invoice::STATUS_WRITTENOFF)
+                                <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
+                            @endif
+                        </dd>
                     </dl>
                 </div>
                 <h3>Change History</h3>
@@ -135,7 +181,7 @@
                 </div>
                 <h3>Payment History</h3>
                 <div id="payment-history-container" class="payment-history-container">
-                    <div class="card-panel">
+                    <div class="card-panel flex">
                         <table class="responsive-table">
                             <thead>
                                 <tr>
@@ -367,6 +413,13 @@
 
 
             $('#invoice-action-container').on('click', '.invoice-delete-btn', function (event) {
+                event.preventDefault();
+                let invoiceid = $(this).attr('data-id');
+                $('#delete-invoice-form').attr('action', '/invoice/' + invoiceid + '/destroy');
+                $('#delete-confirmation').modal('open');
+            });
+
+            $('.fixed-action-btn').on('click', '.invoice-delete-btn', function (event) {
                 event.preventDefault();
                 let invoiceid = $(this).attr('data-id');
                 $('#delete-invoice-form').attr('action', '/invoice/' + invoiceid + '/destroy');

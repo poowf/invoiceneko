@@ -53,13 +53,13 @@
                             <div class="col s12">
                                 <label id="rbtn-label" class="rbtn-label" for="gender">Building Type</label>
                                 <p class="rbtn">
-                                    <label>
+                                    <label for="buildingtype-residential">
                                         <input id="buildingtype-residential" name="buildingtype" type="radio" value="{{ \App\Models\CompanyAddress::BUILDINGTYPE_RESIDENTIAL }}"  data-parsley-required="true" data-parsley-trigger="change" @if($companyaddress) @if($companyaddress->buildingtype == \App\Models\CompanyAddress::BUILDINGTYPE_RESIDENTIAL) checked @endif @endif @if(!$ownedcompany) disabled @endif>
                                         <span>Residential</span>
                                     </label>
                                 </p>
                                 <p class="rbtn">
-                                    <label>
+                                    <label for="buildingtype-business">
                                         <input id="buildingtype-business" name="buildingtype" type="radio" value="{{ \App\Models\CompanyAddress::BUILDINGTYPE_BUSINESS }}" @if($companyaddress) @if($companyaddress->buildingtype == \App\Models\CompanyAddress::BUILDINGTYPE_BUSINESS) checked @endif @endif @if(!$ownedcompany) disabled @endif>
                                         <span>Business</span>
                                     </label>
