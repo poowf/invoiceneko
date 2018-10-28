@@ -3,14 +3,14 @@
 namespace Tests\Feature;
 
 use App\Models\User;
-use Log;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserTest extends TestCase
 {
-
     use RefreshDatabase;
+
     /**
      * A basic test example.
      *
@@ -21,7 +21,9 @@ class UserTest extends TestCase
     {
         $company = factory(\App\Models\Company::class)->create();
 
-        $user = User::make([
+        User::unguard();
+
+        $user = User::create([
             'full_name' => 'Poowf Bunny',
             'username' => 'poowf',
             'password' => 'secret',
@@ -32,7 +34,7 @@ class UserTest extends TestCase
             'company_id' => $company->id
         ]);
 
-        $user->setRelation('company', $company);
+        User::reguard();
 
         $this->assertEquals($user->company->name, $company->name);
         $this->assertEquals('bunny@poowf.com', $user->email);

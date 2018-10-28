@@ -4,32 +4,26 @@ namespace Tests\Feature;
 
 use App\Models\Client;
 use Tests\TestCase;
-use Log;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ClientTest extends TestCase
 {
     use RefreshDatabase;
+
     /**
      * A basic test example.
      *
      * @return void
      */
-//    public function testClient()
-//    {
-//        $client = factory(App\Models\Client::class)->make(function ($client) {
-//            $client->company()->save(factory(App\Models\Company::class)->make());
-//        });
-//
-//        $this->assertTrue(true);
-//    }
 
     public function test_create_client()
     {
         $company = factory(\App\Models\Company::class)->create();
 
-        $client = Client::make([
+        Client::unguard();
+
+        $client = Client::create([
             'companyname' => 'Poowf Labs',
             'phone' => '+6581234567',
             'block' => '123',
@@ -49,7 +43,7 @@ class ClientTest extends TestCase
             'company_id' => $company->id
         ]);
 
-        $client->setRelation('company', $company);
+        Client::unguard();
 
         $this->assertEquals($client->company->name, $company->name);
         $this->assertEquals('Poowf Labs', $client->companyname);
