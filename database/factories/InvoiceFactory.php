@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(Model::class, function (Faker $faker) {
+$factory->define(\App\Models\Invoice::class, function (Faker $faker) {
     return [
         'nice_invoice_id' => $faker->slug,
         'date' => $faker->dateTime,
@@ -12,5 +12,11 @@ $factory->define(Model::class, function (Faker $faker) {
         'share_token' => $faker->uuid,
         'status' => $faker->numberBetween($min = 1, $max = 7),
         'archived' => $faker->boolean,
+        'client_id' => function () {
+            return factory(\App\Models\Client::class)->create()->id;
+        },
+        'company_id' => function () {
+            return factory(\App\Models\Company::class)->create()->id;
+        }
     ];
 });

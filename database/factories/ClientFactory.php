@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Models\Client::class, function (Faker $faker) {
+$factory->define(\App\Models\Client::class, function (Faker $faker) {
 
     return [
         'companyname' => $faker->company,
@@ -20,6 +20,9 @@ $factory->define(App\Models\Client::class, function (Faker $faker) {
         'contactlastname' => $faker->lastName,
         'contactgender' => 'male',
         'contactemail' => $faker->unique()->companyEmail,
-        'contactphone' => '+65' . $faker->randomNumber(8)
+        'contactphone' => '+65' . $faker->randomNumber(8),
+        'company_id' => function () {
+            return factory(\App\Models\Company::class)->create()->id;
+        }
     ];
 });
