@@ -44,18 +44,44 @@ class Company extends Model
         static::created(function ($company) {
             $settings = new CompanySettings;
             $settings->invoice_prefix = str_slug($company->name);
+            $settings->quote_prefix = str_slug($company->name) . 'Q';
+            $settings->invoice_conditions = "Terms & Conditions for your Invoice";
+            $settings->quote_conditions = "Terms & Conditions for your Quote";
             $company->settings()->save($settings);
         });
     }
 
-    public function quotes()
+    public function niceInvoiceID()
     {
-        return $this->hasMany('App\Models\Quote', 'company_id');
+        $companysettings = $this->settings;
+        if($companysettings->invoice_prefix)
+        {
+            $prefix = $companysettings->invoice_prefix . '-';
+        }
+        else
+        {
+            $prefix = $this->slug . '-';
+        }
+        return $prefix . sprintf('%06d', $this->invoice_index);
     }
 
-    public function invoices()
+    public function niceQuoteID()
     {
-        return $this->hasMany('App\Models\Invoice', 'company_id');
+        $companysettings = $this->settings;
+        if($companysettings->quote_prefix)
+        {
+            $prefix = $companysettings->quote_prefix . '-';
+        }
+        else
+        {
+            $prefix = $this->slug . 'Q-';
+        }
+        return $prefix . sprintf('%06d', $this->quote_index);
+    }
+
+    public function isOwner(User $user)
+    {
+        return $this->user_id == $user->id;
     }
 
     public function lastinvoice()
@@ -68,46 +94,19 @@ class Company extends Model
         return $this->hasOne('App\Models\Quote')->latest()->limit(1)->first();
     }
 
-
-    public function niceInvoiceID()
+    public function quotes()
     {
-        $invoice = $this->lastinvoice();
-        $invoiceIndex = 1;
-
-        if ($invoice)
-        {
-            $nice_invoice_id = $invoice->nice_invoice_id;
-
-            $currentindex = preg_split('#^.*-#s', $nice_invoice_id);
-
-            $currentindex[1] += 1;
-            $invoiceIndex = $currentindex[1];
-        }
-
-        return sprintf('%06d', $invoiceIndex);
+        return $this->hasMany('App\Models\Quote', 'company_id');
     }
 
-    public function niceQuoteID()
+    public function invoices()
     {
-        $quote = $this->lastquote();
-        $quoteIndex = 1;
-
-        if ($quote)
-        {
-            $nice_quote_id = $quote->nice_quote_id;
-
-            $currentindex = preg_split('#^.*-#s', $nice_quote_id);
-
-            $currentindex[1] += 1;
-            $quoteIndex = $currentindex[1];
-        }
-
-        return sprintf('%06d', $quoteIndex);
+        return $this->hasMany('App\Models\Invoice', 'company_id');
     }
 
-    public function isOwner(User $user)
+    public function itemtemplates()
     {
-        return $this->user_id == $user->id;
+        return $this->hasMany('App\Models\ItemTemplate', 'company_id');
     }
 
     public function clients()

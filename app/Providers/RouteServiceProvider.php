@@ -29,6 +29,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('invoiceitem', 'App\Models\InvoiceItem');
         Route::model('oldinvoice', 'App\Models\OldInvoice');
         Route::model('oldinvoiceitem', 'App\Models\OldInvoiceItem');
+        Route::model('itemtemplate', 'App\Models\ItemTemplate');
         Route::model('quote', 'App\Models\Quote');
         Route::model('quoteitem', 'App\Models\QuoteItem');
         Route::model('payment', 'App\Models\Payment');
@@ -44,6 +45,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::pattern('invoiceitem', '([A-Za-z0-9]+)');
         Route::pattern('oldinvoice', '([A-Za-z0-9]+)');
         Route::pattern('oldinvoiceitem', '([A-Za-z0-9]+)');
+        Route::pattern('itemtemplate', '([A-Za-z0-9]+)');
         Route::pattern('quote', '([A-Za-z0-9]+)');
         Route::pattern('quoteitem', '([A-Za-z0-9]+)');
         Route::pattern('payment', '([A-Za-z0-9]+)');

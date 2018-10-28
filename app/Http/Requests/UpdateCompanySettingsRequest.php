@@ -25,6 +25,7 @@ class UpdateCompanySettingsRequest extends FormRequest
     {
         return [
             'invoice_conditions' => 'required',
+            'quote_conditions' => 'required',
         ];
     }
 

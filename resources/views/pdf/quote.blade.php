@@ -28,23 +28,23 @@
                 <div class="quote-person" style="position: absolute; left: 0; padding: 0 15px; ">
                     <span class="name" style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">Prepared For: </span>
                     <span style="font-size: 18px; line-height: 26px; display: block;">{{ $quote->client->companyname }}</span>
-                    <span style="font-size: 18px; line-height: 26px; display: block;">@if($quote->client->block){{ $quote->client->block }} @endif {{ $quote->client->street or 'No Street' }}</span>
+                    <span style="font-size: 18px; line-height: 26px; display: block;">@if($quote->client->block){{ $quote->client->block }} @endif {{ $quote->client->street ?? 'No Street' }}</span>
                     @if($quote->client->unitnumber)<span style="font-size: 18px; line-height: 26px; display: block;">#{{ $quote->client->unitnumber }}</span>@endif
-                    <span style="font-size: 18px; line-height: 26px; display: block;">{{ $quote->client->country or 'No Country' }} {{ $quote->client->postalcode or 'No Postal Code' }}</span>
+                    <span style="font-size: 18px; line-height: 26px; display: block;">{{ $quote->client->country ?? 'No Country' }} {{ $quote->client->postalcode ?? 'No Postal Code' }}</span>
                 </div>
                 <div class="quote-payment-direction" style="position: absolute; padding-top: 10px; left: 0; right:0; text-align: center;">
                     <img src="{{ asset('/assets/img/lefttoright.png') }}" width="80" height="80" />
                 </div>
                 <div class="quote-person" style="position: absolute; right: 0; padding: 0 15px; text-align: left;">
-                    <span class="name" style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">{{ $quote->company->name or 'No Company Name' }}</span>
-                    <span style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">{{ $quote->company->crn or 'No Company Registration Number' }}</span>
-                    <span style="font-size: 18px; line-height: 26px; display: block;">{{ $quote->company->owner->full_name or 'No Company Owner Name' }}</span>
+                    <span class="name" style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">{{ $quote->company->name ?? 'No Company Name' }}</span>
+                    <span style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">{{ $quote->company->crn ?? 'No Company Registration Number' }}</span>
+                    <span style="font-size: 18px; line-height: 26px; display: block;">{{ $quote->company->owner->full_name ?? 'No Company Owner Name' }}</span>
                     @if($quote->company->address)
-                        <span style="font-size: 18px; line-height: 26px; display: block;">@if($quote->company->address->block){{ $quote->company->address->block }} @endif {{ $quote->company->address->street or 'No Street' }}</span>
+                        <span style="font-size: 18px; line-height: 26px; display: block;">@if($quote->company->address->block){{ $quote->company->address->block }} @endif {{ $quote->company->address->street ?? 'No Street' }}</span>
                         @if($quote->company->address->unitnumber)<span style="font-size: 18px; line-height: 26px; display: block;">#{{ $quote->company->address->unitnumber }}</span>@endif
-                        <span style="font-size: 18px; line-height: 26px; display: block;">{{ $quote->company->address->postalcode or 'No Postal Code' }}</span>
+                        <span style="font-size: 18px; line-height: 26px; display: block;">{{ $quote->company->address->postalcode ?? 'No Postal Code' }}</span>
                     @else
-                        <span style="font-size: 18px; line-height: 26px; display: block;">{{ $quote->company->owner->email or 'No Company Owner Email' }}</span>
+                        <span style="font-size: 18px; line-height: 26px; display: block;">{{ $quote->company->owner->email ?? 'No Company Owner Email' }}</span>
                     @endif
                 </div>
             </div>
@@ -83,16 +83,16 @@
                                     Subtotal
                                 </td>
                                 <td class="amount" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
-                                    ${{ $quote->calculatetotal() }}
+                                    ${{ $quote->calculatesubtotal() }}
                                 </td>
                             </tr>
                             <tr>
                                 <td style="padding: 20px 0;"></td>
                                 <td class="summary" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; color: #aaaaaa;">
-                                    Tax (0%)
+                                    Tax ({{ $quote->company->settings->tax ?? 0 }}%)
                                 </td>
                                 <td class="amount" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
-                                    $0,00
+                                    ${{ $quote->calculatetax() }}
                                 </td>
                             </tr>
                             <tr>
@@ -114,19 +114,25 @@
                 </div>
                 <div style="margin-top: 20px;">
                     <div class="summary" style="display: inline-block; width: 29.5%; padding: 0 15px; line-height: 16px; text-align: center;">
-                        <span class="title" style="color: #8c8c8c; font-size: 14px; line-height: 21px; font-weight: 700;">{{ $quote->company->name or 'No Company Name' }}</span>
+                        <span class="title" style="color: #8c8c8c; font-size: 14px; line-height: 21px; font-weight: 700;">{{ $quote->company->name ?? 'No Company Name' }}</span>
                         <p style="font-size: inherit; margin: 0 0 15px; line-height: 16px;"></p>
                     </div>
                     <div class="phone" style="display: inline-block; width: 29.5%; padding: 0 15px; border-left: 2px solid #e0e0e0; text-align: center;">
                         <ul class="list-unstyled" style="margin-top: 0; margin-bottom: 9px; line-height: 20px; padding-left: 0; list-style: none;">
-                            <li> {{ $quote->company->phone or 'No Phone Number' }}</li>
+                            <li> {{ $quote->company->phone ?? 'No Phone Number' }}</li>
                         </ul>
                     </div>
                     <div class="email" style="display: inline-block; width: 29.5%; padding: 0 15px; border-left: 2px solid #e0e0e0; text-align: center;">
                         <ul class="list-unstyled" style="margin-top: 0; margin-bottom: 9px; line-height: 20px; padding-left: 0; list-style: none;">
-                            <li>{{ $quote->company->email or 'No Email' }}</li>
+                            <li>{{ $quote->company->email ?? 'No Email' }}</li>
                         </ul>
                     </div>
+                </div>
+            </div>
+            <div class="page row">
+                <div class="invoice-message" style="position: relative; padding: 0 15px; font-size: 16px; padding-top: 62px; margin-bottom: 62px;">
+                    <span class="title" style="font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 12px;">Terms & Conditions</span>
+                    {!! $quote->company->settings->quote_conditions !!}
                 </div>
             </div>
         </div>

@@ -23,14 +23,14 @@
                     <div class="card-panel">
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="username" name="username" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ $user->username or '' }}" placeholder="Username">
+                                <input id="username" name="username" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ $user->username ?? '' }}" placeholder="Username">
                                 <label for="username" class="label-validation">Username</label>
                                 <span class="helper-text"></span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="email" name="email" type="email" data-parsley-required="true" data-parsley-trigger="change" value="{{ $user->email or '' }}" placeholder="Email">
+                                <input id="email" name="email" type="email" data-parsley-required="true" data-parsley-trigger="change" value="{{ $user->email ?? '' }}" placeholder="Email">
                                 <label for="email" class="label-validation">Email</label>
                                 <span class="helper-text"></span>
                             </div>
@@ -58,7 +58,7 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="full_name" name="full_name" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ $user->full_name or '' }}" placeholder="Name">
+                                <input id="full_name" name="full_name" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ $user->full_name ?? '' }}" placeholder="Name">
                                 <label for="full_name" class="label-validation">Full Name</label>
                                 <span class="helper-text"></span>
                             </div>
@@ -85,6 +85,7 @@
                                         <span>Female</span>
                                     </label>
                                 </p>
+                                <span class="helper-text manual-validation"></span>
                             </div>
                         </div>
                     </div>
@@ -155,7 +156,7 @@
                 .on('field:success', function(velem) {
                     if (velem.$element.is(':radio'))
                     {
-                        velem.$element.parent('').siblings('label').removeClass('invalid').addClass('valid');
+                        velem.$element.parentsUntil('.row').find('span.helper-text').removeClass('invalid').addClass('valid');
                     }
                     else if (velem.$element.is('#phone'))
                     {
@@ -165,14 +166,17 @@
                 .on('field:error', function(velem) {
                     if (velem.$element.is(':radio'))
                     {
-                        velem.$element.parent('').siblings('label').removeClass('valid').addClass('invalid');
-                        velem.$element.parent('').siblings('label').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
+                        velem.$element.parentsUntil('.row').find('span.helper-text').removeClass('valid').addClass('invalid');
+                        velem.$element.parentsUntil('.row').find('span.helper-text').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
                     }
                     else if (velem.$element.is('#phone'))
                     {
                         velem.$element.parent('').siblings('span.helper-text').removeClass('valid').addClass('invalid');
                         velem.$element.parent('').siblings('span.helper-text').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
                     }
+                })
+                .on('form:submit', function(velem) {
+                    $("#phone").val($("#phone").intlTelInput("getNumber"));
                 });
         });
     </script>

@@ -10,10 +10,12 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 class LoginTest extends DuskTestCase
 {
     use DatabaseMigrations;
+
     /**
      * A Dusk test example.
      *
      * @return void
+     * @throws \Throwable
      */
     public function test_sign_in()
     {

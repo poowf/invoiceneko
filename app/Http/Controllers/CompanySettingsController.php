@@ -11,7 +11,7 @@ class CompanySettingsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function index()
     {
@@ -21,7 +21,7 @@ class CompanySettingsController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function create()
     {
@@ -31,8 +31,8 @@ class CompanySettingsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request $request
+     * @return void
      */
     public function store(Request $request)
     {
@@ -42,8 +42,8 @@ class CompanySettingsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\CompanySettings  $companySettings
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\CompanySettings $companySettings
+     * @return void
      */
     public function show(CompanySettings $companySettings)
     {
@@ -75,6 +75,7 @@ class CompanySettingsController extends Controller
     /**
      * Update the specified resource in storage.
      *
+     * @param UpdateCompanySettingsRequest $request
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateCompanySettingsRequest $request)
@@ -96,8 +97,8 @@ class CompanySettingsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\CompanySettings  $companySettings
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\CompanySettings $companySettings
+     * @return void
      */
     public function destroy(CompanySettings $companySettings)
     {
