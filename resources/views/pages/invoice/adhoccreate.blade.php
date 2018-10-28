@@ -19,7 +19,7 @@
                     <div class="card-panel">
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="nice_invoice_id" name="nice_invoice_id" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="@if($company->settings->invoice_prefix){{ $company->settings->invoice_prefix . '-' . $invoicenumber }}@else{{ $company->slug . '-' . $invoicenumber }}@endif">
+                                <input id="nice_invoice_id" name="nice_invoice_id" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ $invoicenumber ?? '' }}">
                                 <label for="nice_invoice_id" class="label-validation">Invoice ID</label>
                             </div>
                         </div>
@@ -29,7 +29,7 @@
                                 <label for="date" class="label-validation">Date</label>
                             </div>
                             <div class="input-field col s12 m6">
-                                <input id="netdays" name="netdays" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('netdays') }}" placeholder="Net Days">
+                                <input id="netdays" name="netdays" type="number" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('netdays') }}" placeholder="Net Days">
                                 <label for="netdays" class="label-validation">Net Days</label>
                             </div>
                         </div>

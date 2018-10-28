@@ -14,7 +14,7 @@ class MainController extends Controller
 {
     public function main()
     {
-        return view('pages.main');
+        return redirect()->route('auth.show');
     }
 
     public function dashboard()
@@ -36,23 +36,5 @@ class MainController extends Controller
     public function nocompany()
     {
         return view('pages.nocompany');
-    }
-
-    public function testMail(Request $request)
-    {
-        $invoice = Invoice::find(1);
-
-        Mail::to(auth()->user())->send(new InvoiceMail($invoice));
-    }
-
-    public function viewChart()
-    {
-        return view('pdf.charts');
-    }
-
-    public function pviewChart()
-    {
-        $pdf = PDF::loadView('pdf.charts');
-        return $pdf->inline(str_random(10) . 'test.pdf');
     }
 }

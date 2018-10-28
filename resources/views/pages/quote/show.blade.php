@@ -20,7 +20,7 @@
 
 @section("content")
     <div class="mini-container">
-        <div id="top-action-container" class="row">
+        <div id="top-action-container" class="row desktop-only">
             <div class="col s12 mtop30 right">
                 <a href="#" data-id="{{ $quote->id }}" class="quote-share-btn btn btn-link waves-effect waves-dark">
                     Share
@@ -33,11 +33,15 @@
                 </a>
             </div>
         </div>
-        <div id="quote-action-container" class="row" style="margin-bottom: 0;">
+        <div id="quote-action-container" class="row mbtm0 desktop-only">
             <div class="col s12 right">
                 <form method="post" action="{{ route('quote.convert', [ 'quote' => $quote->id ] ) }}" class="null-form">
                     {{ csrf_field() }}
                     <button class="btn btn-link waves-effect waves-dark null-btn" type="submit">Convert to Invoice</button>
+                </form>
+                <form method="post" action="{{ route('quote.duplicate', [ 'quote' => $quote->id ] ) }}" class="null-form">
+                    {{ csrf_field() }}
+                    <button class="btn blue darken-3 waves-effect waves-dark null-btn" type="submit">Clone</button>
                 </form>
                 <form method="post" action="{{ route('quote.archive', [ 'quote' => $quote->id ] ) }}" class="null-form">
                     {{ method_field('PATCH') }}
@@ -52,42 +56,77 @@
                 </a>
             </div>
         </div>
+        <div class="fixed-action-btn toolbar mobile-only">
+            <a class="btn-floating btn-large btn-large red">
+                <i class="large material-icons">menu</i>
+            </a>
+            <ul>
+                <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Duplicate Quote">
+                    <form method="post" action="{{ route('quote.duplicate', [ 'quote' => $quote->id ] ) }}" class="null-form">
+                        {{ csrf_field() }}
+                        <button class="btn blue darken-3 waves-effect waves-dark null-btn" type="submit">
+                            <i class="material-icons">control_point_duplicate</i>
+                        </button>
+                    </form>
+                </li>
+                <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Archive Quote">
+                    <form method="post" action="{{ route('quote.archive', [ 'quote' => $quote->id ] ) }}" class="null-form">
+                        {{ method_field('PATCH') }}
+                        {{ csrf_field() }}
+                        <button class="btn amber darken-2 waves-effect waves-dark null-btn" type="submit">
+                            <i class="material-icons">archive</i>
+                        </button>
+                    </form>
+                </li>
+                <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Quote">
+                    <a href="{{ route('quote.edit', [ 'quote' => $quote->id ] ) }}" class="btn light-blue waves-effect waves-dark">
+                        <i class="material-icons">edit</i>
+                    </a>
+                </li>
+                <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Quote">
+                    <a href="#" data-id="{{ $quote->id }}" class="quote-delete-btn btn red waves-effect waves-dark">
+                        <i class="material-icons">delete</i>
+                    </a>
+                </li>
+            </ul>
+        </div>
         <div class="row">
             <div class="col s12 l4">
                 <h3>Details</h3>
                 <div id="details-panel" class="card-panel">
-                    <dt>Company Name</dt>
-                    <dd>{{ $client->companyname }}</dd>
-                    <dt>Company Block</dt>
-                    <dd>{{ $client->block or '-' }}</dd>
-                    <dt>Company Street</dt>
-                    <dd>{{ $client->street or '-' }}</dd>
-                    <dt>Company Unit Number</dt>
-                    <dd>{{ $client->unitnumber or '-' }}</dd>
-                    <dt>Company Postal Code</dt>
-                    <dd>{{ $client->postalcode or '-' }}</dd>
-                    <dt>Company Nickname</dt>
-                    <dd>{{ $client->nickname or '-' }}</dd>
-                    <dt>Company Registration Number</dt>
-                    <dd>{{ $client->crn }}
-                    <dt>Contact Name</dt>
-                    <dd>{{ $client->contactname or '-' }}</dd>
-                    <dt>Contact Email</dt>
-                    <dd>{{ $client->contactemail or '-' }}</dd>
-                    <dt>Contact Phone</dt>
-                    <dd>{{ $client->contactphone or '-' }}</dd>
-                    <dt>Status</dt>
-                    <dd>
-                        @if ($quote->status == App\Models\Quote::STATUS_DRAFT)
-                            <span class="alt-badge">{{ $quote->statustext() }}</span>
-                        @elseif ($quote->status == App\Models\Quote::STATUS_OPEN)
-                            <span class="alt-badge success">{{ $quote->statustext() }}</span>
-                        @elseif ($quote->status == App\Models\Quote::STATUS_EXPIRED)
-                            <span class="alt-badge error">{{ $quote->statustext() }}</span>
-                        @elseif ($quote->status == App\Models\Quote::STATUS_ARCHIVED)
-                            <span class="alt-badge warning">{{ $quote->statustext() }}</span>
-                        @endif
-                    </dd>
+                    <dl>
+                        <dt>Company Name</dt>
+                        <dd>{{ $client->companyname }}</dd>
+                        <dt>Company Block</dt>
+                        <dd>{{ $client->block ?? '-' }}</dd>
+                        <dt>Company Street</dt>
+                        <dd>{{ $client->street ?? '-' }}</dd>
+                        <dt>Company Unit Number</dt>
+                        <dd>{{ $client->unitnumber ?? '-' }}</dd>
+                        <dt>Company Postal Code</dt>
+                        <dd>{{ $client->postalcode ?? '-' }}</dd>
+                        <dt>Company Nickname</dt>
+                        <dd>{{ $client->nickname ?? '-' }}</dd>
+                        <dt>Company Registration Number</dt>
+                        <dd>{{ $client->crn }}
+                        <dt>Contact Name</dt>
+                        <dd>{{ $client->contactname ?? '-' }}</dd>
+                        <dt>Contact Email</dt>
+                        <dd>{{ $client->contactemail ?? '-' }}</dd>
+                        <dt>Contact Phone</dt>
+                        <dd>{{ $client->contactphone ?? '-' }}</dd>
+                        <dt>Status</dt>
+                        <dd>
+                            @if ($quote->status == App\Models\Quote::STATUS_DRAFT)
+                                <span class="alt-badge">{{ $quote->statustext() }}</span>
+                            @elseif ($quote->status == App\Models\Quote::STATUS_OPEN)
+                                <span class="alt-badge warning">{{ $quote->statustext() }}</span>
+                            @elseif ($quote->status == App\Models\Quote::STATUS_EXPIRED)
+                                <span class="alt-badge error">{{ $quote->statustext() }}</span>
+                            @elseif ($quote->status == App\Models\Quote::STATUS_COMPLETED)
+                                <span class="alt-badge success">{{ $quote->statustext() }}</span>
+                            @endif
+                        </dd>
                     </dl>
                 </div>
             </div>
@@ -108,23 +147,23 @@
                         <div class="col-xs-5 quote-person" style="position: absolute; left: 0; padding: 0 15px; ">
                             <span class="name" style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">Prepared For: </span>
                             <span style="font-size: 18px; line-height: 26px; display: block;">{{ $quote->client->companyname }}</span>
-                            <span style="font-size: 18px; line-height: 26px; display: block;">@if($quote->client->block){{ $quote->client->block }} @endif {{ $quote->client->street or 'No Street' }}</span>
+                            <span style="font-size: 18px; line-height: 26px; display: block;">@if($quote->client->block){{ $quote->client->block }} @endif {{ $quote->client->street ?? 'No Street' }}</span>
                             @if($quote->client->unitnumber)<span style="font-size: 18px; line-height: 26px; display: block;">#{{ $quote->client->unitnumber }}</span>@endif
-                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $quote->client->country or 'No Country' }} {{ $quote->client->postalcode or 'No Postal Code' }}</span>
+                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $quote->client->country ?? 'No Country' }} {{ $quote->client->postalcode ?? 'No Postal Code' }}</span>
                         </div>
                         <div class="col-xs-2 quote-payment-direction" style="position: absolute; padding-top: 10px; left: 0; right:0; text-align: center;">
                             <img src="{{ asset('/assets/img/lefttoright.png') }}" width="80" height="80" />
                         </div>
                         <div class="col-xs-5 quote-person" style="position: absolute; right: 0; padding: 0 15px; text-align: left;">
-                            <span class="name" style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">{{ $quote->company->name or 'No Company Name' }}</span>
-                            <span style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">{{ $quote->company->crn or 'No Company Registration Number' }}</span>
-                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $quote->company->owner->full_name or 'No Company Owner Name' }}</span>
+                            <span class="name" style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">{{ $quote->company->name ?? 'No Company Name' }}</span>
+                            <span style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">{{ $quote->company->crn ?? 'No Company Registration Number' }}</span>
+                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $quote->company->owner->full_name ?? 'No Company Owner Name' }}</span>
                             @if($quote->company->address)
-                                <span style="font-size: 18px; line-height: 26px; display: block;">@if($quote->company->address->block){{ $quote->company->address->block }} @endif {{ $quote->company->address->street or 'No Street' }}</span>
+                                <span style="font-size: 18px; line-height: 26px; display: block;">@if($quote->company->address->block){{ $quote->company->address->block }} @endif {{ $quote->company->address->street ?? 'No Street' }}</span>
                                 @if($quote->company->address->unitnumber)<span style="font-size: 18px; line-height: 26px; display: block;">#{{ $quote->company->address->unitnumber }}</span>@endif
-                                <span style="font-size: 18px; line-height: 26px; display: block;">{{ $quote->company->address->postalcode or 'No Postal Code' }}</span>
+                                <span style="font-size: 18px; line-height: 26px; display: block;">{{ $quote->company->address->postalcode ?? 'No Postal Code' }}</span>
                             @else
-                                <span style="font-size: 18px; line-height: 26px; display: block;">{{ $quote->company->owner->email or 'No Company Owner Email' }}</span>
+                                <span style="font-size: 18px; line-height: 26px; display: block;">{{ $quote->company->owner->email ?? 'No Company Owner Email' }}</span>
                             @endif
                         </div>
                     </div>
@@ -164,16 +203,16 @@
                                             Subtotal
                                         </td>
                                         <td class="amount" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
-                                            ${{ $quote->calculatetotal() }}
+                                            ${{ $quote->calculatesubtotal() }}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td style="padding: 20px 0;"></td>
                                         <td class="summary" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; color: #aaaaaa;">
-                                            Tax (0%)
+                                            Tax ({{ $quote->company->settings->tax ?? 0 }}%)
                                         </td>
                                         <td class="amount" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
-                                            $0,00
+                                            ${{ $quote->calculatetax() }}
                                         </td>
                                     </tr>
                                     <tr>
@@ -202,17 +241,17 @@
                         <div style="margin-top: 20px;">
                             <div class="row">
                                 <div class="col s6 m4 summary" style="display: inline-block; padding: 0 15px; line-height: 16px; text-align: center;">
-                                    <span class="title" style="color: #8c8c8c; font-size: 14px; line-height: 21px; font-weight: 700;">{{ $quote->company->name or 'No Company Name' }}</span>
+                                    <span class="title" style="color: #8c8c8c; font-size: 14px; line-height: 21px; font-weight: 700;">{{ $quote->company->name ?? 'No Company Name' }}</span>
                                     <p style="font-size: inherit; margin: 0 0 15px; line-height: 16px;"></p>
                                 </div>
                                 <div class="col s6 m4 phone" style="display: inline-block; padding: 0 15px; border-left: 2px solid #e0e0e0; text-align: center;">
                                     <ul class="list-unstyled" style="margin-top: 0; margin-bottom: 9px; line-height: 20px; padding-left: 0; list-style: none;">
-                                        <li> {{ $quote->company->phone or 'No Phone Number' }}</li>
+                                        <li> {{ $quote->company->phone ?? 'No Phone Number' }}</li>
                                     </ul>
                                 </div>
                                 <div class="col s6 m4 email" style="display: inline-block; padding: 0 15px; border-left: 2px solid #e0e0e0; text-align: center;">
                                     <ul class="list-unstyled" style="margin-top: 0; margin-bottom: 9px; line-height: 20px; padding-left: 0; list-style: none;">
-                                        <li>{{ $quote->company->email or 'No Email' }}</li>
+                                        <li>{{ $quote->company->email ?? 'No Email' }}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -297,6 +336,13 @@
 
 
             $('#quote-action-container').on('click', '.quote-delete-btn', function (event) {
+                event.preventDefault();
+                let quoteid = $(this).attr('data-id');
+                $('#delete-quote-form').attr('action', '/quote/' + quoteid + '/destroy');
+                $('#delete-confirmation').modal('open');
+            });
+
+            $('.fixed-action-btn').on('click', '.quote-delete-btn', function (event) {
                 event.preventDefault();
                 let quoteid = $(this).attr('data-id');
                 $('#delete-quote-form').attr('action', '/quote/' + quoteid + '/destroy');

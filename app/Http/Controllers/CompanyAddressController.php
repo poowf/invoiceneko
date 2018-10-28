@@ -13,7 +13,7 @@ class CompanyAddressController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function index()
     {
@@ -23,7 +23,7 @@ class CompanyAddressController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function create()
     {
@@ -33,8 +33,8 @@ class CompanyAddressController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request $request
+     * @return void
      */
     public function store(Request $request)
     {
@@ -44,8 +44,8 @@ class CompanyAddressController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\CompanyAddress  $companyAddress
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\CompanyAddress $companyAddress
+     * @return void
      */
     public function show(CompanyAddress $companyAddress)
     {
@@ -77,8 +77,7 @@ class CompanyAddressController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\CompanyAddress  $companyAddress
+     * @param UpdateCompanyAddressRequest $request
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateCompanyAddressRequest $request)
@@ -100,8 +99,8 @@ class CompanyAddressController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\CompanyAddress  $companyAddress
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\CompanyAddress $companyAddress
+     * @return void
      */
     public function destroy(CompanyAddress $companyAddress)
     {

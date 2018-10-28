@@ -37,6 +37,10 @@
         $('.tooltipped').tooltip();
         $('.tabs').tabs();
         $('.modal').modal();
+        $('.fixed-action-btn').floatingActionButton({
+            toolbarEnabled: true
+        });
+
         $('.dropdown-trigger').dropdown({
             coverTrigger: false
         });
@@ -51,6 +55,16 @@
             $(this).fadeOut(function(){
                 $(this).remove();
             });
+        });
+
+        $('a[href^="#"]').on('click', function(event) {
+            let target = $(this.getAttribute('href'));
+            if( target.length ) {
+                event.preventDefault();
+                $('html, body').stop().animate({
+                    scrollTop: target.offset().top
+                }, 500, 'linear');
+            }
         });
 
         @if(session()->has('flash_notification'))

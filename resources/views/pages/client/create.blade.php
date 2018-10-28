@@ -25,6 +25,22 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="input-field col s12">
+                                <div class="file-field input-field">
+                                    <div class="btn btn-link tooltipped" data-position="left" data-delay="50" data-tooltip="Recommended Size: 500 (W) x 500 (H) with White Background (Optional)">
+                                        <span>File</span>
+                                        <input id="logo" name="logo" type="file" accept="image/*" data-maxsize="10M"/>
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        <input id="logofp" name="logofp" class="file-path validate" type="text" data-parsley-required="false" data-parsley-fileuploaded="true" data-parsley-trigger="change" placeholder="Client Logo"/>
+                                    </div>
+                                </div>
+                                <label for="logo" class="label-validation">
+                                    Logo
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="input-field col s12 m6">
                                 <input id="companyname" name="companyname" type="text" data-parsley-required="true"  data-parsley-trigger="change" data-parsley-minlength="4" value="{{ old('companyname') }}" placeholder="Client Company Name">
                                 <label for="companyname" class="label-validation">Client Company Name</label>
@@ -54,12 +70,12 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="input-field col s6">
+                            <div class="input-field col s12 m6">
                                 <input id="crn" name="crn" type="text" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ old('crn') }}" placeholder="Client Company Registration Number">
                                 <label for="crn" class="label-validation">Client Company Registration Number</label>
                                 <span class="helper-text"></span>
                             </div>
-                            <div class="input-field col s6">
+                            <div class="input-field col s12 m6">
                                 <input id="website" name="website" type="text" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ old('website') }}" placeholder="Client Website">
                                 <label for="website" class="label-validation">Client Website</label>
                                 <span class="helper-text"></span>
@@ -102,7 +118,7 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12 m2">
-                                <select id="contactsalutation" name="contactsalutation" data-parsley-trigger="change">
+                                <select id="contactsalutation" name="contactsalutation" data-parsley-required="true" data-parsley-trigger="change">
                                     <option disabled="" selected="selected" value="">Client Contact Salutation</option>
                                     <option value="mr" @if(old('contactsalutation') == "mr") selected @endif>Mr.</option>
                                     <option value="mrs" @if(old('contactsalutation') == "mrs") selected @endif>Mrs.</option>
@@ -175,6 +191,14 @@
                 $(this).parent().siblings('.label-validation').removeClass('theme-text');
             });
 
+            $( "#contactphone" ).focusin(function() {
+                $(this).parent().siblings('.label-validation').addClass('theme-text');
+            });
+
+            $( "#contactphone" ).focusout(function() {
+                $(this).parent().siblings('.label-validation').removeClass('theme-text');
+            });
+
             window.Parsley
                 .addValidator('phoneFormat', {
                     requirementType: 'string',
@@ -208,9 +232,8 @@
 
                 })
                 .on('field:success', function(velem) {
-                    if (velem.$element.is(':radio'))
-                    {
-                        velem.$element.parent('').siblings('label').removeClass('invalid').addClass('valid');
+                    if (velem.$element.is('select')) {
+                        velem.$element.siblings('.selectize-control').removeClass('invalid').addClass('valid');
                     }
                     else if (velem.$element.is('#phone') || velem.$element.is('#contactphone'))
                     {
@@ -218,10 +241,8 @@
                     }
                 })
                 .on('field:error', function(velem) {
-                    if (velem.$element.is(':radio'))
-                    {
-                        velem.$element.parent('').siblings('label').removeClass('valid').addClass('invalid');
-                        velem.$element.parent('').siblings('label').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
+                    if (velem.$element.is('select')) {
+                        velem.$element.siblings('.selectize-control').removeClass('valid').addClass('invalid');
                     }
                     else if (velem.$element.is('#phone') || velem.$element.is('#contactphone'))
                     {
@@ -230,6 +251,8 @@
                     }
                 })
                 .on('form:submit', function(velem) {
+                    $("#phone").val($("#phone").intlTelInput("getNumber"));
+                    $("#contactphone").val($("#contactphone").intlTelInput("getNumber"));
                 });
         });
     </script>

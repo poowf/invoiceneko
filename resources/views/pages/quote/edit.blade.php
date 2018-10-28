@@ -19,18 +19,18 @@
                     <div class="card-panel">
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="nice_quote_id" name="nice_quote_id" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ $quote->nice_quote_id or '' }}" disabled>
+                                <input id="nice_quote_id" name="nice_quote_id" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ $quote->nice_quote_id ?? '' }}" disabled>
                                 <label for="nice_quote_id" class="label-validation">Quote ID</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12 m6">
-                                <input id="date" name="date" class="datepicker" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ $quote->date or Carbon\Carbon::now()->toDateTimeString()  }}" placeholder="Date">
+                                <input id="date" name="date" class="datepicker" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ $quote->date ?? Carbon\Carbon::now()->toDateTimeString()  }}" placeholder="Date">
                                 <label for="date" class="label-validation">Date</label>
                                 <span class="helper-text"></span>
                             </div>
                             <div class="input-field col s12 m6">
-                                <input id="netdays" name="netdays" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ $quote->netdays or '' }}" placeholder="Net Days">
+                                <input id="netdays" name="netdays" type="number" data-parsley-required="true" data-parsley-trigger="change" value="{{ $quote->netdays ?? '' }}" placeholder="Net Days">
                                 <label for="netdays" class="label-validation">Net Days</label>
                                 <span class="helper-text"></span>
                             </div>
@@ -40,7 +40,7 @@
                                 <select id="client_id" name="client_id" data-parsley-required="true" data-parsley-trigger="change" disabled>
                                     <option disabled="" selected="selected" value="">Pick a Client</option>
                                     @foreach($clients as $client)
-                                        <option value="{{ $client->id }}" @if($quote->client_id == $client->id) selected @endif>{{ $client->companyname or '' }}</option>
+                                        <option value="{{ $client->id }}" @if($quote->client_id == $client->id) selected @endif>{{ $client->companyname ?? '' }}</option>
                                     @endforeach
                                 </select>
                                 <label for="client_id" class="label-validation">Client</label>
@@ -59,24 +59,24 @@
                         @foreach($quote->items as $key => $item)
                             <div id="quote_item_{{ $key }}" class="card-panel">
                                 <div class="row">
-                                    <div class="input-field col s8">
-                                        <input name="item_id[]" type="hidden" data-parsley-required="true" data-parsley-trigger="change" value="{{ $item->id or '' }}">
-                                        <input name="item_name[]" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ $item->name or '' }}" placeholder="Item Name">
+                                    <div class="input-field col s12 l8">
+                                        <input name="item_id[]" type="hidden" data-parsley-required="true" data-parsley-trigger="change" value="{{ $item->id ?? '' }}">
+                                        <input name="item_name[]" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ $item->name ?? '' }}" placeholder="Item Name">
                                         <label for="item_name" class="label-validation">Name</label>
                                         <span class="helper-text"></span>
                                     </div>
-                                    <div class="input-field col s2">
-                                        <input name="item_quantity[]" type="number" data-parsley-required="true" data-parsley-trigger="change" value="{{ $item->quantity or '' }}" placeholder="Item Quantity">
+                                    <div class="input-field col s6 l2">
+                                        <input name="item_quantity[]" type="number" data-parsley-required="true" data-parsley-trigger="change" value="{{ $item->quantity ?? '' }}" placeholder="Item Quantity">
                                         <label for="item_quantity" class="label-validation">Quantity</label>
                                         <span class="helper-text"></span>
                                     </div>
-                                    <div class="input-field col s2">
-                                        <input name="item_price[]" type="number" data-parsley-required="true" data-parsley-trigger="change" value="{{ $item->price or '' }}" placeholder="Item Price">
+                                    <div class="input-field col s6 l2">
+                                        <input name="item_price[]" type="number" data-parsley-required="true" data-parsley-trigger="change" value="{{ $item->price ?? '' }}" placeholder="Item Price">
                                         <label for="item_price" class="label-validation">Price</label>
                                         <span class="helper-text"></span>
                                     </div>
-                                    <div class="input-field col s12">
-                                        <textarea id="item_description" name="item_description[]" class="trumbowyg-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Description">{{ $item->description or '' }}</textarea>
+                                    <div class="input-field col s12 mtop30">
+                                        <textarea id="item_description" name="item_description[]" class="trumbowyg-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Description">{{ $item->description ?? '' }}</textarea>
                                         <label for="item_description" class="label-validation">Description</label>
                                         <span class="helper-text"></span>
                                     </div>
@@ -113,7 +113,8 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            var quoteitemcount = 0;
+            let quoteitemcount = {{ ($quote->items()->count() - 1) ?? 0 }};
+
 
             $('.trumbowyg-textarea').trumbowyg({
                 svgPath: '/assets/fonts/trumbowygicons.svg',
@@ -142,11 +143,17 @@
             });
 
             function initQuoteItem(count, elementid) {
-                let quoteitem = '<div id="quote_item_' + count + '" class="card-panel"><div class="row"><div class="input-field col s8"> <input id="item_name" name="item_name[]" type="text" data-parsley-required="true" data-parsley-trigger="change"> <label for="item_name" class="label-validation">Name</label></div><div class="input-field col s2"> <input id="item_quantity" name="item_quantity[]" type="number" data-parsley-required="true" data-parsley-trigger="change"> <label for="item_quantity" class="label-validation">Quantity</label></div><div class="input-field col s2"> <input id="item_price" name="item_price[]" type="number" data-parsley-required="true" data-parsley-trigger="change"> <label for="item_price" class="label-validation">Price</label></div><div class="input-field col s12"><textarea id="item_description" name="item_description[]" class="trumbowyg-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Description"></textarea><label for="item_description" class="label-validation">Description</label></div></div><div class="row"> <button data-id="false" data-count="' + count + '" class="quote-item-delete-btn btn waves-effect waves-light col s12 m3 offset-m9 red">Delete</button></div></div>';
+                let quoteitem = '<div id="quote_item_' + count + '" class="card-panel"><div class="row"><div class="input-field col s12 l8"> <input id="item_name" name="item_name[]" type="text" data-parsley-required="true" data-parsley-trigger="change"> <label for="item_name" class="label-validation">Name</label> <span class="helper-text"></span></div><div class="input-field col s6 l2"> <input id="item_quantity" name="item_quantity[]" type="number" data-parsley-required="true" data-parsley-trigger="change"> <label for="item_quantity" class="label-validation">Quantity</label> <span class="helper-text"></span></div><div class="input-field col s6 l2"> <input id="item_price" name="item_price[]" type="number" data-parsley-required="true" data-parsley-trigger="change"> <label for="item_price" class="label-validation">Price</label> <span class="helper-text"></span></div><div class="input-field col s12 mtop30"><textarea id="item_description" name="item_description[]" class="trumbowyg-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Description"></textarea><label for="item_description" class="label-validation">Description</label> <span class="helper-text"></span></div></div><div class="row"> <button data-id="false" data-count="' + count + '" class="quote-item-delete-btn btn waves-effect waves-light col s12 m3 offset-m9 red">Delete</button></div></div>';
                 $('#' + elementid).append(quoteitem);
                 $('.trumbowyg-textarea').trumbowyg({
-                    removeformatPasted: true
+                    svgPath: '/assets/fonts/trumbowygicons.svg',
+                    removeformatPasted: true,
+                    resetCss: true,
+                    autogrow: true,
                 });
+                $('html, body').animate({
+                    scrollTop: $("#quote_item_" + count).offset().top
+                }, 500, 'linear');
             }
 
             $('#quote-items-container').on('click', '.quote-item-delete-btn', function (event) {
@@ -214,17 +221,11 @@
                 .on('field:success', function(velem) {
                     if (velem.$element.is('select')) {
                         velem.$element.siblings('.selectize-control').removeClass('invalid').addClass('valid');
-                        //velem.$element.parent('.select-wrapper').removeClass('invalid').addClass('valid');
-                        //velem.$element.siblings('.select-dropdown').removeClass('invalid').addClass('valid');
                     }
                 })
                 .on('field:error', function(velem) {
                     if (velem.$element.is('select')) {
                         velem.$element.siblings('.selectize-control').removeClass('valid').addClass('invalid');
-
-                        //velem.$element.parent('.select-wrapper').removeClass('valid').addClass('invalid');
-                        //velem.$element.siblings('.select-dropdown').removeClass('valid').addClass('invalid');
-                        //velem.$element.parent('.select-wrapper').siblings('label').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
                     }
                 })
                 .on('form:submit', function(velem) {

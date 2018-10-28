@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
 
+use PDF;
 use Carbon\Carbon;
 
 class Quote extends Model
@@ -16,7 +17,7 @@ class Quote extends Model
     const STATUS_DRAFT = 1;
     const STATUS_OPEN = 2;
     const STATUS_EXPIRED = 3;
-    const STATUS_ARCHIVED = 4;
+    const STATUS_COMPLETED = 4;
 
 
     /**
@@ -36,6 +37,18 @@ class Quote extends Model
         'duedate',
         'netdays',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        //Auto Creation of Settings per Company;
+        static::created(function ($quote) {
+            $company = $quote->company;
+            $company->quote_index = $company->quote_index + 1;
+            $company->save();
+        });
+    }
 
     protected $attributes = [
         'status' => self::STATUS_OPEN
@@ -72,10 +85,9 @@ class Quote extends Model
         return $this->id == $model->invoice_id;
     }
 
-    public function calculatetotal($moneyformat = true)
+    public function calculatesubtotal($moneyformat = true)
     {
         $items = $this->items;
-
         $total = 0;
 
         foreach($items as $item)
@@ -84,6 +96,57 @@ class Quote extends Model
 
             $total += $itemtotal;
         }
+
+        if ($moneyformat)
+        {
+            setlocale(LC_MONETARY, 'en_US.UTF-8');
+            return money_format('%!.2n', $total);
+        }
+        else
+        {
+            return $total;
+        }
+    }
+
+    public function calculatetax($moneyformat = true)
+    {
+        $companysettings = $this->company->settings;
+        $tax = 0;
+
+        if($companysettings->tax && $companysettings->tax != 0)
+        {
+            $tax = $companysettings->tax;
+        }
+
+        $subtotal = $this->calculatesubtotal(false);
+
+        $tax = ($subtotal * $tax)/100;
+
+        if ($moneyformat)
+        {
+            setlocale(LC_MONETARY, 'en_US.UTF-8');
+            return money_format('%!.2n', $tax);
+        }
+        else
+        {
+            return $tax;
+        }
+    }
+
+    public function calculatetotal($moneyformat = true)
+    {
+        $companysettings = $this->company->settings;
+        $tax = 0;
+
+        if($companysettings->tax && $companysettings->tax != 0)
+        {
+            $tax = $companysettings->tax;
+        }
+
+        $subtotal = $this->calculatesubtotal(false);
+
+        $total = ($subtotal * (100 + $tax))/100;
+
         if ($moneyformat)
         {
             setlocale(LC_MONETARY, 'en_US.UTF-8');
@@ -119,12 +182,46 @@ class Quote extends Model
             case self::STATUS_EXPIRED:
                 $textstatus = "Expired";
                 break;
-            case self::STATUS_ARCHIVED:
-                $textstatus = "Archived";
+            case self::STATUS_COMPLETED:
+                $textstatus = "Completed";
                 break;
         }
 
         return $textstatus;
+    }
+
+    public function duplicate()
+    {
+        $company = $this->company;
+        $cloned = $this->replicate();
+        $cloned->nice_quote_id = $company->nicequoteid();
+        $cloned->date = Carbon::now();
+        $duedate = Carbon::now()->addDays($this->netdays)->startOfDay()->toDateTimeString();
+        $cloned->duedate = $duedate;
+        $cloned->status = self::STATUS_DRAFT;
+        $cloned->save();
+
+        foreach($this->items as $item)
+        {
+            $clonedrelation = $item->replicate();
+            $clonedrelation->save();
+            $cloned->items()->save($clonedrelation);
+        }
+
+        return $cloned;
+    }
+
+    public function generatePDFView()
+    {
+        $quote = $this;
+        $pdf = PDF::loadView('pdf.quote', compact('quote'))
+            ->setPaper('a4')
+            ->setOption('margin-bottom', '0mm')
+            ->setOption('margin-top', '0mm')
+            ->setOption('margin-right', '0mm')
+            ->setOption('margin-left', '0mm');
+
+        return $pdf;
     }
 
     public function scopeDraft($query)
@@ -148,17 +245,13 @@ class Quote extends Model
     public function scopeArchived($query)
     {
         return $query
-            ->where('status', self::STATUS_ARCHIVED);
+            ->where('archived', true);
     }
 
     public function scopeNotArchived($query)
     {
         return $query
-            ->whereIn('status', [
-                self::STATUS_DRAFT,
-                self::STATUS_OPEN,
-                self::STATUS_EXPIRED
-            ]);
+            ->where('archived', false);
     }
 
 }

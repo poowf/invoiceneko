@@ -11,6 +11,7 @@ use App\Models\OldInvoice;
 use App\Models\OldInvoiceItem;
 use App\Models\Quote;
 use App\Models\QuoteItem;
+use App\Notifications\InvoiceNotification;
 use Illuminate\Http\Request;
 
 use Log;
@@ -28,13 +29,27 @@ class InvoiceController extends Controller
     public function index()
     {
         $company = auth()->user()->company;
-        $overdue = $company->invoices()->with(['client'])->overdue()->get();
-        $pending = $company->invoices()->with(['client'])->pending()->get();
-        $draft = $company->invoices()->with(['client'])->draft()->get();
-        $paid = $company->invoices()->with(['client'])->paid()->get();
+        $overdue = $company->invoices()->with(['client'])->overdue()->notarchived()->get();
+        $pending = $company->invoices()->with(['client'])->pending()->notarchived()->get();
+        $draft = $company->invoices()->with(['client'])->draft()->notarchived()->get();
+        $paid = $company->invoices()->with(['client'])->paid()->notarchived()->get();
 
         return view('pages.invoice.index', compact('overdue', 'pending', 'draft', 'paid'));
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index_archived()
+    {
+        $company = auth()->user()->company;
+        $invoices = $company->invoices()->archived()->with(['client'])->get();
+
+        return view('pages.invoice.index_archived', compact('invoices'));
+    }
+
 
     /**
      * Set the Invoice to Archived
@@ -44,8 +59,9 @@ class InvoiceController extends Controller
      */
     public function archive(Invoice $invoice)
     {
-        $invoice->status = Invoice::STATUS_ARCHIVED;
+        $invoice->archived = true;
         $invoice->save();
+        flash('Invoice has been archived successfully', "success");
 
         return redirect()->route('invoice.show', [ 'invoice' => $invoice->id ]);
     }
@@ -72,11 +88,23 @@ class InvoiceController extends Controller
      */
     public function share(Invoice $invoice)
     {
-        $token = Uuid::generate(4);
-        $invoice->share_token = $token;
-        $invoice->save();
+        $token = $invoice->generateShareToken(true);
 
         return $token;
+    }
+
+    /**
+     * Send Invoice Notification
+     *
+     * @param Invoice $invoice
+     * @return \Illuminate\Http\Response
+     */
+    public function sendnotification(Invoice $invoice)
+    {
+        $invoice->notify(new InvoiceNotification($invoice));
+        flash('An email notification has been sent to the client', "success");
+
+        return redirect()->back();
     }
 
     /**
@@ -92,8 +120,15 @@ class InvoiceController extends Controller
         $invoice->date = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->date)->format('j F, Y');
         $invoice->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y');
 
-        $pdf = PDF::loadView('pdf.invoice', compact('invoice'));
+        $pdf = $invoice->generatePDFView();
         return $pdf->inline(str_slug($invoice->nice_invoice_id) . '.pdf');
+    }
+
+    public function duplicate(Invoice $invoice)
+    {
+        $duplicatedInvoice = $invoice->duplicate();
+        flash('Invoice has been Cloned Sucessfully', "success");
+        return redirect()->route('invoice.show', ['invoice' => $duplicatedInvoice->id]);
     }
 
     /**
@@ -105,6 +140,7 @@ class InvoiceController extends Controller
     {
         $company = auth()->user()->company;
         $clients = $company->clients;
+        $itemtemplates = $company->itemtemplates;
 
         if($company)
         {
@@ -116,7 +152,7 @@ class InvoiceController extends Controller
             }
             else
             {
-                return view('pages.invoice.create', compact('company', 'invoicenumber', 'clients'));
+                return view('pages.invoice.create', compact('company', 'invoicenumber', 'clients', 'itemtemplates'));
             }
         }
         else
@@ -128,7 +164,7 @@ class InvoiceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param CreateInvoiceRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(CreateInvoiceRequest $request)
@@ -136,7 +172,7 @@ class InvoiceController extends Controller
         $company = auth()->user()->company;
 
         $invoice = new Invoice;
-        $invoice->nice_invoice_id = $company->settings->invoice_prefix . '-' . $company->niceinvoiceid();
+        $invoice->nice_invoice_id = $company->niceinvoiceid();
         $duedate = Carbon::createFromFormat('j F, Y', $request->input('date'))->addDays($request->input('netdays'))->startOfDay()->toDateTimeString();
         $invoice->date = Carbon::createFromFormat('j F, Y', $request->input('date'))->startOfDay()->toDateTimeString();
         $invoice->netdays = $request->input('netdays');
@@ -173,7 +209,7 @@ class InvoiceController extends Controller
         $company = auth()->user()->company;
 
         $quote = new Quote;
-        $quote->nice_quote_id = $company->settings->invoice_prefix . 'Q-' . $company->nicequoteid();
+        $quote->nice_quote_id = $company->nicequoteid();
         $quote->date = $invoice->date;
         $quote->netdays = $invoice->netdays;
         $quote->duedate = $invoice->duedate;
@@ -213,7 +249,7 @@ class InvoiceController extends Controller
         $client = $invoice->client;
         $invoice->date = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->date)->format('j F, Y');
         $invoice->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y');
-        $histories = $invoice->history()->orderBy('created_at', 'desc')->get();
+        $histories = $invoice->history()->orderBy('updated_at', 'desc')->get();
         $payments = $invoice->payments;
 
         return view('pages.invoice.show', compact('invoice', 'client', 'histories', 'payments'));
@@ -230,7 +266,8 @@ class InvoiceController extends Controller
         $invoice->date = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->date)->format('j F, Y');
         $invoice->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y');
 
-        $pdf = PDF::loadView('pdf.invoice', compact('invoice'));
+        $pdf = $invoice->generatePDFView();
+
         return $pdf->inline(str_slug($invoice->nice_invoice_id) . 'test.pdf');
     }
 
@@ -245,7 +282,7 @@ class InvoiceController extends Controller
         $invoice->date = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->date)->format('j F, Y');
         $invoice->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y');
 
-        $pdf = PDF::loadView('pdf.invoice', compact('invoice'));
+        $pdf = $invoice->generatePDFView();
         return $pdf->download(str_slug($invoice->nice_invoice_id) . '.pdf');
     }
 
@@ -291,7 +328,6 @@ class InvoiceController extends Controller
             }
         }
 
-
         if($invoice->isDirty() || $ismodified){
             $originalinvoice = $invoice->getOriginal();
             $originalitems = $invoice->items;
@@ -299,7 +335,11 @@ class InvoiceController extends Controller
             $oldinvoice = new OldInvoice;
             $oldinvoice->fill($originalinvoice);
 
+            $oldinvoice->created_at = $originalinvoice['created_at'];
+            $oldinvoice->updated_at = $originalinvoice['updated_at'];
+
             $invoice->history()->save($oldinvoice);
+            $invoice->touch();
 
             foreach($originalitems as $item)
             {
@@ -387,8 +427,7 @@ class InvoiceController extends Controller
             }
             else
             {
-                $invoicenumber = $company->invoices()->count();
-                $invoicenumber = sprintf('%06d', ++$invoicenumber);
+                $invoicenumber = $company->niceinvoiceid();
                 $countries = countries();
 
                 return view('pages.invoice.adhoccreate', compact('company', 'invoicenumber', 'countries'));

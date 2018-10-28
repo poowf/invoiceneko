@@ -20,8 +20,12 @@
 
 @section("content")
     <div class="mini-container">
-        <div id="top-action-container" class="row">
+        <div id="top-action-container" class="row desktop-only">
             <div class="col s12 mtop30 right">
+                <form method="post" action="{{ route('invoice.send', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
+                    {{ csrf_field() }}
+                    <button class="btn btn-link waves-effect waves-dark null-btn" type="submit">Send Notification</button>
+                </form>
                 <a class="btn btn-link waves-effect waves-dark" href="{{ route('payment.create', [ 'invoice' => $invoice->id] ) }}">
                     Log Payment
                 </a>
@@ -36,11 +40,15 @@
                 </a>
             </div>
         </div>
-        <div id="invoice-action-container" class="row" style="margin-bottom: 0;">
+        <div id="invoice-action-container" class="row mbtm0 desktop-only">
             <div class="col s12 right">
                 <form method="post" action="{{ route('invoice.convert', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
                     {{ csrf_field() }}
                     <button class="btn btn-link waves-effect waves-dark null-btn" type="submit">Convert back to Quote</button>
+                </form>
+                <form method="post" action="{{ route('invoice.duplicate', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
+                    {{ csrf_field() }}
+                    <button class="btn blue darken-3 waves-effect waves-dark null-btn" type="submit">Clone</button>
                 </form>
                 <form method="post" action="{{ route('invoice.writeoff', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
                     {{ method_field('PATCH') }}
@@ -60,46 +68,92 @@
                 </a>
             </div>
         </div>
+        <div class="fixed-action-btn toolbar mobile-only">
+            <a class="btn-floating btn-large btn-large red">
+                <i class="large material-icons">menu</i>
+            </a>
+            <ul>
+                <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Log Payment">
+                    <a class="btn btn-link waves-effect waves-dark" href="{{ route('payment.create', [ 'invoice' => $invoice->id] ) }}">
+                        <i class="material-icons">attach_money</i>
+                    </a>
+                </li>
+                <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Duplicate Invoice">
+                    <form method="post" action="{{ route('invoice.duplicate', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
+                        {{ csrf_field() }}
+                        <button class="btn blue darken-3 waves-effect waves-dark null-btn" type="submit">
+                            <i class="material-icons">control_point_duplicate</i>
+                        </button>
+                    </form>
+                </li>
+                <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Send Notification">
+                    <form method="post" action="{{ route('invoice.send', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
+                        {{ csrf_field() }}
+                        <button class="btn blue-grey waves-effect waves-dark null-btn" type="submit">
+                            <i class="material-icons">contact_mail</i>
+                        </button>
+                    </form>
+                </li>
+                <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Archive Invoice">
+                    <form method="post" action="{{ route('invoice.archive', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
+                        {{ method_field('PATCH') }}
+                        {{ csrf_field() }}
+                        <button class="btn amber darken-2 waves-effect waves-dark null-btn" type="submit">
+                            <i class="material-icons">archive</i>
+                        </button>
+                    </form>
+                </li>
+                <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Invoice">
+                    <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="btn light-blue waves-effect waves-dark">
+                        <i class="material-icons">edit</i>
+                    </a>
+                </li>
+                <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Invoice">
+                    <a href="#" data-id="{{ $invoice->id }}" class="invoice-delete-btn btn red waves-effect waves-dark">
+                        <i class="material-icons">delete</i>
+                    </a>
+                </li>
+            </ul>
+        </div>
         <div class="row">
             <div class="col s12 l4">
                 <h3>Details</h3>
                 <div id="details-panel" class="card-panel">
-                    <dt>Company Name</dt>
-                    <dd>{{ $client->companyname }}</dd>
-                    <dt>Company Block</dt>
-                    <dd>{{ $client->block or '-' }}</dd>
-                    <dt>Company Street</dt>
-                    <dd>{{ $client->street or '-' }}</dd>
-                    <dt>Company Unit Number</dt>
-                    <dd>{{ $client->unitnumber or '-' }}</dd>
-                    <dt>Company Postal Code</dt>
-                    <dd>{{ $client->postalcode or '-' }}</dd>
-                    <dt>Company Nickname</dt>
-                    <dd>{{ $client->nickname or '-' }}</dd>
-                    <dt>Company Registration Number</dt>
-                    <dd>{{ $client->crn }}
-                    <dt>Contact Name</dt>
-                    <dd>{{ $client->contactname or '-' }}</dd>
-                    <dt>Contact Email</dt>
-                    <dd>{{ $client->contactemail or '-' }}</dd>
-                    <dt>Contact Phone</dt>
-                    <dd>{{ $client->contactphone or '-' }}</dd>
-                    <dt>Status</dt>
-                    <dd>
-                        @if ($invoice->status == App\Models\Invoice::STATUS_OVERDUE)
-                            <span class="alt-badge error">{{ $invoice->statustext() }}</span>
-                        @elseif ($invoice->status == App\Models\Invoice::STATUS_DRAFT)
-                            <span class="alt-badge">{{ $invoice->statustext() }}</span>
-                        @elseif ($invoice->status == App\Models\Invoice::STATUS_OPEN)
-                            <span class="alt-badge warning">{{ $invoice->statustext() }}</span>
-                        @elseif ($invoice->status == App\Models\Invoice::STATUS_CLOSED)
-                            <span class="alt-badge success">{{ $invoice->statustext() }}</span>
-                        @elseif ($invoice->status == App\Models\Invoice::STATUS_ARCHIVED)
-                            <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
-                        @elseif ($invoice->status == App\Models\Invoice::STATUS_WRITTENOFF)
-                            <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
-                        @endif
-                    </dd>
+                    <dl>
+                        <dt>Company Name</dt>
+                        <dd>{{ $client->companyname }}</dd>
+                        <dt>Company Block</dt>
+                        <dd>{{ $client->block ?? '-' }}</dd>
+                        <dt>Company Street</dt>
+                        <dd>{{ $client->street ?? '-' }}</dd>
+                        <dt>Company Unit Number</dt>
+                        <dd>{{ $client->unitnumber ?? '-' }}</dd>
+                        <dt>Company Postal Code</dt>
+                        <dd>{{ $client->postalcode ?? '-' }}</dd>
+                        <dt>Company Nickname</dt>
+                        <dd>{{ $client->nickname ?? '-' }}</dd>
+                        <dt>Company Registration Number</dt>
+                        <dd>{{ $client->crn }}
+                        <dt>Contact Name</dt>
+                        <dd>{{ $client->contactname ?? '-' }}</dd>
+                        <dt>Contact Email</dt>
+                        <dd>{{ $client->contactemail ?? '-' }}</dd>
+                        <dt>Contact Phone</dt>
+                        <dd>{{ $client->contactphone ?? '-' }}</dd>
+                        <dt>Status</dt>
+                        <dd>
+                            @if ($invoice->status == App\Models\Invoice::STATUS_OVERDUE)
+                                <span class="alt-badge error">{{ $invoice->statustext() }}</span>
+                            @elseif ($invoice->status == App\Models\Invoice::STATUS_DRAFT)
+                                <span class="alt-badge">{{ $invoice->statustext() }}</span>
+                            @elseif ($invoice->status == App\Models\Invoice::STATUS_OPEN)
+                                <span class="alt-badge warning">{{ $invoice->statustext() }}</span>
+                            @elseif ($invoice->status == App\Models\Invoice::STATUS_CLOSED)
+                                <span class="alt-badge success">{{ $invoice->statustext() }}</span>
+                            @elseif ($invoice->status == App\Models\Invoice::STATUS_WRITTENOFF)
+                                <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
+                            @endif
+                        </dd>
                     </dl>
                 </div>
                 <h3>Change History</h3>
@@ -107,8 +161,8 @@
                     <div class="single-history-wrapper">
                         <div class="card single-history">
                             <h6>Date/Time</h6>
-                            <p class="mtop20">{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->created_at)->format('j F, Y') }}</p>
-                            <p>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->created_at)->format('h:i:s a') }}</p>
+                            <p class="mtop20">{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->updated_at)->format('j F, Y') }}</p>
+                            <p>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->updated_at)->format('h:i:s a') }}</p>
                             <span class="alt-badge info mtop20">Current Version</span>
                             <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="btn btn-theme full-width mtop20">Edit</a>
                         </div>
@@ -117,8 +171,8 @@
                         <div class="single-history-wrapper">
                             <div class="card single-history">
                                 <h6>Date/Time</h6>
-                                <p class="mtop20">{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $history->created_at)->format('j F, Y') }}</p>
-                                <p>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $history->created_at)->format('h:i:s a') }}</p>
+                                <p class="mtop20">{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $history->updated_at)->format('j F, Y') }}</p>
+                                <p>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $history->updated_at)->format('h:i:s a') }}</p>
                                 <span class="alt-badge warning mtop20">Past Version</span>
                                 <a href="{{ route('invoice.old.show', [ 'oldinvoice' => $history->id ] ) }}" class="btn btn-theme full-width mtop20">View</a>
                             </div>
@@ -127,7 +181,7 @@
                 </div>
                 <h3>Payment History</h3>
                 <div id="payment-history-container" class="payment-history-container">
-                    <div class="card-panel">
+                    <div class="card-panel flex">
                         <table class="responsive-table">
                             <thead>
                                 <tr>
@@ -154,44 +208,45 @@
             <div class="col s12 l8">
                 <h3>Invoice</h3>
                 <div class="invoice" style="background-color: #ffffff; padding: 50px 50px 20px; color: #8c8c8c;">
-                    <div class="row invoice-header" style="position: relative; margin-bottom: 160px;">
-                        <div class="col-xs-7" style="position: absolute; left: 0; padding: 0 15px;">
-                            <div class="invoice-logo" style="height: 110px; min-width: 210px; background-image: url('{{ $invoice->company->logo }}'); background-repeat: no-repeat; background-position: 0;"></div>
+                    <div class="row invoice-header" style="position: relative; margin-bottom: 50px;">
+                        <div class="col-xs-7" style="position: relative; left: 0; padding: 0 15px; width: 50%; float: left;">
+                            <div class="invoice-logo" style="height: 110px; min-width: 210px; background-image: url('{{ \App\Library\Poowf\Unicorn::getStorageFile($invoice->company->logo, [210, 110]) }}'); background-repeat: no-repeat; background-position: 0; background-size: contain;"></div>
                         </div>
-                        <div class="col-xs-5 invoice-order" style="position: absolute; right: 0; padding: 0 15px; text-align: left;">
+                        <div class="col-xs-5 invoice-order" style="position: relative; padding: 0 15px; text-align: right; width: 50%; float: left;">
                             <span class="invoice-id" style="display: block; font-size: 30px; line-height: 30px; margin-bottom: 10px;">Invoice #{{ $invoice->nice_invoice_id }}</span>
-                            <span class="invoice-date" style="display: block; font-size: 18px; line-height: 30px; text-align: right;">Invoice Date: {{ $invoice->date }}</span>
-                            <span class="invoice-duedate" style="display: block; font-size: 18px; line-height: 30px; text-align: right;">Payment Due: {{ $invoice->duedate }}</span>
-                            <span class="invoice-netdays" style="display: block; font-size: 18px; line-height: 30px; text-align: right;">Payment Terms: Net {{ $invoice->netdays }}</span>
+                            <span class="invoice-date" style="display: block; font-size: 18px; line-height: 30px;">Invoice Date: {{ $invoice->date }}</span>
+                            <span class="invoice-duedate" style="display: block; font-size: 18px; line-height: 30px;">Payment Due: {{ $invoice->duedate }}</span>
+                            <span class="invoice-netdays" style="display: block; font-size: 18px; line-height: 30px;">Payment Terms: Net {{ $invoice->netdays }}</span>
                         </div>
                     </div>
-                    <div class="row invoice-data" style="position: relative; margin-bottom: 320px;">
-                        <div class="col-xs-5 invoice-person" style="position: absolute; left: 0; padding: 0 15px; ">
+                    <div class="row invoice-data" style="position: relative; margin-bottom: 50px;">
+                        <div class="col-xs-5 invoice-person" style="position: relative; left: 0; padding: 0 15px; width:45%; float: left; text-align: left;">
                             <span class="name" style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">Bill To: </span>
                             <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->companyname }}</span>
-                            <span style="font-size: 18px; line-height: 26px; display: block;">@if($invoice->client->block){{ $invoice->client->block }} @endif {{ $invoice->client->street or 'No Street' }}</span>
+                            <span style="font-size: 18px; line-height: 26px; display: block;">@if($invoice->client->block){{ $invoice->client->block }} @endif {{ $invoice->client->street ?? 'No Street' }}</span>
                             @if($invoice->client->unitnumber)<span style="font-size: 18px; line-height: 26px; display: block;">#{{ $invoice->client->unitnumber }}</span>@endif
-                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->country or 'No Country' }} {{ $invoice->client->postalcode or 'No Postal Code' }}</span>
+                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->country ?? 'No Country' }} {{ $invoice->client->postalcode ?? 'No Postal Code' }}</span>
                         </div>
-                        <div class="col-xs-2 invoice-payment-direction" style="position: absolute; padding-top: 10px; left: 0; right:0; text-align: center;">
+                        <div class="col-xs-2 invoice-payment-direction" style="position: relative; padding-top: 10px; width: 10%; float: left; text-align: center;">
                             <img src="{{ asset('/assets/img/lefttoright.png') }}" width="80" height="80" />
                         </div>
-                        <div class="col-xs-5 invoice-person" style="position: absolute; right: 0; padding: 0 15px; text-align: left;">
-                            <span class="name" style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">{{ $invoice->company->name or 'No Company Name' }}</span>
-                            <span style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">{{ $invoice->company->crn or 'No Company Registration Number' }}</span>
-                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->owner->full_name or 'No Company Owner Name' }}</span>
-                            @if($invoice->company->address)
-                                <span style="font-size: 18px; line-height: 26px; display: block;">@if($invoice->company->address->block){{ $invoice->company->address->block }} @endif {{ $invoice->company->address->street or 'No Street' }}</span>
-                                @if($invoice->company->address->unitnumber)<span style="font-size: 18px; line-height: 26px; display: block;">#{{ $invoice->company->address->unitnumber }}</span>@endif
-                                <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->address->postalcode or 'No Postal Code' }}</span>
-                            @else
-                                <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->owner->email or 'No Company Owner Email' }}</span>
-                            @endif
+                        <div class="col-xs-5 invoice-person" style="position: relative; padding: 0 15px; width: 45%; float: left;">
+                            <div class="" style="float: right; text-align: left;">
+                                <span class="name" style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">{{ $invoice->company->name ?? 'No Company Name' }}</span>
+                                <span style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">{{ $invoice->company->crn ?? 'No Company Registration Number' }}</span>
+                                <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->owner->full_name ?? 'No Company Owner Name' }}</span>
+                                @if($invoice->company->address)
+                                    <span style="font-size: 18px; line-height: 26px; display: block;">@if($invoice->company->address->block){{ $invoice->company->address->block }} @endif {{ $invoice->company->address->street ?? 'No Street' }}</span>
+                                    @if($invoice->company->address->unitnumber)<span style="font-size: 18px; line-height: 26px; display: block;">#{{ $invoice->company->address->unitnumber }}</span>@endif
+                                    <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->address->postalcode ?? 'No Postal Code' }}</span>
+                                @else
+                                    <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->company->owner->email ?? 'No Company Owner Email' }}</span>
+                                @endif
+                            </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12"
-                             style="position: relative; padding: 0 15px;">
+                        <div class="col-md-12" style="position: relative; padding: 0 15px;">
                             <table class="invoice-details" style="border-collapse: collapse; border-spacing: 0; background-color: transparent; width: 100%; font-size: 16px;">
                                 <tbody>
                                     <tr>
@@ -225,16 +280,16 @@
                                             Subtotal
                                         </td>
                                         <td class="amount" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
-                                            ${{ $invoice->calculatetotal() }}
+                                            ${{ $invoice->calculatesubtotal() }}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td style="padding: 20px 0;"></td>
                                         <td class="summary" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; color: #aaaaaa;">
-                                            Tax (0%)
+                                            Tax ({{ $invoice->company->settings->tax ?? 0 }}%)
                                         </td>
                                         <td class="amount" style="padding: 20px 0; border-bottom: 1px solid #e0e0e0; text-align: right;">
-                                            $0,00
+                                            ${{ $invoice->calculatetax() }}
                                         </td>
                                     </tr>
                                     <tr>
@@ -250,33 +305,33 @@
                             </table>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col s12 invoice-message" style="position: relative; padding: 0 15px; font-size: 16px; margin-bottom: 62px;">
-                            <span class="title" style="font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 12px;">Terms & Conditions</span>
-                            {!! $invoice->company->settings->invoice_conditions !!}
-                        </div>
-                    </div>
-                    <div class="row invoice-company-info" style="margin-bottom: 70px;">
+                    <div class="row invoice-company-info" style="margin: 50px 0px;">
                         <div class="logo" style="position: relative; display: block; width: 100%;  text-align: center;">
-                            <img src="{{ $invoice->company->smlogo }}" alt="Logo-symbol" width="100" height="100" style="border: 0; vertical-align: middle;">
+                            <img src="{{ \App\Library\Poowf\Unicorn::getStorageFile($invoice->company->smlogo, [100,100]) }}" alt="Logo-symbol" width="100" height="100" style="border: 0; vertical-align: middle;">
                         </div>
                         <div style="margin-top: 20px;">
                             <div class="row">
                                 <div class="col s6 m4 summary" style="display: inline-block; padding: 0 15px; line-height: 16px; text-align: center;">
-                                    <span class="title" style="color: #8c8c8c; font-size: 14px; line-height: 21px; font-weight: 700;">{{ $invoice->company->name or 'No Company Name' }}</span>
+                                    <span class="title" style="color: #8c8c8c; font-size: 14px; line-height: 21px; font-weight: 700;">{{ $invoice->company->name ?? 'No Company Name' }}</span>
                                     <p style="font-size: inherit; margin: 0 0 15px; line-height: 16px;"></p>
                                 </div>
                                 <div class="col s6 m4 phone" style="display: inline-block; padding: 0 15px; border-left: 2px solid #e0e0e0; text-align: center;">
                                     <ul class="list-unstyled" style="margin-top: 0; margin-bottom: 9px; line-height: 20px; padding-left: 0; list-style: none;">
-                                        <li> {{ $invoice->company->phone or 'No Phone Number' }}</li>
+                                        <li> {{ $invoice->company->phone ?? 'No Phone Number' }}</li>
                                     </ul>
                                 </div>
                                 <div class="col s6 m4 email" style="display: inline-block; padding: 0 15px; border-left: 2px solid #e0e0e0; text-align: center;">
                                     <ul class="list-unstyled" style="margin-top: 0; margin-bottom: 9px; line-height: 20px; padding-left: 0; list-style: none;">
-                                        <li>{{ $invoice->company->email or 'No Email' }}</li>
+                                        <li>{{ $invoice->company->email ?? 'No Email' }}</li>
                                     </ul>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12 invoice-message" style="position: relative; padding: 0 15px; font-size: 16px; margin-bottom: 62px;">
+                            <span class="title" style="font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 12px;">Terms & Conditions</span>
+                            {!! $invoice->company->settings->invoice_conditions !!}
                         </div>
                     </div>
                     <div class="row invoice-footer" style="text-align: center;">
@@ -358,6 +413,13 @@
 
 
             $('#invoice-action-container').on('click', '.invoice-delete-btn', function (event) {
+                event.preventDefault();
+                let invoiceid = $(this).attr('data-id');
+                $('#delete-invoice-form').attr('action', '/invoice/' + invoiceid + '/destroy');
+                $('#delete-confirmation').modal('open');
+            });
+
+            $('.fixed-action-btn').on('click', '.invoice-delete-btn', function (event) {
                 event.preventDefault();
                 let invoiceid = $(this).attr('data-id');
                 $('#delete-invoice-form').attr('action', '/invoice/' + invoiceid + '/destroy');

@@ -9,14 +9,16 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 use App\Models\Invoice;
 
-class InvoiceMail extends Mailable
+class InvoiceMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
+
+    public $invoice;
 
     /**
      * Create a new message instance.
      *
-     * @return void
+     * @param Invoice $invoice
      */
     public function __construct(Invoice $invoice)
     {
