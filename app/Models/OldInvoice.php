@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
+use PDF;
 
 class OldInvoice extends Model
 {
@@ -30,6 +31,7 @@ class OldInvoice extends Model
         'nice_invoice_id',
         'date',
         'duedate',
+        'total',
         'status',
         'netdays',
         'client_id',
@@ -64,10 +66,9 @@ class OldInvoice extends Model
         return $this->belongsTo('App\Models\Invoice', 'invoice_id');
     }
 
-    public function calculatetotal()
+    public function calculatesubtotal($moneyformat = true)
     {
         $items = $this->items;
-
         $total = 0;
 
         foreach($items as $item)
@@ -76,7 +77,84 @@ class OldInvoice extends Model
 
             $total += $itemtotal;
         }
-        setlocale(LC_MONETARY, 'en_US.UTF-8');
-        return money_format('%!.2n', $total);
+
+        if ($moneyformat)
+        {
+            setlocale(LC_MONETARY, 'en_US.UTF-8');
+            return money_format('%!.2n', $total);
+        }
+        else
+        {
+            return $total;
+        }
+    }
+
+    public function calculatetax($moneyformat = true)
+    {
+        $companysettings = $this->company->settings;
+        $tax = 0;
+
+        if($companysettings->tax && $companysettings->tax != 0)
+        {
+            $tax = $companysettings->tax;
+        }
+
+        $subtotal = $this->calculatesubtotal(false);
+
+        $tax = ($subtotal * $tax)/100;
+
+        if ($moneyformat)
+        {
+            setlocale(LC_MONETARY, 'en_US.UTF-8');
+            return money_format('%!.2n', $tax);
+        }
+        else
+        {
+            return $tax;
+        }
+    }
+
+    public function calculatetotal($moneyformat = true)
+    {
+        $companysettings = $this->company->settings;
+        $tax = 0;
+
+        if($companysettings->tax && $companysettings->tax != 0)
+        {
+            $tax = $companysettings->tax;
+        }
+
+        $subtotal = $this->calculatesubtotal(false);
+
+        $total = ($subtotal * (100 + $tax))/100;
+
+        if ($moneyformat)
+        {
+            setlocale(LC_MONETARY, 'en_US.UTF-8');
+            return money_format('%!.2n', $total);
+        }
+        else
+        {
+            return $total;
+        }
+    }
+
+    public function setInvoiceTotal()
+    {
+        $this->total = self::calculatetotal(false);
+        $this->save();
+    }
+
+    public function generatePDFView()
+    {
+        $invoice = $this;
+        $pdf = PDF::loadView('pdf.invoice', compact('invoice'))
+            ->setPaper('a4')
+            ->setOption('margin-bottom', '0mm')
+            ->setOption('margin-top', '0mm')
+            ->setOption('margin-right', '0mm')
+            ->setOption('margin-left', '0mm');
+
+        return $pdf;
     }
 }

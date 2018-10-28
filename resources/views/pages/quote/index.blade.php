@@ -44,7 +44,7 @@
                 </div>
 
                 <div id="quote-container" class="row">
-                    <div class="card-panel" >
+                    <div class="card-panel flex">
                         <table id="quotes-table" class="responsive-table striped">
                             <thead>
                                 <tr>
@@ -70,15 +70,19 @@
                                             @if ($quote->status == App\Models\Quote::STATUS_DRAFT)
                                                 <span class="alt-badge">{{ $quote->statustext() }}</span>
                                             @elseif ($quote->status == App\Models\Quote::STATUS_OPEN)
-                                                <span class="alt-badge success">{{ $quote->statustext() }}</span>
+                                                <span class="alt-badge warning">{{ $quote->statustext() }}</span>
                                             @elseif ($quote->status == App\Models\Quote::STATUS_EXPIRED)
                                                 <span class="alt-badge error">{{ $quote->statustext() }}</span>
-                                            @elseif ($quote->status == App\Models\Quote::STATUS_ARCHIVED)
-                                                <span class="alt-badge warning">{{ $quote->statustext() }}</span>
+                                            @elseif ($quote->status == App\Models\Quote::STATUS_COMPLETED)
+                                                <span class="alt-badge success">{{ $quote->statustext() }}</span>
                                             @endif
                                         </td>
                                         <td>
                                             <a href="{{ route('quote.show', [ 'quote' => $quote->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Quote"><i class="material-icons">remove_red_eye</i></a>
+                                            <form method="post" action="{{ route('quote.duplicate', [ 'quote' => $quote->id ] ) }}" class="null-form tooltipped" data-position="top" data-delay="50" data-tooltip="Duplicate Quote">
+                                                {{ csrf_field() }}
+                                                <button class="null-btn" type="submit"><i class="material-icons">control_point_duplicate</i></button>
+                                            </form>
                                             <a href="{{ route('quote.edit', [ 'quote' => $quote->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Quote"><i class="material-icons">mode_edit</i></a>
                                             <a href="#" data-id="{{ $quote->id }}" class="quote-delete-btn tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Quote"><i class="material-icons">delete</i></a>
                                         </td>

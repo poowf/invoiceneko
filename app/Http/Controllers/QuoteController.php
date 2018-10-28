@@ -52,8 +52,9 @@ class QuoteController extends Controller
      */
     public function archive(Quote $quote)
     {
-        $quote->status = Quote::STATUS_ARCHIVED;
+        $quote->archived = true;
         $quote->save();
+        flash('Quote has been archived successfully', "success");
 
         return redirect()->route('quote.show', [ 'quote' => $quote->id ]);
     }
@@ -86,8 +87,15 @@ class QuoteController extends Controller
         $quote->date = Carbon::createFromFormat('Y-m-d H:i:s', $quote->date)->format('j F, Y');
         $quote->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $quote->duedate)->format('j F, Y');
 
-        $pdf = PDF::loadView('pdf.quote', compact('quote'));
+        $pdf = $quote->generatePDFView();
         return $pdf->inline(str_slug($quote->nice_quote_id) . '.pdf');
+    }
+
+    public function duplicate(Quote $quote)
+    {
+        $duplicatedQuote = $quote->duplicate();
+        flash('Quote has been Cloned Sucessfully', "success");
+        return redirect()->route('quote.show', ['quote' => $duplicatedQuote->id]);
     }
 
     /**
@@ -99,6 +107,7 @@ class QuoteController extends Controller
     {
         $company = auth()->user()->company;
         $clients = $company->clients;
+        $itemtemplates = $company->itemtemplates;
 
         if($company)
         {
@@ -110,7 +119,7 @@ class QuoteController extends Controller
             }
             else
             {
-                return view('pages.quote.create', compact('company', 'quotenumber', 'clients'));
+                return view('pages.quote.create', compact('company', 'quotenumber', 'clients', 'itemtemplates'));
             }
         }
         else
@@ -130,7 +139,7 @@ class QuoteController extends Controller
         $company = auth()->user()->company;
 
         $quote = new Quote;
-        $quote->nice_quote_id = $company->settings->invoice_prefix . 'Q-' . $company->nicequoteid();
+        $quote->nice_quote_id = $company->nicequoteid();
         $duedate = Carbon::createFromFormat('j F, Y', $request->input('date'))->addDays($request->input('netdays'))->startOfDay()->toDateTimeString();
         $quote->date = Carbon::createFromFormat('j F, Y', $request->input('date'))->startOfDay()->toDateTimeString();
         $quote->netdays = $request->input('netdays');
@@ -188,7 +197,8 @@ class QuoteController extends Controller
 
         $invoice->setInvoiceTotal();
 
-        $quote->status = Quote::STATUS_ARCHIVED;
+        $quote->status = Quote::STATUS_COMPLETED;
+        $quote->archived = true;
         $quote->save();
 
         flash('Invoice Created', 'success');
@@ -222,7 +232,8 @@ class QuoteController extends Controller
         $quote->date = Carbon::createFromFormat('Y-m-d H:i:s', $quote->date)->format('j F, Y');
         $quote->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $quote->duedate)->format('j F, Y');
 
-        $pdf = PDF::loadView('pdf.quote', compact('quote'));
+        $pdf = $quote->generatePDFView();
+
         return $pdf->inline(str_slug($quote->nice_quote_id) . 'quote.pdf');
     }
 
@@ -237,7 +248,8 @@ class QuoteController extends Controller
         $quote->date = Carbon::createFromFormat('Y-m-d H:i:s', $quote->date)->format('j F, Y');
         $quote->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $quote->duedate)->format('j F, Y');
 
-        $pdf = PDF::loadView('pdf.quote', compact('quote'));
+        $pdf = $quote->generatePDFView();
+
         return $pdf->download(str_slug($quote->nice_quote_id) . '.pdf');
     }
 

@@ -2,6 +2,8 @@
 
 @section("head")
     <title>{{ config('app.name') }}</title>
+    <link href="{{ mix('/assets/css/intlTelInput.css') }}" rel="stylesheet" type="text/css">
+
     <style>
     </style>
 @stop
@@ -55,7 +57,7 @@
                         <div class="row pbtm20">
                             <div class="input-field col s12">
                                 <input id="phone" name="phone" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$" data-parsley-phone-format="#phone" value="{{ old('phone') }}">
-                                <label for="phone" class="manual-validation">Phone</label>
+                                <label for="phone" class="label-validation">Phone</label>
                                 <span class="helper-text"></span>
                             </div>
                         </div>
@@ -63,17 +65,18 @@
                             <div class="col s12 left">
                                 <label id="rbtn-label" class="rbtn-label" for="gender">Gender</label>
                                 <p class="rbtn">
-                                    <label>
+                                    <label for="gender-male">
                                         <input id="gender-male" name="gender" type="radio" value="male" data-parsley-required="true" data-parsley-trigger="change" @if(old('gender') == "male") checked @endif>
                                         <span>Male</span>
                                     </label>
                                 </p>
                                 <p class="rbtn">
-                                    <label>
+                                    <label for="gender-female">
                                         <input id="gender-female" name="gender" type="radio" value="female" @if(old('gender') == "female") checked @endif>
                                         <span>Female</span>
                                     </label>
                                 </p>
+                                <span class="helper-text manual-validation"></span>
                             </div>
                         </div>
                     </div>
@@ -90,6 +93,8 @@
 @stop
 
 @section("scripts")
+    <script type="text/javascript" src="{{ mix('/assets/js/intlTelInput.js') }}"></script>
+
     <script type="text/javascript">
         "use strict";
         $(function() {
@@ -141,7 +146,7 @@
                 .on('field:success', function(velem) {
                     if (velem.$element.is(':radio'))
                     {
-                        velem.$element.parent('').siblings('label').removeClass('invalid').addClass('valid');
+                        velem.$element.parentsUntil('.row').find('span.helper-text').removeClass('invalid').addClass('valid');
                     }
                     else if (velem.$element.is('#phone'))
                     {
@@ -151,8 +156,8 @@
                 .on('field:error', function(velem) {
                     if (velem.$element.is(':radio'))
                     {
-                        velem.$element.parent('').siblings('label').removeClass('valid').addClass('invalid');
-                        velem.$element.parent('').siblings('label').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
+                        velem.$element.parentsUntil('.row').find('span.helper-text').removeClass('valid').addClass('invalid');
+                        velem.$element.parentsUntil('.row').find('span.helper-text').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
                     }
                     else if (velem.$element.is('#phone'))
                     {
@@ -161,6 +166,7 @@
                     }
                 })
                 .on('form:submit', function(velem) {
+                    $("#phone").val($("#phone").intlTelInput("getNumber"));
                 });
         });
     </script>

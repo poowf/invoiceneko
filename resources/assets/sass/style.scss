@@ -96,6 +96,10 @@ dd::after {
   clear: left;
 }
 
+strong {
+  font-weight: 700;
+}
+
 mark {
   background: #fff2c3;
   color: inherit;
@@ -104,6 +108,10 @@ mark {
 
 .no-margin {
   margin: 0 !important;
+}
+
+.no-bold {
+  font-weight: normal;
 }
 
 .mbth5 {
@@ -162,6 +170,9 @@ mark {
   margin-top: 60px;
 }
 
+.mbtm0 {
+  margin-bottom: 0px;
+}
 .mbtm10 {
   margin-bottom: 10px;
 }
@@ -250,15 +261,26 @@ mark {
   display: none;
 }
 
+.mobile-only {
+  display: block;
+}
+
 .null-form {
   display: inline-block;
 }
 
 .null-btn {
+  outline: none;
   border: none;
   background-color: transparent;
   cursor: pointer;
   font-family: "Roboto", sans-serif;
+}
+
+.null-btn:active, .null-btn:focus {
+  outline: none;
+  border: none;
+  background-color: transparent;
 }
 
 #delete-confirmation {
@@ -327,6 +349,30 @@ mark {
   width: calc(100% - 22px);
 }
 
+.helper-text.manual-validation {
+  color: transparent;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+  min-height: 18px;
+  display: block;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.helper-text.manual-validation::after {
+  content: attr(data-error);
+  color: #F44336;
+  opacity: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 /* Selectize */
 
 .selectize-control {
@@ -358,6 +404,14 @@ mark {
   height: 2.8rem;
   line-height: 2.8rem;
   margin-left: 4px;
+}
+
+.selectize-control.multi .selectize-input .item {
+  background-color: #eaeaea;
+  padding: 0.5rem;
+  height: 2rem;
+  line-height: 1rem;
+  margin-top: 0.6rem;
 }
 
 .selectize-dropdown {
@@ -406,6 +460,10 @@ mark {
 
 .theme-text {
   color: #299a9a !important;
+}
+
+.sidenav-trigger {
+  color: #000000;
 }
 
 .sidenav .collapsible-body > ul:not(.collapsible) > li.active, .sidenav.sidenav-fixed .collapsible-body > ul:not(.collapsible) > li.active {
@@ -488,58 +546,6 @@ mark {
 
 .collection a.collection-item {
   color: #000;
-}
-
-.side-nav li {
-  float: none;
-  line-height: 65px;
-}
-
-.side-nav a {
-  height: 65px;
-  line-height: 65px;
-}
-
-.side-nav a:hover, .side-nav a:focus {
-  color: #299a9a
-}
-
-.side-nav a.btn, .side-nav a.btn-large, .side-nav a.btn-large, .side-nav a.btn-floating {
-  color: #fff;
-}
-
-.side-nav a.btn:hover, .side-nav a.btn:focus, .side-nav a.btn-large:hover, .side-nav a.btn-large:hover {
-  background-color: #2196F3;
-}
-
-.side-nav a.btn, .side-nav a.btn-large, .side-nav a.btn-large, .side-nav a.btn-floating {
-  color: #fff;
-}
-
-.side-nav a.btn:hover, .side-nav a.btn:focus, .side-nav a.btn-large:hover, .side-nav a.btn-large:hover {
-  background-color: #2196F3;
-}
-
-.sidenav-trigger {
-  color: #000000;
-}
-
-.sidenav li > a {
-  font-weight: normal;
-}
-
-.sidenav li > a > i.material-icons {
-  font-size: 30px;
-  color: #fff;
-  margin: 0px;
-}
-
-.sidenav li > form {
-  padding: 0 32px;
-}
-
-.sidenav li > form > button {
-  padding: 0;
 }
 
 .dropdown-trigger + .dropdown-content li > a, .dropdown-trigger + .dropdown-content li > span {
@@ -642,6 +648,10 @@ textarea.valid + label:after {
   background-color: #0091ea;
 }
 
+.input-field {
+  margin-bottom: 0px;
+}
+
 .input-field .character-counter {
   position: absolute;
   right: 12px;
@@ -692,6 +702,10 @@ nav .logo img {
   max-width: 100%;
 }
 
+nav .logo h6 {
+  display: inline-block;
+}
+
 nav ul {
   line-height: 80px;
 }
@@ -716,15 +730,49 @@ nav .signout-btn {
   text-align: left;
 }
 
-.side-nav .signout-mobile-btn {
-  display: block;
-  font-size: 14px;
-  font-weight: 500;
-  height: 48px;
-  line-height: 48px;
-  padding: 0 32px;
+nav .sidenav-trigger i {
+  height: 80px;
+  line-height: 80px;
+  font-size: 28px;
+}
+
+.sidenav li > a {
+  font-weight: normal;
+}
+
+.sidenav li > a > i.material-icons {
+  font-size: 30px;
+  color: #fff;
+  margin: 0px;
+}
+
+.sidenav hr {
+  margin: 0;
+}
+
+.sidenav .signout-mobile-btn {
   width: 100%;
+  padding: 0 32px;
+  line-height: 50px;
   text-align: left;
+}
+
+.fixed-action-btn.toolbar ul li .null-btn {
+  display: block;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  color: #fff;
+  line-height: 56px;
+  z-index: 1;
+}
+
+.fixed-action-btn.toolbar ul li .null-form {
+  width: 100%;
 }
 
 /* Footer */
@@ -1024,6 +1072,9 @@ nav .button-collapse i {
 @media only screen and (min-width: 993px) {
   .desktop-only {
     display: block;
+  }
+  .mobile-only {
+    display: none;
   }
   img.force-image-size {
     height: 310px;

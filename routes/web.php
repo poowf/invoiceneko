@@ -11,12 +11,12 @@
 |
 */
 
-Route::get('/', 'MainController@main')->name('main');
 Route::get('/invoice/view', 'InvoiceController@showwithtoken')->name('invoice.token');
 Route::get('/quote/view', 'QuoteController@showwithtoken')->name('quote.token');
 
 Route::group(['middleware' => ['guest']], function() {
     /* Auth */
+    Route::get('/', 'MainController@main')->name('main');
     Route::get('/signin', 'AuthController@show')->name('auth.show');
     Route::post('/signin', 'AuthController@process')->name('auth.process');
     Route::get('/forgot', 'ForgotPasswordController@show')->name('forgot');
@@ -65,18 +65,20 @@ Route::group(['middleware' => ['auth']], function() {
         /* Clients */
         Route::get('/clients', 'ClientController@index')->name('client.index');
         Route::get('/client/create', 'ClientController@create')->name('client.create');
-        Route::get('/client/{client}/invoicecreate', 'ClientController@invoicecreate')->name('client.invoice.create');
+        Route::get('/client/{client}/invoicecreate', 'ClientController@invoicecreate')->name('client.invoice.create')->middleware('can:update,client');
         Route::post('/client/create', 'ClientController@store')->name('client.store');
-        Route::get('/client/{client}', 'ClientController@show')->name('client.show');
-        Route::get('/client/{client}/edit', 'ClientController@edit')->name('client.edit');
-        Route::patch('/client/{client}/edit', 'ClientController@update')->name('client.update');
-        Route::delete('/client/{client}/destroy', 'ClientController@destroy')->name('client.destroy');
+        Route::get('/client/{client}', 'ClientController@show')->name('client.show')->middleware('can:view,client');
+        Route::get('/client/{client}/edit', 'ClientController@edit')->name('client.edit')->middleware('can:update,client');
+        Route::patch('/client/{client}/edit', 'ClientController@update')->name('client.update')->middleware('can:update,client');
+        Route::delete('/client/{client}/destroy', 'ClientController@destroy')->name('client.destroy')->middleware('can:delete,client');
 
         /* Invoice */
         Route::get('/invoices', 'InvoiceController@index')->name('invoice.index');
+        Route::get('/invoices/archived', 'InvoiceController@index_archived')->name('invoice.index.archived');
         Route::get('/invoice/create', 'InvoiceController@create')->name('invoice.create');
         Route::post('/invoice/create', 'InvoiceController@store')->name('invoice.store');
         Route::get('/invoice/{invoice}', 'InvoiceController@show')->name('invoice.show')->middleware('can:view,invoice');
+        Route::post('/invoice/{invoice}/duplicate', 'InvoiceController@duplicate')->name('invoice.duplicate')->middleware('can:update,invoice');
         Route::post('/invoice/{invoice}/convert', 'InvoiceController@convertToQuote')->name('invoice.convert')->middleware('can:view,invoice');
         Route::get('/invoice/{invoice}/download', 'InvoiceController@download')->name('invoice.download')->middleware('can:view,invoice');
         Route::get('/invoice/{invoice}/printview', 'InvoiceController@printview')->name('invoice.printview')->middleware('can:view,invoice');
@@ -85,6 +87,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::patch('/invoice/{invoice}/archive', 'InvoiceController@archive')->name('invoice.archive')->middleware('can:update,invoice');
         Route::patch('/invoice/{invoice}/writeoff', 'InvoiceController@writeoff')->name('invoice.writeoff')->middleware('can:update,invoice');
         Route::patch('/invoice/{invoice}/share', 'InvoiceController@share')->name('invoice.share')->middleware('can:view,invoice');
+        Route::post('/invoice/{invoice}/send', 'InvoiceController@sendnotification')->name('invoice.send')->middleware('can:view,invoice');
         Route::delete('/invoice/{invoice}/destroy', 'InvoiceController@destroy')->name('invoice.destroy')->middleware('can:delete,invoice');
 
         Route::get('/invoice/adhoc/create', 'InvoiceController@adhoccreate')->name('invoice.adhoc.create');
@@ -95,6 +98,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('/quote/create', 'QuoteController@create')->name('quote.create');
         Route::post('/quote/create', 'QuoteController@store')->name('quote.store');
         Route::get('/quote/{quote}', 'QuoteController@show')->name('quote.show')->middleware('can:view,quote');
+        Route::post('/quote/{quote}/duplicate', 'QuoteController@duplicate')->name('quote.duplicate')->middleware('can:update,quote');
         Route::post('/quote/{quote}/convert', 'QuoteController@convertToInvoice')->name('quote.convert')->middleware('can:view,quote');
         Route::get('/quote/{quote}/download', 'QuoteController@download')->name('quote.download')->middleware('can:view,quote');
         Route::get('/quote/{quote}/printview', 'QuoteController@printview')->name('quote.printview')->middleware('can:view,quote');
@@ -115,6 +119,18 @@ Route::group(['middleware' => ['auth']], function() {
 
         /* InvoiceItem */
         Route::delete('/invoice/item/{invoiceitem}/destroy', 'InvoiceItemController@destroy')->name('invoice.item.destroy')->middleware('can:delete,invoiceitem');
+
+        /* ItemTemplate */
+        Route::get('/itemtemplates', 'ItemTemplateController@index')->name('itemtemplate.index');
+        Route::get('/itemtemplate/create', 'ItemTemplateController@create')->name('itemtemplate.create');
+        Route::post('/itemtemplate/create', 'ItemTemplateController@store')->name('itemtemplate.store');
+        Route::get('/itemtemplate/{itemtemplate}', 'ItemTemplateController@show')->name('itemtemplate.show')->middleware('can:view,itemtemplate');
+        Route::get('/itemtemplate/{itemtemplate}/retrieve', 'ItemTemplateController@retrieve')->name('itemtemplate.retrieve')->middleware('can:view,itemtemplate');
+        Route::post('/itemtemplate/{itemtemplate}/duplicate', 'ItemTemplateController@duplicate')->name('itemtemplate.duplicate')->middleware('can:update,itemtemplate');
+        Route::get('/itemtemplate/{itemtemplate}/download', 'ItemTemplateController@download')->name('itemtemplate.download')->middleware('can:view,itemtemplate');
+        Route::get('/itemtemplate/{itemtemplate}/edit', 'ItemTemplateController@edit')->name('itemtemplate.edit')->middleware('can:update,itemtemplate');
+        Route::patch('/itemtemplate/{itemtemplate}/edit', 'ItemTemplateController@update')->name('itemtemplate.update')->middleware('can:update,itemtemplate');
+        Route::delete('/itemtemplate/{itemtemplate}/destroy', 'ItemTemplateController@destroy')->name('itemtemplate.destroy')->middleware('can:delete,itemtemplate');
 
         /* Payment */
         Route::get('/payments', 'PaymentController@index')->name('payment.index');

@@ -33,13 +33,30 @@ class PaymentController extends Controller
      */
     public function create()
     {
-        return view('pages.payment.create');
+        $company = auth()->user()->company;
+
+        if($company)
+        {
+            if ($company->invoices->count() == 0)
+            {
+                return view('pages.payment.noinvoices');
+            }
+            else
+            {
+                return view('pages.payment.create');
+            }
+        }
+        else
+        {
+            return view('pages.invoice.nocompany');
+        }
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param CreatePaymentRequest $request
+     * @param Invoice $invoice
      * @return \Illuminate\Http\Response
      */
     public function store(CreatePaymentRequest $request, Invoice $invoice)
@@ -82,7 +99,7 @@ class PaymentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param CreateSoloPaymentRequest $request
      * @return \Illuminate\Http\Response
      */
     public function storesolo(CreateSoloPaymentRequest $request)
@@ -136,8 +153,8 @@ class PaymentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Payment  $payment
+     * @param UpdatePaymentRequest $request
+     * @param  \App\Models\Payment $payment
      * @return \Illuminate\Http\Response
      */
     public function update(UpdatePaymentRequest $request, Payment $payment)
@@ -154,8 +171,9 @@ class PaymentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Payment  $payment
+     * @param  \App\Models\Payment $payment
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(Payment $payment)
     {

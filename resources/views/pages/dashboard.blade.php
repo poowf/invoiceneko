@@ -15,13 +15,13 @@
             <div class="col s12 m4">
                 <h3>Welcome</h3>
                 <div class="card-panel">
-                    Hello {{ $user->full_name or '' }}
+                    Hello {{ $user->full_name ?? '' }}
                 </div>
             </div>
             <div class="col s12 m8">
                 <h3>Summary</h3>
                 <div class="card-panel">
-                    Hello {{ $user->full_name or '' }}
+                    Hello {{ $user->full_name ?? '' }}
                 </div>
             </div>
             <div class="col s12">

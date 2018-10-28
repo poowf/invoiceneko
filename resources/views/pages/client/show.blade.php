@@ -19,26 +19,27 @@
         <div class="row">
             <div class="col s12">
                 <div class="card-panel">
-                    <dt>Company Name</dt>
-                    <dd>{{ $client->companyname }}</dd>
-                    <dt>Company Block</dt>
-                    <dd>{{ $client->block or '-' }}</dd>
-                    <dt>Company Street</dt>
-                    <dd>{{ $client->street or '-' }}</dd>
-                    <dt>Company Unit Number</dt>
-                    <dd>{{ $client->unitnumber or '-' }}</dd>
-                    <dt>Company Postal Code</dt>
-                    <dd>{{ $client->postalcode or '-' }}</dd>
-                    <dt>Company Nickname</dt>
-                    <dd>{{ $client->nickname or '-' }}</dd>
-                    <dt>Company Registration Number</dt>
-                    <dd>{{ $client->crn or '-' }}
-                    <dt>Contact Name</dt>
-                    <dd>{{ $client->contactname or '-' }}</dd>
-                    <dt>Contact Email</dt>
-                    <dd>{{ $client->contactemail or '-' }}</dd>
-                    <dt>Contact Phone</dt>
-                    <dd>{{ $client->contactphone or '-' }}</dd>
+                    <dl>
+                        <dt>Company Name</dt>
+                        <dd>{{ $client->companyname }}</dd>
+                        <dt>Company Block</dt>
+                        <dd>{{ $client->block ?? '-' }}</dd>
+                        <dt>Company Street</dt>
+                        <dd>{{ $client->street ?? '-' }}</dd>
+                        <dt>Company Unit Number</dt>
+                        <dd>{{ $client->unitnumber ?? '-' }}</dd>
+                        <dt>Company Postal Code</dt>
+                        <dd>{{ $client->postalcode ?? '-' }}</dd>
+                        <dt>Company Nickname</dt>
+                        <dd>{{ $client->nickname ?? '-' }}</dd>
+                        <dt>Company Registration Number</dt>
+                        <dd>{{ $client->crn ?? '-' }}
+                        <dt>Contact Name</dt>
+                        <dd>{{ $client->contactname ?? '-' }}</dd>
+                        <dt>Contact Email</dt>
+                        <dd>{{ $client->contactemail ?? '-' }}</dd>
+                        <dt>Contact Phone</dt>
+                        <dd>{{ $client->contactphone ?? '-' }}</dd>
                     </dl>
                 </div>
             </div>
@@ -74,8 +75,6 @@
                                         <span class="alt-badge warning">{{ $invoice->statustext() }}</span>
                                     @elseif ($invoice->status == App\Models\Invoice::STATUS_CLOSED)
                                         <span class="alt-badge success">{{ $invoice->statustext() }}</span>
-                                    @elseif ($invoice->status == App\Models\Invoice::STATUS_ARCHIVED)
-                                        <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
                                     @elseif ($invoice->status == App\Models\Invoice::STATUS_WRITTENOFF)
                                         <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
                                     @endif

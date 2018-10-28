@@ -21,7 +21,10 @@ class CompanySettings extends Model
 
     protected $fillable = [
         'invoice_prefix',
+        'quote_prefix',
         'invoice_conditions',
+        'quote_conditions',
+        'tax'
     ];
 
     public function company()

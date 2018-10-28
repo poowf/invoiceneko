@@ -70,14 +70,19 @@
                             <div class="form-group">
                                 <label for="gender" class="col-sm-2 control-label">Gender</label>
                                 <div class="col-sm-10">
-                                    <div class="be-radio-icon inline">
-                                        <input id="gender-male" name="gender" type="radio" value="male" @if( $user->gender == "male") checked @endif>
-                                        <label for="gender-male"><span class="mdi mdi-gender-male"></span></label>
-                                    </div>
-                                    <div class="be-radio-icon inline">
-                                        <input id="gender-female" name="gender" type="radio" value="female" @if( $user->gender == "female") checked @endif>
-                                        <label for="gender-female"><span class="mdi mdi-gender-female"></span></label>
-                                    </div>
+                                    <label id="rbtn-label" class="rbtn-label" for="gender">Gender</label>
+                                    <p class="rbtn">
+                                        <label for="gender-male">
+                                            <input id="gender-male" name="gender" type="radio" value="male" data-parsley-required="true" data-parsley-trigger="change" @if($user->gender == "male") checked @endif>
+                                            <span>Male</span>
+                                        </label>
+                                    </p>
+                                    <p class="rbtn">
+                                        <label for="gender-female">
+                                            <input id="gender-female" name="gender" type="radio" value="female" @if($user->gender == "female") checked @endif>
+                                            <span>Female</span>
+                                        </label>
+                                    </p>
                                 </div>
                             </div>
 

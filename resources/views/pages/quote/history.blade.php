@@ -18,13 +18,13 @@
             <div class="col s6">
             </div>
             <div class="col s6 mtop30 right">
-                <a class="btn btn-lg btn-default" href="{{ route('payment.create', [ 'invoice' => $invoice->id] ) }}">
+                <a class="btn btn-lg btn-default" href="{{ route('payment.create', [ 'quote' => $quote->id] ) }}">
                     Log Payment
                 </a>
-                <a class="btn btn-lg btn-default" href="{{ route('invoice.download', [ 'invoice' => $invoice->id] ) }}">
+                <a class="btn btn-lg btn-default" href="{{ route('quote.download', [ 'quote' => $quote->id] ) }}">
                     Save PDF
                 </a>
-                <a class="btn btn-lg btn-default" href="{{ route('invoice.printview', [ 'invoice' => $invoice->id] ) }}">
+                <a class="btn btn-lg btn-default" href="{{ route('quote.printview', [ 'quote' => $quote->id] ) }}">
                     Print
                 </a>
             </div>
@@ -33,36 +33,39 @@
             <div class="col s12">
                 <h3>Current Details</h3>
                 <div id="details-panel" class="card-panel">
-                    <dt>Company Name</dt>
-                    <dd>{{ $client->companyname }}</dd>
-                    <dt>Company Address</dt>
-                    <dd>{{ $client->address }}</dd>
-                    <dt>Company Nickname</dt>
-                    <dd>{{ $client->nickname or '' }}</dd>
-                    <dt>Company Registration Number</dt>
-                    <dd>{{ $client->crn }}
-                    <dt>Contact Name</dt>
-                    <dd>{{ $client->contactname or '-' }}</dd>
-                    <dt>Contact Email</dt>
-                    <dd>{{ $client->contactemail or '-' }}</dd>
-                    <dt>Contact Phone</dt>
-                    <dd>{{ $client->contactphone or '-' }}</dd>
-                    <dt>Status</dt>
-                    <dd>
-                        @if ($invoice->status == App\Models\Invoice::STATUS_OVERDUE)
-                            <span class="alt-badge error">{{ $invoice->statustext() }}</span>
-                        @elseif ($invoice->status == App\Models\Invoice::STATUS_DRAFT)
-                            <span class="alt-badge">{{ $invoice->statustext() }}</span>
-                        @elseif ($invoice->status == App\Models\Invoice::STATUS_OPEN)
-                            <span class="alt-badge warning">{{ $invoice->statustext() }}</span>
-                        @elseif ($invoice->status == App\Models\Invoice::STATUS_CLOSED)
-                            <span class="alt-badge success">{{ $invoice->statustext() }}</span>
-                        @elseif ($invoice->status == App\Models\Invoice::STATUS_ARCHIVED)
-                            <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
-                        @elseif ($invoice->status == App\Models\Invoice::STATUS_WRITTENOFF)
-                            <span class="alt-badge grey">{{ $invoice->statustext() }}</span>
-                        @endif
-                    </dd>
+                    <dl>
+                        <dt>Company Name</dt>
+                        <dd>{{ $client->companyname }}</dd>
+                        <dt>Company Block</dt>
+                        <dd>{{ $client->block ?? '-' }}</dd>
+                        <dt>Company Street</dt>
+                        <dd>{{ $client->street ?? '-' }}</dd>
+                        <dt>Company Unit Number</dt>
+                        <dd>{{ $client->unitnumber ?? '-' }}</dd>
+                        <dt>Company Postal Code</dt>
+                        <dd>{{ $client->postalcode ?? '-' }}</dd>
+                        <dt>Company Nickname</dt>
+                        <dd>{{ $client->nickname ?? '-' }}</dd>
+                        <dt>Company Registration Number</dt>
+                        <dd>{{ $client->crn }}
+                        <dt>Contact Name</dt>
+                        <dd>{{ $client->contactname ?? '-' }}</dd>
+                        <dt>Contact Email</dt>
+                        <dd>{{ $client->contactemail ?? '-' }}</dd>
+                        <dt>Contact Phone</dt>
+                        <dd>{{ $client->contactphone ?? '-' }}</dd>
+                        <dt>Status</dt>
+                        <dd>
+                            @if ($quote->status == App\Models\Quote::STATUS_DRAFT)
+                                <span class="alt-badge">{{ $quote->statustext() }}</span>
+                            @elseif ($quote->status == App\Models\Quote::STATUS_OPEN)
+                                <span class="alt-badge warning">{{ $quote->statustext() }}</span>
+                            @elseif ($quote->status == App\Models\Quote::STATUS_EXPIRED)
+                                <span class="alt-badge error">{{ $quote->statustext() }}</span>
+                            @elseif ($quote->status == App\Models\Quote::STATUS_COMPLETED)
+                                <span class="alt-badge success">{{ $quote->statustext() }}</span>
+                            @endif
+                        </dd>
                     </dl>
                 </div>
             </div>
@@ -70,15 +73,15 @@
         <div class="row">
             @if($histories->isNotEmpty())
                 <div class="col s12">
-                    <h3>Invoice History</h3>
+                    <h3>Quote History</h3>
                 </div>
                 @foreach($histories as $key => $history)
-                    <div class="col s12 m4">
-                        <div class="single-history-wrapper">
-                            <div class="card single-history">
-                                <p>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $history->created_at)->format('j F, Y, h:i:s a') }}</p>
-                                <a href="{{ route('invoice.old.show', [ 'oldinvoice' => $history->id ] ) }}"><i class="material-icons">remove_red_eye</i></a>
-                            </div>
+                    <div class="col s12 m4 l4 xl3 single-history-card">
+                        <div class="card single-history">
+                            <p>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $history->created_at)->format('j F, Y, h:i:s a') }}</p>
+                            <a class="btn btn-link blue-grey lighten-1 waves-effect waves-dark" href="{{ route('quote.old.show', [ 'oldquote' => $history->id ] ) }}">
+                                View
+                            </a>
                         </div>
                     </div>
                 @endforeach

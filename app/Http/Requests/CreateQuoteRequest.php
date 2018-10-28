@@ -26,6 +26,7 @@ class CreateQuoteRequest extends FormRequest
         return [
             'nice_quote_id' => 'required',
             'date' => 'required',
+            'netdays' => 'required|numeric',
             'client_id' => 'required',
         ];
     }
