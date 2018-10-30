@@ -91,6 +91,7 @@ class CompanySettingsController extends Controller
         $companysettings->fill($request->all());
         $ownedcompany->settings()->save($companysettings);
 
+        flash('Company Settings Updated', 'success');
         return redirect()->back();
     }
 
