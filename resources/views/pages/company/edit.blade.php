@@ -71,7 +71,7 @@
         </div>
         <div class="row">
             <div class="col s12 m3 xl2">
-                @include("partials/sidenav")
+                @include("partials/sidenav-company")
             </div>
             <div class="col s12 m9 xl10">
                 <form id="edit-company" method="post" enctype="multipart/form-data">
