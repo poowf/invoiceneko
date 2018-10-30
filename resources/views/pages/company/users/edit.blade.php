@@ -11,12 +11,12 @@
     <div class="container">
         <div class="row">
             <div class="col s12">
-                <h3>Profile</h3>
+                <h3>Edit User</h3>
             </div>
         </div>
         <div class="row">
             <div class="col s12 m3 xl2">
-                @include("partials/sidenav-user")
+                @include("partials/sidenav-company")
             </div>
             <div class="col s12 m9 xl10">
                 <form id="edit-profile" method="post" enctype="multipart/form-data">
@@ -32,13 +32,6 @@
                             <div class="input-field col s12">
                                 <input id="email" name="email" type="email" data-parsley-required="true" data-parsley-trigger="change" value="{{ $user->email ?? '' }}" placeholder="Email">
                                 <label for="email" class="label-validation">Email</label>
-                                <span class="helper-text"></span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input id="password" name="password" type="password" data-parsley-required="true" data-parsley-trigger="change">
-                                <label for="password" class="label-validation">Existing Password</label>
                                 <span class="helper-text"></span>
                             </div>
                         </div>

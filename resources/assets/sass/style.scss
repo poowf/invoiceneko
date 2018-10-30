@@ -114,6 +114,10 @@ mark {
   font-weight: normal;
 }
 
+.text-bold {
+  font-weight: bold;
+}
+
 .mbth5 {
   margin-top: 5px;
   margin-bottom: 5px;
@@ -322,6 +326,10 @@ mark {
   text-align: center;
   line-height: 22px;
   height: 22px;
+}
+
+.alt-badge.mini-padding {
+  padding: 2px 4px;
 }
 
 :root:root .card-panel .card-input {

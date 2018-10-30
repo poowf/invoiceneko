@@ -71,6 +71,17 @@ class UserController extends Controller
     }
 
     /**
+     * Retrieve the user and return as object
+     *
+     * @param  \App\Models\User $user
+     * @return ItemTemplate
+     */
+    public function retrieve(User $user)
+    {
+        return response()->json($user);
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param UpdateUserRequest $request
