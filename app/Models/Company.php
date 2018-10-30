@@ -94,6 +94,11 @@ class Company extends Model
         return $this->hasOne('App\Models\Quote')->latest()->limit(1)->first();
     }
 
+    public function users()
+    {
+        return $this->hasMany('App\Models\User', 'company_id');
+    }
+
     public function quotes()
     {
         return $this->hasMany('App\Models\Quote', 'company_id');

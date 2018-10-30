@@ -42,19 +42,30 @@ Route::group(['middleware' => ['auth']], function() {
     /* User */
     Route::get('/user/edit', 'UserController@edit')->name('user.edit');
     Route::patch('/user/edit', 'UserController@update')->name('user.update');
+    //TODO:Middleware check to ensure that the user logged in is an owner and that the user retrieved is a member of the company
+    Route::get('/user/{user}/retrieve', 'UserController@retrieve')->name('user.retrieve');
 
     /* Company */
-    Route::get('/company/edit', 'CompanyController@edit')->name('company.edit');
-    Route::patch('/company/edit', 'CompanyController@update')->name('company.update');
-
-    /* CompanyAddress */
-    Route::get('/company/address/edit', 'CompanyAddressController@edit')->name('company.address.edit');
-    Route::patch('/company/address/edit', 'CompanyAddressController@update')->name('company.address.update');
-
-    Route::get('/company/settings/edit', 'CompanySettingsController@edit')->name('company.settings.edit');
-    Route::patch('/company/settings/edit', 'CompanySettingsController@update')->name('company.settings.update');
+    Route::get('/company/edit', 'CompanyController@edit')->name('company.edit')->middleware('can:owner,App\Models\Company');
+    Route::patch('/company/edit', 'CompanyController@update')->name('company.update')->middleware('can:owner,App\Models\Company');
 
     Route::group(['middleware' => ['hascompany']], function() {
+        /* Company */
+        Route::get('/company/owner/edit', 'CompanyController@edit_owner')->name('company.owner.edit')->middleware('can:exist,App\Models\Company');
+        Route::patch('/company/owner/edit', 'CompanyController@update_owner')->name('company.owner.update')->middleware('can:owner,App\Models\Company');
+        Route::get('/company/users', 'CompanyController@index_users')->name('company.users.index')->middleware('can:exist,App\Models\Company');
+        Route::get('/company/users/create', 'CompanyController@create_users')->name('company.users.create')->middleware('can:owner,App\Models\Company');
+        Route::post('/company/users/create', 'CompanyController@store_users')->name('company.users.store')->middleware('can:owner,App\Models\Company');
+        Route::get('/company/users/{user}/edit', 'CompanyController@edit_users')->name('company.users.edit')->middleware('can:owner,App\Models\Company');
+        Route::patch('/company/users/{user}/edit', 'CompanyController@update_users')->name('company.users.update')->middleware('can:owner,App\Models\Company');
+
+        /* CompanyAddress */
+        Route::get('/company/address/edit', 'CompanyAddressController@edit')->name('company.address.edit')->middleware('can:owner,App\Models\Company');
+        Route::patch('/company/address/edit', 'CompanyAddressController@update')->name('company.address.update')->middleware('can:owner,App\Models\Company');
+
+        /* CompanySettings */
+        Route::get('/company/settings/edit', 'CompanySettingsController@edit')->name('company.settings.edit')->middleware('can:owner,App\Models\Company');
+        Route::patch('/company/settings/edit', 'CompanySettingsController@update')->name('company.settings.update')->middleware('can:owner,App\Models\Company');
 
         /* Migration */
         Route::get('/migration/', 'DataMigrationController@create')->name('migration.create');

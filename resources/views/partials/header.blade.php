@@ -22,7 +22,7 @@
                                     <ul id="dropdown-navigation" class="dropdown-content" style="margin-left: 15px;">
                                         <li><a href="{{ route('company.edit') }}">Company</a></li>
                                         <li><a href="{{ route('itemtemplate.index') }}">Item Templates</a></li>
-                                        <li><a href="{{ route('company.settings.edit') }}">Settings</a></li>
+                                        <li><a href="{{ route('user.edit') }}">User</a></li>
                                         <li>
                                             <form method="post" action="{{ route('auth.destroy') }}">
                                                 {{ csrf_field() }}
@@ -48,7 +48,7 @@
                                     <ul id="dropdown-mobile-navigation" class="dropdown-content" style="margin-left: 10px; margin-top: 15px;">
                                         <li><a href="{{ route('company.edit') }}">Company</a></li>
                                         <li><a href="{{ route('itemtemplate.index') }}">Item Templates</a></li>
-                                        <li><a href="{{ route('company.settings.edit') }}">Settings</a></li>
+                                        <li><a href="{{ route('user.edit') }}">User</a></li>
                                         <li>
                                             <form method="post" action="{{ route('auth.destroy') }}">
                                                 {{ csrf_field() }}
