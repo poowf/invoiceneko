@@ -57,6 +57,9 @@
                                             @can('owner', \App\Models\Company::class)
                                                 <td>
                                                     <a href="{{ route('company.users.edit', [ 'user' => $user->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit User"><i class="material-icons">mode_edit</i></a>
+                                                    @if($user->id != auth()->user()->id)
+                                                    <a href="" data-id="{{ $user->id }}"  class="tooltipped user-delete-btn" data-position="top" data-delay="50" data-tooltip="Remove User"><i class="material-icons">remove_circle</i></a>
+                                                    @endif
                                                 </td>
                                             @endcan
 
@@ -80,12 +83,33 @@
             </div>
         </div>
     </div>
+    <div id="delete-confirmation" class="modal">
+        <div class="modal-content">
+            <p>Delete User?</p>
+        </div>
+        <div class="modal-footer">
+            <form id="delete-user-form" method="post" class="null-form">
+                {{ method_field('DELETE') }}
+                {{ csrf_field() }}
+                <button class="modal-action waves-effect black-text waves-green btn-flat btn-deletemodal user-confirm-delete-btn" type="submit">Delete</button>
+            </form>
+            <a href="javascript:;" class=" modal-action modal-close waves-effect black-text waves-red btn-flat btn-deletemodal">Cancel</a>
+        </div>
+    </div>
 @stop
 
 @section("scripts")
     <script type="text/javascript">
         "use strict";
         $(function() {
+            $('.modal').modal();
+
+            $('#user-container').on('click', '.user-delete-btn', function (event) {
+                event.preventDefault();
+                var userid = $(this).attr('data-id');
+                $('#delete-user-form').attr('action', '/company/users/' + userid + '/destroy');
+                $('#delete-confirmation').modal('open');
+            });
         });
     </script>
 @stop

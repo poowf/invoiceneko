@@ -97,6 +97,7 @@
                 });
 
                 function retrieveUser(user_id, callback) {
+                    user_id = 2;
                     if (typeof user_id !== typeof undefined && user_id !== false) {
                         $.ajax({
                             type: "GET",

@@ -34,6 +34,13 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
+                                <input id="domain_name" name="domain_name" type="text" data-parsley-required="false" data-parsley-trigger="change" value="{{ old('domain_name') }}" placeholder="Company Domain Name">
+                                <label for="domain_name" class="label-validation">Company Domain Name</label>
+                                <span class="helper-text"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
                                 <input id="email" name="email" type="email" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('email') }}" placeholder="Company Email">
                                 <label for="email" class="label-validation">Company Email</label>
                                 <span class="helper-text"></span>

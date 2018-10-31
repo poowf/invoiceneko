@@ -299,4 +299,37 @@ class CompanyController extends Controller
 
         return redirect()->back();
     }
+
+    public function destroy_users(Request $request, User $user) {
+
+        $auth_user = auth()->user();
+        $usercompany = $user->company;
+
+        //TODO: Probably need to rewrite/refactor this logic to somewhere else
+        if ($usercompany)
+        {
+            if ($usercompany->isOwner($auth_user))
+            {
+                if($user->id != $auth_user->id)
+                {
+                    $user->delete();
+                    flash('User Deleted', 'success');
+                }
+                else
+                {
+                    flash('You cannot delete the owner of the Company', 'error');
+                }
+            }
+            else
+            {
+                flash('Unauthorised', 'error');
+            }
+        }
+        else
+        {
+            flash('Nothing was done', 'error');
+        }
+
+        return redirect()->back();
+    }
 }
