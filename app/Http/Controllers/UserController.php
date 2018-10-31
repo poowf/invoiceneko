@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\CompanyUserRequest;
 use Illuminate\Support\Facades\Hash;
 use Log;
 use App\Models\User;
+use App\Models\Company;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -24,11 +26,23 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param Request $request
+     * @param null $token
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('pages.user.create');
+        $token = null;
+        if ($request->query->has('token'))
+        {
+            $token = $request->query->get('token');
+            $companyUserRequest = CompanyUserRequest::where('token', $token)->first();
+            session(['_old_input.full_name' => $companyUserRequest->full_name]);
+            session(['_old_input.email' => $companyUserRequest->email]);
+            session(['_old_input.phone' => $companyUserRequest->phone]);
+        }
+
+        return view('pages.user.create', compact('token'));
     }
 
     /**
@@ -43,6 +57,24 @@ class UserController extends Controller
         $user->fill($request->all());
         $user->password = $request->input('password');
         $user->save();
+
+        if ($request->query->has('token'))
+        {
+            $token = $request->query->get('token');
+            $companyUserRequest = CompanyUserRequest::where('token', $token)->first();
+            $user->company_id = $companyUserRequest->company_id;
+            $user->save();
+
+            $companyUserRequest->delete();
+
+            session()->forget('_old_input.full_name');
+            session()->forget('_old_input.email');
+            session()->forget('_old_input.phone');
+
+            flash('You can now sign in', 'success');
+
+            return redirect()->route('auth.show');
+        }
 
         $request->session()->put('user_id', $user->id);
 
@@ -68,6 +100,35 @@ class UserController extends Controller
     {
         $user = auth()->user();
         return view('pages.user.edit', compact('user'));
+    }
+
+    /**
+     * Retrieve the user and return as object
+     *
+     * @param  \App\Models\User $user
+     * @return ItemTemplate
+     */
+    public function retrieve(User $user)
+    {
+        $auth_user = auth()->user();
+        $usercompany = $user->company;
+
+        //TODO: Probably need to rewrite/refactor this logic to somewhere else
+        if ($usercompany)
+        {
+            if ($usercompany->isOwner($auth_user))
+            {
+                return response()->json($user);
+            }
+            else
+            {
+                return abort(401);
+            }
+        }
+        else
+        {
+            return abort(401);
+        }
     }
 
     /**

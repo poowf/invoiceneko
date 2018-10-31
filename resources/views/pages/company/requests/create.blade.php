@@ -1,4 +1,4 @@
-@extends("layouts/default")
+@extends("layouts.default")
 
 @section("head")
     <title>{{ config('app.name') }}</title>
@@ -12,41 +12,13 @@
     <div class="container">
         <div class="row">
             <div class="col s12">
-                <h3>Sign Up</h3>
+                <h3>Request for an account</h3>
             </div>
         </div>
         <div class="row">
             <div class="col s12">
-                <form id="signup" method="post" enctype="multipart/form-data">
+                <form id="request-access" method="post" enctype="multipart/form-data">
                     <div class="card-panel">
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input id="username" name="username" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ old('username') }}" placeholder="Username">
-                                <label for="username" class="label-validation">Username</label>
-                                <span class="helper-text"></span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input id="email" name="email" type="email" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('email') }}" placeholder="Email">
-                                <label for="email" class="label-validation">Email</label>
-                                <span class="helper-text"></span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input id="password" name="password" type="password" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="6" placeholder="Password">
-                                <label for="password" class="label-validation">Password</label>
-                                <span class="helper-text"></span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input id="password_confirmation" name="password_confirmation" type="password" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="6" data-parsley-equalto="#password" placeholder="Confirm Password">
-                                <label for="password" class="label-validation">Password Confirmation</label>
-                                <span class="helper-text"></span>
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="input-field col s12">
                                 <input id="full_name" name="full_name" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ old('full_name') }}" placeholder="Name">
@@ -62,28 +34,17 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col s12 left">
-                                <label id="rbtn-label" class="rbtn-label" for="gender">Gender</label>
-                                <p class="rbtn">
-                                    <label for="gender-male">
-                                        <input id="gender-male" name="gender" type="radio" value="male" data-parsley-required="true" data-parsley-trigger="change" @if(old('gender') == "male") checked @endif>
-                                        <span>Male</span>
-                                    </label>
-                                </p>
-                                <p class="rbtn">
-                                    <label for="gender-female">
-                                        <input id="gender-female" name="gender" type="radio" value="female" @if(old('gender') == "female") checked @endif>
-                                        <span>Female</span>
-                                    </label>
-                                </p>
-                                <span class="helper-text manual-validation"></span>
+                            <div class="input-field col s12">
+                                <input id="email" name="email" type="email" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('email') }}" placeholder="Email">
+                                <label for="email" class="label-validation">Email</label>
+                                <span class="helper-text"></span>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
                             {{ csrf_field() }}
-                            <button class="btn waves-effect waves-light col s12 m3 offset-m9" type="submit" name="action">@if($token) Create @else Next @endif</button>
+                            <button class="btn waves-effect waves-light col s12 m3 offset-m9" type="submit" name="action">Request Access</button>
                         </div>
                     </div>
                 </form>
@@ -111,25 +72,7 @@
                 $(this).parent().siblings('.label-validation').removeClass('theme-text');
             });
 
-            window.Parsley
-                .addValidator('phoneFormat', {
-                    requirementType: 'string',
-                    validateString: function(value, elementid) {
-                        if($(elementid).intlTelInput("isValidNumber"))
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    },
-                    messages: {
-                        en: 'This is an invalid phone number format'
-                    }
-                });
-
-            $('#signup').parsley({
+            $('#request-access').parsley({
                 successClass: 'valid',
                 errorClass: 'invalid',
                 errorsContainer: function (velem) {
@@ -167,6 +110,24 @@
                 })
                 .on('form:submit', function(velem) {
                     $("#phone").val($("#phone").intlTelInput("getNumber"));
+                });
+
+            window.Parsley
+                .addValidator('phoneFormat', {
+                    requirementType: 'string',
+                    validateString: function(value, elementid) {
+                        if($(elementid).intlTelInput("isValidNumber"))
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    },
+                    messages: {
+                        en: 'This is an invalid phone number format'
+                    }
                 });
         });
     </script>
