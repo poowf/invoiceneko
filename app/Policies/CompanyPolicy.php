@@ -71,19 +71,6 @@ class CompanyPolicy
     }
 
     /**
-     * Determine whether the company exists.
-     *
-     * @param  \App\Models\User  $user
-     * @return mixed
-     */
-    public function exist(User $user)
-    {
-        $company = $user->company;
-
-        return $company;
-    }
-
-    /**
      * Determine whether the user owns the company.
      *
      * @param  \App\Models\User  $user

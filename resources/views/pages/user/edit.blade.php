@@ -11,7 +11,7 @@
     <div class="container">
         <div class="row">
             <div class="col s12">
-                <h3>Profile</h3>
+                <h3>User</h3>
             </div>
         </div>
         <div class="row">

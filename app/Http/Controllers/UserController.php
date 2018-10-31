@@ -78,7 +78,25 @@ class UserController extends Controller
      */
     public function retrieve(User $user)
     {
-        return response()->json($user);
+        $auth_user = auth()->user();
+        $usercompany = $user->company;
+
+        //TODO: Probably need to rewrite/refactor this logic to somewhere else
+        if ($usercompany)
+        {
+            if ($usercompany->isOwner($auth_user))
+            {
+                return response()->json($user);
+            }
+            else
+            {
+                return abort(401);
+            }
+        }
+        else
+        {
+            return abort(401);
+        }
     }
 
     /**
