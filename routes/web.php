@@ -24,9 +24,12 @@ Route::group(['middleware' => ['guest']], function() {
     Route::get('/reset/{token}', 'ResetPasswordController@show')->name('reset');
     Route::post('/reset/{token}', 'ResetPasswordController@process')->name('reset');
 
+    Route::get('/signup', 'MainController@user_signup')->name('user.signup');
+
     /* User */
     Route::get('/user/create', 'UserController@create')->name('user.create');
     Route::post('/user/create', 'UserController@store')->name('user.store');
+    Route::post('/user/check', 'UserController@check')->name('user.check');
 
     /* Company */
     Route::get('/company/create', 'CompanyController@create')->name('company.create');
