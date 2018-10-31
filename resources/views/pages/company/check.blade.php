@@ -2,18 +2,25 @@
 
 @section("head")
     <title>{{ config('app.name') }}</title>
+    <link href="{{ mix('/assets/css/intlTelInput.css') }}" rel="stylesheet" type="text/css">
+
     <style>
     </style>
 @stop
 
 @section("content")
-    <div class="mini-container">
-        <div class="row mtop30">
-            <div class="col s6">
-                <div class="card-panel">
-                    <h3>Check if your company already has an account here</h3>
-                    <p>Key in your email address</p>
-                    <form id="check-company" method="post" enctype="multipart/form-data">
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <h3>Check Company</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <h4>Check if your company already has an account here</h4>
+                <form id="check-company" method="post" enctype="multipart/form-data">
+                    <div class="card-panel">
+                        <p style="font-size: 1.2em;">Key in your work email:</p>
                         <div class="row">
                             <div class="input-field col s12">
                                 <input id="email" name="email" type="email" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('email') }}" placeholder="Email">
@@ -21,19 +28,22 @@
                                 <span class="helper-text"></span>
                             </div>
                         </div>
-                    </form>
-                </div>
-            </div>
-            <div class="col s6">
-                <div class="card-panel">
-                    <h3>If your company </h3>
-                </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {{ csrf_field() }}
+                            <button id="check-company-btn" class="btn waves-effect waves-light full-width" type="submit" name="action">Check</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 @stop
 
 @section("scripts")
+    <script type="text/javascript" src="{{ mix('/assets/js/intlTelInput.js') }}"></script>
+
     <script type="text/javascript">
         "use strict";
         $(function() {
