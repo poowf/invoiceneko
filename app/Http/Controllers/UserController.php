@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Support\Facades\Hash;
 use Log;
 use App\Models\User;
+use App\Models\Company;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -127,6 +128,27 @@ class UserController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    public function check(Request $request)
+    {
+        $email = $request->input('check_email');
+
+//        $domain = preg_filter("/([^@]+)/","", $email);
+
+        $explode = explode("@", $email);
+        $domain = array_pop($explode);
+        $company = Company::where('domain_name', $domain)->first();
+
+        if($company)
+        {
+            return response()->json(['company_id' => $company->id]);
+        }
+        else
+        {
+            return abort(404);
+        }
+
     }
 
     /**
