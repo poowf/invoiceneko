@@ -119,7 +119,8 @@ class CompanyController extends Controller
      */
     public function show()
     {
-        //
+        $company = auth()->user()->company;
+        return view('pages.company.show', compact('company'));
     }
 
     /**
@@ -254,7 +255,7 @@ class CompanyController extends Controller
 
         if($company)
         {
-            $users = auth()->user()->company->users()->paginate(12);
+            $users = $company->users()->paginate(12);
         }
         else
         {
@@ -331,5 +332,30 @@ class CompanyController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    public function show_check()
+    {
+        return view('pages.company.check');
+    }
+
+    public function check(Request $request)
+    {
+        $email = $request->input('email');
+
+//        $domain = preg_filter("/([^@]+)/","", $email);
+
+        $explode = explode("@", $email);
+        $domain = array_pop($explode);
+        $company = Company::where('domain_name', $domain)->first();
+
+        if($company)
+        {
+            return redirect()->route('company.requests.create');
+        }
+        else
+        {
+            return redirect()->route('user.create');
+        }
     }
 }

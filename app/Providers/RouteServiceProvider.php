@@ -25,6 +25,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::model('client', 'App\Models\Client');
         Route::model('company', 'App\Models\Company');
+        Route::model('companyuserrequest', 'App\Models\CompanyUserRequest');
         Route::model('invoice', 'App\Models\Invoice');
         Route::model('invoiceitem', 'App\Models\InvoiceItem');
         Route::model('oldinvoice', 'App\Models\OldInvoice');
@@ -41,6 +42,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::pattern('token', '([A-Za-z0-9]+)');
         Route::pattern('client', '([A-Za-z0-9]+)');
         Route::pattern('company', '([A-Za-z0-9]+)');
+        Route::pattern('companyuserrequest', '([A-Za-z0-9]+)');
         Route::pattern('invoice', '([A-Za-z0-9]+)');
         Route::pattern('invoiceitem', '([A-Za-z0-9]+)');
         Route::pattern('oldinvoice', '([A-Za-z0-9]+)');

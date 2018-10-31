@@ -17,9 +17,9 @@ class MainController extends Controller
         return redirect()->route('auth.show');
     }
 
-    public function user_signup()
+    public function start()
     {
-        return view('pages.user.signup');
+        return view('pages.start');
     }
 
     public function dashboard()

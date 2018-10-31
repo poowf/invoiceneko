@@ -24,16 +24,21 @@ Route::group(['middleware' => ['guest']], function() {
     Route::get('/reset/{token}', 'ResetPasswordController@show')->name('reset');
     Route::post('/reset/{token}', 'ResetPasswordController@process')->name('reset');
 
-    Route::get('/signup', 'MainController@user_signup')->name('user.signup');
+    Route::get('/start', 'MainController@start')->name('start');
 
     /* User */
     Route::get('/user/create', 'UserController@create')->name('user.create');
     Route::post('/user/create', 'UserController@store')->name('user.store');
-    Route::post('/user/check', 'UserController@check')->name('user.check');
 
     /* Company */
     Route::get('/company/create', 'CompanyController@create')->name('company.create');
     Route::post('/company/create', 'CompanyController@store')->name('company.store');
+    Route::get('/company/check', 'CompanyController@show_check')->name('company.show_check');
+    Route::post('/company/check', 'CompanyController@check')->name('company.check');
+
+    Route::get('/company/requests/create', 'CompanyUserRequestController@create')->name('company.requests.create');
+    Route::post('/company/requests/create', 'CompanyUserRequestController@store')->name('company.requests.store');
+
 });
 
 Route::group(['middleware' => ['auth']], function() {
@@ -45,6 +50,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::patch('/user/edit', 'UserController@update')->name('user.update');
 
     /* Company */
+    Route::get('/company/show', 'CompanyController@show')->name('company.show');
     Route::get('/company/edit', 'CompanyController@edit')->name('company.edit')->middleware('can:owner,App\Models\Company');
     Route::patch('/company/edit', 'CompanyController@update')->name('company.update')->middleware('can:owner,App\Models\Company');
 
@@ -70,6 +76,10 @@ Route::group(['middleware' => ['auth']], function() {
         /* CompanySettings */
         Route::get('/company/settings/edit', 'CompanySettingsController@edit')->name('company.settings.edit')->middleware('can:owner,App\Models\Company');
         Route::patch('/company/settings/edit', 'CompanySettingsController@update')->name('company.settings.update')->middleware('can:owner,App\Models\Company');
+
+        Route::get('/company/requests', 'CompanyUserRequestController@index')->name('company.requests.index');
+        Route::post('/company/requests/{companyuserrequest}/approve', 'CompanyUserRequestController@approve')->name('company.requests.approve');
+        Route::post('/company/requests/{companyuserrequest}/reject', 'CompanyUserRequestController@reject')->name('company.requests.reject');
 
         /* Migration */
         Route::get('/migration/', 'DataMigrationController@create')->name('migration.create');
