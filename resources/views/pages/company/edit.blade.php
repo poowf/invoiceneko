@@ -66,12 +66,12 @@
     <div class="container">
         <div class="row">
             <div class="col s12">
-                <h3>Company</h3>
+                <h3>Details</h3>
             </div>
         </div>
         <div class="row">
             <div class="col s12 m3 xl2">
-                @include("partials/sidenav")
+                @include("partials/sidenav-company")
             </div>
             <div class="col s12 m9 xl10">
                 <form id="edit-company" method="post" enctype="multipart/form-data">
@@ -107,6 +107,13 @@
                             <div class="input-field col s12">
                                 <input id="crn" name="crn" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ $company->crn ?? '' }}" placeholder="Company Registration Number">
                                 <label for="crn" class="label-validation">Company Registration Number</label>
+                                <span class="helper-text"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="domain_name" name="domain_name" type="text" data-parsley-required="false" data-parsley-trigger="change" value="{{ $company->domain_name ?? '' }}" placeholder="Company Domain Name">
+                                <label for="domain_name" class="label-validation">Company Domain Name</label>
                                 <span class="helper-text"></span>
                             </div>
                         </div>

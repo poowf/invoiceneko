@@ -3,7 +3,6 @@
 @section("head")
     <title>{{ config('app.name') }}</title>
     <link href="{{ mix('/assets/css/intlTelInput.css') }}" rel="stylesheet" type="text/css">
-
     <style>
     </style>
 @stop
@@ -12,13 +11,19 @@
     <div class="container">
         <div class="row">
             <div class="col s12">
-                <h3>Sign Up</h3>
+                <h3>Add User</h3>
             </div>
         </div>
         <div class="row">
-            <div class="col s12">
-                <form id="signup" method="post" enctype="multipart/form-data">
+            <div class="col s12 m3 xl2">
+                @include("partials/sidenav-company")
+            </div>
+            <div class="col s12 m9 xl10">
+                <form id="company-create-user" method="post" enctype="multipart/form-data">
                     <div class="card-panel">
+                        <div class="row">
+                            <p>Company: {{ $company->name }}</p>
+                        </div>
                         <div class="row">
                             <div class="input-field col s12">
                                 <input id="username" name="username" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ old('username') }}" placeholder="Username">
@@ -30,20 +35,6 @@
                             <div class="input-field col s12">
                                 <input id="email" name="email" type="email" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('email') }}" placeholder="Email">
                                 <label for="email" class="label-validation">Email</label>
-                                <span class="helper-text"></span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input id="password" name="password" type="password" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="6" placeholder="Password">
-                                <label for="password" class="label-validation">Password</label>
-                                <span class="helper-text"></span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input id="password_confirmation" name="password_confirmation" type="password" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="6" data-parsley-equalto="#password" placeholder="Confirm Password">
-                                <label for="password" class="label-validation">Password Confirmation</label>
                                 <span class="helper-text"></span>
                             </div>
                         </div>
@@ -83,7 +74,7 @@
                     <div class="row">
                         <div class="input-field col s12">
                             {{ csrf_field() }}
-                            <button class="btn waves-effect waves-light col s12 m3 offset-m9" type="submit" name="action">@if($token) Create @else Next @endif</button>
+                            <button class="btn waves-effect waves-light col s12 m3 offset-m9" type="submit" name="action">Add</button>
                         </div>
                     </div>
                 </form>
@@ -103,11 +94,11 @@
                 utilsScript: "/assets/js/utils.js"
             });
 
-            $( "#phone" ).focusin(function() {
+            $("#phone").focusin(function() {
                 $(this).parent().siblings('.label-validation').addClass('theme-text');
             });
 
-            $( "#phone" ).focusout(function() {
+            $("#phone").focusout(function() {
                 $(this).parent().siblings('.label-validation').removeClass('theme-text');
             });
 
@@ -129,7 +120,7 @@
                     }
                 });
 
-            $('#signup').parsley({
+            $('#company-create-user').parsley({
                 successClass: 'valid',
                 errorClass: 'invalid',
                 errorsContainer: function (velem) {
@@ -161,8 +152,8 @@
                     }
                     else if (velem.$element.is('#phone'))
                     {
-                        velem.$element.parent('').siblings('label').removeClass('valid').addClass('invalid');
-                        velem.$element.parent('').siblings('label').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
+                        velem.$element.parent('').siblings('span.helper-text').removeClass('valid').addClass('invalid');
+                        velem.$element.parent('').siblings('span.helper-text').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
                     }
                 })
                 .on('form:submit', function(velem) {
