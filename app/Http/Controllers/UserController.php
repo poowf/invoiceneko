@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Google2FA;
+use PragmaRX\Recovery\Recovery;
 
 class UserController extends Controller
 {
@@ -175,8 +176,11 @@ class UserController extends Controller
     public function security()
     {
         $user = auth()->user();
+        $recovery = collect();
+        $recovery = new Recovery();
+        $codes = $recovery->toCollection();
 
-        return view('pages.user.security', compact('user'));
+        return view('pages.user.security', compact('user', 'codes'));
     }
 
     public function multifactor_start()
@@ -213,12 +217,12 @@ class UserController extends Controller
             $user->twofa_secret = $twofa_secret;
             $user->twofa_timestamp = $twofa_timestamp;
             $user->save();
+            $recovery = new Recovery();
+            $codes = $recovery->toCollection();
 
             flash("Two FA has been enabled for your account", 'success');
-            return redirect()->route('user.security');
-            // successful
+            return redirect()->route('user.security', compact('codes'));
         } else {
-            // failed
             flash("Something went wrong, please try again", 'error');
             return redirect()->back();
         }

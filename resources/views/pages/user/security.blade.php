@@ -45,8 +45,23 @@
                         </div>
                     </form>
                     @endif
+                    @if($codes)
+                    @endif
                 </div>
             </div>
+        </div>
+    </div>
+    <div id="recovery-codes" class="modal mini-modal center">
+        <div class="modal-title pall10 theme-color">
+            Recovery Codes
+        </div>
+        <div class="pall10 blue-grey lighten-5">
+            @foreach($codes as $code)
+                <p class="box-shadow">{{ $code }}</p>
+            @endforeach
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:;" class=" modal-action modal-close waves-effect black-text waves-red btn-flat btn-disablemodal">Cancel</a>
         </div>
     </div>
     <div id="disable-confirmation" class="modal">
@@ -68,6 +83,10 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
+            @if($codes)
+                $('.modal').modal();
+                $('#recovery-codes').modal('open');
+            @endif
             @if($user->twofa_secret)
             $('.modal').modal();
             $('#security').on('change', '#multifactor-auth', function (event) {
