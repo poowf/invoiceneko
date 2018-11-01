@@ -16,7 +16,7 @@
         <div class="quote" style="background-color: #ffffff; padding: 50px 50px 20px; color: #8c8c8c;">
             <div class="row quote-header" style="position: relative; margin-bottom: 160px;">
                 <div style="position: absolute; left: 0; padding: 0 15px;">
-                    <div class="quote-logo" style="height: 110px; min-width: 210px; background-image: url('{{ asset($quote->company->logo) }}'); background-repeat: no-repeat; background-position: 0;"></div>
+                    <div class="quote-logo" style="height: 110px; min-width: 210px; background-image: url('{{ \App\Library\Poowf\Unicorn::getStorageFile($quote->company->logo, [210,110]) }}'); background-repeat: no-repeat; background-position: 0; background-size: contain;"></div>
                 </div>
                 <div class="quote-order" style="position: absolute; right: 0; padding: 0 15px; text-align: right;">
                     <span class="quote-id" style="display: block; font-size: 30px; line-height: 30px; margin-bottom: 10px;">Quote #{{ $quote->nice_quote_id }}</span>
@@ -110,7 +110,7 @@
             </div>
             <div class="row quote-company-info" style="margin-bottom: 70px;">
                 <div class="logo" style="position: relative; display: block; width: 100%;  text-align: center;">
-                    <img src="{{ asset($quote->company->smlogo) }}" alt="Company Logo" width="100" height="100" style="border: 0; vertical-align: middle;">
+                    <img src="{{ \App\Library\Poowf\Unicorn::getStorageFile($quote->company->smlogo, [100,100]) }}" alt="Company Logo" width="100" height="100" style="border: 0; vertical-align: middle;">
                 </div>
                 <div style="margin-top: 20px;">
                     <div class="summary" style="display: inline-block; width: 29.5%; padding: 0 15px; line-height: 16px; text-align: center;">
