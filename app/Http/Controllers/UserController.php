@@ -10,6 +10,7 @@ use Log;
 use App\Models\User;
 use App\Models\Company;
 use Illuminate\Http\Request;
+use Google2FA;
 
 class UserController extends Controller
 {
@@ -169,5 +170,113 @@ class UserController extends Controller
     public function destroy()
     {
         //
+    }
+
+    public function security()
+    {
+        $user = auth()->user();
+
+        return view('pages.user.security', compact('user'));
+    }
+
+    public function multifactor_start()
+    {
+        return redirect()->route('user.multifactor.create');
+    }
+
+    public function multifactor_create()
+    {
+        $user = auth()->user();
+        $twofa_secret = Google2FA::generateSecretKey(32);
+
+        session()->put('twofa_secret', $twofa_secret);
+
+        $twoFactorUrl = Google2FA::getQRCodeUrl(
+            'InvoicePlz',
+            $user->email,
+            $twofa_secret
+        );
+
+        return view('pages.user.multifactor.create', compact('twoFactorUrl', 'twofa_secret'));
+    }
+
+    public function multifactor_store(Request $request)
+    {
+        $multifactor_code = $request->input('multifactor_code');
+        $twofa_secret = session()->pull('twofa_secret');
+        $twofa_timestamp = Google2FA::getTimestamp();
+
+        $valid = Google2FA::verifyKey($twofa_secret, $multifactor_code);
+
+        if ($valid !== false) {
+            $user = auth()->user();
+            $user->twofa_secret = $twofa_secret;
+            $user->twofa_timestamp = $twofa_timestamp;
+            $user->save();
+
+            flash("Two FA has been enabled for your account", 'success');
+            return redirect()->route('user.security');
+            // successful
+        } else {
+            // failed
+            flash("Something went wrong, please try again", 'error');
+            return redirect()->back();
+        }
+
+    }
+
+    public function multifactor_destroy()
+    {
+        $user = auth()->user();
+        $user->twofa_secret = null;
+        $user->twofa_timestamp = null;
+        $user->save();
+
+        flash("Two FA has been disabled for your account", 'warning');
+        return redirect()->back();
+    }
+
+    public function multifactor_verify(Request $request)
+    {
+
+//        $twofa_timestamp = Google2FA::getTimestamp();
+//
+//        $valid = Google2FA::verifyKey($twofa_secret, $multifactor_code);
+//
+//        if ($valid !== false) {
+//            $user = auth()->user();
+//            $user->twofa_secret = $twofa_secret;
+//            $user->twofa_timestamp = $twofa_timestamp;
+//            $user->save();
+//
+//            flash("Two FA has been enabled for your account", 'success');
+//            return redirect()->route('user.security');
+//            // successful
+//        } else {
+//            // failed
+//            flash("Something went wrong, please try again", 'error');
+//            return redirect()->back();
+//        }
+//        return $twoFactorUrl;
+
+//        $user = auth()->user();
+//
+//        $multifactor_code = $request->input('multifactor_code');
+//        $twofa_secret = $user->twofa_secret;
+//        $twofa_timestamp = $user->twofa_timestamp;
+//
+//        $timestamp = Google2FA::verifyKeyNewer($twofa_secret, $multifactor_code, $twofa_timestamp);
+//
+//        if ($timestamp !== false) {
+//            $user->twofa_timestamp = $timestamp;
+//            $user->save();
+//
+//            return redirect()->intended();
+//        } else {
+//            // failed
+//            flash("Something went wrong, please try again", 'error');
+//            return redirect()->back();
+//        }
+//        return $twoFactorUrl;
     }
 }

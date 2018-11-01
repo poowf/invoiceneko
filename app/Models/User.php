@@ -47,6 +47,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'twofa_secret',
+        'twofa_timestamp'
     ];
 
     protected $attributes = [
