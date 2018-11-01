@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Log;
 use App\Traits\UniqueSlug;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
 
 class Company extends Model
 {
-    use SoftDeletes, CascadeSoftDeletes, UniqueSlug;
+    use Notifiable, SoftDeletes, CascadeSoftDeletes, UniqueSlug;
 
     /**
      * The database table used by the model.
@@ -27,6 +28,7 @@ class Company extends Model
     protected $fillable = [
         'name',
         'crn',
+        'domain_name',
         'phone',
         'email',
     ];
@@ -49,6 +51,16 @@ class Company extends Model
             $settings->quote_conditions = "Terms & Conditions for your Quote";
             $company->settings()->save($settings);
         });
+    }
+
+    /**
+     * Route notifications for the mail channel.
+     *
+     * @return string
+     */
+    public function routeNotificationForMail()
+    {
+        return $this->email;
     }
 
     public function niceInvoiceID()
@@ -92,6 +104,16 @@ class Company extends Model
     public function lastquote()
     {
         return $this->hasOne('App\Models\Quote')->latest()->limit(1)->first();
+    }
+
+    public function users()
+    {
+        return $this->hasMany('App\Models\User', 'company_id');
+    }
+
+    public function requests()
+    {
+        return $this->hasMany('App\Models\CompanyUserRequest', 'company_id');
     }
 
     public function quotes()

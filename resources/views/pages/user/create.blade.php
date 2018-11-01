@@ -83,7 +83,7 @@
                     <div class="row">
                         <div class="input-field col s12">
                             {{ csrf_field() }}
-                            <button class="btn waves-effect waves-light col s12 m3 offset-m9" type="submit" name="action">Next</button>
+                            <button class="btn waves-effect waves-light col s12 m3 offset-m9" type="submit" name="action">@if($token) Create @else Next @endif</button>
                         </div>
                     </div>
                 </form>

@@ -55,6 +55,11 @@ class Client extends Model
         return $this->hasMany('App\Models\Invoice', 'client_id');
     }
 
+    public function company()
+    {
+        return $this->belongsTo('App\Models\Company', 'company_id');
+    }
+
     public function scopeDuplicateCheck($query, $companyname)
     {
         return $query
