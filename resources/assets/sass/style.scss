@@ -114,6 +114,10 @@ mark {
   font-weight: normal;
 }
 
+.no-padding {
+  padding: 0 !important;
+}
+
 .text-bold {
   font-weight: bold;
 }
@@ -198,6 +202,10 @@ mark {
 
 .mleft15 {
   margin-left: 15px;
+}
+
+.pall10 {
+  padding: 10px;
 }
 
 .pall20 {
@@ -293,6 +301,11 @@ mark {
 }
 
 /* Modifications for Elements */
+.box-shadow {
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
 .wide-container {
   margin: 0 auto;
   width: 95%;
@@ -301,6 +314,10 @@ mark {
 .mini-container {
   margin: 0 auto;
   width: 90%;
+}
+
+.mini-modal  {
+  max-width: 300px;
 }
 
 .alt-badge {
@@ -469,6 +486,10 @@ mark {
 
 .theme-text {
   color: #299a9a !important;
+}
+
+.theme-color {
+  background-color: #299a9a !important;
 }
 
 .sidenav-trigger {
