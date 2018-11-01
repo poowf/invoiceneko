@@ -1,4 +1,23 @@
 language: php
 php:
-    - '7.1'
-    - '7.2'
+  - '7.1'
+  - '7.2'
+
+before_script:
+  - cp .env.travis .env
+  - mysql -e 'create database invoiceplz_test;'
+  - composer self-update
+  - composer install --no-interaction
+  - php artisan key:generate
+  - php artisan migrate
+
+script:
+  - vendor/bin/phpunit
+
+services:
+  - mysql
+
+cache:
+  directories:
+    - node_modules
+    - vendor
