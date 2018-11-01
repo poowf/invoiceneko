@@ -393,6 +393,7 @@ mark {
   user-select: none;
   pointer-events: none;
   position: absolute;
+  float: left;
   width: 100%;
   min-height: 18px;
   display: block;
