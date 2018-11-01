@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Log;
 use Session;
 use Validator;
 
@@ -36,6 +37,11 @@ class AuthController extends Controller
 
         flash('Invalid Credentials', 'danger');
         return redirect()->back();
+    }
+
+    public function multifactor_validate(Request $request)
+    {
+        return redirect()->intended();
     }
 
     public function destroy()
