@@ -12,12 +12,7 @@
     <div class="container">
         <div class="row">
             <div class="col s12">
-                <h3>Check Company</h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s12">
-                <h4>Check if your company already has an account here</h4>
+                <h4>Check for your company</h4>
                 <form id="check-company" method="post" enctype="multipart/form-data">
                     <div class="card-panel">
                         <p style="font-size: 1.2em;">Key in your work email:</p>
