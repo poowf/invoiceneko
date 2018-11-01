@@ -46,6 +46,7 @@ class AuthController extends Controller
 
     public function destroy()
     {
+        session()->flush();
         Auth::logout();
         return redirect()->route('main');
     }
