@@ -70,7 +70,6 @@ class CompanyAddressController extends Controller
             $companyaddress = null;
         }
 
-
         return view('pages.company.address.edit', compact('companyaddress', 'ownedcompany'));
     }
 
@@ -92,6 +91,8 @@ class CompanyAddressController extends Controller
 
         $companyaddress->fill($request->all());
         $ownedcompany->address()->save($companyaddress);
+
+        flash('Company Address Updated', 'success');
 
         return redirect()->back();
     }
