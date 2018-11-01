@@ -15,13 +15,13 @@
                 </div>
                 <hr><br>
                 <div class="form-box">
-                    <form id="multifactor-auth" method="post" action="{{ route('auth.multifactor.validate') }}">
+                    <form id="multifactor-auth" method="post" action="{{ route('user.multifactor.backup_validate') }}">
                         <div class="input-field col s12">
-                            <input id="multifactor_code" name="multifactor_code" type="number" data-parsley-required="true" data-parsley-trigger="change" placeholder="Code">
-                            <label for="multifactor_code" class="label-validation">Code</label>
+                            <input id="multifactor-backup-code" name="multifactor-backup-code" type="text" data-parsley-required="true" data-parsley-trigger="change" placeholder="Code">
+                            <label for="multifactor-backup-code" class="label-validation">Code</label>
                             <span class="helper-text"></span>
                         </div>
-                        <p>Forgot your code?<br><a href="{{ route('user.multifactor.backup') }}">Click here to Use a backup code</a></p>
+                        <p>Enter your backup code</p>
                         {{ csrf_field() }}
                         <button class="btn btn-link waves-effect waves-light full-width" type="submit" name="action">Verify</button>
                     </form>

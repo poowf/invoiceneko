@@ -81,6 +81,50 @@ class User extends Authenticatable
     }
 
     /**
+     * Encrypt the user's google_2fa secret.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function setTwofaSecretAttribute($value)
+    {
+        $this->attributes['twofa_secret'] = encrypt($value);
+    }
+
+    /**
+     * Decrypt the user's google_2fa secret.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getTwofaSecretAttribute($value)
+    {
+        return ($value) ? decrypt($value) : null;
+    }
+
+    /**
+     * Encrypt the user's google_2fa secret.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function setTwofaBackupCodesAttribute($value)
+    {
+        $this->attributes['twofa_backup_codes'] = encrypt($value);
+    }
+
+    /**
+     * Decrypt the user's google_2fa secret.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getTwofaBackupCodesAttribute($value)
+    {
+        return ($value) ? decrypt($value) : null;
+    }
+
+    /**
      * Send the password reset notification.
      *
      * @param  string  $token
