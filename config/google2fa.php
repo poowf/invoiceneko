@@ -31,7 +31,7 @@ return [
      * 2FA verified session var
      */
 
-    'session_var' => 'twofa',
+    'session_var' => 'multifactor_status',
 
     /*
      * One Time Password request input name
