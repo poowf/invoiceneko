@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ChangeDomainNameNullableToCompaniesTable extends Migration
+class AddTwofaTimestampToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class ChangeDomainNameNullableToCompaniesTable extends Migration
      */
     public function up()
     {
-        Schema::table('companies', function (Blueprint $table) {
-            $table->string('domain_name')->nullable()->change();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('twofa_timestamp')->nullable()->after('twofa_secret');
         });
     }
 
@@ -25,8 +25,8 @@ class ChangeDomainNameNullableToCompaniesTable extends Migration
      */
     public function down()
     {
-        Schema::table('companies', function (Blueprint $table) {
-            $table->string('domain_name')->nullable(false)->change();
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('twofa_timestamp');
         });
     }
 }
