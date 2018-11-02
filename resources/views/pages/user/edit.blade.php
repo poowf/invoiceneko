@@ -71,7 +71,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col s12 left">
+                            <div class="radio-field col s12 left">
                                 <label id="rbtn-label" class="rbtn-label" for="gender">Gender</label>
                                 <p class="rbtn">
                                     <label>
