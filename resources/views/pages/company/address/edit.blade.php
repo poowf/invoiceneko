@@ -50,7 +50,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col s12">
+                            <div class="radio-field col s12 left">
                                 <label id="rbtn-label" class="rbtn-label" for="buildingtype">Building Type</label>
                                 <p class="rbtn">
                                     <label for="buildingtype-residential">
