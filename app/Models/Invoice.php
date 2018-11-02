@@ -232,13 +232,17 @@ class Invoice extends Model
         return $textstatus;
     }
 
-    public function duplicate()
+    public function duplicate($date = null)
     {
+        $date = ($date) ? $date : Carbon::now();
+
+        Log::info(json_encode($date));
+
         $company = $this->company;
         $cloned = $this->replicate();
         $cloned->nice_invoice_id = $company->niceinvoiceid();
-        $cloned->date = Carbon::now();
-        $duedate = Carbon::now()->addDays($this->netdays)->startOfDay()->toDateTimeString();
+        $cloned->date = $date;
+        $duedate = $date->addDays($this->netdays)->startOfDay()->toDateTimeString();
         $cloned->duedate = $duedate;
         $cloned->status = self::STATUS_DRAFT;
         $cloned->save();
