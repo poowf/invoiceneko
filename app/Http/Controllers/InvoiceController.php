@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateInvoiceRequest;
 use App\Library\Poowf\Unicorn;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
+use App\Models\InvoiceEvent;
 use App\Models\OldInvoice;
 use App\Models\OldInvoiceItem;
 use App\Models\Quote;
@@ -14,10 +15,13 @@ use App\Models\QuoteItem;
 use App\Notifications\InvoiceNotification;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Collection;
 use Log;
 use PDF;
 use Uuid;
 use Carbon\Carbon;
+use Recurr\Rule;
+use Recurr\Frequency;
 
 class InvoiceController extends Controller
 {
@@ -169,6 +173,7 @@ class InvoiceController extends Controller
      */
     public function store(CreateInvoiceRequest $request)
     {
+        dd($request);
         $company = auth()->user()->company;
 
         $invoice = new Invoice;
@@ -180,6 +185,49 @@ class InvoiceController extends Controller
         $invoice->client_id = $request->input('client_id');
         $invoice->company_id = $company->id;
         $invoice->save();
+
+        if($request->has('recurring-invoice-check'))
+        {
+            if($request->input('recurring-invoice-check') === 'on')
+            {
+                //$repeatsEveryInterval is the number of times the event needs to occur in a time period
+                //$repeatsEveryTimePeriod is the time period in which an event needs to occur (day, week, month, year)
+                //$repeatUntilOption is the duration of which the event needs to occur until
+                //--never option is forever
+                //--occurence option is how many occurences for it to occur till the event stops
+                //--date option is until a specific date
+                $repeatsEveryTimePeriod = $request->input('recurring-time-period');
+                $repeatsEveryInterval = $request->input('recurring-time-interval');
+                $repeatUntilOption = $request->input('recurring-until');
+                $until = new Collection;
+                $until->put('type', $repeatUntilOption);
+
+                switch($repeatUntilOption)
+                {
+                    case 'occurence':
+                        $numberOfOccurences = $request->input('recurring-until-occurence-number');
+                        $until->put('meta', $numberOfOccurences);
+                        break;
+                    case 'date':
+                        $endDate = Carbon::createFromFormat('j F, Y', $request->input('recurring-until-date-value'))->toDateTimeString();
+                        $until->put('meta', $endDate);
+                        break;
+                    default:
+                        $until->put('meta', null);
+                        break;
+                }
+
+                $startDate = Carbon::now()->toDateTimeString();
+                $timezone = new DateTimeZone('Asia/Singapore');
+
+                $rruleString = $this->generateRruleString($startDate, $timezone, $repeatsEveryTimePeriod, $repeatsEveryInterval, $until);
+
+                $invoiceEvent = new InvoiceEvent;
+                $invoiceEvent->rule = $rruleString;
+                $invoiceEvent->invoice_id = $invoice->id;
+                $invoiceEvent->save();
+            }
+        }
 
         foreach($request->input('item_name') as $key => $item)
         {
@@ -197,6 +245,46 @@ class InvoiceController extends Controller
         flash('Invoice Created', 'success');
 
         return redirect()->route('invoice.show', [ 'invoice' => $invoice->id ]);
+    }
+
+    public function generateRruleString(DateTime $startDate, DateTimeZone $timezone, $frequency, $interval, $until)
+    {
+        $rule = (new Rule)
+            ->setStartDate($startDate)
+            ->setTimezone($timezone)
+            ->setInterval($interval);
+
+        switch($until->get('type'))
+        {
+            case 'occurence':
+                $count = $until->get('meta');
+                $rule->setCount($count);
+                break;
+            case 'date':
+                $untilDate = $until->get('meta');
+                $rule->setUntil($untilDate);
+                break;
+        }
+
+        switch($frequency)
+        {
+            case 'day':
+                $frequency = Frequency::DAILY;
+                break;
+            case 'week':
+                $frequency = Frequency::WEEKLY;
+                break;
+            case 'month':
+                $frequency = Frequency::MONTHLY;
+                break;
+            case 'year':
+                $frequency = Frequency::YEARLY;
+                break;
+        }
+
+        $rule->setFreq($frequency);
+
+        return $rule->getString();
     }
 
     /**
