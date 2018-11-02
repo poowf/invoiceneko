@@ -42,12 +42,24 @@ Route::group(['middleware' => ['guest']], function() {
 });
 
 Route::group(['middleware' => ['auth']], function() {
+    Route::get('/user/multifactor/backup', 'UserController@multifactor_backup')->name('user.multifactor.backup');
+    Route::post('/user/multifactor/backup', 'UserController@multifactor_backup_validate')->name('user.multifactor.backup_validate');
+});
+
+Route::group(['middleware' => ['auth', '2fa']], function() {
+    Route::post('/multifactor/validate', 'AuthController@multifactor_validate')->name('auth.multifactor.validate');
     Route::post('/signout', 'AuthController@destroy')->name('auth.destroy');
     Route::get('/errors/nocompany', 'MainController@nocompany')->name('nocompany');
 
     /* User */
     Route::get('/user/edit', 'UserController@edit')->name('user.edit');
     Route::patch('/user/edit', 'UserController@update')->name('user.update');
+    Route::get('/user/security', 'UserController@security')->name('user.security');
+    Route::post('/user/multifactor/start', 'UserController@multifactor_start')->name('user.multifactor.start');
+    Route::get('/user/multifactor/create', 'UserController@multifactor_create')->name('user.multifactor.create');
+    Route::post('/user/multifactor/create', 'UserController@multifactor_store')->name('user.multifactor.store');
+    Route::post('/user/multifactor/regenerate_codes', 'UserController@multifactor_regenerate_codes')->name('user.multifactor.regenerate_codes');
+    Route::delete('/user/multifactor/destroy', 'UserController@multifactor_destroy')->name('user.multifactor.destroy');
 
     /* Company */
     Route::get('/company/show', 'CompanyController@show')->name('company.show');
