@@ -2,7 +2,10 @@
 
 namespace App\Library\Poowf;
 
+use Carbon\Carbon;
 use Log;
+use Recurr\Frequency;
+use Recurr\Rule;
 use Validator;
 use Storage;
 
@@ -41,5 +44,49 @@ class Unicorn
         }
 
         return $filepath;
+    }
+
+    public static function generateRrule($startDate, $timezone, $interval, $frequency, $until_type, $until_meta, $object = false)
+    {
+        $rule = (new Rule)
+            ->setStartDate($startDate)
+            ->setTimezone($timezone)
+            ->setInterval($interval);
+
+        switch($until_type)
+        {
+            case 'occurence':
+                $rule->setCount($until_meta);
+                break;
+            case 'date':
+                $untilDate = Carbon::createFromFormat('Y-m-d H:i:s', $until_meta);
+                $rule->setUntil($untilDate);
+                break;
+        }
+
+        switch($frequency)
+        {
+            case 'day':
+                $frequency = Frequency::DAILY;
+                break;
+            case 'week':
+                $frequency = Frequency::WEEKLY;
+                break;
+            case 'month':
+                $frequency = Frequency::MONTHLY;
+                break;
+            case 'year':
+                $frequency = Frequency::YEARLY;
+                break;
+        }
+
+        $rule->setFreq($frequency);
+
+        if($object)
+        {
+            return $rule;
+        }
+
+        return $rule->getString();
     }
 }
