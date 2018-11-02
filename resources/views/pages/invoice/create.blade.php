@@ -187,7 +187,7 @@
 
                 //Explicit selection otherwise will change the select into a multiple select if only selecting by css class
                 $('select.item-list-selector').selectize({
-                    create: false,
+                    create: true,
                     dataAttr: 'data-id',
                     valueField: 'name',
                     labelField: 'name',

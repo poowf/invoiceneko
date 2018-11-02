@@ -112,6 +112,10 @@ mark {
   font-weight: normal;
 }
 
+.no-padding {
+  padding: 0 !important;
+}
+
 .text-bold {
   font-weight: bold;
 }
@@ -215,6 +219,10 @@ mark {
 
 .mleft15 {
   margin-left: 15px;
+}
+
+.pall10 {
+  padding: 10px;
 }
 
 .pall20 {
@@ -328,6 +336,10 @@ mark {
   width: 90%;
 }
 
+.mini-modal {
+  max-width: 300px;
+}
+
 .alt-badge {
   font-size: 1rem;
   line-height: inherit;
@@ -385,6 +397,10 @@ mark {
   width: calc(100% - 22px);
 }
 
+.radio-field {
+  position: relative;
+}
+
 .helper-text.manual-validation {
   color: transparent;
   -webkit-user-select: none;
@@ -393,6 +409,7 @@ mark {
   user-select: none;
   pointer-events: none;
   position: absolute;
+  float: left;
   width: 100%;
   min-height: 18px;
   display: block;
@@ -501,6 +518,10 @@ mark {
 
 .theme-text {
   color: #299a9a !important;
+}
+
+.theme-color {
+  background-color: #299a9a !important;
 }
 
 .sidenav-trigger {
