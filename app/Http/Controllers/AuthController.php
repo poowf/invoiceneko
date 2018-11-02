@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Log;
 use Session;
 use Validator;
 
@@ -38,8 +39,14 @@ class AuthController extends Controller
         return redirect()->back();
     }
 
+    public function multifactor_validate(Request $request)
+    {
+        return redirect()->intended();
+    }
+
     public function destroy()
     {
+        session()->flush();
         Auth::logout();
         return redirect()->route('main');
     }
