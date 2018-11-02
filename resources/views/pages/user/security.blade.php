@@ -47,10 +47,10 @@
                     @else
                     <form id="enable-2fa" method="post" enctype="multipart/form-data" action="{{ route('user.multifactor.start') }}">
                         <div class="row">
-                            <label for="multifactor-auth" class="label-validation">Two Factor Authentication</label>
                             <div class="input-field col s12">
+                                <label for="multifactor-auth" class="label-validation">Two Factor Authentication</label>
                                 {{ csrf_field() }}
-                                <button class="btn waves-effect waves-light" type="submit" name="action">Enable 2 FA</button>
+                                <button class="btn waves-effect waves-light mtop20" type="submit" name="action">Enable 2 FA</button>
                             </div>
                         </div>
                     </form>
