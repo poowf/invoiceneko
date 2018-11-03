@@ -45,7 +45,6 @@ class CompanyController extends Controller
      */
     public function store(CreateCompanyRequest $request)
     {
-
         if ($request->session()->has('user_id')) {
             $company = new Company;
             $company->fill($request->all());

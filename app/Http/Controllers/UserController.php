@@ -177,9 +177,8 @@ class UserController extends Controller
     public function security()
     {
         $user = auth()->user();
-        $codes = collect();
 
-        return view('pages.user.security', compact('user', 'codes'));
+        return view('pages.user.security', compact('user'));
     }
 
     public function multifactor_start()
@@ -190,9 +189,17 @@ class UserController extends Controller
     public function multifactor_create()
     {
         $user = auth()->user();
-        $twofa_secret = Google2FA::generateSecretKey(32);
-        $user->twofa_secret = $twofa_secret;
-        $user->save();
+        if(is_null($user->twofa_secret))
+        {
+            $twofa_secret = Google2FA::generateSecretKey(32);
+            $user->twofa_secret = $twofa_secret;
+            $user->save();
+        }
+        else
+        {
+            flash('Multifactor Auth is already enabled', 'warning');
+            return redirect()->route('user.security');
+        }
 
         $twoFactorUrl = Google2FA::getQRCodeUrl(
             config('app.name'),
@@ -206,6 +213,7 @@ class UserController extends Controller
     public function multifactor_store(Request $request)
     {
         $user = auth()->user();
+
         $multifactor_code = $request->input('multifactor_code');
         $twofa_timestamp = Google2FA::getTimestamp();
         $twofa_secret = $user->twofa_secret;
@@ -222,7 +230,9 @@ class UserController extends Controller
             $user->save();
 
             flash("Multifactor Auth has been enabled for your account", 'success');
-            return view('pages.user.security', compact('user', 'codes'));
+//            return view('pages.user.security', compact('user', 'codes'));
+            return redirect()->route('user.security')->with(compact( 'codes'));
+
         } else {
             $user->twofa_secret = null;
             $user->save();
@@ -240,7 +250,7 @@ class UserController extends Controller
         $user->twofa_backup_codes = null;
         $user->save();
 
-        flash("Two FA has been disabled for your account", 'warning');
+        flash("Multifactor Auth has been disabled for your account", 'warning');
         return redirect()->back();
     }
 
@@ -255,7 +265,8 @@ class UserController extends Controller
         $user->save();
 
         flash("Your backup codes have been regenerated", 'success');
-        return view('pages.user.security', compact('user', 'codes'));
+//        return view('pages.user.security', compact('user', 'codes'));
+        return redirect()->route('user.security')->with(compact('codes'));
     }
 
     public function multifactor_backup()
