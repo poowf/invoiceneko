@@ -1,7 +1,6 @@
 @extends("layouts.default", ['page_title' => 'Item Templates'])
 
 @section("head")
-    <title>{{ config('app.name') }}</title>
     <style>
         .card-panel.tab-panel {
             margin-top: 0;

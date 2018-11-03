@@ -1,9 +1,7 @@
 @extends("layouts.default", ['page_title' => 'Old Invoice | View'])
 
 @section("head")
-    <title>{{ config('app.name') }}</title>
     <style>
-
     </style>
 @stop
 

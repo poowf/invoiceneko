@@ -1,7 +1,6 @@
 @extends("layouts.default", ['page_title' => 'Invoice | Edit'])
 
 @section("head")
-    <title>{{ config('app.name') }}</title>
     <style>
     </style>
 @stop
