@@ -18,8 +18,13 @@ class InvoiceEvent extends Model
      */
     protected $table = 'invoice_events';
 
-    public function invoice()
+    public function invoices()
     {
-        return $this->belongsTo('App\Models\Invoice', 'invoice_id');
+        return $this->hasMany('App\Models\Invoice', 'invoice_event_id');
+    }
+
+    public function template()
+    {
+        return $this->hasOne('App\Models\InvoiceTemplate', 'invoice_event_id');
     }
 }

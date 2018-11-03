@@ -34,7 +34,10 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        return view('pages.company.create');
+        $countries = countries();
+        $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
+
+        return view('pages.company.create', 'countries', 'timezones');
     }
 
     /**
@@ -131,7 +134,10 @@ class CompanyController extends Controller
     public function edit()
     {
         $company = auth()->user()->ownedcompany;
-        return view('pages.company.edit', compact('company'));
+        $countries = countries();
+        $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
+
+        return view('pages.company.edit', compact('company', 'countries', 'timezones'));
     }
 
     /**
@@ -271,8 +277,10 @@ class CompanyController extends Controller
 
     public function create_users() {
         $company = auth()->user()->company;
+        $countries = countries();
+        $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
 
-        return view('pages.company.users.create', compact('company'));
+        return view('pages.company.users.create', compact('company', 'countries', 'timezones'));
     }
     public function store_users(CreateCompanyUserRequest $request) {
         $company = auth()->user()->company;
@@ -291,7 +299,9 @@ class CompanyController extends Controller
     }
 
     public function edit_users(User $user) {
-        return view('pages.company.users.edit', compact('user'));
+        $countries = countries();
+        $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
+        return view('pages.company.users.edit', compact('user', 'countries', 'timezones'));
     }
 
     public function update_users(UpdateCompanyUserRequest $request, User $user) {

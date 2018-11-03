@@ -8,6 +8,8 @@ use App\Library\Poowf\Unicorn;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use App\Models\InvoiceEvent;
+use App\Models\InvoiceItemTemplate;
+use App\Models\InvoiceTemplate;
 use App\Models\OldInvoice;
 use App\Models\OldInvoiceItem;
 use App\Models\Quote;
@@ -187,6 +189,19 @@ class InvoiceController extends Controller
         $invoice->company_id = $company->id;
         $invoice->save();
 
+        foreach($request->input('item_name') as $key => $item)
+        {
+            $invoiceitem = new InvoiceItem;
+            $invoiceitem->name = $item;
+            $invoiceitem->description = $request->input('item_description')[$key];
+            $invoiceitem->quantity   = $request->input('item_quantity')[$key];
+            $invoiceitem->price = $request->input('item_price')[$key];
+            $invoiceitem->invoice_id = $invoice->id;
+            $invoiceitem->save();
+        }
+
+        $invoice->setInvoiceTotal();
+
         if($request->has('recurring-invoice-check'))
         {
             if($request->input('recurring-invoice-check') === 'on')
@@ -223,23 +238,27 @@ class InvoiceController extends Controller
                 $invoiceEvent->until_type = $repeatUntilOption;
                 $invoiceEvent->until_meta = $repeatUntilMeta;
                 $invoiceEvent->rule = $rruleString;
-                $invoiceEvent->invoice_id = $invoice->id;
                 $invoiceEvent->save();
+
+                $invoice->invoice_event_id = $invoiceEvent->id;
+                $invoice->save();
+
+                $items = $invoice->items;
+
+                $invoiceTemplate = new InvoiceTemplate;
+                $invoiceTemplate->fill($invoice->toArray());
+                $invoiceTemplate->invoice_event_id = $invoiceEvent->id;
+                $invoiceTemplate->save();
+
+                foreach($items as $item)
+                {
+                    $invoiceItemTemplate = new InvoiceItemTemplate;
+                    $invoiceItemTemplate->fill($item->toArray());
+                    $invoiceItemTemplate->invoice_template_id = $invoiceTemplate->id;
+                    $invoiceItemTemplate->save();
+                }
             }
         }
-
-        foreach($request->input('item_name') as $key => $item)
-        {
-            $invoiceitem = new InvoiceItem;
-            $invoiceitem->name = $item;
-            $invoiceitem->description = $request->input('item_description')[$key];
-            $invoiceitem->quantity   = $request->input('item_quantity')[$key];
-            $invoiceitem->price = $request->input('item_price')[$key];
-            $invoiceitem->invoice_id = $invoice->id;
-            $invoiceitem->save();
-        }
-
-        $invoice->setInvoiceTotal();
 
         flash('Invoice Created', 'success');
 
@@ -343,8 +362,9 @@ class InvoiceController extends Controller
     {
         $company = auth()->user()->company;
         $clients = $company->clients;
+        $event = ($invoice->event) ? $invoice->event : collect();
 
-        return view('pages.invoice.edit', compact('invoice', 'clients'));
+        return view('pages.invoice.edit', compact('invoice', 'clients', 'event'));
     }
 
     /**
@@ -403,6 +423,7 @@ class InvoiceController extends Controller
         {
             if (isset($request->input('item_id')[$key]))
             {
+                //TODO: Validate the invoice item belongs to the invoice/company, need to do authentication here.
                 $invoiceitem = InvoiceItem::find($request->input('item_id')[$key]);
             }
             else
@@ -420,6 +441,84 @@ class InvoiceController extends Controller
         $invoice = $invoice->fresh();
 
         $invoice->setInvoiceTotal();
+
+        if($request->has('recurring-invoice-check'))
+        {
+            if($request->input('recurring-invoice-check') === 'on')
+            {
+                //$repeatsEveryInterval is the number of times the event needs to occur in a time period
+                //$repeatsEveryTimePeriod is the time period in which an event needs to occur (day, week, month, year)
+                //$repeatUntilOption is the duration of which the event needs to occur until
+                //--never option is forever
+                //--occurence option is how many occurences for it to occur till the event stops
+                //--date option is until a specific date
+                $repeatsEveryInterval = $request->input('recurring-time-interval');
+                $repeatsEveryTimePeriod = $request->input('recurring-time-period');
+                $repeatUntilOption = $request->input('recurring-until');
+                $repeatUntilMeta = null;
+
+                switch($repeatUntilOption)
+                {
+                    case 'occurence':
+                        $numberOfOccurences = $request->input('recurring-until-occurence-number');
+                        $repeatUntilMeta = $numberOfOccurences;
+                        break;
+                    case 'date':
+                        $repeatUntilMeta = Carbon::createFromFormat('j F, Y', $request->input('recurring-until-date-value'))->toDateTimeString();
+                        break;
+                }
+
+                $startDate = Carbon::now();
+                $timezone = new DateTimeZone('Asia/Singapore');
+                $rruleString = Unicorn::generateRrule($startDate, $timezone, $repeatsEveryInterval, $repeatsEveryTimePeriod, $repeatUntilOption, $repeatUntilMeta);
+
+                $eventExists = ($invoice->event) ? true : false;
+
+                $invoiceEvent = ($eventExists) ? $invoice->event : new InvoiceEvent;
+                $invoiceEvent->time_interval = $repeatsEveryInterval;
+                $invoiceEvent->time_period = $repeatsEveryTimePeriod;
+                $invoiceEvent->until_type = $repeatUntilOption;
+                $invoiceEvent->until_meta = $repeatUntilMeta;
+                $invoiceEvent->rule = $rruleString;
+                $invoiceEvent->save();
+
+                $invoice->invoice_event_id = $invoiceEvent->id;
+                $invoice->save();
+
+                $items = $invoice->items;
+
+                if($eventExists)
+                {
+                    $invoiceTemplate = $invoiceEvent->template;
+                    $invoiceTemplate->fill($invoice->toArray());
+                    $invoiceTemplate->save();
+
+                    foreach($items as $item)
+                    {
+                        $invoiceItemTemplate = new InvoiceItemTemplate;
+                        $invoiceItemTemplate->fill($item->toArray());
+                        $invoiceItemTemplate->save();
+                    }
+                }
+                else
+                {
+                    $invoiceTemplate = new InvoiceTemplate;
+                    $invoiceTemplate->fill($invoice->toArray());
+                    $invoiceTemplate->invoice_event_id = $invoiceEvent->id;
+                    $invoiceTemplate->save();
+
+                    foreach($items as $item)
+                    {
+                        $invoiceItemTemplate = new InvoiceItemTemplate;
+                        $invoiceItemTemplate->fill($item->toArray());
+                        $invoiceItemTemplate->invoice_template_id = $invoiceTemplate->id;
+                        $invoiceItemTemplate->save();
+                    }
+                }
+
+
+            }
+        }
 
         flash('Invoice Updated', 'success');
 

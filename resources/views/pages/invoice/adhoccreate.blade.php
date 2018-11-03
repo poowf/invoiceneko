@@ -45,10 +45,10 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12 m6">
-                                <select id="country" name="country" data-parsley-trigger="change">
+                                <select id="country_code" name="country_code" data-parsley-trigger="change">
                                     <option disabled="" selected="selected" value="">Client Country</option>
                                     @foreach($countries as $country)
-                                        <option value="{{ $country['name'] }}" @if(old('country') == $country['name']) selected @endif> {{ $country['name'] }}</option>
+                                        <option value="{{ $country['iso_3166_1_alpha2'] }}" @if(old('country_code') == $country['iso_3166_1_alpha2']) selected @endif> {{ $country['name'] }}</option>
                                     @endforeach
                                 </select>
                                 <label for="country" class="label-validation">Client Country</label>
@@ -208,7 +208,7 @@
                 });
             }
 
-            $('#country').selectize({});
+            $('#country_code').selectize({});
             $('#contactsalutation').selectize({});
 
             $("#fphone").intlTelInput({

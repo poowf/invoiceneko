@@ -3,24 +3,6 @@
 @section("head")
     <title>{{ config('app.name') }}</title>
     <style>
-        :root:root:root input.radio-input-inline {
-            display: inline;
-            border: none;
-            background-color: #f1f1f1;
-            text-align: right;
-            box-shadow: none;
-        }
-
-        :root:root:root input.radio-input-digit {
-            width: 45px;
-            height: 35px;
-        }
-
-        :root:root:root input.radio-input-date {
-            width: 150px;
-            height: 35px;
-            text-align: center;
-        }
     </style>
 @stop
 
@@ -151,7 +133,7 @@
                 autogrow: true,
             });
 
-            $('.datepicker').datepicker({
+            $('#date').datepicker({
                 autoClose: 'false',
                 format: 'd mmmm, yyyy',
                 yearRange: [1950, {{ \Carbon\Carbon::now()->format('Y') }}],
