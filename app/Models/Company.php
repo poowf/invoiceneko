@@ -40,6 +40,8 @@ class Company extends Model
         static::creating(function ($company) {
             $company->slug = str_slug($company->name);
             static::generateSlug($company);
+            $company->invoice_index = 1;
+            $company->quote_index = 1;
         });
 
         //Auto Creation of Settings per Company;
