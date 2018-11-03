@@ -1,7 +1,6 @@
 @extends("layouts.default", ['page_title' => 'Company | User Requests'])
 
 @section("head")
-    <title>{{ config('app.name') }}</title>
     <style>
         #request-container {
             margin: 0px;

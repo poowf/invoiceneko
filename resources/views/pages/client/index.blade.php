@@ -1,7 +1,6 @@
 @extends("layouts.default", ['page_title' => 'Clients'])
 
 @section("head")
-    <title>{{ config('app.name') }}</title>
     <style>
         .single-client-card .card-content {
             height: 130px;

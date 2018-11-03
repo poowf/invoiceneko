@@ -2,7 +2,6 @@
 
 @section("head")
     <link href="{{ mix('/assets/css/intlTelInput.css') }}" rel="stylesheet" type="text/css">
-
     <style>
         .btn-text {
             text-decoration: none;
