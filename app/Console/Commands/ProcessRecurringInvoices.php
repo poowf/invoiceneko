@@ -93,9 +93,10 @@ class ProcessRecurringInvoices extends Command
                 {
                     $invoice = $event->invoice;
                     $duplicatedInvoice = $invoice->duplicate(Carbon::createFromFormat('Y-m-d H:i:s', $recurrence->getEnd()->format('Y-m-d H:i:s')));
+                    $duplicatedInvoice->invoice_event_id = $event->id;
+                    $duplicatedInvoice->save();
                 }
             }
-
         }
     }
 }

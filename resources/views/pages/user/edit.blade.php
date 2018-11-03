@@ -63,6 +63,30 @@
                                 <span class="helper-text"></span>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <select id="country_code" name="country_code" data-parsley-trigger="change">
+                                    <option disabled="" selected="selected" value="">Country</option>
+                                    @foreach($countries as $country)
+                                        <option value="{{ $country['iso_3166_1_alpha2'] }}" @if($user->country_code == $country['iso_3166_1_alpha2']) selected @endif> {{ $country['name'] }}</option>
+                                    @endforeach
+                                </select>
+                                <label for="country" class="label-validation">Country</label>
+                                <span class="helper-text"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <select id="timezone" name="timezone" data-parsley-trigger="change">
+                                    <option disabled="" selected="selected" value="">Timezone</option>
+                                    @foreach($timezones as $timezone)
+                                        <option value="{{ $timezone }}" @if($user->timezone == $timezone) selected @endif> {{ $timezone }}</option>
+                                    @endforeach
+                                </select>
+                                <label for="country" class="label-validation">Timezone</label>
+                                <span class="helper-text"></span>
+                            </div>
+                        </div>
                         <div class="row pbtm20">
                             <div class="input-field col s12">
                                 <input id="phone" name="phone" type="text" data-parsley-required="false" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$" data-parsley-phone-format="#phone" value="{{ $user->phone }}">
@@ -108,6 +132,9 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
+            $('#country_code').selectize({});
+            $('#timezone').selectize({});
+
             $("#phone").intlTelInput({
                 initialCountry: "sg",
                 utilsScript: "/assets/js/utils.js"

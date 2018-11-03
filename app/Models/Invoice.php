@@ -91,6 +91,11 @@ class Invoice extends Model
         return $this->belongsTo('App\Models\Company', 'company_id');
     }
 
+    public function event()
+    {
+        return $this->belongsTo('App\Models\InvoiceEvent', 'invoice_event_id');
+    }
+
     public function items()
     {
         return $this->hasMany('App\Models\InvoiceItem', 'invoice_id');
@@ -236,8 +241,6 @@ class Invoice extends Model
     {
         $date = ($date) ? $date : Carbon::now();
 
-        Log::info(json_encode($date));
-
         $company = $this->company;
         $cloned = $this->replicate();
         $cloned->nice_invoice_id = $company->niceinvoiceid();
@@ -253,6 +256,8 @@ class Invoice extends Model
             $clonedrelation->save();
             $cloned->items()->save($clonedrelation);
         }
+
+        $cloned->setInvoiceTotal();
 
         return $cloned;
     }
