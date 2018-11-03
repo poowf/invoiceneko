@@ -1,7 +1,6 @@
 @extends("layouts.default", ['page_title' => 'Company | Settings'])
 
 @section("head")
-    <title>{{ config('app.name') }}</title>
     <style>
     </style>
 @stop

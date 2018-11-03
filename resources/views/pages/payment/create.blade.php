@@ -1,6 +1,7 @@
 @extends("layouts.default", ['page_title' => 'Payment | Create'])
 
 @section("head")
+    <link href="{{ mix('/assets/css/selectize.css') }}" rel="stylesheet" type="text/css">
     <style>
     </style>
 @stop

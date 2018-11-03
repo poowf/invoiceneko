@@ -1,7 +1,6 @@
 @extends("layouts.default", ['page_title' => 'Company | Users'])
 
 @section("head")
-    <title>{{ config('app.name') }}</title>
     <style>
         #user-container {
             margin: 0px;

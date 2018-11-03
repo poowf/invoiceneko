@@ -1,7 +1,6 @@
 @extends("layouts.default", ['page_title' => 'Item Template | View'])
 
 @section("head")
-    <title>{{ config('app.name') }}</title>
     <style>
     </style>
 @stop

@@ -58,22 +58,24 @@
             </div>
         </div>
     </div>
-    @if($codes->isNotEmpty())
-        <div id="recovery-codes" class="modal mini-modal center">
-            <div class="modal-title pall10 theme-color white-text">
-                <h5>Recovery Codes</h5>
+    @if(session()->has('codes'))
+        @if($codes = session()->get('codes'))
+            <div id="recovery-codes" class="modal mini-modal center">
+                <div class="modal-title pall10 theme-color white-text">
+                    <h5>Recovery Codes</h5>
+                </div>
+                <div class="modal-content">
+                    <ul class="collection">
+                        @foreach($codes as $code)
+                            <li class="collection-item">{{ $code }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <a href="javascript:;" class=" modal-action modal-close waves-effect black-text waves-red btn-flat btn-disablemodal">Close</a>
+                </div>
             </div>
-            <div class="modal-content">
-                <ul class="collection">
-                    @foreach($codes as $code)
-                        <li class="collection-item">{{ $code }}</li>
-                    @endforeach
-                </ul>
-            </div>
-            <div class="modal-footer">
-                <a href="javascript:;" class=" modal-action modal-close waves-effect black-text waves-red btn-flat btn-disablemodal">Close</a>
-            </div>
-        </div>
+        @endif
     @endif
     @if($user->twofa_timestamp)
         <div id="disable-confirmation" class="modal mini-modal">
@@ -96,7 +98,7 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            @if($codes->isNotEmpty())
+            @if(session()->has('codes'))
                 $('#recovery-codes').modal('open');
             @endif
             @if($user->twofa_timestamp)
