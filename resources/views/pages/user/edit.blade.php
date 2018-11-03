@@ -11,12 +11,12 @@
     <div class="container">
         <div class="row">
             <div class="col s12">
-                <h3>Profile</h3>
+                <h3>User</h3>
             </div>
         </div>
         <div class="row">
             <div class="col s12 m3 xl2">
-                @include("partials/sidenav")
+                @include("partials/sidenav-user")
             </div>
             <div class="col s12 m9 xl10">
                 <form id="edit-profile" method="post" enctype="multipart/form-data">
@@ -71,7 +71,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col s12 left">
+                            <div class="radio-field col s12 left">
                                 <label id="rbtn-label" class="rbtn-label" for="gender">Gender</label>
                                 <p class="rbtn">
                                     <label>
