@@ -826,6 +826,17 @@ nav .logo img {
   margin-top: 5px;
   max-height: 70px;
   max-width: 100%;
+  float: left;
+}
+
+nav .logo .logo-text {
+  color: #000000;
+  float: left;
+  font-family: "Comfortaa", sans-serif;
+  font-size: 1.3em;
+  font-weight: 400;
+  text-transform: none;
+  line-height: 80px;
 }
 
 nav .logo h6 {

@@ -1,4 +1,4 @@
-@extends("layouts/default")
+@extends("layouts.default", ['page_title' => 'Company | Owner'])
 
 @section("head")
     <title>{{ config('app.name') }}</title>
@@ -20,7 +20,7 @@
             <div class="col s12 m9 xl10">
                 @if($users->isNotEmpty())
                     <div class="card-panel">
-                        <h3 class="no-margin">Current Owner</h3>
+                        <h6>Current Owner</h6>
                         <dl>
                             <dt>Username</dt>
                             <dd>{{ $owner->username }}</dd>

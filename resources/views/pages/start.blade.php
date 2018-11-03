@@ -1,7 +1,6 @@
-@extends("layouts.default")
+@extends("layouts.default", ['page_title' => 'Start'])
 
 @section("head")
-    <title>{{ config('app.name') }}</title>
     <link href="{{ mix('/assets/css/intlTelInput.css') }}" rel="stylesheet" type="text/css">
 
     <style>
@@ -33,6 +32,7 @@
             <div class="col s12 m6">
                 <a href="{{ route('company.show_check') }}">
                     <div class="card-panel light-blue lighten-1 btn-text">
+                        <i class="mdi mdi-48px mdi-account-multiple-plus"></i><br>
                         Join a Company
                     </div>
                 </a>
@@ -40,6 +40,7 @@
             <div class="col s12 m6">
                 <a href="{{ route('user.create') }}">
                     <div class="card-panel deep-orange lighten-1 btn-text">
+                        <i class="mdi mdi-48px mdi-office-building"></i><br>
                         Create a new Company
                     </div>
                 </a>

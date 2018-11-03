@@ -1,4 +1,4 @@
-@extends("layouts/default")
+@extends("layouts.default", ['page_title' => 'Company | Users | Create'])
 
 @section("head")
     <title>{{ config('app.name') }}</title>
@@ -22,7 +22,9 @@
                 <form id="company-create-user" method="post" enctype="multipart/form-data">
                     <div class="card-panel">
                         <div class="row">
-                            <p>Company: {{ $company->name }}</p>
+                            <div class="col s12">
+                                <h6>Company: {{ $company->name }}</h6>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">

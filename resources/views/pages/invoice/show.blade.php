@@ -1,4 +1,4 @@
-@extends("layouts/default")
+@extends("layouts.default", ['page_title' => 'Invoice | View'])
 
 @section("head")
     <title>{{ config('app.name') }}</title>
@@ -431,28 +431,12 @@
                 infinite: false,
                 arrows: false,
                 dots: true,
-                slidesToShow: 3,
-                slidesToScroll: 3,
+                slidesToShow: 2,
+                slidesToScroll: 2,
                 adaptiveHeight: false,
                 responsive: [
                     {
-                        breakpoint: 1900,
-                        settings: {
-                            slidesToShow: 2,
-                            slidesToScroll: 2,
-                            dots: true
-                        }
-                    },
-                    {
-                        breakpoint: 1600,
-                        settings: {
-                            slidesToShow: 2,
-                            slidesToScroll: 2,
-                            dots: true
-                        }
-                    },
-                    {
-                        breakpoint: 1200,
+                        breakpoint: 1750,
                         settings: {
                             slidesToShow: 1,
                             slidesToScroll: 1,
