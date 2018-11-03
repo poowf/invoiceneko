@@ -117,11 +117,18 @@ class PaymentController extends Controller
      */
     public function storesolo(CreateSoloPaymentRequest $request)
     {
+        $company = auth()->user()->company;
         $payment = new Payment;
         $payment->fill($request->all());
         $payment->receiveddate = Carbon::createFromFormat('j F, Y', $request->input('receiveddate'))->startOfDay()->toDateTimeString();
 
         $invoice = Invoice::find($request->input('invoice_id'));
+
+        if($invoice->company_id != $company->id)
+        {
+            flash('You do not have the authorisation to create a payment for the selected invoice', 'error');
+            return redirect()->back();
+        }
 
         $payment->invoice_id = $request->input('invoice_id');
         $payment->client_id = $invoice->client_id;
