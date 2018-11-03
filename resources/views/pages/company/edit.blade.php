@@ -1,7 +1,6 @@
-@extends("layouts/default")
+@extends("layouts.default", ['page_title' => 'Company | Edit'])
 
 @section("head")
-    <title>{{ config('app.name') }}</title>
     <link href="{{ mix('/assets/css/intlTelInput.css') }}" rel="stylesheet" type="text/css">
     <style>
         .logo-display-container, .smlogo-display-container {

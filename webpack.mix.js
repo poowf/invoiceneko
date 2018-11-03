@@ -70,7 +70,7 @@ mix
             port: 8081
         },
         //When configuring proxy, remember that this must be added onto the hosts file on the VM also, otherwise browsersync will not be able to find a dns entry for it
-        proxy: 'invoiceplz.site:80',
+        proxy: 'invoiceneko.test:80',
         open: false
     })
     .version();

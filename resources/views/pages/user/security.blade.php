@@ -1,7 +1,6 @@
-@extends("layouts/default")
+@extends("layouts.default", ['page_title' => 'User | Security'])
 
 @section("head")
-    <title>{{ config('app.name') }}</title>
     <style>
     </style>
 @stop
@@ -22,7 +21,7 @@
                     @if($user->twofa_timestamp)
                         <form id="security" method="post" enctype="multipart/form-data">
                             <div class="row">
-                                <label for="multifactor-auth" class="label-validation">Two Factor Authentication</label>
+                                <label for="multifactor-auth" class="label-validation">Multifactor Authentication</label>
                                     <div class="switch">
                                     <label>
                                         Off
@@ -37,7 +36,7 @@
 
                         <form id="regenerate-2fa-codes" method="post" enctype="multipart/form-data" action="{{ route('user.multifactor.regenerate_codes') }}">
                             <div class="row">
-                                <label for="multifactor-auth" class="label-validation">Two Factor Authentication</label>
+                                <label for="multifactor-auth" class="label-validation">Multifactor Authentication</label>
                                 <div class="input-field col s12">
                                     {{ csrf_field() }}
                                     <button class="btn waves-effect waves-light" type="submit" name="action">Regenerate Backup Codes</button>
@@ -48,9 +47,9 @@
                     <form id="enable-2fa" method="post" enctype="multipart/form-data" action="{{ route('user.multifactor.start') }}">
                         <div class="row">
                             <div class="input-field col s12">
-                                <label for="multifactor-auth" class="label-validation">Two Factor Authentication</label>
+                                <label for="multifactor-auth" class="label-validation">Multifactor Authentication</label>
                                 {{ csrf_field() }}
-                                <button class="btn waves-effect waves-light mtop20" type="submit" name="action">Enable 2 FA</button>
+                                <button class="btn waves-effect waves-light mtop20" type="submit" name="action">Enable Multifactor Auth</button>
                             </div>
                         </div>
                     </form>
@@ -79,7 +78,7 @@
     @if($user->twofa_timestamp)
         <div id="disable-confirmation" class="modal mini-modal">
             <div class="modal-content">
-                <p>Disable Two Factor Authentication?</p>
+                <p>Disable Multifactor Authentication?</p>
             </div>
             <div class="modal-footer">
                 <form id="disable-user-form" method="post" class="null-form" action="{{ route('user.multifactor.destroy') }}">

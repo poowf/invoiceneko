@@ -1,9 +1,6 @@
-@extends("layouts/default")
+@extends("layouts.default", ['page_title' => 'Company | Check'])
 
 @section("head")
-    <title>{{ config('app.name') }}</title>
-    <link href="{{ mix('/assets/css/intlTelInput.css') }}" rel="stylesheet" type="text/css">
-
     <style>
     </style>
 @stop
@@ -37,8 +34,6 @@
 @stop
 
 @section("scripts")
-    <script type="text/javascript" src="{{ mix('/assets/js/intlTelInput.js') }}"></script>
-
     <script type="text/javascript">
         "use strict";
         $(function() {

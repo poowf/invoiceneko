@@ -1,7 +1,6 @@
-@extends("layouts/default")
+@extends("layouts.default", ['page_title' => 'Forgot Password'])
 
 @section("head")
-    <title>{{ config('app.name') }} | Account | Forgot Password</title>
     <style>
     </style>
 @stop

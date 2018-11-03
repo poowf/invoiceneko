@@ -1,7 +1,6 @@
-@extends("layouts/default")
+@extends("layouts.default", ['page_title' => 'Payment | Standalone Create'])
 
 @section("head")
-    <title>{{ config('app.name') }}</title>
     <style>
     </style>
 @stop
