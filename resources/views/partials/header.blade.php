@@ -6,7 +6,7 @@
                     <div class="col l12">
                         <div class="nav-wrapper">
                             <a href="#" data-target="mobile-menu" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-                            <a href="{{ route('main') }}" class="logo"><img src="{{ asset('assets/img/logo.png') }}" alt="Invoice Plz"></a>
+                            <a href="{{ route('main') }}" class="logo black-text"><img src="{{ asset('assets/img/logo.png') }}"><span class="logo-text">{{ config('app.name') }}</span></a>
                             <ul class="left hide-on-med-and-down">
                                 <li><a href="{{ route('main') }}">Home</a></li>
                             </ul>

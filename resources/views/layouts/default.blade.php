@@ -10,6 +10,7 @@
     <link href="{{ mix('/assets/css/style.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ mix('/assets/css/trumbowyg.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ mix('/assets/css/materialdesignicons.css') }}" rel="stylesheet" type="text/css">
+    <title>{{ config('app.name') }}@if(!isActiveRoute('main')){{ ' | ' }}@endif{{ $page_title ?? '' }} </title>
     @yield("head")
     <script>
         window.Laravel = {!! json_encode([
