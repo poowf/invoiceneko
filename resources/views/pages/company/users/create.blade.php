@@ -22,7 +22,9 @@
                 <form id="company-create-user" method="post" enctype="multipart/form-data">
                     <div class="card-panel">
                         <div class="row">
-                            <p>Company: {{ $company->name }}</p>
+                            <div class="col s12">
+                                <h6>Company: {{ $company->name }}</h6>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
@@ -42,6 +44,30 @@
                             <div class="input-field col s12">
                                 <input id="full_name" name="full_name" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ old('full_name') }}" placeholder="Name">
                                 <label for="full_name" class="label-validation">Full Name</label>
+                                <span class="helper-text"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <select id="country_code" name="country_code" data-parsley-trigger="change">
+                                    <option disabled="" selected="selected" value="">Country</option>
+                                    @foreach($countries as $country)
+                                        <option value="{{ $country['iso_3166_1_alpha2'] }}" @if(old('country_code') == $country['iso_3166_1_alpha2']) selected @endif> {{ $country['name'] }}</option>
+                                    @endforeach
+                                </select>
+                                <label for="country" class="label-validation">Country</label>
+                                <span class="helper-text"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <select id="timezone" name="timezone" data-parsley-trigger="change">
+                                    <option disabled="" selected="selected" value="">Timezone</option>
+                                    @foreach($timezones as $timezone)
+                                        <option value="{{ $timezone }}" @if(old('timezone') == $timezone) selected @endif> {{ $timezone }}</option>
+                                    @endforeach
+                                </select>
+                                <label for="country" class="label-validation">Timezone</label>
                                 <span class="helper-text"></span>
                             </div>
                         </div>
@@ -89,6 +115,9 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
+            $('#country_code').selectize({});
+            $('#timezone').selectize({});
+
             $("#phone").intlTelInput({
                 initialCountry: "sg",
                 utilsScript: "/assets/js/utils.js"

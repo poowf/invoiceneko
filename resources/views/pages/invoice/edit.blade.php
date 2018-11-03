@@ -46,6 +46,21 @@
                                 <label for="client_id" class="label-validation">Client</label>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <label for="recurring-invoice-check" class="label-validation">Recurring Invoice</label>
+                                <div class="switch mtop20">
+                                    <label>
+                                        No
+                                        <input id="recurring-invoice-check" name="recurring-invoice-check" type="checkbox" @if($invoice->event) checked @endif>
+                                        <span class="lever"></span>
+                                        Yes
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="recurring-invoice-container" class="row">
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col s6">
@@ -113,6 +128,7 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
+            @if($invoice->event) initRecurringElements('recurring-invoice-container'); @endif
             let invoiceitemcount = {{ ($invoice->items()->count() - 1) ?? 0 }};
 
             $('.trumbowyg-textarea').trumbowyg({
@@ -122,7 +138,7 @@
                 autogrow: true,
             });
 
-            $('.datepicker').datepicker({
+            $('#date').datepicker({
                 autoClose: 'false',
                 format: 'd mmmm, yyyy',
                 yearRange: [1950, 2018],
@@ -140,6 +156,33 @@
             $('#invoice-item-add').on('click', function() {
                 initInvoiceItem(++invoiceitemcount, 'invoice-items-container');
             });
+
+            $('#edit-invoice').on('change', '#recurring-invoice-check', function (event) {
+                if ($(this).prop('checked')) {
+                    initRecurringElements('recurring-invoice-container');
+                } else {
+                    $('#recurring-invoice-container').html('');
+                }
+            });
+
+            function initRecurringElements(elementid)
+            {
+                let recurringelements = '<div class="input-field col s4 l2"> <input id="recurring-time-interval" name="recurring-time-interval" type="number" data-parsley-min="1" data-parsley-max="730" data-parsley-required="false" data-parsley-trigger="change" value="{{ $event->time_interval ?? '1' }}"> <label for="recurring-time-interval" class="label-validation">Repeats every</label> <span class="helper-text"></span></div><div class="input-field col s8 l10"> <select id="recurring-time-period" name="recurring-time-period" class="selectize-custom" data-parsley-required="false" data-parsley-trigger="change"><option value="day" @if($event->time_period == 'day') selected @endif>Day</option><option value="week" @if($event->time_period == 'week') selected @endif>Week</option><option value="month" @if($event->time_period == 'month') selected @endif selected>Month</option><option value="year" @if($event->time_period == 'year') selected @endif>Year</option> </select> <label class="recurring-time-period"></label> <span class="helper-text"></span></div><div class="radio-field col s12"> <label id="rbtn-label" class="rbtn-label" for="recurring-until">Until</label><p> <label> <input id="recurring-until-never" name="recurring-until" type="radio" value="never" data-parsley-required="false" data-parsley-trigger="change" @if($event->until_type == 'never') checked @endif> <span>The End of Time</span> </label></p><p> <label> <input id="recurring-until-occurence" name="recurring-until" type="radio" value="occurence" @if($event->until_type == 'occurence') checked @endif> <span> After <input id="recurring-until-occurence-number" name="recurring-until-occurence-number" class="radio-input-inline radio-input-digit" type="number" data-parsley-required="false" data-parsley-min="1" data-parsley-max="730" data-parsley-trigger="change" @if($event->until_type == 'occurence') value="{{ $event->until_meta ?? '1' }}" @else value="1" @endif> Occurences </span> </label></p><p> <label> <input id="recurring-until-date" name="recurring-until" type="radio" value="date" @if($event->until_type == 'date') checked @endif> <span> On <input id="recurring-until-date-value" name="recurring-until-date-value" class="datepicker radio-input-inline radio-input-date" type="text" data-parsley-required="false" data-parsley-trigger="change" @if($event->until_type == 'date') value="{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $event->until_meta)->toDateTimeString() ?? \Carbon\Carbon::now()->addMonth(1)->toDateTimeString() }}" @else value="{{ \Carbon\Carbon::now()->addMonth(1)->toDateTimeString() }}" @endif> </span> </label></p> <span class="helper-text manual-validation"></span></div>';
+                $('#' + elementid).append(recurringelements);
+                $('#recurring-time-period').selectize();
+
+                $('#recurring-until-date-value').datepicker({
+                    autoClose: 'false',
+                    format: 'd mmmm, yyyy',
+                    yearRange: [{{ \Carbon\Carbon::now()->format('Y') }}, {{ \Carbon\Carbon::now()->addYears(50)->format('Y') }}],
+                    defaultDate: new Date("@if($event->until_type == 'date') {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $event->until_meta)->toDateTimeString() ?? \Carbon\Carbon::now()->addMonth(1)->toDateTimeString() }} @else {{ \Carbon\Carbon::now()->addMonth(1)->toDateTimeString() }} @endif"),
+                    setDefaultDate: true,
+                    onSelect: function() {
+                        // let date = $(this)[0].formats.yyyy() + '-' + $(this)[0].formats.mm() + '-' + $(this)[0].formats.dd()
+                        // $('#receiveddate').val(date);
+                    }
+                });
+            }
 
             function initInvoiceItem(count, elementid) {
                 let invoiceitem = '<div id="invoice_item_' + count + '" class="card-panel"><div class="row"><div class="input-field col s12 l8"> <input id="item_name" name="item_name[]" type="text" data-parsley-required="true" data-parsley-trigger="change"> <label for="item_name" class="label-validation">Name</label> <span class="helper-text"></span></div><div class="input-field col s6 l2"> <input id="item_quantity" name="item_quantity[]" type="number" data-parsley-required="true" data-parsley-trigger="change"> <label for="item_quantity" class="label-validation">Quantity</label> <span class="helper-text"></span></div><div class="input-field col s6 l2"> <input id="item_price" name="item_price[]" type="number" data-parsley-required="true" data-parsley-trigger="change"> <label for="item_price" class="label-validation">Price</label> <span class="helper-text"></span></div><div class="input-field col s12 mtop30"><textarea id="item_description" name="item_description[]" class="trumbowyg-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Description"></textarea><label for="item_description" class="label-validation">Description</label> <span class="helper-text"></span></div></div><div class="row"> <button data-id="false" data-count="' + count + '" class="invoice-item-delete-btn btn waves-effect waves-light col s12 m3 offset-m9 red">Delete</button></div></div>';
