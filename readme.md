@@ -1,6 +1,5 @@
-
 # Invoice Plz
-
+[![GitHub license](https://img.shields.io/github/license/poowf/invoiceplz.svg)](https://github.com/poowf/invoiceplz/blob/master/LICENSE) ![Latest Stable Version](https://img.shields.io/github/release/poowf/invoiceplz.svg) ![Total Downloads](https://img.shields.io/github/downloads/poowf/invoiceplz/total.svg) ![Build Status](https://travis-ci.com/poowf/invoiceplz.svg)
 ## Setup and Deployment
 ```bash
 composer install

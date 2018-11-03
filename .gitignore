@@ -12,6 +12,7 @@ npm-debug.log
 yarn-error.log
 .env
 .env.dusk.local
+.env.testing
 .phpunit.result.cache
 
 .DS_Store

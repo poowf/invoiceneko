@@ -62,7 +62,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col s12 left">
+                            <div class="radio-field col s12 left">
                                 <label id="rbtn-label" class="rbtn-label" for="gender">Gender</label>
                                 <p class="rbtn">
                                     <label for="gender-male">
@@ -83,7 +83,7 @@
                     <div class="row">
                         <div class="input-field col s12">
                             {{ csrf_field() }}
-                            <button class="btn waves-effect waves-light col s12 m3 offset-m9" type="submit" name="action">Next</button>
+                            <button class="btn waves-effect waves-light col s12 m3 offset-m9" type="submit" name="action">@if($token) Create @else Next @endif</button>
                         </div>
                     </div>
                 </form>

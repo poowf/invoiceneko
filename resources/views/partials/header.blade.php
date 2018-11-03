@@ -20,9 +20,13 @@
                                     <li><a href="{{ route('payment.index') }}">Payments</a></li>
                                     <li><a class="waves-effect waves-dark btn-link btn dropdown-trigger" href="javascript:;" data-target="dropdown-navigation">My Account<i class="material-icons right" style="line-height: 35px;">arrow_drop_down</i></a></li>
                                     <ul id="dropdown-navigation" class="dropdown-content" style="margin-left: 15px;">
-                                        <li><a href="{{ route('company.edit') }}">Company</a></li>
+                                        @if(auth()->user()->company)
+                                            <li><a href="{{ route('company.show') }}">Company</a></li>
+                                        @else
+                                            <li><a href="{{ route('company.edit') }}">Company</a></li>
+                                        @endif
                                         <li><a href="{{ route('itemtemplate.index') }}">Item Templates</a></li>
-                                        <li><a href="{{ route('company.settings.edit') }}">Settings</a></li>
+                                        <li><a href="{{ route('user.edit') }}">User</a></li>
                                         <li>
                                             <form method="post" action="{{ route('auth.destroy') }}">
                                                 {{ csrf_field() }}
@@ -32,7 +36,7 @@
                                     </ul>
                                 @else
                                     <li><a href="{{ route('auth.show') }}">Sign In</a></li>
-                                    <li><a href="{{ route('user.create') }}">Sign Up</a></li>
+                                    <li><a href="{{ route('start') }}">Start Here</a></li>
                                 @endif
                             </ul>
                             <ul class="sidenav" id="mobile-menu">
@@ -46,9 +50,13 @@
                                     <li><a href="{{ route('payment.index') }}">Payments</a></li>
                                     <li><a class="waves-effect waves-dark btn-link btn dropdown-trigger" href="javascript:;" data-target="dropdown-mobile-navigation">My Account<i class="material-icons right">arrow_drop_down</i></a></li>
                                     <ul id="dropdown-mobile-navigation" class="dropdown-content" style="margin-left: 10px; margin-top: 15px;">
-                                        <li><a href="{{ route('company.edit') }}">Company</a></li>
+                                        @if(auth()->user()->company)
+                                            <li><a href="{{ route('company.show') }}">Company</a></li>
+                                        @else
+                                            <li><a href="{{ route('company.edit') }}">Company</a></li>
+                                        @endif
                                         <li><a href="{{ route('itemtemplate.index') }}">Item Templates</a></li>
-                                        <li><a href="{{ route('company.settings.edit') }}">Settings</a></li>
+                                        <li><a href="{{ route('user.edit') }}">User</a></li>
                                         <li>
                                             <form method="post" action="{{ route('auth.destroy') }}">
                                                 {{ csrf_field() }}
@@ -58,7 +66,7 @@
                                     </ul>
                                 @else
                                     <li><a href="{{ route('auth.show') }}">Sign In</a></li>
-                                    <li><a href="{{ route('user.create') }}">Sign Up</a></li>
+                                    <li><a href="{{ route('start') }}">Start Here</a></li>
                                 @endif
                             </ul>
                         </div>
