@@ -1,0 +1,37 @@
+language: php
+sudo: true
+php:
+  - '7.1'
+  - '7.2'
+
+before_script:
+  - cp .env.travis .env
+  - mysql -u root -ppoowf -e 'create database invoiceplz_test;'
+  - composer self-update
+  - composer install --no-interaction
+  - php artisan key:generate
+  - php artisan migrate
+
+script:
+  - vendor/bin/phpunit
+
+addons:
+  apt:
+    sources:
+    - mysql-5.7-trusty
+    packages:
+    - mysql-server
+    - mysql-client
+
+before_install:
+- sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('poowf') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
+- sudo mysql_upgrade -u root -ppoowf
+- sudo service mysql restart
+
+services:
+  - mysql
+
+cache:
+  directories:
+    - node_modules
+    - vendor

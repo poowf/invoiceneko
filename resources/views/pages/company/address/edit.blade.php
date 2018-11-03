@@ -15,7 +15,7 @@
         </div>
         <div class="row">
             <div class="col s12 m3 xl2">
-                @include("partials/sidenav")
+                @include("partials/sidenav-company")
             </div>
             <div class="col s12 m9 xl10">
                 <form id="edit-address" method="post" enctype="multipart/form-data">
@@ -50,7 +50,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col s12">
+                            <div class="radio-field col s12 left">
                                 <label id="rbtn-label" class="rbtn-label" for="buildingtype">Building Type</label>
                                 <p class="rbtn">
                                     <label for="buildingtype-residential">
@@ -89,7 +89,6 @@
             @if(!$ownedcompany)
                 M.toast({ html: "You need to fill in your company information first", displayLength: "poowf", classes: "error"});
             @endif
-
 
             $('#edit-address').parsley({
                 successClass: 'valid',
