@@ -60,7 +60,7 @@ class CompanyUserRequestController extends Controller
         {
             $companyuserrequest = new CompanyUserRequest;
             $companyuserrequest->fill($request->all());
-            $company->user_requests()->save($companyuserrequest);
+            $company->requests()->save($companyuserrequest);
 
             $company->notify(new RequestCompanyAccessNotification($companyuserrequest->full_name, $companyuserrequest->email, $companyuserrequest->phone));
 
