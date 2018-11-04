@@ -1,13 +1,6 @@
-let instance = null;
-
 class Unicorn {
     constructor(enforcer) {
         throw new Error('Cannot construct singleton');
-    }
-
-    static donkey()
-    {
-        return 'donkey';
     }
 
     static initPhoneInput(selector)
@@ -128,25 +121,6 @@ class Unicorn {
             });
     }
 }
-//
-// // function Unicorn() {};
-// //
-// // Unicorn.initPhoneInput = function(element_id)
-// // {
-// //
-// // }
-
-// function Unicorn() {
-//     this.hello = function() {
-//         return 'hello!';
-//     }
-//
-//     this.goodbye = function() {
-//         return 'goodbye!';
-//     }
-// }
-//
-// module.exports = Unicorn;
 
 Unicorn.type = 'Unicorn';
 

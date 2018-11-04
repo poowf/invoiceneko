@@ -8,8 +8,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var instance = null;
-
 var Unicorn = function () {
     function Unicorn(enforcer) {
         _classCallCheck(this, Unicorn);
@@ -18,12 +16,7 @@ var Unicorn = function () {
     }
 
     _createClass(Unicorn, null, [{
-        key: 'donkey',
-        value: function donkey() {
-            return 'donkey';
-        }
-    }, {
-        key: 'initPhoneInput',
+        key: "initPhoneInput",
         value: function initPhoneInput(selector) {
             $(selector).intlTelInput({
                 initialCountry: "sg",
@@ -39,7 +32,7 @@ var Unicorn = function () {
             });
         }
     }, {
-        key: 'initConfirmationTrigger',
+        key: "initConfirmationTrigger",
         value: function initConfirmationTrigger(parent_selector, selector, model, model_action, modal_selector, modal_form_selector) {
             var trigger = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : 'click';
 
@@ -51,7 +44,7 @@ var Unicorn = function () {
             });
         }
     }, {
-        key: 'initPageSearch',
+        key: "initPageSearch",
         value: function initPageSearch(selector, selector_context) {
             var inputBox = $(selector);
             var context = $(selector_context);
@@ -70,7 +63,7 @@ var Unicorn = function () {
             });
         }
     }, {
-        key: 'initImageUpload',
+        key: "initImageUpload",
         value: function initImageUpload(selector, upload_selector, display_selector) {
             $(upload_selector).click(function () {
                 $(selector).click();
@@ -93,7 +86,7 @@ var Unicorn = function () {
             });
         }
     }, {
-        key: 'initParsleyValidation',
+        key: "initParsleyValidation",
         value: function initParsleyValidation(selector) {
             $(selector).parsley({
                 successClass: 'valid',
@@ -133,25 +126,6 @@ var Unicorn = function () {
 
     return Unicorn;
 }();
-//
-// // function Unicorn() {};
-// //
-// // Unicorn.initPhoneInput = function(element_id)
-// // {
-// //
-// // }
-
-// function Unicorn() {
-//     this.hello = function() {
-//         return 'hello!';
-//     }
-//
-//     this.goodbye = function() {
-//         return 'goodbye!';
-//     }
-// }
-//
-// module.exports = Unicorn;
 
 Unicorn.type = 'Unicorn';
 
