@@ -219,7 +219,8 @@ class Quote extends Model
             ->setOption('margin-bottom', '0mm')
             ->setOption('margin-top', '0mm')
             ->setOption('margin-right', '0mm')
-            ->setOption('margin-left', '0mm');
+            ->setOption('margin-left', '0mm')
+            ->setOption('title', str_slug($this->nice_quote_id) . '.pdf');
 
         return $pdf;
     }
