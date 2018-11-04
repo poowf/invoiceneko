@@ -192,8 +192,7 @@ class UserController extends Controller
         if(is_null($user->twofa_secret))
         {
             $twofa_secret = Google2FA::generateSecretKey(32);
-            $user->twofa_secret = $twofa_secret;
-            $user->save();
+            session()->put('twofa_secret', $twofa_secret);
         }
         else
         {
@@ -212,11 +211,9 @@ class UserController extends Controller
 
     public function multifactor_store(Request $request)
     {
-        $user = auth()->user();
-
         $multifactor_code = $request->input('multifactor_code');
+        $twofa_secret = session()->pull('twofa_secret');
         $twofa_timestamp = Google2FA::getTimestamp();
-        $twofa_secret = $user->twofa_secret;
 
         $valid = Google2FA::verifyKey($twofa_secret, $multifactor_code);
 
@@ -225,17 +222,16 @@ class UserController extends Controller
             $codesJSON = $recovery->toJson();
             $codes = $recovery->toCollection();
 
+            $user = auth()->user();
+            $user->twofa_secret = $twofa_secret;
             $user->twofa_timestamp = $twofa_timestamp;
             $user->twofa_backup_codes = $codesJSON;
             $user->save();
 
             flash("Multifactor Auth has been enabled for your account", 'success');
-//            return view('pages.user.security', compact('user', 'codes'));
             return redirect()->route('user.security')->with(compact( 'codes'));
 
         } else {
-            $user->twofa_secret = null;
-            $user->save();
             flash("Something went wrong, please try again", 'error');
             return redirect()->back();
         }
@@ -265,7 +261,6 @@ class UserController extends Controller
         $user->save();
 
         flash("Your backup codes have been regenerated", 'success');
-//        return view('pages.user.security', compact('user', 'codes'));
         return redirect()->route('user.security')->with(compact('codes'));
     }
 
