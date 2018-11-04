@@ -18,7 +18,12 @@
                                     <li><a href="{{ route('invoice.index') }}">Invoices</a></li>
                                     <li><a href="{{ route('client.index') }}">Clients</a></li>
                                     <li><a href="{{ route('payment.index') }}">Payments</a></li>
-                                    <li><a class="waves-effect waves-dark btn-link btn dropdown-trigger" href="javascript:;" data-target="dropdown-navigation">My Account<span>&#9207;</span></a></li>
+                                    <li>
+                                        <a class="waves-effect waves-dark btn-link btn dropdown-trigger" href="javascript:;" data-target="dropdown-navigation">
+                                            <div class="dropdown-text" style="width: 115px; line-height: 35px; margin-right: 15px;">My Account</div>
+                                            <div class="dropdown-text icon">&#9698;</div>
+                                        </a>
+                                    </li>
                                     <ul id="dropdown-navigation" class="dropdown-content" style="margin-left: 15px;">
                                         @if(auth()->user()->company)
                                             <li><a href="{{ route('company.show') }}">Company</a></li>
@@ -48,7 +53,12 @@
                                     <li><a href="{{ route('invoice.index') }}">Invoices</a></li>
                                     <li><a href="{{ route('client.index') }}">Clients</a></li>
                                     <li><a href="{{ route('payment.index') }}">Payments</a></li>
-                                    <li><a class="waves-effect waves-dark btn-link btn dropdown-trigger" href="javascript:;" data-target="dropdown-mobile-navigation">My Account<span>&#9207;</span></a></li>
+                                    <li>
+                                        <a class="waves-effect waves-dark btn-link btn dropdown-trigger" href="javascript:;" data-target="dropdown-mobile-navigation">
+                                            <div class="dropdown-text">My Account</div>
+                                            <div class="dropdown-text icon">&#9698;</div>
+                                        </a>
+                                    </li>
                                     <ul id="dropdown-mobile-navigation" class="dropdown-content" style="margin-left: 10px; margin-top: 15px;">
                                         @if(auth()->user()->company)
                                             <li><a href="{{ route('company.show') }}">Company</a></li>

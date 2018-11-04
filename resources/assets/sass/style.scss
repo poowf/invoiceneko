@@ -594,6 +594,19 @@ mark {
   color: #000;
 }
 
+.dropdown-trigger .dropdown-text {
+  display: inline-block;
+}
+
+.dropdown-trigger .dropdown-text.icon{
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  position: absolute;
+  top: -2px;
+  right: 15px;
+}
+
 .dropdown-trigger + .dropdown-content li > a, .dropdown-trigger + .dropdown-content li > span {
   color: #000;
 }
@@ -601,7 +614,10 @@ mark {
 .dropdown-trigger span {
   padding-left: 15px;
   padding-right: 5px;
-  font-size: 1.4em;
+  font-size: 1em;
+
+  display: inline-block;
+  vertical-align: super;
 }
 
 [type="radio"]:checked + label:after {
