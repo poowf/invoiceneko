@@ -286,7 +286,8 @@ class Invoice extends Model
             ->setOption('margin-bottom', '0mm')
             ->setOption('margin-top', '0mm')
             ->setOption('margin-right', '0mm')
-            ->setOption('margin-left', '0mm');
+            ->setOption('margin-left', '0mm')
+            ->setOption('title', str_slug($this->nice_invoice_id) . '.pdf');
 
         return $pdf;
     }

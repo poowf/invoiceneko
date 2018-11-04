@@ -88,7 +88,7 @@ class QuoteController extends Controller
         $quote->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $quote->duedate)->format('j F, Y');
 
         $pdf = $quote->generatePDFView();
-        return $pdf->inline(str_slug($quote->nice_quote_id) . '.pdf');
+        return $pdf->inline();
     }
 
     public function duplicate(Quote $quote)
@@ -234,7 +234,7 @@ class QuoteController extends Controller
 
         $pdf = $quote->generatePDFView();
 
-        return $pdf->inline(str_slug($quote->nice_quote_id) . 'quote.pdf');
+        return $pdf->inline();
     }
 
     /**

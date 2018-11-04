@@ -121,7 +121,7 @@ class InvoiceController extends Controller
         $invoice->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y');
 
         $pdf = $invoice->generatePDFView();
-        return $pdf->inline(str_slug($invoice->nice_invoice_id) . '.pdf');
+        return $pdf->inline();
     }
 
     public function duplicate(Invoice $invoice)
@@ -268,7 +268,7 @@ class InvoiceController extends Controller
 
         $pdf = $invoice->generatePDFView();
 
-        return $pdf->inline(str_slug($invoice->nice_invoice_id) . 'test.pdf');
+        return $pdf->inline();
     }
 
     /**
