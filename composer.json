@@ -8,7 +8,6 @@
         "php": "^7.1.3",
         "barryvdh/laravel-snappy": "^0.4.1",
         "doctrine/dbal": "^2.8",
-        "fedeisas/laravel-mail-css-inliner": "^2.2",
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "^6.3",
         "iatstuti/laravel-cascade-soft-deletes": "^1.3",
