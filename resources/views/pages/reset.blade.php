@@ -1,7 +1,6 @@
-@extends("layouts/default")
+@extends("layouts.default", ['page_title' => 'Reset Password'])
 
 @section("head")
-    <title>{{ config('app.name') }} | Account | Reset Password</title>
     <style>
     </style>
 @stop
@@ -52,26 +51,7 @@
     <script>
         "use strict";
         $(function() {
-            $('#reset').parsley({
-                successClass: 'valid',
-                errorClass: 'invalid',
-                errorsContainer: function (velem) {
-                    let $errelem = velem.$element.siblings('span.helper-text');
-                    $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                    return true;
-                },
-                errorsWrapper: '',
-                errorTemplate: ''
-            })
-                .on('field:validated', function(velem) {
-
-                })
-                .on('field:success', function(velem) {
-
-                })
-                .on('field:error', function(velem) {
-
-                });
+            Unicorn.initParsleyValidation('#reset');
         });
     </script>
 @stop

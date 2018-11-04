@@ -1,4 +1,4 @@
-@extends("layouts/default")
+@extends("layouts.default", ['page_title' => 'pagetitle'])
 
 @section("head")
     <title>{{ config('app.name') }}</title>

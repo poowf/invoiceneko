@@ -1,7 +1,6 @@
-@extends("layouts/default")
+@extends("layouts.default", ['page_title' => 'Invoice | Ad-Hoc Create'])
 
 @section("head")
-    <title>{{ config('app.name') }}</title>
     <style>
     </style>
 @stop
@@ -48,7 +47,7 @@
                                 <select id="country" name="country" data-parsley-trigger="change">
                                     <option disabled="" selected="selected" value="">Client Country</option>
                                     @foreach($countries as $country)
-                                        <option value="{{ $country['name'] }}" @if(old('country') == $country['name']) selected @endif> {{ $country['name'] }}</option>
+                                        <option value="{{ $country['iso_3166_1_alpha2'] }}" @if(old('country') == $country['iso_3166_1_alpha2']) selected @endif> {{ $country['name'] }}</option>
                                     @endforeach
                                 </select>
                                 <label for="country" class="label-validation">Client Country</label>

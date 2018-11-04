@@ -1,6 +1,5 @@
-
-# Invoice Plz
-
+# Invoice Neko
+[![GitHub license](https://img.shields.io/github/license/poowf/invoiceneko.svg)](https://github.com/poowf/invoiceneko/blob/master/LICENSE) ![Latest Stable Version](https://img.shields.io/github/release/poowf/invoiceneko.svg) ![Total Downloads](https://img.shields.io/github/downloads/poowf/invoiceneko/total.svg) ![Build Status](https://travis-ci.com/poowf/invoiceneko.svg)
 ## Setup and Deployment
 ```bash
 composer install
@@ -14,7 +13,7 @@ php artisan storage:link
 php artisan serve --host 0.0.0.0
 ```
 
-## About Invoice Plz
+## About Invoice Neko
 
 An Invoice System developed for anyone who needs to generate out an invoice and manage clients
 

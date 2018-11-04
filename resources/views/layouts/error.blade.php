@@ -95,6 +95,8 @@
 
 @yield("content")
 
+<script type="text/javascript" src="{{ mix('/assets/js/manifest.js') }}"></script>
+<script type="text/javascript" src="{{ mix('/assets/js/vendor.js') }}"></script>
 <script type="text/javascript" src="{{ mix('/assets/js/app.js') }}"></script>
 
 @yield("scripts")
