@@ -1,7 +1,7 @@
-@extends("layouts/default")
+@extends("layouts.default", ['page_title' => 'Quote | Create'])
 
 @section("head")
-    <title>{{ config('app.name') }}</title>
+    <link href="{{ mix('/assets/css/selectize.css') }}" rel="stylesheet" type="text/css">
     <style>
     </style>
 @stop
@@ -111,6 +111,8 @@
         $(function() {
             let quoteitemcount = 0;
 
+            Unicorn.initParsleyValidation('#create-quote');
+
             $('.trumbowyg-textarea').trumbowyg({
                 svgPath: '/assets/fonts/trumbowygicons.svg',
                 removeformatPasted: true,
@@ -146,7 +148,7 @@
 
                 //Explicit selection otherwise will change the select into a multiple select if only selecting by css class
                 $('select.item-list-selector').selectize({
-                    create: false,
+                    create: true,
                     dataAttr: 'data-id',
                     valueField: 'name',
                     labelField: 'name',
@@ -230,34 +232,6 @@
                     $('#delete-confirmation').modal('close');
                 }
             });
-
-            $('#create-quote').parsley({
-                successClass: 'valid',
-                errorClass: 'invalid',
-                errorsContainer: function (velem) {
-                    let $errelem = velem.$element.siblings('span.helper-text');
-                    $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                    return true;
-                },
-                errorsWrapper: '',
-                errorTemplate: ''
-            })
-                .on('field:validated', function(velem) {
-
-                })
-                .on('field:success', function(velem) {
-                    if (velem.$element.is('select')) {
-                        velem.$element.siblings('.selectize-control').removeClass('invalid').addClass('valid');
-                    }
-                })
-                .on('field:error', function(velem) {
-                    if (velem.$element.is('select')) {
-                        velem.$element.siblings('.selectize-control').removeClass('valid').addClass('invalid');
-                    }
-                })
-                .on('form:submit', function(velem) {
-
-                });
         });
     </script>
 @stop

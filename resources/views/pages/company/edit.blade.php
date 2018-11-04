@@ -1,7 +1,6 @@
-@extends("layouts/default")
+@extends("layouts.default", ['page_title' => 'Company | Edit'])
 
 @section("head")
-    <title>{{ config('app.name') }}</title>
     <link href="{{ mix('/assets/css/intlTelInput.css') }}" rel="stylesheet" type="text/css">
     <style>
         .logo-display-container, .smlogo-display-container {
@@ -66,12 +65,12 @@
     <div class="container">
         <div class="row">
             <div class="col s12">
-                <h3>Company</h3>
+                <h3>Details</h3>
             </div>
         </div>
         <div class="row">
             <div class="col s12 m3 xl2">
-                @include("partials/sidenav")
+                @include("partials/sidenav-company")
             </div>
             <div class="col s12 m9 xl10">
                 <form id="edit-company" method="post" enctype="multipart/form-data">
@@ -112,6 +111,13 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
+                                <input id="domain_name" name="domain_name" type="text" data-parsley-required="false" data-parsley-trigger="change" value="{{ $company->domain_name ?? '' }}" placeholder="Company Domain Name">
+                                <label for="domain_name" class="label-validation">Company Domain Name</label>
+                                <span class="helper-text"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
                                 <input id="email" name="email" type="email" data-parsley-required="true" data-parsley-trigger="change" value="{{ $company->email ?? '' }}" placeholder="Company Email">
                                 <label for="email" class="label-validation">Company Email</label>
                                 <span class="helper-text"></span>
@@ -119,7 +125,7 @@
                         </div>
                         <div class="row pbtm20">
                             <div class="input-field col s12">
-                                <input id="phone" name="phone" type="text" data-parsley-required="false" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$" data-parsley-phone-format="#phone" value="{{ $company->phone ?? '' }}">
+                                <input id="phone" name="phone" type="tel" class="phone-input" data-parsley-required="true" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$" data-parsley-phone-format="#phone" value="{{ $company->phone ?? '' }}">
                                 <label for="phone" class="label-validation">Phone</label>
                                 <span class="helper-text"></span>
                             </div>
@@ -144,105 +150,10 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            $('#logo-upload').click(function(){
-                $('#logo').click();
-            });
-
-            $('#smlogo-upload').click(function(){
-                $('#smlogo').click();
-            });
-
-            $("#logo").on("change", function()
-            {
-                var files = !!this.files ? this.files : [];
-                if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
-
-                if (/^image/.test( files[0].type)){ // only image file
-                    var reader = new FileReader(); // instance of the FileReader
-                    reader.readAsDataURL(files[0]); // read the local file
-
-                    reader.onloadend = function(){ // set image data as background of div
-                        $("#logo-display").attr("src", this.result);
-                    }
-                }
-            });
-
-            $("#smlogo").on("change", function()
-            {
-                var files = !!this.files ? this.files : [];
-                if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
-
-                if (/^image/.test( files[0].type)){ // only image file
-                    var reader = new FileReader(); // instance of the FileReader
-                    reader.readAsDataURL(files[0]); // read the local file
-
-                    reader.onloadend = function(){ // set image data as background of div
-                        $("#smlogo-display").attr("src", this.result);
-                    }
-                }
-            });
-
-            $("#phone").intlTelInput({
-                initialCountry: "sg",
-                utilsScript: "/assets/js/utils.js"
-            });
-
-            $("#phone").focusin(function() {
-                $(this).parent().siblings('.label-validation').addClass('theme-text');
-            });
-
-            $("#phone").focusout(function() {
-                $(this).parent().siblings('.label-validation').removeClass('theme-text');
-            });
-
-            window.Parsley
-                .addValidator('phoneFormat', {
-                    requirementType: 'string',
-                    validateString: function(value, elementid) {
-                        if($(elementid).intlTelInput("isValidNumber"))
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    },
-                    messages: {
-                        en: 'This is an invalid phone number format'
-                    }
-                });
-
-            $('#edit-company').parsley({
-                successClass: 'valid',
-                errorClass: 'invalid',
-                errorsContainer: function (velem) {
-                    let $errelem = velem.$element.siblings('span.helper-text');
-                    $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                    return true;
-                },
-                errorsWrapper: '',
-                errorTemplate: ''
-            })
-                .on('field:validated', function(velem) {
-
-                })
-                .on('field:success', function(velem) {
-                   if (velem.$element.is('#phone'))
-                    {
-                        velem.$element.parent('').siblings('label').removeClass('invalid').addClass('valid');
-                    }
-                })
-                .on('field:error', function(velem) {
-                    if (velem.$element.is('#phone'))
-                    {
-                        velem.$element.parent('').siblings('span.helper-text').removeClass('valid').addClass('invalid');
-                        velem.$element.parent('').siblings('span.helper-text').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                    }
-                })
-                .on('form:submit', function(velem) {
-                    $("#phone").val($("#phone").intlTelInput("getNumber"));
-                });
+            Unicorn.initPhoneInput('#phone');
+            Unicorn.initParsleyValidation('#edit-company');
+            Unicorn.initImageUpload('#logo', '#logo-upload','#logo-display');
+            Unicorn.initImageUpload('#smlogo', '#smlogo-upload','#smlogo-display');
         });
     </script>
 @stop

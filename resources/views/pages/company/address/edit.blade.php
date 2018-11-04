@@ -1,7 +1,6 @@
-@extends("layouts/default")
+@extends("layouts.default", ['page_title' => 'Company | Address'])
 
 @section("head")
-    <title>{{ config('app.name') }}</title>
     <style>
     </style>
 @stop
@@ -15,7 +14,7 @@
         </div>
         <div class="row">
             <div class="col s12 m3 xl2">
-                @include("partials/sidenav")
+                @include("partials/sidenav-company")
             </div>
             <div class="col s12 m9 xl10">
                 <form id="edit-address" method="post" enctype="multipart/form-data">
@@ -50,7 +49,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col s12">
+                            <div class="radio-field col s12 left">
                                 <label id="rbtn-label" class="rbtn-label" for="buildingtype">Building Type</label>
                                 <p class="rbtn">
                                     <label for="buildingtype-residential">
@@ -90,35 +89,7 @@
                 M.toast({ html: "You need to fill in your company information first", displayLength: "poowf", classes: "error"});
             @endif
 
-
-            $('#edit-address').parsley({
-                successClass: 'valid',
-                errorClass: 'invalid',
-                errorsContainer: function (velem) {
-                    let $errelem = velem.$element.siblings('span.helper-text');
-                    $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                    return true;
-                },
-                errorsWrapper: '',
-                errorTemplate: ''
-            })
-                .on('field:validated', function(velem) {
-                })
-                .on('field:success', function(velem) {
-                    if (velem.$element.is(':radio'))
-                    {
-                        velem.$element.parentsUntil('.row').find('span.helper-text').removeClass('invalid').addClass('valid');
-                    }
-                })
-                .on('field:error', function(velem) {
-                    if (velem.$element.is(':radio'))
-                    {
-                        velem.$element.parentsUntil('.row').find('span.helper-text').removeClass('valid').addClass('invalid');
-                        velem.$element.parentsUntil('.row').find('span.helper-text').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                    }
-                })
-                .on('form:submit', function(velem) {
-                });
+            Unicorn.initParsleyValidation('#edit-address');
         });
     </script>
 @stop

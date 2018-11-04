@@ -29,6 +29,7 @@ const app = new Vue({
  */
 
 window.$ = window.jQuery = require('jquery');
+window.Unicorn = require('./unicorn.js');
 //window.Laravel = { csrfToken: $('meta[name=csrf-token]').attr("content") };
 
 require('materialize-css');
