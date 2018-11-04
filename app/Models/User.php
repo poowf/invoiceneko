@@ -15,6 +15,10 @@ class User extends Authenticatable
 
     use HasRoles;
 
+    const STATUS_ACTIVE = 1;
+    const STATUS_DISABLED = 2;
+    const STATUS_BANNED = 3;
+
     /**
      * The database table used by the model.
      *
@@ -43,8 +47,13 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'twofa_secret',
+        'twofa_timestamp'
     ];
 
+    protected $attributes = [
+        'status' => self::STATUS_ACTIVE
+    ];
 
     /**
      * Get the route key for the model.
@@ -69,6 +78,50 @@ class User extends Authenticatable
     public function setPasswordAttribute($password)
     {
         $this->attributes['password'] = bcrypt($password);
+    }
+
+    /**
+     * Encrypt the user's google_2fa secret.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function setTwofaSecretAttribute($value)
+    {
+        $this->attributes['twofa_secret'] = encrypt($value);
+    }
+
+    /**
+     * Decrypt the user's google_2fa secret.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getTwofaSecretAttribute($value)
+    {
+        return ($value) ? decrypt($value) : null;
+    }
+
+    /**
+     * Encrypt the user's google_2fa secret.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function setTwofaBackupCodesAttribute($value)
+    {
+        $this->attributes['twofa_backup_codes'] = encrypt($value);
+    }
+
+    /**
+     * Decrypt the user's google_2fa secret.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getTwofaBackupCodesAttribute($value)
+    {
+        return ($value) ? decrypt($value) : null;
     }
 
     /**
@@ -116,6 +169,29 @@ class User extends Authenticatable
     {
         $this->confirmation_token = null;
         $this->save();
+    }
+
+    public function statusText()
+    {
+        $status = $this->status;
+
+        switch($status)
+        {
+            default:
+                $textstatus = "Unknown";
+                break;
+            case self::STATUS_ACTIVE:
+                $textstatus = "Active";
+                break;
+            case self::STATUS_BANNED:
+                $textstatus = "Banned";
+                break;
+            case self::STATUS_DISABLED:
+                $textstatus = "Disabled";
+                break;
+        }
+
+        return $textstatus;
     }
 
     public function sendConfirmEmailNotification()

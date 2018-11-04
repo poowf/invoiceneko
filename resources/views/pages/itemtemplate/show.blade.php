@@ -1,7 +1,6 @@
-@extends("layouts/default")
+@extends("layouts.default", ['page_title' => 'Item Template | View'])
 
 @section("head")
-    <title>{{ config('app.name') }}</title>
     <style>
     </style>
 @stop
@@ -54,7 +53,6 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-
         });
     </script>
 @stop

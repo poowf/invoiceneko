@@ -287,6 +287,10 @@ class QuoteController extends Controller
             if (isset($request->input('item_id')[$key]))
             {
                 $quoteitem = QuoteItem::find($request->input('item_id')[$key]);
+                if($quoteitem->quote_id != $quote->id)
+                {
+                    continue;
+                }
             }
             else
             {

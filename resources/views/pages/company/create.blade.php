@@ -1,7 +1,6 @@
-@extends("layouts/default")
+@extends("layouts.default", ['page_title' => 'Company | Create'])
 
 @section("head")
-    <title>{{ config('app.name') }}</title>
     <link href="{{ mix('/assets/css/intlTelInput.css') }}" rel="stylesheet" type="text/css">
     <style>
     </style>
@@ -34,6 +33,13 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
+                                <input id="domain_name" name="domain_name" type="text" data-parsley-required="false" data-parsley-trigger="change" value="{{ old('domain_name') }}" placeholder="Company Domain Name">
+                                <label for="domain_name" class="label-validation">Company Domain Name</label>
+                                <span class="helper-text"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
                                 <input id="email" name="email" type="email" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('email') }}" placeholder="Company Email">
                                 <label for="email" class="label-validation">Company Email</label>
                                 <span class="helper-text"></span>
@@ -41,7 +47,7 @@
                         </div>
                         <div class="row pbtm20">
                             <div class="input-field col s12">
-                                <input id="phone" name="phone" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$" data-parsley-phone-format="#phone" value="{{ old('phone') }}">
+                                <input id="phone" name="phone" type="tel" class="phone-input" data-parsley-required="true" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$" data-parsley-phone-format="#phone" value="{{ old('phone') }}">
                                 <label for="phone" class="label-validation">Company Phone</label>
                                 <span class="helper-text"></span>
                             </div>
@@ -97,67 +103,8 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            $("#phone").intlTelInput({
-                initialCountry: "sg",
-                utilsScript: "/assets/js/utils.js"
-            });
-
-            $( "#phone" ).focusin(function() {
-                $(this).parent().siblings('.label-validation').addClass('theme-text');
-            });
-
-            $( "#phone" ).focusout(function() {
-                $(this).parent().siblings('.label-validation').removeClass('theme-text');
-            });
-
-            window.Parsley
-                .addValidator('phoneFormat', {
-                    requirementType: 'string',
-                    validateString: function(value, elementid) {
-                        if($(elementid).intlTelInput("isValidNumber"))
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    },
-                    messages: {
-                        en: 'This is an invalid phone number format'
-                    }
-                });
-
-            $('#create-company').parsley({
-                successClass: 'valid',
-                errorClass: 'invalid',
-                errorsContainer: function (velem) {
-                    let $errelem = velem.$element.siblings('span.helper-text');
-                    $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                    return true;
-                },
-                errorsWrapper: '',
-                errorTemplate: ''
-            })
-                .on('field:validated', function(velem) {
-
-                })
-                .on('field:success', function(velem) {
-                    if (velem.$element.is('#phone'))
-                    {
-                        velem.$element.parent('').siblings('label').removeClass('invalid').addClass('valid');
-                    }
-                })
-                .on('field:error', function(velem) {
-                    if (velem.$element.is('#phone'))
-                    {
-                        velem.$element.parent('').siblings('span.helper-text').removeClass('valid').addClass('invalid');
-                        velem.$element.parent('').siblings('span.helper-text').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                    }
-                })
-                .on('form:submit', function(velem) {
-                    $("#phone").val($("#phone").intlTelInput("getNumber"));
-                });
+            Unicorn.initPhoneInput('#phone');
+            Unicorn.initParsleyValidation('#create-company');
         });
     </script>
 @stop

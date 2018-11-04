@@ -1,9 +1,8 @@
-@extends("layouts/default")
+@extends("layouts.default", ['page_title' => 'Client | Create'])
 
 @section("head")
-    <title>{{ config('app.name') }}</title>
     <link href="{{ mix('/assets/css/intlTelInput.css') }}" rel="stylesheet" type="text/css">
-
+    <link href="{{ mix('/assets/css/selectize.css') }}" rel="stylesheet" type="text/css">
     <style>
     </style>
 @stop
@@ -64,7 +63,7 @@
                                 <span class="helper-text"></span>
                             </div>
                             <div class="input-field col s12 m6">
-                                <input id="phone" name="phone" type="text" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$" data-parsley-phone-format="#phone" value="{{ old('phone') }}">
+                                <input id="phone" name="phone" type="tel" class="phone-input" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$" data-parsley-phone-format="#phone" value="{{ old('phone') }}">
                                 <label for="phone" class="label-validation">Phone</label>
                                 <span class="helper-text"></span>
                             </div>
@@ -141,7 +140,7 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12 m6">
-                                <input id="contactphone" name="contactphone" type="text" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$" data-parsley-phone-format="#contactphone" value="{{ old('contactphone') }}">
+                                <input id="contactphone" name="contactphone" type="tel" class="phone-input" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$" data-parsley-phone-format="#contactphone" value="{{ old('contactphone') }}">
                                 <label for="contactphone" class="label-validation">Phone</label>
                                 <span class="helper-text"></span>
                             </div>
@@ -173,87 +172,9 @@
             $('#country').selectize({});
             $('#contactsalutation').selectize({});
 
-            $("#phone").intlTelInput({
-                initialCountry: "sg",
-                utilsScript: "/assets/js/utils.js"
-            });
-
-            $("#contactphone").intlTelInput({
-                initialCountry: "sg",
-                utilsScript: "/assets/js/utils.js"
-            });
-
-            $( "#phone" ).focusin(function() {
-                $(this).parent().siblings('.label-validation').addClass('theme-text');
-            });
-
-            $( "#phone" ).focusout(function() {
-                $(this).parent().siblings('.label-validation').removeClass('theme-text');
-            });
-
-            $( "#contactphone" ).focusin(function() {
-                $(this).parent().siblings('.label-validation').addClass('theme-text');
-            });
-
-            $( "#contactphone" ).focusout(function() {
-                $(this).parent().siblings('.label-validation').removeClass('theme-text');
-            });
-
-            window.Parsley
-                .addValidator('phoneFormat', {
-                    requirementType: 'string',
-                    validateString: function(value, elementid) {
-                        if($(elementid).intlTelInput("isValidNumber"))
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    },
-                    messages: {
-                        en: 'This is an invalid phone number format'
-                    }
-                });
-
-            $('#create-client').parsley({
-                successClass: 'valid',
-                errorClass: 'invalid',
-                errorsContainer: function (velem) {
-                    let $errelem = velem.$element.siblings('span.helper-text');
-                    $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                    return true;
-                },
-                errorsWrapper: '',
-                errorTemplate: ''
-            })
-                .on('field:validated', function(velem) {
-
-                })
-                .on('field:success', function(velem) {
-                    if (velem.$element.is('select')) {
-                        velem.$element.siblings('.selectize-control').removeClass('invalid').addClass('valid');
-                    }
-                    else if (velem.$element.is('#phone') || velem.$element.is('#contactphone'))
-                    {
-                        velem.$element.parent('').siblings('label').removeClass('invalid').addClass('valid');
-                    }
-                })
-                .on('field:error', function(velem) {
-                    if (velem.$element.is('select')) {
-                        velem.$element.siblings('.selectize-control').removeClass('valid').addClass('invalid');
-                    }
-                    else if (velem.$element.is('#phone') || velem.$element.is('#contactphone'))
-                    {
-                        velem.$element.parent('').siblings('label').removeClass('valid').addClass('invalid');
-                        velem.$element.parent('').siblings('label').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                    }
-                })
-                .on('form:submit', function(velem) {
-                    $("#phone").val($("#phone").intlTelInput("getNumber"));
-                    $("#contactphone").val($("#contactphone").intlTelInput("getNumber"));
-                });
+            Unicorn.initPhoneInput('#phone');
+            Unicorn.initPhoneInput('#contactphone');
+            Unicorn.initParsleyValidation('#create-client');
         });
     </script>
 @stop

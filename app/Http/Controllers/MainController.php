@@ -17,6 +17,11 @@ class MainController extends Controller
         return redirect()->route('auth.show');
     }
 
+    public function start()
+    {
+        return view('pages.start');
+    }
+
     public function dashboard()
     {
         $user = auth()->user();

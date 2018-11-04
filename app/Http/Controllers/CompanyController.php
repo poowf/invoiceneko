@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateCompanyRequest;
+use App\Http\Requests\CreateCompanyUserRequest;
+use App\Http\Requests\UpdateCompanyOwnerRequest;
 use App\Http\Requests\UpdateCompanyRequest;
+use App\Http\Requests\UpdateCompanyUserRequest;
+use App\Notifications\NewCompanyUserNotification;
 use Illuminate\Http\Request;
 use App\Models\Company;
 use App\Models\User;
@@ -41,7 +45,6 @@ class CompanyController extends Controller
      */
     public function store(CreateCompanyRequest $request)
     {
-
         if ($request->session()->has('user_id')) {
             $company = new Company;
             $company->fill($request->all());
@@ -115,7 +118,8 @@ class CompanyController extends Controller
      */
     public function show()
     {
-        //
+        $company = auth()->user()->company;
+        return view('pages.company.show', compact('company'));
     }
 
     /**
@@ -145,6 +149,7 @@ class CompanyController extends Controller
         }
         else
         {
+            //TODO: Prevent User from registering a company if the domain name has already been registered.
             $company = new Company;
             $company->user_id = auth()->user()->id;
             $isnew = true;
@@ -164,7 +169,9 @@ class CompanyController extends Controller
 
             if (!Storage::exists($storedirectory . 'logo_' . $filename))
             {
-                $image = Image::make($file)->fit(420, 220, function ($constraint) {
+                $image = Image::make($file)
+                    ->encode('png', 100)
+                    ->fit(420, 220, function ($constraint) {
                     $constraint->upsize();
                 }, 'center');
                 Storage::put($storedirectory . 'logo_' . $filename, $image->stream('jpg')->detach());
@@ -183,7 +190,9 @@ class CompanyController extends Controller
 
             if (!Storage::exists($storedirectory . 'smlogo_' . $filename))
             {
-                $image = Image::make($file)->fit(200, 200, function ($constraint) {
+                $image = Image::make($file)
+                    ->encode('png', 100)
+                    ->fit(200, 200, function ($constraint) {
                     $constraint->upsize();
                 }, 'center');
                 Storage::put($storedirectory . 'smlogo_' . $filename, $image->stream('jpg')->detach());
@@ -216,5 +225,56 @@ class CompanyController extends Controller
     public function destroy()
     {
         //
+    }
+
+    public function edit_owner() {
+        $company = auth()->user()->company;
+
+        if($company)
+        {
+            $owner = $company->owner;
+            $users = $company->users;
+        }
+        else
+        {
+            $owner = collect();
+            $users = collect();
+        }
+
+        return view('pages.company.owner.edit', compact('company', 'owner', 'users'));
+    }
+
+    public function update_owner(UpdateCompanyOwnerRequest $request) {
+        $company = auth()->user()->ownedcompany;
+        $user = User::find($request->input('user_id'));
+        $company->user_id = $user->id;
+        $company->save();
+
+        return redirect()->back();
+    }
+
+    public function show_check()
+    {
+        return view('pages.company.check');
+    }
+
+    public function check(Request $request)
+    {
+        $email = $request->input('email');
+
+//        $domain = preg_filter("/([^@]+)/","", $email);
+
+        $explode = explode("@", $email);
+        $domain = array_pop($explode);
+        $company = Company::where('domain_name', $domain)->first();
+
+        if($company)
+        {
+            return redirect()->route('company.requests.create');
+        }
+        else
+        {
+            return redirect()->route('user.create');
+        }
     }
 }

@@ -1,7 +1,7 @@
-@extends("layouts/default")
+@extends("layouts.default", ['page_title' => 'Payment | Create'])
 
 @section("head")
-    <title>{{ config('app.name') }}</title>
+    <link href="{{ mix('/assets/css/selectize.css') }}" rel="stylesheet" type="text/css">
     <style>
     </style>
 @stop
@@ -85,28 +85,7 @@
                 $(this).val(parseFloat($(this).val()).toFixed(2));
             });
 
-            $('#create-payment').parsley({
-                successClass: 'valid',
-                errorClass: 'invalid',
-                errorsContainer: function (velem) {
-                    let $errelem = velem.$element.siblings('span.helper-text');
-                    $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                    return true;
-                },
-                errorsWrapper: '',
-                errorTemplate: ''
-            })
-                .on('field:validated', function(velem) {
-
-                })
-                .on('field:success', function(velem) {
-
-                })
-                .on('field:error', function(velem) {
-
-                })
-                .on('form:submit', function(velem) {
-                });
+            Unicorn.initParsleyValidation('#create-payment');
         });
     </script>
 @stop
