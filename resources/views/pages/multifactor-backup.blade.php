@@ -34,26 +34,7 @@
     <script>
         "use strict";
         $(function() {
-            $('#multifactor-auth').parsley({
-                successClass: 'valid',
-                errorClass: 'invalid',
-                errorsContainer: function (velem) {
-                    let $errelem = velem.$element.siblings('span.helper-text');
-                    $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                    return true;
-                },
-                errorsWrapper: '',
-                errorTemplate: ''
-            })
-                .on('field:validated', function(velem) {
-
-                })
-                .on('field:success', function(velem) {
-
-                })
-                .on('field:error', function(velem) {
-
-                });
+            Unicorn.initParsleyValidation('#multifactor-auth');
         });
     </script>
 @stop

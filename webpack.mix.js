@@ -39,6 +39,8 @@ mix
     })
 
     .js('resources/assets/js/app.js', 'assets/js')
+    .js('resources/assets/js/core.js', 'assets/js')
+    .js('resources/assets/js/unicorn.js', 'assets/js')
     .js('node_modules/trumbowyg/dist/plugins/colors/trumbowyg.colors.min.js', 'assets/js')
     .js('node_modules/trumbowyg/dist/plugins/cleanpaste/trumbowyg.cleanpaste.min.js', 'assets/js')
     .js('node_modules/trumbowyg/dist/plugins/fontsize/trumbowyg.fontsize.min.js', 'assets/js')

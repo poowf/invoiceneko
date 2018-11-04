@@ -53,7 +53,6 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-
         });
     </script>
 @stop

@@ -418,12 +418,20 @@ mark {
 }
 
 .helper-text.manual-validation::after {
-  content: attr(data-error);
-  color: #F44336;
   opacity: 1;
   position: absolute;
   top: 0;
   left: 0;
+}
+
+.helper-text.manual-validation.valid::after {
+  content: attr(data-success);
+  color: #4CAF50;
+}
+
+.helper-text.manual-validation.invalid::after {
+  content: attr(data-error);
+  color: #F44336;
 }
 
 /* Selectize */
@@ -484,8 +492,6 @@ mark {
   background-color: #ffffff;
   z-index: 12;
   max-height: 400px;
-  overflow-y: scroll;
-  overflow-x: hidden;
   font-size: 16px;
 }
 

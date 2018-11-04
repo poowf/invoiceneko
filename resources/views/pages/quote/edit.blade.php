@@ -115,6 +115,7 @@
         $(function() {
             let quoteitemcount = {{ ($quote->items()->count() - 1) ?? 0 }};
 
+            Unicorn.initParsleyValidation('#edit-quote');
 
             $('.trumbowyg-textarea').trumbowyg({
                 svgPath: '/assets/fonts/trumbowygicons.svg',
@@ -203,34 +204,6 @@
                     $('#delete-confirmation').children().children('.quote-item-confirm-delete-btn').attr('data-count', '');
                 });
             });
-
-            $('#edit-quote').parsley({
-                successClass: 'valid',
-                errorClass: 'invalid',
-                errorsContainer: function (velem) {
-                    let $errelem = velem.$element.siblings('span.helper-text');
-                    $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                    return true;
-                },
-                errorsWrapper: '',
-                errorTemplate: ''
-            })
-                .on('field:validated', function(velem) {
-
-                })
-                .on('field:success', function(velem) {
-                    if (velem.$element.is('select')) {
-                        velem.$element.siblings('.selectize-control').removeClass('invalid').addClass('valid');
-                    }
-                })
-                .on('field:error', function(velem) {
-                    if (velem.$element.is('select')) {
-                        velem.$element.siblings('.selectize-control').removeClass('valid').addClass('invalid');
-                    }
-                })
-                .on('form:submit', function(velem) {
-
-                });
         });
     </script>
 @stop

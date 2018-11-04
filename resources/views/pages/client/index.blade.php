@@ -40,7 +40,7 @@
         <div class="row">
             <div class="col s12">
                 <div class="card-panel" style="padding: 2px;">
-                    <input id="search-input" class="card-input" name="search-input" type="text" placeholder="Search">
+                    <input id="search-input" class="card-input" name="search-input" type="search" placeholder="Search">
                 </div>
             </div>
         </div>
@@ -106,31 +106,8 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-
-            $('.modal').modal();
-
-            $('#client-container').on('click', '.client-delete-btn', function (event) {
-                event.preventDefault();
-                var clientid = $(this).attr('data-id');
-                $('#delete-client-form').attr('action', '/client/' + clientid + '/destroy');
-                $('#delete-confirmation').modal('open');
-            });
-
-            var inputBox = $('#search-input');
-            var context = $('#client-container .single-client-card');
-
-            inputBox.on("input", function() {
-                var term = $(this).val();
-                context.unmark().show();
-                if (term != "") {
-                    console.log(term);
-                    context.mark(term, {
-                        done: function() {
-                            context.not(":has(mark)").hide();
-                        }
-                    });
-                }
-            });
+            Unicorn.initConfirmationTrigger('#client-container', '.client-delete-btn', 'client', 'destroy', '#delete-confirmation', '#delete-client-form');
+            Unicorn.initPageSearch('#search-input', '#client-container .single-client-card');
         });
     </script>
 @stop

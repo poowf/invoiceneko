@@ -89,34 +89,7 @@
                 M.toast({ html: "You need to fill in your company information first", displayLength: "poowf", classes: "error"});
             @endif
 
-            $('#edit-address').parsley({
-                successClass: 'valid',
-                errorClass: 'invalid',
-                errorsContainer: function (velem) {
-                    let $errelem = velem.$element.siblings('span.helper-text');
-                    $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                    return true;
-                },
-                errorsWrapper: '',
-                errorTemplate: ''
-            })
-                .on('field:validated', function(velem) {
-                })
-                .on('field:success', function(velem) {
-                    if (velem.$element.is(':radio'))
-                    {
-                        velem.$element.parentsUntil('.row').find('span.helper-text').removeClass('invalid').addClass('valid');
-                    }
-                })
-                .on('field:error', function(velem) {
-                    if (velem.$element.is(':radio'))
-                    {
-                        velem.$element.parentsUntil('.row').find('span.helper-text').removeClass('valid').addClass('invalid');
-                        velem.$element.parentsUntil('.row').find('span.helper-text').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                    }
-                })
-                .on('form:submit', function(velem) {
-                });
+            Unicorn.initParsleyValidation('#edit-address');
         });
     </script>
 @stop

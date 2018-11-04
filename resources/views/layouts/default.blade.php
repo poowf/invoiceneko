@@ -35,6 +35,7 @@
 <script type="text/javascript" src="{{ mix('/assets/js/manifest.js') }}"></script>
 <script type="text/javascript" src="{{ mix('/assets/js/vendor.js') }}"></script>
 <script type="text/javascript" src="{{ mix('/assets/js/app.js') }}"></script>
+<script type="text/javascript" src="{{ mix('/assets/js/core.js') }}"></script>
 
 <script>
     "use strict";
@@ -63,8 +64,6 @@
                 $(this).remove();
             });
         });
-
-
 
         @if(session()->has('flash_notification'))
             @foreach (session('flash_notification', collect())->toArray() as $message)
