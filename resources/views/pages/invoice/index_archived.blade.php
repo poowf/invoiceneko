@@ -37,7 +37,7 @@
         <div class="row">
             <div class="col s12">
                 <div class="card-panel" style="padding: 2px;">
-                    <input id="search-input" class="card-input" name="search-input" type="text" placeholder="Search">
+                    <input id="search-input" class="card-input" name="search-input" type="search" placeholder="Search">
                 </div>
 
                 <div id="invoice-container" class="row">
@@ -110,30 +110,8 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            $('.modal').modal();
-
-            $('#invoice-container').on('click', '.invoice-delete-btn', function (event) {
-                event.preventDefault();
-                var invoiceid = $(this).attr('data-id');
-                $('#delete-invoice-form').attr('action', '/invoice/' + invoiceid + '/destroy');
-                $('#delete-confirmation').modal('open');
-            });
-
-            var inputBox = $('#search-input');
-            var context = $('#invoice-container .single-invoice-row');
-
-            inputBox.on("input", function() {
-                var term = $(this).val();
-                context.unmark().show();
-                if (term != "") {
-                    console.log(term);
-                    context.mark(term, {
-                        done: function() {
-                            context.not(":has(mark)").hide();
-                        }
-                    });
-                }
-            });
+            Unicorn.initConfirmationTrigger('#invoice-container', '.invoice-delete-btn', 'invoice', 'destroy', '#delete-confirmation', '#delete-invoice-form');
+            Unicorn.initPageSearch('#search-input', '#invoice-container .single-invoice-row');
         });
     </script>
 @stop

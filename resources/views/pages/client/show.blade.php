@@ -111,13 +111,7 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-
-            $('#invoice-container').on('click', '.invoice-delete-btn', function (event) {
-                event.preventDefault();
-                let invoiceid = $(this).attr('data-id');
-                $('#delete-invoice-form').attr('action', '/invoice/' + invoiceid + '/destroy');
-                $('#delete-confirmation').modal('open');
-            });
+            Unicorn.initConfirmationTrigger('#invoice-container', '.invoice-delete-btn', 'invoice', 'destroy', '#delete-confirmation', '#delete-invoice-form');
         });
     </script>
 @stop

@@ -103,7 +103,7 @@
                                 <span class="helper-text"></span>
                             </div>
                             <div class="input-field col s12 m6">
-                                <input id="phone" name="phone" type="text" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$" data-parsley-phone-format="#phone" value="{{ $client->phone ?? '' }}">
+                                <input id="phone" name="phone" type="tel" class="phone-input" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$" data-parsley-phone-format="#phone" value="{{ $client->phone ?? '' }}">
                                 <label for="phone" class="label-validation">Phone</label>
                                 <span class="helper-text"></span>
                             </div>
@@ -180,7 +180,7 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12 m6">
-                                <input id="contactphone" name="contactphone" type="text" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$" data-parsley-phone-format="#contactphone" value="{{ $client->contactphone ?? '' }}">
+                                <input id="contactphone" name="contactphone" type="tel" class="phone-input" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$" data-parsley-phone-format="#contactphone" value="{{ $client->contactphone ?? '' }}">
                                 <label for="contactphone" class="label-validation">Phone</label>
                                 <span class="helper-text"></span>
                             </div>
@@ -213,100 +213,10 @@
             $('#country').selectize({});
             $('#contactsalutation').selectize({});
 
-            $("#contactphone").intlTelInput({
-                initialCountry: "sg",
-                utilsScript: "/assets/js/utils.js"
-            });
-
-            $("#phone").intlTelInput({
-                initialCountry: "sg",
-                utilsScript: "/assets/js/utils.js"
-            });
-
-            $( "#phone" ).focusin(function() {
-                $(this).parent().siblings('.label-validation').addClass('theme-text');
-            });
-
-            $( "#phone" ).focusout(function() {
-                $(this).parent().siblings('.label-validation').removeClass('theme-text');
-            });
-
-            $( "#contactphone" ).focusin(function() {
-                $(this).parent().siblings('.label-validation').addClass('theme-text');
-            });
-
-            $( "#contactphone" ).focusout(function() {
-                $(this).parent().siblings('.label-validation').removeClass('theme-text');
-            });
-
-            $('#logo-upload').click(function(){
-                $('#logo').click();
-            });
-
-            $("#logo").on("change", function()
-            {
-                var files = !!this.files ? this.files : [];
-                if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
-
-                if (/^image/.test( files[0].type)){ // only image file
-                    var reader = new FileReader(); // instance of the FileReader
-                    reader.readAsDataURL(files[0]); // read the local file
-
-                    reader.onloadend = function(){ // set image data as background of div
-                        $("#logo-display").attr("src", this.result);
-                    }
-                }
-            });
-
-            window.Parsley
-                .addValidator('phoneFormat', {
-                    requirementType: 'string',
-                    validateString: function(value, elementid) {
-                        if($(elementid).intlTelInput("isValidNumber"))
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    },
-                    messages: {
-                        en: 'This is an invalid phone number format'
-                    }
-                });
-
-            $('#edit-client').parsley({
-                successClass: 'valid',
-                errorClass: 'invalid',
-                errorsContainer: function (velem) {
-                    let $errelem = velem.$element.siblings('span.helper-text');
-                    $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                    return true;
-                },
-                errorsWrapper: '',
-                errorTemplate: ''
-            })
-                .on('field:validated', function(velem) {
-
-                })
-                .on('field:success', function(velem) {
-                    if (velem.$element.is('#contactphone') || velem.$element.is('#phone'))
-                    {
-                        velem.$element.parent('').siblings('label').removeClass('invalid').addClass('valid');
-                    }
-                })
-                .on('field:error', function(velem) {
-                    if (velem.$element.is('#contactphone') || velem.$element.is('#phone'))
-                    {
-                        velem.$element.parent('').siblings('label').removeClass('valid').addClass('invalid');
-                        velem.$element.parent('').siblings('label').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                    }
-                })
-                .on('form:submit', function(velem) {
-                    $("#phone").val($("#phone").intlTelInput("getNumber"));
-                    $("#contactphone").val($("#contactphone").intlTelInput("getNumber"));
-                });
+            Unicorn.initPhoneInput('#phone');
+            Unicorn.initPhoneInput('#contactphone');
+            Unicorn.initParsleyValidation('#edit-client');
+            Unicorn.initImageUpload('#logo', '#logo-upload','#logo-display');
         });
     </script>
 @stop

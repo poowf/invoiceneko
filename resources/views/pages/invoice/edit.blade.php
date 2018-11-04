@@ -114,6 +114,8 @@
         $(function() {
             let invoiceitemcount = {{ ($invoice->items()->count() - 1) ?? 0 }};
 
+            Unicorn.initParsleyValidation('#edit-invoice');
+
             $('.trumbowyg-textarea').trumbowyg({
                 svgPath: '/assets/fonts/trumbowygicons.svg',
                 removeformatPasted: true,
@@ -134,7 +136,6 @@
             });
 
             $('#client_id').selectize();
-            $('.modal').modal();
 
             $('#invoice-item-add').on('click', function() {
                 initInvoiceItem(++invoiceitemcount, 'invoice-items-container');
@@ -201,34 +202,6 @@
                     $('#delete-confirmation').children().children('.invoice-item-confirm-delete-btn').attr('data-count', '');
                 });
             });
-
-            $('#edit-invoice').parsley({
-                successClass: 'valid',
-                errorClass: 'invalid',
-                errorsContainer: function (velem) {
-                    let $errelem = velem.$element.siblings('span.helper-text');
-                    $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                    return true;
-                },
-                errorsWrapper: '',
-                errorTemplate: ''
-            })
-                .on('field:validated', function(velem) {
-
-                })
-                .on('field:success', function(velem) {
-                    if (velem.$element.is('select')) {
-                        velem.$element.siblings('.selectize-control').removeClass('invalid').addClass('valid');
-                    }
-                })
-                .on('field:error', function(velem) {
-                    if (velem.$element.is('select')) {
-                        velem.$element.siblings('.selectize-control').removeClass('valid').addClass('invalid');
-                    }
-                })
-                .on('form:submit', function(velem) {
-
-                });
         });
     </script>
 @stop
