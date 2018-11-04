@@ -99,38 +99,7 @@
 
             $('#invoice_id').selectize();
 
-            $('#create-payment').parsley({
-                successClass: 'valid',
-                errorClass: 'invalid',
-                errorsContainer: function (velem) {
-                    let $errelem = velem.$element.siblings('span.helper-text');
-                    $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                    return true;
-                },
-                errorsWrapper: '',
-                errorTemplate: ''
-            })
-                .on('field:validated', function(velem) {
-
-                })
-                .on('field:success', function(velem) {
-                    if (velem.$element.is('select')) {
-                        velem.$element.siblings('.selectize-control').removeClass('invalid').addClass('valid');
-                        //velem.$element.parent('.select-wrapper').removeClass('invalid').addClass('valid');
-                        //velem.$element.siblings('.select-dropdown').removeClass('invalid').addClass('valid');
-                    }
-                })
-                .on('field:error', function(velem) {
-                    if (velem.$element.is('select')) {
-                        velem.$element.siblings('.selectize-control').removeClass('valid').addClass('invalid');
-
-                        //velem.$element.parent('.select-wrapper').removeClass('valid').addClass('invalid');
-                        //velem.$element.siblings('.select-dropdown').removeClass('valid').addClass('invalid');
-                        //velem.$element.parent('.select-wrapper').siblings('label').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                    }
-                })
-                .on('form:submit', function(velem) {
-                });
+            Unicorn.initParsleyValidation('#create-payment');
         });
     </script>
 @stop

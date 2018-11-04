@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col s12">
                 <div class="card-panel" style="padding: 2px;">
-                    <input id="search-input" class="card-input" name="search-input" type="text" placeholder="Search">
+                    <input id="search-input" class="card-input" name="search-input" type="search" placeholder="Search">
                 </div>
             </div>
         </div>
@@ -80,31 +80,8 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-
-            $('.modal').modal();
-
-            $('#payment-container').on('click', '.payment-delete-btn', function (event) {
-                event.preventDefault();
-                var paymentid = $(this).attr('data-id');
-                $('#delete-payment-form').attr('action', '/payment/' + paymentid + '/destroy');
-                $('#delete-confirmation').modal('open');
-            });
-
-            var inputBox = $('#search-input');
-            var context = $('#payment-container .single-payment-row');
-
-            inputBox.on("input", function() {
-                var term = $(this).val();
-                context.unmark().show();
-                if (term != "") {
-                    console.log(term);
-                    context.mark(term, {
-                        done: function() {
-                            context.not(":has(mark)").hide();
-                        }
-                    });
-                }
-            });
+            Unicorn.initConfirmationTrigger('#payment-container', '.payment-delete-btn', 'payment', 'destroy', '#delete-confirmation', '#delete-payment-form');
+            Unicorn.initPageSearch('#search-input', '#payment-container .single-payment-row');
         });
     </script>
 @stop

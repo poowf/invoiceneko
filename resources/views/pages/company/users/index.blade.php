@@ -101,14 +101,7 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            $('.modal').modal();
-
-            $('#user-container').on('click', '.user-delete-btn', function (event) {
-                event.preventDefault();
-                var userid = $(this).attr('data-id');
-                $('#delete-user-form').attr('action', '/company/users/' + userid + '/destroy');
-                $('#delete-confirmation').modal('open');
-            });
+            Unicorn.initConfirmationTrigger('#user-container', '.user-delete-btn', 'company/users', 'destroy', '#delete-confirmation', '#delete-user-form');
         });
     </script>
 @stop

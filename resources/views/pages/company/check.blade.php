@@ -37,45 +37,7 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            $('#check-company').parsley({
-                successClass: 'valid',
-                errorClass: 'invalid',
-                errorsContainer: function (velem) {
-                    let $errelem = velem.$element.siblings('span.helper-text');
-                    $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                    return true;
-                },
-                errorsWrapper: '',
-                errorTemplate: ''
-            })
-                .on('field:validated', function(velem) {
-
-                })
-                .on('field:success', function(velem) {
-                    if (velem.$element.is(':radio'))
-                    {
-                        velem.$element.parentsUntil('.row').find('span.helper-text').removeClass('invalid').addClass('valid');
-                    }
-                    else if (velem.$element.is('#phone'))
-                    {
-                        velem.$element.parent('').siblings('label').removeClass('invalid').addClass('valid');
-                    }
-                })
-                .on('field:error', function(velem) {
-                    if (velem.$element.is(':radio'))
-                    {
-                        velem.$element.parentsUntil('.row').find('span.helper-text').removeClass('valid').addClass('invalid');
-                        velem.$element.parentsUntil('.row').find('span.helper-text').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                    }
-                    else if (velem.$element.is('#phone'))
-                    {
-                        velem.$element.parent('').siblings('label').removeClass('valid').addClass('invalid');
-                        velem.$element.parent('').siblings('label').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                    }
-                })
-                .on('form:submit', function(velem) {
-                    $("#phone").val($("#phone").intlTelInput("getNumber"));
-                });
+            Unicorn.initParsleyValidation('#check-company');
         });
     </script>
 @stop
