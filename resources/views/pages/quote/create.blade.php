@@ -63,7 +63,7 @@
                                 <select id="item_name_0" name="item_name[]" class="item-list-selector selectize-custom" data-parsley-required="true" data-parsley-trigger="change">
                                     <option disabled="" selected="selected" value="">Pick an Item or Create a new one</option>
                                     @foreach($itemtemplates as $itemtemplate)
-                                        <option value="{{ $itemtemplate->name }}" data-data="{'id': {{ $itemtemplate->id }}}">{{ $itemtemplate->name }}</option>
+                                        <option value="{{ $itemtemplate->name }}" data-data='{"id": {{ $itemtemplate->id }}}'>{{ $itemtemplate->name }}</option>
                                     @endforeach
                                 </select>
                                 <label for="item_name_0" class="label-validation">Name</label>
