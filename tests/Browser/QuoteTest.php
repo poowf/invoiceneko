@@ -3,6 +3,7 @@
 namespace Tests\Browser;
 
 use App\Models\ItemTemplate;
+use Carbon\Carbon;
 use Log;
 use App\Models\Client;
 use Faker\Factory as Faker;
@@ -23,13 +24,13 @@ class QuoteTest extends DuskTestCase
     public function test_creating_a_quote()
     {
         $client = factory(Client::class)->create();
-        $itemtemplate = factory(ItemTemplate::class)->create();
+        $itemtemplate = factory(ItemTemplate::class)->create([
+            'company_id' => $client->company->id
+        ]);
+
         //Need to assign the company_id to the user
         $client->company->owner->company_id = $client->company->id;
         $client->company->owner->save();
-
-        Log::info($itemtemplate);
-        Log::info(addslashes($itemtemplate->name));
 
         $faker = Faker::create();
 
@@ -46,15 +47,13 @@ class QuoteTest extends DuskTestCase
                 ->type('netdays', $faker->numberBetween($min = 1, $max = 60))
                 ->type('item_quantity[]', $faker->numberBetween($min = 1, $max = 1000))
                 ->type('item_price[]', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = NULL));
-            $browser->pause(5000);
             $browser
                 ->script('jQuery("#client_id").selectize()[0].selectize.setValue(1);');
             $browser
-                ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("05 November, 2018");');
+                ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("' . Carbon::now()->format('j F, Y') . '");');
             $browser
-                ->script('jQuery("#item_name_0").selectize()[0].selectize.setValue(jQuery("#item_name_0").siblings().find(".selectize-dropdown-content").children()[0].innerHTML)');
-            $browser
-                ->script('jQuery("#item_description_0").trumbowyg("html", "safdafas");');
+                ->script('jQuery("#item_name_0").selectize()[0].selectize.setValue("' . addslashes($itemtemplate->name) .'");');
+            $browser->pause(2000);
             $browser
                 ->press('CREATE')
                 ->assertPresent('#quote-action-container');
