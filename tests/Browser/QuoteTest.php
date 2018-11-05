@@ -43,7 +43,7 @@ class QuoteTest extends DuskTestCase
                 ->visit('/quotes')
                 ->click("a[href='{$this->baseUrl()}/quote/create']")
                 ->assertPathIs('/quote/create')
-                ->type('nice_quote_id', $faker->slug)
+                ->type('nice_quote_id', substr($faker->slug, 0, 20) . 'sasdf')
                 ->type('netdays', $faker->numberBetween($min = 1, $max = 60))
                 ->type('item_quantity[]', $faker->numberBetween($min = 1, $max = 1000))
                 ->type('item_price[]', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = NULL));

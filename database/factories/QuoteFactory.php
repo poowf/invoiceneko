@@ -4,7 +4,7 @@ use Faker\Generator as Faker;
 
 $factory->define(\App\Models\Quote::class, function (Faker $faker) {
     return [
-        'nice_quote_id' => $faker->slug,
+        'nice_quote_id' => substr($faker->slug, 0, 20) . 'sasdf',
         'date' => $faker->dateTime,
         'duedate' => $faker->dateTime,
         'netdays' => $faker->numberBetween($min = 1, $max = 60),
