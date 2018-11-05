@@ -62,9 +62,6 @@
                             <div class="input-field col s12 l8">
                                 <select id="item_name_0" name="item_name[]" class="item-list-selector selectize-custom" data-parsley-required="true" data-parsley-trigger="change">
                                     <option disabled="" selected="selected" value="">Pick an Item or Create a new one</option>
-                                    @foreach($itemtemplates as $itemtemplate)
-                                        <option value="{{ $itemtemplate->name }}" data-data='{"id": {{ $itemtemplate->id }}}'>{{ $itemtemplate->name }}</option>
-                                    @endforeach
                                 </select>
                                 <label for="item_name_0" class="label-validation">Name</label>
                                 <span class="helper-text"></span>
@@ -155,9 +152,12 @@
                     valueField: 'name',
                     labelField: 'name',
                     searchField: ['name'],
+                    options: [
+                            @foreach($itemtemplates as $itemtemplate){ id:'{{ $itemtemplate->id }}', name:'{{ $itemtemplate->name }}' },@endforeach
+                    ],
                     render: {
                         option: function(data) {
-                            return '<div class="option" data-id="' + data.id +'">' + data.name +'</div>';
+                            return '<div class="option" data-selectable="" data-id="' + data.id +'" data-value="' + data.name +'">' + data.name +'</div>';
                         }
                     }
                 });
