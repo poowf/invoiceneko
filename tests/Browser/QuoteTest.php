@@ -2,6 +2,7 @@
 
 namespace Tests\Browser;
 
+use App\Models\ItemTemplate;
 use Log;
 use App\Models\Client;
 use Faker\Factory as Faker;
@@ -11,6 +12,8 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class QuoteTest extends DuskTestCase
 {
+    use DatabaseMigrations;
+
     /**
      * A Dusk test example.
      *
@@ -20,27 +23,39 @@ class QuoteTest extends DuskTestCase
     public function test_creating_a_quote()
     {
         $client = factory(Client::class)->create();
+        $itemtemplate = factory(ItemTemplate::class)->create();
         //Need to assign the company_id to the user
         $client->company->owner->company_id = $client->company->id;
         $client->company->owner->save();
 
+        Log::info($itemtemplate);
+        Log::info(addslashes($itemtemplate->name));
+
         $faker = Faker::create();
 
-        $this->browse(function (Browser $browser) use ($faker, $client) {
+        $this->browse(function (Browser $browser) use ($faker, $client, $itemtemplate) {
             $browser->visit('/signin')
                 ->type('username', $client->company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
                 ->assertPathIs('/dashboard')
                 ->visit('/quotes')
-                ->press('CREATE')
+                ->click("a[href='{$this->baseUrl()}/quote/create']")
+                ->assertPathIs('/quote/create')
                 ->type('nice_quote_id', $faker->slug)
-                ->type('date', $faker->dateTime)
-                ->type('client_id', $client->companyname)
                 ->type('netdays', $faker->numberBetween($min = 1, $max = 60))
-                ->type('item_name_0', $faker->realText($maxNbChars = 20, $indexSize = 1))
-                ->type('item_quantity_0', $faker->numberBetween($min = 1, $max = 1000))
-                ->type('item_price_0', $faker->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = NULL))
+                ->type('item_quantity[]', $faker->numberBetween($min = 1, $max = 1000))
+                ->type('item_price[]', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = NULL));
+            $browser->pause(5000);
+            $browser
+                ->script('jQuery("#client_id").selectize()[0].selectize.setValue(1);');
+            $browser
+                ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("05 November, 2018");');
+            $browser
+                ->script('jQuery("#item_name_0").selectize()[0].selectize.setValue(jQuery("#item_name_0").siblings().find(".selectize-dropdown-content").children()[0].innerHTML)');
+            $browser
+                ->script('jQuery("#item_description_0").trumbowyg("html", "safdafas");');
+            $browser
                 ->press('CREATE')
                 ->assertPresent('#quote-action-container');
         });
