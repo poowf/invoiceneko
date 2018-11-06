@@ -1,7 +1,6 @@
-@extends("layouts/default")
+@extends("layouts.default", ['page_title' => 'Quotes | Archived'])
 
 @section("head")
-    <title>{{ config('app.name') }}</title>
     <style>
         .card-panel.tab-panel {
             margin-top: 0;
@@ -38,7 +37,7 @@
         <div class="row">
             <div class="col s12">
                 <div class="card-panel" style="padding: 2px;">
-                    <input id="search-input" class="card-input" name="search-input" type="text" placeholder="Search">
+                    <input id="search-input" class="card-input" name="search-input" type="search" placeholder="Search">
                 </div>
 
                 <div id="quote-container" class="row">
@@ -109,30 +108,8 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            $('.modal').modal();
-
-            $('#quote-container').on('click', '.quote-delete-btn', function (event) {
-                event.preventDefault();
-                var quoteid = $(this).attr('data-id');
-                $('#delete-quote-form').attr('action', '/quote/' + quoteid + '/destroy');
-                $('#delete-confirmation').modal('open');
-            });
-
-            var inputBox = $('#search-input');
-            var context = $('#quote-container .single-quote-row');
-
-            inputBox.on("input", function() {
-                var term = $(this).val();
-                context.unmark().show();
-                if (term != "") {
-                    console.log(term);
-                    context.mark(term, {
-                        done: function() {
-                            context.not(":has(mark)").hide();
-                        }
-                    });
-                }
-            });
+            Unicorn.initConfirmationTrigger('#quote-container', '.quote-delete-btn', 'quote', 'destroy', '#delete-confirmation', '#delete-quote-form');
+            Unicorn.initPageSearch('#search-input', '#quote-container .single-quote-row');
         });
     </script>
 @stop

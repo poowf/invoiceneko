@@ -1,7 +1,7 @@
-@extends("layouts/default")
+@extends("layouts.default", ['page_title' => 'Payment | Standalone Create'])
 
 @section("head")
-    <title>{{ config('app.name') }}</title>
+    <link href="{{ mix('/assets/css/selectize.css') }}" rel="stylesheet" type="text/css">
     <style>
     </style>
 @stop
@@ -19,7 +19,7 @@
                     <div class="card-panel">
                         <div class="row">
                             <div class="input-field col s12">
-                                <select id="invoice_id" name="invoice_id" class="test" data-parsley-required="true" data-parsley-trigger="change">
+                                <select id="invoice_id" name="invoice_id" data-parsley-required="true" data-parsley-trigger="change">
                                     <option disabled="" selected="selected" value="">Pick an Invoice</option>
                                     @foreach($invoices as $invoice)
                                         <option value="{{ $invoice->id }}">{{ $invoice->nice_invoice_id }}</option>
@@ -31,7 +31,7 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="amount" name="amount" type="number" data-parsley-required="true" data-parsley-trigger="change"  value="{{ old('amount') }}" placeholder="Payment Amount">
+                                <input id="amount" name="amount" type="number" step="0.01" data-parsley-required="true" data-parsley-trigger="change"  value="{{ old('amount') }}" placeholder="Payment Amount">
                                 <label for="amount" class="label-validation">Amount</label>
                                 <span class="helper-text"></span>
                             </div>
@@ -99,38 +99,7 @@
 
             $('#invoice_id').selectize();
 
-            $('#create-payment').parsley({
-                successClass: 'valid',
-                errorClass: 'invalid',
-                errorsContainer: function (velem) {
-                    let $errelem = velem.$element.siblings('span.helper-text');
-                    $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                    return true;
-                },
-                errorsWrapper: '',
-                errorTemplate: ''
-            })
-                .on('field:validated', function(velem) {
-
-                })
-                .on('field:success', function(velem) {
-                    if (velem.$element.is('select')) {
-                        velem.$element.siblings('.selectize-control').removeClass('invalid').addClass('valid');
-                        //velem.$element.parent('.select-wrapper').removeClass('invalid').addClass('valid');
-                        //velem.$element.siblings('.select-dropdown').removeClass('invalid').addClass('valid');
-                    }
-                })
-                .on('field:error', function(velem) {
-                    if (velem.$element.is('select')) {
-                        velem.$element.siblings('.selectize-control').removeClass('valid').addClass('invalid');
-
-                        //velem.$element.parent('.select-wrapper').removeClass('valid').addClass('invalid');
-                        //velem.$element.siblings('.select-dropdown').removeClass('valid').addClass('invalid');
-                        //velem.$element.parent('.select-wrapper').siblings('label').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                    }
-                })
-                .on('form:submit', function(velem) {
-                });
+            Unicorn.initParsleyValidation('#create-payment');
         });
     </script>
 @stop

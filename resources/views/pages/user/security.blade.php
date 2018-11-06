@@ -1,7 +1,6 @@
-@extends("layouts/default")
+@extends("layouts.default", ['page_title' => 'User | Security'])
 
 @section("head")
-    <title>{{ config('app.name') }}</title>
     <style>
     </style>
 @stop
@@ -22,7 +21,7 @@
                     @if($user->twofa_timestamp)
                         <form id="security" method="post" enctype="multipart/form-data">
                             <div class="row">
-                                <label for="multifactor-auth" class="label-validation">Two Factor Authentication</label>
+                                <label for="multifactor-auth" class="label-validation">Multifactor Authentication</label>
                                     <div class="switch">
                                     <label>
                                         Off
@@ -37,7 +36,7 @@
 
                         <form id="regenerate-2fa-codes" method="post" enctype="multipart/form-data" action="{{ route('user.multifactor.regenerate_codes') }}">
                             <div class="row">
-                                <label for="multifactor-auth" class="label-validation">Two Factor Authentication</label>
+                                <label for="multifactor-auth" class="label-validation">Multifactor Authentication</label>
                                 <div class="input-field col s12">
                                     {{ csrf_field() }}
                                     <button class="btn waves-effect waves-light" type="submit" name="action">Regenerate Backup Codes</button>
@@ -48,9 +47,9 @@
                     <form id="enable-2fa" method="post" enctype="multipart/form-data" action="{{ route('user.multifactor.start') }}">
                         <div class="row">
                             <div class="input-field col s12">
-                                <label for="multifactor-auth" class="label-validation">Two Factor Authentication</label>
+                                <label for="multifactor-auth" class="label-validation">Multifactor Authentication</label>
                                 {{ csrf_field() }}
-                                <button class="btn waves-effect waves-light mtop20" type="submit" name="action">Enable 2 FA</button>
+                                <button class="btn waves-effect waves-light mtop20" type="submit" name="action">Enable Multifactor Auth</button>
                             </div>
                         </div>
                     </form>
@@ -59,27 +58,29 @@
             </div>
         </div>
     </div>
-    @if($codes->isNotEmpty())
-        <div id="recovery-codes" class="modal mini-modal center">
-            <div class="modal-title pall10 theme-color white-text">
-                <h5>Recovery Codes</h5>
+    @if(session()->has('codes'))
+        @if($codes = session()->get('codes'))
+            <div id="recovery-codes" class="modal mini-modal center">
+                <div class="modal-title pall10 theme-color white-text">
+                    <h5>Recovery Codes</h5>
+                </div>
+                <div class="modal-content">
+                    <ul class="collection">
+                        @foreach($codes as $code)
+                            <li class="collection-item">{{ $code }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <a href="javascript:;" class=" modal-action modal-close waves-effect black-text waves-red btn-flat btn-disablemodal">Close</a>
+                </div>
             </div>
-            <div class="modal-content">
-                <ul class="collection">
-                    @foreach($codes as $code)
-                        <li class="collection-item">{{ $code }}</li>
-                    @endforeach
-                </ul>
-            </div>
-            <div class="modal-footer">
-                <a href="javascript:;" class=" modal-action modal-close waves-effect black-text waves-red btn-flat btn-disablemodal">Close</a>
-            </div>
-        </div>
+        @endif
     @endif
     @if($user->twofa_timestamp)
         <div id="disable-confirmation" class="modal mini-modal">
             <div class="modal-content">
-                <p>Disable Two Factor Authentication?</p>
+                <p>Disable Multifactor Authentication?</p>
             </div>
             <div class="modal-footer">
                 <form id="disable-user-form" method="post" class="null-form" action="{{ route('user.multifactor.destroy') }}">
@@ -97,7 +98,7 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            @if($codes->isNotEmpty())
+            @if(session()->has('codes'))
                 $('#recovery-codes').modal('open');
             @endif
             @if($user->twofa_timestamp)

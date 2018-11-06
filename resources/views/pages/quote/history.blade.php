@@ -1,7 +1,6 @@
-@extends("layouts/default")
+@extends("layouts.default", ['page_title' => 'Quote | History'])
 
 @section("head")
-    <title>{{ config('app.name') }}</title>
     <style>
         :root .card.single-history {
             overflow: hidden;
