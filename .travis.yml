@@ -1,14 +1,17 @@
 language: php
 sudo: required
 dist: trusty
-node_js:
-  - 10
 php:
   - '7.1'
   - '7.2'
 
+env:
+  - NODE_RELEASE=10.x
+
 before_script:
   - cp .env.travis .env
+  - sudo rm -rf ~/.nvm - curl -sL "https://deb.nodesource.com/setup_${NODE_RELEASE}" | sudo -E bash -
+  - sudo apt-get install -y nodejs
   - mysql -u root -ppoowf -e 'create database invoiceneko_test;'
   - composer self-update
   - travis_retry composer install --no-interaction --prefer-dist --no-suggest
