@@ -1,6 +1,8 @@
 language: php
 sudo: required
 dist: trusty
+node_js:
+  - 10
 php:
   - '7.1'
   - '7.2'
@@ -12,7 +14,7 @@ before_script:
   - travis_retry composer install --no-interaction --prefer-dist --no-suggest
   - php artisan migrate
   - php artisan key:generate
-  - npm i - g npm
+  - npm i -g npm
   - npm install
   - npm run prod
 
