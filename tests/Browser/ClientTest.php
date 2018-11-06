@@ -42,7 +42,7 @@ class ClientTest extends DuskTestCase
                 ->type('street', $faker->streetName)
                 ->type('contactfirstname', $faker->firstName)
                 ->type('contactemail', $faker->unique()->companyEmail)
-                ->type('contactphone', '+658' . $faker->numberBetween($min = 1, $max = 8) . $faker->randomNumber(6));
+                ->type('contactphone', '+658' . $faker->numberBetween($min = 1, $max = 8) . $faker->randomNumber(6, true));
             $browser
                 ->script('jQuery("#contactsalutation").selectize()[0].selectize.setValue("mr");');
             $browser
