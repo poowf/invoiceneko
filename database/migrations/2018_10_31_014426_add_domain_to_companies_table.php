@@ -26,7 +26,7 @@ class AddDomainToCompaniesTable extends Migration
     public function down()
     {
         Schema::table('companies', function (Blueprint $table) {
-            $table->string('domain_name')->after('slug');
+            $table->dropColumn('domain_name');
         });
     }
 }
