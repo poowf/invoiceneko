@@ -10,7 +10,8 @@ env:
 
 before_script:
   - cp .env.travis .env
-  - sudo rm -rf ~/.nvm - curl -sL "https://deb.nodesource.com/setup_${NODE_RELEASE}" | sudo -E bash -
+  - sudo rm -rf ~/.nvm
+  - curl -sL "https://deb.nodesource.com/setup_${NODE_RELEASE}" | sudo -E bash -
   - sudo apt-get install -y nodejs
   - mysql -u root -ppoowf -e 'create database invoiceneko_test;'
   - composer self-update
