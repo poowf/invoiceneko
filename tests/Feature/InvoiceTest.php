@@ -37,7 +37,6 @@ class InvoiceTest extends TestCase
 
         Invoice::reguard();
 
-        $this->assertEquals($invoice->client->name, $client->name);
         $this->assertEquals($invoice->client->company->name, $client->company->name);
         $this->assertEquals('7e57d004-2b97-0e7a-b45f-5387367791cd', $invoice->share_token);
     }

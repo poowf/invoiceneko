@@ -37,7 +37,6 @@ class QuoteTest extends TestCase
 
         Quote::reguard();
 
-        $this->assertEquals($quote->client->name, $client->name);
         $this->assertEquals($quote->client->company->name, $client->company->name);
         $this->assertEquals('7e57d004-2b97-0e7a-b45f-5387367791cd', $quote->share_token);
     }
