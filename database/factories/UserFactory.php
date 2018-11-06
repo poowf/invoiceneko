@@ -21,7 +21,7 @@ $factory->define(\App\Models\User::class, function (Faker $faker) {
         'username' => $faker->userName,
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = 'secret',
-        'phone' => '+658' . $faker->numberBetween($min = 1, $max = 8) . $faker->randomNumber(6),
+        'phone' => '+658' . $faker->numberBetween($min = 1, $max = 8) . $faker->randomNumber(6, true),
         'gender' => 'male'|'female',
         'remember_token' => str_random(10),
     ];
