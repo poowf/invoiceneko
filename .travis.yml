@@ -18,9 +18,11 @@ before_script:
   - travis_retry composer install --no-interaction --prefer-dist --no-suggest
   - php artisan migrate
   - php artisan key:generate
-  - npm i -g npm
+  - sudo npm i -g npm
   - npm install
   - npm run prod
+  - nodejs -v
+  - php -v
 
 script:
   - vendor/bin/phpunit
