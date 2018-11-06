@@ -4,7 +4,6 @@ namespace Tests\Browser;
 
 use App\Models\Invoice;
 use Faker\Factory as Faker;
-use Illuminate\Support\Facades\Log;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -26,8 +25,6 @@ class PaymentTest extends DuskTestCase
         //Need to assign the company_id to the user
         $invoice->company->owner->company_id = $invoice->company_id;
         $invoice->company->owner->save();
-
-        Log::info($invoice);
 
         $faker = Faker::create();
 

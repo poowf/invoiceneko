@@ -4,7 +4,6 @@ namespace Tests\Browser;
 
 use App\Models\ItemTemplate;
 use Carbon\Carbon;
-use Log;
 use App\Models\Client;
 use Faker\Factory as Faker;
 use Tests\DuskTestCase;
