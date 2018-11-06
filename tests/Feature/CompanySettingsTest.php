@@ -22,7 +22,7 @@ class CompanySettingsTest extends TestCase
 
         CompanySettings::unguard();
 
-        $companysettings = CompanySettings::create([
+        $companySettings = CompanySettings::create([
             'invoice_prefix' => 'PWF',
             'quote_prefix' => 'PWFQ',
             'invoice_conditions' => 'asdfasfdasfasfasdf <strong>asdfasdfasdf</strong> asfdassafas <p>asdfasdfasdfas</p>',
@@ -33,7 +33,7 @@ class CompanySettingsTest extends TestCase
 
         CompanySettings::reguard();
 
-        $this->assertEquals($companysettings->company->name, $company->name);
-        $this->assertEquals('asdfasfdasfasfasdf <strong>asdfasdfasdf</strong> asfdassafas <p>asdfasdfasdfas</p>', $companysettings->invoice_conditions);
+        $this->assertEquals($companySettings->company->name, $company->name);
+        $this->assertEquals('asdfasfdasfasfasdf <strong>asdfasdfasdf</strong> asfdassafas <p>asdfasdfasdfas</p>', $companySettings->invoice_conditions);
     }
 }
