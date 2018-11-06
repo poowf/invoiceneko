@@ -22,7 +22,7 @@ class QuoteItemTest extends TestCase
 
         QuoteItem::unguard();
 
-        $quoteitem = QuoteItem::create([
+        $quoteItem = QuoteItem::create([
             'name' => 'This is a Quote Item la',
             'quantity' => '250',
             'price' => '5.00',
@@ -32,7 +32,7 @@ class QuoteItemTest extends TestCase
 
         QuoteItem::reguard();
 
-        $this->assertEquals($quoteitem->quote->id, $quote->id);
-        $this->assertEquals('asfdasfasfasfsf<p>asasdfasdfasfas</p>', $quoteitem->description);
+        $this->assertEquals($quoteItem->quote->id, $quote->id);
+        $this->assertEquals('asfdasfasfasfsf<p>asasdfasdfasfas</p>', $quoteItem->description);
     }
 }

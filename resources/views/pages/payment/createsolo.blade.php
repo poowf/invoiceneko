@@ -19,7 +19,7 @@
                     <div class="card-panel">
                         <div class="row">
                             <div class="input-field col s12">
-                                <select id="invoice_id" name="invoice_id" class="test" data-parsley-required="true" data-parsley-trigger="change">
+                                <select id="invoice_id" name="invoice_id" data-parsley-required="true" data-parsley-trigger="change">
                                     <option disabled="" selected="selected" value="">Pick an Invoice</option>
                                     @foreach($invoices as $invoice)
                                         <option value="{{ $invoice->id }}">{{ $invoice->nice_invoice_id }}</option>
@@ -31,7 +31,7 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="amount" name="amount" type="number" data-parsley-required="true" data-parsley-trigger="change"  value="{{ old('amount') }}" placeholder="Payment Amount">
+                                <input id="amount" name="amount" type="number" step="0.01" data-parsley-required="true" data-parsley-trigger="change"  value="{{ old('amount') }}" placeholder="Payment Amount">
                                 <label for="amount" class="label-validation">Amount</label>
                                 <span class="helper-text"></span>
                             </div>
