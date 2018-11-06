@@ -6,7 +6,12 @@ php:
   - '7.2'
 
 before_script:
+  - cp .env.travis .env
   - mysql -u root -ppoowf -e 'create database invoiceneko_test;'
+  - composer self-update
+  - travis_retry composer install --no-interaction --prefer-dist --no-suggest
+  - php artisan migrate
+  - php artisan key:generate
 
 script:
   - vendor/bin/phpunit
@@ -27,13 +32,6 @@ before_install:
   - sudo service mysql restart
   - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
   - php artisan serve &
-
-install:
-  - cp .env.travis .env
-  - composer self-update
-  - travis_retry composer install --no-interaction --prefer-dist --no-suggest
-  - php artisan migrate
-  - php artisan key:generate
 
 services:
   - mysql
