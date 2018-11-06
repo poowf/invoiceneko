@@ -22,7 +22,7 @@ before_script:
   - npm i -g npm
   - npm install
   - npm run prod
-  - nodejs -v
+  - node -v
   - php -v
 
 script:
