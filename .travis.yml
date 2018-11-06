@@ -6,12 +6,7 @@ php:
   - '7.2'
 
 before_script:
-  - cp .env.travis .env
   - mysql -u root -ppoowf -e 'create database invoiceneko_test;'
-  - composer self-update
-  - composer install --no-interaction
-  - php artisan key:generate
-  - php artisan migrate
 
 script:
   - vendor/bin/phpunit
@@ -35,7 +30,9 @@ before_install:
 
 install:
   - cp .env.travis .env
+  - composer self-update
   - travis_retry composer install --no-interaction --prefer-dist --no-suggest
+  - php artisan migrate
   - php artisan key:generate
 
 services:

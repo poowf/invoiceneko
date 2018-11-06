@@ -23,7 +23,7 @@ class QuoteTest extends DuskTestCase
     public function test_creating_a_quote()
     {
         $client = factory(Client::class)->create();
-        $itemtemplate = factory(ItemTemplate::class)->create([
+        $itemTemplate = factory(ItemTemplate::class)->create([
             'company_id' => $client->company->id
         ]);
 
@@ -33,7 +33,7 @@ class QuoteTest extends DuskTestCase
 
         $faker = Faker::create();
 
-        $this->browse(function (Browser $browser) use ($faker, $client, $itemtemplate) {
+        $this->browse(function (Browser $browser) use ($faker, $client, $itemTemplate) {
             $browser->visit('/signin')
                 ->type('username', $client->company->owner->email)
                 ->type('password', 'secret')
@@ -51,7 +51,7 @@ class QuoteTest extends DuskTestCase
             $browser
                 ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("' . Carbon::now()->format('j F, Y') . '");');
             $browser
-                ->script('jQuery("#item_name_0").selectize()[0].selectize.setValue("' . addslashes($itemtemplate->name) .'");');
+                ->script('jQuery("#item_name_0").selectize()[0].selectize.setValue("' . addslashes($itemTemplate->name) .'");');
             $browser->pause(2000);
             $browser
                 ->press('CREATE')
