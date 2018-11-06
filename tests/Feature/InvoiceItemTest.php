@@ -22,7 +22,7 @@ class InvoiceItemTest extends TestCase
 
         InvoiceItem::unguard();
 
-        $invoiceitem = InvoiceItem::create([
+        $invoiceItem = InvoiceItem::create([
             'name' => 'This is an Invoice Item la',
             'quantity' => '250',
             'price' => '5.00',
@@ -32,7 +32,7 @@ class InvoiceItemTest extends TestCase
 
         InvoiceItem::reguard();
 
-        $this->assertEquals($invoiceitem->invoice->id, $invoice->id);
-        $this->assertEquals('asfdasfasfasfsf<p>asasdfasdfasfas</p>', $invoiceitem->description);
+        $this->assertEquals($invoiceItem->invoice->id, $invoice->id);
+        $this->assertEquals('asfdasfasfasfsf<p>asasdfasdfasfas</p>', $invoiceItem->description);
     }
 }

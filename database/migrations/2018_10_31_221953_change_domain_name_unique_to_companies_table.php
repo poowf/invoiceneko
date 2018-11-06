@@ -26,7 +26,7 @@ class ChangeDomainNameUniqueToCompaniesTable extends Migration
     public function down()
     {
         Schema::table('companies', function (Blueprint $table) {
-            $table->dropUnique('domain_name');
+            $table->dropUnique(['domain_name']);
         });
     }
 }
