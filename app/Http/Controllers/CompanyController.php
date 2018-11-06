@@ -45,7 +45,6 @@ class CompanyController extends Controller
      */
     public function store(CreateCompanyRequest $request)
     {
-
         if ($request->session()->has('user_id')) {
             $company = new Company;
             $company->fill($request->all());
@@ -250,90 +249,6 @@ class CompanyController extends Controller
         $user = User::find($request->input('user_id'));
         $company->user_id = $user->id;
         $company->save();
-
-        return redirect()->back();
-    }
-
-    public function index_users() {
-        $company = auth()->user()->company;
-
-        if($company)
-        {
-            $users = $company->users()->paginate(12);
-        }
-        else
-        {
-            $users = collect();
-        }
-
-        return view('pages.company.users.index', compact('users', 'company'));
-    }
-
-    public function create_users() {
-        $company = auth()->user()->company;
-
-        return view('pages.company.users.create', compact('company'));
-    }
-    public function store_users(CreateCompanyUserRequest $request) {
-        $company = auth()->user()->company;
-
-        $random_password = str_random(16);
-
-        $user = new User;
-        $user->fill($request->all());
-        $user->password = $random_password;
-        $user->company_id = $company->id;
-        $user->save();
-
-        $user->notify(new NewCompanyUserNotification($user, $random_password));
-
-        return redirect()->back();
-    }
-
-    public function edit_users(User $user) {
-        return view('pages.company.users.edit', compact('user'));
-    }
-
-    public function update_users(UpdateCompanyUserRequest $request, User $user) {
-        $user->fill($request->all());
-        if ($request->has('newpassword') && $request->input('newpassword') != null) {
-            $newpass = $request->input('newpassword');
-            $user->password = $newpass;
-        }
-        $user->save();
-
-        return redirect()->back();
-    }
-
-    public function destroy_users(Request $request, User $user) {
-
-        $auth_user = auth()->user();
-        $usercompany = $user->company;
-
-        //TODO: Probably need to rewrite/refactor this logic to somewhere else
-        if ($usercompany)
-        {
-            if ($usercompany->isOwner($auth_user))
-            {
-                if($user->id != $auth_user->id)
-                {
-                    $user->delete();
-                    flash('User Deleted', 'success');
-                }
-                else
-                {
-                    flash('You cannot delete the owner of the Company', 'error');
-                }
-            }
-            else
-            {
-                flash('Unauthorised', 'error');
-            }
-        }
-        else
-        {
-            flash('Nothing was done', 'error');
-        }
 
         return redirect()->back();
     }

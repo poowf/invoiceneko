@@ -357,6 +357,10 @@ class InvoiceController extends Controller
             if (isset($request->input('item_id')[$key]))
             {
                 $invoiceitem = InvoiceItem::find($request->input('item_id')[$key]);
+                if($invoiceitem->invoice_id != $invoice->id)
+                {
+                    continue;
+                }
             }
             else
             {

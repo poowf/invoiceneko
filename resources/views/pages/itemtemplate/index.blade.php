@@ -1,7 +1,6 @@
-@extends("layouts/default")
+@extends("layouts.default", ['page_title' => 'Item Templates'])
 
 @section("head")
-    <title>{{ config('app.name') }}</title>
     <style>
         .card-panel.tab-panel {
             margin-top: 0;
@@ -39,7 +38,7 @@
         <div class="row">
             <div class="col s12">
                 <div class="card-panel" style="padding: 2px;">
-                    <input id="search-input" class="card-input" name="search-input" type="text" placeholder="Search">
+                    <input id="search-input" class="card-input" name="search-input" type="search" placeholder="Search">
                 </div>
 
                 <div id="itemtemplate-container" class="row">
@@ -98,30 +97,8 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            $('.modal').modal();
-
-            $('#itemtemplate-container').on('click', '.itemtemplate-delete-btn', function (event) {
-                event.preventDefault();
-                let itemtemplateid = $(this).attr('data-id');
-                $('#delete-itemtemplate-form').attr('action', '/itemtemplate/' + itemtemplateid + '/destroy');
-                $('#delete-confirmation').modal('open');
-            });
-
-            let inputBox = $('#search-input');
-            let context = $('#itemtemplate-container .single-itemtemplate-row');
-
-            inputBox.on("input", function() {
-                let term = $(this).val();
-                context.unmark().show();
-                if (term != "") {
-                    console.log(term);
-                    context.mark(term, {
-                        done: function() {
-                            context.not(":has(mark)").hide();
-                        }
-                    });
-                }
-            });
+            Unicorn.initConfirmationTrigger('#itemtemplate-container', '.itemtemplate-delete-btn', 'itemtemplate', 'destroy', '#delete-confirmation', '#delete-itemtemplate-form');
+            Unicorn.initPageSearch('#search-input', '#itemtemplate-container .single-itemtemplate-row');
         });
     </script>
 @stop

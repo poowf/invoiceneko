@@ -26,7 +26,7 @@ class AddTwofaSecretToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn();
+            $table->dropColumn('twofa_secret');
         });
     }
 }

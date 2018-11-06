@@ -39,6 +39,8 @@ mix
     })
 
     .js('resources/assets/js/app.js', 'assets/js')
+    .js('resources/assets/js/core.js', 'assets/js')
+    .js('resources/assets/js/unicorn.js', 'assets/js')
     .js('node_modules/trumbowyg/dist/plugins/colors/trumbowyg.colors.min.js', 'assets/js')
     .js('node_modules/trumbowyg/dist/plugins/cleanpaste/trumbowyg.cleanpaste.min.js', 'assets/js')
     .js('node_modules/trumbowyg/dist/plugins/fontsize/trumbowyg.fontsize.min.js', 'assets/js')
@@ -70,7 +72,7 @@ mix
             port: 8081
         },
         //When configuring proxy, remember that this must be added onto the hosts file on the VM also, otherwise browsersync will not be able to find a dns entry for it
-        proxy: 'invoiceplz.site:80',
+        proxy: 'invoiceneko.test:80',
         open: false
     })
     .version();

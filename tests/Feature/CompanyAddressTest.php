@@ -22,7 +22,7 @@ class CompanyAddressTest extends TestCase
 
         CompanyAddress::unguard();
 
-        $companyaddress = CompanyAddress::create([
+        $companyAddress = CompanyAddress::create([
             'block' => '123',
             'street' => '123 Street Name',
             'unitnumber' => '00-00',
@@ -33,7 +33,7 @@ class CompanyAddressTest extends TestCase
 
         CompanyAddress::reguard();
 
-        $this->assertEquals($companyaddress->company->name, $company->name);
-        $this->assertEquals('123 Street Name', $companyaddress->street);
+        $this->assertEquals($companyAddress->company->name, $company->name);
+        $this->assertEquals('123 Street Name', $companyAddress->street);
     }
 }

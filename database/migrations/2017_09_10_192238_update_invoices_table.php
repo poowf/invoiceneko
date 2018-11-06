@@ -30,6 +30,7 @@ class UpdateInvoicesTable extends Migration
     {
         Schema::table('invoices', function (Blueprint $table) {
             $table->dropForeign(['company_id']);
+            $table->dropColumn('company_id');
         });
     }
 }
