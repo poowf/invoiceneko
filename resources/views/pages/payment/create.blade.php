@@ -19,7 +19,7 @@
                     <div class="card-panel">
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="amount" name="amount" type="number" step="any" data-parsley-required="true" data-parsley-trigger="change"  value="{{ old('amount') }}" placeholder="Payment Amount">
+                                <input id="amount" name="amount" type="number" step="0.01" data-parsley-required="true" data-parsley-trigger="change"  value="{{ old('amount') }}" placeholder="Payment Amount">
                                 <label for="amount" class="label-validation">Amount</label>
                                 <span class="helper-text"></span>
                             </div>
