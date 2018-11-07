@@ -6,6 +6,7 @@
     "type": "project",
     "require": {
         "php": "^7.1.3",
+        "aschmelyun/larametrics": "^1.1",
         "barryvdh/laravel-snappy": "^0.4.1",
         "doctrine/dbal": "^2.8",
         "fideloper/proxy": "^4.0",
@@ -21,17 +22,19 @@
         "pragmarx/recovery": "^0.1.0",
         "rinvex/countries": "^5.0",
         "rollbar/rollbar-laravel": "^4.0",
+        "sentry/sentry-laravel": "^0.11.0",
         "simplesoftwareio/simple-qrcode": "^2.0",
         "simshaun/recurr": "^3.0",
         "spatie/laravel-permission": "^2.23",
         "webpatser/laravel-uuid": "2.*"
     },
     "require-dev": {
-        "beyondcode/laravel-dump-server": "^1.0",
         "barryvdh/laravel-debugbar": "^3.1",
+        "beyondcode/laravel-dump-server": "^1.0",
         "filp/whoops": "^2.0",
         "fzaninotto/faker": "^1.4",
         "laravel/dusk": "^4.0",
+        "laravel/telescope": "^0.1.6",
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^2.0",
         "phpunit/phpunit": "~7.0"
