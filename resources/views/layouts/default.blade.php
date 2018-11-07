@@ -40,11 +40,11 @@
 <script>
     "use strict";
     let _rollbarConfig = {
-        accessToken: "40b61c3274fc4b1a81059ee47832f1d1",
+        accessToken: "{{ env('ROLLBAR_POST_CLIENT_TOKEN') }}",
         captureUncaught: true,
         captureUnhandledRejections: true,
         payload: {
-            environment: "production"
+            environment: "{{ env('ROLLBAR_ENV') }}"
         }
     };
     // Rollbar Snippet
