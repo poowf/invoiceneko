@@ -30,6 +30,7 @@ const app = new Vue({
 
 window.$ = window.jQuery = require('jquery');
 window.Unicorn = require('./unicorn.js');
+window.LogRocket = require('logrocket');
 //window.Laravel = { csrfToken: $('meta[name=csrf-token]').attr("content") };
 
 require('materialize-css');
@@ -38,3 +39,6 @@ require('parsleyjs');
 require('slick-carousel');
 require('mark.js');
 require('trumbowyg');
+
+
+LogRocket.init('grcixc/invoiceneko');
