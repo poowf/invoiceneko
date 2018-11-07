@@ -102,6 +102,10 @@
                 M.toast({ html: "{!! $error[0] !!}", displayLength: "5000", classes: "error"});
             @endforeach
         @endif
+                    
+        @if(app()->environment('production'))
+            LogRocket.init('grcixc/invoiceneko');
+        @endif
 
         @if(auth()->check())
             @if($user = auth()->user())
