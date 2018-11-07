@@ -39,5 +39,3 @@ require('parsleyjs');
 require('slick-carousel');
 require('mark.js');
 require('trumbowyg');
-
-LogRocket.init('grcixc/invoiceneko');
