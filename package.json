@@ -32,6 +32,7 @@
     "dropzone": "^5.5.1",
     "flag-icon-css": "^3.2.0",
     "intl-tel-input": "^13.0.4",
+    "logrocket": "^0.6.17",
     "mark.js": "^8.11.1",
     "materialize-css": "^1.0.0",
     "parsleyjs": "^2.8.1",
