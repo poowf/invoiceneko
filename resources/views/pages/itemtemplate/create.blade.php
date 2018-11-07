@@ -28,7 +28,7 @@
                                 <span class="helper-text"></span>
                             </div>
                             <div class="input-field col s6 l2">
-                                <input id="price" name="price" type="number" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('price') }}" placeholder="Item Price">
+                                <input id="price" name="price" type="number" step="0.01" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('price') }}" placeholder="Item Price">
                                 <label for="price" class="label-validation">Price</label>
                                 <span class="helper-text"></span>
                             </div>
