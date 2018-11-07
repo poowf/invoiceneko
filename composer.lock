@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "59090aaafafbdbef02f3217da107e213",
@@ -2958,12 +2958,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rollbar/rollbar-php.git",
-                "reference": "d0553cfb6e13de0c6667563ec58220895c8f9677"
+                "reference": "34d86c155f4069c3dc3005da72f0d39ebfa78903"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rollbar/rollbar-php/zipball/d0553cfb6e13de0c6667563ec58220895c8f9677",
-                "reference": "d0553cfb6e13de0c6667563ec58220895c8f9677",
+                "url": "https://api.github.com/repos/rollbar/rollbar-php/zipball/34d86c155f4069c3dc3005da72f0d39ebfa78903",
+                "reference": "34d86c155f4069c3dc3005da72f0d39ebfa78903",
                 "shasum": ""
             },
             "require": {
@@ -3010,7 +3010,7 @@
                 "logging",
                 "monitoring"
             ],
-            "time": "2018-10-19T12:34:15+00:00"
+            "time": "2018-11-06T09:04:56+00:00"
         },
         {
             "name": "rollbar/rollbar-laravel",
@@ -3326,16 +3326,16 @@
         },
         {
             "name": "spatie/laravel-permission",
-            "version": "2.23.0",
+            "version": "2.24.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-permission.git",
-                "reference": "104e3aad0ac6f1364ec52d3f3f9d9ded0e822d82"
+                "reference": "867df3945e5c622e2e310c36cf226fe4594d7d0f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/104e3aad0ac6f1364ec52d3f3f9d9ded0e822d82",
-                "reference": "104e3aad0ac6f1364ec52d3f3f9d9ded0e822d82",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/867df3945e5c622e2e310c36cf226fe4594d7d0f",
+                "reference": "867df3945e5c622e2e310c36cf226fe4594d7d0f",
                 "shasum": ""
             },
             "require": {
@@ -3386,7 +3386,7 @@
                 "security",
                 "spatie"
             ],
-            "time": "2018-10-15T19:10:43+00:00"
+            "time": "2018-11-07T02:15:22+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
