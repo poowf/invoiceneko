@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "59090aaafafbdbef02f3217da107e213",
+    "content-hash": "1f9cc6bc5a0880cd6794c10f5985977d",
     "packages": [
         {
             "name": "aschmelyun/larametrics",
@@ -2958,12 +2958,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rollbar/rollbar-php.git",
-                "reference": "d0553cfb6e13de0c6667563ec58220895c8f9677"
+                "reference": "34d86c155f4069c3dc3005da72f0d39ebfa78903"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rollbar/rollbar-php/zipball/d0553cfb6e13de0c6667563ec58220895c8f9677",
-                "reference": "d0553cfb6e13de0c6667563ec58220895c8f9677",
+                "url": "https://api.github.com/repos/rollbar/rollbar-php/zipball/34d86c155f4069c3dc3005da72f0d39ebfa78903",
+                "reference": "34d86c155f4069c3dc3005da72f0d39ebfa78903",
                 "shasum": ""
             },
             "require": {
@@ -3010,7 +3010,7 @@
                 "logging",
                 "monitoring"
             ],
-            "time": "2018-10-19T12:34:15+00:00"
+            "time": "2018-11-06T09:04:56+00:00"
         },
         {
             "name": "rollbar/rollbar-laravel",
@@ -4526,31 +4526,31 @@
         },
         {
             "name": "webpatser/laravel-uuid",
-            "version": "2.2.1",
+            "version": "3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webpatser/laravel-uuid.git",
-                "reference": "c87d5c631938edad7aae96d27881e3ea3de23d80"
+                "reference": "9c9bd4344f4aa78326b34a324d8a208e65c8221f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webpatser/laravel-uuid/zipball/c87d5c631938edad7aae96d27881e3ea3de23d80",
-                "reference": "c87d5c631938edad7aae96d27881e3ea3de23d80",
+                "url": "https://api.github.com/repos/webpatser/laravel-uuid/zipball/9c9bd4344f4aa78326b34a324d8a208e65c8221f",
+                "reference": "9c9bd4344f4aa78326b34a324d8a208e65c8221f",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
+                "php": "^7.0"
             },
             "require-dev": {
-                "fzaninotto/faker": "1.5.*",
-                "phpunit/phpunit": "4.7.*"
-            },
-            "suggest": {
-                "paragonie/random_compat": "A random_bytes Php 5.x polyfill."
+                "fzaninotto/faker": "~1.4",
+                "phpunit/phpunit": "~6.0"
             },
             "type": "library",
             "extra": {
                 "laravel": {
+                    "providers": [
+                        "Webpatser\\Uuid\\UuidServiceProvider"
+                    ],
                     "aliases": {
                         "Uuid": "Webpatser\\Uuid\\Uuid"
                     }
@@ -4576,7 +4576,7 @@
             "keywords": [
                 "UUID RFC4122"
             ],
-            "time": "2017-09-10T21:34:32+00:00"
+            "time": "2017-09-03T23:32:05+00:00"
         }
     ],
     "packages-dev": [
