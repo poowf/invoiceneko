@@ -238,6 +238,7 @@ class InvoiceController extends Controller
                 $invoiceEvent->until_type = $repeatUntilOption;
                 $invoiceEvent->until_meta = $repeatUntilMeta;
                 $invoiceEvent->rule = $rruleString;
+                $invoiceEvent->company_id = $invoice->company_id;
                 $invoiceEvent->save();
 
                 $invoice->invoice_event_id = $invoiceEvent->id;
@@ -362,7 +363,7 @@ class InvoiceController extends Controller
     {
         $company = auth()->user()->company;
         $clients = $company->clients;
-        $event = ($invoice->event) ? $invoice->event : collect();
+        $event = ($invoice->event) ? $invoice->event : null;
 
         return view('pages.invoice.edit', compact('invoice', 'clients', 'event'));
     }
@@ -439,12 +440,26 @@ class InvoiceController extends Controller
         }
 
         $invoice = $invoice->fresh();
-
         $invoice->setInvoiceTotal();
 
-        if($request->has('recurring-invoice-check'))
+        $eventExists = ($invoice->event) ? true : false;
+
+        if ($request->has('recurring-invoice-check'))
         {
-            if($request->input('recurring-invoice-check') === 'on')
+
+            if($request->input('recurring-invoice-check') === 'on' && $request->input('recurring-details') === 'standalone')
+            {
+                $invoicesCount = $invoice->event->invoices()->count();
+                $invoice->invoice_event_id = null;
+                $invoice->save();
+
+                //Check if last invoice and delete if so
+                if($invoicesCount == 1)
+                {
+                    $invoice->event->delete();
+                }
+            }
+            elseif($request->input('recurring-invoice-check') === 'on')
             {
                 //$repeatsEveryInterval is the number of times the event needs to occur in a time period
                 //$repeatsEveryTimePeriod is the time period in which an event needs to occur (day, week, month, year)
@@ -452,13 +467,13 @@ class InvoiceController extends Controller
                 //--never option is forever
                 //--occurence option is how many occurences for it to occur till the event stops
                 //--date option is until a specific date
+
                 $repeatsEveryInterval = $request->input('recurring-time-interval');
                 $repeatsEveryTimePeriod = $request->input('recurring-time-period');
                 $repeatUntilOption = $request->input('recurring-until');
                 $repeatUntilMeta = null;
 
-                switch($repeatUntilOption)
-                {
+                switch ($repeatUntilOption) {
                     case 'occurence':
                         $numberOfOccurences = $request->input('recurring-until-occurence-number');
                         $repeatUntilMeta = $numberOfOccurences;
@@ -469,10 +484,8 @@ class InvoiceController extends Controller
                 }
 
                 $startDate = Carbon::now();
-                $timezone = new DateTimeZone('Asia/Singapore');
+                $timezone = new DateTimeZone('UTC');
                 $rruleString = Unicorn::generateRrule($startDate, $timezone, $repeatsEveryInterval, $repeatsEveryTimePeriod, $repeatUntilOption, $repeatUntilMeta);
-
-                $eventExists = ($invoice->event) ? true : false;
 
                 $invoiceEvent = ($eventExists) ? $invoice->event : new InvoiceEvent;
                 $invoiceEvent->time_interval = $repeatsEveryInterval;
@@ -480,6 +493,7 @@ class InvoiceController extends Controller
                 $invoiceEvent->until_type = $repeatUntilOption;
                 $invoiceEvent->until_meta = $repeatUntilMeta;
                 $invoiceEvent->rule = $rruleString;
+                $invoiceEvent->company_id = $invoice->company_id;
                 $invoiceEvent->save();
 
                 $invoice->invoice_event_id = $invoiceEvent->id;
@@ -487,37 +501,50 @@ class InvoiceController extends Controller
 
                 $items = $invoice->items;
 
-                if($eventExists)
-                {
-                    $invoiceTemplate = $invoiceEvent->template;
-                    $invoiceTemplate->fill($invoice->toArray());
-                    $invoiceTemplate->save();
-
-                    foreach($items as $item)
+                if ($eventExists) {
+                    if($request->input('recurring-details') === 'future')
                     {
-                        $invoiceItemTemplate = new InvoiceItemTemplate;
-                        $invoiceItemTemplate->fill($item->toArray());
-                        $invoiceItemTemplate->save();
-                    }
-                }
-                else
-                {
-                    $invoiceTemplate = new InvoiceTemplate;
-                    $invoiceTemplate->fill($invoice->toArray());
-                    $invoiceTemplate->invoice_event_id = $invoiceEvent->id;
-                    $invoiceTemplate->save();
+                        $invoiceTemplate = $invoiceEvent->template;
+                        $invoiceTemplate->fill($invoice->toArray());
+                        $invoiceTemplate->save();
 
-                    foreach($items as $item)
+                        $invoiceItemTemplates = $invoiceTemplate->items;
+
+                        foreach($invoiceItemTemplates as $invoiceItemTemplate)
+                        {
+                            $invoiceItemTemplate->delete();
+                        }
+
+                        foreach ($items as $item)
+                        {
+                            $invoiceItemTemplate = new InvoiceItemTemplate;
+                            $invoiceItemTemplate->fill($item->toArray());
+                            $invoiceItemTemplate->invoice_template_id = $invoiceTemplate->id;
+                            $invoiceItemTemplate->save();
+                        }
+                    }
+                } else {
+                    if($request->input('recurring-details') === 'none')
                     {
-                        $invoiceItemTemplate = new InvoiceItemTemplate;
-                        $invoiceItemTemplate->fill($item->toArray());
-                        $invoiceItemTemplate->invoice_template_id = $invoiceTemplate->id;
-                        $invoiceItemTemplate->save();
+                        $invoiceTemplate = new InvoiceTemplate;
+                        $invoiceTemplate->fill($invoice->toArray());
+                        $invoiceTemplate->invoice_event_id = $invoiceEvent->id;
+                        $invoiceTemplate->save();
+
+                        foreach ($items as $item) {
+                            $invoiceItemTemplate = new InvoiceItemTemplate;
+                            $invoiceItemTemplate->fill($item->toArray());
+                            $invoiceItemTemplate->invoice_template_id = $invoiceTemplate->id;
+                            $invoiceItemTemplate->save();
+                        }
                     }
+
                 }
-
-
             }
+        }
+        else
+        {
+            if($eventExists) : $invoice->event->delete(); endif;
         }
 
         flash('Invoice Updated', 'success');
@@ -553,6 +580,19 @@ class InvoiceController extends Controller
         $histories = $invoice->history()->orderBy('created_at', 'desc')->get();
 
         return view('pages.invoice.history', compact('invoice', 'client', 'histories'));
+    }
+
+    /**
+     * Function to check if the invoice has any siblings
+     *
+     * @param Invoice $invoice
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function checkSiblings(Invoice $invoice)
+    {
+        $hasSiblings = ($invoice->siblings()) ? true : false;
+
+        return response()->json(compact('hasSiblings'));
     }
 
     /**
