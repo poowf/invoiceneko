@@ -111,6 +111,11 @@ class Invoice extends Model
         return $this->hasMany(OldInvoice::class);
     }
 
+    public function siblings()
+    {
+        return $this->event->invoices->except($this->id);
+    }
+
     public function owns($model)
     {
         return $this->id == $model->invoice_id;
@@ -248,6 +253,7 @@ class Invoice extends Model
         $duedate = $date->addDays($this->netdays)->startOfDay()->toDateTimeString();
         $cloned->duedate = $duedate;
         $cloned->status = self::STATUS_DRAFT;
+        $cloned->invoice_event_id = null;
         $cloned->save();
 
         foreach($this->items as $item)
