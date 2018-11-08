@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Invoice;
 use App\Models\InvoiceEvent;
+use App\Notifications\InvoiceNotification;
 use Carbon\Carbon;
 use DateTimeZone;
 use Illuminate\Console\Command;
@@ -13,7 +15,7 @@ use Recurr\Transformer\ArrayTransformer;
 use Recurr\Transformer\Constraint\AfterConstraint;
 use Recurr\Transformer\Constraint\BeforeConstraint;
 
-class ProcessRecurringInvoices extends Command
+class ProcessGeneratedInvoices extends Command
 {
     /**
      * The name and signature of the console command.
@@ -27,7 +29,7 @@ class ProcessRecurringInvoices extends Command
      *
      * @var string
      */
-    protected $description = 'Process and generate recurring invoices';
+    protected $description = 'Process the generated recurring invoices';
 
     /**
      * Create a new command instance.
@@ -43,8 +45,6 @@ class ProcessRecurringInvoices extends Command
      * Execute the console command.
      *
      * @return mixed
-     * @throws \Recurr\Exception\InvalidRRule
-     * @throws \Recurr\Exception\InvalidWeekday
      */
     public function handle()
     {
@@ -54,6 +54,7 @@ class ProcessRecurringInvoices extends Command
 
         foreach($invoiceEvents as $event)
         {
+            $company = $event->company;
             $now = Carbon::now();
 
             switch($event->time_period)
@@ -80,21 +81,39 @@ class ProcessRecurringInvoices extends Command
 
             $recurrences = $transformer->transform($rrule, $constraint);
 
+            $today = Carbon::now();
+
             foreach($recurrences as $key => $recurrence)
             {
-                if($key == 2)
-                {
-                    break;
-                }
-
-                $today = Carbon::now();
-
+                //Need to use datediff
+                //Currently this will only send after the date has passed.
                 if($today > $recurrence->getEnd())
                 {
-                    $invoice = $event->invoice;
-                    $duplicatedInvoice = $invoice->duplicate(Carbon::createFromFormat('Y-m-d H:i:s', $recurrence->getEnd()->format('Y-m-d H:i:s')));
-                    $duplicatedInvoice->invoice_event_id = $event->id;
-                    $duplicatedInvoice->save();
+                    if ($key == 2) {
+                        break;
+                    }
+
+                    $template = $event->template;
+                    $templateItems = $template->items;
+                    $generatedInvoice = new Invoice;
+                    $generatedInvoice->fill($template->toArray());
+                    $duedate = Carbon::createFromFormat('Y-m-d H:i:s', $recurrence->getEnd()->format('Y-m-d H:i:s'))->addDays($generatedInvoice->netdays)->startOfDay()->toDateTimeString();
+                    $generatedInvoice->date = Carbon::createFromFormat('Y-m-d H:i:s', $recurrence->getEnd()->format('Y-m-d H:i:s'))->startOfDay()->toDateTimeString();
+                    $generatedInvoice->duedate = $duedate;
+                    $generatedInvoice->client_id = $template->client_id;
+                    $generatedInvoice->company_id = $company->id;
+                    $generatedInvoice->invoice_event_id = $event->id;
+                    $generatedInvoice->status = Invoice::STATUS_DRAFT;
+
+                    //Generate hash based on the serialized version of the invoice;
+                    $hash = hash('sha512', serialize($generatedInvoice . $templateItems));
+
+                    if (Invoice::where('hash', $hash)->count() == 1) {
+                        {
+                            $invoice = Invoice::where('hash', $hash)->first();
+                            $invoice->notify(new InvoiceNotification($invoice));
+                        }
+                    }
                 }
             }
         }

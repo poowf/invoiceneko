@@ -504,6 +504,8 @@ class InvoiceController extends Controller
                 if ($eventExists) {
                     if($request->input('recurring-details') === 'future')
                     {
+                        //TODO: If updating template, delete all generated preview invoices that are in draft status.
+                        //Perhaps, it might be a better idea to just display a preview instead of generating the invoices.
                         $invoiceTemplate = $invoiceEvent->template;
                         $invoiceTemplate->fill($invoice->toArray());
                         $invoiceTemplate->save();
