@@ -301,6 +301,9 @@ mark {
 }
 
 /* Modifications for Elements */
+[type="radio"] + span {
+  color: #000000;
+}
 :root:root:root input.radio-input-inline {
   display: inline;
   border: none;

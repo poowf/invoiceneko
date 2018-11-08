@@ -15,10 +15,14 @@ class CreateInvoiceEventsTable extends Migration
     {
         Schema::create('invoice_events', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('time_interval');
+            $table->string('time_period');
+            $table->string('until_type');
+            $table->string('until_meta')->nullable();
             $table->string('rule');
-            $table->integer('invoice_id')->unsigned()->unique();
-            $table->foreign('invoice_id')
-                ->references('id')->on('invoices')
+            $table->integer('company_id')->unsigned();
+            $table->foreign('company_id')
+                ->references('id')->on('companies')
                 ->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

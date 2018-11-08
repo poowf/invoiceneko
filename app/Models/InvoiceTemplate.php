@@ -23,7 +23,9 @@ class InvoiceTemplate extends Model
      * @var array
      */
     protected $fillable = [
+        'date',
         'netdays',
+        'client_id'
     ];
 
     public function event()
