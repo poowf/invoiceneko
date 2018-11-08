@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "59090aaafafbdbef02f3217da107e213",
@@ -2958,12 +2958,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rollbar/rollbar-php.git",
-                "reference": "d0553cfb6e13de0c6667563ec58220895c8f9677"
+                "reference": "34d86c155f4069c3dc3005da72f0d39ebfa78903"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rollbar/rollbar-php/zipball/d0553cfb6e13de0c6667563ec58220895c8f9677",
-                "reference": "d0553cfb6e13de0c6667563ec58220895c8f9677",
+                "url": "https://api.github.com/repos/rollbar/rollbar-php/zipball/34d86c155f4069c3dc3005da72f0d39ebfa78903",
+                "reference": "34d86c155f4069c3dc3005da72f0d39ebfa78903",
                 "shasum": ""
             },
             "require": {
@@ -3010,7 +3010,7 @@
                 "logging",
                 "monitoring"
             ],
-            "time": "2018-10-19T12:34:15+00:00"
+            "time": "2018-11-06T09:04:56+00:00"
         },
         {
             "name": "rollbar/rollbar-laravel",
@@ -3271,16 +3271,16 @@
         },
         {
             "name": "simshaun/recurr",
-            "version": "v3.0.7",
+            "version": "v3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/simshaun/recurr.git",
-                "reference": "f729bfd715f4fdf2fc2d8f400e89c9753e479c7c"
+                "reference": "9aa6f01382ced5d2a18addd27799dc0065916af0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/simshaun/recurr/zipball/f729bfd715f4fdf2fc2d8f400e89c9753e479c7c",
-                "reference": "f729bfd715f4fdf2fc2d8f400e89c9753e479c7c",
+                "url": "https://api.github.com/repos/simshaun/recurr/zipball/9aa6f01382ced5d2a18addd27799dc0065916af0",
+                "reference": "9aa6f01382ced5d2a18addd27799dc0065916af0",
                 "shasum": ""
             },
             "require": {
@@ -3322,7 +3322,7 @@
                 "recurring",
                 "rrule"
             ],
-            "time": "2018-09-19T05:26:21+00:00"
+            "time": "2018-11-08T20:53:11+00:00"
         },
         {
             "name": "spatie/laravel-permission",
