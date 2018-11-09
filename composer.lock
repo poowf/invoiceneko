@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "59090aaafafbdbef02f3217da107e213",
+    "content-hash": "c87cc9431ee1da3bcdfe248dd8bd0f77",
     "packages": [
         {
             "name": "aschmelyun/larametrics",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aschmelyun/larametrics.git",
-                "reference": "4e5b0c26533457f74c07aae2624c0cd6e98d925b"
+                "reference": "3c9a5efdecdaf434db2c7bdf4b07db854c6e40c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aschmelyun/larametrics/zipball/4e5b0c26533457f74c07aae2624c0cd6e98d925b",
-                "reference": "4e5b0c26533457f74c07aae2624c0cd6e98d925b",
+                "url": "https://api.github.com/repos/aschmelyun/larametrics/zipball/3c9a5efdecdaf434db2c7bdf4b07db854c6e40c0",
+                "reference": "3c9a5efdecdaf434db2c7bdf4b07db854c6e40c0",
                 "shasum": ""
             },
             "require": {
@@ -52,7 +52,7 @@
                 }
             ],
             "description": "A self-hosted metrics and notifications platform for Laravel apps",
-            "time": "2018-11-02T09:51:06+00:00"
+            "time": "2018-11-09T10:25:13+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -1381,16 +1381,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.7.12",
+            "version": "v5.7.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "4cb5bf13e0cd50015f8e6a420a52fa8b90758eb1"
+                "reference": "3ff3110ac14f2b4876acaff289bb55a1af74f02e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/4cb5bf13e0cd50015f8e6a420a52fa8b90758eb1",
-                "reference": "4cb5bf13e0cd50015f8e6a420a52fa8b90758eb1",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/3ff3110ac14f2b4876acaff289bb55a1af74f02e",
+                "reference": "3ff3110ac14f2b4876acaff289bb55a1af74f02e",
                 "shasum": ""
             },
             "require": {
@@ -1456,6 +1456,7 @@
                 "aws/aws-sdk-php": "^3.0",
                 "doctrine/dbal": "^2.6",
                 "filp/whoops": "^2.1.4",
+                "guzzlehttp/guzzle": "^6.3",
                 "league/flysystem-cached-adapter": "^1.0",
                 "mockery/mockery": "^1.0",
                 "moontoast/math": "^1.1",
@@ -1520,7 +1521,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2018-10-30T14:44:34+00:00"
+            "time": "2018-11-07T12:41:02+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -1971,16 +1972,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "1.34.0",
+            "version": "1.34.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "1dbd3cb01c5645f3e7deda7aa46ef780d95fcc33"
+                "reference": "19201b87f7dba2a7cbf1cccdf0e1da13c04ee9c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/1dbd3cb01c5645f3e7deda7aa46ef780d95fcc33",
-                "reference": "1dbd3cb01c5645f3e7deda7aa46ef780d95fcc33",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/19201b87f7dba2a7cbf1cccdf0e1da13c04ee9c9",
+                "reference": "19201b87f7dba2a7cbf1cccdf0e1da13c04ee9c9",
                 "shasum": ""
             },
             "require": {
@@ -2022,7 +2023,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2018-09-20T19:36:25+00:00"
+            "time": "2018-11-08T13:33:47+00:00"
         },
         {
             "name": "nette/caching",
@@ -3563,12 +3564,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rollbar/rollbar-php.git",
-                "reference": "d0553cfb6e13de0c6667563ec58220895c8f9677"
+                "reference": "34d86c155f4069c3dc3005da72f0d39ebfa78903"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rollbar/rollbar-php/zipball/d0553cfb6e13de0c6667563ec58220895c8f9677",
-                "reference": "d0553cfb6e13de0c6667563ec58220895c8f9677",
+                "url": "https://api.github.com/repos/rollbar/rollbar-php/zipball/34d86c155f4069c3dc3005da72f0d39ebfa78903",
+                "reference": "34d86c155f4069c3dc3005da72f0d39ebfa78903",
                 "shasum": ""
             },
             "require": {
@@ -3687,16 +3688,16 @@
         },
         {
             "name": "sentry/sentry",
-            "version": "1.9.2",
+            "version": "1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-php.git",
-                "reference": "6b4c80ee1f5d9d5ab5bae949f4eb5d758a0bf64b"
+                "reference": "b2b8ffe1560b9fb0110b02993594a4b04a511959"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/6b4c80ee1f5d9d5ab5bae949f4eb5d758a0bf64b",
-                "reference": "6b4c80ee1f5d9d5ab5bae949f4eb5d758a0bf64b",
+                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/b2b8ffe1560b9fb0110b02993594a4b04a511959",
+                "reference": "b2b8ffe1560b9fb0110b02993594a4b04a511959",
                 "shasum": ""
             },
             "require": {
@@ -3747,7 +3748,7 @@
                 "log",
                 "logging"
             ],
-            "time": "2018-08-18T19:41:03+00:00"
+            "time": "2018-11-09T12:27:19+00:00"
         },
         {
             "name": "sentry/sentry-laravel",
@@ -3876,16 +3877,16 @@
         },
         {
             "name": "simshaun/recurr",
-            "version": "v3.0.7",
+            "version": "v3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/simshaun/recurr.git",
-                "reference": "f729bfd715f4fdf2fc2d8f400e89c9753e479c7c"
+                "reference": "9aa6f01382ced5d2a18addd27799dc0065916af0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/simshaun/recurr/zipball/f729bfd715f4fdf2fc2d8f400e89c9753e479c7c",
-                "reference": "f729bfd715f4fdf2fc2d8f400e89c9753e479c7c",
+                "url": "https://api.github.com/repos/simshaun/recurr/zipball/9aa6f01382ced5d2a18addd27799dc0065916af0",
+                "reference": "9aa6f01382ced5d2a18addd27799dc0065916af0",
                 "shasum": ""
             },
             "require": {
@@ -3927,20 +3928,20 @@
                 "recurring",
                 "rrule"
             ],
-            "time": "2018-09-19T05:26:21+00:00"
+            "time": "2018-11-08T20:53:11+00:00"
         },
         {
             "name": "spatie/laravel-permission",
-            "version": "2.23.0",
+            "version": "2.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-permission.git",
-                "reference": "104e3aad0ac6f1364ec52d3f3f9d9ded0e822d82"
+                "reference": "6b41d1d1726d432342546f9d3c79144b082812dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/104e3aad0ac6f1364ec52d3f3f9d9ded0e822d82",
-                "reference": "104e3aad0ac6f1364ec52d3f3f9d9ded0e822d82",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/6b41d1d1726d432342546f9d3c79144b082812dc",
+                "reference": "6b41d1d1726d432342546f9d3c79144b082812dc",
                 "shasum": ""
             },
             "require": {
@@ -3991,7 +3992,7 @@
                 "security",
                 "spatie"
             ],
-            "time": "2018-10-15T19:10:43+00:00"
+            "time": "2018-11-07T22:48:36+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -5131,31 +5132,31 @@
         },
         {
             "name": "webpatser/laravel-uuid",
-            "version": "2.2.1",
+            "version": "3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webpatser/laravel-uuid.git",
-                "reference": "c87d5c631938edad7aae96d27881e3ea3de23d80"
+                "reference": "9c9bd4344f4aa78326b34a324d8a208e65c8221f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webpatser/laravel-uuid/zipball/c87d5c631938edad7aae96d27881e3ea3de23d80",
-                "reference": "c87d5c631938edad7aae96d27881e3ea3de23d80",
+                "url": "https://api.github.com/repos/webpatser/laravel-uuid/zipball/9c9bd4344f4aa78326b34a324d8a208e65c8221f",
+                "reference": "9c9bd4344f4aa78326b34a324d8a208e65c8221f",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
+                "php": "^7.0"
             },
             "require-dev": {
-                "fzaninotto/faker": "1.5.*",
-                "phpunit/phpunit": "4.7.*"
-            },
-            "suggest": {
-                "paragonie/random_compat": "A random_bytes Php 5.x polyfill."
+                "fzaninotto/faker": "~1.4",
+                "phpunit/phpunit": "~6.0"
             },
             "type": "library",
             "extra": {
                 "laravel": {
+                    "providers": [
+                        "Webpatser\\Uuid\\UuidServiceProvider"
+                    ],
                     "aliases": {
                         "Uuid": "Webpatser\\Uuid\\Uuid"
                     }
@@ -5181,7 +5182,7 @@
             "keywords": [
                 "UUID RFC4122"
             ],
-            "time": "2017-09-10T21:34:32+00:00"
+            "time": "2017-09-03T23:32:05+00:00"
         }
     ],
     "packages-dev": [
@@ -5650,16 +5651,16 @@
         },
         {
             "name": "laravel/telescope",
-            "version": "v0.1.6",
+            "version": "v0.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/telescope.git",
-                "reference": "e3dbda59367969222603a2a20f0ee3aabe7bcdce"
+                "reference": "7183e588501de3b1de307a6f82d311e2212b0f83"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/telescope/zipball/e3dbda59367969222603a2a20f0ee3aabe7bcdce",
-                "reference": "e3dbda59367969222603a2a20f0ee3aabe7bcdce",
+                "url": "https://api.github.com/repos/laravel/telescope/zipball/7183e588501de3b1de307a6f82d311e2212b0f83",
+                "reference": "7183e588501de3b1de307a6f82d311e2212b0f83",
                 "shasum": ""
             },
             "require": {
@@ -5709,7 +5710,7 @@
                 "laravel",
                 "monitoring"
             ],
-            "time": "2018-11-02T10:45:19+00:00"
+            "time": "2018-11-08T11:21:56+00:00"
         },
         {
             "name": "maximebf/debugbar",

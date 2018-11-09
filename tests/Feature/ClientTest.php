@@ -30,7 +30,7 @@ class ClientTest extends TestCase
             'street' => '123 Street Name',
             'unitnumber' => '00-00',
             'postalcode' => '123456',
-            'country' => 'Singapore',
+            'country_code' => 'SG',
             'nickname' => 'Poowf the Bunny',
             'crn' => '201810000A',
             'website' => 'http://poowf.com',

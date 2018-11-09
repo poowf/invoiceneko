@@ -53,7 +53,7 @@ class CompanyController extends Controller
             $company = new Company;
             $company->fill($request->all());
             $company->user_id = $request->session()->pull('user_id');
-            if($request->has('country_code'))
+            if($request->has('country_code') && !$request->has('timezone'))
             {
                 $timezone = (new Countries())
                     ->where('iso_3166_1_alpha2', $request->input('country_code'))
@@ -62,10 +62,9 @@ class CompanyController extends Controller
                     ->timezones
                     ->first()
                     ->zone_name;
-                dd($timezone);
+                $company->timezone = $timezone;
             }
             $company->save();
-
 
             $storedirectory = '/perm_store/company/' . $company->id . '/photos/';
 

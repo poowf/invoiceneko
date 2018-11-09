@@ -11,7 +11,7 @@ $factory->define(\App\Models\Client::class, function (Faker $faker) {
         'street' => $faker->streetName,
         'unitnumber' => $faker->buildingNumber,
         'postalcode' => $faker->postcode,
-        'country' => $faker->country,
+        'country_code' => $faker->countryCode,
         'nickname' => $faker->name,
         'crn' => $faker->ean8,
         'website' => $faker->url,
