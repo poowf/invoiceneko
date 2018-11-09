@@ -25,6 +25,7 @@ class InvoiceTemplate extends Model
     protected $fillable = [
         'date',
         'netdays',
+        'notify',
         'client_id'
     ];
 

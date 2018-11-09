@@ -37,6 +37,8 @@ class User extends Authenticatable
         'email',
         'phone',
         'gender',
+        'country_code',
+        'timezone',
     ];
 
     /**
