@@ -4,7 +4,7 @@
 [![Total Downloads][download-image]][download-url]
 [![Build Status][travis-image]][travis-url]
 
-<img width="150" height="150" src="https://invoiceneko.blob.core.windows.net/assets/invoiceneko-circle.png">
+<img align="center" width="150" height="150" src="https://invoiceneko.blob.core.windows.net/assets/invoiceneko-circle.png">
 
 ## Setup and Deployment
 ```bash

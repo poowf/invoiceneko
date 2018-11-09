@@ -31,6 +31,7 @@ class InvoiceTest extends TestCase
             'share_token' => '7e57d004-2b97-0e7a-b45f-5387367791cd',
             'status' => '2',
             'archived' => '0',
+            'notify' => '0',
             'client_id' => $client->id,
             'company_id' => $client->company->id
         ]);
