@@ -398,6 +398,11 @@ class InvoiceController extends Controller
             }
         }
 
+        if(count($request->input('item_name')) != count($request->input('item_id')))
+        {
+            $ismodified = true;
+        }
+
         if($invoice->isDirty() || $ismodified){
             $originalinvoice = $invoice->getOriginal();
             $originalitems = $invoice->items;

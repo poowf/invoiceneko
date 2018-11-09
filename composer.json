@@ -27,7 +27,7 @@
         "simplesoftwareio/simple-qrcode": "^2.0",
         "simshaun/recurr": "^3.0",
         "spatie/laravel-permission": "^2.23",
-        "webpatser/laravel-uuid": "2.*"
+        "webpatser/laravel-uuid": "^3.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.1",
