@@ -48,6 +48,19 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
+                                <label for="notify" class="label-validation">Auto-Notify</label>
+                                <div class="switch mtop20">
+                                    <label class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Automatically send Invoice to customers on Invoice Date">
+                                        No
+                                        <input id="notify" name="notify" type="checkbox" @if($invoice->notify) checked @endif>
+                                        <span class="lever"></span>
+                                        Yes
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
                                 <label for="recurring-invoice-check" class="label-validation">Recurring Invoice</label>
                                 <div class="switch mtop20">
                                     <label>
@@ -106,6 +119,7 @@
                         <div class="input-field col s12">
                             {{ method_field('PATCH') }}
                             {{ csrf_field() }}
+                            <input id="notify-details" name="notify-details" type="hidden" value="{{ ($invoice->notify) ? 'on' : 'off' }}" data-parsley-required="true" data-parsley-trigger="change">
                             <input id="recurring-details" name="recurring-details" type="hidden" value="none" data-parsley-required="true" data-parsley-trigger="change">
                             <button class="btn waves-effect waves-light col s12 m3 offset-m9" type="submit" name="action">Update</button>
                         </div>
@@ -172,7 +186,7 @@
             $('#date').datepicker({
                 autoClose: 'false',
                 format: 'd mmmm, yyyy',
-                yearRange: [1950, 2018],
+                yearRange: [1950, {{ \Carbon\Carbon::now()->addYear()->format('Y') }}],
                 defaultDate: new Date("{{ $invoice->date ?? Carbon\Carbon::now()->toDateTimeString()  }}"),
                 setDefaultDate: true,
                 onSelect: function() {
@@ -193,6 +207,14 @@
                     initRecurringElements('recurring-invoice-container');
                 } else {
                     $('#recurring-invoice-container').html('');
+                }
+            });
+
+            $('#edit-invoice').on('change', '#notify', function (event) {
+                if ($(this).prop('checked')) {
+                    $('#notify-details').val("on");
+                } else {
+                    $('#notify-details').val("off");
                 }
             });
 

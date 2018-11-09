@@ -31,6 +31,8 @@ class Company extends Model
         'domain_name',
         'phone',
         'email',
+        'country_code',
+        'timezone',
     ];
 
     protected static function boot()

@@ -126,7 +126,7 @@
             $('.datepicker').datepicker({
                 autoClose: 'false',
                 format: 'd mmmm, yyyy',
-                yearRange: [1950, 2018],
+                yearRange: [1950, {{ \Carbon\Carbon::now()->addYear()->format('Y') }}],
                 defaultDate: new Date("{{ $quote->date ?? Carbon\Carbon::now()->toDateTimeString()  }}"),
                 setDefaultDate: true,
                 onSelect: function() {

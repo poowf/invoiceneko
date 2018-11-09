@@ -116,6 +116,12 @@ class Invoice extends Model
         return $this->event->invoices->except($this->id);
     }
 
+    public function hash()
+    {
+        $hash = hash('sha512', serialize($this . $this->items));
+        return $hash;
+    }
+
     public function owns($model)
     {
         return $this->id == $model->invoice_id;
@@ -250,7 +256,7 @@ class Invoice extends Model
         $cloned = $this->replicate();
         $cloned->nice_invoice_id = $company->niceinvoiceid();
         $cloned->date = $date;
-        $duedate = $date->addDays($this->netdays)->startOfDay()->toDateTimeString();
+        $duedate = $date->addDays($this->netdays)->toDateTimeString();
         $cloned->duedate = $duedate;
         $cloned->status = self::STATUS_DRAFT;
         $cloned->invoice_event_id = null;
@@ -311,6 +317,18 @@ class Invoice extends Model
         Mail::to($this->client->contactemail)
             ->cc($this->company->owner->email)
             ->send(new InvoiceMail($this));
+    }
+
+    public function scopeDateBetween($query, $startDate, $endDate)
+    {
+        return $query
+            ->whereBetween('date', [$startDate, $endDate]);
+    }
+
+    public function scopeNotifiable($query)
+    {
+        return $query
+            ->where('notify', true);
     }
 
     public function scopeOverdue($query)

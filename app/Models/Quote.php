@@ -196,7 +196,7 @@ class Quote extends Model
         $cloned = $this->replicate();
         $cloned->nice_quote_id = $company->nicequoteid();
         $cloned->date = Carbon::now();
-        $duedate = Carbon::now()->addDays($this->netdays)->startOfDay()->toDateTimeString();
+        $duedate = Carbon::now()->addDays($this->netdays)->toDateTimeString();
         $cloned->duedate = $duedate;
         $cloned->status = self::STATUS_DRAFT;
         $cloned->save();
