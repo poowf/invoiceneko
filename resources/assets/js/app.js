@@ -29,6 +29,10 @@ const app = new Vue({
  */
 
 window.$ = window.jQuery = require('jquery');
+window.Unicorn = require('./unicorn.js');
+window.LogRocket = require('logrocket');
+// window.Sentry = require('sentry/node');
+// window.Rollbar = require('rollbar');
 //window.Laravel = { csrfToken: $('meta[name=csrf-token]').attr("content") };
 
 require('materialize-css');

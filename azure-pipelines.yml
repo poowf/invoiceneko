@@ -1,0 +1,67 @@
+# PHP
+# Test and package your PHP project.
+# Add steps that run tests, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/php
+
+pool:
+  vmImage: 'Ubuntu 16.04'
+
+variables:
+  phpVersion: 7.2
+
+steps:
+- script: |
+    sudo update-alternatives --set php /usr/bin/php$(phpVersion)
+    sudo update-alternatives --set phar /usr/bin/phar$(phpVersion)
+    sudo update-alternatives --set phpdbg /usr/bin/phpdbg$(phpVersion)
+    sudo update-alternatives --set php-cgi /usr/bin/php-cgi$(phpVersion)
+    sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpVersion)
+    php -version
+  displayName: 'Use PHP version $(phpVersion)'
+
+- script: |
+    curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash -
+    sudo apt-get install -y build-essential debconf-utils screen nodejs mysql-server google-chrome-stable
+    sudo mysql -uroot -proot -e "use mysql; update user set authentication_string=PASSWORD('poowf') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
+    sudo mysql -u root -ppoowf -e 'create database invoiceneko_test;'
+  displayName: 'Installing System Dependencies'
+
+- script: |
+    mysql --version
+  displayName: 'MySQL Version'
+
+- script: |
+    sudo apt-get -y remove composer
+    sudo wget https://getcomposer.org/composer.phar -O /usr/local/bin/composer
+    sudo chmod +x /usr/local/bin/composer
+    export PATH=$PATH:~/usr/local/bin/
+    sudo composer self-update
+    composer install --no-interaction --prefer-dist --no-suggest
+    composer --version
+  displayName: 'Installing Package Dependencies'
+
+- script: |
+    cp .env.travis .env
+    php artisan migrate
+    php artisan key:generate
+  displayName: 'Migrations and Environment Setup'
+
+- script: |
+    sudo npm i -g npm
+    npm install
+    npm run prod
+    node -v
+  displayName: 'Generating build assets'
+
+- script: |
+    screen -d -m google-chrome-stable --headless --disable-gpu --disable-dev-shm-usage --disable-software-rasterizer --remote-debugging-port=9222 http://localhost &
+    screen -d -m php artisan serve &
+  displayName: 'Starting Chrome and the Web Server'
+
+- script: |
+    vendor/bin/phpunit
+  displayName: 'Running Unit Tests'
+
+- script: |
+    php artisan dusk
+  displayName: 'Running Browser Tests'

@@ -1,7 +1,7 @@
-@extends("layouts/default")
+@extends("layouts.default", ['page_title' => 'Company | Owner'])
 
 @section("head")
-    <title>{{ config('app.name') }}</title>
+    <link href="{{ mix('/assets/css/selectize.css') }}" rel="stylesheet" type="text/css">
     <style>
     </style>
 @stop
@@ -33,7 +33,7 @@
                         </dl>
                     </div>
                     @can('update', $owner->company)
-                        <form id="edit-profile" method="post" enctype="multipart/form-data">
+                        <form id="edit-owner" method="post" enctype="multipart/form-data">
                             <div class="card-panel flex">
                                 <div class="input-field col s12">
                                     <select id="user_id" name="user_id" class="user-list-selector selectize-custom" data-parsley-required="true" data-parsley-trigger="change">
@@ -130,45 +130,7 @@
                     retrieveUser($(this).val(), displayOwnerModificationPanel);
                 });
 
-                $('#edit-profile').parsley({
-                    successClass: 'valid',
-                    errorClass: 'invalid',
-                    errorsContainer: function (velem) {
-                        let $errelem = velem.$element.siblings('span.helper-text');
-                        $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                        return true;
-                    },
-                    errorsWrapper: '',
-                    errorTemplate: ''
-                })
-                    .on('field:validated', function(velem) {
-
-                    })
-                    .on('field:success', function(velem) {
-                        if (velem.$element.is(':radio'))
-                        {
-                            velem.$element.parentsUntil('.row').find('span.helper-text').removeClass('invalid').addClass('valid');
-                        }
-                        else if (velem.$element.is('#phone'))
-                        {
-                            velem.$element.parent('').siblings('label').removeClass('invalid').addClass('valid');
-                        }
-                    })
-                    .on('field:error', function(velem) {
-                        if (velem.$element.is(':radio'))
-                        {
-                            velem.$element.parentsUntil('.row').find('span.helper-text').removeClass('valid').addClass('invalid');
-                            velem.$element.parentsUntil('.row').find('span.helper-text').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                        }
-                        else if (velem.$element.is('#phone'))
-                        {
-                            velem.$element.parent('').siblings('span.helper-text').removeClass('valid').addClass('invalid');
-                            velem.$element.parent('').siblings('span.helper-text').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                        }
-                    })
-                    .on('form:submit', function(velem) {
-                        $("#phone").val($("#phone").intlTelInput("getNumber"));
-                    });
+                Unicorn.initParsleyValidation('#edit-owner');
             });
             </script>
         @endcan

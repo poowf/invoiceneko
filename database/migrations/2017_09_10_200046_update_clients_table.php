@@ -30,6 +30,7 @@ class UpdateClientsTable extends Migration
     {
         Schema::table('clients', function (Blueprint $table) {
             $table->dropForeign(['company_id']);
+            $table->dropColumn('company_id');
         });
     }
 }

@@ -428,6 +428,10 @@ class InvoiceController extends Controller
             {
                 //TODO: Validate the invoice item belongs to the invoice/company, need to do authentication here.
                 $invoiceitem = InvoiceItem::find($request->input('item_id')[$key]);
+                if($invoiceitem->invoice_id != $invoice->id)
+                {
+                    continue;
+                }
             }
             else
             {
