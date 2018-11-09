@@ -44,11 +44,11 @@ Route::group(['middleware' => ['guest']], function() {
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/user/multifactor/backup', 'UserController@multifactor_backup')->name('user.multifactor.backup');
     Route::post('/user/multifactor/backup', 'UserController@multifactor_backup_validate')->name('user.multifactor.backup_validate');
+    Route::post('/signout', 'AuthController@destroy')->name('auth.destroy');
 });
 
 Route::group(['middleware' => ['auth', '2fa']], function() {
     Route::post('/multifactor/validate', 'AuthController@multifactor_validate')->name('auth.multifactor.validate');
-    Route::post('/signout', 'AuthController@destroy')->name('auth.destroy');
     Route::get('/errors/nocompany', 'MainController@nocompany')->name('nocompany');
 
     /* User */
@@ -74,12 +74,12 @@ Route::group(['middleware' => ['auth', '2fa']], function() {
         /* Company */
         Route::get('/company/owner/edit', 'CompanyController@edit_owner')->name('company.owner.edit')->middleware('can:owner,App\Models\Company');
         Route::patch('/company/owner/edit', 'CompanyController@update_owner')->name('company.owner.update')->middleware('can:owner,App\Models\Company');
-        Route::get('/company/users', 'CompanyController@index_users')->name('company.users.index')->middleware('can:owner,App\Models\Company');
-        Route::get('/company/users/create', 'CompanyController@create_users')->name('company.users.create')->middleware('can:owner,App\Models\Company');
-        Route::post('/company/users/create', 'CompanyController@store_users')->name('company.users.store')->middleware('can:owner,App\Models\Company');
-        Route::get('/company/users/{user}/edit', 'CompanyController@edit_users')->name('company.users.edit')->middleware('can:owner,App\Models\Company');
-        Route::patch('/company/users/{user}/edit', 'CompanyController@update_users')->name('company.users.update')->middleware('can:owner,App\Models\Company');
-        Route::delete('/company/users/{user}/destroy', 'CompanyController@destroy_users')->name('company.users.destroy')->middleware('can:owner,App\Models\Company');
+        Route::get('/company/users', 'CompanyUserController@index')->name('company.users.index')->middleware('can:owner,App\Models\Company');
+        Route::get('/company/users/create', 'CompanyUserController@create')->name('company.users.create')->middleware('can:owner,App\Models\Company');
+        Route::post('/company/users/create', 'CompanyUserController@store')->name('company.users.store')->middleware('can:owner,App\Models\Company');
+        Route::get('/company/users/{user}/edit', 'CompanyUserController@edit')->name('company.users.edit')->middleware('can:owner,App\Models\Company');
+        Route::patch('/company/users/{user}/edit', 'CompanyUserController@update')->name('company.users.update')->middleware('can:owner,App\Models\Company');
+        Route::delete('/company/users/{user}/destroy', 'CompanyUserController@destroy')->name('company.users.destroy')->middleware('can:owner,App\Models\Company');
 
         /* CompanyAddress */
         Route::get('/company/address/edit', 'CompanyAddressController@edit')->name('company.address.edit')->middleware('can:owner,App\Models\Company');

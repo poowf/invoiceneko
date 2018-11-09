@@ -35,7 +35,7 @@
                             <a href="https://www.twitter.com/"><li><i class="mdi mdi-twitter" aria-hidden="true"></i></li></a>
                             <a href="https://www.instagram.com/"><li><i class="mdi mdi-instagram" aria-hidden="true"></i></li></a>
                         </ul>
-                        <p>© {{ date('Y') }} {{ config('app.name') }} Copyright</p>
+                        <p>© {{ date('Y') }} {{ config('app.name') }}</p>
                     </div>
                     <div class="footer-totop">
                         <a id="return-to-top" href="javascript:;"><div class="totop-link"><i class="material-icons md-36">keyboard_arrow_up</i></div></a>

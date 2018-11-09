@@ -1,7 +1,6 @@
-@extends("layouts/default")
+@extends("layouts.default", ['page_title' => 'Forgot Password'])
 
 @section("head")
-    <title>{{ config('app.name') }} | Account | Forgot Password</title>
     <style>
     </style>
 @stop
@@ -35,26 +34,7 @@
     <script>
         "use strict";
         $(function() {
-            $('#forgot').parsley({
-                successClass: 'valid',
-                errorClass: 'invalid',
-                errorsContainer: function (velem) {
-                    var $errelem = velem.$element.siblings('label');
-                    $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                    return true;
-                },
-                errorsWrapper: '',
-                errorTemplate: ''
-            })
-                .on('field:validated', function(velem) {
-
-                })
-                .on('field:success', function(velem) {
-
-                })
-                .on('field:error', function(velem) {
-
-                });
+            Unicorn.initParsleyValidation('#forgot');
         });
     </script>
 @stop

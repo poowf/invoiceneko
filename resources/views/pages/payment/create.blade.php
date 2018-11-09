@@ -1,7 +1,7 @@
-@extends("layouts/default")
+@extends("layouts.default", ['page_title' => 'Payment | Create'])
 
 @section("head")
-    <title>{{ config('app.name') }}</title>
+    <link href="{{ mix('/assets/css/selectize.css') }}" rel="stylesheet" type="text/css">
     <style>
     </style>
 @stop
@@ -19,7 +19,7 @@
                     <div class="card-panel">
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="amount" name="amount" type="number" step="any" data-parsley-required="true" data-parsley-trigger="change"  value="{{ old('amount') }}" placeholder="Payment Amount">
+                                <input id="amount" name="amount" type="number" step="0.01" data-parsley-required="true" data-parsley-trigger="change"  value="{{ old('amount') }}" placeholder="Payment Amount">
                                 <label for="amount" class="label-validation">Amount</label>
                                 <span class="helper-text"></span>
                             </div>
@@ -85,28 +85,7 @@
                 $(this).val(parseFloat($(this).val()).toFixed(2));
             });
 
-            $('#create-payment').parsley({
-                successClass: 'valid',
-                errorClass: 'invalid',
-                errorsContainer: function (velem) {
-                    let $errelem = velem.$element.siblings('span.helper-text');
-                    $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                    return true;
-                },
-                errorsWrapper: '',
-                errorTemplate: ''
-            })
-                .on('field:validated', function(velem) {
-
-                })
-                .on('field:success', function(velem) {
-
-                })
-                .on('field:error', function(velem) {
-
-                })
-                .on('form:submit', function(velem) {
-                });
+            Unicorn.initParsleyValidation('#create-payment');
         });
     </script>
 @stop
