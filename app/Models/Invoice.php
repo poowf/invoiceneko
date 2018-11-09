@@ -91,6 +91,11 @@ class Invoice extends Model
         return $this->belongsTo('App\Models\Company', 'company_id');
     }
 
+    public function event()
+    {
+        return $this->belongsTo('App\Models\InvoiceEvent', 'invoice_event_id');
+    }
+
     public function items()
     {
         return $this->hasMany('App\Models\InvoiceItem', 'invoice_id');
@@ -104,6 +109,17 @@ class Invoice extends Model
     public function history()
     {
         return $this->hasMany(OldInvoice::class);
+    }
+
+    public function siblings()
+    {
+        return $this->event->invoices->except($this->id);
+    }
+
+    public function hash()
+    {
+        $hash = hash('sha512', serialize($this . $this->items));
+        return $hash;
     }
 
     public function owns($model)
@@ -232,15 +248,18 @@ class Invoice extends Model
         return $textstatus;
     }
 
-    public function duplicate()
+    public function duplicate($date = null)
     {
+        $date = ($date) ? $date : Carbon::now();
+
         $company = $this->company;
         $cloned = $this->replicate();
         $cloned->nice_invoice_id = $company->niceinvoiceid();
-        $cloned->date = Carbon::now();
-        $duedate = Carbon::now()->addDays($this->netdays)->startOfDay()->toDateTimeString();
+        $cloned->date = $date;
+        $duedate = $date->addDays($this->netdays)->toDateTimeString();
         $cloned->duedate = $duedate;
         $cloned->status = self::STATUS_DRAFT;
+        $cloned->invoice_event_id = null;
         $cloned->save();
 
         foreach($this->items as $item)
@@ -249,6 +268,8 @@ class Invoice extends Model
             $clonedrelation->save();
             $cloned->items()->save($clonedrelation);
         }
+
+        $cloned->setInvoiceTotal();
 
         return $cloned;
     }
@@ -296,6 +317,18 @@ class Invoice extends Model
         Mail::to($this->client->contactemail)
             ->cc($this->company->owner->email)
             ->send(new InvoiceMail($this));
+    }
+
+    public function scopeDateBetween($query, $startDate, $endDate)
+    {
+        return $query
+            ->whereBetween('date', [$startDate, $endDate]);
+    }
+
+    public function scopeNotifiable($query)
+    {
+        return $query
+            ->where('notify', true);
     }
 
     public function scopeOverdue($query)

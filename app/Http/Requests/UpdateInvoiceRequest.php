@@ -26,6 +26,7 @@ class UpdateInvoiceRequest extends FormRequest
         return [
             'date' => 'required',
             'netdays' => 'required|numeric',
+            'recurring-details' => 'required|in:none,standalone,future'
         ];
     }
 }

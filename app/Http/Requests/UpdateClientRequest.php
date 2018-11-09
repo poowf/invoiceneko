@@ -30,7 +30,7 @@ class UpdateClientRequest extends FormRequest
             'street' => '',
             'unitnumber' => '',
             'postalcode' => '',
-            'country' => '',
+            'country_code' => '',
             'nickname' => '',
             'crn' => '',
             'website' => '',

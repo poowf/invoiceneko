@@ -31,6 +31,8 @@ class Company extends Model
         'domain_name',
         'phone',
         'email',
+        'country_code',
+        'timezone',
     ];
 
     protected static function boot()
@@ -76,7 +78,9 @@ class Company extends Model
         {
             $prefix = $this->slug . '-';
         }
-        return $prefix . sprintf('%06d', $this->invoice_index);
+        //Retrieve latest version of the company model otherwise it will use the old index value
+        $company = $this->fresh();
+        return $prefix . sprintf('%06d', $company->invoice_index);
     }
 
     public function niceQuoteID()

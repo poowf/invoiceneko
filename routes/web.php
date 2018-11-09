@@ -126,6 +126,7 @@ Route::group(['middleware' => ['auth', '2fa']], function() {
         Route::patch('/invoice/{invoice}/share', 'InvoiceController@share')->name('invoice.share')->middleware('can:view,invoice');
         Route::post('/invoice/{invoice}/send', 'InvoiceController@sendnotification')->name('invoice.send')->middleware('can:view,invoice');
         Route::delete('/invoice/{invoice}/destroy', 'InvoiceController@destroy')->name('invoice.destroy')->middleware('can:delete,invoice');
+        Route::get('/invoice/{invoice}/siblings/check', 'InvoiceController@checkSiblings')->name('invoice.siblings.check')->middleware('can:update,invoice');
 
         Route::get('/invoice/adhoc/create', 'InvoiceController@adhoccreate')->name('invoice.adhoc.create');
 
