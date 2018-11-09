@@ -1,7 +1,6 @@
-@extends("layouts/default")
+@extends("layouts.default", ['page_title' => 'Item Template | Edit'])
 
 @section("head")
-    <title>{{ config('app.name') }}</title>
     <style>
     </style>
 @stop
@@ -15,7 +14,7 @@
         </div>
         <div class="row">
             <div class="col s12">
-                <form id="update-itemtemplate" method="post" enctype="multipart/form-data">
+                <form id="edit-itemtemplate" method="post" enctype="multipart/form-data">
                     <div class="card-panel">
                         <div class="row">
                             <div class="input-field col s12 l8">
@@ -29,7 +28,7 @@
                                 <span class="helper-text"></span>
                             </div>
                             <div class="input-field col s6 l2">
-                                <input id="price" name="price" type="number" data-parsley-required="true" data-parsley-trigger="change" value="{{ $itemtemplate->price }}" placeholder="Item Price">
+                                <input id="price" name="price" type="number" step="0.01" data-parsley-required="true" data-parsley-trigger="change" value="{{ $itemtemplate->price }}" placeholder="Item Price">
                                 <label for="price" class="label-validation">Price</label>
                                 <span class="helper-text"></span>
                             </div>
@@ -64,25 +63,7 @@
                 autogrow: true,
             });
 
-            $('#update-itemtemplate').parsley({
-                successClass: 'valid',
-                errorClass: 'invalid',
-                errorsContainer: function (velem) {
-                    let $errelem = velem.$element.siblings('span.helper-text');
-                    $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                    return true;
-                },
-                errorsWrapper: '',
-                errorTemplate: ''
-            })
-                .on('field:validated', function(velem) {
-                })
-                .on('field:success', function(velem) {
-                })
-                .on('field:error', function(velem) {
-                })
-                .on('form:submit', function(velem) {
-                });
+            Unicorn.initParsleyValidation('#edit-itemtemplate');
         });
     </script>
 @stop

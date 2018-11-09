@@ -1,5 +1,11 @@
-# Invoice Plz
-[![GitHub license](https://img.shields.io/github/license/poowf/invoiceplz.svg)](https://github.com/poowf/invoiceplz/blob/master/LICENSE) ![Latest Stable Version](https://img.shields.io/github/release/poowf/invoiceplz.svg) ![Total Downloads](https://img.shields.io/github/downloads/poowf/invoiceplz/total.svg) ![Build Status](https://travis-ci.com/poowf/invoiceplz.svg)
+# Invoice Neko
+[![GitHub license][license-image]][license-url]
+[![Latest Stable Version][release-image]][release-url]
+[![Total Downloads][download-image]][download-url]
+[![Build Status][travis-image]][travis-url]
+
+<img width="150" height="150" src="https://invoiceneko.blob.core.windows.net/assets/invoiceneko-circle.png">
+
 ## Setup and Deployment
 ```bash
 composer install
@@ -13,7 +19,7 @@ php artisan storage:link
 php artisan serve --host 0.0.0.0
 ```
 
-## About Invoice Plz
+## About Invoice Neko
 
 An Invoice System developed for anyone who needs to generate out an invoice and manage clients
 
@@ -33,3 +39,16 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+
+
+[license-image]: https://img.shields.io/github/license/poowf/invoiceneko.svg?style=flat-square
+[license-url]: https://github.com/poowf/invoiceneko/blob/master/LICENSE
+
+[release-image]: https://img.shields.io/github/release/poowf/invoiceneko.svg?style=flat-square
+[release-url]: https://github.com/poowf/invoiceneko/releases
+
+[download-image]: https://img.shields.io/github/downloads/poowf/invoiceneko/total.svg?style=flat-square
+[download-url]: https://github.com/poowf/invoiceneko/releases
+
+[travis-image]: https://img.shields.io/travis/poowf/invoiceneko/master.svg?style=flat-square
+[travis-url]: https://travis-ci.org/poowf/invoiceneko

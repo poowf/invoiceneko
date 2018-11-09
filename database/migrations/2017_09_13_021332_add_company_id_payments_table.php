@@ -30,6 +30,7 @@ class AddCompanyIdPaymentsTable extends Migration
     {
         Schema::table('payments', function (Blueprint $table) {
             $table->dropForeign(['company_id']);
+            $table->dropColumn('company_id');
         });
     }
 }
