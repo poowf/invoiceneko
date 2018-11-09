@@ -111,6 +111,29 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
+                                <select id="country_code" name="country_code" data-parsley-trigger="change" placeholder="Country">
+                                    @foreach($countries as $country)
+                                        <option value="{{ $country['iso_3166_1_alpha2'] }}" @if($company->country_code == $country['iso_3166_1_alpha2']) selected @endif>{{ $country['name']['common'] }}</option>
+                                    @endforeach
+                                </select>
+                                <label for="country" class="label-validation">Country</label>
+                                <span class="helper-text"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <select id="timezone" name="timezone" data-parsley-trigger="change">
+                                    <option disabled="" selected="selected" value="">Timezone</option>
+                                    @foreach($timezones as $timezone)
+                                        <option value="{{ $timezone }}" @if($company->timezone == $timezone) selected @endif> {{ $timezone }}</option>
+                                    @endforeach
+                                </select>
+                                <label for="country" class="label-validation">Timezone</label>
+                                <span class="helper-text"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
                                 <input id="domain_name" name="domain_name" type="text" data-parsley-required="false" data-parsley-trigger="change" value="{{ $company->domain_name ?? '' }}" placeholder="Company Domain Name">
                                 <label for="domain_name" class="label-validation">Company Domain Name</label>
                                 <span class="helper-text"></span>
@@ -150,6 +173,8 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
+            $('#country_code').selectize({});
+            $('#timezone').selectize({});
             Unicorn.initPhoneInput('#phone');
             Unicorn.initParsleyValidation('#edit-company');
             Unicorn.initImageUpload('#logo', '#logo-upload','#logo-display');

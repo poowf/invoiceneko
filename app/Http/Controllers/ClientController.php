@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateClientRequest;
 use App\Http\Requests\UpdateClientRequest;
 use App\Models\Client;
+use PragmaRX\Countries\Package\Countries;
 use Storage;
 use Uuid;
 use Image;
@@ -31,7 +32,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        $countries = countries();
+        $countries = (new Countries())->all();
 
         return view('pages.client.create', compact('countries'));
     }
@@ -99,7 +100,7 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
-        $countries = countries();
+        $countries = (new Countries())->all();
 
         return view('pages.client.edit', compact('client', 'countries'));
     }

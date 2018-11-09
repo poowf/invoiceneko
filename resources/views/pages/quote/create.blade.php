@@ -123,7 +123,7 @@
             $('.datepicker').datepicker({
                 autoClose: 'false',
                 format: 'd mmmm, yyyy',
-                yearRange: [1950, 2018],
+                yearRange: [1950, {{ \Carbon\Carbon::now()->addYear()->format('Y') }}],
                 onSelect: function() {
                     // let date = $(this)[0].formats.yyyy() + '-' + $(this)[0].formats.mm() + '-' + $(this)[0].formats.dd()
                     // $('#receiveddate').val(date);

@@ -52,6 +52,17 @@
                                 <span class="helper-text"></span>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <select id="country_code" name="country_code" data-parsley-trigger="change" placeholder="Country">
+                                    @foreach($countries as $country)
+                                        <option value="{{ $country['iso_3166_1_alpha2'] }}" @if(old('country_code') == $country['iso_3166_1_alpha2']) selected @endif>{{ $country['name']['common'] }}</option>
+                                    @endforeach
+                                </select>
+                                <label for="country" class="label-validation">Country</label>
+                                <span class="helper-text"></span>
+                            </div>
+                        </div>
                         <div class="row pbtm20">
                             <div class="input-field col s12">
                                 <input id="phone" name="phone" type="tel" class="phone-input" data-parsley-required="true" data-parsley-trigger="change" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$" data-parsley-phone-format="#phone" value="{{ old('phone') }}">
@@ -95,6 +106,8 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
+            $('#country_code').selectize({});
+            $('#timezone').selectize({});
             Unicorn.initPhoneInput('#phone');
             Unicorn.initParsleyValidation('#signup');
         });
