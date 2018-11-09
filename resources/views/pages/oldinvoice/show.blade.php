@@ -38,7 +38,7 @@
                             <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->companyname }}</span>
                             <span style="font-size: 18px; line-height: 26px; display: block;">@if($invoice->client->block){{ $invoice->client->block }} @endif {{ $invoice->client->street ?? 'No Street' }}</span>
                             @if($invoice->client->unitnumber)<span style="font-size: 18px; line-height: 26px; display: block;">#{{ $invoice->client->unitnumber }}</span>@endif
-                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->country ?? 'No Country' }} {{ $invoice->client->postalcode ?? 'No Postal Code' }}</span>
+                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->country_code ?? 'No Country' }} {{ $invoice->client->postalcode ?? 'No Postal Code' }}</span>
                         </div>
                         <div class="col-xs-2 invoice-payment-direction" style="position: relative; padding-top: 10px; width: 10%; float: left; text-align: center;">
                             <img src="{{ asset('/assets/img/lefttoright.png') }}" width="80" height="80" />

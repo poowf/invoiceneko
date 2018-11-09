@@ -13,6 +13,7 @@ use App\Models\Company;
 use Illuminate\Http\Request;
 use Google2FA;
 use PragmaRX\Recovery\Recovery;
+use PragmaRX\Countries\Package\Countries;
 
 class UserController extends Controller
 {
@@ -45,7 +46,10 @@ class UserController extends Controller
             session(['_old_input.phone' => $companyUserRequest->phone]);
         }
 
-        return view('pages.user.create', compact('token'));
+        $countries = (new Countries())->all();
+        $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
+
+        return view('pages.user.create', compact('token', 'countries', 'timezones'));
     }
 
     /**
@@ -102,7 +106,9 @@ class UserController extends Controller
     public function edit()
     {
         $user = auth()->user();
-        return view('pages.user.edit', compact('user'));
+        $countries = (new Countries())->all();
+        $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
+        return view('pages.user.edit', compact('user', 'countries', 'timezones'));
     }
 
     /**

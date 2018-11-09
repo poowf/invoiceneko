@@ -18,6 +18,7 @@
         "laravel/tinker": "^1.0",
         "laravelista/ekko": "^1.5",
         "maatwebsite/excel": "~3.1.0",
+        "pragmarx/countries": "^0.5.9",
         "pragmarx/google2fa-laravel": "^0.2.0",
         "pragmarx/recovery": "^0.1.0",
         "rinvex/countries": "^5.0",

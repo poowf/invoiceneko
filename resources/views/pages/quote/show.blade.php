@@ -148,7 +148,7 @@
                             <span style="font-size: 18px; line-height: 26px; display: block;">{{ $quote->client->companyname }}</span>
                             <span style="font-size: 18px; line-height: 26px; display: block;">@if($quote->client->block){{ $quote->client->block }} @endif {{ $quote->client->street ?? 'No Street' }}</span>
                             @if($quote->client->unitnumber)<span style="font-size: 18px; line-height: 26px; display: block;">#{{ $quote->client->unitnumber }}</span>@endif
-                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $quote->client->country ?? 'No Country' }} {{ $quote->client->postalcode ?? 'No Postal Code' }}</span>
+                            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $quote->client->country_code ?? 'No Country' }} {{ $quote->client->postalcode ?? 'No Postal Code' }}</span>
                         </div>
                         <div class="col-xs-2 quote-payment-direction" style="position: absolute; padding-top: 10px; left: 0; right:0; text-align: center;">
                             <img src="{{ asset('/assets/img/lefttoright.png') }}" width="80" height="80" />

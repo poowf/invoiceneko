@@ -93,10 +93,9 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12 m6">
-                                <select id="country" name="country" data-parsley-trigger="change">
-                                    <option disabled="" selected="selected" value="">Client Country</option>
+                                <select id="country_code" name="country_code" data-parsley-trigger="change" placeholder="Client Country">
                                     @foreach($countries as $country)
-                                        <option value="{{ $country['name'] }}" @if($client->country == $country['name']) selected @endif> {{ $country['name'] }}</option>
+                                        <option value="{{ $country['iso_3166_1_alpha2'] }}" @if($client->country_code == $country['iso_3166_1_alpha2']) selected @endif>{{ $country['name']['common'] }}</option>
                                     @endforeach
                                 </select>
                                 <label for="country" class="label-validation">Client Country</label>
@@ -210,7 +209,7 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            $('#country').selectize({});
+            $('#country_code').selectize({});
             $('#contactsalutation').selectize({});
 
             Unicorn.initPhoneInput('#phone');

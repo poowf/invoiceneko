@@ -301,6 +301,28 @@ mark {
 }
 
 /* Modifications for Elements */
+[type="radio"] + span {
+  color: #000000;
+}
+:root:root:root input.radio-input-inline {
+  display: inline;
+  border: none;
+  background-color: #f1f1f1;
+  text-align: right;
+  box-shadow: none;
+}
+
+:root:root:root input.radio-input-digit {
+  width: 45px;
+  height: 35px;
+}
+
+:root:root:root input.radio-input-date {
+  width: 150px;
+  height: 35px;
+  text-align: center;
+}
+
 .wide-container {
   margin: 0 auto;
   width: 95%;
