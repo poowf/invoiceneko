@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateCompanyRequest;
 use App\Http\Requests\UpdateCompanyUserRequest;
 use App\Notifications\NewCompanyUserNotification;
 use Illuminate\Http\Request;
+use PragmaRX\Countries\Package\Countries;
 use App\Models\Company;
 use App\Models\User;
 use Storage;
@@ -34,10 +35,10 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        $countries = countries();
+        $countries = (new Countries())->all();
         $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
 
-        return view('pages.company.create', 'countries', 'timezones');
+        return view('pages.company.create', compact('countries', 'timezones'));
     }
 
     /**
@@ -48,12 +49,23 @@ class CompanyController extends Controller
      */
     public function store(CreateCompanyRequest $request)
     {
-
         if ($request->session()->has('user_id')) {
             $company = new Company;
             $company->fill($request->all());
             $company->user_id = $request->session()->pull('user_id');
+            if($request->has('country_code'))
+            {
+                $timezone = (new Countries())
+                    ->where('iso_3166_1_alpha2', $request->input('country_code'))
+                    ->first()
+                    ->hydrate('timezones')
+                    ->timezones
+                    ->first()
+                    ->zone_name;
+                dd($timezone);
+            }
             $company->save();
+
 
             $storedirectory = '/perm_store/company/' . $company->id . '/photos/';
 
@@ -134,7 +146,7 @@ class CompanyController extends Controller
     public function edit()
     {
         $company = auth()->user()->ownedcompany;
-        $countries = countries();
+        $countries = (new Countries())->all();
         $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
 
         return view('pages.company.edit', compact('company', 'countries', 'timezones'));
@@ -277,7 +289,7 @@ class CompanyController extends Controller
 
     public function create_users() {
         $company = auth()->user()->company;
-        $countries = countries();
+        $countries = (new Countries())->all();
         $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
 
         return view('pages.company.users.create', compact('company', 'countries', 'timezones'));
@@ -299,7 +311,7 @@ class CompanyController extends Controller
     }
 
     public function edit_users(User $user) {
-        $countries = countries();
+        $countries = (new Countries())->all();
         $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
         return view('pages.company.users.edit', compact('user', 'countries', 'timezones'));
     }

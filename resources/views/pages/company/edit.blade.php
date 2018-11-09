@@ -112,10 +112,9 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <select id="country_code" name="country_code" data-parsley-trigger="change">
-                                    <option disabled="" selected="selected" value="">Country</option>
+                                <select id="country_code" name="country_code" data-parsley-trigger="change" placeholder="Country">
                                     @foreach($countries as $country)
-                                        <option value="{{ $country['iso_3166_1_alpha2'] }}" @if($company->country_code == $country['iso_3166_1_alpha2']) selected @endif> {{ $country['name'] }}</option>
+                                        <option value="{{ $country['iso_3166_1_alpha2'] }}" @if($company->country_code == $country['iso_3166_1_alpha2']) selected @endif>{{ $country['name']['common'] }}</option>
                                     @endforeach
                                 </select>
                                 <label for="country" class="label-validation">Country</label>

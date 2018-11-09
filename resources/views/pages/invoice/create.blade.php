@@ -49,6 +49,19 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
+                            <label for="notify" class="label-validation">Auto-Notify</label>
+                            <div class="switch mtop20">
+                                <label class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Automatically send Invoice to customers on Invoice Date">
+                                    No
+                                    <input id="notify" name="notify" type="checkbox">
+                                    <span class="lever"></span>
+                                    Yes
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
                             <label for="recurring-invoice-check" class="label-validation">Recurring Invoice</label>
                             <div class="switch mtop20">
                                 <label>
@@ -136,7 +149,7 @@
             $('#date').datepicker({
                 autoClose: 'false',
                 format: 'd mmmm, yyyy',
-                yearRange: [1950, {{ \Carbon\Carbon::now()->format('Y') }}],
+                yearRange: [1950, {{ \Carbon\Carbon::now()->addYear()->format('Y') }}],
                 onSelect: function() {
                     // let date = $(this)[0].formats.yyyy() + '-' + $(this)[0].formats.mm() + '-' + $(this)[0].formats.dd()
                     // $('#receiveddate').val(date);

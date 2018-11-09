@@ -18,8 +18,8 @@ use App\Notifications\InvoiceNotification;
 use DateTime;
 use DateTimeZone;
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Collection;
+use PragmaRX\Countries\Package\Countries;
 use Log;
 use PDF;
 use Uuid;
@@ -187,6 +187,7 @@ class InvoiceController extends Controller
         $invoice->duedate = $duedate;
         $invoice->client_id = $request->input('client_id');
         $invoice->company_id = $company->id;
+        $invoice->notify = $request->has('notify') ? true : false;
         $invoice->save();
 
         foreach($request->input('item_name') as $key => $item)
@@ -224,7 +225,7 @@ class InvoiceController extends Controller
                         $repeatUntilMeta = $numberOfOccurences;
                         break;
                     case 'date':
-                        $repeatUntilMeta = Carbon::createFromFormat('j F, Y', $request->input('recurring-until-date-value'))->toDateTimeString();
+                        $repeatUntilMeta = Carbon::createFromFormat('j F, Y', $request->input('recurring-until-date-value'))->startOfDay()->toDateTimeString();
                         break;
                 }
 
@@ -381,6 +382,7 @@ class InvoiceController extends Controller
         $invoice->date = Carbon::createFromFormat('j F, Y', $request->input('date'))->startOfDay()->toDateTimeString();
         $invoice->netdays = $request->input('netdays');
         $invoice->duedate = $duedate;
+        $invoice->notify = $request->has('notify') ? true : false;
 
         $ismodified = false;
 
@@ -479,7 +481,7 @@ class InvoiceController extends Controller
                         $repeatUntilMeta = $numberOfOccurences;
                         break;
                     case 'date':
-                        $repeatUntilMeta = Carbon::createFromFormat('j F, Y', $request->input('recurring-until-date-value'))->toDateTimeString();
+                        $repeatUntilMeta = Carbon::createFromFormat('j F, Y', $request->input('recurring-until-date-value'))->startOfDay()->toDateTimeString();
                         break;
                 }
 
@@ -616,7 +618,7 @@ class InvoiceController extends Controller
             else
             {
                 $invoicenumber = $company->niceinvoiceid();
-                $countries = countries();
+                $countries = (new Countries())->all();
 
                 return view('pages.invoice.adhoccreate', compact('company', 'invoicenumber', 'countries'));
             }

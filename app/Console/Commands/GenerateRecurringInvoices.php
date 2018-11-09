@@ -94,13 +94,14 @@ class GenerateRecurringInvoices extends Command
                 $templateItems = $template->items;
                 $generatedInvoice = new Invoice;
                 $generatedInvoice->fill($template->toArray());
-                $duedate = Carbon::createFromFormat('Y-m-d H:i:s', $recurrence->getEnd()->format('Y-m-d H:i:s'))->addDays($generatedInvoice->netdays)->startOfDay()->toDateTimeString();
-                $generatedInvoice->date = Carbon::createFromFormat('Y-m-d H:i:s', $recurrence->getEnd()->format('Y-m-d H:i:s'))->startOfDay()->toDateTimeString();
+                $duedate = Carbon::createFromFormat('Y-m-d H:i:s', $recurrence->getEnd()->format('Y-m-d H:i:s'))->addDays($generatedInvoice->netdays)->toDateTimeString();
+                $generatedInvoice->date = Carbon::createFromFormat('Y-m-d H:i:s', $recurrence->getEnd()->format('Y-m-d H:i:s'))->toDateTimeString();
                 $generatedInvoice->duedate = $duedate;
                 $generatedInvoice->client_id = $template->client_id;
                 $generatedInvoice->company_id = $company->id;
                 $generatedInvoice->invoice_event_id = $event->id;
                 $generatedInvoice->status = Invoice::STATUS_DRAFT;
+                $generatedInvoice->notify = $template->notify;
 
                 //Generate hash based on the serialized version of the invoice;
                 $hash = hash('sha512', serialize($generatedInvoice . $templateItems));
