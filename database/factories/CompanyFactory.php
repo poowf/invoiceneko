@@ -10,6 +10,8 @@ $factory->define(\App\Models\Company::class, function (Faker $faker) {
         'slug' => $faker->slug,
         'domain_name' => $faker->domainName,
         'crn' => $faker->ean8,
+        'country_code' => $faker->countryCode,
+        'timezone' => $faker->timezone,
         'phone' => '+659' . $faker->numberBetween($min = 0, $max = 8) . $faker->randomNumber(6, true),
         'email' => $faker->unique()->companyEmail,
         'user_id' => function() {

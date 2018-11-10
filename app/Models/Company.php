@@ -35,6 +35,11 @@ class Company extends Model
         'timezone',
     ];
 
+    protected $attributes = [
+        'invoice_index' => 1,
+        'quote_index' => 1
+    ];
+
     protected static function boot()
     {
         parent::boot();
@@ -42,17 +47,11 @@ class Company extends Model
         static::creating(function ($company) {
             $company->slug = str_slug($company->name);
             static::generateSlug($company);
-            $company->invoice_index = 1;
-            $company->quote_index = 1;
         });
 
         //Auto Creation of Settings per Company;
         static::created(function ($company) {
             $settings = new CompanySettings;
-            $settings->invoice_prefix = str_slug($company->name);
-            $settings->quote_prefix = str_slug($company->name) . 'Q';
-            $settings->invoice_conditions = "Terms & Conditions for your Invoice";
-            $settings->quote_conditions = "Terms & Conditions for your Quote";
             $company->settings()->save($settings);
         });
     }
