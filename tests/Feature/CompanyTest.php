@@ -37,4 +37,16 @@ class CompanyTest extends TestCase
         $this->assertEquals($company->owner->name, $user->name);
         $this->assertEquals('poowf-labs', $company->slug);
     }
+
+
+    public function test_company_has_a_company_settings_relationship()
+    {
+        $company = factory(Company::class)->create();
+        //Need to assign the company_id to the user
+        $company->owner->company_id = $company->id;
+        $company->owner->save();
+
+        $this->assertTrue(isset($company->settings));
+        $this->assertEquals($company->id, $company->settings->company_id);
+    }
 }
