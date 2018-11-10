@@ -12,6 +12,10 @@ use Image;
 
 class ClientController extends Controller
 {
+    public function __construct(){
+        $this->countries = new Countries();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -32,7 +36,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        $countries = (new Countries())->all();
+        $countries = $this->countries->all();
 
         return view('pages.client.create', compact('countries'));
     }
@@ -100,7 +104,7 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
-        $countries = (new Countries())->all();
+        $countries = $this->countries->all();
 
         return view('pages.client.edit', compact('client', 'countries'));
     }

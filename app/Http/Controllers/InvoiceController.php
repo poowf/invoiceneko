@@ -29,6 +29,10 @@ use Recurr\Frequency;
 
 class InvoiceController extends Controller
 {
+    public function __construct(){
+        $this->countries = new Countries();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -627,7 +631,7 @@ class InvoiceController extends Controller
             else
             {
                 $invoicenumber = $company->niceinvoiceid();
-                $countries = (new Countries())->all();
+                $countries = $this->countries->all();
 
                 return view('pages.invoice.adhoccreate', compact('company', 'invoicenumber', 'countries'));
             }

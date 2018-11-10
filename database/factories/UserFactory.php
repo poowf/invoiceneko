@@ -20,6 +20,8 @@ $factory->define(\App\Models\User::class, function (Faker $faker) {
         'full_name' => $faker->name,
         'username' => $faker->userName,
         'email' => $faker->unique()->safeEmail,
+        'country_code' => $faker->countryCode,
+        'timezone' => $faker->timezone,
         'password' => $password ?: $password = 'secret',
         'phone' => '+658' . $faker->numberBetween($min = 1, $max = 8) . $faker->randomNumber(6, true),
         'gender' => 'male'|'female',
