@@ -6,11 +6,18 @@ use App\Http\Requests\CreateCompanyUserRequest;
 use App\Http\Requests\UpdateCompanyUserRequest;
 use App\Models\User;
 use App\Notifications\NewCompanyUserNotification;
+use DateTimeZone;
+use PragmaRX\Countries\Package\Countries;
 use Illuminate\Http\Request;
 
 class CompanyUserController extends Controller
 {
-    public function index() {
+    public function __construct(){
+        $this->countries = new Countries();
+    }
+
+    public function index()
+    {
         $company = auth()->user()->company;
 
         if($company)
@@ -25,13 +32,17 @@ class CompanyUserController extends Controller
         return view('pages.company.users.index', compact('users', 'company'));
     }
 
-    public function create() {
+    public function create()
+    {
         $company = auth()->user()->company;
+        $countries = $this->countries->all();
+        $timezones = \DateTimeZone::listIdentifiers(DateTimeZone::ALL);
 
-        return view('pages.company.users.create', compact('company'));
+        return view('pages.company.users.create', compact('company', 'countries', 'timezones'));
     }
 
-    public function store(CreateCompanyUserRequest $request) {
+    public function store(CreateCompanyUserRequest $request)
+    {
         $company = auth()->user()->company;
 
         $random_password = str_random(16);
@@ -47,11 +58,15 @@ class CompanyUserController extends Controller
         return redirect()->route('company.users.index');
     }
 
-    public function edit(User $user) {
-        return view('pages.company.users.edit', compact('user'));
+    public function edit(User $user)
+    {
+        $countries = $this->countries->all();
+        $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
+        return view('pages.company.users.edit', compact('user', 'countries', 'timezones'));
     }
 
-    public function update(UpdateCompanyUserRequest $request, User $user) {
+    public function update(UpdateCompanyUserRequest $request, User $user)
+    {
         $user->fill($request->all());
         if ($request->has('newpassword') && $request->input('newpassword') != null) {
             $newpass = $request->input('newpassword');
@@ -62,7 +77,8 @@ class CompanyUserController extends Controller
         return redirect()->back();
     }
 
-    public function destroy(Request $request, User $user) {
+    public function destroy(Request $request, User $user)
+    {
 
         $auth_user = auth()->user();
         $usercompany = $user->company;

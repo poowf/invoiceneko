@@ -17,8 +17,6 @@ class CompanySettings extends Model
      */
     protected $table = 'company_settings';
 
-    public $timestamps = true;
-
     protected $fillable = [
         'invoice_prefix',
         'quote_prefix',
@@ -26,6 +24,22 @@ class CompanySettings extends Model
         'quote_conditions',
         'tax'
     ];
+
+    protected $attributes = [
+        'invoice_conditions' => 'Terms & Conditions for your Invoice',
+        'quote_conditions' => 'Terms & Conditions for your Quote',
+        'tax' => 0,
+    ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($companySettings) {
+            $companySettings->invoice_prefix = str_slug($companySettings->company->name);
+            $companySettings->quote_prefix = str_slug($companySettings->company->name) . 'Q';
+        });
+    }
 
     public function company()
     {

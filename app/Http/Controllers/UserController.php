@@ -17,6 +17,10 @@ use PragmaRX\Countries\Package\Countries;
 
 class UserController extends Controller
 {
+    public function __construct(){
+        $this->countries = new Countries();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -46,7 +50,7 @@ class UserController extends Controller
             session(['_old_input.phone' => $companyUserRequest->phone]);
         }
 
-        $countries = (new Countries())->all();
+        $countries = $this->countries->all();
         $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
 
         return view('pages.user.create', compact('token', 'countries', 'timezones'));
@@ -106,7 +110,7 @@ class UserController extends Controller
     public function edit()
     {
         $user = auth()->user();
-        $countries = (new Countries())->all();
+        $countries = $this->countries->all();
         $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
         return view('pages.user.edit', compact('user', 'countries', 'timezones'));
     }
