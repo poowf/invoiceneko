@@ -119,7 +119,7 @@ class GenerateRecurringInvoices extends Command
                     foreach($templateItems as $key => $item)
                     {
                         $invoiceitem = new InvoiceItem;
-                        $invoiceitem->name = $item;
+                        $invoiceitem->name = $item->name;
                         $invoiceitem->description = $item->description;
                         $invoiceitem->quantity   = $item->quantity;
                         $invoiceitem->price = $item->price;

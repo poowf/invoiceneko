@@ -12,6 +12,31 @@
         .single-history-wrapper {
         }
 
+        :root .slick-prev:before, :root .slick-next:before{
+            content: initial;
+            color: #000000;
+        }
+
+        :root .slick-prev, :root .slick-next {
+            color: #000000;
+        }
+
+        :root .slick-prev:hover, :root .slick-next:hover, :root .slick-prev:focus, :root .slick-next:focus {
+            color: #000000;
+        }
+
+        :root .slick-prev {
+            left: -20px;
+        }
+
+        :root .slick-next {
+            right: -5px;
+        }
+
+        :root .slick-list {
+            z-index: -1;
+        }
+
     </style>
     <link href="{{ mix('/assets/css/slick.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ mix('/assets/css/slick-theme.css') }}" rel="stylesheet" type="text/css">
@@ -160,7 +185,7 @@
                     <div class="single-history-wrapper">
                         <div class="card single-history">
                             <h6>Date/Time</h6>
-                            <p class="mtop20">{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->updated_at)->format('j F, Y') }}</p>
+                            <p class="mtop20">{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->updated_at)->format('d F, Y') }}</p>
                             <p>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->updated_at)->format('h:i:s a') }}</p>
                             <span class="alt-badge info mtop20">Current Version</span>
                             <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="btn btn-theme full-width mtop20">Edit</a>
@@ -170,7 +195,7 @@
                         <div class="single-history-wrapper">
                             <div class="card single-history">
                                 <h6>Date/Time</h6>
-                                <p class="mtop20">{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $history->updated_at)->format('j F, Y') }}</p>
+                                <p class="mtop20">{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $history->updated_at)->format('d F, Y') }}</p>
                                 <p>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $history->updated_at)->format('h:i:s a') }}</p>
                                 <span class="alt-badge warning mtop20">Past Version</span>
                                 <a href="{{ route('invoice.old.show', [ 'oldinvoice' => $history->id ] ) }}" class="btn btn-theme full-width mtop20">View</a>
@@ -197,6 +222,31 @@
                                         <td>{{ $payment->mode }}</td>
                                         <td>S${{ $payment->money_format }}</td>
                                         <td><span class="alt-badge teal lighten-1">{{ $payment->percentage }}%</span></td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <h3>Related Invoices</h3>
+                <div id="payment-history-container" class="payment-history-container">
+                    <div class="card-panel flex">
+                        <table class="responsive-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($siblings as $key => $sibling)
+                                    <tr>
+                                        <td>{{ $sibling->nice_invoice_id }}</td>
+                                        <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $sibling->date)->format('d F, Y') }}</td>
+                                        <td>S${{ $sibling->calculatetotal() }}</td>
+                                        <td><a href="{{ route('invoice.show', [ 'invoice' => $sibling->id ] ) }}" class="btn btn-link waves-effect waves-dark tooltipped" data-position="top" data-delay="50" data-tooltip="View Invoice">View</a></td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -388,7 +438,7 @@
         $(function() {
 
             $('#change-history-container').on('init', function(event, slick, direction){
-                let height = $('#details-panel').outerHeight();
+                let height = $('#change-history-container').outerHeight() + 10;
                 console.log($(this).find('.single-history').css('height', height));
                 // left
             });
@@ -428,14 +478,16 @@
             $('#change-history-container').slick({
                 // normal options...
                 infinite: false,
-                arrows: false,
+                arrows: true,
                 dots: true,
                 slidesToShow: 2,
                 slidesToScroll: 2,
                 adaptiveHeight: false,
+                prevArrow: '<button type="button" class="slick-prev"><i class="material-icons md-36">keyboard_arrow_left</i></button>',
+                nextArrow: '<button type="button" class="slick-next"><i class="material-icons md-36">keyboard_arrow_right</i></button>',
                 responsive: [
                     {
-                        breakpoint: 1750,
+                        breakpoint: 1650,
                         settings: {
                             slidesToShow: 1,
                             slidesToScroll: 1,

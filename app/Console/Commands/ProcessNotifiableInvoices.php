@@ -59,6 +59,8 @@ class ProcessNotifiableInvoices extends Command
 
             if(date_diff($localDate, $localInvoiceDate)->format('%a') === '0')
             {
+                $invoice->status = Invoice::STATUS_OPEN;
+                $invoice->save();
                 $invoice->notify(new InvoiceNotification($invoice));
             }
         }
