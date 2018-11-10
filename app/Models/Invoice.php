@@ -113,7 +113,7 @@ class Invoice extends Model
 
     public function siblings()
     {
-        return $this->event->invoices->except($this->id);
+        return ($this->event->invoices) ? $this->event->invoices->except($this->id) : collect();
     }
 
     public function hash()

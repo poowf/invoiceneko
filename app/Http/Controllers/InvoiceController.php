@@ -323,8 +323,9 @@ class InvoiceController extends Controller
         $invoice->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y');
         $histories = $invoice->history()->orderBy('updated_at', 'desc')->get();
         $payments = $invoice->payments;
+        $siblings = $invoice->siblings();
 
-        return view('pages.invoice.show', compact('invoice', 'client', 'histories', 'payments'));
+        return view('pages.invoice.show', compact('invoice', 'client', 'histories', 'payments', 'siblings'));
     }
 
     /**

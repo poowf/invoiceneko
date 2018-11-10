@@ -173,7 +173,23 @@ class CompanyController extends Controller
             $isnew = true;
         }
 
+
         $company->fill($request->all());
+        if(!is_null($company->country_code) && is_null($company->timezone))
+        {
+            $timezone = $this->countries
+                ->where('iso_3166_1_alpha2', $request->input('country_code'))
+                ->first()
+                ->hydrate('timezones')
+                ->timezones
+                ->first()
+                ->zone_name;
+            $company->timezone = $timezone;
+        }
+        elseif (is_null($company->timezone))
+        {
+            $company->timezone = 'UTC';
+        }
         $company->save();
 
         $storedirectory = '/perm_store/company/' . $company->id . '/photos/';
