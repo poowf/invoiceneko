@@ -26,6 +26,7 @@ class CompanyTest extends TestCase
             'name' => 'Poowf Labs',
             'invoice_index' => '2342',
             'quote_index' => '12313',
+            'timezone' => 'UTC',
             'crn' => '201810000A',
             'phone' => '+6579328669',
             'email' => 'bunny@poowf.com',
