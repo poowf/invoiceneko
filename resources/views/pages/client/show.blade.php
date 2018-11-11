@@ -62,8 +62,8 @@
                         @foreach($invoices as $key => $invoice)
                             <tr>
                                 <td>{{ $invoice->nice_invoice_id }}</td>
-                                <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->date)->format('j F, Y') }}</td>
-                                <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y') }}</td>
+                                <td>{{ $invoice->date->format('d F, Y') }}</td>
+                                <td>{{ $invoice->duedate->format('d F, Y') }}</td>
                                 <td>${{ $invoice->totalmoneyformat }}</td>
                                 <td>
                                     @if ($invoice->status == App\Models\Invoice::STATUS_OVERDUE)

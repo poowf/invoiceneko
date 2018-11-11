@@ -48,9 +48,22 @@ class Payment extends Model
         return money_format('%!.2n', ($this->amount/$invoiceTotal)*100);
     }
 
-    public function getDateFormatAttribute()
+    public function getCreatedAtAttribute($value)
     {
-        return Carbon::createFromFormat('Y-m-d H:i:s', $this->receiveddate)->format('j F, Y');
+        $date = $this->asDateTime($value);
+        return $date->timezone(auth()->user()->timezone);
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        $date = $this->asDateTime($value);
+        return $date->timezone(auth()->user()->timezone);
+    }
+
+    public function getReceiveddateAttribute($value)
+    {
+        $date = $this->asDateTime($value);
+        return $date->timezone(auth()->user()->timezone);
     }
 
     public function invoice()

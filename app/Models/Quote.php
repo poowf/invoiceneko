@@ -65,6 +65,30 @@ class Quote extends Model
         return money_format('%!.2n', $this->total);
     }
 
+    public function getCreatedAtAttribute($value)
+    {
+        $date = $this->asDateTime($value);
+        return $date->timezone(auth()->user()->timezone);
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        $date = $this->asDateTime($value);
+        return $date->timezone(auth()->user()->timezone);
+    }
+
+    public function getDateAttribute($value)
+    {
+        $date = $this->asDateTime($value);
+        return $date->timezone($this->company->timezone);
+    }
+
+    public function getDuedateAttribute($value)
+    {
+        $date = $this->asDateTime($value);
+        return $date->timezone($this->company->timezone);
+    }
+
     public function client()
     {
         return $this->belongsTo('App\Models\Client', 'client_id');

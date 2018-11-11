@@ -77,7 +77,7 @@
                 @foreach($histories as $key => $history)
                     <div class="col s12 m4 l4 xl3 single-history-card">
                         <div class="card single-history">
-                            <p>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $history->created_at)->format('j F, Y, h:i:s a') }}</p>
+                            <p>{{ $history->created_at->format('d F, Y, h:i:s a') }}</p>
                             <a class="btn btn-link blue-grey lighten-1 waves-effect waves-dark" href="{{ route('quote.old.show', [ 'oldquote' => $history->id ] ) }}">
                                 View
                             </a>

@@ -46,6 +46,30 @@ class OldInvoice extends Model
         'olditems'
     ];
 
+    public function getCreatedAtAttribute($value)
+    {
+        $date = $this->asDateTime($value);
+        return $date->timezone(auth()->user()->timezone);
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        $date = $this->asDateTime($value);
+        return $date->timezone(auth()->user()->timezone);
+    }
+
+    public function getDateAttribute($value)
+    {
+        $date = $this->asDateTime($value);
+        return $date->timezone(auth()->user()->timezone);
+    }
+
+    public function getDuedateAttribute($value)
+    {
+        $date = $this->asDateTime($value);
+        return $date->timezone(auth()->user()->timezone);
+    }
+
     public function items()
     {
         return $this->hasMany('App\Models\OldInvoiceItem', 'old_invoice_id');

@@ -81,6 +81,30 @@ class Invoice extends Model
         return money_format('%!.2n', $this->total);
     }
 
+    public function getCreatedAtAttribute($value)
+    {
+        $date = $this->asDateTime($value);
+        return $date->timezone(auth()->user()->timezone);
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        $date = $this->asDateTime($value);
+        return $date->timezone(auth()->user()->timezone);
+    }
+
+    public function getDateAttribute($value)
+    {
+        $date = $this->asDateTime($value);
+        return $date->timezone($this->company->timezone);
+    }
+
+    public function getDuedateAttribute($value)
+    {
+        $date = $this->asDateTime($value);
+        return $date->timezone($this->company->timezone);
+    }
+
     public function client()
     {
         return $this->belongsTo('App\Models\Client', 'client_id');
@@ -113,7 +137,15 @@ class Invoice extends Model
 
     public function siblings()
     {
-        return ($this->event->invoices) ? $this->event->invoices->except($this->id) : collect();
+        if($this->event)
+        {
+            if($this->event->invoices)
+            {
+                return ($this->event->invoices->except($this->id)->isNotEmpty()) ? $this->event->invoices->except($this->id) : null;
+            }
+        }
+
+        return null;
     }
 
     public function hash()

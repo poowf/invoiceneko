@@ -46,8 +46,8 @@ class InvoiceTest extends DuskTestCase
                 ->assertPathIs('/invoice/create')
                 ->type('nice_invoice_id', substr($faker->slug, 0, 20) . 'sasdf')
                 ->type('netdays', $faker->numberBetween($min = 1, $max = 60))
-                ->type('item_quantity[]', $faker->numberBetween($min = 1, $max = 1000))
-                ->type('item_price[]', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = NULL));
+                ->type('item_quantity[]', $faker->numberBetween($min = 1, $max = 999999999))
+                ->type('item_price[]', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999));
             $browser
                 ->script('jQuery("#client_id").selectize()[0].selectize.setValue(1);');
             $browser
@@ -87,8 +87,8 @@ class InvoiceTest extends DuskTestCase
                 ->assertPathIs('/invoice/create')
                 ->type('nice_invoice_id', substr($faker->slug, 0, 20) . 'sasdf')
                 ->type('netdays', $faker->numberBetween($min = 1, $max = 60))
-                ->type('item_quantity[]', $faker->numberBetween($min = 1, $max = 1000))
-                ->type('item_price[]', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = NULL));
+                ->type('item_quantity[]', $faker->numberBetween($min = 1, $max = 999999999))
+                ->type('item_price[]', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999));
             $browser
                 ->script('jQuery("#client_id").selectize()[0].selectize.setValue(1);');
             $browser

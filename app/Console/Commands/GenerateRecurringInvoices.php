@@ -6,7 +6,6 @@ use App\Models\Invoice;
 use App\Models\InvoiceEvent;
 use App\Models\InvoiceItem;
 use Carbon\Carbon;
-use DateTimeZone;
 use Illuminate\Console\Command;
 use App\Library\Poowf\Unicorn;
 use Illuminate\Support\Facades\Log;
@@ -51,8 +50,6 @@ class GenerateRecurringInvoices extends Command
     public function handle()
     {
         $invoiceEvents = InvoiceEvent::all();
-
-        $timezone = new DateTimeZone('Asia/Singapore');
 
         foreach($invoiceEvents as $event)
         {

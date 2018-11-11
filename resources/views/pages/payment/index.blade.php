@@ -44,7 +44,7 @@
                                         <td>{{ $payment->invoice->nice_invoice_id }}</td>
                                         <td>{{ $payment->client->companyname }}</td>
                                         <td>${{ $payment->moneyformat }}</td>
-                                        <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $payment->receiveddate)->format('j F, Y') }}</td>
+                                        <td>{{ $payment->receiveddate->format('d F, Y') }}</td>
                                         <td>
                                             <a href="{{ route('payment.show', [ 'payment' => $payment ] ) }}"><i class="material-icons">remove_red_eye</i></a>
                                             <a href="{{ route('payment.edit', [ 'payment' => $payment ] ) }}"><i class="material-icons">mode_edit</i></a>

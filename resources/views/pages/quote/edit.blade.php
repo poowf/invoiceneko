@@ -25,7 +25,7 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12 m6">
-                                <input id="date" name="date" class="datepicker" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $quote->date)->format('j F, Y') ?? Carbon\Carbon::now()->format('j F, Y')  }}" placeholder="Date">
+                                <input id="date" name="date" class="datepicker" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ $quote->date->format('j F, Y') ?? Carbon\Carbon::now()->format('j F, Y')  }}" placeholder="Date">
                                 <label for="date" class="label-validation">Date</label>
                                 <span class="helper-text"></span>
                             </div>

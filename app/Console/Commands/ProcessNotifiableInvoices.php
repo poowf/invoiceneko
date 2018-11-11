@@ -55,12 +55,16 @@ class ProcessNotifiableInvoices extends Command
         {
             $company = $invoice->company;
             $localDate = Carbon::now($company->timezone);
-            $localInvoiceDate = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->date, $company->timezone);
+            $localInvoiceDate = $invoice->date;
 
             if(date_diff($localDate, $localInvoiceDate)->format('%a') === '0')
             {
-                $invoice->status = Invoice::STATUS_OPEN;
-                $invoice->save();
+                if($invoice->status = Invoice::STATUS_DRAFT)
+                {
+                    $invoice->status = Invoice::STATUS_OPEN;
+                    $invoice->save();
+                }
+
                 $invoice->notify(new InvoiceNotification($invoice));
             }
         }

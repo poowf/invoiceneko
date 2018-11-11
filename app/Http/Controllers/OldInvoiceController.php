@@ -50,9 +50,6 @@ class OldInvoiceController extends Controller
     public function show(OldInvoice $invoice)
     {
         $client = $invoice->client;
-        $invoice->date = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->date)->format('j F, Y');
-        $invoice->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y');
-
         return view('pages.oldinvoice.show', compact('invoice', 'client'));
     }
 
@@ -64,9 +61,6 @@ class OldInvoiceController extends Controller
      */
     public function printview(OldInvoice $invoice)
     {
-        $invoice->date = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->date)->format('j F, Y');
-        $invoice->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y');
-
         $pdf = $invoice->generatePDFView();
         return $pdf->inline(str_slug($invoice->nice_invoice_id . ' - ' . $invoice->created_at) . 'test.pdf');
     }
@@ -79,9 +73,6 @@ class OldInvoiceController extends Controller
      */
     public function download(OldInvoice $invoice)
     {
-        $invoice->date = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->date)->format('j F, Y');
-        $invoice->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y');
-
         $pdf = $invoice->generatePDFView();
         return $pdf->download(str_slug($invoice->nice_invoice_id . ' - ' . $invoice->created_at) . '.pdf');
     }

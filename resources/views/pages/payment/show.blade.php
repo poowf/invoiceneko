@@ -19,7 +19,7 @@
                         <dt>Payment Amount</dt>
                         <dd>${{ $payment->moneyformat ?? '-' }}</dd>
                         <dt>Payment Date</dt>
-                        <dd>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $payment->receiveddate)->format('j F, Y') }}</dd>
+                        <dd>{{ $payment->receiveddate->format('d F, Y') }}</dd>
                         <dt>Payment Mode</dt>
                         <dd>{{ $payment->mode ?? '-' }}</dd>
                         <dt>Payment Notes</dt>

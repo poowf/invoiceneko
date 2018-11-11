@@ -44,7 +44,7 @@
                                         <td>{{ $invoice->nice_invoice_id }}</td>
                                         <td>{{ $invoice->client->companyname }}</td>
                                         <td>${{ $invoice->calculatetotal() }}</td>
-                                        <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y') }}</td>
+                                        <td>{{ $invoice->duedate->format('d F, Y') }}</td>
                                         <td>
                                             <a href="{{ route('invoice.show', [ 'invoice' => $invoice->id ])  }}" class="btn waves-effect waves-light">View</a>
                                         </td>

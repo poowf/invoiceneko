@@ -54,6 +54,7 @@ class User extends Authenticatable
     ];
 
     protected $attributes = [
+        'timezone' => 'UTC',
         'status' => self::STATUS_ACTIVE
     ];
 
