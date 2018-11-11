@@ -105,6 +105,17 @@ class Invoice extends Model
         return $date->timezone($this->company->timezone);
     }
 
+    public function getPaymentCompleteDateAttribute($value)
+    {
+        if(!is_null($value))
+        {
+            $date = $this->asDateTime($value);
+            return $date->timezone($this->company->timezone);
+        }
+
+        return null;
+    }
+
     public function client()
     {
         return $this->belongsTo('App\Models\Client', 'client_id');
@@ -133,6 +144,20 @@ class Invoice extends Model
     public function history()
     {
         return $this->hasMany(OldInvoice::class);
+    }
+
+    public function isLocked()
+    {
+        if(!is_null($this->payment_complete_date))
+        {
+            $now = Carbon::now();
+            if(date_diff($now, $this->payment_complete_date)->format('%a') >= '120')
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function siblings()
