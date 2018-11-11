@@ -357,6 +357,13 @@ class InvoiceController extends Controller
      */
     public function edit(Invoice $invoice)
     {
+        if($invoice->isLocked())
+        {
+            flash('More than 120 days has passed since the invoice has been completed, the invoice is now locked', 'error');
+
+            return redirect()->route('invoice.show', [ 'invoice' => $invoice->id ]);
+        }
+
         $company = auth()->user()->company;
         $clients = $company->clients;
         $event = ($invoice->event) ? $invoice->event : null;
@@ -373,6 +380,13 @@ class InvoiceController extends Controller
      */
     public function update(UpdateInvoiceRequest $request, Invoice $invoice)
     {
+        if($invoice->isLocked())
+        {
+            flash('More than 120 days has passed since the invoice has been completed, the invoice is now locked', 'error');
+
+            return redirect()->route('invoice.show', [ 'invoice' => $invoice->id ]);
+        }
+
         $duedate = Carbon::createFromFormat('j F, Y', $request->input('date'))->addDays($request->input('netdays'))->startOfDay()->toDateTimeString();
         $invoice->date = Carbon::createFromFormat('j F, Y', $request->input('date'))->startOfDay()->toDateTimeString();
         $invoice->netdays = $request->input('netdays');

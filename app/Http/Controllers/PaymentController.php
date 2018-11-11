@@ -73,6 +73,7 @@ class PaymentController extends Controller
 
         if($invoice->calculateremainder() == "0.0")
         {
+            $invoice->payment_complete_date = Carbon::now()->toDateTimeString();
             $invoice->status = Invoice::STATUS_CLOSED;
             $invoice->save();
         }
