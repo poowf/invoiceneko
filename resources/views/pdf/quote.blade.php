@@ -20,8 +20,8 @@
                 </div>
                 <div class="quote-order" style="position: absolute; right: 0; padding: 0 15px; text-align: right;">
                     <span class="quote-id" style="display: block; font-size: 30px; line-height: 30px; margin-bottom: 10px;">Quote #{{ $quote->nice_quote_id }}</span>
-                    <span class="quote-date" style="display: block; font-size: 18px; line-height: 30px;">Quote Date: {{ $quote->date }}</span>
-                    <span class="quote-duedate" style="display: block; font-size: 18px; line-height: 30px;">Quote Expires: {{ $quote->duedate }}</span>
+                    <span class="quote-date" style="display: block; font-size: 18px; line-height: 30px;">Quote Date: {{ $quote->date->format('d F, Y')  }}</span>
+                    <span class="quote-duedate" style="display: block; font-size: 18px; line-height: 30px;">Quote Expires: {{ $quote->duedate->format('d F, Y')  }}</span>
                 </div>
             </div>
             <div class="row quote-data" style="position: relative; margin-bottom: 320px;">

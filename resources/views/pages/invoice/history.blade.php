@@ -80,8 +80,8 @@
                     <div class="col s12 m4 l4 xl3 single-history-card">
                         <div class="card single-history">
                             <h6>Date/Time</h6>
-                            <p class="mtop20">{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $history->updated_at)->format('j F, Y') }}</p>
-                            <p>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $history->updated_at)->format('h:i:s a') }}</p>
+                            <p class="mtop20">{{ $history->updated_at->format('d F, Y') }}</p>
+                            <p>{{ $history->updated_at->format('h:i:s a') }}</p>
                             <a class="btn btn-link full-width blue-grey lighten-1 waves-effect waves-dark" href="{{ route('invoice.old.show', [ 'oldinvoice' => $history->id ] ) }}">
                                 View
                             </a>

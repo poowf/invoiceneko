@@ -84,9 +84,6 @@ class QuoteController extends Controller
         $quote = Quote::where('share_token', $token)->first();
         abort_unless($quote, 404);
 
-        $quote->date = Carbon::createFromFormat('Y-m-d H:i:s', $quote->date)->format('j F, Y');
-        $quote->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $quote->duedate)->format('j F, Y');
-
         $pdf = $quote->generatePDFView();
         return $pdf->inline(str_slug($quote->nice_quote_id) . '.pdf');
     }
@@ -175,13 +172,14 @@ class QuoteController extends Controller
         $company = auth()->user()->company;
 
         $invoice = new Invoice;
-        $invoice->nice_invoice_id = $company->settings->invoice_prefix . '-' . $company->niceinvoiceid();
+        $invoice->nice_invoice_id = $company->niceinvoiceid();
         $duedate = Carbon::now()->addDays($quote->netdays)->startOfDay()->toDateTimeString();
         $invoice->date = Carbon::now()->startOfDay()->toDateTimeString();
         $invoice->netdays = $quote->netdays;
         $invoice->duedate = $duedate;
         $invoice->client_id = $quote->client_id;
         $invoice->company_id = $company->id;
+        $invoice->notify = false;
         $invoice->save();
 
         foreach($quote->items as $key => $item)
@@ -215,8 +213,6 @@ class QuoteController extends Controller
     public function show(Quote $quote)
     {
         $client = $quote->client;
-        $quote->date = Carbon::createFromFormat('Y-m-d H:i:s', $quote->date)->format('j F, Y');
-        $quote->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $quote->duedate)->format('j F, Y');
 
         return view('pages.quote.show', compact('quote', 'client'));
     }
@@ -229,9 +225,6 @@ class QuoteController extends Controller
      */
     public function printview(Quote $quote)
     {
-        $quote->date = Carbon::createFromFormat('Y-m-d H:i:s', $quote->date)->format('j F, Y');
-        $quote->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $quote->duedate)->format('j F, Y');
-
         $pdf = $quote->generatePDFView();
 
         return $pdf->inline(str_slug($quote->nice_quote_id) . 'quote.pdf');
@@ -245,9 +238,6 @@ class QuoteController extends Controller
      */
     public function download(Quote $quote)
     {
-        $quote->date = Carbon::createFromFormat('Y-m-d H:i:s', $quote->date)->format('j F, Y');
-        $quote->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $quote->duedate)->format('j F, Y');
-
         $pdf = $quote->generatePDFView();
 
         return $pdf->download(str_slug($quote->nice_quote_id) . '.pdf');

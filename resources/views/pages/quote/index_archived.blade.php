@@ -60,7 +60,7 @@
                                     <tr class="single-quote-row">
                                         <td>{{ $quote->nice_quote_id }}</td>
                                         <td>${{ $quote->totalmoneyformat  }}</td>
-                                        <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $quote->duedate)->format('j F, Y') }}</td>
+                                        <td>{{ $quote->duedate->format('d F, Y') }}</td>
                                         <td>{{ $quote->client->companyname }}</td>
                                         <td>{{ $quote->client->contactphone }}</td>
                                         <td>

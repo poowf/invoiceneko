@@ -60,7 +60,7 @@
                                     <tr class="single-invoice-row">
                                         <td>{{ $invoice->nice_invoice_id }}</td>
                                         <td>${{ $invoice->totalmoneyformat  }}</td>
-                                        <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y') }}</td>
+                                        <td>{{ $invoice->duedate->format('d F, Y') }}</td>
                                         <td>{{ $invoice->client->companyname }}</td>
                                         <td>{{ $invoice->client->contactphone }}</td>
                                         <td>

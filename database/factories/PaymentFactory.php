@@ -4,7 +4,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Model::class, function (Faker $faker) {
     return [
-        'amount' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = NULL),
+        'amount' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999),
         'receiveddate' => $faker->dateTime,
         'mode' => 'Cheque'|'Bank Transfer',
         'notes' => $faker->realText(50, 2),

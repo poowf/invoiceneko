@@ -19,6 +19,7 @@
 
         :root .slick-prev, :root .slick-next {
             color: #000000;
+            z-index: 1;
         }
 
         :root .slick-prev:hover, :root .slick-next:hover, :root .slick-prev:focus, :root .slick-next:focus {
@@ -32,11 +33,6 @@
         :root .slick-next {
             right: -5px;
         }
-
-        :root .slick-list {
-            z-index: -1;
-        }
-
     </style>
     <link href="{{ mix('/assets/css/slick.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ mix('/assets/css/slick-theme.css') }}" rel="stylesheet" type="text/css">
@@ -157,7 +153,7 @@
                         <dt>Company Nickname</dt>
                         <dd>{{ $client->nickname ?? '-' }}</dd>
                         <dt>Company Registration Number</dt>
-                        <dd>{{ $client->crn }}
+                        <dd>{{ $client->crn ?? '-' }}
                         <dt>Contact Name</dt>
                         <dd>{{ $client->contactname ?? '-' }}</dd>
                         <dt>Contact Email</dt>
@@ -180,13 +176,32 @@
                         </dd>
                     </dl>
                 </div>
+                @if($event)
+                <h3>Recurring Details</h3>
+                <div id="recurring-details-panel" class="card-panel">
+                    <dl>
+                        <dt>Repeats</dt>
+                        <dd>Every {{ $event->time_interval . ' ' . ucwords($event->time_period) }}</dd>
+                        <dt>Until</dt>
+                        <dd>
+                            @if($event->until_type === 'never')
+                                {{ 'The End of Time' }}
+                            @elseif($event->until_type == 'occurence')
+                                {{ 'After ' . $event->until_meta . ' Occurences' }}
+                            @elseif($event->until_type == 'date')
+                                {{ 'On ' . \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $event->until_meta)->format('d F, Y') }}
+                            @endif
+                        </dd>
+                    </dl>
+                </div>
+                @endif
                 <h3>Change History</h3>
                 <div id="change-history-container" class="change-history-container">
                     <div class="single-history-wrapper">
                         <div class="card single-history">
                             <h6>Date/Time</h6>
-                            <p class="mtop20">{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->updated_at)->format('d F, Y') }}</p>
-                            <p>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $invoice->updated_at)->format('h:i:s a') }}</p>
+                            <p class="mtop20">{{ $invoice->updated_at->format('d F, Y') }}</p>
+                            <p>{{ $invoice->updated_at->format('h:i:s a') }}</p>
                             <span class="alt-badge info mtop20">Current Version</span>
                             <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="btn btn-theme full-width mtop20">Edit</a>
                         </div>
@@ -195,8 +210,8 @@
                         <div class="single-history-wrapper">
                             <div class="card single-history">
                                 <h6>Date/Time</h6>
-                                <p class="mtop20">{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $history->updated_at)->format('d F, Y') }}</p>
-                                <p>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $history->updated_at)->format('h:i:s a') }}</p>
+                                <p class="mtop20">{{ $history->updated_at->format('d F, Y') }}</p>
+                                <p>{{ $history->updated_at->format('h:i:s a') }}</p>
                                 <span class="alt-badge warning mtop20">Past Version</span>
                                 <a href="{{ route('invoice.old.show', [ 'oldinvoice' => $history->id ] ) }}" class="btn btn-theme full-width mtop20">View</a>
                             </div>
@@ -218,7 +233,7 @@
                             <tbody>
                                 @foreach($payments as $key => $payment)
                                     <tr>
-                                        <td>{{ $payment->date_format }}</td>
+                                        <td>{{ $payment->receiveddate->format('d F, Y') }}</td>
                                         <td>{{ $payment->mode }}</td>
                                         <td>S${{ $payment->money_format }}</td>
                                         <td><span class="alt-badge teal lighten-1">{{ $payment->percentage }}%</span></td>
@@ -228,6 +243,7 @@
                         </table>
                     </div>
                 </div>
+                @if($siblings)
                 <h3>Related Invoices</h3>
                 <div id="payment-history-container" class="payment-history-container">
                     <div class="card-panel flex">
@@ -244,7 +260,7 @@
                                 @foreach($siblings as $key => $sibling)
                                     <tr>
                                         <td>{{ $sibling->nice_invoice_id }}</td>
-                                        <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $sibling->date)->format('d F, Y') }}</td>
+                                        <td>{{ $sibling->date->format('d F, Y')  }}</td>
                                         <td>S${{ $sibling->calculatetotal() }}</td>
                                         <td><a href="{{ route('invoice.show', [ 'invoice' => $sibling->id ] ) }}" class="btn btn-link waves-effect waves-dark tooltipped" data-position="top" data-delay="50" data-tooltip="View Invoice">View</a></td>
                                     </tr>
@@ -253,6 +269,7 @@
                         </table>
                     </div>
                 </div>
+                @endif
             </div>
             <div class="col s12 l8">
                 <h3>Invoice</h3>
@@ -263,8 +280,8 @@
                         </div>
                         <div class="col-xs-5 invoice-order" style="position: relative; padding: 0 15px; text-align: right; width: 50%; float: left;">
                             <span class="invoice-id" style="display: block; font-size: 30px; line-height: 30px; margin-bottom: 10px;">Invoice #{{ $invoice->nice_invoice_id }}</span>
-                            <span class="invoice-date" style="display: block; font-size: 18px; line-height: 30px;">Invoice Date: {{ $invoice->date }}</span>
-                            <span class="invoice-duedate" style="display: block; font-size: 18px; line-height: 30px;">Payment Due: {{ $invoice->duedate }}</span>
+                            <span class="invoice-date" style="display: block; font-size: 18px; line-height: 30px;">Invoice Date: {{ $invoice->date->format('d F, Y') }}</span>
+                            <span class="invoice-duedate" style="display: block; font-size: 18px; line-height: 30px;">Payment Due: {{ $invoice->duedate->format('d F, Y') }}</span>
                             <span class="invoice-netdays" style="display: block; font-size: 18px; line-height: 30px;">Payment Terms: Net {{ $invoice->netdays }}</span>
                         </div>
                     </div>

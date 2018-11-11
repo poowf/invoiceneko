@@ -129,9 +129,6 @@ class InvoiceController extends Controller
         $invoice = Invoice::where('share_token', $token)->first();
         abort_unless($invoice, 404);
 
-        $invoice->date = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->date)->format('j F, Y');
-        $invoice->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y');
-
         $pdf = $invoice->generatePDFView();
         return $pdf->inline(str_slug($invoice->nice_invoice_id) . '.pdf');
     }
@@ -319,13 +316,12 @@ class InvoiceController extends Controller
     public function show(Invoice $invoice)
     {
         $client = $invoice->client;
-        $invoice->date = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->date)->format('j F, Y');
-        $invoice->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y');
         $histories = $invoice->history()->orderBy('updated_at', 'desc')->get();
         $payments = $invoice->payments;
+        $event = $invoice->event;
         $siblings = $invoice->siblings();
 
-        return view('pages.invoice.show', compact('invoice', 'client', 'histories', 'payments', 'siblings'));
+        return view('pages.invoice.show', compact('invoice', 'event','client', 'histories', 'payments', 'siblings'));
     }
 
     /**
@@ -336,9 +332,6 @@ class InvoiceController extends Controller
      */
     public function printview(Invoice $invoice)
     {
-        $invoice->date = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->date)->format('j F, Y');
-        $invoice->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y');
-
         $pdf = $invoice->generatePDFView();
 
         return $pdf->inline(str_slug($invoice->nice_invoice_id) . 'test.pdf');
@@ -352,9 +345,6 @@ class InvoiceController extends Controller
      */
     public function download(Invoice $invoice)
     {
-        $invoice->date = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->date)->format('j F, Y');
-        $invoice->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y');
-
         $pdf = $invoice->generatePDFView();
         return $pdf->download(str_slug($invoice->nice_invoice_id) . '.pdf');
     }
@@ -593,8 +583,6 @@ class InvoiceController extends Controller
     public function history(Invoice $invoice)
     {
         $client = $invoice->client;
-        $invoice->date = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->date)->format('j F, Y');
-        $invoice->duedate = Carbon::createFromFormat('Y-m-d H:i:s', $invoice->duedate)->format('j F, Y');
         $histories = $invoice->history()->orderBy('created_at', 'desc')->get();
 
         return view('pages.invoice.history', compact('invoice', 'client', 'histories'));

@@ -37,7 +37,7 @@ class PaymentTest extends DuskTestCase
                 ->visit('/payments')
                 ->click("a[href='{$this->baseUrl()}/payment/create']")
                 ->assertPathIs('/payment/create')
-                ->type('amount', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = NULL))
+                ->type('amount', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999))
                 ->type('notes', $faker->text(50));
             $browser
                 ->script('jQuery("#receiveddate").datepicker("setDate", new Date());jQuery("#receiveddate").val("' . Carbon::now()->format('j F, Y') . '");');

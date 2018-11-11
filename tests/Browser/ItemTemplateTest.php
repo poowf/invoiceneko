@@ -30,8 +30,8 @@ class ItemTemplateTest extends DuskTestCase
                 ->visit('/itemtemplates')
                 ->click("a[href='{$this->baseUrl()}/itemtemplate/create']")
                 ->type('name', $faker->bs())
-                ->type('quantity', $faker->numberBetween($min = 1, $max = 1000))
-                ->type('price', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = NULL));
+                ->type('quantity', $faker->numberBetween($min = 1, $max = 999999999))
+                ->type('price', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999));
             $browser
                 ->script('jQuery("#description").trumbowyg("html", "' . $faker->text(200) . '");');
             $browser
