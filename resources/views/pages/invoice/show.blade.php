@@ -80,9 +80,11 @@
                     {{ csrf_field() }}
                     <button class="btn amber darken-2 waves-effect waves-dark null-btn" type="submit">Archive</button>
                 </form>
+                @if(!$invoice->isLocked())
                 <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="btn light-blue waves-effect waves-dark">
                     Edit
                 </a>
+                @endif
                 <a href="#" data-id="{{ $invoice->id }}" class="invoice-delete-btn btn red waves-effect waves-dark">
                     Delete
                 </a>
@@ -123,11 +125,13 @@
                         </button>
                     </form>
                 </li>
+                @if(!$invoice->isLocked())
                 <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Invoice">
                     <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="btn light-blue waves-effect waves-dark">
                         <i class="material-icons">edit</i>
                     </a>
                 </li>
+                @endif
                 <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Invoice">
                     <a href="#" data-id="{{ $invoice->id }}" class="invoice-delete-btn btn red waves-effect waves-dark">
                         <i class="material-icons">delete</i>
@@ -203,7 +207,7 @@
                             <p class="mtop20">{{ $invoice->updated_at->format('d F, Y') }}</p>
                             <p>{{ $invoice->updated_at->format('h:i:s a') }}</p>
                             <span class="alt-badge info mtop20">Current Version</span>
-                            <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="btn btn-theme full-width mtop20">Edit</a>
+                            @if(!$invoice->isLocked())<a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="btn btn-theme full-width mtop20">Edit</a>@endif
                         </div>
                     </div>
                     @foreach($histories as $key => $history)
