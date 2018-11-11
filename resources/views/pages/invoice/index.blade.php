@@ -89,7 +89,7 @@
                                         </td>
                                         <td>
                                             <a href="{{ route('invoice.show', [ 'invoice' => $invoice->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Invoice"><i class="material-icons">remove_red_eye</i></a>
-                                            <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Invoice"><i class="material-icons">mode_edit</i></a>
+                                            @if(!$invoice->isLocked())<a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Invoice"><i class="material-icons">mode_edit</i></a>@endif
                                             <form method="post" action="{{ route('invoice.duplicate', [ 'invoice' => $invoice->id ] ) }}" class="null-form tooltipped" data-position="top" data-delay="50" data-tooltip="Duplicate Invoice">
                                                 {{ csrf_field() }}
                                                 <button class="null-btn" type="submit"><i class="material-icons">control_point_duplicate</i></button>
@@ -143,7 +143,7 @@
                                 </td>
                                 <td>
                                     <a href="{{ route('invoice.show', [ 'invoice' => $invoice->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Invoice"><i class="material-icons">remove_red_eye</i></a>
-                                    <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Invoice"><i class="material-icons">mode_edit</i></a>
+                                    @if(!$invoice->isLocked())<a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Invoice"><i class="material-icons">mode_edit</i></a>@endif
                                     <form method="post" action="{{ route('invoice.duplicate', [ 'invoice' => $invoice->id ] ) }}" class="null-form tooltipped" data-position="top" data-delay="50" data-tooltip="Duplicate Invoice">
                                         {{ csrf_field() }}
                                         <button class="null-btn" type="submit"><i class="material-icons">control_point_duplicate</i></button>
@@ -197,7 +197,7 @@
                                 </td>
                                 <td>
                                     <a href="{{ route('invoice.show', [ 'invoice' => $invoice->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Invoice"><i class="material-icons">remove_red_eye</i></a>
-                                    <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Invoice"><i class="material-icons">mode_edit</i></a>
+                                    @if(!$invoice->isLocked())<a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Invoice"><i class="material-icons">mode_edit</i></a>@endif
                                     <form method="post" action="{{ route('invoice.duplicate', [ 'invoice' => $invoice->id ] ) }}" class="null-form tooltipped" data-position="top" data-delay="50" data-tooltip="Duplicate Invoice">
                                         {{ csrf_field() }}
                                         <button class="null-btn" type="submit"><i class="material-icons">control_point_duplicate</i></button>
@@ -251,7 +251,7 @@
                                 </td>
                                 <td>
                                     <a href="{{ route('invoice.show', [ 'invoice' => $invoice->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Invoice"><i class="material-icons">remove_red_eye</i></a>
-                                    <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Invoice"><i class="material-icons">mode_edit</i></a>
+                                    @if(!$invoice->isLocked())<a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Invoice"><i class="material-icons">mode_edit</i></a>@endif
                                     <form method="post" action="{{ route('invoice.duplicate', [ 'invoice' => $invoice->id ] ) }}" class="null-form tooltipped" data-position="top" data-delay="50" data-tooltip="Duplicate Invoice">
                                         {{ csrf_field() }}
                                         <button class="null-btn" type="submit"><i class="material-icons">control_point_duplicate</i></button>
