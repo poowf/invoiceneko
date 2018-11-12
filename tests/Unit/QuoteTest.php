@@ -57,7 +57,7 @@ class QuoteTest extends TestCase
         $data = [
             'date' => '1 January, 2018',
             'netdays' => '25',
-            'total' => 19293313.00,
+            'total' => '19293313.00',
         ];
 
         $quote->fill($data);
@@ -75,6 +75,6 @@ class QuoteTest extends TestCase
         $this->assertInstanceOf(Quote::class, $quote);
         $quote = $quote->delete();
 
-        $this->assertTrue($quote);
+        $this->assertEquals('true', json_encode($quote));
     }
 }

@@ -44,7 +44,7 @@ class Company extends Model
     {
         parent::boot();
 
-        static::creating(function ($company) {
+        static::saving(function ($company) {
             $company->slug = str_slug($company->name);
             static::generateSlug($company);
         });

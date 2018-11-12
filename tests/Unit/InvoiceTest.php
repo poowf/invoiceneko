@@ -58,7 +58,7 @@ class InvoiceTest extends TestCase
         $data = [
             'date' => '1 November, 2018',
             'netdays' => '25',
-            'total' => 19293313.00,
+            'total' => '19293313.00',
         ];
 
         $invoice->fill($data);
@@ -76,7 +76,6 @@ class InvoiceTest extends TestCase
         $this->assertInstanceOf(Invoice::class, $invoice);
         $invoice = $invoice->delete();
 
-        $this->assertTrue($invoice);
+        $this->assertEquals('true', json_encode($invoice));
     }
-
 }
