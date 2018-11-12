@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(Model::class, function (Faker $faker) {
+$factory->define(\App\Models\Payment::class, function (Faker $faker) {
     return [
         'amount' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999),
         'receiveddate' => $faker->dateTime,
