@@ -8,7 +8,7 @@ $factory->define(\App\Models\Quote::class, function (Faker $faker) {
         'date' => $faker->dateTime,
         'duedate' => $faker->dateTime,
         'netdays' => $faker->numberBetween($min = 1, $max = 60),
-        'total' => $faker->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = NULL),
+        'total' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999999.99),
         'share_token' => $faker->uuid,
         'status' => $faker->numberBetween($min = 1, $max = 7),
         'archived' => $faker->boolean,
