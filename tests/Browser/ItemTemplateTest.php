@@ -1,13 +1,15 @@
 <?php
+
 namespace Tests\Browser;
+
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Faker\Factory as Faker;
 use App\Models\Company;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+
 class ItemTemplateTest extends DuskTestCase
 {
-    use DatabaseMigrations;
     /**
      * A Dusk test example.
      *

@@ -10,8 +10,6 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class ClientTest extends DuskTestCase
 {
-    use DatabaseMigrations;
-
     /**
      * A Dusk test example.
      *

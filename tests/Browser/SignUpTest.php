@@ -9,8 +9,6 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class SignUpTest extends DuskTestCase
 {
-    use DatabaseMigrations;
-
     /**
      * A Dusk test example.
      *

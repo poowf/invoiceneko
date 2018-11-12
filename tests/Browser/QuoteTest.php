@@ -12,8 +12,6 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class QuoteTest extends DuskTestCase
 {
-    use DatabaseMigrations;
-
     /**
      * A Dusk test example.
      *

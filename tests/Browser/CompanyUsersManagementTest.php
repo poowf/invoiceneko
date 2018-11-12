@@ -1,17 +1,20 @@
 <?php
+
 namespace Tests\Browser;
+
 use App\Models\Company;
 use Faker\Factory as Faker;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+
 class CompanyUsersManagementTest extends DuskTestCase
 {
-    use DatabaseMigrations;
     /**
      * A Dusk test example.
      *
      * @return void
+     * @throws \Throwable
      */
     public function test_adding_a_user_to_a_company()
     {
