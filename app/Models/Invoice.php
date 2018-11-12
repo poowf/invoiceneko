@@ -47,8 +47,8 @@ class Invoice extends Model
         parent::boot();
 
         static::saving(function ($invoice) {
-            $date = $invoice->date->addDays($invoice->netdays);
-            $invoice->duedate = $date->timezone(config('app.timezone'))->startOfDay();
+            $date = clone $invoice->date;
+            $invoice->duedate = $date->addDays($invoice->netdays)->timezone(config('app.timezone'))->startOfDay();
         });
 
         //Auto Increment of invoice_index per Company;
@@ -300,7 +300,7 @@ class Invoice extends Model
         {
             default:
                 $textstatus = "Pending";
-            break;
+                break;
             case self::STATUS_DRAFT:
                 $textstatus = "Draft";
                 break;
