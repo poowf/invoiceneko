@@ -62,23 +62,28 @@ class GenerateRecurringInvoices extends Command
             $constraint = new BeforeConstraint($constraintTime);
 
 //            $rrule = Unicorn::generateRrule($event->created_at, $timezone, $event->time_interval, $event->time_period, $event->until_type, $event->until_meta, true);
-            $rrule = Rule::createFromString($event->rule);
+            $rrule = Rule::createFromString($event->rule, $template->date);
             $transformer = new ArrayTransformer();
 
             $recurrences = $transformer->transform($rrule, $constraint);
 
             foreach($recurrences as $key => $recurrence)
             {
-                $template->refresh();
-                if($key == 2)
+                if($key == 0)
+                {
+                    //Skip the first instance as it is the original invoice.
+                    continue;
+                }
+                elseif($key == 3)
                 {
                     break;
                 }
 
-                $template->date = $template->date->{$this->getDateAdditionOperator($event->time_period)}(($event->time_interval * ($key + 1) ));
+//                $template->date = $template->date->{$this->getDateAdditionOperator($event->time_period)}(($event->time_interval * ($key + 1) ));
 
                 $generatedInvoice = new Invoice;
                 $generatedInvoice->fill($template->toArray());
+                $generatedInvoice->date = $recurrence->getEnd();
                 $generatedInvoice->client_id = $template->client_id;
                 $generatedInvoice->company_id = $company->id;
                 $generatedInvoice->invoice_event_id = $event->id;
@@ -86,17 +91,20 @@ class GenerateRecurringInvoices extends Command
                 $generatedInvoice->notify = $template->notify;
 
                 //Generate hash based on the serialized version of the invoice;
-                $hash = hash('sha512', serialize($generatedInvoice . $templateItems));
+                //Only retrieve the invoice data without any relations
+                $hash = hash('sha512', serialize(json_encode($generatedInvoice->getAttributes()) . $templateItems));
 
                 if(Invoice::where('hash', $hash)->count() == 1)
                 {
                     print_r("Invoice already generated\n");
+                    continue;
                 }
                 else
                 {
                     $generatedInvoice->nice_invoice_id = $company->niceinvoiceid();
                     $generatedInvoice->hash = $hash;
                     $generatedInvoice->save();
+
 
                     foreach($templateItems as $key => $item)
                     {
