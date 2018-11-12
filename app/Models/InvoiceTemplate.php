@@ -29,6 +29,12 @@ class InvoiceTemplate extends Model
         'client_id'
     ];
 
+    public function getDateAttribute($value)
+    {
+        $date = $this->asDateTime($value);
+        return $date->timezone($this->event->company->timezone);
+    }
+
     public function event()
     {
         return $this->belongsTo('App\Models\InvoiceEvent', 'invoice_event_id');

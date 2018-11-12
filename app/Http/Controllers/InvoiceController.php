@@ -227,8 +227,8 @@ class InvoiceController extends Controller
                         break;
                 }
 
-                $startDate = Carbon::now();
-                $timezone = new DateTimeZone('Asia/Singapore');
+                $startDate = $invoice->date;
+                $timezone = config('app.timezone');
                 $rruleString = Unicorn::generateRrule($startDate, $timezone, $repeatsEveryInterval, $repeatsEveryTimePeriod, $repeatUntilOption, $repeatUntilMeta);
 
                 $invoiceEvent = new InvoiceEvent;
@@ -392,7 +392,12 @@ class InvoiceController extends Controller
         foreach($request->input('item_id') as $key => $itemid)
         {
             $invoiceitem = InvoiceItem::find($itemid);
-            $ismodified = $invoiceitem->modified($request->input('item_name')[$key], $request->input('item_description')[$key], $request->input('item_quantity')[$key], $request->input('item_price')[$key]);
+            $ismodified = $invoiceitem->modified(
+                $request->input('item_name')[$key],
+                $request->input('item_description')[$key],
+                $request->input('item_quantity')[$key],
+                $request->input('item_price')[$key]
+            );
 
             if ($ismodified)
             {
@@ -496,8 +501,8 @@ class InvoiceController extends Controller
                         break;
                 }
 
-                $startDate = Carbon::now();
-                $timezone = new DateTimeZone('UTC');
+                $startDate = $invoice->date;
+                $timezone = config('app.timezone');
                 $rruleString = Unicorn::generateRrule($startDate, $timezone, $repeatsEveryInterval, $repeatsEveryTimePeriod, $repeatUntilOption, $repeatUntilMeta);
 
                 $invoiceEvent = ($eventExists) ? $invoice->event : new InvoiceEvent;
