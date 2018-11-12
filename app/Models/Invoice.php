@@ -39,7 +39,6 @@ class Invoice extends Model
      */
     protected $fillable = [
         'date',
-        'duedate',
         'netdays',
     ];
 
@@ -47,7 +46,12 @@ class Invoice extends Model
     {
         parent::boot();
 
-        //Auto Creation of Settings per Company;
+        static::saving(function ($invoice) {
+            $date = clone $invoice->date;
+            $invoice->duedate = $date->addDays($invoice->netdays)->timezone(config('app.timezone'))->startOfDay();
+        });
+
+        //Auto Increment of invoice_index per Company;
         static::created(function ($invoice) {
             $company = $invoice->company;
             $company->invoice_index = $company->invoice_index + 1;
@@ -114,6 +118,18 @@ class Invoice extends Model
         }
 
         return null;
+    }
+
+    public function setDateAttribute($value)
+    {
+        if($value instanceof \DateTime)
+        {
+            $this->attributes['date'] = $value;
+        }
+        else
+        {
+            $this->attributes['date'] = $value = Carbon::createFromFormat('j F, Y', $value)->startOfDay();
+        }
     }
 
     public function client()
@@ -284,7 +300,7 @@ class Invoice extends Model
         {
             default:
                 $textstatus = "Pending";
-            break;
+                break;
             case self::STATUS_DRAFT:
                 $textstatus = "Draft";
                 break;
