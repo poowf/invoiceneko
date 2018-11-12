@@ -55,23 +55,10 @@ class GenerateRecurringInvoices extends Command
         {
             $company = $event->company;
             $now = Carbon::now();
+            $template = $event->template;
+            $templateItems = $template->items;
 
-            switch($event->time_period)
-            {
-                case 'day':
-                    $constraintTime = $now->addDay($event->time_interval + 2);
-                    break;
-                case 'week':
-                    $constraintTime = $now->addWeek(($event->time_interval + 2));
-                    break;
-                case 'month':
-                    $constraintTime = $now->addMonth($event->time_interval + 2);
-                    break;
-                case 'year':
-                    $constraintTime = $now->addYear($event->time_interval + 2);
-                    break;
-            }
-
+            $constraintTime = $now->{$this->getDateAdditionOperator($event->time_period)}($event->time_interval + 3);
             $constraint = new BeforeConstraint($constraintTime);
 
 //            $rrule = Unicorn::generateRrule($event->created_at, $timezone, $event->time_interval, $event->time_period, $event->until_type, $event->until_meta, true);
@@ -82,18 +69,16 @@ class GenerateRecurringInvoices extends Command
 
             foreach($recurrences as $key => $recurrence)
             {
+                $template->refresh();
                 if($key == 2)
                 {
                     break;
                 }
 
-                $template = $event->template;
-                $templateItems = $template->items;
+                $template->date = $template->date->{$this->getDateAdditionOperator($event->time_period)}(($event->time_interval * ($key + 1) ));
+
                 $generatedInvoice = new Invoice;
                 $generatedInvoice->fill($template->toArray());
-                $duedate = Carbon::createFromFormat('Y-m-d H:i:s', $recurrence->getEnd()->format('Y-m-d H:i:s'))->addDays($generatedInvoice->netdays)->toDateTimeString();
-                $generatedInvoice->date = Carbon::createFromFormat('Y-m-d H:i:s', $recurrence->getEnd()->format('Y-m-d H:i:s'))->toDateTimeString();
-                $generatedInvoice->duedate = $duedate;
                 $generatedInvoice->client_id = $template->client_id;
                 $generatedInvoice->company_id = $company->id;
                 $generatedInvoice->invoice_event_id = $event->id;
@@ -127,6 +112,25 @@ class GenerateRecurringInvoices extends Command
                     $generatedInvoice->setInvoiceTotal();
                 }
             }
+        }
+    }
+
+    public function getDateAdditionOperator($timePeriod)
+    {
+        switch($timePeriod)
+        {
+            case 'day':
+                return 'addDays';
+                break;
+            case 'week':
+                return 'addWeeks';
+                break;
+            case 'month':
+                return 'addMonths';
+                break;
+            case 'year':
+                return 'addYears';
+                break;
         }
     }
 }

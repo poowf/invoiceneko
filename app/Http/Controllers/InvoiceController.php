@@ -182,10 +182,7 @@ class InvoiceController extends Controller
 
         $invoice = new Invoice;
         $invoice->nice_invoice_id = $company->niceinvoiceid();
-        $duedate = Carbon::createFromFormat('j F, Y', $request->input('date'))->addDays($request->input('netdays'))->startOfDay()->toDateTimeString();
-        $invoice->date = Carbon::createFromFormat('j F, Y', $request->input('date'))->startOfDay()->toDateTimeString();
-        $invoice->netdays = $request->input('netdays');
-        $invoice->duedate = $duedate;
+        $invoice->fill($request->all());
         $invoice->client_id = $request->input('client_id');
         $invoice->company_id = $company->id;
         $invoice->notify = $request->has('notify') ? true : false;
@@ -230,8 +227,8 @@ class InvoiceController extends Controller
                         break;
                 }
 
-                $startDate = Carbon::now();
-                $timezone = new DateTimeZone('Asia/Singapore');
+                $startDate = $invoice->date;
+                $timezone = config('app.timezone');
                 $rruleString = Unicorn::generateRrule($startDate, $timezone, $repeatsEveryInterval, $repeatsEveryTimePeriod, $repeatUntilOption, $repeatUntilMeta);
 
                 $invoiceEvent = new InvoiceEvent;
@@ -387,19 +384,20 @@ class InvoiceController extends Controller
             return redirect()->route('invoice.show', [ 'invoice' => $invoice->id ]);
         }
 
-        $duedate = Carbon::createFromFormat('j F, Y', $request->input('date'))->addDays($request->input('netdays'))->startOfDay()->toDateTimeString();
-        $invoice->date = Carbon::createFromFormat('j F, Y', $request->input('date'))->startOfDay()->toDateTimeString();
-        $invoice->netdays = $request->input('netdays');
-        $invoice->duedate = $duedate;
+        $invoice->fill($request->all());
         $invoice->notify = $request->has('notify') ? true : false;
 
         $ismodified = false;
 
-
         foreach($request->input('item_id') as $key => $itemid)
         {
             $invoiceitem = InvoiceItem::find($itemid);
-            $ismodified = $invoiceitem->modified($request->input('item_name')[$key], $request->input('item_description')[$key], $request->input('item_quantity')[$key], $request->input('item_price')[$key]);
+            $ismodified = $invoiceitem->modified(
+                $request->input('item_name')[$key],
+                $request->input('item_description')[$key],
+                $request->input('item_quantity')[$key],
+                $request->input('item_price')[$key]
+            );
 
             if ($ismodified)
             {
@@ -503,8 +501,8 @@ class InvoiceController extends Controller
                         break;
                 }
 
-                $startDate = Carbon::now();
-                $timezone = new DateTimeZone('UTC');
+                $startDate = $invoice->date;
+                $timezone = config('app.timezone');
                 $rruleString = Unicorn::generateRrule($startDate, $timezone, $repeatsEveryInterval, $repeatsEveryTimePeriod, $repeatUntilOption, $repeatUntilMeta);
 
                 $invoiceEvent = ($eventExists) ? $invoice->event : new InvoiceEvent;
