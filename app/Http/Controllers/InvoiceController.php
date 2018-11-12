@@ -182,10 +182,7 @@ class InvoiceController extends Controller
 
         $invoice = new Invoice;
         $invoice->nice_invoice_id = $company->niceinvoiceid();
-        $duedate = Carbon::createFromFormat('j F, Y', $request->input('date'))->addDays($request->input('netdays'))->startOfDay()->toDateTimeString();
-        $invoice->date = Carbon::createFromFormat('j F, Y', $request->input('date'))->startOfDay()->toDateTimeString();
-        $invoice->netdays = $request->input('netdays');
-        $invoice->duedate = $duedate;
+        $invoice->fill($request->all());
         $invoice->client_id = $request->input('client_id');
         $invoice->company_id = $company->id;
         $invoice->notify = $request->has('notify') ? true : false;
@@ -387,14 +384,10 @@ class InvoiceController extends Controller
             return redirect()->route('invoice.show', [ 'invoice' => $invoice->id ]);
         }
 
-        $duedate = Carbon::createFromFormat('j F, Y', $request->input('date'))->addDays($request->input('netdays'))->startOfDay()->toDateTimeString();
-        $invoice->date = Carbon::createFromFormat('j F, Y', $request->input('date'))->startOfDay()->toDateTimeString();
-        $invoice->netdays = $request->input('netdays');
-        $invoice->duedate = $duedate;
+        $invoice->fill($request->all());
         $invoice->notify = $request->has('notify') ? true : false;
 
         $ismodified = false;
-
 
         foreach($request->input('item_id') as $key => $itemid)
         {
