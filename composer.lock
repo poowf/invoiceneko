@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "c87cc9431ee1da3bcdfe248dd8bd0f77",
@@ -3616,7 +3616,7 @@
                 "logging",
                 "monitoring"
             ],
-            "time": "2018-10-19T12:34:15+00:00"
+            "time": "2018-11-06T09:04:56+00:00"
         },
         {
             "name": "rollbar/rollbar-laravel",
@@ -5651,16 +5651,16 @@
         },
         {
             "name": "laravel/telescope",
-            "version": "v0.1.7",
+            "version": "v0.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/telescope.git",
-                "reference": "7183e588501de3b1de307a6f82d311e2212b0f83"
+                "reference": "96e23e08c5de5748b7ea38573da13b3a1f3fc141"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/telescope/zipball/7183e588501de3b1de307a6f82d311e2212b0f83",
-                "reference": "7183e588501de3b1de307a6f82d311e2212b0f83",
+                "url": "https://api.github.com/repos/laravel/telescope/zipball/96e23e08c5de5748b7ea38573da13b3a1f3fc141",
+                "reference": "96e23e08c5de5748b7ea38573da13b3a1f3fc141",
                 "shasum": ""
             },
             "require": {
@@ -5710,7 +5710,7 @@
                 "laravel",
                 "monitoring"
             ],
-            "time": "2018-11-08T11:21:56+00:00"
+            "time": "2018-11-09T14:19:41+00:00"
         },
         {
             "name": "maximebf/debugbar",
