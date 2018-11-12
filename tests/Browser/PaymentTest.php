@@ -11,8 +11,6 @@ use Carbon\Carbon;
 
 class PaymentTest extends DuskTestCase
 {
-    use DatabaseMigrations;
-
     /**
      * A Dusk test example.
      *
