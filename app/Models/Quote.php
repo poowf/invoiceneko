@@ -42,8 +42,8 @@ class Quote extends Model
         parent::boot();
 
         static::saving(function ($quote) {
-            $date = $quote->date->addDays($quote->netdays);
-            $quote->duedate = $date->timezone(config('app.timezone'))->startOfDay();
+            $date = clone $quote->date;
+            $quote->duedate = $date->timezone(config('app.timezone'))->startOfDay()->addDays($quote->netdays);
         });
 
         //Auto Increment of quote_index per Company;

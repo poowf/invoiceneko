@@ -18,7 +18,6 @@ class QuoteTest extends TestCase
     public function test_create_quote()
     {
         $client = factory(Client::class)->create();
-
         Quote::unguard();
 
         $quote = Quote::create([

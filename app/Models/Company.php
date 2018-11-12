@@ -131,6 +131,11 @@ class Company extends Model
         return $this->hasMany('App\Models\Invoice', 'company_id');
     }
 
+    public function events()
+    {
+        return $this->hasMany('App\Models\InvoiceEvent', 'company_id');
+    }
+
     public function itemtemplates()
     {
         return $this->hasMany('App\Models\ItemTemplate', 'company_id');

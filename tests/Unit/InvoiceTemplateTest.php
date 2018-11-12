@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Models\Client;
+use App\Models\Company;
 use App\Models\InvoiceEvent;
 use App\Models\InvoiceTemplate;
 use Tests\TestCase;
@@ -18,8 +19,13 @@ class InvoiceTemplateTest extends TestCase
      */
     public function test_create_invoice_template()
     {
-        $client = factory(Client::class)->create();
-        $invoiceEvent = factory(InvoiceEvent::class)->create();
+        $company = factory(Company::class)->create();
+        $client = factory(Client::class)->create([
+            'company_id' => $company->id
+        ]);
+        $invoiceEvent = factory(InvoiceEvent::class)->create([
+            'company_id' => $company->id
+        ]);
 
         InvoiceTemplate::unguard();
 
