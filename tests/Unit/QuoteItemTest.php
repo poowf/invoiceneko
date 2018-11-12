@@ -11,8 +11,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class QuoteItemTest extends TestCase
 {
-    use RefreshDatabase;
-
     /**
      * A basic test example.
      *

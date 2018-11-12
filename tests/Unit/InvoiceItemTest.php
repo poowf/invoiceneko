@@ -11,8 +11,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class InvoiceItemTest extends TestCase
 {
-    use RefreshDatabase;
-
     /**
      * A basic test example.
      *
