@@ -18,6 +18,7 @@ class ClientTest extends TestCase
 
     public function test_create_client()
     {
+        self::refreshDatabase();
         $company = factory(Company::class)->create();
 
         Client::unguard();

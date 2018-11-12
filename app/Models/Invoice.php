@@ -48,7 +48,7 @@ class Invoice extends Model
 
         static::saving(function ($invoice) {
             $date = clone $invoice->date;
-            $invoice->duedate = $date->addDays($invoice->netdays)->timezone(config('app.timezone'))->startOfDay();
+            $invoice->duedate = $date->timezone(config('app.timezone'))->startOfDay()->addDays($invoice->netdays);
         });
 
         //Auto Increment of invoice_index per Company;
