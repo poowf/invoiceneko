@@ -63,12 +63,12 @@ steps:
   displayName: 'Running Unit Tests'
 
 - script: |
-    php artisan dusk --log-junit
+    php artisan dusk --log-junit TEST-dusk-junit.xml
   displayName: 'Running Browser Tests'
 
 - script: |
-    php parseJUnitToAzureJUnit.php ./TEST-phpunit-junit.xml ./TEST-phpunit-azure-junit.xml
-#    php parseJUnitToAzureJUnit.php ./TEST-dusk-junit.xml ./TEST-dusk-azure-junit.xml
+    php parseJUnitToAzureJUnit.php TEST-phpunit-junit.xml TEST-phpunit-azure-junit.xml
+    php parseJUnitToAzureJUnit.php TEST-dusk-junit.xml TEST-dusk-azure-junit.xml
   displayName: 'Parsing JUnit Files to Azure JUnit Supported Format'
 
 # Publish Test Results to Azure Pipelines/TFS
