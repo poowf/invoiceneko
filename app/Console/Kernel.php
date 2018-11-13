@@ -24,8 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-         $schedule->command('invoice:process')
-             ->twiceDaily(07, 19);
+         $schedule->command('invoice:generate')->hourly(30);
     }
 
     /**
