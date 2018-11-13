@@ -240,7 +240,7 @@ class InvoiceTest extends DuskTestCase
                 ->clickLink('Pending')
                 ->pause(500);
             $browser
-                ->script("jQuery(\"a[href='{$this->baseUrl()}/invoice/{$invoice->id}/edit'] > i\").click();");
+                ->script("jQuery(\"a[data-tooltip='View Invoice'] > i\").click();");
             $browser
                 ->assertPathBeginsWith('/invoice')
                 ->clickLink('Log Payment')
@@ -315,6 +315,25 @@ class InvoiceTest extends DuskTestCase
                 ->pause(2000)
                 ->press('UPDATE')
                 ->assertPresent('#invoice-action-container')
+                ->clickLink('Invoices')
+                ->assertPathIs('/invoices')
+                ->clickLink('Pending')
+                ->pause(500);
+            $browser
+                ->script("jQuery(\"a[data-tooltip='View Invoice'] > i\").click();");
+            $browser
+                ->assertPathBeginsWith('/invoice')
+                ->clickLink('Log Payment')
+                ->type('amount', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999))
+                ->type('notes', $faker->text(50));
+            $browser
+                ->script('jQuery("#receiveddate").datepicker("setDate", new Date());jQuery("#receiveddate").val("' . Carbon::now()->format('j F, Y') . '");');
+            $browser
+                ->script('jQuery("#mode").selectize()[0].selectize.setValue("Cheque");');
+            $browser
+                ->press('SUBMIT')
+                ->assertPresent('#invoice-action-container')
+                ->assertPathBeginsWith('/invoice')
                 ->clickLink('Invoices')
                 ->assertPathIs('/invoices')
                 ->clickLink('Pending')
