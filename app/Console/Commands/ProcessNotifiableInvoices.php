@@ -29,7 +29,7 @@ class ProcessNotifiableInvoices extends Command
      *
      * @var string
      */
-    protected $description = 'Process the generated recurring invoices';
+    protected $description = 'Process the invoices to be sent out based on the date attribute';
 
     /**
      * Create a new command instance.
