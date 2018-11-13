@@ -6,7 +6,6 @@ use App\Models\Company;
 use Faker\Factory as Faker;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class CompanyTest extends DuskTestCase
 {

@@ -5,7 +5,6 @@ namespace Tests\Browser;
 use App\Models\User;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class LoginTest extends DuskTestCase
 {
@@ -21,7 +20,7 @@ class LoginTest extends DuskTestCase
             'email' => 'test@poowf.com',
         ]);
 
-        $this->browse(function ($browser) use ($user) {
+        $this->browse(function (Browser $browser) use ($user) {
             $browser->visit('/signin')
                 ->type('username', $user->email)
                 ->type('password', 'secret')
