@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\TestCase as BaseTestCase;
 use Facebook\WebDriver\Chrome\ChromeOptions;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
@@ -9,7 +10,18 @@ use Facebook\WebDriver\Remote\DesiredCapabilities;
 
 abstract class DuskTestCase extends BaseTestCase
 {
-    use CreatesApplication;
+    use CreatesApplication, DatabaseMigrations;
+
+    /**
+     *  Notes for Dusk
+     * ->clickLink('Text Here') does not get affected by CSS and is case sensitive fot the actual text between <a> tags
+     * ->press only works for buttons and does get affected by CSS e.g. text-transform: uppercase
+     *
+     *
+     *
+     * /
+
+
 
     /**
      * Prepare for Dusk test execution.
@@ -38,6 +50,7 @@ abstract class DuskTestCase extends BaseTestCase
         else
         {
             $options = (new ChromeOptions)->addArguments([
+                '--window-size=1024,768',
                 '--disable-gpu',
                 '--headless',
                 '--no-sandbox',

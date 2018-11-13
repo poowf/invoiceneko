@@ -137,10 +137,7 @@ class QuoteController extends Controller
 
         $quote = new Quote;
         $quote->nice_quote_id = $company->nicequoteid();
-        $duedate = Carbon::createFromFormat('j F, Y', $request->input('date'))->addDays($request->input('netdays'))->startOfDay()->toDateTimeString();
-        $quote->date = Carbon::createFromFormat('j F, Y', $request->input('date'))->startOfDay()->toDateTimeString();
-        $quote->netdays = $request->input('netdays');
-        $quote->duedate = $duedate;
+        $quote->fill($request->all());
         $quote->client_id = $request->input('client_id');
         $quote->company_id = $company->id;
         $quote->save();
@@ -266,10 +263,7 @@ class QuoteController extends Controller
      */
     public function update(UpdateQuoteRequest $request, Quote $quote)
     {
-        $duedate = Carbon::createFromFormat('j F, Y', $request->input('date'))->addDays($request->input('netdays'))->startOfDay()->toDateTimeString();
-        $quote->date = Carbon::createFromFormat('j F, Y', $request->input('date'))->startOfDay()->toDateTimeString();
-        $quote->netdays = $request->input('netdays');
-        $quote->duedate = $duedate;
+        $quote->fill($request->all());
         $quote->save();
 
         foreach($request->input('item_name') as $key => $itemname)
@@ -295,7 +289,6 @@ class QuoteController extends Controller
         }
 
         $quote = $quote->fresh();
-
         $quote->setQuoteTotal();
 
         flash('Quote Updated', 'success');

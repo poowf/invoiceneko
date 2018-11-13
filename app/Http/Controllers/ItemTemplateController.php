@@ -133,6 +133,6 @@ class ItemTemplateController extends Controller
 
         flash('Item Template Deleted', 'success');
 
-        return redirect()->back();
+        return redirect()->route('itemtemplate.index');
     }
 }

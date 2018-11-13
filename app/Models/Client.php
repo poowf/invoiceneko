@@ -29,7 +29,7 @@ class Client extends Model
         'street',
         'unitnumber',
         'postalcode',
-        'country',
+        'country_code',
         'nickname',
         'crn',
         'website',

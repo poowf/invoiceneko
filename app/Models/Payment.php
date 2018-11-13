@@ -63,12 +63,17 @@ class Payment extends Model
     public function getReceiveddateAttribute($value)
     {
         $date = $this->asDateTime($value);
-        return $date->timezone(auth()->user()->timezone);
+        return $date->timezone($this->company->timezone);
     }
 
     public function invoice()
     {
         return $this->belongsTo('App\Models\Invoice', 'invoice_id');
+    }
+
+    public function company()
+    {
+        return $this->belongsTo('App\Models\Company', 'company_id');
     }
 
     public function client()

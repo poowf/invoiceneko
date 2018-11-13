@@ -34,7 +34,6 @@ class Quote extends Model
      */
     protected $fillable = [
         'date',
-        'duedate',
         'netdays',
     ];
 
@@ -42,7 +41,12 @@ class Quote extends Model
     {
         parent::boot();
 
-        //Auto Creation of Settings per Company;
+        static::saving(function ($quote) {
+            $date = clone $quote->date;
+            $quote->duedate = $date->timezone(config('app.timezone'))->startOfDay()->addDays($quote->netdays);
+        });
+
+        //Auto Increment of quote_index per Company;
         static::created(function ($quote) {
             $company = $quote->company;
             $company->quote_index = $company->quote_index + 1;
@@ -55,8 +59,7 @@ class Quote extends Model
     ];
 
     protected $cascadeDeletes = [
-        'items',
-        'payments',
+        'items'
     ];
 
     public function getTotalMoneyFormatAttribute()
@@ -87,6 +90,18 @@ class Quote extends Model
     {
         $date = $this->asDateTime($value);
         return $date->timezone($this->company->timezone);
+    }
+
+    public function setDateAttribute($value)
+    {
+        if($value instanceof \DateTime)
+        {
+            $this->attributes['date'] = $value;
+        }
+        else
+        {
+            $this->attributes['date'] = $value = Carbon::createFromFormat('j F, Y', $value)->startOfDay();
+        }
     }
 
     public function client()
