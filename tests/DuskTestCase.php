@@ -13,6 +13,17 @@ abstract class DuskTestCase extends BaseTestCase
     use CreatesApplication, DatabaseMigrations;
 
     /**
+     *  Notes for Dusk
+     * ->clickLink('Text Here') does not get affected by CSS and is case sensitive fot the actual text between <a> tags
+     * ->press only works for buttons and does get affected by CSS e.g. text-transform: uppercase
+     *
+     *
+     *
+     * /
+
+
+
+    /**
      * Prepare for Dusk test execution.
      *
      * @beforeClass

@@ -5,7 +5,6 @@ namespace Tests\Browser;
 use Faker\Factory as Faker;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class SignUpTest extends DuskTestCase
 {

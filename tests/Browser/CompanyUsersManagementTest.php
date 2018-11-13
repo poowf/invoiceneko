@@ -3,10 +3,10 @@
 namespace Tests\Browser;
 
 use App\Models\Company;
+use App\Models\CompanyUserRequest;
 use Faker\Factory as Faker;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class CompanyUsersManagementTest extends DuskTestCase
 {
@@ -30,7 +30,7 @@ class CompanyUsersManagementTest extends DuskTestCase
                 ->press('SIGN IN')
                 ->assertPathIs('/dashboard')
                 ->visit('/company/users')
-                ->click("a[href='{$this->baseUrl()}/company/users/create']")
+                ->clickLink('Add User')
                 ->type('username', str_random(10))
                 ->type('email', $faker->unique()->safeEmail)
                 ->type('full_name', $faker->name)
@@ -39,6 +39,40 @@ class CompanyUsersManagementTest extends DuskTestCase
                 ->press('ADD')
                 ->assertPresent('#users-table')
                 ->assertPathIs('/company/users');
+            $browser->script('jQuery(".signmeout-btn").click()');
+            $browser->assertPathIs('/signin');
+        });
+    }
+
+    public function test_removing_a_user_from_a_company()
+    {
+        $company = factory(Company::class)->create();
+        //Need to assign the company_id to the user
+        $company->owner->company_id = $company->id;
+        $company->owner->save();
+
+        $companyUserRequest = factory(CompanyUserRequest::class)->create([
+            'status' => CompanyUserRequest::STATUS_PENDING,
+            'company_id' => $company->id
+        ]);
+
+        $faker = Faker::create();
+        $this->browse(function (Browser $browser) use ($faker, $company, $companyUserRequest) {
+            $browser->visit('/signin')
+                ->type('username', $company->owner->email)
+                ->type('password', 'secret')
+                ->press('SIGN IN')
+                ->assertPathIs('/dashboard')
+                ->visit('/company/users');
+            $browser
+                ->script("jQuery(\"a[data-tooltip='Remove User'] > i\").click();");
+            $browser
+                ->pause(500)
+                ->press('DELETE')
+                ->assertPresent('#user-container')
+                ->assertPathIs('/company/users');
+            $browser->script('jQuery(".signmeout-btn").click()');
+            $browser->assertPathIs('/signin');
         });
     }
 }

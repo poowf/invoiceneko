@@ -46,9 +46,9 @@
                                         <td>${{ $payment->moneyformat }}</td>
                                         <td>{{ $payment->receiveddate->format('d F, Y') }}</td>
                                         <td>
-                                            <a href="{{ route('payment.show', [ 'payment' => $payment ] ) }}"><i class="material-icons">remove_red_eye</i></a>
-                                            <a href="{{ route('payment.edit', [ 'payment' => $payment ] ) }}"><i class="material-icons">mode_edit</i></a>
-                                            <a href="#" data-id="{{ $payment->id }}" class="payment-delete-btn"><i class="material-icons">delete</i></a>
+                                            <a href="{{ route('payment.show', [ 'payment' => $payment ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Payment"><i class="material-icons">remove_red_eye</i></a>
+                                            <a href="{{ route('payment.edit', [ 'payment' => $payment ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Payment"><i class="material-icons">mode_edit</i></a>
+                                            <a href="#" data-id="{{ $payment->id }}" class="payment-delete-btn tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Payment"><i class="material-icons">delete</i></a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -62,7 +62,7 @@
 
     <div id="delete-confirmation" class="modal">
         <div class="modal-content">
-            <p>Delete Invoice?</p>
+            <p>Delete Payment?</p>
         </div>
         <div class="modal-footer">
             <form id="delete-payment-form" method="post" class="null-form">
