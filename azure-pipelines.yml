@@ -59,9 +59,21 @@ steps:
   displayName: 'Starting Chrome and the Web Server'
 
 - script: |
-    vendor/bin/phpunit
+    vendor/bin/phpunit --log-junit TEST-phpunit-junit.xml
   displayName: 'Running Unit Tests'
 
 - script: |
-    php artisan dusk
+    php artisan dusk --log-junit TEST-dusk-junit.xml
   displayName: 'Running Browser Tests'
+
+# Publish Test Results to Azure Pipelines/TFS
+- task: PublishTestResults@2
+  inputs:
+  testRunner: 'JUnit' # Options: JUnit, NUnit, VSTest, xUnit
+  testResultsFiles: '**/TEST-*.xml'
+  #searchFolder: '$(System.DefaultWorkingDirectory)' # Optional
+  #mergeTestResults: false # Optional
+  #testRunTitle: # Optional
+  #buildPlatform: # Optional
+  #buildConfiguration: # Optional
+  #publishRunAttachments: true # Optional
