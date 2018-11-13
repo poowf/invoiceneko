@@ -44,7 +44,7 @@ class Company extends Model
     {
         parent::boot();
 
-        static::creating(function ($company) {
+        static::saving(function ($company) {
             $company->slug = str_slug($company->name);
             static::generateSlug($company);
         });
@@ -129,6 +129,11 @@ class Company extends Model
     public function invoices()
     {
         return $this->hasMany('App\Models\Invoice', 'company_id');
+    }
+
+    public function events()
+    {
+        return $this->hasMany('App\Models\InvoiceEvent', 'company_id');
     }
 
     public function itemtemplates()

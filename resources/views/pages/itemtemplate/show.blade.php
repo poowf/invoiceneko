@@ -13,7 +13,7 @@
             </div>
             <div class="col s6 right">
                 <a href="{{ route('itemtemplate.edit', [ 'itemtemplate' => $itemtemplate->id ] ) }}" class="btn light-blue waves-effect waves-dark mtop30">Edit</a>
-                <a href="#" class="btn btn-link waves-effect waves-dark mtop30">Delete</a>
+                <a href="#" data-id="{{ $itemtemplate->id }}" class="btn btn-link waves-effect waves-dark itemtemplate-delete-btn mtop30">Delete</a>
             </div>
         </div>
         <div class="row">
@@ -53,6 +53,7 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
+            Unicorn.initConfirmationTrigger('.container', '.itemtemplate-delete-btn', 'itemtemplate', 'destroy', '#delete-confirmation', '#delete-itemtemplate-form');
         });
     </script>
 @stop
