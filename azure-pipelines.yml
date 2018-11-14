@@ -70,6 +70,7 @@ steps:
     php ParseJUnitToAzureJUnit.php TEST-phpunit-junit.xml TEST-phpunit-azure-junit.xml
     php ParseJUnitToAzureJUnit.php TEST-dusk-junit.xml TEST-dusk-azure-junit.xml
   displayName: 'Parsing JUnit Files to Azure JUnit Supported Format'
+  condition: always()
 
 # Publish Test Results to Azure Pipelines/TFS
 - task: PublishTestResults@2
@@ -82,3 +83,4 @@ steps:
     #buildPlatform: # Optional
     #buildConfiguration: # Optional
     #publishRunAttachments: true # Optional
+  condition: always()
