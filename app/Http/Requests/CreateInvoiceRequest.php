@@ -25,7 +25,7 @@ class CreateInvoiceRequest extends FormRequest
     {
         return [
             'date' => 'required|date_format:"j F, Y"',
-            'netdays' => 'required|integer|min:1',
+            'netdays' => 'required|integer|min:0',
             'client_id' => 'required',
             'item_name.*' => 'required|string',
             'item_quantity.*' => 'required|integer|min:1',
