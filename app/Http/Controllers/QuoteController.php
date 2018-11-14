@@ -170,8 +170,8 @@ class QuoteController extends Controller
 
         $invoice = new Invoice;
         $invoice->nice_invoice_id = $company->niceinvoiceid();
-        $duedate = Carbon::now()->addDays($quote->netdays)->startOfDay()->toDateTimeString();
-        $invoice->date = Carbon::now()->startOfDay()->toDateTimeString();
+        $duedate = Carbon::now()->addDays($quote->netdays)->startOfDay();
+        $invoice->date = Carbon::now()->startOfDay();
         $invoice->netdays = $quote->netdays;
         $invoice->duedate = $duedate;
         $invoice->client_id = $quote->client_id;
@@ -309,6 +309,6 @@ class QuoteController extends Controller
 
         flash('Quote Deleted', 'success');
 
-        return redirect()->back();
+        return redirect()->route('quote.index');
     }
 }

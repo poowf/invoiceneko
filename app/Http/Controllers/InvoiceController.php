@@ -585,7 +585,7 @@ class InvoiceController extends Controller
 
         flash('Invoice Deleted', 'success');
 
-        return redirect()->back();
+        return redirect()->route('invoice.index');
     }
 
     /**

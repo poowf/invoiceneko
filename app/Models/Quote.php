@@ -37,11 +37,36 @@ class Quote extends Model
         'netdays',
     ];
 
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'date',
+        'duedate',
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
+
+    protected $attributes = [
+        'status' => self::STATUS_OPEN
+    ];
+
+    protected $cascadeDeletes = [
+        'items'
+    ];
+
     protected static function boot()
     {
         parent::boot();
 
         static::saving(function ($quote) {
+            if($quote->status == self::STATUS_DRAFT)
+            {
+                $quote->status = self::STATUS_OPEN;
+            }
             $date = clone $quote->date;
             $quote->duedate = $date->timezone(config('app.timezone'))->startOfDay()->addDays($quote->netdays);
         });
@@ -53,14 +78,6 @@ class Quote extends Model
             $company->save();
         });
     }
-
-    protected $attributes = [
-        'status' => self::STATUS_OPEN
-    ];
-
-    protected $cascadeDeletes = [
-        'items'
-    ];
 
     public function getTotalMoneyFormatAttribute()
     {

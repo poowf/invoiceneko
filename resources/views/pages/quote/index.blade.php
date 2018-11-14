@@ -33,7 +33,7 @@
 
             <div class="col s6 right mtop30">
                 <a href="{{ route('quote.create') }}" class="btn btn-link waves-effect waves-dark">Create</a>
-                <a href="{{ route('quotes.index.archived') }}" class="btn btn-link waves-effect waves-dark">Archived Quotes</a>
+                <a href="{{ route('quote.index.archived') }}" class="btn btn-link waves-effect waves-dark">Archived Quotes</a>
             </div>
         </div>
         <div class="row">
