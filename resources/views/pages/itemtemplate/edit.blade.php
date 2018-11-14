@@ -32,6 +32,8 @@
                                 <label for="price" class="label-validation">Price</label>
                                 <span class="helper-text"></span>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="input-field col s12">
                                 <textarea id="description" name="description" class="trumbowyg-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Description">{{ $itemtemplate->description }}</textarea>
                                 <label for="description" class="label-validation">Description</label>

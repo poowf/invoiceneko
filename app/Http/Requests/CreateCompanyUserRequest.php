@@ -24,9 +24,9 @@ class CreateCompanyUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'username' => 'required|min:4|unique:users',
+            'username' => 'required|string|min:4|unique:users',
             'email' => 'required|email|unique:users',
-            'full_name' => 'required',
+            'full_name' => 'required|string|min:4',
             'phone' => 'required|unique:users',
             'gender' => 'required|in:male,female',
         ];

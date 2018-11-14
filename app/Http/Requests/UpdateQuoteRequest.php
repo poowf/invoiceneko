@@ -24,8 +24,12 @@ class UpdateQuoteRequest extends FormRequest
     public function rules()
     {
         return [
-            'date' => 'required',
-            'netdays' => 'required|numeric',
+            'date' => 'required|date_format:"j F, Y"',
+            'netdays' => 'required|integer|min:1',
+            'item_name.*' => 'required|string',
+            'item_quantity.*' => 'required|integer|min:1',
+            'item_price.*' => 'required|numeric',
+            'item_description.*' => 'required|string',
         ];
     }
 }

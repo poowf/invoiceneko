@@ -24,11 +24,11 @@ class UpdateCompanyAddressRequest extends FormRequest
     public function rules()
     {
         return [
-            'block' => 'required',
-            'street' => 'required',
-            'unitnumber' => 'required',
-            'postalcode' => 'required',
-            'buildingtype' => 'required',
+            'block' => 'required|string',
+            'street' => 'required|string',
+            'unitnumber' => 'required|string',
+            'postalcode' => 'required|string',
+            'buildingtype' => 'required|string',
         ];
     }
 

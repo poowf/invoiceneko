@@ -93,6 +93,11 @@ class Unicorn {
                 else if (velem.$element.is('select')) {
                     velem.$element.siblings('.selectize-control').removeClass('invalid').addClass('valid');
                 }
+                else if (velem.$element.is('.trumbowyg-textarea'))
+                {
+                    velem.$element.parentsUntil('.row').find('.trumbowyg-box').removeClass('invalid').addClass('valid');
+                    velem.$element.parentsUntil('.row').find('span.helper-text').removeClass('invalid').addClass('valid');
+                }
                 else if (velem.$element.is('.phone-input'))
                 {
                     velem.$element.parent('').siblings('span.helper-text').removeClass('invalid').addClass('valid');
@@ -106,6 +111,11 @@ class Unicorn {
                 }
                 else if (velem.$element.is('select')) {
                     velem.$element.siblings('.selectize-control').removeClass('valid').addClass('invalid');
+                }
+                else if(velem.$element.is('.trumbowyg-textarea')) {
+                    velem.$element.parentsUntil('.row').find('.trumbowyg-box').removeClass('valid').addClass('invalid');
+                    velem.$element.parentsUntil('.row').find('span.helper-text').removeClass('valid').addClass('invalid');
+                    velem.$element.parentsUntil('.row').find('span.helper-text').attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
                 }
                 else if (velem.$element.is('.phone-input'))
                 {

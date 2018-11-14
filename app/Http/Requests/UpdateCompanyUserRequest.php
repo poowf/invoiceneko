@@ -24,11 +24,11 @@ class UpdateCompanyUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'username' => 'required|min:4|unique:users,username,' . $this->user->id,
+            'username' => 'required|string|min:4|unique:users,username,' . $this->user->id,
             'email' => 'required|email|unique:users,email,' . $this->user->id,
             'phone' => 'required|unique:users,phone,' . $this->user->id,
             'gender' => 'required|in:male,female',
-            'full_name' => 'required',
+            'full_name' => 'required|string|min:4',
             'newpassword' => 'confirmed',
         ];
     }

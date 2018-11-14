@@ -31,6 +31,18 @@ class Payment extends Model
     ];
 
     /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'receiveddate',
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
+
+    /**
      * Get the price.
      *
      * @param  string  $value

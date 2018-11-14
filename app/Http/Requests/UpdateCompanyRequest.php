@@ -24,10 +24,10 @@ class UpdateCompanyRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'crn' => 'required',
-            'phone' => 'required',
-            'email' => 'required',
+            'name' => 'required|string',
+            'crn' => 'required|string',
+            'phone' => 'required|string',
+            'email' => 'required|email',
         ];
     }
 }

@@ -26,7 +26,7 @@ class CreateSoloPaymentRequest extends FormRequest
         return [
             'invoice_id' => 'required',
             'amount' => 'required|numeric',
-            'receiveddate' => 'required',
+            'receiveddate' => 'required|date_format:"j F, Y"',
             'mode' => 'required',
         ];
     }
