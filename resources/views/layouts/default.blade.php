@@ -103,7 +103,7 @@
                     ])
                 @else
                     {{-- 5000 is the duration of the toast, replace with text for unlimited duration --}}
-                    M.toast({ html: "{!! $message['message'] !!}", displayLength: "poowf", classes: "{{ $message['level'] }}"});
+                    M.toast({ html: "{!! $message['message'] !!} <i class='material-icons'>clear</i>", displayLength: "poowf", classes: "{{ $message['level'] }}"});
                 @endif
             @endforeach
             {{ session()->forget('flash_notification') }}

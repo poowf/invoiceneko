@@ -81,6 +81,10 @@ class InvoiceItemController extends Controller
      */
     public function destroy(InvoiceItem $invoiceItem)
     {
-        $invoiceItem->delete();
+        $invoice = $invoiceItem->invoice;
+        if($invoice->items->count() != 1)
+        {
+            $invoiceItem->delete();
+        }
     }
 }

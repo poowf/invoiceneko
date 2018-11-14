@@ -41,7 +41,7 @@
                 </div>
 
                 <div id="quote-container" class="row">
-                    <div class="card-panel" >
+                    <div class="card-panel flex">
                         <table id="quotes-table" class="responsive-table striped">
                             <thead>
                                 <tr>

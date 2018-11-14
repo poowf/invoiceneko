@@ -131,8 +131,8 @@ Route::group(['middleware' => ['auth', '2fa']], function() {
         Route::get('/invoice/adhoc/create', 'InvoiceController@adhoccreate')->name('invoice.adhoc.create');
 
         /* Quotes */
-        Route::get('/quotes', 'QuoteController@index')->name('quotes.index');
-        Route::get('/quotes/archived', 'QuoteController@index_archived')->name('quotes.index.archived');
+        Route::get('/quotes', 'QuoteController@index')->name('quote.index');
+        Route::get('/quotes/archived', 'QuoteController@index_archived')->name('quote.index.archived');
         Route::get('/quote/create', 'QuoteController@create')->name('quote.create');
         Route::post('/quote/create', 'QuoteController@store')->name('quote.store');
         Route::get('/quote/{quote}', 'QuoteController@show')->name('quote.show')->middleware('can:view,quote');
