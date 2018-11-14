@@ -63,7 +63,7 @@ class PaymentController extends Controller
     {
         $payment = new Payment;
         $payment->fill($request->all());
-        $payment->receiveddate = Carbon::createFromFormat('j F, Y', $request->input('receiveddate'))->startOfDay()->toDateTimeString();
+        $payment->receiveddate = Carbon::createFromFormat('j F, Y', $request->input('receiveddate'))->startOfDay();
         $payment->invoice_id = $invoice->id;
         $payment->client_id = $invoice->client->id;
         $payment->company_id = $invoice->company_id;
@@ -73,7 +73,7 @@ class PaymentController extends Controller
 
         if($invoice->calculateremainder() == "0.0")
         {
-            $invoice->payment_complete_date = Carbon::now()->toDateTimeString();
+            $invoice->payment_complete_date = Carbon::now();
             $invoice->status = Invoice::STATUS_CLOSED;
             $invoice->save();
         }
@@ -121,7 +121,7 @@ class PaymentController extends Controller
         $company = auth()->user()->company;
         $payment = new Payment;
         $payment->fill($request->all());
-        $payment->receiveddate = Carbon::createFromFormat('j F, Y', $request->input('receiveddate'))->startOfDay()->toDateTimeString();
+        $payment->receiveddate = Carbon::createFromFormat('j F, Y', $request->input('receiveddate'))->startOfDay();
 
         $invoice = Invoice::find($request->input('invoice_id'));
 
@@ -181,7 +181,7 @@ class PaymentController extends Controller
     public function update(UpdatePaymentRequest $request, Payment $payment)
     {
         $payment->fill($request->all());
-        $payment->receiveddate = Carbon::createFromFormat('j F, Y', $request->input('receiveddate'))->startOfDay()->toDateTimeString();
+        $payment->receiveddate = Carbon::createFromFormat('j F, Y', $request->input('receiveddate'))->startOfDay();
         $payment->save();
 
         flash('Payment Updated', 'success');
@@ -202,6 +202,6 @@ class PaymentController extends Controller
 
         flash('Payment Deleted', 'success');
 
-        return redirect()->back();
+        return redirect()->route('payment.index');
     }
 }

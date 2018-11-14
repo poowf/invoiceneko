@@ -25,7 +25,7 @@ class CreatePaymentRequest extends FormRequest
     {
         return [
             'amount' => 'required|numeric',
-            'receiveddate' => 'required',
+            'receiveddate' => 'required|date_format:"j F, Y"',
             'mode' => 'required',
         ];
     }

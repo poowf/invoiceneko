@@ -81,6 +81,10 @@ class QuoteItemController extends Controller
      */
     public function destroy(QuoteItem $quoteItem)
     {
-        $quoteItem->delete();
+        $quote = $quoteItem->quote;
+        if($quote->items->count() != 1)
+        {
+            $quoteItem->delete();
+        }
     }
 }

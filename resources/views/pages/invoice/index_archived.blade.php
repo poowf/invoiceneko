@@ -30,7 +30,6 @@
             <div class="col s6">
                 <h3>Archived Invoices</h3>
             </div>
-
             <div class="col s6 right mtop30">
             </div>
         </div>
@@ -41,7 +40,7 @@
                 </div>
 
                 <div id="invoice-container" class="row">
-                    <div class="card-panel" >
+                    <div class="card-panel flex">
                         <table id="invoices-table" class="responsive-table striped">
                             <thead>
                                 <tr>

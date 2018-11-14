@@ -24,7 +24,7 @@ class UpdateClientRequest extends FormRequest
     public function rules()
     {
         return [
-            'companyname' => 'required',
+            'companyname' => 'required|string',
             'phone' => '',
             'block' => '',
             'street' => '',
@@ -35,10 +35,10 @@ class UpdateClientRequest extends FormRequest
             'crn' => '',
             'website' => '',
             'contactsalutation' => 'required|in:mr,mrs,mdm,miss',
-            'contactfirstname' => 'required',
+            'contactfirstname' => 'required|string',
             'contactlastname' => '',
             'contactgender' => '',
-            'contactemail' => 'required',
+            'contactemail' => 'required|email',
             'contactphone' => '',
         ];
     }

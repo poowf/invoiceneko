@@ -148,7 +148,7 @@ class ClientController extends Controller
 
         flash('Client Updated', 'success');
 
-        return redirect()->route('client.index');
+        return redirect()->route('client.show', [ 'client' => $client->id ]);
     }
 
     /**
@@ -164,7 +164,7 @@ class ClientController extends Controller
 
         flash('Client Deleted', 'success');
 
-        return redirect()->back();
+        return redirect()->route('client.index');
     }
 
     /**

@@ -212,6 +212,10 @@ mark {
   padding: 20px;
 }
 
+.pall30 {
+  padding: 30px;
+}
+
 .flex {
   display: flex;
 }
@@ -517,7 +521,6 @@ mark {
   content: attr(data-error);
   color: #F44336;
   opacity: 1;
-  margin-top: 8px;
 }
 
 /* Accents */
@@ -721,6 +724,7 @@ textarea.valid + label:after {
 
 #toast-container .toast {
   cursor: pointer;
+  padding: 10px 15px;
 }
 
 .toast.success, .alt-badge.success {
@@ -739,6 +743,14 @@ textarea.valid + label:after {
   background-color: #0091ea;
 }
 
+.toast i {
+  margin-left: 10px;
+}
+
+.toast i:hover, .toast i:focus {
+  color: #F44336;
+}
+
 .input-field {
   margin-bottom: 0px;
 }
@@ -751,6 +763,10 @@ textarea.valid + label:after {
 .input-field .helper-text {
   position: absolute;
   width: 100%;
+}
+
+.file-field {
+  margin-top: 15px;
 }
 
 /* Fonts */
@@ -844,6 +860,13 @@ nav .sidenav-trigger span {
   font-size: 2em;
 }
 
+nav .button-collapse i {
+  height: 80px;
+  line-height: 80px;
+  font-size: 30px;
+  color: #000;
+}
+
 .sidenav li > a {
   font-weight: normal;
 }
@@ -924,11 +947,10 @@ footer.page-footer .footer-main ul li {
 }
 
 footer .footer-totop {
-  position: absolute;
-  width: 80px;
   text-align: center;
-  top: 40px;
-  right: 30px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
 }
 
 footer .footer-totop a {
@@ -937,15 +959,12 @@ footer .footer-totop a {
 }
 
 footer .footer-totop .totop-link {
-  width: 50px;
-  height: 50px;
-  border: 1px solid #fff;
-  border-radius: 50%;
+  margin: 0 auto;
 }
 
 footer .footer-totop .totop-link i {
   display: block;
-  margin-top: 4px;
+  font-size: 2em;
 }
 
 footer .footer-follow {
@@ -1043,14 +1062,34 @@ label.rbtn-label.invalid:after {
   outline: none;
 }
 
+.trumbowyg ~ .helper-text[data-error] {
+  color: transparent;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+.trumbowyg ~ .helper-text.invalid[data-error]:after {
+  content: attr(data-error);
+  color: #F44336;
+}
+
+.trumbowyg-box.invalid {
+  outline: 2px solid #F44336;
+}
+
+.trumbowyg-box.valid {
+  outline: 2px solid #4CAF50;
+}
+
 /* Sign In Page */
 .login-container {
   position: relative;
   width: 320px;
   margin: 10% auto 10%;
-  padding: 30px 40px 40px;
   text-align: center;
-  background: #fff;
 }
 .login-container label {
   text-align: left;
@@ -1139,14 +1178,63 @@ label.rbtn-label.invalid:after {
   margin-left: -100%
 }
 
-/* Media Queries */
-
-nav .button-collapse i {
-  height: 80px;
-  line-height: 80px;
-  font-size: 30px;
-  color: #000;
+/* Animations */
+.bounce {
+  -moz-animation: bounce 3s infinite;
+  -webkit-animation: bounce 3s infinite;
+  animation: bounce 3s infinite;
 }
+
+@-moz-keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    -moz-transform: translateY(0);
+    transform: translateY(0);
+  }
+  40% {
+    -moz-transform: translateY(-30px);
+    transform: translateY(-30px);
+  }
+  60% {
+    -moz-transform: translateY(-15px);
+    transform: translateY(-15px);
+  }
+}
+@-webkit-keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  40% {
+    -webkit-transform: translateY(-30px);
+    transform: translateY(-30px);
+  }
+  60% {
+    -webkit-transform: translateY(-15px);
+    transform: translateY(-15px);
+  }
+}
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  40% {
+    -moz-transform: translateY(-30px);
+    -ms-transform: translateY(-30px);
+    -webkit-transform: translateY(-30px);
+    transform: translateY(-30px);
+  }
+  60% {
+    -moz-transform: translateY(-15px);
+    -ms-transform: translateY(-15px);
+    -webkit-transform: translateY(-15px);
+    transform: translateY(-15px);
+  }
+}
+
+/* Media Queries */
 
 @media only screen and (min-width: 601px) {
   nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
@@ -1167,8 +1255,14 @@ nav .button-collapse i {
 
 }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 600px) {
+  form .row {
+    margin-bottom: 0px;
+  }
 
+  form .row .input-field {
+    margin-bottom: 15px;
+  }
 }
 
 @media only screen and (min-width: 768px) {

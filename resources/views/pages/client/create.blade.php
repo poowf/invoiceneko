@@ -25,7 +25,7 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <div class="file-field input-field">
+                                <div class="file-field">
                                     <div class="btn btn-link tooltipped" data-position="left" data-delay="50" data-tooltip="Recommended Size: 500 (W) x 500 (H) with White Background (Optional)">
                                         <span>File</span>
                                         <input id="logo" name="logo" type="file" accept="image/*" data-maxsize="10M"/>
@@ -115,23 +115,23 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="input-field col s12 m2">
+                            <div class="input-field col s12 m3 l2">
                                 <select id="contactsalutation" name="contactsalutation" data-parsley-required="true" data-parsley-trigger="change">
-                                    <option disabled="" selected="selected" value="">Client Contact Salutation</option>
+                                    <option disabled="" selected="selected" value="">Salutation</option>
                                     <option value="mr" @if(old('contactsalutation') == "mr") selected @endif>Mr.</option>
                                     <option value="mrs" @if(old('contactsalutation') == "mrs") selected @endif>Mrs.</option>
                                     <option value="mdm" @if(old('contactsalutation') == "mdm") selected @endif>Mdm.</option>
                                     <option value="miss" @if(old('contactsalutation') == "miss") selected @endif>Miss.</option>
                                 </select>
-                                <label for="contactsalutation" class="label-validation">Contact Salutation</label>
+                                <label for="contactsalutation" class="label-validation">Salutation</label>
                                 <span class="helper-text"></span>
                             </div>
-                            <div class="input-field col s12 m5">
+                            <div class="input-field col s12 m5 l5">
                                 <input id="contactfirstname" name="contactfirstname" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('contactfirstname') }}" placeholder="Client Contact First Name">
                                 <label for="contactfirstname" class="label-validation">Contact First Name</label>
                                 <span class="helper-text"></span>
                             </div>
-                            <div class="input-field col s12 m5">
+                            <div class="input-field col s12 m4 l5">
                                 <input id="contactlastname" name="contactlastname" type="text" data-parsley-trigger="change" value="{{ old('contactlastname') }}" placeholder="Client Contact Last Name">
                                 <label for="contactlastname" class="label-validation">Contact Last Name</label>
                                 <span class="helper-text"></span>
