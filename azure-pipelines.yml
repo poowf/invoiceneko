@@ -76,8 +76,8 @@ steps:
   inputs:
     testRunner: 'JUnit' # Options: JUnit, NUnit, VSTest, xUnit
     testResultsFiles: '**/TEST-*.xml'
-    #searchFolder: '$(System.DefaultWorkingDirectory)' # Optional
-    #mergeTestResults: false # Optional
+    searchFolder: '$(System.DefaultWorkingDirectory)/tests/Results' # Optional
+    mergeTestResults: false # Optional
     #testRunTitle: # Optional
     #buildPlatform: # Optional
     #buildConfiguration: # Optional
