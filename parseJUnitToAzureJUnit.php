@@ -31,7 +31,7 @@ foreach($domCollection as $key => $domSingle)
 {
     outputToFile($domSingle, $directory, $outputFileNameOnly . '-' . $key . '.' . $outputFileExtension);
 }
-//unlink($inputFileName);
+unlink($inputFileName);
 
 function outputToFile($dom, $directory, $filename)
 {
@@ -132,7 +132,6 @@ function flatten_xml_element($dataArray)
                         elseif(array_key_exists('error', $testcase)) {
                             $toddlerElement = $dom->createElement('error', $testcase['error']);
                             $childElement->appendChild($toddlerElement);
-                            print_r($toddlerElement);
                         }
 
                         $element->appendChild($childElement);
