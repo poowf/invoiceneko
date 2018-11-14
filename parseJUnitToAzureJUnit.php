@@ -4,6 +4,8 @@ if (defined('STDIN')) {
     $outputFileName = $argv[2];
 }
 
+$directory = './tests/Results/';
+
 $data = simplexml_load_file($inputFileName);
 
 $json_string = json_encode($data);
@@ -19,30 +21,47 @@ else
     $mainResults = $result_array['testsuite']['testsuite'];
 }
 
-$doc = new DOMDocument();
-$doc->encoding = 'UTF-8';
-$dom = flatten_xml_element($doc, $mainResults);
-$dom->formatOutput = true;
-$xml = $doc->saveXML();
+$domCollection = flatten_xml_element($mainResults);
 
-file_put_contents($outputFileName, $xml);
+$outputFilePieces = explode(".", $outputFileName);
+$outputFileNameOnly = $outputFilePieces[0];
+$outputFileExtension = $outputFilePieces[1];
+
+foreach($domCollection as $key => $domSingle)
+{
+    outputToFile($domSingle, $directory, $outputFileNameOnly . '-' . $key . '.' . $outputFileExtension);
+}
 //unlink($inputFileName);
 
-function flatten_xml_element($dom, $dataArray)
+function outputToFile($dom, $directory, $filename)
 {
-    foreach ($dataArray as $data) {
-        $element = $dom->createElement('testsuite', '');
-        // Add any @attributes
-        if (! empty($data['@attributes']) && is_array($data['@attributes'])) {
-            foreach ($data['@attributes'] as $attribute_key => $attribute_value) {
-                $element->setAttribute($attribute_key, $attribute_value);
-            }
-        }
+    if (!file_exists($directory)) {
+        mkdir($directory, 0777, true);
+    }
+    $dom->encoding = 'UTF-8';
+    $dom->formatOutput = true;
+    $xml = $dom->saveXML();
+    file_put_contents($directory . $filename, $xml);
+}
 
-        $dom->appendChild($element);
+function flatten_xml_element($dataArray)
+{
+    $domArray = [];
+
+    foreach ($dataArray as $data) {
+//        $element = $dom->createElement('testsuite', '');
+//        // Add any @attributes
+//        if (! empty($data['@attributes']) && is_array($data['@attributes'])) {
+//            foreach ($data['@attributes'] as $attribute_key => $attribute_value) {
+//                $element->setAttribute($attribute_key, $attribute_value);
+//            }
+//        }
+//
+//        $dom->appendChild($element);
 
         //Check for Single Element only, otherwise assume multiple elements
         if (array_key_exists('testsuite', $data) && array_key_exists('@attributes', $data['testsuite']) && array_key_exists('testcase', $data['testsuite'])) {
+            $dom = new DOMDocument();
             $testsuite = $data['testsuite'];
 
             $element = $dom->createElement('testsuite', '');
@@ -67,8 +86,11 @@ function flatten_xml_element($dom, $dataArray)
             $element->appendChild($childElement);
             $dom->appendChild($element);
 
+            array_push($domArray, $dom);
+
         } else {
             foreach ($data['testsuite'] as $testsuite) {
+                $dom = new DOMDocument();
                 $element = $dom->createElement('testsuite', '');
 
                 // Add any @attributes
@@ -118,10 +140,11 @@ function flatten_xml_element($dom, $dataArray)
                 }
 
                 $dom->appendChild($element);
+                array_push($domArray, $dom);
             }
         }
     }
 
-    return $dom;
+    return $domArray;
 }
 ?>

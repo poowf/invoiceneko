@@ -6,6 +6,7 @@
 /.idea
 /.vagrant
 /public/perm_store/*
+/public/mix-manifest.json
 Homestead.json
 Homestead.yaml
 npm-debug.log
