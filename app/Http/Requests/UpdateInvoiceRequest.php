@@ -25,7 +25,7 @@ class UpdateInvoiceRequest extends FormRequest
     {
         return [
             'date' => 'required|date_format:"j F, Y"',
-            'netdays' => 'required|integer|min:1',
+            'netdays' => 'required|integer|min:0',
             'item_name.*' => 'required|string',
             'item_quantity.*' => 'required|integer|min:1',
             'item_price.*' => 'required|numeric',
