@@ -36,7 +36,7 @@
         </div>
         <div class="row">
             <div class="col s12">
-                <div class="card-panel" style="padding: 2px;">
+                <div class="card-panel search-panel">
                     <input id="search-input" class="card-input" name="search-input" type="search" placeholder="Search">
                 </div>
             </div>

@@ -460,7 +460,6 @@
 
             $('#change-history-container').on('init', function(event, slick, direction){
                 let height = $('#change-history-container').outerHeight() + 10;
-                console.log($(this).find('.single-history').css('height', height));
                 // left
             });
 

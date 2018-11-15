@@ -36,7 +36,7 @@
         </div>
         <div class="row">
             <div class="col s12">
-                <div class="card-panel" style="padding: 2px;">
+                <div class="card-panel search-panel">
                     <input id="search-input" class="card-input" name="search-input" type="search" placeholder="Search">
                 </div>
 
@@ -104,7 +104,6 @@
 @stop
 
 @section("scripts")
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.0/jquery.mark.min.js" integrity="sha256-1iYR6/Bs+CrdUVeCpCmb4JcYVWvvCUEgpSU7HS5xhsY=" crossorigin="anonymous"></script>
     <script type="text/javascript">
         "use strict";
         $(function() {

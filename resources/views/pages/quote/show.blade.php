@@ -311,8 +311,7 @@
         $(function() {
 
             $('#change-history-container').on('init', function(event, slick, direction){
-                let height = $('#details-panel').outerHeight();
-                console.log($(this).find('.single-history').css('height', height));
+                let height = $('#change-history-container').outerHeight() + 10;
                 // left
             });
 
