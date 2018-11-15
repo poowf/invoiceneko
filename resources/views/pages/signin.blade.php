@@ -11,9 +11,9 @@
             <div class="login-container">
                 <div class="card-panel pall30">
                     <div class="avatar">
-                        <img src="{{ asset('assets/img/avatar.png') }}" width="150" height="150">
+                        <img src="{{ asset('assets/img/avatar.png') }}">
                     </div>
-                    <hr><br>
+                    <hr>
                     <div class="form-box">
                         <form id="signin" method="post">
                             <div class="row">
@@ -33,7 +33,8 @@
                             <div class="rembme switch">
                                 <label>
                                     <input type="checkbox" name="remember">
-                                    <span class="lever"></span>Remember</label>
+                                    <span class="lever"></span>Remember
+                                </label>
                             </div>
                             {{ csrf_field() }}
                             <button id="signin-btn" class="btn btn-link waves-effect waves-light full-width" type="submit" name="action">Sign In</button>

@@ -305,6 +305,10 @@ mark {
 }
 
 /* Modifications for Elements */
+:root:root:root .input-field .helper-text::after
+{
+  top: -5px;
+}
 [type="radio"] + span {
   color: #000000;
 }
@@ -1094,20 +1098,24 @@ label.rbtn-label.invalid:after {
 .login-container {
   position: relative;
   width: 320px;
-  margin: 10% auto 10%;
+  margin: 5% auto 5%;
   text-align: center;
 }
 .login-container label {
   text-align: left;
 }
-.login-container .avatar{
-  width: 150px;
-  height: 150px;
-  margin: 10px auto 25px;
+.login-container .avatar {
+  width: 130px;
+  height: 130px;
+  margin: 0 auto 10px auto;
+}
+.login-container .avatar img {
+  width: 130px;
+  height: 130px;
 }
 .login-container .rembme {
   display: block;
-  margin-top: -30px;
+  margin-top: -20px;
   margin-left: -10px;
   text-align: left;
   padding: 20px 0;
@@ -1251,9 +1259,14 @@ label.rbtn-label.invalid:after {
   nav .nav-wrapper i {
     font-size: 30px;
   }
+
   .force-image-size {
     height: 170px;
     margin: auto;
+  }
+
+  form .row {
+    margin-bottom: 15px;
   }
 }
 
