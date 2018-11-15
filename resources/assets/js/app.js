@@ -31,13 +31,14 @@ const app = new Vue({
 window.$ = window.jQuery = require('jquery');
 window.Unicorn = require('./unicorn.js');
 window.LogRocket = require('logrocket');
+// window.Mark = require('mark.js');
 // window.Sentry = require('sentry/node');
 // window.Rollbar = require('rollbar');
 //window.Laravel = { csrfToken: $('meta[name=csrf-token]').attr("content") };
 
+require('../../../node_modules/mark.js/dist/jquery.mark.js');
 require('materialize-css');
 require('selectize');
 require('parsleyjs');
 require('slick-carousel');
-require('mark.js');
 require('trumbowyg');

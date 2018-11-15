@@ -32,16 +32,17 @@ class Unicorn {
     static initPageSearch(selector, selector_context)
     {
         let inputBox = $(selector);
-        let context = $(selector_context);
+        let instance = $(selector_context);
+        // let context = document.querySelector(selector_context);
+        // let instance = new Mark(context);
 
         inputBox.on("input", function() {
             let term = $(this).val();
-            context.unmark().show();
+            instance.unmark().show();
             if (term != "") {
-                console.log(term);
-                context.mark(term, {
+                instance.mark(term, {
                     done: function() {
-                        context.not(":has(mark)").hide();
+                        instance.not(":has(mark)").hide();
                     }
                 });
             }

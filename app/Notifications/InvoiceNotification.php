@@ -14,7 +14,7 @@ class InvoiceNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public $invoice;
+    protected $invoice;
 
     /**
      * Create a new notification instance.
