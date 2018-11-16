@@ -11,6 +11,9 @@
 |
 */
 
+
+use Silber\Bouncer\BouncerFacade as Bouncer;
+
 Route::get('/invoice/view', 'InvoiceController@showwithtoken')->name('invoice.token');
 Route::get('/quote/view', 'QuoteController@showwithtoken')->name('quote.token');
 
