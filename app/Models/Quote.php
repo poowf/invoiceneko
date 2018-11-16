@@ -272,10 +272,10 @@ class Quote extends Model
         $quote = $this;
         $pdf = PDF::loadView('pdf.quote', compact('quote'))
             ->setPaper('a4')
-            ->setOption('margin-bottom', '0mm')
-            ->setOption('margin-top', '0mm')
-            ->setOption('margin-right', '0mm')
-            ->setOption('margin-left', '0mm');
+            ->setOption('margin-bottom', '10mm')
+            ->setOption('margin-top', '10mm')
+            ->setOption('margin-right', '10mm')
+            ->setOption('margin-left', '10mm');
 
         return $pdf;
     }
