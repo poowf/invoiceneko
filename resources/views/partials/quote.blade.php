@@ -1,134 +1,143 @@
-<!DOCTYPE html>
-<html lang="{{ config('app.locale') }}" style="font-family: sans-serif; overflow-x: hidden;">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <style>
-            .keep-together {
-                page-break-inside: avoid;
-            }
+@section("quote")
+    <style>
+        .quote {
+            font-size: 1.1em;
+            line-height: 1.5em;
+        }
 
-            .break-before {
-                page-break-before: always;
-            }
+        .quote table {
+            width: 100%;
+            line-height: inherit;
+            text-align: left;
+        }
 
-            .break-after {
-                page-break-after: always;
+        .quote table tr {
+            border: 0;
+        }
+
+        .quote table td {
+            padding: 5px;
+            vertical-align: top;
+        }
+
+        .quote table tr.company-information td:nth-child(2) {
+            text-align: center;
+        }
+
+        .quote table tr.information td:nth-child(2) {
+            text-align: center;
+        }
+
+        .quote table th {
+            color: #8c8c8c;
+            padding: 10px 5px;
+        }
+
+        .quote table th:nth-child(3) {
+            text-align: right;
+        }
+
+        .quote table tr td:nth-child(3) {
+            text-align: right;
+        }
+
+        .quote table tr.top table td {
+            padding-bottom: 20px;
+        }
+
+        .quote table tr table td span {
+            color: #8c8c8c;
+            display: block;
+        }
+
+        .quote table tr.information table table {
+            float: left;
+        }
+
+        .quote table tr.information table table tbody {
+            float: right;
+        }
+
+        .quote table tr.information table table td {
+            padding: 0;
+        }
+
+        .quote table tr.information table td {
+            padding-bottom: 20px;
+        }
+
+        .quote table tr.company-logo td {
+            text-align: center;
+        }
+
+        .quote table tr.details td {
+            padding: 20px 5px;
+        }
+
+        .quote .bottom-line {
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .quote .left-line {
+            border-left: 2px solid #e0e0e0;
+        }
+
+        .quote .summary, .quote .amount, .quote .quantity {
+            color: #8c8c8c;
+        }
+
+        .quote .total-value {
+            color: #4da6a6;
+        }
+
+        .quote-bold {
+            color: #8c8c8c;
+            font-weight: bold;
+        }
+
+        .quote-text-larger {
+            font-size: 1.3em;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .quote .left-line {
+                border: 0;
             }
 
             .quote {
-                font-size: 1.1em;
-                line-height: 1.5em;
-            }
-
-            .quote table {
-                width: 100%;
-                line-height: inherit;
-                text-align: left;
-                border: 0;
-            }
-
-            .quote table table {
-                border: 0;
-            }
-
-            .quote table tr {
-                border: 0;
-            }
-
-            .quote table td {
-                padding: 5px;
-                vertical-align: top;
-            }
-
-            .quote table tr.company-information td:nth-child(2) {
-                text-align: center;
-            }
-
-            .quote table tr.information td:nth-child(2) {
-                text-align: center;
-            }
-
-            .quote table th {
-                color: #8c8c8c;
-                padding: 10px 5px;
-            }
-
-            .quote table th:nth-child(3) {
-                text-align: right;
-            }
-
-            .quote table tr td:nth-child(3) {
-                text-align: right;
+                padding: 20px;
             }
 
             .quote table tr.top table td {
-                padding-bottom: 20px;
-            }
-
-            .quote table tr table td span {
-                color: #8c8c8c;
+                width: 100%;
                 display: block;
-            }
-
-            .quote table tr.information table table {
-                float: left;
-            }
-
-            .quote table tr.information table table tbody {
-                float: right;
-            }
-
-            .quote table tr.information table table td {
-                padding: 0;
-            }
-
-            .quote table tr.information table td {
-                padding-bottom: 20px;
-            }
-
-            .quote table tr.company-logo td {
                 text-align: center;
             }
 
-            .quote table tr.details td {
-                padding: 20px 5px;
+            .quote table tr.information table td {
+                width: 100%;
+                display: block;
+                text-align: center;
             }
 
-            .quote table tr.details td p {
-                margin: 0;
-                color: #8c8c8c;
+            .quote table tr.information table table {
+                float: none;
             }
 
-            .quote .bottom-line {
-                border-bottom: 1px solid #e0e0e0;
+            .quote table tr.information table table tbody {
+                float: none;
             }
 
-            .quote .left-line {
-                border-left: 2px solid #e0e0e0;
+            .quote table tr.company-information table td {
+                width: 100%;
+                display: block;
+                text-align: center;
             }
-
-            .quote .summary, .quote .amount, .quote .quantity {
-                color: #8c8c8c;
-            }
-
-            .quote .total-value {
-                color: #4da6a6;
-            }
-
-            .quote-bold {
-                color: #8c8c8c;
-                font-weight: bold;
-            }
-
-            .quote-text-larger {
-                font-size: 1.3em;
-            }
-        </style>
-    </head>
-    <body style="margin: 0; font-family: 'Roboto', Arial, sans-serif;font-size: 13px;">
-        <div class="quote">
+        }
+    </style>
+    <div class="col s12 l8">
+        <h3>Quote</h3>
+        <div class="quote card-panel">
             <table cellpadding="0" cellspacing="0">
                 <tr class="top">
                     <td>
@@ -196,7 +205,7 @@
                         <table cellpadding="0" cellspacing="0" style="border-collapse: collapse; border-spacing: 0; background-color: transparent;">
                             <tbody>
                                 <tr class="bottom-line">
-                                    <th width="800">
+                                    <th width="300">
                                         Description
                                     </th>
                                     <th width="160">
@@ -208,7 +217,7 @@
                                 </tr>
                                 @foreach($quote->items as $key => $item)
                                     <tr class="bottom-line">
-                                        <td class="description" width="800">
+                                        <td class="description" width="300">
                                             <span class="quote-bold">{{ $item->name }}</span>
                                             <p>{!! $item->description !!}</p>
                                         </td>
@@ -221,7 +230,7 @@
                                     </tr>
                                 @endforeach
                                 <tr>
-                                    <td width="800"></td>
+                                    <td width="300"></td>
                                     <td class="summary bottom-line" width="160">
                                         Subtotal
                                     </td>
@@ -230,7 +239,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td width="800"></td>
+                                    <td width="300"></td>
                                     <td class="summary bottom-line" width="160">
                                         Tax ({{ $quote->company->settings->tax ?? 0 }}%)
                                     </td>
@@ -239,7 +248,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td width="800"></td>
+                                    <td width="300"></td>
                                     <td class="summary bottom-line total quote-bold" width="160">
                                         Total
                                     </td>
@@ -269,17 +278,35 @@
                         </table>
                     </td>
                 </tr>
+
+                <tr class="terms">
+                    <td>
+                        <table>
+                            <tr>
+                                <td><span>Terms & Conditions</span></td>
+                            </tr>
+                            <tr>
+                                <td>{!! $quote->company->settings->quote_conditions !!}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
             </table>
-            <div class="quote break-before">
-                <table cellpadding="0" cellspacing="0">
-                    <tr>
-                        <td><span>Terms & Conditions</span></td>
-                    </tr>
-                    <tr>
-                        <td>{!! $quote->company->settings->quote_conditions !!}</td>
-                    </tr>
-                </table>
+        </div>
+        <div class="row quote-footer">
+            <div class="col s12 center">
+                <a class="btn btn-lg btn-space btn-default" href="{{ route('quote.download', [ 'quote' => $quote->id] ) }}">
+                    Save PDF
+                </a>
+                <a class="btn btn-lg btn-space btn-default" href="{{ route('quote.printview', [ 'quote' => $quote->id] ) }}">
+                    Print
+                </a>
+                {{--
+                <a class="btn btn-lg btn-space btn-primary" style="-webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05); border: 1px solid transparent; color: #fff; background-color: #4da6a6; border-color: #4da6a6; padding: 0 12px; line-height: 38px; border-radius: 3px; font-weight: 700; margin-right: 5px; margin-bottom: 5px; min-width: 96px; font-size: 14px;">
+                    Pay now
+                </a>
+                --}}
             </div>
         </div>
-    </body>
-</html>
+    </div>
+@show

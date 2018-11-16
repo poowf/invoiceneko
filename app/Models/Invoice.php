@@ -395,10 +395,10 @@ class Invoice extends Model
         $invoice = $this;
         $pdf = PDF::loadView('pdf.invoice', compact('invoice'))
             ->setPaper('a4')
-            ->setOption('margin-bottom', '0mm')
-            ->setOption('margin-top', '0mm')
-            ->setOption('margin-right', '0mm')
-            ->setOption('margin-left', '0mm');
+            ->setOption('margin-bottom', '10mm')
+            ->setOption('margin-top', '10mm')
+            ->setOption('margin-right', '10mm')
+            ->setOption('margin-left', '10mm');
 
         return $pdf;
     }
