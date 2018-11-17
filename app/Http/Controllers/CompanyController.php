@@ -53,16 +53,19 @@ class CompanyController extends Controller
             $company->fill($request->all());
             $company->user_id = $request->session()->pull('user_id');
             $company->timezone = 'UTC';
-            if($request->has('country_code') && !$request->has('timezone'))
+            if($request->has('country_code') && !is_null($request->input('country_code')))
             {
-                $timezone = $this->countries
-                    ->where('iso_3166_1_alpha2', $request->input('country_code'))
-                    ->first()
-                    ->hydrate('timezones')
-                    ->timezones
-                    ->first()
-                    ->zone_name;
-                $company->timezone = $timezone;
+                if($request->has('timezone') && is_null($request->input('timezone')))
+                {
+                    $timezone = $this->countries
+                        ->where('iso_3166_1_alpha2', $request->input('country_code'))
+                        ->first()
+                        ->hydrate('timezones')
+                        ->timezones
+                        ->first()
+                        ->zone_name;
+                    $company->timezone = $timezone;
+                }
             }
             $company->save();
 
@@ -175,16 +178,19 @@ class CompanyController extends Controller
 
 
         $company->fill($request->all());
-        if(!is_null($company->country_code) && is_null($company->timezone))
+        if($request->has('country_code') && !is_null($request->input('country_code')))
         {
-            $timezone = $this->countries
-                ->where('iso_3166_1_alpha2', $request->input('country_code'))
-                ->first()
-                ->hydrate('timezones')
-                ->timezones
-                ->first()
-                ->zone_name;
-            $company->timezone = $timezone;
+            if($request->has('timezone') && is_null($request->input('timezone')))
+            {
+                $timezone = $this->countries
+                    ->where('iso_3166_1_alpha2', $request->input('country_code'))
+                    ->first()
+                    ->hydrate('timezones')
+                    ->timezones
+                    ->first()
+                    ->zone_name;
+                $company->timezone = $timezone;
+            }
         }
         elseif (is_null($company->timezone))
         {
