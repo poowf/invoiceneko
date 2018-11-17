@@ -96,6 +96,10 @@ Route::group(['middleware' => ['auth', '2fa']], function() {
         Route::post('/company/requests/{companyuserrequest}/approve', 'CompanyUserRequestController@approve')->name('company.requests.approve');
         Route::post('/company/requests/{companyuserrequest}/reject', 'CompanyUserRequestController@reject')->name('company.requests.reject');
 
+        Route::get('/company/roles', 'CompanyRoleController@index')->name('company.roles.index');
+        Route::get('/company/roles/create', 'CompanyRoleController@create')->name('company.roles.create');
+        Route::get('/company/roles/{role}/edit', 'CompanyRoleController@edit')->name('company.roles.edit');
+
         /* Migration */
         Route::get('/migration/', 'DataMigrationController@create')->name('migration.create');
         Route::post('/migration/import/contact', 'DataMigrationController@storecontact')->name('migration.import.contact');
