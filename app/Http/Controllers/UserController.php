@@ -67,6 +67,20 @@ class UserController extends Controller
         $user = new User;
         $user->fill($request->all());
         $user->password = $request->input('password');
+        if($request->has('country_code') && !is_null($request->input('country_code')))
+        {
+            if($request->has('timezone') && is_null($request->input('timezone')))
+            {
+                $timezone = $this->countries
+                    ->where('iso_3166_1_alpha2', $request->input('country_code'))
+                    ->first()
+                    ->hydrate('timezones')
+                    ->timezones
+                    ->first()
+                    ->zone_name;
+                $user->timezone = $timezone;
+            }
+        }
         $user->save();
 
         if ($request->query->has('token'))
@@ -156,6 +170,21 @@ class UserController extends Controller
 
         if (Hash::check($request->input('password'), $user->password)) {
             $user->fill($request->all());
+
+            if($request->has('country_code') && !is_null($request->input('country_code')))
+            {
+                if($request->has('timezone') && is_null($request->input('timezone')))
+                {
+                    $timezone = $this->countries
+                        ->where('iso_3166_1_alpha2', $request->input('country_code'))
+                        ->first()
+                        ->hydrate('timezones')
+                        ->timezones
+                        ->first()
+                        ->zone_name;
+                    $user->timezone = $timezone;
+                }
+            }
 
             if ($request->has('newpassword') && $request->input('newpassword') != null) {
                 $newpass = $request->input('newpassword');
