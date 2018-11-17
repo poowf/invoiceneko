@@ -4,6 +4,7 @@
             <a href="{{ route('company.show') }}" class="collection-item {{ Ekko::isActiveRoute('company.show') }}">Company</a>
             @can('owner', \App\Models\Company::class)
                 <a href="{{ route('company.edit') }}" class="collection-item {{ Ekko::isActiveRoute('company.edit') }}">Details</a>
+                <a href="{{ route('company.roles.index') }}" class="collection-item {{ Ekko::isActiveRoute('company.roles.*') }}">Roles</a>
                 <a href="{{ route('company.settings.edit') }}" class="collection-item {{ Ekko::isActiveRoute('company.settings.edit') }}">Settings</a>
                 <a href="{{ route('company.address.edit') }}" class="collection-item {{ Ekko::isActiveRoute('company.address.edit') }}">Address</a>
                 <a href="{{ route('company.owner.edit') }}" class="collection-item {{ Ekko::isActiveRoute('company.owner.edit') }}">Owner</a>

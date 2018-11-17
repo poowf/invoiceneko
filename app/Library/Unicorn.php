@@ -8,6 +8,7 @@ use Recurr\Frequency;
 use Recurr\Rule;
 use Validator;
 use Storage;
+use Silber\Bouncer\BouncerFacade as Bouncer;
 
 class Unicorn
 {
@@ -88,5 +89,61 @@ class Unicorn
         }
 
         return $rule->getString();
+    }
+
+    public static function createRoles($scopeId = null)
+    {
+        Bouncer::scope()->to($scopeId);
+
+        $gadmin = Bouncer::role()->firstOrCreate([
+            'name' => 'globaladmin',
+            'title' => 'Global Administrator',
+        ]);
+
+        $admin = Bouncer::role()->firstOrCreate([
+            'name' => 'admin',
+            'title' => 'Administrator',
+        ]);
+
+        Bouncer::allow($gadmin)->everything();
+    }
+
+    public static function createPermissions($scopeId = null)
+    {
+        self::createCrudPermissions($scopeId, 'Invoice');
+        self::createCrudPermissions($scopeId, 'Quote');
+        self::createCrudPermissions($scopeId, 'Payment');
+        self::createCrudPermissions($scopeId, 'Client');
+        self::createCrudPermissions($scopeId, 'Company');
+        self::createCrudPermissions($scopeId, 'Company Address');
+        self::createCrudPermissions($scopeId, 'Company Settings');
+        self::createCrudPermissions($scopeId, 'Company User Requests');
+        self::createCrudPermissions($scopeId, 'Role');
+        self::createCrudPermissions($scopeId, 'User');
+    }
+
+    public function createCrudPermissions($scopeId, $modelName)
+    {
+        Bouncer::scope()->to($scopeId);
+
+        Bouncer::ability()->firstOrCreate([
+            'name' => 'view-' . str_slug(strtolower($modelName)),
+            'title' => 'View ' . $modelName,
+        ]);
+
+        Bouncer::ability()->firstOrCreate([
+            'name' => 'create-' . str_slug(strtolower($modelName)),
+            'title' => 'Create ' . $modelName,
+        ]);
+
+        Bouncer::ability()->firstOrCreate([
+            'name' => 'update-' . str_slug(strtolower($modelName)),
+            'title' => 'Update ' . $modelName,
+        ]);
+
+        Bouncer::ability()->firstOrCreate([
+            'name' => 'delete-' . str_slug(strtolower($modelName)),
+            'title' => 'Delete ' . $modelName,
+        ]);
     }
 }

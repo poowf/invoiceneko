@@ -34,8 +34,6 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('quote', 'App\Models\Quote');
         Route::model('quoteitem', 'App\Models\QuoteItem');
         Route::model('payment', 'App\Models\Payment');
-        Route::model('permission', 'App\Models\Permission');
-        Route::model('role', 'App\Models\Role');
         Route::model('user', 'App\Models\User');
 
 

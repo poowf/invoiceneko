@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
+use App\Library\Poowf\Unicorn;
 use App\Traits\UniqueSlug;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Silber\Bouncer\Database\HasRolesAndAbilities;
-//use Silber\Bouncer\BouncerFacade as Bouncer;
-use Bouncer;
+use Silber\Bouncer\BouncerFacade as Bouncer;
 
 class Company extends Model
 {
@@ -55,20 +55,9 @@ class Company extends Model
         static::created(function ($company) {
             $settings = new CompanySettings;
             $company->settings()->save($settings);
-
-            Bouncer::scope()->to($company->id);
-
-            $gadmin = Bouncer::role()->firstOrCreate([
-                'name' => 'globaladmin',
-                'title' => 'Global Administrator',
-            ]);
-
-            $admin = Bouncer::role()->firstOrCreate([
-                'name' => 'admin',
-                'title' => 'Administrator',
-            ]);
-
-            Bouncer::allow($gadmin)->everything();
+            Unicorn::createPermissions($company->id);
+            Unicorn::createRoles($company->id);
+            Bouncer::assign('globaladmin')->to($company->owner);
         });
     }
 
