@@ -15,6 +15,11 @@
                 <h3>Roles</h3>
             </div>
             <div class="col s6 right mtop30">
+                @if($roles->isNotEmpty())
+                    @can('owner', \App\Models\Company::class)
+                        <a href="{{ route('company.roles.create') }}" class="btn btn-link waves-effect waves-dark">Add Role</a>
+                    @endcan
+                @endif
             </div>
         </div>
         <div class="row">
@@ -41,6 +46,10 @@
                                             <td>{{ $role->title }}</td>
                                             @can('owner', \App\Models\Company::class)
                                                 <td>
+                                                    @if($role->name != 'global-administrator')
+                                                    <a href="{{ route('company.roles.edit', [ 'role' => $role->name ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Role"><i class="material-icons">mode_edit</i></a>
+                                                    <a href="#" data-id="{{ $role->title }}" class="role-delete-btn tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Role"><i class="material-icons">delete</i></a>
+                                                    @endif
                                                 </td>
                                             @endcan
                                         </tr>
@@ -62,12 +71,26 @@
             </div>
         </div>
     </div>
+    <div id="delete-confirmation" class="modal">
+        <div class="modal-content">
+            <p>Delete Role?</p>
+        </div>
+        <div class="modal-footer">
+            <form id="delete-role-form" method="post" class="null-form">
+                {{ method_field('DELETE') }}
+                {{ csrf_field() }}
+                <button class="modal-action waves-effect black-text waves-green btn-flat btn-deletemodal role-confirm-delete-btn" type="submit">Delete</button>
+            </form>
+            <a href="javascript:;" class=" modal-action modal-close waves-effect black-text waves-red btn-flat btn-deletemodal">Cancel</a>
+        </div>
+    </div>
 @stop
 
 @section("scripts")
     <script type="text/javascript">
         "use strict";
         $(function() {
+            Unicorn.initConfirmationTrigger('#role-container', '.role-delete-btn', 'company/roles', 'destroy', '#delete-confirmation', '#delete-role-form');
         });
     </script>
 @stop

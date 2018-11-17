@@ -98,7 +98,10 @@ Route::group(['middleware' => ['auth', '2fa']], function() {
 
         Route::get('/company/roles', 'CompanyRoleController@index')->name('company.roles.index');
         Route::get('/company/roles/create', 'CompanyRoleController@create')->name('company.roles.create');
+        Route::post('/company/roles/create', 'CompanyRoleController@store')->name('company.roles.store');
         Route::get('/company/roles/{role}/edit', 'CompanyRoleController@edit')->name('company.roles.edit');
+        Route::patch('/company/roles/{role}/edit', 'CompanyRoleController@update')->name('company.roles.update');
+        Route::delete('/company/roles/{role}/destroy', 'CompanyRoleController@destroy')->name('company.roles.destroy');
 
         /* Migration */
         Route::get('/migration/', 'DataMigrationController@create')->name('migration.create');

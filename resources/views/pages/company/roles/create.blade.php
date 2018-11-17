@@ -29,19 +29,24 @@
                             </div>
                         </div>
                         <div class="row">
-                            @foreach($permissions as $permission)
-                                <div class="input-field col s2">
-                                    <label for="notify" class="label-validation">{{ $permission-> }}</label>
+                            @for($i = 0; $i < $permissions->count(); $i++)
+                                @if($permissions[$i]->type != $permissions[$i - 1]->type)
+                                    <div class="col s12 mtop20">
+                                        <h6>{{ $permissions[$i]->type }}</h6>
+                                    </div>
+                                @endif
+                                <div class="input-field col s6 m3">
+                                    <label for="permissions[]" class="label-validation">{{ $permissions[$i]->title }}</label>
                                     <div class="switch mtop20">
-                                        <label class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Automatically send Invoice to customers on Invoice Date">
-                                            No
-                                            <input id="notify" name="notify" type="checkbox">
+                                        <label>
+                                            Deny
+                                            <input id="permissions[]" name="permissions[]" type="checkbox" value="{{ $permissions[$i]->name }}">
                                             <span class="lever"></span>
-                                            Yes
+                                            Allow
                                         </label>
                                     </div>
                                 </div>
-                            @endforeach
+                            @endfor
                         </div>
                     </div>
                     <div class="row">
