@@ -96,16 +96,16 @@ class Unicorn
         Bouncer::scope()->to($scopeId);
 
         $gadmin = Bouncer::role()->firstOrCreate([
-            'name' => 'globaladmin',
+            'name' => str_slug('Global Administrator'),
             'title' => 'Global Administrator',
         ]);
 
         $admin = Bouncer::role()->firstOrCreate([
-            'name' => 'admin',
+            'name' => str_slug('Administrator'),
             'title' => 'Administrator',
         ]);
 
-        Bouncer::allow($gadmin)->everything();
+        Bouncer::allow('global-administrator')->everything();
     }
 
     public static function createPermissions($scopeId = null)

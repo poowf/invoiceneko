@@ -19,7 +19,7 @@ class CompanyRoleController extends Controller
 
         $user = $company->owner;
 
-        $roles = $user->getRoles();
+//        $roles = $user->getRoles();
 
         $roles = Bouncer::role()->all();
 
@@ -35,9 +35,7 @@ class CompanyRoleController extends Controller
     {
         $company = auth()->user()->company;
 
-        $permissions = Bouncer::ability()->all();
-
-        dd($permissions);
+        $permissions = self::getFormattedPermissions();
 
         return view('pages.company.roles.create', compact('permissions'));
     }
@@ -50,7 +48,21 @@ class CompanyRoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $title = $request->input('title');
+        $permissions = $request->input('permissions');
+        $role = Bouncer::role()->firstOrCreate([
+            'name' => str_slug($title),
+            'title' => $title,
+        ]);
+
+        if(!empty($permissions)) {
+            foreach ($permissions as $permission) {
+                Bouncer::allow($role)->to($permission);
+            }
+        }
+
+        flash("The Role has been created", 'success');
+        return redirect()->route('company.roles.index');
     }
 
     /**
@@ -72,11 +84,18 @@ class CompanyRoleController extends Controller
      */
     public function edit($rolename)
     {
-        $role = Bouncer::role()->where('name', $rolename)->first();
+        if($rolename != 'global-administrator')
+        {
+            $role = Bouncer::role()->where('name', $rolename)->first();
+            $rolePermissions = $role->getAbilities();
+            $permissions = self::getFormattedPermissions();
 
-        dd($role);
-
-        return view('pages.company.roles.edit', ['role' => $role]);
+            return view('pages.company.roles.edit', compact('role', 'rolePermissions', 'permissions'));
+        }
+        else
+        {
+            return redirect()->route('company.roles.index');
+        }
     }
 
     /**
@@ -86,9 +105,41 @@ class CompanyRoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $rolename)
     {
-        //
+        if($rolename != 'global-administrator')
+        {
+            $title = $request->input('title');
+            $permissions = $request->input('permissions');
+            $role = Bouncer::role()->where('name', $rolename)->first();
+            $role->title = $title;
+            $role->name = str_slug($title);
+            $role->save();
+
+            $rolePermissions = $role->getAbilities();
+
+    //        $role->abilities()->sync($permissions);
+
+            foreach($rolePermissions as $rolePermission)
+            {
+                Bouncer::disallow($role)->to($rolePermission);
+            }
+
+            if(!empty($permissions))
+            {
+                foreach ($permissions as $permission)
+                {
+                    Bouncer::allow($role)->to($permission);
+                }
+            }
+
+            flash("The Role has been updated", 'success');
+            return redirect()->route('company.roles.index');
+        }
+        else
+        {
+            return redirect()->route('company.roles.index');
+        }
     }
 
     /**
@@ -97,8 +148,31 @@ class CompanyRoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($rolename)
     {
-        //
+        $role = Bouncer::role()->where('name', $rolename)->first();
+        $role->delete();
+
+        flash("The Role has been deleted", 'success');
+        return redirect()->route('company.roles.index');
+    }
+
+    public function getFormattedPermissions()
+    {
+        $permissions = Bouncer::ability()->all();
+
+        foreach($permissions as $key => $permission)
+        {
+            if($permission->name === '*')
+            {
+                $permission->title = 'All Permissions';
+                continue;
+            }
+
+            $type = ucwords(substr(str_replace('-', ' ', $permission->name), strpos($permission->name, "-") + 1));
+            $permission->type = $type;
+        }
+
+        return $permissions;
     }
 }

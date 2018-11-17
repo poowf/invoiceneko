@@ -15,8 +15,7 @@ yarn-error.log
 .env.dusk.local
 .env.testing
 .phpunit.result.cache
-TEST-phpunit-junit.xml
-TEST-dusk-junit.xml
+TEST-*.xml
 
 .DS_Store
 .AppleDouble
