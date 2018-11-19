@@ -23,6 +23,9 @@ class CompanyRoleController extends Controller
 
         $roles = Bouncer::role()->all();
 
+//        Unicorn::createRoleAndPermissions($company->id);
+//        Bouncer::assign('global-administrator')->to($company->owner);
+
         return view('pages.company.roles.index', compact('roles'));
     }
 
@@ -68,8 +71,8 @@ class CompanyRoleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     * @return void
      */
     public function show($id)
     {
@@ -101,8 +104,8 @@ class CompanyRoleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param $rolename
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $rolename)
@@ -145,7 +148,7 @@ class CompanyRoleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param $rolename
      * @return \Illuminate\Http\Response
      */
     public function destroy($rolename)

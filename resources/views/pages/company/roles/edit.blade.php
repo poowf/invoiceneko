@@ -29,24 +29,26 @@
                             </div>
                         </div>
                         <div class="row">
-                            @for($i = 0; $i < $permissions->count(); $i++)
-                                @if($permissions[$i]->type != $permissions[$i - 1]->type)
-                                    <div class="col s12 mtop20">
-                                        <h6>{{ $permissions[$i]->type }}</h6>
+                            @if($permissions->isNotEmpty())
+                                @for($i = 0; $i < $permissions->count(); $i++)
+                                    @if($i != 0  && $permissions[$i]->type != $permissions[$i - 1]->type)
+                                        <div class="col s12 mtop20">
+                                            <h6>{{ $permissions[$i]->type }}</h6>
+                                        </div>
+                                    @endif
+                                    <div class="input-field col s6 m3">
+                                        <label for="permissions[]" class="label-validation">{{ $permissions[$i]->title }}</label>
+                                        <div class="switch mtop20">
+                                            <label>
+                                                Deny
+                                                <input id="permissions[]" name="permissions[]" type="checkbox" value="{{ $permissions[$i]->name }}" @foreach($rolePermissions as $rolePermission) @if($permissions[$i]->name == $rolePermission->name) checked @endif @endforeach>
+                                                <span class="lever"></span>
+                                                Allow
+                                            </label>
+                                        </div>
                                     </div>
-                                @endif
-                                <div class="input-field col s6 m3">
-                                    <label for="permissions[]" class="label-validation">{{ $permissions[$i]->title }}</label>
-                                    <div class="switch mtop20">
-                                        <label>
-                                            Deny
-                                            <input id="permissions[]" name="permissions[]" type="checkbox" value="{{ $permissions[$i]->name }}" @foreach($rolePermissions as $rolePermission) @if($permissions[$i]->name == $rolePermission->name) checked @endif @endforeach>
-                                            <span class="lever"></span>
-                                            Allow
-                                        </label>
-                                    </div>
-                                </div>
-                            @endfor
+                                @endfor
+                            @endif
                         </div>
                     </div>
                     <div class="row">

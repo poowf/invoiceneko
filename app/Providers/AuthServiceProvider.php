@@ -23,8 +23,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Models\QuoteItem' => 'App\Policies\QuoteItemPolicy',
         'App\Models\Quote' => 'App\Policies\QuotePolicy',
         'App\Models\Payment' => 'App\Policies\PaymentPolicy',
-        'App\Models\Permission' => 'App\Policies\PermissionPolicy',
-        'App\Models\Role' => 'App\Policies\RolePolicy',
+        'Silber\Bouncer\Database\Role' => 'App\Policies\RolePolicy',
         'App\Models\User' => 'App\Policies\UserPolicy',
     ];
 

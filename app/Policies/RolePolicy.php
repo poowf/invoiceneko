@@ -16,21 +16,25 @@ class RolePolicy
 
     public function before($user, $ability)
     {
-//        if ($user->isSuperAdmin()) {
-//            return true;
-//        }
+        if ($user->isAn('global-administrator')) {
+            return true;
+        }
+    }
+
+    public function index(User $user)
+    {
+        return $user->can('view-role');
     }
 
     /**
      * Determine whether the user can view the role.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\User $user
      * @return mixed
      */
-    public function view(User $user, Role $role)
+    public function view(User $user)
     {
-        //
+        return $user->can('view-role');
     }
 
     /**
@@ -41,30 +45,28 @@ class RolePolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->can('create-role');
     }
 
     /**
      * Determine whether the user can update the role.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\User $user
      * @return mixed
      */
-    public function update(User $user, Role $role)
+    public function update(User $user)
     {
-        //
+        return $user->can('update-role');
     }
 
     /**
      * Determine whether the user can delete the role.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\User $user
      * @return mixed
      */
-    public function delete(User $user, Role $role)
+    public function delete(User $user)
     {
-        //
+        return $user->can('delete-role');
     }
 }

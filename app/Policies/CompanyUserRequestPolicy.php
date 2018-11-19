@@ -22,21 +22,20 @@ class CompanyUserRequestPolicy
 
     public function before($user, $ability)
     {
-//        if ($user->isSuperAdmin()) {
-//            return true;
-//        }
+        if ($user->isAn('global-administrator')) {
+            return true;
+        }
     }
 
     /**
      * Determine whether the user can view the companyUserRequest.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\CompanyUserRequest  $companyUserRequest
+     * @param  \App\Models\User $user
      * @return mixed
      */
-    public function view(User $user, CompanyUserRequest $companyUserRequest)
+    public function view(User $user)
     {
-        return $user->isOfCompanyUserRequest($companyUserRequest->id);
+        return $user->can('view-company-user-requests');
     }
 
     /**
@@ -47,30 +46,28 @@ class CompanyUserRequestPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->can('create-company-user-requests');
     }
 
     /**
      * Determine whether the user can update the companyUserRequest.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\CompanyUserRequest  $companyUserRequest
+     * @param  \App\Models\User $user
      * @return mixed
      */
-    public function update(User $user, CompanyUserRequest $companyUserRequest)
+    public function update(User $user)
     {
-        return $companyUserRequest->isOwner($user);
+        return $user->can('update-company-user-requests');
     }
 
     /**
      * Determine whether the user can delete the companyUserRequest.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\CompanyUserRequest  $companyUserRequest
+     * @param  \App\Models\User $user
      * @return mixed
      */
-    public function delete(User $user, CompanyUserRequest $companyUserRequest)
+    public function delete(User $user)
     {
-        return $companyUserRequest->isOwner($user);
+        return $user->can('delete-company-user-requests');
     }
 }

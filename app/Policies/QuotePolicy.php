@@ -16,9 +16,14 @@ class QuotePolicy
 
     public function before($user, $ability)
     {
-//        if ($user->isSuperAdmin()) {
-//            return true;
-//        }
+        if ($user->isAn('global-administrator')) {
+            return true;
+        }
+    }
+
+    public function index(User $user)
+    {
+        return $user->can('view-quote');
     }
 
     /**
@@ -30,7 +35,7 @@ class QuotePolicy
      */
     public function view(User $user, Quote $quote)
     {
-        return $user->isOfCompany($quote->company_id);
+        return $user->can('view-quote');
     }
 
     /**
@@ -41,7 +46,7 @@ class QuotePolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->can('create-quote');
     }
 
     /**
@@ -53,7 +58,7 @@ class QuotePolicy
      */
     public function update(User $user, Quote $quote)
     {
-        return $user->isOfCompany($quote->company_id);
+        return $user->can('update-quote');
     }
 
     /**
@@ -65,6 +70,6 @@ class QuotePolicy
      */
     public function delete(User $user, Quote $quote)
     {
-        return $user->isOfCompany($quote->company_id);
+        return $user->can('delete-quote');
     }
 }
