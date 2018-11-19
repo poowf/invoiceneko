@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateRoleRequest;
+use App\Http\Requests\UpdateRoleRequest;
 use App\Library\Poowf\Unicorn;
 use Illuminate\Http\Request;
 use Silber\Bouncer\BouncerFacade as Bouncer;
+use Silber\Bouncer\Database\Role;
 
 class CompanyRoleController extends Controller
 {
@@ -49,14 +52,14 @@ class CompanyRoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateRoleRequest $request)
     {
         $title = $request->input('title');
         $permissions = $request->input('permissions');
-        $role = Bouncer::role()->firstOrCreate([
-            'name' => str_slug($title),
-            'title' => $title,
-        ]);
+        $role = Bouncer::role();
+        $role->title = $title;
+        $role->name = str_slug($title);
+        $role->save();
 
         if(!empty($permissions)) {
             foreach ($permissions as $permission) {
@@ -108,7 +111,7 @@ class CompanyRoleController extends Controller
      * @param $rolename
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $rolename)
+    public function update(UpdateRoleRequest $request, $rolename)
     {
         if($rolename != 'global-administrator')
         {
