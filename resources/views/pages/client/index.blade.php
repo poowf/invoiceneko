@@ -34,7 +34,9 @@
             </div>
 
             <div class="col s6 right mtop30">
+                @can('create', \App\Models\Client::class)
                 <a href="{{ route('client.create') }}" class="btn waves-effect waves-dark">Create</a>
+                @endcan
             </div>
         </div>
         <div class="row">
@@ -55,7 +57,7 @@
                                         <img class="activator responsive-img" src="{{ \App\Library\Poowf\Unicorn::getStorageFile($client->logo, [250,250]) }}">
                                     </div>
                                     <div class="card-content">
-                                        <span class="card-title activator grey-text text-darken-4">@if($client->nickname) {{ $client->nickname }} @else {{ $client->companyname }} @endif</span><i class="material-icons right">more_vert</i>
+                                        <span class="card-title activator grey-text text-darken-4">@if($client->nickname) {{ $client->nickname }} @else {{ $client->companyname }} @endif</span><i class="activator material-icons right" style="cursor: pointer;">more_vert</i>
                                         <p><a href="#">{{ $client->companyname }}</a></p>
                                     </div>
                                     <div class="card-reveal">
@@ -73,9 +75,15 @@
                                             <dd>{{ $client->contactphone }}</dd>
                                         </dl>
                                         <span class="card-title grey-text text-darken-4 mtop20">Actions</span>
+                                        @can('view', $client)
                                         <a href="{{ route('client.show', [ 'client' => $client ] ) }}" class="btn btn-theme full-width mbth5">More Info</a>
+                                        @endcan
+                                        @can('update', $client)
                                         <a href="{{ route('client.edit', [ 'client' => $client ] ) }}" class="btn btn-theme full-width mbth5">Edit</a>
+                                        @endcan
+                                        @can('delete', $client)
                                         <a href="#" data-id="{{ $client->id }}" class="btn btn-theme client-delete-btn full-width mbth5">Delete</a>
+                                        @endcan
                                     </div>
                                 </div>
                             </div>

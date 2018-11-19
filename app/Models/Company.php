@@ -55,8 +55,7 @@ class Company extends Model
         static::created(function ($company) {
             $settings = new CompanySettings;
             $company->settings()->save($settings);
-            Unicorn::createRoles($company->id);
-            Unicorn::createPermissions($company->id);
+            Unicorn::createRoleAndPermissions($company->id);
             Bouncer::assign('global-administrator')->to($company->owner);
         });
     }

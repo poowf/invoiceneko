@@ -14,10 +14,18 @@
                             <ul class="right hide-on-med-and-down">
                                 @if(Auth::check())
                                     <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                                    @can('index', \App\Models\Quote::class)
                                     <li><a href="{{ route('quote.index') }}">Quotes</a></li>
+                                    @endcan
+                                    @can('index', \App\Models\Invoice::class)
                                     <li><a href="{{ route('invoice.index') }}">Invoices</a></li>
+                                    @endcan
+                                    @can('index', \App\Models\Client::class)
                                     <li><a href="{{ route('client.index') }}">Clients</a></li>
+                                    @endcan
+                                    @can('index', \App\Models\Payment::class)
                                     <li><a href="{{ route('payment.index') }}">Payments</a></li>
+                                    @endcan
                                     <li>
                                         <a class="waves-effect waves-dark btn-link btn dropdown-trigger" href="javascript:;" data-target="dropdown-navigation">
                                             <div class="dropdown-text" style="width: 115px; line-height: 35px; margin-right: 15px;">My Account</div>
@@ -30,7 +38,9 @@
                                         @else
                                             <li><a href="{{ route('company.edit') }}">Company</a></li>
                                         @endif
+                                        @can('index', \App\Models\ItemTemplate::class)
                                         <li><a href="{{ route('itemtemplate.index') }}">Item Templates</a></li>
+                                        @endcan
                                         <li><a href="{{ route('user.edit') }}">User</a></li>
                                         <li>
                                             <form method="post" action="{{ route('auth.destroy') }}">
@@ -49,10 +59,18 @@
                                 <hr>
                                 @if(Auth::check())
                                     <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                                    @can('index', \App\Models\Quote::class)
                                     <li><a href="{{ route('quote.index') }}">Quotes</a></li>
+                                    @endcan
+                                    @can('index', \App\Models\Invoice::class)
                                     <li><a href="{{ route('invoice.index') }}">Invoices</a></li>
+                                    @endcan
+                                    @can('index', \App\Models\Client::class)
                                     <li><a href="{{ route('client.index') }}">Clients</a></li>
+                                    @endcan
+                                    @can('index', \App\Models\Payment::class)
                                     <li><a href="{{ route('payment.index') }}">Payments</a></li>
+                                    @endcan
                                     <li>
                                         <a class="waves-effect waves-dark btn-link btn dropdown-trigger" href="javascript:;" data-target="dropdown-mobile-navigation">
                                             <div class="dropdown-text">My Account</div>
@@ -65,7 +83,9 @@
                                         @else
                                             <li><a href="{{ route('company.edit') }}">Company</a></li>
                                         @endif
+                                        @can('index', \App\Models\ItemTemplate::class)
                                         <li><a href="{{ route('itemtemplate.index') }}">Item Templates</a></li>
+                                        @endcan
                                         <li><a href="{{ route('user.edit') }}">User</a></li>
                                         <li>
                                             <form method="post" action="{{ route('auth.destroy') }}">

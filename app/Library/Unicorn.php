@@ -12,6 +12,12 @@ use Silber\Bouncer\BouncerFacade as Bouncer;
 
 class Unicorn
 {
+    private static $modelEnum = ['Invoice', 'Quote', 'Item Template', 'Payment', 'Client', 'Company', 'Company Address', 'Company Settings', 'Company User Requests', 'Role', 'User'];
+
+    public function  __construct()
+    {
+    }
+
     public static function validateQueryString($data)
     {
         $dataFormat = [
@@ -91,7 +97,7 @@ class Unicorn
         return $rule->getString();
     }
 
-    public static function createRoles($scopeId = null)
+    public static function createRoleAndPermissions($scopeId = null)
     {
         Bouncer::scope()->to($scopeId);
 
@@ -105,24 +111,25 @@ class Unicorn
             'title' => 'Administrator',
         ]);
 
+        $user = Bouncer::role()->firstOrCreate([
+            'name' => str_slug('User'),
+            'title' => 'User',
+        ]);
+
         Bouncer::allow('global-administrator')->everything();
+        self::createPermissions($scopeId);
+        self::assignCrudPermissions($scopeId, $user, 'view');
     }
 
     public static function createPermissions($scopeId = null)
     {
-        self::createCrudPermissions($scopeId, 'Invoice');
-        self::createCrudPermissions($scopeId, 'Quote');
-        self::createCrudPermissions($scopeId, 'Payment');
-        self::createCrudPermissions($scopeId, 'Client');
-        self::createCrudPermissions($scopeId, 'Company');
-        self::createCrudPermissions($scopeId, 'Company Address');
-        self::createCrudPermissions($scopeId, 'Company Settings');
-        self::createCrudPermissions($scopeId, 'Company User Requests');
-        self::createCrudPermissions($scopeId, 'Role');
-        self::createCrudPermissions($scopeId, 'User');
+        foreach(self::$modelEnum as $model)
+        {
+            self::createCrudPermissions($scopeId, $model);
+        }
     }
 
-    public function createCrudPermissions($scopeId, $modelName)
+    protected static function createCrudPermissions($scopeId, $modelName)
     {
         Bouncer::scope()->to($scopeId);
 
@@ -145,5 +152,47 @@ class Unicorn
             'name' => 'delete-' . str_slug(strtolower($modelName)),
             'title' => 'Delete ' . $modelName,
         ]);
+    }
+
+    protected static function assignCrudPermissions($scopeId, $role, $methodName = 'all', $modelName = 'all')
+    {
+        switch($methodName)
+        {
+            case 'all':
+                self::assignPermissions($scopeId, $role, 'view', $modelName);
+                self::assignPermissions($scopeId, $role, 'create', $modelName);
+                self::assignPermissions($scopeId, $role, 'update', $modelName);
+                self::assignPermissions($scopeId, $role, 'delete', $modelName);
+                break;
+            case 'view':
+                self::assignPermissions($scopeId, $role, 'view', $modelName);
+                break;
+            case 'create':
+                self::assignPermissions($scopeId, $role, 'create', $modelName);
+                break;
+            case 'update':
+                self::assignPermissions($scopeId, $role, 'update', $modelName);
+                break;
+            case 'delete':
+                self::assignPermissions($scopeId, $role, 'delete', $modelName);
+                break;
+        }
+    }
+
+    protected static function assignPermissions($scopeId, $role, $methodName, $modelName)
+    {
+        Bouncer::scope()->to($scopeId);
+
+        if($modelName === 'all')
+        {
+            foreach(self::$modelEnum as $model)
+            {
+                Bouncer::allow($role)->to($methodName . '-' . str_slug(strtolower($model)));
+            }
+        }
+        else
+        {
+            Bouncer::allow($role)->to($methodName . '-' . str_slug(strtolower($modelName)));
+        }
     }
 }

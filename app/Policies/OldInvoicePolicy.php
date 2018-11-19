@@ -16,9 +16,9 @@ class OldInvoicePolicy
 
     public function before($user, $ability)
     {
-//        if ($user->isSuperAdmin()) {
-//            return true;
-//        }
+        if ($user->isAn('global-administrator')) {
+            return true;
+        }
     }
 
     /**
@@ -30,7 +30,7 @@ class OldInvoicePolicy
      */
     public function view(User $user, OldInvoice $oldInvoice)
     {
-        return $user->isOfCompany($oldInvoice->company_id);
+        return $user->can('view-invoice');
     }
 
     /**
@@ -41,7 +41,7 @@ class OldInvoicePolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->can('create-invoice');
     }
 
     /**
@@ -53,7 +53,7 @@ class OldInvoicePolicy
      */
     public function update(User $user, OldInvoice $oldInvoice)
     {
-        return $user->isOfCompany($oldInvoice->company_id);
+        return $user->can('update-invoice');
     }
 
     /**
@@ -65,6 +65,6 @@ class OldInvoicePolicy
      */
     public function delete(User $user, OldInvoice $oldInvoice)
     {
-        return $user->isOfCompany($oldInvoice->company_id);
+        return $user->can('delete-invoice');
     }
 }

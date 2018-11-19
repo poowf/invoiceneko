@@ -16,9 +16,9 @@ class InvoiceItemPolicy
 
     public function before($user, $ability)
     {
-//        if ($user->isSuperAdmin()) {
-//            return true;
-//        }
+        if ($user->isAn('global-administrator')) {
+            return true;
+        }
     }
 
     /**
@@ -30,7 +30,7 @@ class InvoiceItemPolicy
      */
     public function view(User $user, InvoiceItem $invoiceItem)
     {
-        return $user->isOfCompany($invoiceItem->invoice->company_id);
+        return $user->can('view-invoice');
     }
 
     /**
@@ -41,7 +41,7 @@ class InvoiceItemPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->can('create-invoice');
     }
 
     /**
@@ -53,7 +53,7 @@ class InvoiceItemPolicy
      */
     public function update(User $user, InvoiceItem $invoiceItem)
     {
-        return $user->isOfCompany($invoiceItem->invoice->company_id);
+        return $user->can('update-invoice');
     }
 
     /**
@@ -65,6 +65,6 @@ class InvoiceItemPolicy
      */
     public function delete(User $user, InvoiceItem $invoiceItem)
     {
-        return $user->isOfCompany($invoiceItem->invoice->company_id);
+        return $user->can('delete-invoice');
     }
 }

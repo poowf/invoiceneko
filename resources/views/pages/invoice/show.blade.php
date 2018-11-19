@@ -46,9 +46,11 @@
                     {{ csrf_field() }}
                     <button class="btn btn-link waves-effect waves-dark null-btn" type="submit">Send Notification</button>
                 </form>
+                @can('create', \App\Models\Payment::class)
                 <a class="btn btn-link waves-effect waves-dark" href="{{ route('payment.create', [ 'invoice' => $invoice->id] ) }}">
                     Log Payment
                 </a>
+                @endcan
                 <a href="#" data-id="{{ $invoice->id }}" class="invoice-share-btn btn btn-link waves-effect waves-dark">
                     Share
                 </a>
@@ -60,46 +62,63 @@
                 </a>
             </div>
         </div>
+        @can('update', $invoice)
         <div id="invoice-action-container" class="row mbtm0 desktop-only">
             <div class="col s12 right">
+                @can('update', $invoice)
                 <form method="post" action="{{ route('invoice.convert', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
                     {{ csrf_field() }}
                     <button class="btn btn-link waves-effect waves-dark null-btn" type="submit">Convert back to Quote</button>
                 </form>
+                @endcan
+                @can('update', $invoice)
                 <form method="post" action="{{ route('invoice.duplicate', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
                     {{ csrf_field() }}
                     <button class="btn blue darken-3 waves-effect waves-dark null-btn" type="submit">Clone</button>
                 </form>
+                @endcan
+                @can('update', $invoice)
                 <form method="post" action="{{ route('invoice.writeoff', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
                     {{ method_field('PATCH') }}
                     {{ csrf_field() }}
                     <button class="btn deep-orange darken-2 waves-effect waves-dark null-btn" type="submit">Write Off</button>
                 </form>
+                @endcan
+                @can('update', $invoice)
                 <form method="post" action="{{ route('invoice.archive', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
                     {{ method_field('PATCH') }}
                     {{ csrf_field() }}
                     <button class="btn amber darken-2 waves-effect waves-dark null-btn" type="submit">Archive</button>
                 </form>
+                @endcan
+                @can('update', $invoice)
                 @if(!$invoice->isLocked())
                 <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="btn light-blue waves-effect waves-dark">
                     Edit
                 </a>
                 @endif
+                @endcan
+                @can('delete', $invoice)
                 <a href="#" data-id="{{ $invoice->id }}" class="invoice-delete-btn btn red waves-effect waves-dark">
                     Delete
                 </a>
+                @endcan
             </div>
         </div>
+        @endcan
+        @can('update', $invoice)
         <div class="fixed-action-btn toolbar mobile-only">
             <a class="btn-floating btn-large btn-large red">
                 <i class="large material-icons">menu</i>
             </a>
             <ul>
+                @can('create', \App\Models\Payment::class)
                 <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Log Payment">
                     <a class="btn btn-link waves-effect waves-dark" href="{{ route('payment.create', [ 'invoice' => $invoice->id] ) }}">
                         <i class="material-icons">attach_money</i>
                     </a>
                 </li>
+                @endcan
                 <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Duplicate Invoice">
                     <form method="post" action="{{ route('invoice.duplicate', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
                         {{ csrf_field() }}
@@ -132,13 +151,16 @@
                     </a>
                 </li>
                 @endif
+                @can('delete', $invoice)
                 <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Invoice">
                     <a href="#" data-id="{{ $invoice->id }}" class="invoice-delete-btn btn red waves-effect waves-dark">
                         <i class="material-icons">delete</i>
                     </a>
                 </li>
+                @endcan
             </ul>
         </div>
+        @endcan
         <div class="row">
             <div class="col s12 l4">
                 <h3>Details</h3>
@@ -278,7 +300,7 @@
             @include('partials/invoice')
         </div>
     </div>
-
+    @can('delete', $invoice)
     <div id="delete-confirmation" class="modal">
         <div class="modal-content">
             <p>Delete Invoice?</p>
@@ -292,6 +314,7 @@
             <a href="javascript:;" class=" modal-action modal-close waves-effect black-text waves-red btn-flat btn-deletemodal">Cancel</a>
         </div>
     </div>
+    @endcan
 
     <div id="shared-details" class="modal">
         <div class="modal-content">
@@ -335,7 +358,7 @@
                 getSharedLink();
             });
 
-
+            @can('delete', $invoice)
             $('#invoice-action-container').on('click', '.invoice-delete-btn', function (event) {
                 event.preventDefault();
                 let invoiceid = $(this).attr('data-id');
@@ -349,6 +372,7 @@
                 $('#delete-invoice-form').attr('action', '/invoice/' + invoiceid + '/destroy');
                 $('#delete-confirmation').modal('open');
             });
+            @endcan
 
             $('#change-history-container').slick({
                 // normal options...

@@ -16,9 +16,14 @@ class PaymentPolicy
 
     public function before($user, $ability)
     {
-//        if ($user->isSuperAdmin()) {
-//            return true;
-//        }
+        if ($user->isAn('global-administrator')) {
+            return true;
+        }
+    }
+
+    public function index(User $user)
+    {
+        return $user->can('view-payment');
     }
 
     /**
@@ -30,7 +35,7 @@ class PaymentPolicy
      */
     public function view(User $user, Payment $payment)
     {
-        return $user->isOfCompany($payment->company_id);
+        return $user->can('view-payment');
     }
 
     /**
@@ -41,7 +46,7 @@ class PaymentPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->can('create-payment');
     }
 
     /**
@@ -53,7 +58,7 @@ class PaymentPolicy
      */
     public function update(User $user, Payment $payment)
     {
-        return $user->isOfCompany($payment->company_id);
+        return $user->can('update-payment');
     }
 
     /**
@@ -65,6 +70,6 @@ class PaymentPolicy
      */
     public function delete(User $user, Payment $payment)
     {
-        return $user->isOfCompany($payment->company_id);
+        return $user->can('delete-payment');
     }
 }

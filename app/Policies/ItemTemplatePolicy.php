@@ -16,9 +16,14 @@ class ItemTemplatePolicy
 
     public function before($user, $ability)
     {
-//        if ($user->isSuperAdmin()) {
-//            return true;
-//        }
+        if ($user->isAn('global-administrator')) {
+            return true;
+        }
+    }
+
+    public function index(User $user)
+    {
+        return $user->can('view-item-template');
     }
 
     /**
@@ -30,7 +35,7 @@ class ItemTemplatePolicy
      */
     public function view(User $user, ItemTemplate $itemtemplate)
     {
-        return $user->isOfCompany($itemtemplate->company_id);
+        return $user->can('view-item-template');
     }
 
     /**
@@ -41,7 +46,7 @@ class ItemTemplatePolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->can('create-item-template');
     }
 
     /**
@@ -53,7 +58,7 @@ class ItemTemplatePolicy
      */
     public function update(User $user, ItemTemplate $itemtemplate)
     {
-        return $user->isOfCompany($itemtemplate->company_id);
+        return $user->can('update-item-template');
     }
 
     /**
@@ -65,6 +70,6 @@ class ItemTemplatePolicy
      */
     public function delete(User $user, ItemTemplate $itemtemplate)
     {
-        return $user->isOfCompany($itemtemplate->company_id);
+        return $user->can('delete-item-template');
     }
 }

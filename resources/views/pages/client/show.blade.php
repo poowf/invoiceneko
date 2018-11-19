@@ -12,7 +12,9 @@
                 <h3>Client Details</h3>
             </div>
             <div class="col s6 right">
+                @can('create', \App\Models\Invoice::class)
                 <a href="{{ route('client.invoice.create', [ 'client' => $client->id ]) }}" class="btn btn-link waves-effect waves-dark mtop30">Create Invoice</a>
+                @endcan
             </div>
         </div>
         <div class="row">

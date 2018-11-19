@@ -17,9 +17,11 @@
             <div class="col s6">
             </div>
             <div class="col s6 mtop30 right">
+                @can('update', $invoice)
                 <a class="btn btn-lg btn-default" href="{{ route('payment.create', [ 'invoice' => $invoice->id] ) }}">
                     Log Payment
                 </a>
+                @endcan
                 <a class="btn btn-lg btn-default" href="{{ route('invoice.download', [ 'invoice' => $invoice->id] ) }}">
                     Save PDF
                 </a>
