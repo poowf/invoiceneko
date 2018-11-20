@@ -19,16 +19,11 @@ class CompanyUserController extends Controller
     }
 
     /**
-<<<<<<< da9089e6a7359021b663daf53d48fcb84ab9a1c0
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function index()
-=======
      * @param Company $company
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Company $company)
->>>>>>> Refactor routes to use selected company data
     {
         if($company)
         {
@@ -43,16 +38,11 @@ class CompanyUserController extends Controller
     }
 
     /**
-<<<<<<< da9089e6a7359021b663daf53d48fcb84ab9a1c0
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function create()
-=======
      * @param Company $company
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create(Company $company)
->>>>>>> Refactor routes to use selected company data
     {
         $countries = $this->countries->all();
         $timezones = \DateTimeZone::listIdentifiers(DateTimeZone::ALL);
@@ -63,16 +53,11 @@ class CompanyUserController extends Controller
 
     /**
      * @param CreateCompanyUserRequest $request
-<<<<<<< da9089e6a7359021b663daf53d48fcb84ab9a1c0
      * @return \Illuminate\Http\RedirectResponse
-     */
-    public function store(CreateCompanyUserRequest $request)
-=======
      * @param Company $company
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(CreateCompanyUserRequest $request, Company $company)
->>>>>>> Refactor routes to use selected company data
     {
         $random_password = str_random(16);
 
@@ -92,18 +77,11 @@ class CompanyUserController extends Controller
     }
 
     /**
-<<<<<<< da9089e6a7359021b663daf53d48fcb84ab9a1c0
-     * @param User $user
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function edit(User $user)
-=======
      * @param Company $company
      * @param User $user
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(Company $company, User $user)
->>>>>>> Refactor routes to use selected company data
     {
         $countries = $this->countries->all();
         $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
@@ -115,19 +93,11 @@ class CompanyUserController extends Controller
 
     /**
      * @param UpdateCompanyUserRequest $request
-<<<<<<< da9089e6a7359021b663daf53d48fcb84ab9a1c0
      * @param User $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateCompanyUserRequest $request, User $user)
-=======
-     * @param Company $company
-     * @param User $user
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function update(UpdateCompanyUserRequest $re
-quest, Company $company, User $user)
->>>>>>> Refactor routes to use selected company data
+
+    public function update(UpdateCompanyUserRequest $request, Company $company, User $user)
     {
         $user->fill($request->all());
         if ($request->has('newpassword') && $request->input('newpassword') != null) {
@@ -145,28 +115,19 @@ quest, Company $company, User $user)
 
     /**
      * @param Request $request
-<<<<<<< da9089e6a7359021b663daf53d48fcb84ab9a1c0
-=======
      * @param Company $company
->>>>>>> Refactor routes to use selected company data
      * @param User $user
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-<<<<<<< da9089e6a7359021b663daf53d48fcb84ab9a1c0
-    public function destroy(Request $request, User $user)
-=======
     public function destroy(Request $request, Company $company, User $user)
->>>>>>> Refactor routes to use selected company data
     {
-
         $auth_user = auth()->user();
-        $usercompany = $company;
 
         //TODO: Probably need to rewrite/refactor this logic to somewhere else
-        if ($usercompany)
+        if ($company)
         {
-            if ($usercompany->isOwner($auth_user))
+            if ($company->isOwner($auth_user))
             {
                 if($user->id != $auth_user->id)
                 {

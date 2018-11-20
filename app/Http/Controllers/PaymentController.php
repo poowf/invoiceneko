@@ -92,10 +92,10 @@ class PaymentController extends Controller
      */
     public function createsolo(Company $company)
     {
-        $invoices = $company->invoices;
-
         if($company)
         {
+            $invoices = $company->invoices;
+
             if ($invoices->count() <= 0)
             {
                 return view('pages.payment.noinvoices');

@@ -640,7 +640,6 @@ class InvoiceController extends Controller
     {
         if($company)
         {
-
             if ($company->clients->count() == 0)
             {
                 return view('pages.invoice.noclients');

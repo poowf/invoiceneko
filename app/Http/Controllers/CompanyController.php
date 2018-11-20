@@ -116,11 +116,9 @@ class CompanyController extends Controller
 
             $company->save();
 
-            $user = User::find($company->user_id);
-            $user->company_id = $company->id;
-            $user->save();
+            $company->users()->attach($company->user_id);
 
-            flash('You can now sign in', 'success');
+             flash('You can now sign in', 'success');
 
             return redirect()->route('auth.show');
         }
@@ -251,9 +249,7 @@ class CompanyController extends Controller
 
         if ($isnew)
         {
-            $user = User::find($company->user_id);
-            $user->company_id = $company->id;
-            $user->save();
+            $company->users()->attach($company->user_id);
         }
 
         flash('Company Updated', 'success');
@@ -273,6 +269,7 @@ class CompanyController extends Controller
     }
 
     public function edit_owner(Company $company) {
+
         if($company)
         {
             $owner = $company->owner;
@@ -293,7 +290,6 @@ class CompanyController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update_owner(UpdateCompanyOwnerRequest $request, Company $company) {
-        $company = auth()->user()->ownedcompany;
         $user = User::find($request->input('user_id'));
         $company->user_id = $user->id;
         $company->save();

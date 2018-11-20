@@ -216,8 +216,8 @@ class User extends Authenticatable
         return $this->belongsToMany(Company::class);
     }
 
-    public function ownedcompany()
+    public function ownedCompanies()
     {
-        return $this->hasOne('App\Models\Company', 'user_id');
+        return $this->hasMany('App\Models\Company', 'user_id');
     }
 }

@@ -64,11 +64,9 @@ class CompanyAddressController extends Controller
      */
     public function edit(Company $company)
     {
-        $ownedcompany = auth()->user()->ownedcompany;
-
-        if($ownedcompany)
+        if($company)
         {
-            $companyaddress = $ownedcompany->address;
+            $companyaddress = $company->address;
         }
         else
         {
@@ -87,8 +85,7 @@ class CompanyAddressController extends Controller
      */
     public function update(UpdateCompanyAddressRequest $request, Company $company)
     {
-        $ownedcompany = auth()->user()->ownedcompany;
-        $companyaddress = $ownedcompany->address;
+        $companyaddress = $company->address;
 
         if(!$companyaddress)
         {
@@ -96,7 +93,7 @@ class CompanyAddressController extends Controller
         }
 
         $companyaddress->fill($request->all());
-        $ownedcompany->address()->save($companyaddress);
+        $company->address()->save($companyaddress);
 
         flash('Company Address Updated', 'success');
 

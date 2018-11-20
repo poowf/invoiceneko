@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Library\Poowf\Unicorn;
 use Log;
 use Session;
 use Validator;
@@ -32,7 +33,7 @@ class AuthController extends Controller
         ];
 
         if (Auth::attempt($creds, $remember)) {
-            return redirect()->intended('/dashboard');
+            return redirect()->intended(route('dashboard', [ 'company' => Unicorn::getCompanyKey() ]));
         }
 
         flash('Invalid Credentials', 'danger');

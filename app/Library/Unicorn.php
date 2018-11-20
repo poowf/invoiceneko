@@ -221,14 +221,21 @@ class Unicorn
 =======
     public static function getCompanyKey()
     {
-        if(session()->has('current_company_fqdn'))
+        if(auth()->check())
         {
-            return session()->get('current_company_fqdn');
+            if(session()->has('current_company_fqdn'))
+            {
+                return session()->get('current_company_fqdn');
+            }
+            else
+            {
+                $user = auth()->user();
+                return $user->getFirstCompanyKey();
+            }
         }
         else
         {
-            $user = auth()->user();
-            return $user->getFirstCompanyKey();
+            return null;
         }
     }
 >>>>>>> Refactor routes to use selected company data
