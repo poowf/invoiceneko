@@ -15,6 +15,9 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         'App\Models\Client' => 'App\Policies\ClientPolicy',
         'App\Models\Company' => 'App\Policies\CompanyPolicy',
+        'App\Models\CompanyAddress' => 'App\Policies\CompanyAddressPolicy',
+        'App\Models\CompanySettings' => 'App\Policies\CompanySettingsPolicy',
+        'App\Models\CompanyUserRequest' => 'App\Policies\CompanyUserRequestPolicy',
         'App\Models\InvoiceItem' => 'App\Policies\InvoiceItemPolicy',
         'App\Models\Invoice' => 'App\Policies\InvoicePolicy',
         'App\Models\OldInvoiceItem' => 'App\Policies\OldInvoiceItemPolicy',
@@ -23,7 +26,6 @@ class AuthServiceProvider extends ServiceProvider
         'App\Models\QuoteItem' => 'App\Policies\QuoteItemPolicy',
         'App\Models\Quote' => 'App\Policies\QuotePolicy',
         'App\Models\Payment' => 'App\Policies\PaymentPolicy',
-        'App\Models\Permission' => 'App\Policies\PermissionPolicy',
         'App\Models\Role' => 'App\Policies\RolePolicy',
         'App\Models\User' => 'App\Policies\UserPolicy',
     ];

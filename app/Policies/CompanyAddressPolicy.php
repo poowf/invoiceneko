@@ -2,12 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\CompanyAddress;
 use App\Models\User;
-use App\Models\CompanyUserRequest;
+use App\Models\CompanyAddress;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class CompanyUserRequestPolicy
+class CompanyAddressPolicy
 {
     use HandlesAuthorization;
 
@@ -30,53 +29,54 @@ class CompanyUserRequestPolicy
 
     public function index(User $user)
     {
-        return $user->can('view-company-user-request', CompanyUserRequest::class);
+        return $user->can('view-company-address', CompanyAddress::class);
     }
 
     /**
      * Determine whether the user can view the companyUserRequest.
      *
      * @param  \App\Models\User $user
-     * @param CompanyUserRequest $companyUserRequest
+     * @param CompanyAddress $companyAddress
      * @return mixed
      */
-    public function view(User $user, CompanyUserRequest $companyUserRequest)
+    public function view(User $user, CompanyAddress $companyAddress)
     {
-        return $user->can('view-company-user-request', $companyUserRequest);
+        return $user->can('view-company-address', $companyAddress);
     }
 
     /**
      * Determine whether the user can create companies.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\User $user
+     * @param CompanyAddress $companyAddress
      * @return mixed
      */
     public function create(User $user)
     {
-        return $user->can('create-company-user-request', CompanyUserRequest::class);
+        return $user->can('create-company-address', CompanyAddress::class);
     }
 
     /**
      * Determine whether the user can update the companyUserRequest.
      *
      * @param  \App\Models\User $user
-     * @param CompanyUserRequest $companyUserRequest
+     * @param CompanyAddress $companyAddress
      * @return mixed
      */
-    public function update(User $user, CompanyUserRequest $companyUserRequest)
+    public function update(User $user, CompanyAddress $companyAddress)
     {
-        return $user->can('update-company-user-request', $companyUserRequest);
+        return $user->can('update-company-address', $companyAddress);
     }
 
     /**
      * Determine whether the user can delete the companyUserRequest.
      *
      * @param  \App\Models\User $user
-     * @param CompanyUserRequest $companyUserRequest
+     * @param CompanyAddress $companyAddress
      * @return mixed
      */
-    public function delete(User $user, CompanyUserRequest $companyUserRequest)
+    public function delete(User $user, CompanyAddress $companyAddress)
     {
-        return $user->can('delete-company-user-request', $companyUserRequest);
+        return $user->can('delete-company-address', $companyAddress);
     }
 }

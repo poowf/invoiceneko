@@ -16,9 +16,14 @@ class ItemTemplatePolicy
 
     public function before($user, $ability)
     {
-        if ($user->isSuperAdmin()) {
+        if ($user->isAn('global-administrator')) {
             return true;
         }
+    }
+
+    public function index(User $user)
+    {
+        return $user->can('view-item-template', ItemTemplate::class);
     }
 
     /**
@@ -30,18 +35,18 @@ class ItemTemplatePolicy
      */
     public function view(User $user, ItemTemplate $itemtemplate)
     {
-        return $user->isOfCompany($itemtemplate->company_id);
+        return $user->can('view-item-template', $itemtemplate);
     }
 
     /**
      * Determine whether the user can create invoiceItems.
-     *
+     *d
      * @param  \App\Models\User  $user
      * @return mixed
      */
     public function create(User $user)
     {
-        //
+        return $user->can('create-item-template', ItemTemplate::class);
     }
 
     /**
@@ -53,7 +58,7 @@ class ItemTemplatePolicy
      */
     public function update(User $user, ItemTemplate $itemtemplate)
     {
-        return $user->isOfCompany($itemtemplate->company_id);
+        return $user->can('update-item-template', $itemtemplate);
     }
 
     /**
@@ -65,6 +70,6 @@ class ItemTemplatePolicy
      */
     public function delete(User $user, ItemTemplate $itemtemplate)
     {
-        return $user->isOfCompany($itemtemplate->company_id);
+        return $user->can('delete-item-template', $itemtemplate);
     }
 }

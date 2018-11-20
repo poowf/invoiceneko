@@ -69,7 +69,7 @@
                                         <option value="{{ $country['iso_3166_1_alpha2'] }}" @if($user->country_code == $country['iso_3166_1_alpha2']) selected @endif>{{ $country['name']['common'] }}</option>
                                     @endforeach
                                 </select>
-                                <label for="country" class="label-validation">Country</label>
+                                <label for="country_code" class="label-validation">Country</label>
                                 <span class="helper-text"></span>
                             </div>
                         </div>
@@ -81,7 +81,7 @@
                                         <option value="{{ $timezone }}" @if($user->timezone == $timezone) selected @endif> {{ $timezone }}</option>
                                     @endforeach
                                 </select>
-                                <label for="country" class="label-validation">Timezone</label>
+                                <label for="timezone" class="label-validation">Timezone</label>
                                 <span class="helper-text"></span>
                             </div>
                         </div>

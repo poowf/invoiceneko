@@ -53773,6 +53773,36 @@ var render = function() {
             _vm._v(" "),
             _c("tr", [
               _c("td", { staticClass: "table-fit font-weight-bold" }, [
+                _vm._v("Controller Action")
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _vm._v(
+                  "\n            " +
+                    _vm._s(slotProps.entry.content.controller_action) +
+                    "\n        "
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            slotProps.entry.content.middleware
+              ? _c("tr", [
+                  _c("td", { staticClass: "table-fit font-weight-bold" }, [
+                    _vm._v("Middleware")
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _vm._v(
+                      "\n            " +
+                        _vm._s(slotProps.entry.content.middleware.join(", ")) +
+                        "\n        "
+                    )
+                  ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _c("tr", [
+              _c("td", { staticClass: "table-fit font-weight-bold" }, [
                 _vm._v("Path")
               ]),
               _vm._v(" "),
@@ -53795,6 +53825,20 @@ var render = function() {
                   "\n            " +
                     _vm._s(slotProps.entry.content.response_status) +
                     "\n        "
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("tr", [
+              _c("td", { staticClass: "table-fit font-weight-bold" }, [
+                _vm._v("Duration")
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _vm._v(
+                  "\n            " +
+                    _vm._s(slotProps.entry.content.duration || "-") +
+                    " ms\n        "
                 )
               ])
             ])
@@ -68520,7 +68564,9 @@ new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
                 confirmationCancel: null
             },
 
-            autoLoadsNewEntries: localStorage.autoLoadsNewEntries === '1'
+            autoLoadsNewEntries: localStorage.autoLoadsNewEntries === '1',
+
+            recording: Telescope.recording
         };
     },
 
@@ -68534,6 +68580,12 @@ new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
                 this.autoLoadsNewEntries = false;
                 localStorage.autoLoadsNewEntries = 0;
             }
+        },
+        toggleRecording: function toggleRecording() {
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post('/' + Telescope.path + '/telescope-api/toggle-recording');
+
+            window.Telescope.recording = !Telescope.recording;
+            this.recording = !this.recording;
         }
     }
 });

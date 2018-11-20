@@ -36,7 +36,7 @@
                         <form id="edit-owner" method="post" enctype="multipart/form-data">
                             <div class="card-panel flex">
                                 <div class="input-field col s12">
-                                    <select id="user_id" name="user_id" class="user-list-selector selectize-custom" data-parsley-required="true" data-parsley-trigger="change">
+                                    <select id="user_id" name="user_id" class="user-list-selector" data-parsley-required="true" data-parsley-trigger="change">
                                         <option disabled="" selected="selected" value="">Pick a new Owner</option>
                                     </select>
                                     <label for="user_id" class="label-validation">Owner</label>

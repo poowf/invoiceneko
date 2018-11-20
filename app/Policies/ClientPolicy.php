@@ -16,9 +16,14 @@ class ClientPolicy
 
     public function before($user, $ability)
     {
-        if ($user->isSuperAdmin()) {
+        if ($user->isAn('global-administrator')) {
             return true;
         }
+    }
+
+    public function index(User $user)
+    {
+        return $user->can('view-client', Client::class);
     }
 
     /**
@@ -30,7 +35,7 @@ class ClientPolicy
      */
     public function view(User $user, Client $client)
     {
-        return $user->isOfCompany($client->company_id);
+        return $user->can('view-client', $client);
     }
 
     /**
@@ -41,7 +46,7 @@ class ClientPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->can('create-client', Client::class);
     }
 
     /**
@@ -53,7 +58,7 @@ class ClientPolicy
      */
     public function update(User $user, Client $client)
     {
-        return $user->isOfCompany($client->company_id);
+        return $user->can('update-client', $client);
     }
 
     /**
@@ -65,6 +70,6 @@ class ClientPolicy
      */
     public function delete(User $user, Client $client)
     {
-        return $user->isOfCompany($client->company_id);
+        return $user->can('delete-client', $client);
     }
 }
