@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Library\Poowf\Unicorn;
+use App\Models\Company;
 use Illuminate\Http\Request;
 
 use App\Models\Invoice;
@@ -22,10 +23,10 @@ class MainController extends Controller
         return view('pages.start');
     }
 
-    public function dashboard()
+    public function dashboard(Company $company)
     {
         $user = auth()->user();
-        $company = auth()->user()->company;
+//        $company = auth()->user()->company;
         if($company)
         {
             $overdueinvoices = $company->invoices()->overdue()->take(10)->get();

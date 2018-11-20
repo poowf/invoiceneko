@@ -61,6 +61,16 @@ class Company extends Model
     }
 
     /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'domain_name';
+    }
+
+    /**
      * Route notifications for the mail channel.
      *
      * @return string
@@ -117,7 +127,7 @@ class Company extends Model
 
     public function users()
     {
-        return $this->hasMany('App\Models\User', 'company_id');
+        return $this->belongsToMany('App\Models\User', 'user_id');
     }
 
     public function requests()

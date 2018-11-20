@@ -40,7 +40,7 @@ class RouteServiceProvider extends ServiceProvider
 
         Route::pattern('token', '([A-Za-z0-9]+)');
         Route::pattern('client', '([A-Za-z0-9]+)');
-        Route::pattern('company', '([A-Za-z0-9]+)');
+        Route::pattern('company', '([A-Za-z0-9-.]+)');
         Route::pattern('companyuserrequest', '([A-Za-z0-9]+)');
         Route::pattern('invoice', '([A-Za-z0-9]+)');
         Route::pattern('invoiceitem', '([A-Za-z0-9]+)');

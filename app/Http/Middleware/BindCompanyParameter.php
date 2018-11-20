@@ -3,9 +3,10 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\Models\Company;
 use Illuminate\Contracts\Auth\Guard;
 
-class HasCompany
+class BindCompanyParameter
 {
     /**
      * The Guard implementation.
@@ -33,10 +34,14 @@ class HasCompany
      */
     public function handle($request, Closure $next)
     {
-        if (!$request->user()->company) {
-            return redirect()->route('nocompany');
-        }
+        if($request->route()->hasParameter('company'))
+        {
+            $companyFQDN = $request->route()->parameter('company');
 
+            $company = Company::where('domain_name', $companyFQDN)->firstOrFail();
+
+            $request->route()->setParameter('company', $company);
+        }
         return $next($request);
     }
 }
