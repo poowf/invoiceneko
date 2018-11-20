@@ -2,31 +2,32 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Iatstuti\Database\Support\CascadeSoftDeletes;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use \Silber\Bouncer\Database\Role as RoleBase;
+use Silber\Bouncer\BouncerFacade as Bouncer;
 
-class Role extends Model
+class Role extends RoleBase
 {
-    use SoftDeletes, CascadeSoftDeletes;
 
-    protected $table = 'roles';
-
-    public $timestamps = true;
-
-    protected $fillable = [
-        'name',
-        'label',
-    ];
-
-
-    public function permissions()
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
     {
-        return $this->belongsToMany(Permission::class)->withTimestamps();
+        return 'name';
     }
 
-    public function givePermissionTo(Permission $permission)
+    /**
+     * Retrieve the model for a bound value.
+     *
+     * @param  mixed  $value
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    public function resolveRouteBinding($value)
     {
-        return $this->permissions()->save($permission);
+        $user = auth()->user();
+        $role = $this->where($this->getRouteKeyName(), $value)->where('scope', $user->company_id)->first();
+        return $role;
     }
 }

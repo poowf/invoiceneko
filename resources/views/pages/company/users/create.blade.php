@@ -2,6 +2,7 @@
 
 @section("head")
     <link href="{{ mix('/assets/css/intlTelInput.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ mix('/assets/css/selectize.css') }}" rel="stylesheet" type="text/css">
     <style>
     </style>
 @stop
@@ -53,19 +54,19 @@
                                         <option value="{{ $country['iso_3166_1_alpha2'] }}" @if(old('country_code') == $country['iso_3166_1_alpha2']) selected @endif>{{ $country['name']['common'] }}</option>
                                     @endforeach
                                 </select>
-                                <label for="country" class="label-validation">Country</label>
+                                <label for="country_code" class="label-validation">Country</label>
                                 <span class="helper-text"></span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <select id="timezone" name="timezone" data-parsley-trigger="change">
+                                <select id="timezone" name="timezone" data-parsley-required="true" data-parsley-trigger="change">
                                     <option disabled="" selected="selected" value="">Timezone</option>
                                     @foreach($timezones as $timezone)
                                         <option value="{{ $timezone }}" @if(old('timezone') == $timezone) selected @endif> {{ $timezone }}</option>
                                     @endforeach
                                 </select>
-                                <label for="country" class="label-validation">Timezone</label>
+                                <label for="timezone" class="label-validation">Timezone</label>
                                 <span class="helper-text"></span>
                             </div>
                         </div>
@@ -94,6 +95,17 @@
                                 <span class="helper-text manual-validation"></span>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <select id="roles" name="roles[]" data-parsley-required="true" data-parsley-trigger="change" placeholder="Roles" multiple>
+                                    @foreach($roles as $role)
+                                        <option value="{{ $role->name }}" @if(old('roles') == $role->name) selected @endif>{{ $role->title }}</option>
+                                    @endforeach
+                                </select>
+                                <label for="roles" class="label-validation">Roles</label>
+                                <span class="helper-text"></span>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
@@ -115,6 +127,7 @@
         $(function() {
             $('#country_code').selectize({});
             $('#timezone').selectize({});
+            $('#roles').selectize({});
             Unicorn.initPhoneInput('#phone');
             Unicorn.initParsleyValidation('#company-create-user');
         });

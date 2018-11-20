@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\User;
 use App\Models\Quote;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Silber\Bouncer\BouncerFacade as Bouncer;
 
 class QuotePolicy
 {
@@ -16,9 +17,15 @@ class QuotePolicy
 
     public function before($user, $ability)
     {
-        if ($user->isSuperAdmin()) {
+        if ($user->isAn('global-administrator')) {
             return true;
         }
+    }
+
+    public function index(User $user)
+    {
+//        dd($user->roles()->first()->getAbilities());
+        return $user->can('view-quote', Quote::class);
     }
 
     /**
@@ -30,7 +37,7 @@ class QuotePolicy
      */
     public function view(User $user, Quote $quote)
     {
-        return $user->isOfCompany($quote->company_id);
+        return $user->can('view-quote', $quote);
     }
 
     /**
@@ -41,7 +48,7 @@ class QuotePolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->can('create-quote', Quote::class);
     }
 
     /**
@@ -53,7 +60,7 @@ class QuotePolicy
      */
     public function update(User $user, Quote $quote)
     {
-        return $user->isOfCompany($quote->company_id);
+        return $user->can('update-quote', $quote);
     }
 
     /**
@@ -65,6 +72,6 @@ class QuotePolicy
      */
     public function delete(User $user, Quote $quote)
     {
-        return $user->isOfCompany($quote->company_id);
+        return $user->can('delete-quote', $quote);
     }
 }

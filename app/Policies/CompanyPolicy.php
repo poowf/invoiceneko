@@ -18,9 +18,14 @@ class CompanyPolicy
 
     public function before($user, $ability)
     {
-        if ($user->isSuperAdmin()) {
+        if ($user->isAn('global-administrator')) {
             return true;
         }
+    }
+
+    public function index(User $user)
+    {
+        return $user->can('view-company', Company::class);
     }
 
     /**
@@ -32,7 +37,7 @@ class CompanyPolicy
      */
     public function view(User $user, Company $company)
     {
-        return $user->isOfCompany($company->id);
+        return $user->can('view-company', $company);
     }
 
     /**
@@ -53,9 +58,9 @@ class CompanyPolicy
      * @param  \App\Models\Company  $company
      * @return mixed
      */
-    public function update(User $user, Company $company)
+    public function update(User $user)
     {
-        return $company->isOwner($user);
+        return $user->company->isOwner($user) || $user->can('update-company', Company::class);
     }
 
     /**
@@ -65,9 +70,9 @@ class CompanyPolicy
      * @param  \App\Models\Company  $company
      * @return mixed
      */
-    public function delete(User $user, Company $company)
+    public function delete(User $user)
     {
-        return $company->isOwner($user);
+        return $user->company->isOwner($user) || $user->can('delete-company', Company::class);
     }
 
     /**

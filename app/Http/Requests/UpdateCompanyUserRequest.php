@@ -23,6 +23,7 @@ class UpdateCompanyUserRequest extends FormRequest
      */
     public function rules()
     {
+        //this->user works because the user model is in the path
         return [
             'username' => 'required|string|min:4|unique:users,username,' . $this->user->id,
             'email' => 'required|email|unique:users,email,' . $this->user->id,
