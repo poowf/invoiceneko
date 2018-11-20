@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Quote;
 use App\Models\User;
 use App\Models\QuoteItem;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -21,6 +22,11 @@ class QuoteItemPolicy
         }
     }
 
+    public function index(User $user)
+    {
+        return $user->can('view-quote', QuoteItem::class);
+    }
+
     /**
      * Determine whether the user can view the quoteItem.
      *
@@ -30,7 +36,7 @@ class QuoteItemPolicy
      */
     public function view(User $user, QuoteItem $quoteItem)
     {
-        return $user->can('view-quote');
+        return $user->can('view-quote', Quote::class);
     }
 
     /**
@@ -41,7 +47,7 @@ class QuoteItemPolicy
      */
     public function create(User $user)
     {
-        return $user->can('create-quote');
+        return $user->can('create-quote', Quote::class);
     }
 
     /**
@@ -53,7 +59,7 @@ class QuoteItemPolicy
      */
     public function update(User $user, QuoteItem $quoteItem)
     {
-        return $user->can('update-quote');
+        return $user->can('update-quote', Quote::class);
     }
 
     /**
@@ -65,6 +71,6 @@ class QuoteItemPolicy
      */
     public function delete(User $user, QuoteItem $quoteItem)
     {
-        return $user->can('delete-quote');
+        return $user->can('delete-quote', Quote::class);
     }
 }

@@ -7,7 +7,7 @@ use App\Http\Requests\UpdateRoleRequest;
 use App\Library\Poowf\Unicorn;
 use Illuminate\Http\Request;
 use Silber\Bouncer\BouncerFacade as Bouncer;
-use Silber\Bouncer\Database\Role;
+use App\Models\Role;
 
 class CompanyRoleController extends Controller
 {
@@ -22,12 +22,7 @@ class CompanyRoleController extends Controller
 
         $user = $company->owner;
 
-//        $roles = $user->getRoles();
-
-        $roles = Bouncer::role()->all();
-
-//        Unicorn::createRoleAndPermissions($company->id);
-//        Bouncer::assign('global-administrator')->to($company->owner);
+        $roles = Role::all();
 
         return view('pages.company.roles.index', compact('roles'));
     }
@@ -49,21 +44,23 @@ class CompanyRoleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param CreateRoleRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(CreateRoleRequest $request)
     {
         $title = $request->input('title');
         $permissions = $request->input('permissions');
-        $role = Bouncer::role();
+        $role = new Role;
         $role->title = $title;
         $role->name = str_slug($title);
         $role->save();
 
         if(!empty($permissions)) {
             foreach ($permissions as $permission) {
-                Bouncer::allow($role)->to($permission);
+                $permissionPieces = explode('-', $permission);
+                $model = '\\App\\Models\\' . str_replace(' ', '', $permissionPieces[1]);
+                Bouncer::allow($role)->to($permissionPieces[0], $model);
             }
         }
 
@@ -85,14 +82,13 @@ class CompanyRoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param Role $role
      * @return \Illuminate\Http\Response
      */
-    public function edit($rolename)
+    public function edit(Role $role)
     {
-        if($rolename != 'global-administrator')
+        if($role->name != 'global-administrator')
         {
-            $role = Bouncer::role()->where('name', $rolename)->first();
             $rolePermissions = $role->getAbilities();
             $permissions = self::getFormattedPermissions();
 
@@ -107,17 +103,16 @@ class CompanyRoleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param $rolename
+     * @param UpdateRoleRequest $request
+     * @param Role $role
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRoleRequest $request, $rolename)
+    public function update(UpdateRoleRequest $request, Role $role)
     {
-        if($rolename != 'global-administrator')
+        if($role->name != 'global-administrator')
         {
             $title = $request->input('title');
             $permissions = $request->input('permissions');
-            $role = Bouncer::role()->where('name', $rolename)->first();
             $role->title = $title;
             $role->name = str_slug($title);
             $role->save();
@@ -131,11 +126,11 @@ class CompanyRoleController extends Controller
                 Bouncer::disallow($role)->to($rolePermission);
             }
 
-            if(!empty($permissions))
-            {
-                foreach ($permissions as $permission)
-                {
-                    Bouncer::allow($role)->to($permission);
+            if(!empty($permissions)) {
+                foreach ($permissions as $permission) {
+                    $permissionPieces = explode('-', $permission);
+                    $model = '\\App\\Models\\' . str_replace(' ', '', $permissionPieces[1]);
+                    Bouncer::allow($role)->to($permissionPieces[0], $model);
                 }
             }
 
@@ -151,12 +146,12 @@ class CompanyRoleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param $rolename
+     * @param $role
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
-    public function destroy($rolename)
+    public function destroy(Role $role)
     {
-        $role = Bouncer::role()->where('name', $rolename)->first();
         $role->delete();
 
         flash("The Role has been deleted", 'success');
@@ -175,7 +170,7 @@ class CompanyRoleController extends Controller
                 continue;
             }
 
-            $type = ucwords(substr(str_replace('-', ' ', $permission->name), strpos($permission->name, "-") + 1));
+            $type = trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', str_replace('App\\Models\\', '', $permission->entity_type)));
             $permission->type = $type;
         }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Role;
 use Silber\Bouncer\Bouncer;
 
 use Closure;
@@ -40,6 +41,7 @@ class ScopeBouncer
         $companyId = ($request->user()) ? $request->user()->company_id : null;
 
         $this->bouncer->scope()->to($companyId);
+        $this->bouncer->useRoleModel(Role::class);
 
         return $next($request);
     }

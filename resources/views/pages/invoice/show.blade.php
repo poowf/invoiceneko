@@ -229,7 +229,11 @@
                             <p class="mtop20">{{ $invoice->updated_at->format('d F, Y') }}</p>
                             <p>{{ $invoice->updated_at->format('h:i:s a') }}</p>
                             <span class="alt-badge info mtop20">Current Version</span>
+                            @can('update', $invoice)
                             @if(!$invoice->isLocked())<a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="btn btn-theme full-width mtop20">Edit</a>@endif
+                            @else
+                            <a href="{{ route('invoice.show', [ 'invoice' => $invoice->id ] ) }}" class="btn btn-theme full-width mtop20">View</a>
+                            @endcan
                         </div>
                     </div>
                     @foreach($histories as $key => $history)

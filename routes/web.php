@@ -95,12 +95,12 @@ Route::group(['middleware' => ['auth', '2fa']], function() {
         Route::post('/company/requests/{companyuserrequest}/reject', 'CompanyUserRequestController@reject')->name('company.requests.reject')->middleware('can:update, App\Models\CompanyUserRequest');
 
         /* Roles */
-        Route::get('/company/roles', 'CompanyRoleController@index')->name('company.roles.index')->middleware('can:view, Silber\Bouncer\Database\Role');
-        Route::get('/company/roles/create', 'CompanyRoleController@create')->name('company.roles.create')->middleware('can:view, Silber\Bouncer\Database\Role');
-        Route::post('/company/roles/create', 'CompanyRoleController@store')->name('company.roles.store')->middleware('can:create, Silber\Bouncer\Database\Role');
-        Route::get('/company/roles/{role}/edit', 'CompanyRoleController@edit')->name('company.roles.edit')->middleware('can:update, Silber\Bouncer\Database\Role');
-        Route::patch('/company/roles/{role}/edit', 'CompanyRoleController@update')->name('company.roles.update')->middleware('can:update, Silber\Bouncer\Database\Role');
-        Route::delete('/company/roles/{role}/destroy', 'CompanyRoleController@destroy')->name('company.roles.destroy')->middleware('can:delete, Silber\Bouncer\Database\Role');
+        Route::get('/company/roles', 'CompanyRoleController@index')->name('company.roles.index');
+        Route::get('/company/roles/create', 'CompanyRoleController@create')->name('company.roles.create')->middleware('can:create, App\Models\Role');
+        Route::post('/company/roles/create', 'CompanyRoleController@store')->name('company.roles.store')->middleware('can:create, App\Models\Role');
+        Route::get('/company/roles/{role}/edit', 'CompanyRoleController@edit')->name('company.roles.edit')->middleware('can:update,role');
+        Route::patch('/company/roles/{role}/edit', 'CompanyRoleController@update')->name('company.roles.update')->middleware('can:update,role');
+        Route::delete('/company/roles/{role}/destroy', 'CompanyRoleController@destroy')->name('company.roles.destroy')->middleware('can:delete,role');
 
         /* Migration */
         Route::get('/migration/', 'DataMigrationController@create')->name('migration.create');
@@ -120,7 +120,7 @@ Route::group(['middleware' => ['auth', '2fa']], function() {
 
         /* Invoice */
         Route::get('/invoices', 'InvoiceController@index')->name('invoice.index')->middleware('can:index, App\Models\Invoice');
-        Route::get('/invoices/archived', 'InvoiceController@index_archived')->name('invoice.index.archived');
+        Route::get('/invoices/archived', 'InvoiceController@index_archived')->name('invoice.index.archived')->middleware('can:index, App\Models\Invoice');
         Route::get('/invoice/create', 'InvoiceController@create')->name('invoice.create')->middleware('can:create, App\Models\Invoice');
         Route::post('/invoice/create', 'InvoiceController@store')->name('invoice.store')->middleware('can:create, App\Models\Invoice');
         Route::get('/invoice/{invoice}', 'InvoiceController@show')->name('invoice.show')->middleware('can:view,invoice');

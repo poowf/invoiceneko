@@ -2,6 +2,7 @@
 
 namespace App\Library\Poowf;
 
+use App\Models\Role;
 use Carbon\Carbon;
 use Log;
 use Recurr\Frequency;
@@ -12,7 +13,19 @@ use Silber\Bouncer\BouncerFacade as Bouncer;
 
 class Unicorn
 {
-    private static $modelEnum = ['Invoice', 'Quote', 'Item Template', 'Payment', 'Client', 'Company', 'Company Address', 'Company Settings', 'Company User Requests', 'Role', 'User'];
+    private static $modelClasses = [
+        \App\Models\Invoice::class,
+        \App\Models\Quote::class,
+        \App\Models\ItemTemplate::class,
+        \App\Models\Payment::class,
+        \App\Models\Client::class,
+        \App\Models\Company::class,
+        \App\Models\CompanyAddress::class,
+        \App\Models\CompanySettings::class,
+        \App\Models\CompanyUserRequest::class,
+        \App\Models\Role::class,
+        \App\Models\User::class
+    ];
 
     public function  __construct()
     {
@@ -100,6 +113,7 @@ class Unicorn
     public static function createRoleAndPermissions($scopeId = null)
     {
         Bouncer::scope()->to($scopeId);
+        Bouncer::useRoleModel(Role::class);
 
         $gadmin = Bouncer::role()->firstOrCreate([
             'name' => str_slug('Global Administrator'),
@@ -123,76 +137,84 @@ class Unicorn
 
     public static function createPermissions($scopeId = null)
     {
-        foreach(self::$modelEnum as $model)
+        foreach(self::$modelClasses as $key => $model)
         {
             self::createCrudPermissions($scopeId, $model);
         }
     }
 
-    protected static function createCrudPermissions($scopeId, $modelName)
+    protected static function createCrudPermissions($scopeId, $model)
     {
         Bouncer::scope()->to($scopeId);
+        Bouncer::useRoleModel(Role::class);
 
-        Bouncer::ability()->firstOrCreate([
-            'name' => 'view-' . str_slug(strtolower($modelName)),
-            'title' => 'View ' . $modelName,
-        ]);
+        Bouncer::ability()->makeForModel($model, [
+            'name' => 'view-' . str_slug(strtolower(self::getModelNiceName($model))),
+            'title' => 'View ' . self::getModelNiceName($model),
+        ])->save();
 
-        Bouncer::ability()->firstOrCreate([
-            'name' => 'create-' . str_slug(strtolower($modelName)),
-            'title' => 'Create ' . $modelName,
-        ]);
+        Bouncer::ability()->makeForModel($model, [
+            'name' => 'create-' . str_slug(strtolower(self::getModelNiceName($model))),
+            'title' => 'Create ' . self::getModelNiceName($model),
+        ])->save();
 
-        Bouncer::ability()->firstOrCreate([
-            'name' => 'update-' . str_slug(strtolower($modelName)),
-            'title' => 'Update ' . $modelName,
-        ]);
+        Bouncer::ability()->makeForModel($model, [
+            'name' => 'update-' . str_slug(strtolower(self::getModelNiceName($model))),
+            'title' => 'Update ' . self::getModelNiceName($model),
+        ])->save();
 
-        Bouncer::ability()->firstOrCreate([
-            'name' => 'delete-' . str_slug(strtolower($modelName)),
-            'title' => 'Delete ' . $modelName,
-        ]);
+        Bouncer::ability()->makeForModel($model, [
+            'name' => 'delete-' . str_slug(strtolower(self::getModelNiceName($model))),
+            'title' => 'Delete ' . self::getModelNiceName($model),
+        ])->save();
     }
 
-    protected static function assignCrudPermissions($scopeId, $role, $methodName = 'all', $modelName = 'all')
+    protected static function assignCrudPermissions($scopeId, $role, $methodName = 'all', $modelClass = 'all')
     {
         switch($methodName)
         {
             case 'all':
-                self::assignPermissions($scopeId, $role, 'view', $modelName);
-                self::assignPermissions($scopeId, $role, 'create', $modelName);
-                self::assignPermissions($scopeId, $role, 'update', $modelName);
-                self::assignPermissions($scopeId, $role, 'delete', $modelName);
+                self::assignPermissions($scopeId, $role, 'view', $modelClass);
+                self::assignPermissions($scopeId, $role, 'create', $modelClass);
+                self::assignPermissions($scopeId, $role, 'update', $modelClass);
+                self::assignPermissions($scopeId, $role, 'delete', $modelClass);
                 break;
             case 'view':
-                self::assignPermissions($scopeId, $role, 'view', $modelName);
+                self::assignPermissions($scopeId, $role, 'view', $modelClass);
                 break;
             case 'create':
-                self::assignPermissions($scopeId, $role, 'create', $modelName);
+                self::assignPermissions($scopeId, $role, 'create', $modelClass);
                 break;
             case 'update':
-                self::assignPermissions($scopeId, $role, 'update', $modelName);
+                self::assignPermissions($scopeId, $role, 'update', $modelClass);
                 break;
             case 'delete':
-                self::assignPermissions($scopeId, $role, 'delete', $modelName);
+                self::assignPermissions($scopeId, $role, 'delete', $modelClass);
                 break;
         }
     }
 
-    protected static function assignPermissions($scopeId, $role, $methodName, $modelName)
+    protected static function assignPermissions($scopeId, $role, $methodName, $modelClass)
     {
         Bouncer::scope()->to($scopeId);
+        Bouncer::useRoleModel(Role::class);
 
-        if($modelName === 'all')
+        if($modelClass === 'all')
         {
-            foreach(self::$modelEnum as $model)
+            foreach(self::$modelClasses as $key => $model)
             {
-                Bouncer::allow($role)->to($methodName . '-' . str_slug(strtolower($model)));
+                Bouncer::allow($role)->to($methodName . '-' . str_slug(strtolower(self::getModelNiceName($model))), $model);
             }
         }
         else
         {
-            Bouncer::allow($role)->to($methodName . '-' . str_slug(strtolower($modelName)));
+            Bouncer::allow($role)->to($methodName . '-' . str_slug(strtolower(self::getModelNiceName($modelClass))), $modelClass);
         }
+    }
+
+    protected static function getModelNiceName($modelClass)
+    {
+        $transformed = trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', str_replace('::class', '', str_replace('App\\Models\\', '', $modelClass))));
+        return $transformed;
     }
 }

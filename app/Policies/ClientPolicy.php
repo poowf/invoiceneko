@@ -23,7 +23,7 @@ class ClientPolicy
 
     public function index(User $user)
     {
-        return $user->can('view-client');
+        return $user->can('view-client', Client::class);
     }
 
     /**
@@ -35,7 +35,7 @@ class ClientPolicy
      */
     public function view(User $user, Client $client)
     {
-        return $user->can('view-client');
+        return $user->can('view-client', $client);
     }
 
     /**
@@ -46,7 +46,7 @@ class ClientPolicy
      */
     public function create(User $user)
     {
-        return $user->can('create-client');
+        return $user->can('create-client', Client::class);
     }
 
     /**
@@ -58,7 +58,7 @@ class ClientPolicy
      */
     public function update(User $user, Client $client)
     {
-        return $user->can('update-client');
+        return $user->can('update-client', $client);
     }
 
     /**
@@ -70,6 +70,6 @@ class ClientPolicy
      */
     public function delete(User $user, Client $client)
     {
-        return $user->can('delete-client');
+        return $user->can('delete-client', $client);
     }
 }
