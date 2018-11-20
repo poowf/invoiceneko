@@ -23,7 +23,7 @@ class InvoicePolicy
 
     public function index(User $user)
     {
-        return $user->can('view-invoice');
+        return $user->can('view-invoice', Invoice::class);
     }
 
     /**
@@ -35,7 +35,7 @@ class InvoicePolicy
      */
     public function view(User $user, Invoice $invoice)
     {
-        return $user->can('view-invoice');
+        return $user->can('view-invoice', $invoice);
     }
 
     /**
@@ -46,7 +46,7 @@ class InvoicePolicy
      */
     public function create(User $user)
     {
-        return $user->can('create-invoice');
+        return $user->can('create-invoice', Invoice::class);
     }
 
     /**
@@ -58,7 +58,7 @@ class InvoicePolicy
      */
     public function update(User $user, Invoice $invoice)
     {
-        return $user->can('update-invoice');
+        return $user->can('update-invoice', $invoice);
     }
 
     /**
@@ -70,6 +70,6 @@ class InvoicePolicy
      */
     public function delete(User $user, Invoice $invoice)
     {
-        return $user->can('delete-invoice');
+        return $user->can('delete-invoice', $invoice);
     }
 }

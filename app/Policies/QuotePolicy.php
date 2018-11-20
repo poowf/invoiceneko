@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\User;
 use App\Models\Quote;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Silber\Bouncer\BouncerFacade as Bouncer;
 
 class QuotePolicy
 {
@@ -23,7 +24,8 @@ class QuotePolicy
 
     public function index(User $user)
     {
-        return $user->can('view-quote');
+//        dd($user->roles()->first()->getAbilities());
+        return $user->can('view-quote', Quote::class);
     }
 
     /**
@@ -35,7 +37,7 @@ class QuotePolicy
      */
     public function view(User $user, Quote $quote)
     {
-        return $user->can('view-quote');
+        return $user->can('view-quote', $quote);
     }
 
     /**
@@ -46,7 +48,7 @@ class QuotePolicy
      */
     public function create(User $user)
     {
-        return $user->can('create-quote');
+        return $user->can('create-quote', Quote::class);
     }
 
     /**
@@ -58,7 +60,7 @@ class QuotePolicy
      */
     public function update(User $user, Quote $quote)
     {
-        return $user->can('update-quote');
+        return $user->can('update-quote', $quote);
     }
 
     /**
@@ -70,6 +72,6 @@ class QuotePolicy
      */
     public function delete(User $user, Quote $quote)
     {
-        return $user->can('delete-quote');
+        return $user->can('delete-quote', $quote);
     }
 }

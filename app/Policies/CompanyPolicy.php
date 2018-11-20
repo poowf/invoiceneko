@@ -23,6 +23,11 @@ class CompanyPolicy
         }
     }
 
+    public function index(User $user)
+    {
+        return $user->can('view-company', Company::class);
+    }
+
     /**
      * Determine whether the user can view the company.
      *
@@ -30,9 +35,9 @@ class CompanyPolicy
      * @param  \App\Models\Company  $company
      * @return mixed
      */
-    public function view(User $user)
+    public function view(User $user, Company $company)
     {
-        return $user->can('view-company');
+        return $user->can('view-company', $company);
     }
 
     /**
@@ -55,7 +60,7 @@ class CompanyPolicy
      */
     public function update(User $user)
     {
-        return $user->company->isOwner($user) || $user->can('update-company');
+        return $user->company->isOwner($user) || $user->can('update-company', Company::class);
     }
 
     /**
@@ -67,7 +72,7 @@ class CompanyPolicy
      */
     public function delete(User $user)
     {
-        return $user->company->isOwner($user) || $user->can('delete-company');
+        return $user->company->isOwner($user) || $user->can('delete-company', Company::class);
     }
 
     /**

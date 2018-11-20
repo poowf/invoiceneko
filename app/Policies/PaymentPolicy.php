@@ -23,7 +23,7 @@ class PaymentPolicy
 
     public function index(User $user)
     {
-        return $user->can('view-payment');
+        return $user->can('view-payment', Payment::class);
     }
 
     /**
@@ -35,7 +35,7 @@ class PaymentPolicy
      */
     public function view(User $user, Payment $payment)
     {
-        return $user->can('view-payment');
+        return $user->can('view-payment', $payment);
     }
 
     /**
@@ -46,7 +46,7 @@ class PaymentPolicy
      */
     public function create(User $user)
     {
-        return $user->can('create-payment');
+        return $user->can('create-payment', Payment::class);
     }
 
     /**
@@ -58,7 +58,7 @@ class PaymentPolicy
      */
     public function update(User $user, Payment $payment)
     {
-        return $user->can('update-payment');
+        return $user->can('update-payment', $payment);
     }
 
     /**
@@ -70,6 +70,6 @@ class PaymentPolicy
      */
     public function delete(User $user, Payment $payment)
     {
-        return $user->can('delete-payment');
+        return $user->can('delete-payment', $payment);
     }
 }

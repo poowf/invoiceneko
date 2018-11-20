@@ -41,7 +41,7 @@
                                         <div class="switch mtop20">
                                             <label>
                                                 Deny
-                                                <input id="permissions[]" name="permissions[]" type="checkbox" value="{{ $permissions[$i]->name }}" @foreach($rolePermissions as $rolePermission) @if($permissions[$i]->name == $rolePermission->name) checked @endif @endforeach>
+                                                <input id="permissions[]" name="permissions[]" type="checkbox" value="{{ $permissions[$i]->name . '-' . $permissions[$i]->type }}" @foreach($rolePermissions as $rolePermission) @if(($permissions[$i]->name . $permissions[$i]->entity_type) == ($rolePermission->name . $rolePermission->entity_type)) checked @endif @endforeach>
                                                 <span class="lever"></span>
                                                 Allow
                                             </label>

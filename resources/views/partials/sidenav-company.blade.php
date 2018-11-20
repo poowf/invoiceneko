@@ -5,13 +5,13 @@
             @can('update', \App\Models\Company::class)
             <a href="{{ route('company.edit') }}" class="collection-item {{ Ekko::isActiveRoute('company.edit') }}">Details</a>
             @endcan
-            @can('view', \Silber\Bouncer\Database\Role::class)
+            @can('index', \App\Models\Role::class)
             <a href="{{ route('company.roles.index') }}" class="collection-item {{ Ekko::isActiveRoute('company.roles.*') }}">Roles</a>
             @endcan
-            @can('update', \App\Models\CompanySettings::class)
+            @can('create', \App\Models\CompanySettings::class)
             <a href="{{ route('company.settings.edit') }}" class="collection-item {{ Ekko::isActiveRoute('company.settings.edit') }}">Settings</a>
             @endcan
-            @can('update', \App\Models\CompanyAddress::class)
+            @can('create', \App\Models\CompanyAddress::class)
             <a href="{{ route('company.address.edit') }}" class="collection-item {{ Ekko::isActiveRoute('company.address.edit') }}">Address</a>
             @endcan
             @can('owner', \App\Models\Company::class)
@@ -20,7 +20,7 @@
             @can('update', \App\Models\Company::class)
             <a href="{{ route('company.users.index') }}" class="collection-item {{ Ekko::isActiveRoute('company.users.*') }}">Users</a>
             @endcan
-            @can('view', \App\Models\CompanyUserRequest::class)
+            @can('create', \App\Models\CompanyUserRequest::class)
             <a href="{{ route('company.requests.index') }}" class="collection-item {{ Ekko::isActiveRoute('company.requests.*') }}">Requests</a>
             @endcan
         @endif

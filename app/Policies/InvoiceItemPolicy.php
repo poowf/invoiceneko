@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Invoice;
 use App\Models\User;
 use App\Models\InvoiceItem;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -21,6 +22,11 @@ class InvoiceItemPolicy
         }
     }
 
+    public function index(User $user)
+    {
+        return $user->can('view-invoice', InvoiceItem::class);
+    }
+
     /**
      * Determine whether the user can view the invoiceItem.
      *
@@ -30,7 +36,7 @@ class InvoiceItemPolicy
      */
     public function view(User $user, InvoiceItem $invoiceItem)
     {
-        return $user->can('view-invoice');
+        return $user->can('view-invoice', Invoice::class);
     }
 
     /**
@@ -41,7 +47,7 @@ class InvoiceItemPolicy
      */
     public function create(User $user)
     {
-        return $user->can('create-invoice');
+        return $user->can('create-invoice', Invoice::class);
     }
 
     /**
@@ -53,7 +59,7 @@ class InvoiceItemPolicy
      */
     public function update(User $user, InvoiceItem $invoiceItem)
     {
-        return $user->can('update-invoice');
+        return $user->can('update-invoice', Invoice::class);
     }
 
     /**
@@ -65,6 +71,6 @@ class InvoiceItemPolicy
      */
     public function delete(User $user, InvoiceItem $invoiceItem)
     {
-        return $user->can('delete-invoice');
+        return $user->can('delete-invoice', Invoice::class);
     }
 }
