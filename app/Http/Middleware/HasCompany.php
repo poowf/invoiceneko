@@ -33,7 +33,7 @@ class HasCompany
      */
     public function handle($request, Closure $next)
     {
-        if (!$request->user()->company) {
+        if (!$request->route('company')->isOwner($request->user())) {
             return redirect()->route('nocompany');
         }
 

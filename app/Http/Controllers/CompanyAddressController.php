@@ -73,7 +73,7 @@ class CompanyAddressController extends Controller
             $companyaddress = null;
         }
 
-        return view('pages.company.address.edit', compact('companyaddress', 'ownedcompany'));
+        return view('pages.company.address.edit', compact('companyaddress', 'company'));
     }
 
     /**

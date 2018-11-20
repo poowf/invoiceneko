@@ -1,6 +1,6 @@
 @section('sidenav-company')
     <div class="collection">
-        @if(auth()->user()->company)
+        @if(app('request')->route('company')->hasUser(auth()->user()))
             <a href="{{ route('company.show', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}" class="collection-item {{ Ekko::isActiveRoute('company.show') }}">Company</a>
             @can('update', \App\Models\Company::class)
             <a href="{{ route('company.edit', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}" class="collection-item {{ Ekko::isActiveRoute('company.edit') }}">Details</a>

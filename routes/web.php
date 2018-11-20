@@ -13,6 +13,8 @@
 
 Route::get('/invoice/view', 'InvoiceController@showwithtoken')->name('invoice.token');
 Route::get('/quote/view', 'QuoteController@showwithtoken')->name('quote.token');
+Route::get('/company/create', 'CompanyController@create')->name('company.create');
+Route::post('/company/create', 'CompanyController@store')->name('company.store');
 
 Route::group(['middleware' => ['guest']], function() {
     /* Auth */
@@ -31,8 +33,6 @@ Route::group(['middleware' => ['guest']], function() {
     Route::post('/user/create', 'UserController@store')->name('user.store');
 
     /* Company */
-    Route::get('/company/create', 'CompanyController@create')->name('company.create');
-    Route::post('/company/create', 'CompanyController@store')->name('company.store');
     Route::get('/company/check', 'CompanyController@show_check')->name('company.show_check');
     Route::post('/company/check', 'CompanyController@check')->name('company.check');
 
@@ -63,6 +63,7 @@ Route::group(['middleware' => ['auth', '2fa']], function() {
     Route::delete('/user/multifactor/destroy', 'UserController@multifactor_destroy')->name('user.multifactor.destroy');
 
     Route::group(['prefix' => '{company}'], function() {
+    Route::get('/', 'MainController@dashboard')->name('company.main');
     /* Company */
     Route::get('/company/show', 'CompanyController@show')->name('company.show');
     Route::get('/company/edit', 'CompanyController@edit')->name('company.edit')->middleware('can:update, App\Models\Company');

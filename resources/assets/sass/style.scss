@@ -575,7 +575,7 @@ mark {
 }
 
 .btn-link {
-  background-color: #299a9a !important;
+  background-color: #585454 !important;
 }
 
 .btn-link:hover, .btn-link:focus {
@@ -604,7 +604,8 @@ mark {
 }
 
 :root:root:root .btn-floating:hover {
-  background-color: #e57373 !important;
+  background-color: #585454 !important;
+  box-shadow: 0 5px 11px 0 rgba(200, 200, 200, 0.18), 0 4px 15px 0 rgba(200, 200, 200, 0.15);
 }
 
 .btn-facebook {
@@ -806,7 +807,7 @@ textarea.valid + label:after {
 
 /* Header */
 nav {
-  background-color: #fff;
+  background-color: #299a9a;
   height: 80px;
 }
 
@@ -831,7 +832,7 @@ nav .logo img {
 }
 
 nav .logo .logo-text {
-  color: #000000;
+  color: #ffffff;
   float: left;
   font-family: "Comfortaa", sans-serif;
   font-size: 1.3em;
@@ -850,7 +851,7 @@ nav ul {
 }
 
 nav ul a {
-  color: #000;
+  color: #ffffff;
 }
 
 nav ul li.active a {
@@ -880,11 +881,81 @@ nav .sidenav-trigger span {
   font-size: 2em;
 }
 
-nav .button-collapse i {
-  height: 80px;
-  line-height: 80px;
-  font-size: 30px;
-  color: #000;
+nav .company-selector-btn i {
+  line-height: 40px;
+  height: 40px;
+}
+
+nav .my-account-btn .dropdown-text:after {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 6px 6px 0 6px;
+  border-color: #ffffff transparent transparent transparent;
+  top: 14px;
+  right: 20px;
+}
+
+nav .my-account-mobile-btn .dropdown-text:after {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 6px 6px 0 6px;
+  border-color: #ffffff transparent transparent transparent;
+  top: 20px;
+  right: 15px;
+}
+
+nav .dropdown-content.top-arrow {
+  //top: calc(100% - 10px);
+  background-color: transparent;
+  box-shadow: none;
+  width: 180px !important;
+  max-height: 300px;
+}
+
+nav .dropdown-content.top-arrow li:first-child {
+  padding-top: 8px;
+}
+
+nav .dropdown-content.top-arrow li {
+  background-color: transparent;
+}
+
+nav .dropdown-content.top-arrow li form, nav .dropdown-content.top-arrow li a {
+  background-color: #ffffff;
+  text-align: center;
+  min-height: 50px;
+}
+
+nav .dropdown-content.top-arrow li form button {
+  padding: 15px 0px;
+  width: 100%;
+}
+
+nav .dropdown-content.top-arrow li form:hover, nav .dropdown-content.top-arrow li a:hover {
+  background-color: #299a9a;
+  color: #ffffff;
+}
+
+nav .dropdown-content.top-arrow li form:hover button {
+  color: #ffffff;
+}
+
+nav .dropdown-content.top-arrow:before {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 8px 8px 8px;
+  border-color: transparent transparent #ffffff transparent;
+  top: 0px;
+  left: 12px;
 }
 
 .sidenav li {
@@ -1265,15 +1336,6 @@ label.rbtn-label.invalid:after {
 /* Media Queries */
 
 @media only screen and (min-width: 601px) {
-  nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
-    height: 80px;
-    line-height: 80px;
-  }
-
-  nav .nav-wrapper i {
-    font-size: 30px;
-  }
-
   .force-image-size {
     height: 170px;
     margin: auto;

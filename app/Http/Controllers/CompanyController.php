@@ -51,12 +51,12 @@ class CompanyController extends Controller
      */
     public function store(CreateCompanyRequest $request, Company $company)
     {
-        if ($request->session()->has('user_id')) {
+        if ($request->session()->has('user_id') || auth()->check()) {
             $company = new Company;
             $company->fill($request->all());
-            $company->user_id = $request->session()->pull('user_id');
-            $company->timezone = 'UTC';
-            if($request->has('country_code') && !is_null($request->input('country_code')))
+            $company->user_id = ($request->session()->has('user_id')) ? $request->session()->pull('user_id') : auth()->user()->id;
+
+            if(!is_null($request->input('country_code')) && is_null($request->input('timezone')))
             {
                 if($request->has('timezone') && is_null($request->input('timezone')))
                 {
@@ -69,6 +69,10 @@ class CompanyController extends Controller
                         ->zone_name;
                     $company->timezone = $timezone;
                 }
+            }
+            elseif (is_null($company->timezone))
+            {
+                $company->timezone = 'UTC';
             }
             $company->save();
 
@@ -115,10 +119,9 @@ class CompanyController extends Controller
             }
 
             $company->save();
-
             $company->users()->attach($company->user_id);
 
-             flash('You can now sign in', 'success');
+            flash('You can now sign in', 'success');
 
             return redirect()->route('auth.show');
         }
@@ -164,21 +167,6 @@ class CompanyController extends Controller
      */
     public function update(UpdateCompanyRequest $request, Company $company)
     {
-        $isnew = false;
-
-        if (auth()->user()->ownedcompany)
-        {
-            $company = auth()->user()->ownedcompany;
-        }
-        else
-        {
-            //TODO: Prevent User from registering a company if the domain name has already been registered.
-            $company = new Company;
-            $company->user_id = auth()->user()->id;
-            $isnew = true;
-        }
-
-
         $company->fill($request->all());
         if($request->has('country_code') && !is_null($request->input('country_code')))
         {
@@ -246,11 +234,6 @@ class CompanyController extends Controller
         }
 
         $company->save();
-
-        if ($isnew)
-        {
-            $company->users()->attach($company->user_id);
-        }
 
         flash('Company Updated', 'success');
 

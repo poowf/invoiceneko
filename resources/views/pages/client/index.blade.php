@@ -35,7 +35,7 @@
 
             <div class="col s6 right mtop30">
                 @can('create', \App\Models\Client::class)
-                <a href="{{ route('client.create', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}" class="btn waves-effect waves-dark">Create</a>
+                <a href="{{ route('client.create', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}" class="btn btn-link waves-effect waves-dark">Create</a>
                 @endcan
             </div>
         </div>

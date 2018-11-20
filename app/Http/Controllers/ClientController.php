@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateClientRequest;
 use App\Http\Requests\UpdateClientRequest;
+use App\Library\Poowf\Unicorn;
 use App\Models\Client;
 use App\Models\Company;
 use PragmaRX\Countries\Package\Countries;
@@ -54,7 +55,7 @@ class ClientController extends Controller
     {
         $client = new Client;
         $client->fill($request->all());
-        $client->company_id = auth()->user()->company_id;
+        $client->company_id = $company->id;
         $client->save();
 
         $storedirectory = '/perm_store/company/' . $client->company_id . '/clients/' . $client->id . '/photos/';
@@ -84,7 +85,7 @@ class ClientController extends Controller
 
         flash('Client Created', 'success');
 
-        return redirect()->route('client.index');
+        return redirect()->route('client.index', [ 'company' => Unicorn::getCompanyKey() ]);
     }
 
     /**
@@ -154,7 +155,7 @@ class ClientController extends Controller
 
         flash('Client Updated', 'success');
 
-        return redirect()->route('client.show', [ 'client' => $client->id ]);
+        return redirect()->route('client.show', [ 'client' => $client->id, 'company' => Unicorn::getCompanyKey() ]);
     }
 
     /**
@@ -171,7 +172,7 @@ class ClientController extends Controller
 
         flash('Client Deleted', 'success');
 
-        return redirect()->route('client.index');
+        return redirect()->route('client.index', [ 'company' => Unicorn::getCompanyKey() ]);
     }
 
     /**
@@ -181,7 +182,7 @@ class ClientController extends Controller
      */
     public function invoicecreate(Company $company, Client $client)
     {
-        return redirect()->route('invoice.create')->withInput([
+        return redirect()->route('invoice.create', [ 'company' => Unicorn::getCompanyKey() ])->withInput([
             'client_id' => $client->id
         ]);
     }

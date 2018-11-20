@@ -33,10 +33,19 @@ class AuthController extends Controller
         ];
 
         if (Auth::attempt($creds, $remember)) {
-            return redirect()->intended(route('dashboard', [ 'company' => Unicorn::getCompanyKey() ]));
+            $routeKey = Unicorn::getCompanyKey();
+            if($routeKey)
+            {
+                return redirect()->intended(route('dashboard', [ 'company' => $routeKey ]));
+            }
+            else
+            {
+                flash('Please fill in your company information first', 'error');
+                return redirect()->route('company.create');
+            }
         }
 
-        flash('Invalid Credentials', 'danger');
+        flash('Invalid Credentials', 'error');
         return redirect()->back();
     }
 

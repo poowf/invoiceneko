@@ -63,19 +63,16 @@ class CompanySettingsController extends Controller
      */
     public function edit(Company $company)
     {
-        $ownedcompany = $company;
-
-        if($ownedcompany)
+        if($company)
         {
-            $companysettings = $ownedcompany->settings;
+            $companysettings = $company->settings;
         }
         else
         {
             $companysettings = null;
         }
 
-
-        return view('pages.company.settings.edit', compact('companysettings', 'ownedcompany'));
+        return view('pages.company.settings.edit', compact('companysettings', 'company'));
     }
 
     /**
@@ -87,8 +84,7 @@ class CompanySettingsController extends Controller
      */
     public function update(UpdateCompanySettingsRequest $request, Company $company)
     {
-        $ownedcompany = auth()->user()->ownedcompany;
-        $companysettings = $ownedcompany->settings;
+        $companysettings = $company->settings;
 
         if(!$companysettings)
         {
@@ -96,7 +92,7 @@ class CompanySettingsController extends Controller
         }
 
         $companysettings->fill($request->all());
-        $ownedcompany->settings()->save($companysettings);
+        $company->settings()->save($companysettings);
 
         flash('Company Settings Updated', 'success');
         return redirect()->back();

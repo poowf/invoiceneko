@@ -81,30 +81,24 @@
                                     @endif
                                 </td>
                                 <td>
-<<<<<<< da9089e6a7359021b663daf53d48fcb84ab9a1c0
                                     @can('view', $invoice)
-                                        <a href="{{ route('invoice.show', [ 'invoice' => $invoice->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Invoice"><i class="material-icons">remove_red_eye</i></a>
+                                        <a href="{{ route('invoice.show', [ 'invoice' => $invoice->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Invoice"><i class="material-icons">remove_red_eye</i></a>
                                     @endcan
                                     @can('update', $invoice)
-                                        @if(!$invoice->isLocked())<a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Invoice"><i class="material-icons">mode_edit</i></a>@endif
+                                        @if(!$invoice->isLocked())<a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Invoice"><i class="material-icons">mode_edit</i></a>@endif
                                     @endcan
                                     @can('update', $invoice)
-                                        <form method="post" action="{{ route('invoice.duplicate', [ 'invoice' => $invoice->id ] ) }}" class="null-form tooltipped" data-position="top" data-delay="50" data-tooltip="Duplicate Invoice">
+                                        <form method="post" action="{{ route('invoice.duplicate', [ 'invoice' => $invoice->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form tooltipped" data-position="top" data-delay="50" data-tooltip="Duplicate Invoice">
                                             {{ csrf_field() }}
                                             <button class="null-btn" type="submit"><i class="material-icons">control_point_duplicate</i></button>
                                         </form>
                                     @endcan
                                     @can('view', $invoice)
-                                        <a href="{{ route('invoice.history.show', [ 'invoice' => $invoice->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Invoice History"><i class="material-icons">history</i></a>
+                                        <a href="{{ route('invoice.history.show', [ 'invoice' => $invoice->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Invoice History"><i class="material-icons">history</i></a>
                                     @endcan
                                     @can('delete', $invoice)
                                         <a href="#" data-id="{{ $invoice->id }}" class="invoice-delete-btn tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Invoice"><i class="material-icons">delete</i></a>
                                     @endcan
-=======
-                                    <a href="{{ route('invoice.show', [ 'invoice' => $invoice->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}"><i class="material-icons">remove_red_eye</i></a>
-                                    @if(!$invoice->isLocked())<a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}"><i class="material-icons">mode_edit</i></a>@endif
-                                    <a href="#" data-id="{{ $invoice->id }}" class="invoice-delete-btn"><i class="material-icons">delete</i></a>
->>>>>>> Refactor routes to use selected company data
                                 </td>
                             </tr>
                         @endforeach

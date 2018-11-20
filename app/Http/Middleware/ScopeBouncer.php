@@ -38,7 +38,7 @@ class ScopeBouncer
         // Here you may use whatever mechanism you use in your app
         // to determine the current tenant. To demonstrate, the
         // $tenantId is set here from the user's company_id.
-        $companyId = ($request->user()) ? $request->user()->company_id : null;
+        $companyId = ($request->route('company')) ? $request->route('company')->id : null;
 
         $this->bouncer->scope()->to($companyId);
         $this->bouncer->useRoleModel(Role::class);

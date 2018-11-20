@@ -151,21 +151,6 @@ class User extends Authenticatable
         return $this->id == $model->user_id;
     }
 
-    public function isOfCompany($company_id)
-    {
-        return $this->company_id == $company_id;
-    }
-
-    public function isSuperAdmin()
-    {
-        return $this->hasRole('super-administrator');
-    }
-
-    public function isAdmin()
-    {
-        return $this->hasRole('administrator');
-    }
-
     public function confirmEmail()
     {
         $this->confirmation_token = null;
@@ -206,14 +191,9 @@ class User extends Authenticatable
         return $this->companies->first()->{(new Company)->getRouteKeyName()};
     }
 
-    public function company()
-    {
-        return $this->belongsTo('App\Models\Company', 'company_id');
-    }
-
     public function companies()
     {
-        return $this->belongsToMany(Company::class);
+        return $this->belongsToMany(Company::class)->withTimestamps();
     }
 
     public function ownedCompanies()

@@ -110,9 +110,13 @@ class Company extends Model
         return $prefix . sprintf('%06d', $this->quote_index);
     }
 
-    public function isOwner(User $user)
+    public function isOwner($user)
     {
         return $this->user_id == $user->id;
+    }
+
+    public function hasUser($user) {
+        return $this->users->contains($user);
     }
 
     public function lastinvoice()
@@ -127,7 +131,7 @@ class Company extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)->withTimestamps();
     }
 
     public function requests()

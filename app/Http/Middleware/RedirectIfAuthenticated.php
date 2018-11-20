@@ -20,8 +20,14 @@ class RedirectIfAuthenticated
     {
         if (Auth::guard($guard)->check()) {
             $routeKey = Unicorn::getCompanyKey();
-            dd($routeKey);
-            return redirect()->route('dashboard', ['company' => $routeKey]);
+            if($routeKey)
+            {
+                return redirect()->route('dashboard', ['company' => $routeKey]);
+            }
+            else
+            {
+                return redirect()->route('company.create');
+            }
         }
 
         return $next($request);
