@@ -188,7 +188,7 @@ class User extends Authenticatable
 
     public function getFirstCompanyKey()
     {
-        return $this->companies->first()->{(new Company)->getRouteKeyName()};
+        return (is_null($this->companies->first())) ? null : $this->companies->first()->{(new Company)->getRouteKeyName()};
     }
 
     public function companies()

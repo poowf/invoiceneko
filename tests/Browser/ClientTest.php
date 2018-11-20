@@ -23,6 +23,8 @@ class ClientTest extends DuskTestCase
         $company->owner->company_id = $company->id;
         $company->owner->save();
 
+        $company->users()->attach($company->user_id);
+
         $faker = Faker::create();
         $salutation = ["mr", "mrs", "mdm", "miss"];
 
@@ -31,11 +33,11 @@ class ClientTest extends DuskTestCase
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/dashboard')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->clickLink('Clients')
-                ->assertPathIs('/clients')
+                ->assertPathIs('/' . $company->domain_name . '/clients')
                 ->clickLink('Create')
-                ->assertPathIs('/client/create')
+                ->assertPathIs('/' . $company->domain_name . '/client/create')
                 ->type('companyname', $faker->company)
                 ->type('block', $faker->buildingNumber)
                 ->type('street', $faker->streetName)
