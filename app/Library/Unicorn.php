@@ -110,6 +110,7 @@ class Unicorn
         return $rule->getString();
     }
 
+<<<<<<< da9089e6a7359021b663daf53d48fcb84ab9a1c0
     public static function createRoleAndPermissions($scopeId = null)
     {
         Bouncer::scope()->to($scopeId);
@@ -217,4 +218,18 @@ class Unicorn
         $transformed = trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', str_replace('::class', '', str_replace('App\\Models\\', '', $modelClass))));
         return $transformed;
     }
+=======
+    public static function getCompanyKey()
+    {
+        if(session()->has('current_company_fqdn'))
+        {
+            return session()->get('current_company_fqdn');
+        }
+        else
+        {
+            $user = auth()->user();
+            return $user->getFirstCompanyKey();
+        }
+    }
+>>>>>>> Refactor routes to use selected company data
 }

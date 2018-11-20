@@ -18,7 +18,8 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            return redirect()->route('dashboard');
+            $routeKey = $request->user()->getFirstCompanyKey();
+            return redirect()->route('dashboard', ['company' => $routeKey]);
         }
 
         return $next($request);

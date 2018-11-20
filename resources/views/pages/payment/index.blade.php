@@ -14,7 +14,7 @@
 
             <div class="col s6 right mtop30">
                 @can('create', \App\Models\Payment::class)
-                <a href="{{ route('payment.createsolo') }}" class="btn waves-effect waves-dark">Create</a>
+                <a href="{{ route('payment.createsolo', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}" class="btn waves-effect waves-dark">Create</a>
                 @endcan
             </div>
         </div>

@@ -13,9 +13,10 @@ class CompanyAddressController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Company $company
      * @return void
      */
-    public function index()
+    public function index(Company $company)
     {
         //
     }
@@ -23,9 +24,10 @@ class CompanyAddressController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param Company $company
      * @return void
      */
-    public function create()
+    public function create(Company $company)
     {
         //
     }
@@ -34,9 +36,10 @@ class CompanyAddressController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
+     * @param Company $company
      * @return void
      */
-    public function store(Request $request)
+    public function store(Request $request, Company $company)
     {
         //
     }
@@ -44,10 +47,11 @@ class CompanyAddressController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param Company $company
      * @param  \App\Models\CompanyAddress $companyAddress
      * @return void
      */
-    public function show(CompanyAddress $companyAddress)
+    public function show(Company $company, CompanyAddress $companyAddress)
     {
         //
     }
@@ -55,9 +59,10 @@ class CompanyAddressController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
+     * @param Company $company
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit(Company $company)
     {
         $ownedcompany = auth()->user()->ownedcompany;
 
@@ -77,9 +82,10 @@ class CompanyAddressController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdateCompanyAddressRequest $request
+     * @param Company $company
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCompanyAddressRequest $request)
+    public function update(UpdateCompanyAddressRequest $request, Company $company)
     {
         $ownedcompany = auth()->user()->ownedcompany;
         $companyaddress = $ownedcompany->address;
@@ -100,10 +106,11 @@ class CompanyAddressController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param Company $company
      * @param  \App\Models\CompanyAddress $companyAddress
      * @return void
      */
-    public function destroy(CompanyAddress $companyAddress)
+    public function destroy(Company $company, CompanyAddress $companyAddress)
     {
         //
     }

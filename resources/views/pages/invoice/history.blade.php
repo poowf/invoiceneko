@@ -18,14 +18,14 @@
             </div>
             <div class="col s6 mtop30 right">
                 @can('update', $invoice)
-                <a class="btn btn-lg btn-default" href="{{ route('payment.create', [ 'invoice' => $invoice->id] ) }}">
+                <a class="btn btn-lg btn-default" href="{{ route('payment.create', [ 'invoice' => $invoice->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}">
                     Log Payment
                 </a>
                 @endcan
-                <a class="btn btn-lg btn-default" href="{{ route('invoice.download', [ 'invoice' => $invoice->id] ) }}">
+                <a class="btn btn-lg btn-default" href="{{ route('invoice.download', [ 'invoice' => $invoice->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}">
                     Save PDF
                 </a>
-                <a class="btn btn-lg btn-default" href="{{ route('invoice.printview', [ 'invoice' => $invoice->id] ) }}">
+                <a class="btn btn-lg btn-default" href="{{ route('invoice.printview', [ 'invoice' => $invoice->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}">
                     Print
                 </a>
             </div>
@@ -84,7 +84,7 @@
                             <h6>Date/Time</h6>
                             <p class="mtop20">{{ $history->updated_at->format('d F, Y') }}</p>
                             <p>{{ $history->updated_at->format('h:i:s a') }}</p>
-                            <a class="btn btn-link full-width blue-grey lighten-1 waves-effect waves-dark" href="{{ route('invoice.old.show', [ 'oldinvoice' => $history->id ] ) }}">
+                            <a class="btn btn-link full-width blue-grey lighten-1 waves-effect waves-dark" href="{{ route('invoice.old.show', [ 'oldinvoice' => $history->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}">
                                 View
                             </a>
                         </div>

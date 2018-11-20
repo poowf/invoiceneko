@@ -14,7 +14,7 @@
                 <h2>You have not completed your company information</h2>
                 <div class="error-description">You need to fill in your company information before continuing</div>
                 <div class="error-goback-text">Maybe you should fill in your company information first?</div>
-                <div class="error-goback-button mbtm30"><a href="{{ route('company.edit') }}" class="btn btn-xl btn-primary btn-link">Fill in Information</a></div>
+                <div class="error-goback-button mbtm30"><a href="{{ route('company.edit', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}" class="btn btn-xl btn-primary btn-link">Fill in Information</a></div>
                 <div class="footer">&copy; {{ date('Y') }} {{ config('app.name') }}</div>
             </div>
         </div>

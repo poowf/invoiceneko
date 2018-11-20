@@ -21,18 +21,20 @@ class CompanyController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Company $company
      * @return void
      */
-    public function index()
+    public function index(Company $company)
     {
     }
 
     /**
      * Show the form for creating a new resource.
      *
+     * @param Company $company
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Company $company)
     {
         $countries = $this->countries->all();
         $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
@@ -44,9 +46,10 @@ class CompanyController extends Controller
      * Store a newly created resource in storage.
      *
      * @param CreateCompanyRequest $request
+     * @param Company $company
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateCompanyRequest $request)
+    public function store(CreateCompanyRequest $request, Company $company)
     {
         if ($request->session()->has('user_id')) {
             $company = new Company;
@@ -132,22 +135,22 @@ class CompanyController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param Company $company
      * @return void
      */
-    public function show()
+    public function show(Company $company)
     {
-        $company = auth()->user()->company;
         return view('pages.company.show', compact('company'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
+     * @param Company $company
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit(Company $company)
     {
-        $company = auth()->user()->ownedcompany;
         $countries = $this->countries->all();
         $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
 
@@ -158,9 +161,10 @@ class CompanyController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdateCompanyRequest $request
+     * @param Company $company
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCompanyRequest $request)
+    public function update(UpdateCompanyRequest $request, Company $company)
     {
         $isnew = false;
 
@@ -260,16 +264,15 @@ class CompanyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param Company $company
      * @return void
      */
-    public function destroy()
+    public function destroy(Company $company)
     {
         //
     }
 
-    public function edit_owner() {
-        $company = auth()->user()->company;
-
+    public function edit_owner(Company $company) {
         if($company)
         {
             $owner = $company->owner;
@@ -284,7 +287,12 @@ class CompanyController extends Controller
         return view('pages.company.owner.edit', compact('company', 'owner', 'users'));
     }
 
-    public function update_owner(UpdateCompanyOwnerRequest $request) {
+    /**
+     * @param UpdateCompanyOwnerRequest $request
+     * @param Company $company
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update_owner(UpdateCompanyOwnerRequest $request, Company $company) {
         $company = auth()->user()->ownedcompany;
         $user = User::find($request->input('user_id'));
         $company->user_id = $user->id;
@@ -293,12 +301,21 @@ class CompanyController extends Controller
         return redirect()->back();
     }
 
-    public function show_check()
+    /**
+     * @param Company $company
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show_check(Company $company)
     {
         return view('pages.company.check');
     }
 
-    public function check(Request $request)
+    /**
+     * @param Request $request
+     * @param Company $company
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function check(Request $request, Company $company)
     {
         $email = $request->input('email');
 
@@ -316,5 +333,19 @@ class CompanyController extends Controller
         {
             return redirect()->route('user.create');
         }
+    }
+
+    /**
+     * @param Request $request
+     * @param Company $company
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function switch(Request $request, Company $company)
+    {
+        $companyDomainName = $request->input('domain_name');
+
+        session()->put('current_company_fqdn', $companyDomainName);
+
+        return redirect()->route('dashboard', ['company' => $companyDomainName]);
     }
 }

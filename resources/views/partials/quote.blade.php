@@ -295,10 +295,10 @@
         </div>
         <div class="row quote-footer">
             <div class="col s12 center">
-                <a class="btn btn-lg btn-space btn-default" href="{{ route('quote.download', [ 'quote' => $quote->id] ) }}">
+                <a class="btn btn-lg btn-space btn-default" href="{{ route('quote.download', [ 'quote' => $quote->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}">
                     Save PDF
                 </a>
-                <a class="btn btn-lg btn-space btn-default" href="{{ route('quote.printview', [ 'quote' => $quote->id] ) }}">
+                <a class="btn btn-lg btn-space btn-default" href="{{ route('quote.printview', [ 'quote' => $quote->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}">
                     Print
                 </a>
                 {{--

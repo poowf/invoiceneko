@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateCompanyUserRequest;
 use App\Http\Requests\UpdateCompanyUserRequest;
+use App\Models\Company;
 use App\Models\User;
 use App\Notifications\NewCompanyUserNotification;
 use DateTimeZone;
@@ -18,12 +19,17 @@ class CompanyUserController extends Controller
     }
 
     /**
+<<<<<<< da9089e6a7359021b663daf53d48fcb84ab9a1c0
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
+=======
+     * @param Company $company
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index(Company $company)
+>>>>>>> Refactor routes to use selected company data
     {
-        $company = auth()->user()->company;
-
         if($company)
         {
             $users = $company->users()->paginate(12);
@@ -37,11 +43,17 @@ class CompanyUserController extends Controller
     }
 
     /**
+<<<<<<< da9089e6a7359021b663daf53d48fcb84ab9a1c0
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
+=======
+     * @param Company $company
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function create(Company $company)
+>>>>>>> Refactor routes to use selected company data
     {
-        $company = auth()->user()->company;
         $countries = $this->countries->all();
         $timezones = \DateTimeZone::listIdentifiers(DateTimeZone::ALL);
         $roles = Bouncer::role()->all();
@@ -51,12 +63,17 @@ class CompanyUserController extends Controller
 
     /**
      * @param CreateCompanyUserRequest $request
+<<<<<<< da9089e6a7359021b663daf53d48fcb84ab9a1c0
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(CreateCompanyUserRequest $request)
+=======
+     * @param Company $company
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(CreateCompanyUserRequest $request, Company $company)
+>>>>>>> Refactor routes to use selected company data
     {
-        $company = auth()->user()->company;
-
         $random_password = str_random(16);
 
         $user = new User;
@@ -75,10 +92,18 @@ class CompanyUserController extends Controller
     }
 
     /**
+<<<<<<< da9089e6a7359021b663daf53d48fcb84ab9a1c0
      * @param User $user
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(User $user)
+=======
+     * @param Company $company
+     * @param User $user
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function edit(Company $company, User $user)
+>>>>>>> Refactor routes to use selected company data
     {
         $countries = $this->countries->all();
         $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
@@ -90,10 +115,19 @@ class CompanyUserController extends Controller
 
     /**
      * @param UpdateCompanyUserRequest $request
+<<<<<<< da9089e6a7359021b663daf53d48fcb84ab9a1c0
      * @param User $user
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdateCompanyUserRequest $request, User $user)
+=======
+     * @param Company $company
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(UpdateCompanyUserRequest $re
+quest, Company $company, User $user)
+>>>>>>> Refactor routes to use selected company data
     {
         $user->fill($request->all());
         if ($request->has('newpassword') && $request->input('newpassword') != null) {
@@ -111,15 +145,23 @@ class CompanyUserController extends Controller
 
     /**
      * @param Request $request
+<<<<<<< da9089e6a7359021b663daf53d48fcb84ab9a1c0
+=======
+     * @param Company $company
+>>>>>>> Refactor routes to use selected company data
      * @param User $user
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
+<<<<<<< da9089e6a7359021b663daf53d48fcb84ab9a1c0
     public function destroy(Request $request, User $user)
+=======
+    public function destroy(Request $request, Company $company, User $user)
+>>>>>>> Refactor routes to use selected company data
     {
 
         $auth_user = auth()->user();
-        $usercompany = $user->company;
+        $usercompany = $company;
 
         //TODO: Probably need to rewrite/refactor this logic to somewhere else
         if ($usercompany)

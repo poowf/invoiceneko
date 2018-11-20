@@ -127,7 +127,7 @@ class Company extends Model
 
     public function users()
     {
-        return $this->belongsToMany('App\Models\User', 'user_id');
+        return $this->belongsToMany(User::class);
     }
 
     public function requests()

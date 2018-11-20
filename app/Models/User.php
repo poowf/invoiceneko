@@ -201,6 +201,11 @@ class User extends Authenticatable
         $this->notify(new ConfirmEmailNotification($token));
     }
 
+    public function getFirstCompanyKey()
+    {
+        return $this->companies->first()->{(new Company)->getRouteKeyName()};
+    }
+
     public function company()
     {
         return $this->belongsTo('App\Models\Company', 'company_id');
@@ -208,7 +213,7 @@ class User extends Authenticatable
 
     public function companies()
     {
-        return $this->belongsToMany('App\Models\Company', 'company_id');
+        return $this->belongsToMany(Company::class);
     }
 
     public function ownedcompany()

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateClientRequest;
 use App\Http\Requests\UpdateClientRequest;
 use App\Models\Client;
+use App\Models\Company;
 use PragmaRX\Countries\Package\Countries;
 use Storage;
 use Uuid;
@@ -19,11 +20,11 @@ class ClientController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Company $company
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Company $company)
     {
-        $company = auth()->user()->company;
         $clients = $company->clients;
 
         return view('pages.client.index', compact('clients'));
@@ -32,9 +33,10 @@ class ClientController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param Company $company
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Company $company)
     {
         $countries = $this->countries->all();
 
@@ -45,9 +47,10 @@ class ClientController extends Controller
      * Store a newly created resource in storage.
      *
      * @param CreateClientRequest $request
+     * @param Company $company
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateClientRequest $request)
+    public function store(CreateClientRequest $request, Company $company)
     {
         $client = new Client;
         $client->fill($request->all());
@@ -87,10 +90,11 @@ class ClientController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Client  $client
+     * @param Company $company
+     * @param  \App\Models\Client $client
      * @return \Illuminate\Http\Response
      */
-    public function show(Client $client)
+    public function show(Company $company, Client $client)
     {
         $invoices = $client->invoices;
         return view('pages.client.show', compact('client', 'invoices'));
@@ -99,10 +103,11 @@ class ClientController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Client  $client
+     * @param Company $company
+     * @param  \App\Models\Client $client
      * @return \Illuminate\Http\Response
      */
-    public function edit(Client $client)
+    public function edit(Company $company, Client $client)
     {
         $countries = $this->countries->all();
 
@@ -113,10 +118,11 @@ class ClientController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdateClientRequest $request
+     * @param Company $company
      * @param  \App\Models\Client $client
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateClientRequest $request, Client $client)
+    public function update(UpdateClientRequest $request, Company $company, Client $client)
     {
         $client->fill($request->all());
         $client->save();
@@ -154,11 +160,12 @@ class ClientController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param Company $company
      * @param  \App\Models\Client $client
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
-    public function destroy(Client $client)
+    public function destroy(Company $company, Client $client)
     {
         $client->delete();
 
@@ -168,10 +175,11 @@ class ClientController extends Controller
     }
 
     /**
+     * @param Company $company
      * @param Client $client
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function invoicecreate(Client $client)
+    public function invoicecreate(Company $company, Client $client)
     {
         return redirect()->route('invoice.create')->withInput([
             'client_id' => $client->id

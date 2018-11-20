@@ -13,7 +13,7 @@
             </div>
             <div class="col s6 right">
                 @can('create', \App\Models\Invoice::class)
-                <a href="{{ route('client.invoice.create', [ 'client' => $client->id ]) }}" class="btn btn-link waves-effect waves-dark mtop30">Create Invoice</a>
+                <a href="{{ route('client.invoice.create', [ 'client' => $client->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey()  ]) }}" class="btn btn-link waves-effect waves-dark mtop30">Create Invoice</a>
                 @endcan
             </div>
         </div>
@@ -81,6 +81,7 @@
                                     @endif
                                 </td>
                                 <td>
+<<<<<<< da9089e6a7359021b663daf53d48fcb84ab9a1c0
                                     @can('view', $invoice)
                                         <a href="{{ route('invoice.show', [ 'invoice' => $invoice->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Invoice"><i class="material-icons">remove_red_eye</i></a>
                                     @endcan
@@ -99,6 +100,11 @@
                                     @can('delete', $invoice)
                                         <a href="#" data-id="{{ $invoice->id }}" class="invoice-delete-btn tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Invoice"><i class="material-icons">delete</i></a>
                                     @endcan
+=======
+                                    <a href="{{ route('invoice.show', [ 'invoice' => $invoice->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}"><i class="material-icons">remove_red_eye</i></a>
+                                    @if(!$invoice->isLocked())<a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}"><i class="material-icons">mode_edit</i></a>@endif
+                                    <a href="#" data-id="{{ $invoice->id }}" class="invoice-delete-btn"><i class="material-icons">delete</i></a>
+>>>>>>> Refactor routes to use selected company data
                                 </td>
                             </tr>
                         @endforeach
