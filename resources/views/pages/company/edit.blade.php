@@ -113,10 +113,10 @@
                             <div class="input-field col s12">
                                 <select id="country_code" name="country_code" data-parsley-trigger="change" placeholder="Country">
                                     @foreach($countries as $country)
-                                        <option value="{{ $country['iso_3166_1_alpha2'] }}" @if($company->country_code == $country['iso_3166_1_alpha2']) selected @endif>{{ $country['name']['common'] }}</option>
+                                        <option value="{{ $country['iso_3166_1_alpha2'] }}" @if($company) @if($company->country_code == $country['iso_3166_1_alpha2']) selected @endif @endif>{{ $country['name']['common'] }}</option>
                                     @endforeach
                                 </select>
-                                <label for="country" class="label-validation">Country</label>
+                                <label for="country_code" class="label-validation">Country</label>
                                 <span class="helper-text"></span>
                             </div>
                         </div>
@@ -125,10 +125,10 @@
                                 <select id="timezone" name="timezone" data-parsley-trigger="change">
                                     <option disabled="" selected="selected" value="">Timezone</option>
                                     @foreach($timezones as $timezone)
-                                        <option value="{{ $timezone }}" @if($company->timezone == $timezone) selected @endif> {{ $timezone }}</option>
+                                        <option value="{{ $timezone }}" @if($company) @if($company->timezone == $timezone) selected @endif @endif> {{ $timezone }}</option>
                                     @endforeach
                                 </select>
-                                <label for="country" class="label-validation">Timezone</label>
+                                <label for="timezone" class="label-validation">Timezone</label>
                                 <span class="helper-text"></span>
                             </div>
                         </div>

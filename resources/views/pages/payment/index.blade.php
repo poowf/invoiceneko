@@ -13,7 +13,9 @@
             </div>
 
             <div class="col s6 right mtop30">
+                @can('create', \App\Models\Payment::class)
                 <a href="{{ route('payment.createsolo') }}" class="btn waves-effect waves-dark">Create</a>
+                @endcan
             </div>
         </div>
         <div class="row">
@@ -46,9 +48,15 @@
                                         <td>${{ $payment->moneyformat }}</td>
                                         <td>{{ $payment->receiveddate->format('d F, Y') }}</td>
                                         <td>
+                                            @can('view', $payment)
                                             <a href="{{ route('payment.show', [ 'payment' => $payment ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Payment"><i class="material-icons">remove_red_eye</i></a>
+                                            @endcan
+                                            @can('update', $payment)
                                             <a href="{{ route('payment.edit', [ 'payment' => $payment ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Payment"><i class="material-icons">mode_edit</i></a>
+                                            @endcan
+                                            @can('delete', $payment)
                                             <a href="#" data-id="{{ $payment->id }}" class="payment-delete-btn tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Payment"><i class="material-icons">delete</i></a>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach

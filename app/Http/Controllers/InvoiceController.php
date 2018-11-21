@@ -331,7 +331,7 @@ class InvoiceController extends Controller
     {
         $pdf = $invoice->generatePDFView();
 
-        return $pdf->inline(str_slug($invoice->nice_invoice_id) . 'test.pdf');
+        return $pdf->inline(str_slug($invoice->nice_invoice_id) . '.pdf');
     }
 
     /**

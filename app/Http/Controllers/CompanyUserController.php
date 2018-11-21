@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Notifications\NewCompanyUserNotification;
 use DateTimeZone;
 use PragmaRX\Countries\Package\Countries;
+use Silber\Bouncer\BouncerFacade as Bouncer;
 use Illuminate\Http\Request;
 
 class CompanyUserController extends Controller
@@ -16,6 +17,9 @@ class CompanyUserController extends Controller
         $this->countries = new Countries();
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         $company = auth()->user()->company;
@@ -32,15 +36,23 @@ class CompanyUserController extends Controller
         return view('pages.company.users.index', compact('users', 'company'));
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create()
     {
         $company = auth()->user()->company;
         $countries = $this->countries->all();
         $timezones = \DateTimeZone::listIdentifiers(DateTimeZone::ALL);
+        $roles = Bouncer::role()->all();
 
-        return view('pages.company.users.create', compact('company', 'countries', 'timezones'));
+        return view('pages.company.users.create', compact('company', 'countries', 'timezones', 'roles'));
     }
 
+    /**
+     * @param CreateCompanyUserRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(CreateCompanyUserRequest $request)
     {
         $company = auth()->user()->company;
@@ -53,18 +65,34 @@ class CompanyUserController extends Controller
         $user->company_id = $company->id;
         $user->save();
 
+        $roles = $request->input('roles');
+
+        Bouncer::sync($user)->roles($roles);
+
         $user->notify(new NewCompanyUserNotification($user, $random_password));
 
         return redirect()->route('company.users.index');
     }
 
+    /**
+     * @param User $user
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function edit(User $user)
     {
         $countries = $this->countries->all();
         $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
-        return view('pages.company.users.edit', compact('user', 'countries', 'timezones'));
+        $roles = Bouncer::role()->all();
+        $userRoles = $user->getRoles();
+
+        return view('pages.company.users.edit', compact('user', 'countries', 'timezones', 'roles', 'userRoles'));
     }
 
+    /**
+     * @param UpdateCompanyUserRequest $request
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(UpdateCompanyUserRequest $request, User $user)
     {
         $user->fill($request->all());
@@ -74,9 +102,19 @@ class CompanyUserController extends Controller
         }
         $user->save();
 
+        $roles = $request->input('roles');
+
+        Bouncer::sync($user)->roles($roles);
+
         return redirect()->back();
     }
 
+    /**
+     * @param Request $request
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
     public function destroy(Request $request, User $user)
     {
 

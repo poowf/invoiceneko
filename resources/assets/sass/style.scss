@@ -440,6 +440,8 @@ mark {
 
 /* Selectize */
 
+//TODO: There's a bug with multi select input on width > 1200px, the selected items will jump about. need to find a fix. minor issue.
+
 .selectize-control {
 }
 
@@ -447,7 +449,7 @@ mark {
   font-size: 1rem;
 }
 
-.selectize-control.single .selectize-input {
+.selectize-control .selectize-input {
   border: none;
   box-shadow: none;
   background-color: transparent;
@@ -457,13 +459,21 @@ mark {
   padding-top: 1px;
   padding-bottom: 0;
   height: 3rem;
+  display: inline-block;
+  width: 100%;
+  overflow: hidden;
 }
 
-:root:root:root .selectize-control.single .selectize-input.input-active {
+.selectize-control .selectize-input.full {
   background-color: transparent;
 }
 
-.selectize-control.single .selectize-input input {
+:root:root:root .selectize-control .selectize-input.input-active, :root:root:root .selectize-control .selectize-input.focus {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.selectize-control .selectize-input input {
   height: 2.8rem;
   border: none;
   outline: none;
@@ -471,7 +481,7 @@ mark {
   font-size: 16px;
  }
 
-.selectize-control.single .selectize-input .item {
+.selectize-control .selectize-input .item {
   display: inline-block;
   height: 2.8rem;
   line-height: 2.8rem;
@@ -485,6 +495,10 @@ mark {
   height: 2rem;
   line-height: 1rem;
   margin-top: 0.6rem;
+}
+
+:root:root:root .selectize-control.multi .selectize-input.has-items {
+  padding: 0;
 }
 
 :root:root:root .selectize-dropdown {

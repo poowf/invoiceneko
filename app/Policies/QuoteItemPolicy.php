@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Quote;
 use App\Models\User;
 use App\Models\QuoteItem;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -16,9 +17,14 @@ class QuoteItemPolicy
 
     public function before($user, $ability)
     {
-        if ($user->isSuperAdmin()) {
+        if ($user->isAn('global-administrator')) {
             return true;
         }
+    }
+
+    public function index(User $user)
+    {
+        return $user->can('view-quote', QuoteItem::class);
     }
 
     /**
@@ -30,7 +36,7 @@ class QuoteItemPolicy
      */
     public function view(User $user, QuoteItem $quoteItem)
     {
-        return $user->isOfCompany($quoteItem->quote->company_id);
+        return $user->can('view-quote', Quote::class);
     }
 
     /**
@@ -41,7 +47,7 @@ class QuoteItemPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->can('create-quote', Quote::class);
     }
 
     /**
@@ -53,7 +59,7 @@ class QuoteItemPolicy
      */
     public function update(User $user, QuoteItem $quoteItem)
     {
-        return $user->isOfCompany($quoteItem->quote->company_id);
+        return $user->can('update-quote', Quote::class);
     }
 
     /**
@@ -65,6 +71,6 @@ class QuoteItemPolicy
      */
     public function delete(User $user, QuoteItem $quoteItem)
     {
-        return $user->isOfCompany($quoteItem->quote->company_id);
+        return $user->can('delete-quote', Quote::class);
     }
 }
