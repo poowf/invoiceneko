@@ -18,42 +18,40 @@
             </div>
             <div class="col s12 m9 xl10">
                 <div class="card-panel">
-                    @if($user->twofa_timestamp)
-                        <form id="security" method="post" enctype="multipart/form-data">
-                            <div class="row">
-                                <label for="multifactor-auth" class="label-validation">Multifactor Authentication</label>
+                    <div class="row">
+                        <div class="col s12">
+                            @if($user->twofa_timestamp)
+                                <form id="security" method="post" enctype="multipart/form-data">
+                                    <label for="multifactor-auth" class="label-validation">Multifactor Authentication</label>
                                     <div class="switch">
-                                    <label>
-                                        Off
-                                        <input id="multifactor-auth" name="multifactor-auth" type="checkbox" checked>
-                                        <span class="lever"></span>
-                                        On
-                                    </label>
-                                    <span class="helper-text"></span>
-                                </div>
-                            </div>
-                        </form>
+                                        <label>
+                                            Off
+                                            <input id="multifactor-auth" name="multifactor-auth" type="checkbox" checked>
+                                            <span class="lever"></span>
+                                            On
+                                        </label>
+                                        <span class="helper-text"></span>
+                                    </div>
+                                </form>
 
-                        <form id="regenerate-2fa-codes" method="post" enctype="multipart/form-data" action="{{ route('user.multifactor.regenerate_codes') }}">
-                            <div class="row">
-                                <label for="multifactor-auth" class="label-validation">Multifactor Authentication</label>
-                                <div class="input-field col s12">
-                                    {{ csrf_field() }}
-                                    <button class="btn waves-effect waves-light" type="submit" name="action">Regenerate Backup Codes</button>
-                                </div>
-                            </div>
-                        </form>
-                    @else
-                    <form id="enable-2fa" method="post" enctype="multipart/form-data" action="{{ route('user.multifactor.start') }}">
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <label for="multifactor-auth" class="label-validation">Multifactor Authentication</label>
-                                {{ csrf_field() }}
-                                <button class="btn waves-effect waves-light mtop20" type="submit" name="action">Enable Multifactor Auth</button>
-                            </div>
+                                <form id="regenerate-2fa-codes" method="post" enctype="multipart/form-data" action="{{ route('user.multifactor.regenerate_codes') }}" class="mtop30">
+                                    <div class="input-field">
+                                        <label for="multifactor-auth" class="label-validation">Multifactor Authentication</label>
+                                        {{ csrf_field() }}
+                                        <button class="btn btn-link waves-effect waves-light null-btn mtop10" type="submit" name="action">Regenerate Backup Codes</button>
+                                    </div>
+                                </form>
+                            @else
+                                <form id="enable-2fa" method="post" enctype="multipart/form-data" action="{{ route('user.multifactor.start') }}" class="null-form">
+                                    <div class="input-field">
+                                        <label for="multifactor-auth" class="label-validation">Multifactor Authentication</label>
+                                        {{ csrf_field() }}
+                                        <button class="btn btn-link waves-effect waves-light null-btn mtop10" type="submit" name="action">Enable Multifactor Auth</button>
+                                    </div>
+                                </form>
+                            @endif
                         </div>
-                    </form>
-                    @endif
+                    </div>
                 </div>
             </div>
         </div>

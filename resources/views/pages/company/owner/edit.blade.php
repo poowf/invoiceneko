@@ -33,39 +33,41 @@
                         </dl>
                     </div>
                     @can('update', $owner->company)
-                        <form id="edit-owner" method="post" enctype="multipart/form-data">
-                            <div class="card-panel flex">
-                                <div class="input-field col s12">
-                                    <select id="user_id" name="user_id" class="user-list-selector" data-parsley-required="true" data-parsley-trigger="change">
-                                        <option disabled="" selected="selected" value="">Pick a new Owner</option>
-                                    </select>
-                                    <label for="user_id" class="label-validation">Owner</label>
-                                    <span class="helper-text"></span>
+                        @if($company->users->count() != 1)
+                            <form id="edit-owner" method="post" enctype="multipart/form-data">
+                                <div class="card-panel flex">
+                                    <div class="input-field col s12">
+                                        <select id="user_id" name="user_id" class="user-list-selector selectize-custom" data-parsley-required="true" data-parsley-trigger="change">
+                                            <option disabled="" selected="selected" value="">Pick a new Owner</option>
+                                        </select>
+                                        <label for="user_id" class="label-validation">Owner</label>
+                                        <span class="helper-text"></span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div id="owner-modification-panel" class="card-panel flex hide">
-                                <div class="col s12">
-                                    <h3 class="no-margin">New Company Owner</h3>
-                                    <dl>
-                                        <dt>Username</dt>
-                                        <dd><span class="red-text">{{ $owner->username }}</span> to <span id="new-username" class="green-text text-lighten-1 text-bold"></span></dd>
-                                        <dt>Email</dt>
-                                        <dd><span class="red-text">{{ $owner->email ?? '-' }}</span> to <span id="new-email" class="green-text text-lighten-1 text-bold"></span></dd>
-                                        <dt>Full Name</dt>
-                                        <dd><span class="red-text">{{ $owner->full_name ?? '-' }}</span> to <span id="new-fullname" class="green-text text-lighten-1 text-bold"></span></dd>
-                                        <dt>Phone</dt>
-                                        <dd><span class="red-text">{{ $owner->phone ?? '-' }}</span> to <span id="new-phone" class="green-text text-lighten-1 text-bold"></span></dd>
-                                    </dl>
+                                <div id="owner-modification-panel" class="card-panel flex hide">
+                                    <div class="col s12">
+                                        <h3 class="no-margin">New Company Owner</h3>
+                                        <dl>
+                                            <dt>Username</dt>
+                                            <dd><span class="red-text">{{ $owner->username }}</span> to <span id="new-username" class="green-text text-lighten-1 text-bold"></span></dd>
+                                            <dt>Email</dt>
+                                            <dd><span class="red-text">{{ $owner->email ?? '-' }}</span> to <span id="new-email" class="green-text text-lighten-1 text-bold"></span></dd>
+                                            <dt>Full Name</dt>
+                                            <dd><span class="red-text">{{ $owner->full_name ?? '-' }}</span> to <span id="new-fullname" class="green-text text-lighten-1 text-bold"></span></dd>
+                                            <dt>Phone</dt>
+                                            <dd><span class="red-text">{{ $owner->phone ?? '-' }}</span> to <span id="new-phone" class="green-text text-lighten-1 text-bold"></span></dd>
+                                        </dl>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    {{ method_field('PATCH') }}
-                                    {{ csrf_field() }}
-                                    <button class="btn waves-effect waves-light col s12 m3 offset-m9" type="submit" name="action">Update</button>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        {{ method_field('PATCH') }}
+                                        {{ csrf_field() }}
+                                        <button class="btn waves-effect waves-light col s12 m3 offset-m9" type="submit" name="action">Update</button>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        @endif
                     @endcan
                 @else
                     <div class="card-panel center">
