@@ -17,7 +17,7 @@
             <div class="col s6 right mtop30">
                 @if($users->isNotEmpty())
                     @can('owner', \App\Models\Company::class)
-                        <a href="{{ route('company.users.create', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}" class="btn btn-link waves-effect waves-dark">Add User</a>
+                        <a href="{{ route('company.users.invite', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}" class="btn btn-link waves-effect waves-dark">Invite User</a>
                     @endcan
                 @endif
             </div>

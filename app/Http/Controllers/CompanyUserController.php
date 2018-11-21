@@ -152,4 +152,19 @@ class CompanyUserController extends Controller
 
         return redirect()->back();
     }
+
+
+    public function invite(Company $company)
+    {
+        $roles = Bouncer::role()->all();
+
+        return view('pages.company.users.invite', compact('roles'));
+    }
+
+    public function sendinvite(Request $request, Company $company)
+    {
+        //Get email, send a link to accept the invite
+        //Check database for user's email,
+        dd($request->all());
+    }
 }

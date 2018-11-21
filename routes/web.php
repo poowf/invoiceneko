@@ -85,6 +85,9 @@ Route::group(['middleware' => ['auth', '2fa']], function() {
             Route::patch('/company/users/{user}/edit', 'CompanyUserController@update')->name('company.users.update')->middleware('can:update, App\Models\CompanyUserRequest');
             Route::delete('/company/users/{user}/destroy', 'CompanyUserController@destroy')->name('company.users.destroy')->middleware('can:delete, App\Models\CompanyUserRequest');
 
+            Route::get('/company/users/invite', 'CompanyUserController@invite')->name('company.users.invite')->middleware('can:update, App\Models\Company');
+            Route::post('/company/users/invite', 'CompanyUserController@sendinvite')->name('company.users.sendinvite')->middleware('can:update, App\Models\Company');
+
             /* CompanyAddress */
             Route::get('/company/address/edit', 'CompanyAddressController@edit')->name('company.address.edit')->middleware('can:update, App\Models\CompanyAddress');
             Route::patch('/company/address/edit', 'CompanyAddressController@update')->name('company.address.update')->middleware('can:update, App\Models\CompanyAddress');
