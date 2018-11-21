@@ -26,7 +26,7 @@ class RedirectIfAuthenticated
             }
             else
             {
-                return redirect()->route('company.create');
+                return redirect()->route('nocompany');
             }
         }
 

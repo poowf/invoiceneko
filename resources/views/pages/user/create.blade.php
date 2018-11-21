@@ -54,12 +54,24 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <select id="country_code" name="country_code" data-parsley-trigger="change" placeholder="Country">
+                                <select id="country_code" name="country_code" data-parsley-required="false" data-parsley-trigger="change" placeholder="Country">
                                     @foreach($countries as $country)
                                         <option value="{{ $country['iso_3166_1_alpha2'] }}" @if(old('country_code') == $country['iso_3166_1_alpha2']) selected @endif>{{ $country['name']['common'] }}</option>
                                     @endforeach
                                 </select>
                                 <label for="country_code" class="label-validation">Country</label>
+                                <span class="helper-text"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <select id="timezone" name="timezone" data-parsley-required="false" data-parsley-trigger="change">
+                                    <option disabled="" selected="selected" value="">Timezone</option>
+                                    @foreach($timezones as $timezone)
+                                        <option value="{{ $timezone }}" @if(old('timezone') == $timezone) selected @endif> {{ $timezone }}</option>
+                                    @endforeach
+                                </select>
+                                <label for="timezone" class="label-validation">Timezone</label>
                                 <span class="helper-text"></span>
                             </div>
                         </div>

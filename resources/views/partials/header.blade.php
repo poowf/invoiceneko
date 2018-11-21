@@ -52,11 +52,11 @@
                                     <ul id="dropdown-navigation" class="dropdown-content" style="margin-left: 15px;">
                                         @if(app('request')->route('company'))
                                             <li><a href="{{ route('company.show', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}">Company</a></li>
+                                            <li><a href="{{ route('user.edit', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}">User</a></li>
+                                            @can('index', \App\Models\ItemTemplate::class)
+                                            <li><a href="{{ route('itemtemplate.index', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}">Item Templates</a></li>
+                                            @endcan
                                         @endif
-                                        @can('index', \App\Models\ItemTemplate::class)
-                                        <li><a href="{{ route('itemtemplate.index', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}">Item Templates</a></li>
-                                        @endcan
-                                        <li><a href="{{ route('user.edit', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}">User</a></li>
                                         <li>
                                             <form method="post" action="{{ route('auth.destroy') }}">
                                                 {{ csrf_field() }}
@@ -96,11 +96,11 @@
                                     <ul id="dropdown-mobile-navigation" class="dropdown-content">
                                         @if(app('request')->route('company'))
                                             <li><a href="{{ route('company.show', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}">Company</a></li>
+                                            <li><a href="{{ route('user.edit', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}">User</a></li>
+                                            @can('index', \App\Models\ItemTemplate::class)
+                                            <li><a href="{{ route('itemtemplate.index', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}">Item Templates</a></li>
+                                            @endcan
                                         @endif
-                                        @can('index', \App\Models\ItemTemplate::class)
-                                        <li><a href="{{ route('itemtemplate.index', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}">Item Templates</a></li>
-                                        @endcan
-                                        <li><a href="{{ route('user.edit', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}">User</a></li>
                                         <li>
                                             <form method="post" action="{{ route('auth.destroy') }}">
                                                 {{ csrf_field() }}

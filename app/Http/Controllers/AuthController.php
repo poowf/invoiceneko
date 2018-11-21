@@ -38,11 +38,6 @@ class AuthController extends Controller
             {
                 return redirect()->intended(route('dashboard', [ 'company' => $routeKey ]));
             }
-            else
-            {
-                flash('Please fill in your company information first', 'error');
-                return redirect()->route('company.create');
-            }
         }
 
         flash('Invalid Credentials', 'error');

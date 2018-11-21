@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Library\Poowf\Unicorn;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
@@ -33,10 +34,19 @@ class HasCompany
      */
     public function handle($request, Closure $next)
     {
-        if (!$request->route('company')->isOwner($request->user())) {
+        $routeKey = Unicorn::getCompanyKey();
+        if ($routeKey) {
+            if($request->route('company')->hasUser($request->user()))
+            {
+                return $next($request);
+            }
+            else {
+                abort(401);
+            }
+        }
+        else
+        {
             return redirect()->route('nocompany');
         }
-
-        return $next($request);
     }
 }
