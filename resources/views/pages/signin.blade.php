@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <p>Don't have an account?</p>
-                <a href="{{ route('start') }}" class="btn light-blue darken-1 waves-effect waves-dark full-width">Get Started</a>
+                <a href="@if(strpos(session()->get('url.intended'), '/company/join') !== false){{ route('user.create') }}@else{{ route('start') }}@endif" class="btn light-blue darken-1 waves-effect waves-dark full-width">Get Started</a>
             </div>
         </div>
     </div>

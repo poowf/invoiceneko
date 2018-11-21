@@ -17,7 +17,7 @@
             <div class="col s6 right mtop30">
                 @if($users->isNotEmpty())
                     @can('owner', \App\Models\Company::class)
-                        <a href="{{ route('company.users.invite', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}" class="btn btn-link waves-effect waves-dark">Invite User</a>
+                        <a href="{{ route('company.invite.create', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}" class="btn btn-link waves-effect waves-dark">Invite User</a>
                     @endcan
                 @endif
             </div>
@@ -55,7 +55,6 @@
                                             <td>{{ $user->statusText() }}</td>
                                             @can('owner', \App\Models\Company::class)
                                                 <td>
-                                                    <a href="{{ route('company.users.edit', [ 'user' => $user->id , 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit User"><i class="material-icons">mode_edit</i></a>
                                                     @if($user->id != auth()->user()->id)
                                                     <a href="" data-id="{{ $user->id }}"  class="tooltipped user-delete-btn" data-position="top" data-delay="50" data-tooltip="Remove User"><i class="material-icons">remove_circle</i></a>
                                                     @endif

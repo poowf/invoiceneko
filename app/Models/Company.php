@@ -139,6 +139,11 @@ class Company extends Model
         return $this->hasMany('App\Models\CompanyUserRequest', 'company_id');
     }
 
+    public function invites()
+    {
+        return $this->hasMany('App\Models\CompanyInvite', 'company_id');
+    }
+
     public function quotes()
     {
         return $this->hasMany('App\Models\Quote', 'company_id');

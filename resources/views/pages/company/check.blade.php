@@ -7,12 +7,13 @@
 
 @section("content")
     <div class="container">
-        <div class="row">
+        <div class="row mtop30">
             <div class="col s12">
-                <h4>Check for your company</h4>
                 <form id="check-company" method="post" enctype="multipart/form-data">
                     <div class="card-panel">
-                        <p style="font-size: 1.2em;">Key in your work email:</p>
+                        <a href="{{ route('user.create', [ 'hasinvite' => 'true' ]) }}" class="btn btn-link">Click here if you have an invite link</a>
+                        <h5>Check for your company</h5>
+                        <p>We will check if your company has a registered account on {{ config('app.name') }}</p>
                         <div class="row">
                             <div class="input-field col s12">
                                 <input id="email" name="email" type="email" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('email') }}" placeholder="Email">

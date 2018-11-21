@@ -51,9 +51,12 @@ Route::group(['middleware' => ['auth', '2fa']], function() {
     Route::post('/multifactor/validate', 'AuthController@multifactor_validate')->name('auth.multifactor.validate');
     Route::post('/company/switch', 'CompanyController@switch')->name('company.switch');
     Route::get('/errors/nocompany', 'MainController@nocompany')->name('nocompany');
+    Route::get('/company/joiss', 'MainController@dashboard')->name('company.main');
+
+    Route::get('/company/join/{companyinvite}', 'CompanyInviteController@show')->name('company.invite.show');
+    Route::post('/company/join/{companyinvite}', 'CompanyInviteController@join')->name('company.invite.join');
 
     Route::group(['prefix' => '{company}'], function() {
-        Route::get('/', 'MainController@dashboard')->name('company.main');
 
         /* User */
         Route::get('/user/edit', 'UserController@edit')->name('user.edit');
@@ -85,8 +88,8 @@ Route::group(['middleware' => ['auth', '2fa']], function() {
             Route::patch('/company/users/{user}/edit', 'CompanyUserController@update')->name('company.users.update')->middleware('can:update, App\Models\CompanyUserRequest');
             Route::delete('/company/users/{user}/destroy', 'CompanyUserController@destroy')->name('company.users.destroy')->middleware('can:delete, App\Models\CompanyUserRequest');
 
-            Route::get('/company/users/invite', 'CompanyUserController@invite')->name('company.users.invite')->middleware('can:update, App\Models\Company');
-            Route::post('/company/users/invite', 'CompanyUserController@sendinvite')->name('company.users.sendinvite')->middleware('can:update, App\Models\Company');
+            Route::get('/company/invite', 'CompanyInviteController@create')->name('company.invite.create')->middleware('can:update, App\Models\Company');
+            Route::post('/company/invite', 'CompanyInviteController@store')->name('company.invite.store')->middleware('can:update, App\Models\Company');
 
             /* CompanyAddress */
             Route::get('/company/address/edit', 'CompanyAddressController@edit')->name('company.address.edit')->middleware('can:update, App\Models\CompanyAddress');

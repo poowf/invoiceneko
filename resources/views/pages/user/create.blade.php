@@ -100,11 +100,20 @@
                                 <span class="helper-text manual-validation"></span>
                             </div>
                         </div>
+                        @if(app('request')->has('hasinvite'))
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="companyinvite" name="companyinvite" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ old('companyinvite') }}" placeholder="Invite Code">
+                                <label for="companyinvite" class="label-validation">Invite Code</label>
+                                <span class="helper-text"></span>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
                             {{ csrf_field() }}
-                            <button class="btn waves-effect waves-light col s12 m3 offset-m9" type="submit" name="action">@if($token) Create @else Next @endif</button>
+                            <button class="btn waves-effect waves-light col s12 m3 offset-m9" type="submit" name="action">@if(app('request')->has('token') || app('request')->has('hasinvite')) Create @else Next @endif</button>
                         </div>
                     </div>
                 </form>

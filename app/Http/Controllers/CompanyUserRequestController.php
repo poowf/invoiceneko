@@ -60,11 +60,11 @@ class CompanyUserRequestController extends Controller
 
         if($company)
         {
-            $companyuserrequest = new CompanyUserRequest;
-            $companyuserrequest->fill($request->all());
-            $company->requests()->save($companyuserrequest);
+            $companyUserRequest = new CompanyUserRequest;
+            $companyUserRequest->fill($request->all());
+            $company->requests()->save($companyUserRequest);
 
-            $company->notify(new RequestCompanyAccessNotification($companyuserrequest->full_name, $companyuserrequest->email, $companyuserrequest->phone));
+            $company->notify(new RequestCompanyAccessNotification($companyUserRequest));
 
             flash('The request has been sent to the current owner of the Company', "success");
 

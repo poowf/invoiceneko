@@ -6,6 +6,7 @@ use App\Library\Poowf\Unicorn;
 use Log;
 use Session;
 use Validator;
+use Ekko;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,9 +35,14 @@ class AuthController extends Controller
 
         if (Auth::attempt($creds, $remember)) {
             $routeKey = Unicorn::getCompanyKey();
+            $intendedUrl = session()->get('url.intended');
             if($routeKey)
             {
                 return redirect()->intended(route('dashboard', [ 'company' => $routeKey ]));
+            }
+            elseif(strpos($intendedUrl, '/company/join') !== false)
+            {
+                return redirect()->intended();
             }
         }
 

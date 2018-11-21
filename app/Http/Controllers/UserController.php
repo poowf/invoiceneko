@@ -40,7 +40,6 @@ class UserController extends Controller
      */
     public function create(Request $request)
     {
-        $token = null;
         if ($request->query->has('token'))
         {
             $token = $request->query->get('token');
@@ -53,7 +52,7 @@ class UserController extends Controller
         $countries = $this->countries->all();
         $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
 
-        return view('pages.user.create', compact('token', 'countries', 'timezones'));
+        return view('pages.user.create', compact('countries', 'timezones'));
     }
 
     /**
@@ -101,6 +100,11 @@ class UserController extends Controller
             flash('You can now sign in', 'success');
 
             return redirect()->route('auth.show');
+        }
+        else if($request->query->has('hasinvite'))
+        {
+            flash('Sign in to accept the invite', 'success');
+            return redirect()->route('company.invite.show', [ 'companyinvite' => $request->input('companyinvite') ]);
         }
 
         $request->session()->put('user_id', $user->id);

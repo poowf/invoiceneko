@@ -2,24 +2,26 @@
 
 namespace App\Notifications;
 
+use App\Models\Company;
+use App\Models\CompanyInvite;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class CompanyUserRequestApprovedNotification extends Notification implements ShouldQueue
+class InviteUserNotification extends Notification implements ShouldQueue
 {
     use Queueable;
-    private $token;
+    private $companyInvite;
 
     /**
      * Create a new notification instance.
      *
-     * @return void
+     * @param CompanyInvite $companyInvite
      */
-    public function __construct($token)
+    public function __construct(CompanyInvite $companyInvite)
     {
-        $this->token = $token;
+        $this->companyInvite = $companyInvite;
     }
 
     /**
@@ -41,12 +43,17 @@ class CompanyUserRequestApprovedNotification extends Notification implements Sho
      */
     public function toMail($notifiable)
     {
-        $url = route('user.create', ['token' => $this->token]);
+        $companyInvite = $this->companyInvite;
+        $company = $companyInvite->company;
+        $url = route('company.invite.show', [ 'companyinvite' => $companyInvite->token ]);
 
         return (new MailMessage)
-            ->subject("Your requested to be added to your company on " . config('app.name') . " has been approved")
-            ->line('Please fill in the rest of your details on' . config('app.name'))
-            ->action('Create Account', $url)
+            ->subject('You have been invited to join ' . $company->name . ' on ' . config('app.name'))
+            ->line('Join ' . $company->name . ' on ' . config('app.name'))
+            ->action('Accept Invite', $url)
+            ->line('Your invite code is : ' . $companyInvite->token)
+            ->line('This special invite link expires in 48 hours')
+            ->line('Please contact the company owner for a new invite link if it has expired')
             ->line('Thank you for using our application!');
     }
 
