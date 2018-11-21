@@ -3,17 +3,15 @@
 namespace App\Models;
 
 use App\Notifications\ResetPasswordNotification;
-use App\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
+use Silber\Bouncer\Database\HasRolesAndAbilities;
 
 class User extends Authenticatable
 {
-    use Notifiable, SoftDeletes, CascadeSoftDeletes;
-
-    use HasRoles;
+    use HasRolesAndAbilities, Notifiable, SoftDeletes, CascadeSoftDeletes;
 
     const STATUS_ACTIVE = 1;
     const STATUS_DISABLED = 2;

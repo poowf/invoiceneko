@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
-use Log;
+use App\Library\Poowf\Unicorn;
 use App\Traits\UniqueSlug;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
+use Silber\Bouncer\Database\HasRolesAndAbilities;
+use Silber\Bouncer\BouncerFacade as Bouncer;
 
 class Company extends Model
 {
-    use Notifiable, SoftDeletes, CascadeSoftDeletes, UniqueSlug;
+    use HasRolesAndAbilities, Notifiable, SoftDeletes, CascadeSoftDeletes, UniqueSlug;
 
     /**
      * The database table used by the model.
@@ -53,6 +55,8 @@ class Company extends Model
         static::created(function ($company) {
             $settings = new CompanySettings;
             $company->settings()->save($settings);
+            Unicorn::createRoleAndPermissions($company->id);
+            Bouncer::assign('global-administrator')->to($company->owner);
         });
     }
 

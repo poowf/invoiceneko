@@ -15,7 +15,7 @@ class UserPolicy
 
     public function before($user, $ability)
     {
-        if ($user->isSuperAdmin()) {
+        if ($user->isAn('global-administrator')) {
             return true;
         }
     }

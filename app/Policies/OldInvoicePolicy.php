@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Invoice;
 use App\Models\User;
 use App\Models\OldInvoice;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -16,9 +17,14 @@ class OldInvoicePolicy
 
     public function before($user, $ability)
     {
-        if ($user->isSuperAdmin()) {
+        if ($user->isAn('global-administrator')) {
             return true;
         }
+    }
+
+    public function index(User $user)
+    {
+        return $user->can('view-invoice', OldInvoice::class);
     }
 
     /**
@@ -30,7 +36,7 @@ class OldInvoicePolicy
      */
     public function view(User $user, OldInvoice $oldInvoice)
     {
-        return $user->isOfCompany($oldInvoice->company_id);
+        return $user->can('view-invoice', Invoice::class);
     }
 
     /**
@@ -41,7 +47,7 @@ class OldInvoicePolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->can('create-invoice', Invoice::class);
     }
 
     /**
@@ -53,7 +59,7 @@ class OldInvoicePolicy
      */
     public function update(User $user, OldInvoice $oldInvoice)
     {
-        return $user->isOfCompany($oldInvoice->company_id);
+        return $user->can('update-invoice', Invoice::class);
     }
 
     /**
@@ -65,6 +71,6 @@ class OldInvoicePolicy
      */
     public function delete(User $user, OldInvoice $oldInvoice)
     {
-        return $user->isOfCompany($oldInvoice->company_id);
+        return $user->can('delete-invoice', Invoice::class);
     }
 }

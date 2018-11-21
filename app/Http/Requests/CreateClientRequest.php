@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Client;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateClientRequest extends FormRequest
@@ -13,7 +14,7 @@ class CreateClientRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->user()->can('create', Client::class);
     }
 
     /**

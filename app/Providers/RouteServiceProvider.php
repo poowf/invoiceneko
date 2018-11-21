@@ -34,7 +34,6 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('quote', 'App\Models\Quote');
         Route::model('quoteitem', 'App\Models\QuoteItem');
         Route::model('payment', 'App\Models\Payment');
-        Route::model('permission', 'App\Models\Permission');
         Route::model('role', 'App\Models\Role');
         Route::model('user', 'App\Models\User');
 
@@ -52,7 +51,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::pattern('quoteitem', '([A-Za-z0-9]+)');
         Route::pattern('payment', '([A-Za-z0-9]+)');
         Route::pattern('permission', '([A-Za-z0-9]+)');
-        Route::pattern('role', '([A-Za-z0-9]+)');
+        Route::pattern('role', '([A-Za-z0-9-]+)');
         Route::pattern('user', '([A-Za-z0-9]+)');
 
         parent::boot();

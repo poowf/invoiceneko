@@ -12,8 +12,12 @@
                 <h3>Item Template Details</h3>
             </div>
             <div class="col s6 right">
+                @can('update', $itemtemplate)
                 <a href="{{ route('itemtemplate.edit', [ 'itemtemplate' => $itemtemplate->id ] ) }}" class="btn light-blue waves-effect waves-dark mtop30">Edit</a>
+                @endcan
+                @can('delete', $itemtemplate)
                 <a href="#" data-id="{{ $itemtemplate->id }}" class="btn btn-link waves-effect waves-dark itemtemplate-delete-btn mtop30">Delete</a>
+                @endcan
             </div>
         </div>
         <div class="row">

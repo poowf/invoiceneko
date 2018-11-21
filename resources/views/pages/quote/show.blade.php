@@ -32,29 +32,42 @@
                 </a>
             </div>
         </div>
+        @can('update', $quote)
         <div id="quote-action-container" class="row mbtm0 desktop-only">
             <div class="col s12 right">
+                @can('create', \App\Models\Invoice::class)
                 <form method="post" action="{{ route('quote.convert', [ 'quote' => $quote->id ] ) }}" class="null-form">
                     {{ csrf_field() }}
                     <button class="btn btn-link waves-effect waves-dark null-btn" type="submit">Convert to Invoice</button>
                 </form>
+                @endcan
+                @can('update', $quote)
                 <form method="post" action="{{ route('quote.duplicate', [ 'quote' => $quote->id ] ) }}" class="null-form">
                     {{ csrf_field() }}
                     <button class="btn blue darken-3 waves-effect waves-dark null-btn" type="submit">Clone</button>
                 </form>
+                @endcan
+                @can('update', $quote)
                 <form method="post" action="{{ route('quote.archive', [ 'quote' => $quote->id ] ) }}" class="null-form">
                     {{ method_field('PATCH') }}
                     {{ csrf_field() }}
                     <button class="btn amber darken-2 waves-effect waves-dark null-btn" type="submit">Archive</button>
                 </form>
+                @endcan
+                @can('update', $quote)
                 <a href="{{ route('quote.edit', [ 'quote' => $quote->id ] ) }}" class="btn light-blue waves-effect waves-dark">
                     Edit
                 </a>
+                @endcan
+                @can('delete', $quote)
                 <a href="#" data-id="{{ $quote->id }}" class="quote-delete-btn btn red waves-effect waves-dark">
                     Delete
                 </a>
+                @endcan
             </div>
         </div>
+        @endcan
+        @can('update', $quote)
         <div class="fixed-action-btn toolbar mobile-only">
             <a class="btn-floating btn-large btn-large red">
                 <i class="large material-icons">menu</i>
@@ -82,13 +95,16 @@
                         <i class="material-icons">edit</i>
                     </a>
                 </li>
+                @can('delete', $quote)
                 <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Quote">
                     <a href="#" data-id="{{ $quote->id }}" class="quote-delete-btn btn red waves-effect waves-dark">
                         <i class="material-icons">delete</i>
                     </a>
                 </li>
+                @endcan
             </ul>
         </div>
+        @endcan
         <div class="row">
             <div class="col s12 l4">
                 <h3>Details</h3>
@@ -132,7 +148,7 @@
             @include('partials/quote')
         </div>
     </div>
-
+    @can('delete', $quote)
     <div id="delete-confirmation" class="modal">
         <div class="modal-content">
             <p>Delete Quote?</p>
@@ -146,6 +162,7 @@
             <a href="javascript:;" class=" modal-action modal-close waves-effect black-text waves-red btn-flat btn-deletemodal">Cancel</a>
         </div>
     </div>
+    @endcan
 
     <div id="shared-details" class="modal">
         <div class="modal-content">
@@ -189,7 +206,7 @@
                 getSharedLink();
             });
 
-
+            @can('delete', $quote)
             $('#quote-action-container').on('click', '.quote-delete-btn', function (event) {
                 event.preventDefault();
                 let quoteid = $(this).attr('data-id');
@@ -203,6 +220,7 @@
                 $('#delete-quote-form').attr('action', '/quote/' + quoteid + '/destroy');
                 $('#delete-confirmation').modal('open');
             });
+            @endcan
 
             $('#change-history-container').slick({
                 // normal options...
