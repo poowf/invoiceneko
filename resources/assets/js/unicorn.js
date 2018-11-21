@@ -19,12 +19,12 @@ class Unicorn {
         });
     }
 
-    static initConfirmationTrigger(parent_selector, selector, model, model_action, modal_selector, modal_form_selector, trigger = 'click')
+    static initConfirmationTrigger(parent_selector, selector, fqdn, model, model_action, modal_selector, modal_form_selector, trigger = 'click')
     {
         $(parent_selector).on(trigger, selector, function (event) {
             event.preventDefault();
             let dataid = $(this).attr('data-id');
-            $(modal_form_selector).attr('action', '/' + model + '/' + dataid + '/' + model_action);
+            $(modal_form_selector).attr('action', '/' + fqdn + '/' + model + '/' + dataid + '/' + model_action);
             $(modal_selector).modal('open');
         });
     }

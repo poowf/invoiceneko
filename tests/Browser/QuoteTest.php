@@ -25,28 +25,28 @@ class QuoteTest extends DuskTestCase
         $itemTemplate = factory(ItemTemplate::class)->create([
             'company_id' => $client->company->id
         ]);
-
-        //Need to assign the company_id to the user
-        $client->company->owner->company_id = $client->company->id;
-        $client->company->owner->save();
+        $company = $client->company;
+        //Need to attach the company to the user
+        $company->users()->attach($company->user_id);
 
         $faker = Faker::create();
 
-        $this->browse(function (Browser $browser) use ($faker, $client, $itemTemplate) {
+        $this->browse(function (Browser $browser) use ($faker, $client, $company, $itemTemplate) {
             $browser->visit('/signin')
-                ->type('username', $client->company->owner->email)
+                ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/dashboard')
-                ->visit('/quotes')
-                ->click("a[href='{$this->baseUrl()}/quote/create']")
-                ->assertPathIs('/quote/create')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
+                ->clickLink('Quotes')
+                ->assertPathIs('/' . $company->domain_name . '/quotes')
+                ->clickLink('Create')
+                ->assertPathIs('/' . $company->domain_name . '/quote/create')
                 ->type('nice_quote_id', substr($faker->slug, 0, 20) . 'sasdf')
                 ->type('netdays', $faker->numberBetween($min = 1, $max = 60))
                 ->type('item_quantity[]', $faker->numberBetween($min = 1, $max = 999999999))
                 ->type('item_price[]', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999));
             $browser
-                ->script('jQuery("#client_id").selectize()[0].selectize.setValue(1);');
+                ->script('jQuery("#client_id").selectize()[0].selectize.setValue(' . $client->id . ');');
             $browser
                 ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("' . Carbon::now()->format('j F, Y') . '");');
             $browser
@@ -66,29 +66,28 @@ class QuoteTest extends DuskTestCase
         $itemTemplates = factory(ItemTemplate::class, 5)->create([
             'company_id' => $client->company->id
         ]);
-
-        //Need to assign the company_id to the user
-        $client->company->owner->company_id = $client->company->id;
-        $client->company->owner->save();
+        $company = $client->company;
+        //Need to attach the company to the user
+        $company->users()->attach($company->user_id);
 
         $faker = Faker::create();
 
-        $this->browse(function (Browser $browser) use ($faker, $client, $itemTemplates) {
+        $this->browse(function (Browser $browser) use ($faker, $client, $company, $itemTemplates) {
             $browser->visit('/signin')
-                ->type('username', $client->company->owner->email)
+                ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/dashboard')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->clickLink('Quotes')
-                ->assertPathIs('/quotes')
+                ->assertPathIs('/' . $company->domain_name . '/quotes')
                 ->clickLink('Create')
-                ->assertPathIs('/quote/create')
+                ->assertPathIs('/' . $company->domain_name . '/quote/create')
                 ->type('nice_quote_id', substr($faker->slug, 0, 20) . 'sasdf')
                 ->type('netdays', $faker->numberBetween($min = 1, $max = 60))
                 ->type('item_quantity[]', $faker->numberBetween($min = 1, $max = 999999999))
                 ->type('item_price[]', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999));
             $browser
-                ->script('jQuery("#client_id").selectize()[0].selectize.setValue(1);');
+                ->script('jQuery("#client_id").selectize()[0].selectize.setValue(' . $client->id . ');');
             $browser
                 ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("' . Carbon::now()->format('j F, Y') . '");');
             $browser
@@ -110,9 +109,8 @@ class QuoteTest extends DuskTestCase
     {
         $client = factory(Client::class)->create();
         $company = $client->company;
-        //Need to assign the company_id to the user
-        $company->owner->company_id = $company->id;
-        $company->owner->save();
+        //Need to attach the company to the user
+        $company->users()->attach($company->user_id);
 
         $quote = factory(Quote::class)->create([
             'status' => Quote::STATUS_OPEN,
@@ -135,18 +133,18 @@ class QuoteTest extends DuskTestCase
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/dashboard')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->clickLink('Quotes')
-                ->assertPathIs('/quotes');
+                ->assertPathIs('/' . $company->domain_name . '/quotes');
             $browser
-                ->script("jQuery(\"a[href='{$this->baseUrl()}/quote/{$quote->id}/edit'] > i\").click();");
+                ->script("jQuery(\"a[href='{$this->baseUrl()}/{$company->domain_name}/quote/{$quote->id}/edit'] > i\").click();");
             $browser
                 ->type('netdays', $faker->numberBetween($min = 1, $max = 60))
                 ->type('item_name[]', 'The Turbo Ultra Turbonator')
                 ->type('item_quantity[]', $faker->numberBetween($min = 1, $max = 999999999))
                 ->type('item_price[]', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999));
             $browser
-                ->script('jQuery("#client_id").selectize()[0].selectize.setValue(1);');
+                ->script('jQuery("#client_id").selectize()[0].selectize.setValue(' . $client->id . ');');
             $browser
                 ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("' . Carbon::now()->format('j F, Y') . '");');
             $browser
@@ -163,9 +161,8 @@ class QuoteTest extends DuskTestCase
     {
         $client = factory(Client::class)->create();
         $company = $client->company;
-        //Need to assign the company_id to the user
-        $company->owner->company_id = $company->id;
-        $company->owner->save();
+        //Need to attach the company to the user
+        $company->users()->attach($company->user_id);
 
         $quote = factory(Quote::class)->create([
             'status' => Quote::STATUS_OPEN,
@@ -185,9 +182,9 @@ class QuoteTest extends DuskTestCase
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/dashboard')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->clickLink('Quotes')
-                ->assertPathIs('/quotes');
+                ->assertPathIs('/' . $company->domain_name . '/quotes');
             $browser
                 ->script('jQuery(".quote-delete-btn > i").click();');
             $browser
@@ -205,29 +202,28 @@ class QuoteTest extends DuskTestCase
         $itemTemplate = factory(ItemTemplate::class)->create([
             'company_id' => $client->company->id
         ]);
-
-        //Need to assign the company_id to the user
-        $client->company->owner->company_id = $client->company->id;
-        $client->company->owner->save();
+        $company = $client->company;
+        //Need to attach the company to the user
+        $company->users()->attach($company->user_id);
 
         $faker = Faker::create();
 
-        $this->browse(function (Browser $browser) use ($faker, $client, $itemTemplate) {
+        $this->browse(function (Browser $browser) use ($faker, $client, $company, $itemTemplate) {
             $browser->visit('/signin')
-                ->type('username', $client->company->owner->email)
+                ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/dashboard')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->clickLink('Quotes')
-                ->assertPathIs('/quotes')
+                ->assertPathIs('/' . $company->domain_name . '/quotes')
                 ->clickLink('Create')
-                ->assertPathIs('/quote/create')
+                ->assertPathIs('/' . $company->domain_name . '/quote/create')
                 ->type('nice_quote_id', substr($faker->slug, 0, 20) . 'sasdf')
                 ->type('netdays', $faker->numberBetween($min = 1, $max = 60))
                 ->type('item_quantity[]', $faker->numberBetween($min = 1, $max = 999999999))
                 ->type('item_price[]', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999));
             $browser
-                ->script('jQuery("#client_id").selectize()[0].selectize.setValue(1);');
+                ->script('jQuery("#client_id").selectize()[0].selectize.setValue(' . $client->id . ');');
             $browser
                 ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("' . Carbon::now()->format('j F, Y') . '");');
             $browser
@@ -237,7 +233,7 @@ class QuoteTest extends DuskTestCase
                 ->press('CREATE')
                 ->assertPresent('#quote-action-container')
                 ->clickLink('Quotes')
-                ->assertPathIs('/quotes');
+                ->assertPathIs('/' . $company->domain_name . '/quotes');
             $browser
                 ->script("jQuery(\"a[data-tooltip='Edit Quote'] > i\").click();");
             $browser
@@ -246,7 +242,7 @@ class QuoteTest extends DuskTestCase
                 ->type('item_quantity[]', $faker->numberBetween($min = 1, $max = 999999999))
                 ->type('item_price[]', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999));
             $browser
-                ->script('jQuery("#client_id").selectize()[0].selectize.setValue(1);');
+                ->script('jQuery("#client_id").selectize()[0].selectize.setValue(' . $client->id . ');');
             $browser
                 ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("' . Carbon::now()->format('j F, Y') . '");');
             $browser
@@ -254,14 +250,14 @@ class QuoteTest extends DuskTestCase
                 ->press('UPDATE')
                 ->assertPresent('#quote-action-container')
                 ->clickLink('Quotes')
-                ->assertPathIs('/quotes');
+                ->assertPathIs('/' . $company->domain_name . '/quotes');
             $browser
                 ->script('jQuery(".quote-delete-btn > i").click();');
             $browser
                 ->pause(500)
                 ->press('DELETE')
                 ->assertPresent('#quote-container')
-                ->assertPathBeginsWith('/quote');
+                ->assertPathBeginsWith('/' . $company->domain_name . '/quote');
             $browser->script('jQuery(".signmeout-btn").click()');
             $browser->assertPathIs('/signin');
         });

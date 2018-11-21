@@ -19,10 +19,7 @@ class ClientTest extends DuskTestCase
     public function test_create_a_client()
     {
         $company = factory(Company::class)->create();
-        //Need to assign the company_id to the user
-        $company->owner->company_id = $company->id;
-        $company->owner->save();
-
+        //Need to attach the company to the user
         $company->users()->attach($company->user_id);
 
         $faker = Faker::create();
@@ -57,9 +54,8 @@ class ClientTest extends DuskTestCase
     public function test_update_a_client()
     {
         $company = factory(Company::class)->create();
-        //Need to assign the company_id to the user
-        $company->owner->company_id = $company->id;
-        $company->owner->save();
+        //Need to attach the company to the user
+        $company->users()->attach($company->user_id);
 
         $client = factory(Client::class)->create([
             'company_id' => $company->id
@@ -73,9 +69,9 @@ class ClientTest extends DuskTestCase
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/dashboard')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->clickLink('Clients')
-                ->assertPathIs('/clients')
+                ->assertPathIs('/' . $company->domain_name . '/clients')
                 ->click(".activator")
                 ->pause('500')
                 ->clickLink('Edit')
@@ -89,7 +85,7 @@ class ClientTest extends DuskTestCase
                 ->script('jQuery("#contactsalutation").selectize()[0].selectize.setValue("mr");');
             $browser
                 ->press('UPDATE')
-                ->assertPathBeginsWith('/client')
+                ->assertPathBeginsWith('/' . $company->domain_name . '/client')
                 ->assertSee('Client Details');
             $browser->script('jQuery(".signmeout-btn").click()');
             $browser->assertPathIs('/signin');
@@ -99,9 +95,8 @@ class ClientTest extends DuskTestCase
     public function test_delete_a_client()
     {
         $company = factory(Company::class)->create();
-        //Need to assign the company_id to the user
-        $company->owner->company_id = $company->id;
-        $company->owner->save();
+        //Need to attach the company to the user
+        $company->users()->attach($company->user_id);
 
         $client = factory(Client::class)->create([
             'company_id' => $company->id
@@ -115,9 +110,9 @@ class ClientTest extends DuskTestCase
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/dashboard')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->clickLink('Clients')
-                ->assertPathIs('/clients')
+                ->assertPathIs('/' . $company->domain_name . '/clients')
                 ->click(".activator")
                 ->pause(500)
                 ->click('.client-delete-btn')
@@ -132,9 +127,8 @@ class ClientTest extends DuskTestCase
     public function test_end_to_end_client()
     {
         $company = factory(Company::class)->create();
-        //Need to assign the company_id to the user
-        $company->owner->company_id = $company->id;
-        $company->owner->save();
+        //Need to attach the company to the user
+        $company->users()->attach($company->user_id);
 
         $faker = Faker::create();
         $salutation = ["mr", "mrs", "mdm", "miss"];
@@ -144,11 +138,11 @@ class ClientTest extends DuskTestCase
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/dashboard')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->clickLink('Clients')
-                ->assertPathIs('/clients')
+                ->assertPathIs('/' . $company->domain_name . '/clients')
                 ->clickLink('Create')
-                ->assertPathIs('/client/create')
+                ->assertPathIs('/' . $company->domain_name . '/client/create')
                 ->type('companyname', $faker->company)
                 ->type('block', $faker->buildingNumber)
                 ->type('street', $faker->streetName)
@@ -173,10 +167,10 @@ class ClientTest extends DuskTestCase
                 ->script('jQuery("#contactsalutation").selectize()[0].selectize.setValue("mr");');
             $browser
                 ->press('UPDATE')
-                ->assertPathBeginsWith('/client')
+                ->assertPathBeginsWith('/' . $company->domain_name . '/client')
                 ->assertSee('Client Details')
                 ->clickLink('Clients')
-                ->assertPathIs('/clients')
+                ->assertPathIs('/' . $company->domain_name . '/clients')
                 ->click(".activator")
                 ->pause(500)
                 ->click('.client-delete-btn')

@@ -79,41 +79,43 @@ class CompanyUserRequestController extends Controller
     }
 
     /**
-     * @param CompanyUserRequest $request
+     * @param CompanyUserRequest $companyUserRequest
+     * @param Company $company
      * @return RedirectResponse
      */
-    public function approve(CompanyUserRequest $request)
+    public function approve(Company $company, CompanyUserRequest $companyUserRequest)
     {
-        $request->status = CompanyUserRequest::STATUS_APPROVED;
-        $request->save();
+        $companyUserRequest->status = CompanyUserRequest::STATUS_APPROVED;
+        $companyUserRequest->save();
 
-        $request->notify(new CompanyUserRequestApprovedNotification($request->token));
+        $companyUserRequest->notify(new CompanyUserRequestApprovedNotification($companyUserRequest->token));
 
-        return redirect()->back();
+        return redirect()->route('company.requests.index', [ 'company' => $company->domain_name ]);
     }
 
     /**
-     * @param CompanyUserRequest $request
+     * @param CompanyUserRequest $companyUserRequest
+     * @param Company $company
      * @return RedirectResponse
      */
-    public function reject(CompanyUserRequest $request)
+    public function reject(Company $company, CompanyUserRequest $companyUserRequest)
     {
-        $request->status = CompanyUserRequest::STATUS_REJECTED;
-        $request->save();
+        $companyUserRequest->status = CompanyUserRequest::STATUS_REJECTED;
+        $companyUserRequest->save();
 
-        $request->notify(new CompanyUserRequestRejectedNotification());
+        $companyUserRequest->notify(new CompanyUserRequestRejectedNotification());
 
-        return redirect()->back();
+        return redirect()->route('company.requests.index', [ 'company' => $company->domain_name ]);
     }
 
     /**
      * Display the specified resource.
      *
      * @param Company $company
-     * @param  \App\Models\CompanyUserRequest $request
+     * @param  \App\Models\CompanyUserRequest $companyUserRequest
      * @return void
      */
-    public function show(CompanyUserRequest $request, Company $company)
+    public function show(Company $company, CompanyUserRequest $companyUserRequest)
     {
         //
     }
@@ -122,10 +124,10 @@ class CompanyUserRequestController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param Company $company
-     * @param  \App\Models\CompanyUserRequest $request
+     * @param  \App\Models\CompanyUserRequest $companyUserRequest
      * @return void
      */
-    public function edit(CompanyUserRequest $request, Company $company)
+    public function edit(Company $company, CompanyUserRequest $companyUserRequest)
     {
         //
     }
@@ -133,10 +135,10 @@ class CompanyUserRequestController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param CompanyUserRequest $request
+     * @param CompanyUserRequest $companyUserRequest
      * @return void
      */
-    public function update(CompanyUserRequest $request)
+    public function update(CompanyUserRequest $companyUserRequest)
     {
         //
     }
@@ -145,10 +147,10 @@ class CompanyUserRequestController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Company $company
-     * @param  \App\Models\CompanyUserRequest $request
+     * @param  \App\Models\CompanyUserRequest $companyUserRequest
      * @return void
      */
-    public function destroy(CompanyUserRequest $request, Company $company)
+    public function destroy(Company $company, CompanyUserRequest $companyUserRequest)
     {
         //
     }

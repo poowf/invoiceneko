@@ -87,8 +87,10 @@ class UserController extends Controller
         {
             $token = $request->query->get('token');
             $companyUserRequest = CompanyUserRequest::where('token', $token)->first();
-            $user->company_id = $companyUserRequest->company_id;
             $user->save();
+
+            $company = Company::findOrFail($companyUserRequest->company_id);
+            $company->users()->attach($user->id);
 
             $companyUserRequest->delete();
 
@@ -220,12 +222,12 @@ class UserController extends Controller
         return view('pages.user.security', compact('user'));
     }
 
-    public function multifactor_start()
+    public function multifactor_start(Company $company)
     {
-        return redirect()->route('user.multifactor.create');
+        return redirect()->route('user.multifactor.create', [ 'company' => $company->domain_name ]);
     }
 
-    public function multifactor_create()
+    public function multifactor_create(Company $company)
     {
         $user = auth()->user();
         if(is_null($user->twofa_secret))
@@ -236,7 +238,7 @@ class UserController extends Controller
         else
         {
             flash('Multifactor Auth is already enabled', 'warning');
-            return redirect()->route('user.security');
+            return redirect()->route('user.security', [ 'company' => $company->domain_name ]);
         }
 
         $twoFactorUrl = Google2FA::getQRCodeUrl(
@@ -248,7 +250,7 @@ class UserController extends Controller
         return view('pages.user.multifactor.create', compact('twoFactorUrl', 'twofa_secret'));
     }
 
-    public function multifactor_store(Request $request)
+    public function multifactor_store(Request $request, Company $company)
     {
         $multifactor_code = $request->input('multifactor_code');
         $twofa_secret = session()->pull('twofa_secret');
@@ -268,7 +270,7 @@ class UserController extends Controller
             $user->save();
 
             flash("Multifactor Auth has been enabled for your account", 'success');
-            return redirect()->route('user.security')->with(compact( 'codes'));
+            return redirect()->route('user.security', [ 'company' => $company->domain_name ])->with(compact( 'codes'));
 
         } else {
             flash("Something went wrong, please try again", 'error');
@@ -277,7 +279,7 @@ class UserController extends Controller
 
     }
 
-    public function multifactor_destroy()
+    public function multifactor_destroy(Company $company)
     {
         $user = auth()->user();
         $user->twofa_secret = null;
@@ -289,7 +291,7 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function multifactor_regenerate_codes(Request $request)
+    public function multifactor_regenerate_codes(Request $request, Company $company)
     {
         $recovery = new Recovery();
         $codesJSON = $recovery->toJson();
@@ -300,7 +302,7 @@ class UserController extends Controller
         $user->save();
 
         flash("Your backup codes have been regenerated", 'success');
-        return redirect()->route('user.security')->with(compact('codes'));
+        return redirect()->route('user.security', [ 'company' => $company->domain_name ])->with(compact('codes'));
     }
 
     public function multifactor_backup()
@@ -308,7 +310,7 @@ class UserController extends Controller
         return view('pages.multifactor-backup');
     }
 
-    public function multifactor_backup_validate(Request $request)
+    public function multifactor_backup_validate(Request $request, Company $company)
     {
         $code = $request->input('multifactor-backup-code');
         $user = auth()->user();
@@ -331,7 +333,7 @@ class UserController extends Controller
                     "auth_time" => Carbon::now()
                 ]);
 
-                return redirect()->route('dashboard');
+                return redirect()->route('dashboard', [ 'company' => $company->domain_name ]);
             }
             else
             {

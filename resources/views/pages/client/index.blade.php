@@ -113,7 +113,7 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            Unicorn.initConfirmationTrigger('#client-container', '.client-delete-btn', 'client', 'destroy', '#delete-confirmation', '#delete-client-form');
+            Unicorn.initConfirmationTrigger('#client-container', '.client-delete-btn', '{{ \App\Library\Poowf\Unicorn::getCompanyKey() }}', 'client', 'destroy', '#delete-confirmation', '#delete-client-form');
             Unicorn.initPageSearch('#search-input', '#client-container .single-client-card');
         });
     </script>

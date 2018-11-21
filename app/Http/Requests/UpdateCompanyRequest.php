@@ -28,6 +28,7 @@ class UpdateCompanyRequest extends FormRequest
             'crn' => 'required|string',
             'phone' => 'required|string',
             'email' => 'required|email',
+            'domain_name' => 'required|unique:companies,domain_name,' . $this->route('company')->id
         ];
     }
 }

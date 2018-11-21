@@ -230,7 +230,7 @@
                 if (typeof itemtemplate_id !== typeof undefined && itemtemplate_id !== false) {
                     $.ajax({
                         type: "GET",
-                        url: "/itemtemplate/" + itemtemplate_id +"/retrieve",
+                        url: "/{{ app('request')->route('company')->domain_name }}/itemtemplate/" + itemtemplate_id +"/retrieve",
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }

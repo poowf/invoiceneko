@@ -56,7 +56,7 @@ class ItemTemplateController extends Controller
 
         flash('Item Template Created', 'success');
 
-        return redirect()->route('itemtemplate.show', [ 'itemtemplate' => $itemtemplate->id ]);
+        return redirect()->route('itemtemplate.show', [ 'itemtemplate' => $itemtemplate->id, 'company' => $company->domain_name ]);
     }
 
     /**
@@ -99,7 +99,7 @@ class ItemTemplateController extends Controller
 
         flash('Item Template Updated', 'success');
 
-        return redirect()->route('itemtemplate.show', [ 'itemtemplate' => $itemtemplate->id ]);
+        return redirect()->route('itemtemplate.show', [ 'itemtemplate' => $itemtemplate->id, 'company' => $company->domain_name ]);
     }
 
     /**
@@ -123,7 +123,7 @@ class ItemTemplateController extends Controller
     {
         $duplicatedItemTemplate = $itemtemplate->duplicate();
         flash('Item Template has been Cloned Sucessfully', "success");
-        return redirect()->route('itemtemplate.show', ['itemtemplate' => $duplicatedItemTemplate->id]);
+        return redirect()->route('itemtemplate.show', [ 'itemtemplate' => $duplicatedItemTemplate->id, 'company' => $company->domain_name ]);
     }
 
     /**
@@ -140,6 +140,6 @@ class ItemTemplateController extends Controller
 
         flash('Item Template Deleted', 'success');
 
-        return redirect()->route('itemtemplate.index');
+        return redirect()->route('itemtemplate.index', [ 'company' => $company->domain_name ]);
     }
 }

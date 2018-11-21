@@ -332,7 +332,7 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            Unicorn.initConfirmationTrigger('#invoice-container', '.invoice-delete-btn', 'invoice', 'destroy', '#delete-confirmation', '#delete-invoice-form');
+            Unicorn.initConfirmationTrigger('#invoice-container', '.invoice-delete-btn', '{{ \App\Library\Poowf\Unicorn::getCompanyKey() }}', 'invoice', 'destroy', '#delete-confirmation', '#delete-invoice-form');
             Unicorn.initPageSearch('#search-input', '#invoice-container .single-invoice-row');
         });
     </script>

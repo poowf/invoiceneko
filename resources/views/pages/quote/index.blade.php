@@ -125,7 +125,7 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            Unicorn.initConfirmationTrigger('#quote-container', '.quote-delete-btn', 'quote', 'destroy', '#delete-confirmation', '#delete-quote-form');
+            Unicorn.initConfirmationTrigger('#quote-container', '.quote-delete-btn', '{{ \App\Library\Poowf\Unicorn::getCompanyKey() }}', 'quote', 'destroy', '#delete-confirmation', '#delete-quote-form');
             Unicorn.initPageSearch('#search-input', '#quote-container .single-quote-row');
         });
     </script>

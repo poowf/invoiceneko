@@ -56,7 +56,7 @@
                                         @can('index', \App\Models\ItemTemplate::class)
                                         <li><a href="{{ route('itemtemplate.index', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}">Item Templates</a></li>
                                         @endcan
-                                        <li><a href="{{ route('user.edit') }}">User</a></li>
+                                        <li><a href="{{ route('user.edit', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}">User</a></li>
                                         <li>
                                             <form method="post" action="{{ route('auth.destroy') }}">
                                                 {{ csrf_field() }}
@@ -100,7 +100,7 @@
                                         @can('index', \App\Models\ItemTemplate::class)
                                         <li><a href="{{ route('itemtemplate.index', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}">Item Templates</a></li>
                                         @endcan
-                                        <li><a href="{{ route('user.edit') }}">User</a></li>
+                                        <li><a href="{{ route('user.edit', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}">User</a></li>
                                         <li>
                                             <form method="post" action="{{ route('auth.destroy') }}">
                                                 {{ csrf_field() }}

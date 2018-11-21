@@ -27,8 +27,7 @@
         "silber/bouncer": "v1.0.0-rc.4",
         "simplesoftwareio/simple-qrcode": "^2.0",
         "simshaun/recurr": "^3.0",
-        "webpatser/laravel-uuid": "^3.0",
-        "laravel/telescope": "^1.0.1"
+        "webpatser/laravel-uuid": "^3.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.1",

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
 use App\Library\Poowf\Unicorn;
+use App\Models\Company;
 use Illuminate\Http\Request;
 use Silber\Bouncer\BouncerFacade as Bouncer;
 use App\Models\Role;
@@ -14,14 +15,11 @@ class CompanyRoleController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Company $company
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Company $company)
     {
-        $company = auth()->user()->company;
-
-        $user = $company->owner;
-
         $roles = Role::all();
 
         return view('pages.company.roles.index', compact('roles'));
@@ -30,9 +28,10 @@ class CompanyRoleController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param Company $company
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Company $company)
     {
         $company = auth()->user()->company;
 
@@ -45,9 +44,10 @@ class CompanyRoleController extends Controller
      * Store a newly created resource in storage.
      *
      * @param CreateRoleRequest $request
+     * @param Company $company
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateRoleRequest $request)
+    public function store(CreateRoleRequest $request, Company $company)
     {
         $title = $request->input('title');
         $permissions = $request->input('permissions');
@@ -65,7 +65,7 @@ class CompanyRoleController extends Controller
         }
 
         flash("The Role has been created", 'success');
-        return redirect()->route('company.roles.index');
+        return redirect()->route('company.roles.index', [ 'company' => $company->domain_name ]);
     }
 
     /**
@@ -82,10 +82,11 @@ class CompanyRoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
+     * @param Company $company
      * @param Role $role
      * @return \Illuminate\Http\Response
      */
-    public function edit(Role $role)
+    public function edit(Company $company, Role $role)
     {
         if($role->name != 'global-administrator')
         {
@@ -96,7 +97,7 @@ class CompanyRoleController extends Controller
         }
         else
         {
-            return redirect()->route('company.roles.index');
+            return redirect()->route('company.roles.index', [ 'company' => $company->domain_name ]);
         }
     }
 
@@ -104,10 +105,11 @@ class CompanyRoleController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdateRoleRequest $request
+     * @param Company $company
      * @param Role $role
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRoleRequest $request, Role $role)
+    public function update(UpdateRoleRequest $request, Company $company, Role $role)
     {
         if($role->name != 'global-administrator')
         {
@@ -135,27 +137,28 @@ class CompanyRoleController extends Controller
             }
 
             flash("The Role has been updated", 'success');
-            return redirect()->route('company.roles.index');
+            return redirect()->route('company.roles.index', [ 'company' => $company->domain_name ]);
         }
         else
         {
-            return redirect()->route('company.roles.index');
+            return redirect()->route('company.roles.index', [ 'company' => $company->domain_name ]);
         }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param $role
+     * @param Company $company
+     * @param Role $role
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
-    public function destroy(Role $role)
+    public function destroy(Company $company, Role $role)
     {
         $role->delete();
 
         flash("The Role has been deleted", 'success');
-        return redirect()->route('company.roles.index');
+        return redirect()->route('company.roles.index', [ 'company' => $company->domain_name ]);
     }
 
     public function getFormattedPermissions()

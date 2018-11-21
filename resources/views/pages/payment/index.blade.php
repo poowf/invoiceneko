@@ -49,10 +49,10 @@
                                         <td>{{ $payment->receiveddate->format('d F, Y') }}</td>
                                         <td>
                                             @can('view', $payment)
-                                            <a href="{{ route('payment.show', [ 'payment' => $payment ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Payment"><i class="material-icons">remove_red_eye</i></a>
+                                            <a href="{{ route('payment.show', [ 'payment' => $payment, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Payment"><i class="material-icons">remove_red_eye</i></a>
                                             @endcan
                                             @can('update', $payment)
-                                            <a href="{{ route('payment.edit', [ 'payment' => $payment ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Payment"><i class="material-icons">mode_edit</i></a>
+                                            <a href="{{ route('payment.edit', [ 'payment' => $payment, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Payment"><i class="material-icons">mode_edit</i></a>
                                             @endcan
                                             @can('delete', $payment)
                                             <a href="#" data-id="{{ $payment->id }}" class="payment-delete-btn tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Payment"><i class="material-icons">delete</i></a>
@@ -87,7 +87,7 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            Unicorn.initConfirmationTrigger('#payment-container', '.payment-delete-btn', 'payment', 'destroy', '#delete-confirmation', '#delete-payment-form');
+            Unicorn.initConfirmationTrigger('#payment-container', '.payment-delete-btn', '{{ \App\Library\Poowf\Unicorn::getCompanyKey() }}', 'payment', 'destroy', '#delete-confirmation', '#delete-payment-form');
             Unicorn.initPageSearch('#search-input', '#payment-container .single-payment-row');
         });
     </script>

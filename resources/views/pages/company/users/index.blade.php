@@ -101,7 +101,7 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            Unicorn.initConfirmationTrigger('#user-container', '.user-delete-btn', 'company/users', 'destroy', '#delete-confirmation', '#delete-user-form');
+            Unicorn.initConfirmationTrigger('#user-container', '.user-delete-btn', '{{ \App\Library\Poowf\Unicorn::getCompanyKey() }}', 'company/users', 'destroy', '#delete-confirmation', '#delete-user-form');
         });
     </script>
 @stop

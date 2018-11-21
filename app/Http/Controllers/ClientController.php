@@ -85,7 +85,7 @@ class ClientController extends Controller
 
         flash('Client Created', 'success');
 
-        return redirect()->route('client.index', [ 'company' => Unicorn::getCompanyKey() ]);
+        return redirect()->route('client.index', [ 'company' => $company->domain_name ]);
     }
 
     /**
@@ -155,7 +155,7 @@ class ClientController extends Controller
 
         flash('Client Updated', 'success');
 
-        return redirect()->route('client.show', [ 'client' => $client->id, 'company' => Unicorn::getCompanyKey() ]);
+        return redirect()->route('client.show', [ 'client' => $client->id, 'company' => $company->domain_name ]);
     }
 
     /**
@@ -172,7 +172,7 @@ class ClientController extends Controller
 
         flash('Client Deleted', 'success');
 
-        return redirect()->route('client.index', [ 'company' => Unicorn::getCompanyKey() ]);
+        return redirect()->route('client.index', [ 'company' => $company->domain_name ]);
     }
 
     /**
@@ -182,7 +182,7 @@ class ClientController extends Controller
      */
     public function invoicecreate(Company $company, Client $client)
     {
-        return redirect()->route('invoice.create', [ 'company' => Unicorn::getCompanyKey() ])->withInput([
+        return redirect()->route('invoice.create', [ 'company' => $company->domain_name ])->withInput([
             'client_id' => $client->id
         ]);
     }

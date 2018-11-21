@@ -90,7 +90,7 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            Unicorn.initConfirmationTrigger('#role-container', '.role-delete-btn', 'company/roles', 'destroy', '#delete-confirmation', '#delete-role-form');
+            Unicorn.initConfirmationTrigger('#role-container', '.role-delete-btn', '{{ \App\Library\Poowf\Unicorn::getCompanyKey() }}', 'company/roles', 'destroy', '#delete-confirmation', '#delete-role-form');
         });
     </script>
 @stop

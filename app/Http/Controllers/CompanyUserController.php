@@ -64,8 +64,9 @@ class CompanyUserController extends Controller
         $user = new User;
         $user->fill($request->all());
         $user->password = $random_password;
-        $user->company_id = $company->id;
         $user->save();
+
+        $company->users()->attach($user->id);
 
         $roles = $request->input('roles');
 
@@ -73,7 +74,7 @@ class CompanyUserController extends Controller
 
         $user->notify(new NewCompanyUserNotification($user, $random_password));
 
-        return redirect()->route('company.users.index');
+        return redirect()->route('company.users.index', [ 'company' => $company->domain_name ]);
     }
 
     /**

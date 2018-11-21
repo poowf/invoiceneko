@@ -13,7 +13,7 @@
             </div>
             <div class="col s6 right">
                 @can('update', $itemtemplate)
-                <a href="{{ route('itemtemplate.edit', [ 'itemtemplate' => $itemtemplate->id ] ) }}" class="btn light-blue waves-effect waves-dark mtop30">Edit</a>
+                <a href="{{ route('itemtemplate.edit', [ 'itemtemplate' => $itemtemplate->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="btn light-blue waves-effect waves-dark mtop30">Edit</a>
                 @endcan
                 @can('delete', $itemtemplate)
                 <a href="#" data-id="{{ $itemtemplate->id }}" class="btn btn-link waves-effect waves-dark itemtemplate-delete-btn mtop30">Delete</a>
@@ -57,7 +57,7 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            Unicorn.initConfirmationTrigger('.container', '.itemtemplate-delete-btn', 'itemtemplate', 'destroy', '#delete-confirmation', '#delete-itemtemplate-form');
+            Unicorn.initConfirmationTrigger('.container', '.itemtemplate-delete-btn', '{{ \App\Library\Poowf\Unicorn::getCompanyKey() }}', 'itemtemplate', 'destroy', '#delete-confirmation', '#delete-itemtemplate-form');
         });
     </script>
 @stop

@@ -20,22 +20,22 @@ class PaymentTest extends DuskTestCase
     public function test_create_a_payment()
     {
         $invoice = factory(Invoice::class)->create();
-        //Need to assign the company_id to the user
-        $invoice->company->owner->company_id = $invoice->company_id;
-        $invoice->company->owner->save();
+        $company = $invoice->company;
+        //Need to attach the company to the user
+        $company->users()->attach($company->user_id);
 
         $faker = Faker::create();
 
-        $this->browse(function (Browser $browser) use ($faker, $invoice) {
+        $this->browse(function (Browser $browser) use ($faker, $invoice, $company) {
             $browser->visit('/signin')
-                ->type('username', $invoice->company->owner->email)
+                ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/dashboard')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->clickLink('Payments')
-                ->assertPathIs('/payments')
+                ->assertPathIs('/' . $company->domain_name . '/payments')
                 ->clickLink('Create')
-                ->assertPathIs('/payment/create')
+                ->assertPathIs('/' . $company->domain_name . '/payment/create')
                 ->type('amount', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999))
                 ->type('notes', $faker->text(50));
             $browser
@@ -55,9 +55,10 @@ class PaymentTest extends DuskTestCase
     public function test_update_a_payment()
     {
         $invoice = factory(Invoice::class)->create();
-        //Need to assign the company_id to the user
-        $invoice->company->owner->company_id = $invoice->company_id;
-        $invoice->company->owner->save();
+        $company = $invoice->company;
+        //Need to attach the company to the user
+        $company->users()->attach($company->user_id);
+
         $payment = factory(Payment::class)->create([
             'invoice_id' => $invoice->id,
             'company_id' => $invoice->company_id
@@ -65,18 +66,18 @@ class PaymentTest extends DuskTestCase
 
         $faker = Faker::create();
 
-        $this->browse(function (Browser $browser) use ($faker, $invoice, $payment) {
+        $this->browse(function (Browser $browser) use ($faker, $invoice, $company, $payment) {
             $browser->visit('/signin')
-                ->type('username', $invoice->company->owner->email)
+                ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/dashboard')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->clickLink('Payments')
-                ->assertPathIs('/payments');
+                ->assertPathIs('/' . $company->domain_name . '/payments');
             $browser
-                ->script("jQuery(\"a[href='{$this->baseUrl()}/payment/{$payment->id}/edit'] > i\").click();");
+                ->script("jQuery(\"a[href='{$this->baseUrl()}/{$company->domain_name}/payment/{$payment->id}/edit'] > i\").click();");
             $browser
-                ->assertPathBeginsWith('/payment')
+                ->assertPathBeginsWith('/' . $company->domain_name . '/payment')
                 ->type('amount', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999))
                 ->type('notes', $faker->text(50));
             $browser
@@ -86,7 +87,7 @@ class PaymentTest extends DuskTestCase
             $browser
                 ->press('SUBMIT')
                 ->assertPresent('#payment-container')
-                ->assertPathIs('/payments');
+                ->assertPathIs('/' . $company->domain_name . '/payments');
             $browser->script('jQuery(".signmeout-btn").click()');
             $browser->assertPathIs('/signin');
         });
@@ -95,9 +96,10 @@ class PaymentTest extends DuskTestCase
     public function test_delete_a_payment()
     {
         $invoice = factory(Invoice::class)->create();
-        //Need to assign the company_id to the user
-        $invoice->company->owner->company_id = $invoice->company_id;
-        $invoice->company->owner->save();
+        $company = $invoice->company;
+        //Need to attach the company to the user
+        $company->users()->attach($company->user_id);
+
         $payment = factory(Payment::class)->create([
             'invoice_id' => $invoice->id,
             'company_id' => $invoice->company_id
@@ -105,21 +107,21 @@ class PaymentTest extends DuskTestCase
 
         $faker = Faker::create();
 
-        $this->browse(function (Browser $browser) use ($faker, $invoice, $payment) {
+        $this->browse(function (Browser $browser) use ($faker, $invoice, $company, $payment) {
             $browser->visit('/signin')
-                ->type('username', $invoice->company->owner->email)
+                ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/dashboard')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->clickLink('Payments')
-                ->assertPathIs('/payments');
+                ->assertPathIs('/' . $company->domain_name . '/payments');
             $browser
                 ->script('jQuery(".payment-delete-btn > i").click();');
             $browser
                 ->pause(500)
                 ->press('DELETE')
                 ->assertPresent('#payment-container')
-                ->assertPathIs('/payments');
+                ->assertPathIs('/' . $company->domain_name . '/payments');
             $browser->script('jQuery(".signmeout-btn").click()');
             $browser->assertPathIs('/signin');
         });
@@ -128,22 +130,22 @@ class PaymentTest extends DuskTestCase
     public function test_end_to_end_payment()
     {
         $invoice = factory(Invoice::class)->create();
-        //Need to assign the company_id to the user
-        $invoice->company->owner->company_id = $invoice->company_id;
-        $invoice->company->owner->save();
+        $company = $invoice->company;
+        //Need to attach the company to the user
+        $company->users()->attach($company->user_id);
 
         $faker = Faker::create();
 
-        $this->browse(function (Browser $browser) use ($faker, $invoice) {
+        $this->browse(function (Browser $browser) use ($faker, $invoice, $company) {
             $browser->visit('/signin')
-                ->type('username', $invoice->company->owner->email)
+                ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/dashboard')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->clickLink('Payments')
-                ->assertPathIs('/payments')
+                ->assertPathIs('/' . $company->domain_name . '/payments')
                 ->clickLink('Create')
-                ->assertPathIs('/payment/create')
+                ->assertPathIs('/' . $company->domain_name . '/payment/create')
                 ->type('amount', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999))
                 ->type('notes', $faker->text(50));
             $browser
@@ -156,11 +158,11 @@ class PaymentTest extends DuskTestCase
                 ->press('SUBMIT')
                 ->assertPresent('#payment-container')
                 ->clickLink('Payments')
-                ->assertPathIs('/payments');
+                ->assertPathIs('/' . $company->domain_name . '/payments');
             $browser
                 ->script("jQuery(\"a[data-tooltip='Edit Payment'] > i\").click();");
             $browser
-                ->assertPathBeginsWith('/payment')
+                ->assertPathBeginsWith('/' . $company->domain_name . '/payment')
                 ->type('amount', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999))
                 ->type('notes', $faker->text(50));
             $browser
@@ -170,14 +172,14 @@ class PaymentTest extends DuskTestCase
             $browser
                 ->press('SUBMIT')
                 ->assertPresent('#payment-container')
-                ->assertPathIs('/payments');
+                ->assertPathIs('/' . $company->domain_name . '/payments');
             $browser
                 ->script('jQuery(".payment-delete-btn > i").click();');
             $browser
                 ->pause(500)
                 ->press('DELETE')
                 ->assertPresent('#payment-container')
-                ->assertPathIs('/payments');
+                ->assertPathIs('/' . $company->domain_name . '/payments');
             $browser->script('jQuery(".signmeout-btn").click()');
             $browser->assertPathIs('/signin');
         });

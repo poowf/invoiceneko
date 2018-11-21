@@ -78,7 +78,7 @@ class InvoiceController extends Controller
         $invoice->save();
         flash('Invoice has been archived successfully', "success");
 
-        return redirect()->route('invoice.show', [ 'invoice' => $invoice->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]);
+        return redirect()->route('invoice.show', [ 'invoice' => $invoice->id, 'company' => $company->domain_name ]);
     }
 
     /**
@@ -92,7 +92,7 @@ class InvoiceController extends Controller
         $invoice->status = Invoice::STATUS_WRITTENOFF;
         $invoice->save();
 
-        return redirect()->route('invoice.show', [ 'invoice' => $invoice->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]);
+        return redirect()->route('invoice.show', [ 'invoice' => $invoice->id, 'company' => $company->domain_name ]);
     }
 
 /**
@@ -188,6 +188,8 @@ class InvoiceController extends Controller
      * @param CreateInvoiceRequest $request
      * @param Company $company
      * @return Response
+     * @throws \Recurr\Exception\InvalidArgument
+     * @throws \Recurr\Exception\InvalidRRule
      */
     public function store(CreateInvoiceRequest $request, Company $company)
     {
@@ -273,7 +275,7 @@ class InvoiceController extends Controller
 
         flash('Invoice Created', 'success');
 
-        return redirect()->route('invoice.show', [ 'invoice' => $invoice->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]);
+        return redirect()->route('invoice.show', [ 'invoice' => $invoice->id, 'company' => $company->domain_name ]);
     }
 
     /**
@@ -311,7 +313,7 @@ class InvoiceController extends Controller
 
         flash('Quote Created', 'success');
 
-        return redirect()->route('quote.show', [ 'quote' => $quote->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]);
+        return redirect()->route('quote.show', [ 'quote' => $quote->id, 'company' => $company->domain_name ]);
     }
 
     /**
@@ -372,7 +374,7 @@ class InvoiceController extends Controller
         {
             flash('More than 120 days has passed since the invoice has been completed, the invoice is now locked', 'error');
 
-            return redirect()->route('invoice.show', [ 'invoice' => $invoice->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]);
+            return redirect()->route('invoice.show', [ 'invoice' => $invoice->id, 'company' => $company->domain_name ]);
         }
 
         $clients = $company->clients;
@@ -395,7 +397,7 @@ class InvoiceController extends Controller
         {
             flash('More than 120 days has passed since the invoice has been completed, the invoice is now locked', 'error');
 
-            return redirect()->route('invoice.show', [ 'invoice' => $invoice->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]);
+            return redirect()->route('invoice.show', [ 'invoice' => $invoice->id, 'company' => $company->domain_name ]);
         }
 
         $invoice->fill($request->all());
@@ -583,7 +585,7 @@ class InvoiceController extends Controller
 
         flash('Invoice Updated', 'success');
 
-        return redirect()->route('invoice.show', [ 'invoice' => $invoice->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]);
+        return redirect()->route('invoice.show', [ 'invoice' => $invoice->id, 'company' => $company->domain_name ]);
     }
 
     /**
@@ -600,7 +602,7 @@ class InvoiceController extends Controller
 
         flash('Invoice Deleted', 'success');
 
-        return redirect()->route('invoice.index');
+        return redirect()->route('invoice.index', [ 'company' => $company->domain_name ]);
     }
 
     /**

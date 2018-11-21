@@ -43,8 +43,7 @@ class CompanyTest extends TestCase
     {
         $user = factory(\App\Models\User::class)->create();
         $company = factory(Company::class)->create();
-        $company->owner->company_id = $company->id;
-        $company->owner->save();
+
 
         $this->assertInstanceOf(Company::class, $company);
 
@@ -81,8 +80,7 @@ class CompanyTest extends TestCase
     public function test_delete_company()
     {
         $company = factory(Company::class)->create();
-        $company->owner->company_id = $company->id;
-        $company->owner->save();
+
 
         $this->assertInstanceOf(Company::class, $company);
 
@@ -94,7 +92,7 @@ class CompanyTest extends TestCase
     public function test_company_has_a_company_settings_relationship()
     {
         $company = factory(Company::class)->create();
-        //Need to assign the company_id to the user
+        //Need to attach the company to the user
 
         $this->assertTrue(isset($company->settings));
         $this->assertInstanceOf(CompanySettings::class, $company->settings);
