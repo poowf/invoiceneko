@@ -17,13 +17,13 @@
             <div class="col s6">
             </div>
             <div class="col s6 mtop30 right">
-                <a class="btn btn-lg btn-default" href="{{ route('payment.create', [ 'quote' => $quote->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}">
+                <a class="btn btn-lg btn-default" href="{{ route('payment.create', [ 'quote' => $quote, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}">
                     Log Payment
                 </a>
-                <a class="btn btn-lg btn-default" href="{{ route('quote.download', [ 'quote' => $quote->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}">
+                <a class="btn btn-lg btn-default" href="{{ route('quote.download', [ 'quote' => $quote, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}">
                     Save PDF
                 </a>
-                <a class="btn btn-lg btn-default" href="{{ route('quote.printview', [ 'quote' => $quote->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}">
+                <a class="btn btn-lg btn-default" href="{{ route('quote.printview', [ 'quote' => $quote, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}">
                     Print
                 </a>
             </div>

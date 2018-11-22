@@ -81,7 +81,7 @@ class PaymentController extends Controller
 
         flash('Payment Created', 'success');
 
-        return redirect()->route('invoice.show', [ 'invoice' => $invoice->id, 'company' => $company->domain_name ]);
+        return redirect()->route('invoice.show', [ 'invoice' => $invoice, 'company' => $company ]);
     }
 
     /**
@@ -147,7 +147,7 @@ class PaymentController extends Controller
 
         flash('Payment Created', 'success');
 
-        return redirect()->route('payment.index', [ 'company' => $company->domain_name ]);
+        return redirect()->route('payment.index', [ 'company' => $company ]);
     }
 
     /**
@@ -190,7 +190,7 @@ class PaymentController extends Controller
 
         flash('Payment Updated', 'success');
 
-        return redirect()->route('payment.index', [ 'company' => $company->domain_name ]);
+        return redirect()->route('payment.index', [ 'company' => $company ]);
     }
 
     /**
@@ -207,6 +207,6 @@ class PaymentController extends Controller
 
         flash('Payment Deleted', 'success');
 
-        return redirect()->route('payment.index', [ 'company' => $company->domain_name ]);
+        return redirect()->route('payment.index', [ 'company' => $company ]);
     }
 }

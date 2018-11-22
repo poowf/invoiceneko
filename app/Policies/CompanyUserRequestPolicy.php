@@ -30,7 +30,7 @@ class CompanyUserRequestPolicy
 
     public function index(User $user)
     {
-        return $user->can('view-company-user-request', CompanyUserRequest::class);
+        return $user->can('update-company-user-request', CompanyUserRequest::class);
     }
 
     /**

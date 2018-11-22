@@ -32,7 +32,7 @@
                             <dd>{{ $owner->phone ?? '-' }}</dd>
                         </dl>
                     </div>
-                    @can('update', $owner->company)
+                    @can('owner', $company)
                         @if($company->users->count() != 1)
                             <form id="edit-owner" method="post" enctype="multipart/form-data">
                                 <div class="card-panel flex">
@@ -82,7 +82,7 @@
 
 @section("scripts")
     @if($users->isNotEmpty())
-        @can('update', $owner->company)
+        @can('owner', $company)
             <script type="text/javascript">
             "use strict";
             $(function() {

@@ -28,8 +28,8 @@ class UpdateRoleRequest extends FormRequest
         return [
             'title' => [
                 'required',
-                Rule::unique('roles')->where('scope', auth()->user()->company_id)->ignore(Bouncer::role()->where('name', $this->role)->first()->id),
-                Rule::unique('roles', 'name')->where('scope', auth()->user()->company_id)->ignore(Bouncer::role()->where('name', $this->role)->first()->id)
+                Rule::unique('roles')->where('scope', $this->route('company')->id)->ignore($this->role->id),
+                Rule::unique('roles', 'name')->where('scope', $this->route('company')->id)->ignore($this->role->id)
             ],
             'permissions' => 'required|array'
         ];

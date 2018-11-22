@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use App\Models\CompanyInvite;
+use App\Models\User;
 use App\Notifications\InviteUserNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -60,7 +61,7 @@ class CompanyInviteController extends Controller
         }
 
         flash('Invite has been successfully sent to the user', 'success');
-        return redirect()->route('company.users.index', [ 'company' => $company->domain_name ]);
+        return redirect()->route('company.users.index', [ 'company' => $company ]);
     }
 
     /**
@@ -75,7 +76,7 @@ class CompanyInviteController extends Controller
         $user = auth()->user();
         if($company->hasUser($user))
         {
-            return redirect()->route('dashboard', [ 'company' => $company->domain_name ]);
+            return redirect()->route('dashboard', [ 'company' => $company ]);
         }
 
         return view('pages.company.invite.show', compact('companyInvite'));
@@ -104,7 +105,7 @@ class CompanyInviteController extends Controller
 
             $companyInvite->delete();
 
-            return redirect()->route('dashboard', [ 'company' => $company->domain_name ]);
+            return redirect()->route('dashboard', [ 'company' => $company ]);
         }
         else
         {
@@ -144,5 +145,23 @@ class CompanyInviteController extends Controller
     public function destroy(CompanyInvite $companyInvite)
     {
         //
+    }
+
+    /**
+     * @param Request $request
+     * @param Company $company
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function revoke(Request $request, Company $company, User $user)
+    {
+        if($company->hasUser($user))
+        {
+            Bouncer::sync($user)->roles([]);
+            Bouncer::sync($user)->abilities([]);
+            $company->users()->detach($user->id);
+        }
+
+        return redirect()->route('company.users.index', [ 'company' => $company ]);
     }
 }

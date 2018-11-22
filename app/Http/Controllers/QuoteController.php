@@ -58,7 +58,7 @@ class QuoteController extends Controller
         $quote->save();
         flash('Quote has been archived successfully', "success");
 
-        return redirect()->route('quote.show', [ 'quote' => $quote->id, 'company' => $company->domain_name ]);
+        return redirect()->route('quote.show', [ 'quote' => $quote, 'company' => $company ]);
     }
 
     /**
@@ -101,7 +101,7 @@ class QuoteController extends Controller
     {
         $duplicatedQuote = $quote->duplicate();
         flash('Quote has been Cloned Sucessfully', "success");
-        return redirect()->route('quote.show', [ 'quote' => $duplicatedQuote->id, 'company' => $company->domain_name ]);
+        return redirect()->route('quote.show', [ 'quote' => $duplicatedQuote->id, 'company' => $company ]);
     }
 
     /**
@@ -165,7 +165,7 @@ class QuoteController extends Controller
 
         flash('Quote Created', 'success');
 
-        return redirect()->route('quote.show', [ 'quote' => $quote->id, 'company' => $company->domain_name ]);
+        return redirect()->route('quote.show', [ 'quote' => $quote, 'company' => $company ]);
     }
 
     /**
@@ -205,7 +205,7 @@ class QuoteController extends Controller
 
         flash('Invoice Created', 'success');
 
-        return redirect()->route('invoice.show', [ 'invoice' => $invoice->id, 'company' => $company->domain_name ]);
+        return redirect()->route('invoice.show', [ 'invoice' => $invoice, 'company' => $company ]);
     }
 
     /**
@@ -304,7 +304,7 @@ class QuoteController extends Controller
 
         flash('Quote Updated', 'success');
 
-        return redirect()->route('quote.show', [ 'quote' => $quote->id, 'company' => $company->domain_name ]);
+        return redirect()->route('quote.show', [ 'quote' => $quote, 'company' => $company ]);
     }
 
     /**
@@ -321,6 +321,6 @@ class QuoteController extends Controller
 
         flash('Quote Deleted', 'success');
 
-        return redirect()->route('quote.index', [ 'company' => $company->domain_name ]);
+        return redirect()->route('quote.index', [ 'company' => $company ]);
     }
 }

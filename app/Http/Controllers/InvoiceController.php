@@ -78,7 +78,7 @@ class InvoiceController extends Controller
         $invoice->save();
         flash('Invoice has been archived successfully', "success");
 
-        return redirect()->route('invoice.show', [ 'invoice' => $invoice->id, 'company' => $company->domain_name ]);
+        return redirect()->route('invoice.show', [ 'invoice' => $invoice, 'company' => $company ]);
     }
 
     /**
@@ -92,7 +92,7 @@ class InvoiceController extends Controller
         $invoice->status = Invoice::STATUS_WRITTENOFF;
         $invoice->save();
 
-        return redirect()->route('invoice.show', [ 'invoice' => $invoice->id, 'company' => $company->domain_name ]);
+        return redirect()->route('invoice.show', [ 'invoice' => $invoice, 'company' => $company ]);
     }
 
 /**
@@ -149,7 +149,7 @@ class InvoiceController extends Controller
     {
         $duplicatedInvoice = $invoice->duplicate();
         flash('Invoice has been Cloned Sucessfully', "success");
-        return redirect()->route('invoice.show', ['invoice' => $duplicatedInvoice->id]);
+        return redirect()->route('invoice.show', [ 'invoice' => $duplicatedInvoice ]);
     }
 
     /**
@@ -275,7 +275,7 @@ class InvoiceController extends Controller
 
         flash('Invoice Created', 'success');
 
-        return redirect()->route('invoice.show', [ 'invoice' => $invoice->id, 'company' => $company->domain_name ]);
+        return redirect()->route('invoice.show', [ 'invoice' => $invoice, 'company' => $company ]);
     }
 
     /**
@@ -313,7 +313,7 @@ class InvoiceController extends Controller
 
         flash('Quote Created', 'success');
 
-        return redirect()->route('quote.show', [ 'quote' => $quote->id, 'company' => $company->domain_name ]);
+        return redirect()->route('quote.show', [ 'quote' => $quote, 'company' => $company ]);
     }
 
     /**
@@ -374,7 +374,7 @@ class InvoiceController extends Controller
         {
             flash('More than 120 days has passed since the invoice has been completed, the invoice is now locked', 'error');
 
-            return redirect()->route('invoice.show', [ 'invoice' => $invoice->id, 'company' => $company->domain_name ]);
+            return redirect()->route('invoice.show', [ 'invoice' => $invoice, 'company' => $company ]);
         }
 
         $clients = $company->clients;
@@ -397,7 +397,7 @@ class InvoiceController extends Controller
         {
             flash('More than 120 days has passed since the invoice has been completed, the invoice is now locked', 'error');
 
-            return redirect()->route('invoice.show', [ 'invoice' => $invoice->id, 'company' => $company->domain_name ]);
+            return redirect()->route('invoice.show', [ 'invoice' => $invoice, 'company' => $company ]);
         }
 
         $invoice->fill($request->all());
@@ -585,7 +585,7 @@ class InvoiceController extends Controller
 
         flash('Invoice Updated', 'success');
 
-        return redirect()->route('invoice.show', [ 'invoice' => $invoice->id, 'company' => $company->domain_name ]);
+        return redirect()->route('invoice.show', [ 'invoice' => $invoice, 'company' => $company ]);
     }
 
     /**
@@ -602,7 +602,7 @@ class InvoiceController extends Controller
 
         flash('Invoice Deleted', 'success');
 
-        return redirect()->route('invoice.index', [ 'company' => $company->domain_name ]);
+        return redirect()->route('invoice.index', [ 'company' => $company ]);
     }
 
     /**

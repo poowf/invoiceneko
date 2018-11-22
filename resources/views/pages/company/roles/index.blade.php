@@ -16,7 +16,7 @@
             </div>
             <div class="col s6 right mtop30">
                 @if($roles->isNotEmpty())
-                    @can('owner', \App\Models\Company::class)
+                    @can('owner', app('request')->route('company'))
                         <a href="{{ route('company.roles.create', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}" class="btn btn-link waves-effect waves-dark">Add Role</a>
                     @endcan
                 @endif
@@ -34,7 +34,7 @@
                                 <thead>
                                     <tr>
                                         <th>Role Name</th>
-                                        @can('owner', \App\Models\Company::class)
+                                        @can('owner', app('request')->route('company'))
                                             <th>Action</th>
                                         @endcan
                                     </tr>
@@ -44,7 +44,7 @@
                                     @foreach($roles as $key => $role)
                                         <tr class="single-request-row">
                                             <td>{{ $role->title }}</td>
-                                            @can('owner', \App\Models\Company::class)
+                                            @can('owner', app('request')->route('company'))
                                                 <td>
                                                     @if($role->name != 'global-administrator')
                                                     <a href="{{ route('company.roles.edit', [ 'role' => $role->name, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Role"><i class="material-icons">mode_edit</i></a>

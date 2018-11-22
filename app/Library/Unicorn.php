@@ -18,12 +18,10 @@ class Unicorn
         \App\Models\ItemTemplate::class,
         \App\Models\Payment::class,
         \App\Models\Client::class,
-        \App\Models\Company::class,
+        \App\Models\Role::class,
         \App\Models\CompanyAddress::class,
         \App\Models\CompanySettings::class,
         \App\Models\CompanyUserRequest::class,
-        \App\Models\Role::class,
-        \App\Models\User::class
     ];
 
     public function  __construct()

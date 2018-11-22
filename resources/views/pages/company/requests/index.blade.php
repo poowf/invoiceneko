@@ -32,7 +32,7 @@
                                         <th>Email</th>
                                         <th>Phone</th>
                                         <th>Status</th>
-                                        @can('owner', \App\Models\Company::class)
+                                        @can('owner', app('request')->route('company'))
                                             <th>Action</th>
                                         @endcan
                                     </tr>
@@ -45,7 +45,7 @@
                                             <td>{{ $request->email }}</td>
                                             <td>{{ $request->phone }}</td>
                                             <td>{{ $request->statusText() }}</td>
-                                            @can('owner', \App\Models\Company::class)
+                                            @can('owner', app('request')->route('company'))
                                                 <td>
                                                     <form method="post" action="{{ route('company.requests.approve', [ 'companyuserrequest' => $request->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form tooltipped" data-position="top" data-delay="50" data-tooltip="Approve User">
                                                         {{ csrf_field() }}
@@ -57,7 +57,6 @@
                                                     </form>
                                                 </td>
                                             @endcan
-
                                         </tr>
                                     @endforeach
                                 </tbody>

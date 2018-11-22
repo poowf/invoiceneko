@@ -51,13 +51,11 @@ Route::group(['middleware' => ['auth', '2fa']], function() {
     Route::post('/multifactor/validate', 'AuthController@multifactor_validate')->name('auth.multifactor.validate');
     Route::post('/company/switch', 'CompanyController@switch')->name('company.switch');
     Route::get('/errors/nocompany', 'MainController@nocompany')->name('nocompany');
-    Route::get('/company/joiss', 'MainController@dashboard')->name('company.main');
 
     Route::get('/company/join/{companyinvite}', 'CompanyInviteController@show')->name('company.invite.show');
     Route::post('/company/join/{companyinvite}', 'CompanyInviteController@join')->name('company.invite.join');
 
     Route::group(['prefix' => '{company}'], function() {
-
         /* User */
         Route::get('/user/edit', 'UserController@edit')->name('user.edit');
         Route::patch('/user/edit', 'UserController@update')->name('user.update');
@@ -69,35 +67,32 @@ Route::group(['middleware' => ['auth', '2fa']], function() {
         Route::delete('/user/multifactor/destroy', 'UserController@multifactor_destroy')->name('user.multifactor.destroy');
 
         /* Company */
-        Route::get('/company/show', 'CompanyController@show')->name('company.show');
-        Route::get('/company/edit', 'CompanyController@edit')->name('company.edit')->middleware('can:update, App\Models\Company');
-        Route::patch('/company/edit', 'CompanyController@update')->name('company.update')->middleware('can:update, App\Models\Company');
+        Route::get('/company/show', 'CompanyController@show')->name('company.show')->middleware('can:member,company');
+        Route::get('/company/edit', 'CompanyController@edit')->name('company.edit')->middleware('can:owner,company');
+        Route::patch('/company/edit', 'CompanyController@update')->name('company.update')->middleware('can:owner,company');
 
         Route::group(['middleware' => ['hascompany']], function() {
             Route::get('/dashboard', 'MainController@dashboard')->name('dashboard');
 
-            //TODO:Middleware check to ensure that the user logged in is an owner and that the user retrieved is a member of the company
-            Route::get('/user/{user}/retrieve', 'UserController@retrieve')->name('user.retrieve');
+            Route::get('/user/{user}/retrieve', 'UserController@retrieve')->name('user.retrieve')->middleware('can:owner,company');
             /* Company */
-            Route::get('/company/owner/edit', 'CompanyController@edit_owner')->name('company.owner.edit')->middleware('can:owner, App\Models\Company');
-            Route::patch('/company/owner/edit', 'CompanyController@update_owner')->name('company.owner.update')->middleware('can:owner, App\Models\Company');
-            Route::get('/company/users', 'CompanyUserController@index')->name('company.users.index')->middleware('can:update, App\Models\Company');
-            Route::get('/company/users/create', 'CompanyUserController@create')->name('company.users.create')->middleware('can:update, App\Models\Company');
-            Route::post('/company/users/create', 'CompanyUserController@store')->name('company.users.store')->middleware('can:update, App\Models\Company');
-            Route::get('/company/users/{user}/edit', 'CompanyUserController@edit')->name('company.users.edit')->middleware('can:update, App\Models\CompanyUserRequest');
-            Route::patch('/company/users/{user}/edit', 'CompanyUserController@update')->name('company.users.update')->middleware('can:update, App\Models\CompanyUserRequest');
-            Route::delete('/company/users/{user}/destroy', 'CompanyUserController@destroy')->name('company.users.destroy')->middleware('can:delete, App\Models\CompanyUserRequest');
+            Route::get('/company/owner/edit', 'CompanyController@edit_owner')->name('company.owner.edit')->middleware('can:owner,company');
+            Route::patch('/company/owner/edit', 'CompanyController@update_owner')->name('company.owner.update')->middleware('can:owner,company');
+            Route::get('/company/users', 'CompanyUserController@index')->name('company.users.index')->middleware('can:owner,company');
+            Route::get('/company/users/{user}/edit', 'CompanyUserController@edit')->name('company.users.edit')->middleware('can:owner,company');
+            Route::patch('/company/users/{user}/edit', 'CompanyUserController@update')->name('company.users.update')->middleware('can:owner,company');
 
-            Route::get('/company/invite', 'CompanyInviteController@create')->name('company.invite.create')->middleware('can:update, App\Models\Company');
-            Route::post('/company/invite', 'CompanyInviteController@store')->name('company.invite.store')->middleware('can:update, App\Models\Company');
+            Route::get('/company/invite', 'CompanyInviteController@create')->name('company.invite.create')->middleware('can:owner,company');
+            Route::post('/company/invite', 'CompanyInviteController@store')->name('company.invite.store')->middleware('can:owner,company');
+            Route::delete('/company/access/{user}/revoke', 'CompanyInviteController@revoke')->name('company.access.revoke')->middleware('can:owner,company');
 
             /* CompanyAddress */
-            Route::get('/company/address/edit', 'CompanyAddressController@edit')->name('company.address.edit')->middleware('can:update, App\Models\CompanyAddress');
-            Route::patch('/company/address/edit', 'CompanyAddressController@update')->name('company.address.update')->middleware('can:update, App\Models\CompanyAddress');
+            Route::get('/company/address/edit', 'CompanyAddressController@edit')->name('company.address.edit')->middleware('can:address,company');
+            Route::patch('/company/address/edit', 'CompanyAddressController@update')->name('company.address.update')->middleware('can:address,company');
 
             /* CompanySettings */
-            Route::get('/company/settings/edit', 'CompanySettingsController@edit')->name('company.settings.edit')->middleware('can:update, App\Models\CompanySettings');
-            Route::patch('/company/settings/edit', 'CompanySettingsController@update')->name('company.settings.update')->middleware('can:update, App\Models\CompanySettings');
+            Route::get('/company/settings/edit', 'CompanySettingsController@edit')->name('company.settings.edit')->middleware('can:settings,company');
+            Route::patch('/company/settings/edit', 'CompanySettingsController@update')->name('company.settings.update')->middleware('can:settings,company');
 
             /* CompanyUserRequest */
             Route::get('/company/requests', 'CompanyUserRequestController@index')->name('company.requests.index')->middleware('can:index, App\Models\CompanyUserRequest');
@@ -105,12 +100,12 @@ Route::group(['middleware' => ['auth', '2fa']], function() {
             Route::post('/company/requests/{companyuserrequest}/reject', 'CompanyUserRequestController@reject')->name('company.requests.reject')->middleware('can:update, App\Models\CompanyUserRequest');
 
             /* Roles */
-            Route::get('/company/roles', 'CompanyRoleController@index')->name('company.roles.index');
-            Route::get('/company/roles/create', 'CompanyRoleController@create')->name('company.roles.create')->middleware('can:create, App\Models\Role');
-            Route::post('/company/roles/create', 'CompanyRoleController@store')->name('company.roles.store')->middleware('can:create, App\Models\Role');
-            Route::get('/company/roles/{role}/edit', 'CompanyRoleController@edit')->name('company.roles.edit')->middleware('can:update,role');
-            Route::patch('/company/roles/{role}/edit', 'CompanyRoleController@update')->name('company.roles.update')->middleware('can:update,role');
-            Route::delete('/company/roles/{role}/destroy', 'CompanyRoleController@destroy')->name('company.roles.destroy')->middleware('can:delete,role');
+            Route::get('/company/roles', 'CompanyRoleController@index')->name('company.roles.index')->middleware('can:owner,company');
+            Route::get('/company/roles/create', 'CompanyRoleController@create')->name('company.roles.create')->middleware('can:owner,company');
+            Route::post('/company/roles/create', 'CompanyRoleController@store')->name('company.roles.store')->middleware('can:owner,company');
+            Route::get('/company/roles/{role}/edit', 'CompanyRoleController@edit')->name('company.roles.edit')->middleware('can:owner,company');
+            Route::patch('/company/roles/{role}/edit', 'CompanyRoleController@update')->name('company.roles.update')->middleware('can:owner,company');
+            Route::delete('/company/roles/{role}/destroy', 'CompanyRoleController@destroy')->name('company.roles.destroy')->middleware('can:owner,company');
 
             /* Migration */
             Route::get('/migration/', 'DataMigrationController@create')->name('migration.create');
@@ -121,8 +116,8 @@ Route::group(['middleware' => ['auth', '2fa']], function() {
             /* Clients */
             Route::get('/clients', 'ClientController@index')->name('client.index')->middleware('can:index, App\Models\Client');
             Route::get('/client/create', 'ClientController@create')->name('client.create')->middleware('can:create, App\Models\Client');
-            Route::get('/client/{client}/invoicecreate', 'ClientController@invoicecreate')->name('client.invoice.create')->middleware('can:update,client');
             Route::post('/client/create', 'ClientController@store')->name('client.store')->middleware('can:create, App\Models\Client');
+            Route::get('/client/{client}/invoicecreate', 'ClientController@invoicecreate')->name('client.invoice.create')->middleware('can:create,App\Models\Invoice');
             Route::get('/client/{client}', 'ClientController@show')->name('client.show')->middleware('can:view,client');
             Route::get('/client/{client}/edit', 'ClientController@edit')->name('client.edit')->middleware('can:update,client');
             Route::patch('/client/{client}/edit', 'ClientController@update')->name('client.update')->middleware('can:update,client');
@@ -135,7 +130,7 @@ Route::group(['middleware' => ['auth', '2fa']], function() {
             Route::post('/invoice/create', 'InvoiceController@store')->name('invoice.store')->middleware('can:create, App\Models\Invoice');
             Route::get('/invoice/{invoice}', 'InvoiceController@show')->name('invoice.show')->middleware('can:view,invoice');
             Route::post('/invoice/{invoice}/duplicate', 'InvoiceController@duplicate')->name('invoice.duplicate')->middleware('can:update,invoice');
-            Route::post('/invoice/{invoice}/convert', 'InvoiceController@convertToQuote')->name('invoice.convert')->middleware('can:view,invoice');
+            Route::post('/invoice/{invoice}/convert', 'InvoiceController@convertToQuote')->name('invoice.convert')->middleware('can:update,invoice');
             Route::get('/invoice/{invoice}/download', 'InvoiceController@download')->name('invoice.download')->middleware('can:view,invoice');
             Route::get('/invoice/{invoice}/printview', 'InvoiceController@printview')->name('invoice.printview')->middleware('can:view,invoice');
             Route::get('/invoice/{invoice}/edit', 'InvoiceController@edit')->name('invoice.edit')->middleware('can:update,invoice');
@@ -147,16 +142,16 @@ Route::group(['middleware' => ['auth', '2fa']], function() {
             Route::delete('/invoice/{invoice}/destroy', 'InvoiceController@destroy')->name('invoice.destroy')->middleware('can:delete,invoice');
             Route::get('/invoice/{invoice}/siblings/check', 'InvoiceController@checkSiblings')->name('invoice.siblings.check')->middleware('can:update,invoice');
 
-            Route::get('/invoice/adhoc/create', 'InvoiceController@adhoccreate')->name('invoice.adhoc.create');
+            Route::get('/invoice/adhoc/create', 'InvoiceController@adhoccreate')->name('invoice.adhoc.create')->middleware('can:create, App\Models\Invoice');
 
             /* Quotes */
             Route::get('/quotes', 'QuoteController@index')->name('quote.index')->middleware('can:index, App\Models\Quote');
-            Route::get('/quotes/archived', 'QuoteController@index_archived')->name('quote.index.archived');
+            Route::get('/quotes/archived', 'QuoteController@index_archived')->name('quote.index.archived')->middleware('can:index, App\Models\Quote');
             Route::get('/quote/create', 'QuoteController@create')->name('quote.create')->middleware('can:create, App\Models\Quote');
             Route::post('/quote/create', 'QuoteController@store')->name('quote.store')->middleware('can:create, App\Models\Quote');
             Route::get('/quote/{quote}', 'QuoteController@show')->name('quote.show')->middleware('can:view,quote');
             Route::post('/quote/{quote}/duplicate', 'QuoteController@duplicate')->name('quote.duplicate')->middleware('can:update,quote');
-            Route::post('/quote/{quote}/convert', 'QuoteController@convertToInvoice')->name('quote.convert')->middleware('can:view,quote');
+            Route::post('/quote/{quote}/convert', 'QuoteController@convertToInvoice')->name('quote.convert')->middleware('can:update,quote');
             Route::get('/quote/{quote}/download', 'QuoteController@download')->name('quote.download')->middleware('can:view,quote');
             Route::get('/quote/{quote}/printview', 'QuoteController@printview')->name('quote.printview')->middleware('can:view,quote');
             Route::get('/quote/{quote}/edit', 'QuoteController@edit')->name('quote.edit')->middleware('can:update,quote');
@@ -190,8 +185,8 @@ Route::group(['middleware' => ['auth', '2fa']], function() {
 
             /* Payment */
             Route::get('/payments', 'PaymentController@index')->name('payment.index')->middleware('can:index, App\Models\Payment');
-            Route::get('/invoice/{invoice}/payment/create', 'PaymentController@create')->name('payment.create')->middleware('can:update,invoice');
-            Route::post('/invoice/{invoice}/payment/create', 'PaymentController@store')->name('payment.store')->middleware('can:update,invoice');
+            Route::get('/invoice/{invoice}/payment/create', 'PaymentController@create')->name('payment.create')->middleware('can:create, App\Models\Payment');
+            Route::post('/invoice/{invoice}/payment/create', 'PaymentController@store')->name('payment.store')->middleware('can:create, App\Models\Payment');
             Route::get('/payment/create', 'PaymentController@createsolo')->name('payment.createsolo')->middleware('can:create, App\Models\Payment');
             Route::post('/payment/create', 'PaymentController@storesolo')->name('payment.storesolo')->middleware('can:create, App\Models\Payment');
             Route::get('/payment/{payment}', 'PaymentController@show')->name('payment.show')->middleware('can:view,payment');

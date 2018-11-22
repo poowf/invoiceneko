@@ -9,10 +9,10 @@
     <div class="container">
         <div class="row">
             <div class="col s6 mtop30 right">
-                <a class="btn btn-lg btn-default" href="{{ route('invoice.old.download', [ 'invoice' => $invoice->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}">
+                <a class="btn btn-lg btn-default" href="{{ route('invoice.old.download', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}">
                     Save PDF
                 </a>
-                <a class="btn btn-lg btn-default" href="{{ route('invoice.old.printview', [ 'invoice' => $invoice->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}">
+                <a class="btn btn-lg btn-default" href="{{ route('invoice.old.printview', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}">
                     Print
                 </a>
             </div>

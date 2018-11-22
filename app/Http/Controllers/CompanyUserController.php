@@ -74,7 +74,7 @@ class CompanyUserController extends Controller
 
         $user->notify(new NewCompanyUserNotification($user, $random_password));
 
-        return redirect()->route('company.users.index', [ 'company' => $company->domain_name ]);
+        return redirect()->route('company.users.index', [ 'company' => $company ]);
     }
 
     /**
@@ -84,33 +84,26 @@ class CompanyUserController extends Controller
      */
     public function edit(Company $company, User $user)
     {
-        $countries = $this->countries->all();
-        $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
         $roles = Bouncer::role()->all();
         $userRoles = $user->getRoles();
 
-        return view('pages.company.users.edit', compact('user', 'countries', 'timezones', 'roles', 'userRoles'));
+        return view('pages.company.users.edit', compact('user', 'roles', 'userRoles'));
     }
 
     /**
      * @param UpdateCompanyUserRequest $request
+     * @param Company $company
      * @param User $user
      * @return \Illuminate\Http\RedirectResponse
      */
 
     public function update(UpdateCompanyUserRequest $request, Company $company, User $user)
     {
-        $user->fill($request->all());
-        if ($request->has('newpassword') && $request->input('newpassword') != null) {
-            $newpass = $request->input('newpassword');
-            $user->password = $newpass;
-        }
-        $user->save();
-
         $roles = $request->input('roles');
 
         Bouncer::sync($user)->roles($roles);
 
+        flash('User has been updated', 'success');
         return redirect()->back();
     }
 

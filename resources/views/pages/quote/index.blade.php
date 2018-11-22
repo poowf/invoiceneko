@@ -82,16 +82,16 @@
                                         </td>
                                         <td>
                                             @can('view', $quote)
-                                            <a href="{{ route('quote.show', [ 'quote' => $quote->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Quote"><i class="material-icons">remove_red_eye</i></a>
+                                            <a href="{{ route('quote.show', [ 'quote' => $quote, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Quote"><i class="material-icons">remove_red_eye</i></a>
                                             @endcan
                                             @can('update', $quote)
-                                            <form method="post" action="{{ route('quote.duplicate', [ 'quote' => $quote->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form tooltipped" data-position="top" data-delay="50" data-tooltip="Duplicate Quote">
+                                            <form method="post" action="{{ route('quote.duplicate', [ 'quote' => $quote, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form tooltipped" data-position="top" data-delay="50" data-tooltip="Duplicate Quote">
                                                 {{ csrf_field() }}
                                                 <button class="null-btn" type="submit"><i class="material-icons">control_point_duplicate</i></button>
                                             </form>
                                             @endcan
                                             @can('update', $quote)
-                                            <a href="{{ route('quote.edit', [ 'quote' => $quote->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Quote"><i class="material-icons">mode_edit</i></a>
+                                            <a href="{{ route('quote.edit', [ 'quote' => $quote, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Quote"><i class="material-icons">mode_edit</i></a>
                                             @endcan
                                             @can('delete', $quote)
                                             <a href="#" data-id="{{ $quote->id }}" class="quote-delete-btn tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Quote"><i class="material-icons">delete</i></a>

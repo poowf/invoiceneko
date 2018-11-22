@@ -138,30 +138,20 @@ class UserController extends Controller
     /**
      * Retrieve the user and return as object
      *
+     * @param Company $company
      * @param  \App\Models\User $user
-     * @return ItemTemplate
+     * @return \Illuminate\Http\JsonResponse|void
      */
-    public function retrieve(User $user)
+    public function retrieve(Company $company, User $user)
     {
-        $auth_user = auth()->user();
-        $usercompany = $user->company;
+        $authedUser = auth()->user();
 
-        //TODO: Probably need to rewrite/refactor this logic to somewhere else
-        if ($usercompany)
+        if ($company->hasUser($user) && $company->isOwner($authedUser))
         {
-            if ($usercompany->isOwner($auth_user))
-            {
-                return response()->json($user);
-            }
-            else
-            {
-                return abort(401);
-            }
+            return response()->json($user);
         }
-        else
-        {
-            return abort(401);
-        }
+
+        return abort(401);
     }
 
     /**
@@ -228,7 +218,7 @@ class UserController extends Controller
 
     public function multifactor_start(Company $company)
     {
-        return redirect()->route('user.multifactor.create', [ 'company' => $company->domain_name ]);
+        return redirect()->route('user.multifactor.create', [ 'company' => $company ]);
     }
 
     public function multifactor_create(Company $company)
@@ -242,7 +232,7 @@ class UserController extends Controller
         else
         {
             flash('Multifactor Auth is already enabled', 'warning');
-            return redirect()->route('user.security', [ 'company' => $company->domain_name ]);
+            return redirect()->route('user.security', [ 'company' => $company ]);
         }
 
         $twoFactorUrl = Google2FA::getQRCodeUrl(
@@ -274,7 +264,7 @@ class UserController extends Controller
             $user->save();
 
             flash("Multifactor Auth has been enabled for your account", 'success');
-            return redirect()->route('user.security', [ 'company' => $company->domain_name ])->with(compact( 'codes'));
+            return redirect()->route('user.security', [ 'company' => $company ])->with(compact( 'codes'));
 
         } else {
             flash("Something went wrong, please try again", 'error');
@@ -306,7 +296,7 @@ class UserController extends Controller
         $user->save();
 
         flash("Your backup codes have been regenerated", 'success');
-        return redirect()->route('user.security', [ 'company' => $company->domain_name ])->with(compact('codes'));
+        return redirect()->route('user.security', [ 'company' => $company ])->with(compact('codes'));
     }
 
     public function multifactor_backup()
@@ -337,7 +327,7 @@ class UserController extends Controller
                     "auth_time" => Carbon::now()
                 ]);
 
-                return redirect()->route('dashboard', [ 'company' => $company->domain_name ]);
+                return redirect()->route('dashboard', [ 'company' => $company ]);
             }
             else
             {

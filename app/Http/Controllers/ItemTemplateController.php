@@ -18,9 +18,9 @@ class ItemTemplateController extends Controller
      */
     public function index(Company $company)
     {
-        $itemtemplates = $company->itemtemplates()->get();
+        $itemTemplates = $company->itemtemplates()->get();
 
-        return view('pages.itemtemplate.index', compact('itemtemplates'));
+        return view('pages.itemtemplate.index', compact('itemTemplates'));
     }
 
     /**
@@ -50,37 +50,37 @@ class ItemTemplateController extends Controller
      */
     public function store(CreateItemTemplateRequest $request, Company $company)
     {
-        $itemtemplate = new ItemTemplate;
-        $itemtemplate->fill($request->all());
-        $company->itemtemplates()->save($itemtemplate);
+        $itemTemplate = new ItemTemplate;
+        $itemTemplate->fill($request->all());
+        $company->itemtemplates()->save($itemTemplate);
 
         flash('Item Template Created', 'success');
 
-        return redirect()->route('itemtemplate.show', [ 'itemtemplate' => $itemtemplate->id, 'company' => $company->domain_name ]);
+        return redirect()->route('itemtemplate.show', [ 'itemtemplate' => $itemTemplate, 'company' => $company ]);
     }
 
     /**
      * Display the specified resource.
      *
      * @param Company $company
-     * @param  \App\Models\ItemTemplate $itemtemplate
+     * @param  \App\Models\ItemTemplate $itemTemplate
      * @return \Illuminate\Http\Response
      */
-    public function show(Company $company, ItemTemplate $itemtemplate)
+    public function show(Company $company, ItemTemplate $itemTemplate)
     {
-        return view('pages.itemtemplate.show', compact('itemtemplate'));
+        return view('pages.itemtemplate.show', compact('itemTemplate'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param Company $company
-     * @param  \App\Models\ItemTemplate $itemtemplate
+     * @param  \App\Models\ItemTemplate $itemTemplate
      * @return \Illuminate\Http\Response
      */
-    public function edit(Company $company, ItemTemplate $itemtemplate)
+    public function edit(Company $company, ItemTemplate $itemTemplate)
     {
-        return view('pages.itemtemplate.edit', compact('itemtemplate'));
+        return view('pages.itemtemplate.edit', compact('itemTemplate'));
 
     }
 
@@ -89,57 +89,57 @@ class ItemTemplateController extends Controller
      *
      * @param UpdateItemTemplateRequest $request
      * @param Company $company
-     * @param  \App\Models\ItemTemplate $itemtemplate
+     * @param  \App\Models\ItemTemplate $itemTemplate
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateItemTemplateRequest $request, Company $company, ItemTemplate $itemtemplate)
+    public function update(UpdateItemTemplateRequest $request, Company $company, ItemTemplate $itemTemplate)
     {
-        $itemtemplate->fill($request->all());
-        $company->itemtemplates()->save($itemtemplate);
+        $itemTemplate->fill($request->all());
+        $company->itemtemplates()->save($itemTemplate);
 
         flash('Item Template Updated', 'success');
 
-        return redirect()->route('itemtemplate.show', [ 'itemtemplate' => $itemtemplate->id, 'company' => $company->domain_name ]);
+        return redirect()->route('itemtemplate.show', [ 'itemtemplate' => $itemTemplate, 'company' => $company ]);
     }
 
     /**
      * Retrieve the itemtemplate and return as object
      *
      * @param Company $company
-     * @param  \App\Models\ItemTemplate $itemtemplate
+     * @param  \App\Models\ItemTemplate $itemTemplate
      * @return ItemTemplate
      */
-    public function retrieve(Company $company, ItemTemplate $itemtemplate)
+    public function retrieve(Company $company, ItemTemplate $itemTemplate)
     {
-        return response()->json($itemtemplate);
+        return response()->json($itemTemplate);
     }
 
     /**
      * @param Company $company
-     * @param ItemTemplate $itemtemplate
+     * @param ItemTemplate $itemTemplate
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function duplicate(Company $company, ItemTemplate $itemtemplate)
+    public function duplicate(Company $company, ItemTemplate $itemTemplate)
     {
-        $duplicatedItemTemplate = $itemtemplate->duplicate();
+        $duplicatedItemTemplate = $itemTemplate->duplicate();
         flash('Item Template has been Cloned Sucessfully', "success");
-        return redirect()->route('itemtemplate.show', [ 'itemtemplate' => $duplicatedItemTemplate->id, 'company' => $company->domain_name ]);
+        return redirect()->route('itemtemplate.show', [ 'itemtemplate' => $duplicatedItemTemplate, 'company' => $company ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param Company $company
-     * @param  \App\Models\ItemTemplate $itemtemplate
+     * @param  \App\Models\ItemTemplate $itemTemplate
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
-    public function destroy(Company $company, ItemTemplate $itemtemplate)
+    public function destroy(Company $company, ItemTemplate $itemTemplate)
     {
-        $itemtemplate->delete();
+        $itemTemplate->delete();
 
         flash('Item Template Deleted', 'success');
 
-        return redirect()->route('itemtemplate.index', [ 'company' => $company->domain_name ]);
+        return redirect()->route('itemtemplate.index', [ 'company' => $company ]);
     }
 }

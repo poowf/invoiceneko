@@ -18,14 +18,14 @@
             </div>
             <div class="col s6 mtop30 right">
                 @can('update', $invoice)
-                <a class="btn btn-lg btn-default" href="{{ route('payment.create', [ 'invoice' => $invoice->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}">
+                <a class="btn btn-lg btn-default" href="{{ route('payment.create', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}">
                     Log Payment
                 </a>
                 @endcan
-                <a class="btn btn-lg btn-default" href="{{ route('invoice.download', [ 'invoice' => $invoice->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}">
+                <a class="btn btn-lg btn-default" href="{{ route('invoice.download', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}">
                     Save PDF
                 </a>
-                <a class="btn btn-lg btn-default" href="{{ route('invoice.printview', [ 'invoice' => $invoice->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}">
+                <a class="btn btn-lg btn-default" href="{{ route('invoice.printview', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}">
                     Print
                 </a>
             </div>

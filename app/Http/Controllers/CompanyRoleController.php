@@ -33,8 +33,6 @@ class CompanyRoleController extends Controller
      */
     public function create(Company $company)
     {
-        $company = auth()->user()->company;
-
         $permissions = self::getFormattedPermissions();
 
         return view('pages.company.roles.create', compact('permissions'));
@@ -57,15 +55,12 @@ class CompanyRoleController extends Controller
         $role->save();
 
         if(!empty($permissions)) {
-            foreach ($permissions as $permission) {
-                $permissionPieces = explode('-', $permission);
-                $model = '\\App\\Models\\' . str_replace(' ', '', $permissionPieces[1]);
-                Bouncer::allow($role)->to($permissionPieces[0], $model);
-            }
+            $abilities = Bouncer::ability()->whereIn('name', $permissions)->pluck('id');
+            $role->abilities()->sync($abilities);
         }
 
-        flash("The Role has been created", 'success');
-        return redirect()->route('company.roles.index', [ 'company' => $company->domain_name ]);
+        flash('The Role has been created', 'success');
+        return redirect()->route('company.roles.index', [ 'company' => $company ]);
     }
 
     /**
@@ -97,7 +92,7 @@ class CompanyRoleController extends Controller
         }
         else
         {
-            return redirect()->route('company.roles.index', [ 'company' => $company->domain_name ]);
+            return redirect()->route('company.roles.index', [ 'company' => $company ]);
         }
     }
 
@@ -119,29 +114,17 @@ class CompanyRoleController extends Controller
             $role->name = str_slug($title);
             $role->save();
 
-            $rolePermissions = $role->getAbilities();
-
-    //        $role->abilities()->sync($permissions);
-
-            foreach($rolePermissions as $rolePermission)
-            {
-                Bouncer::disallow($role)->to($rolePermission);
-            }
-
             if(!empty($permissions)) {
-                foreach ($permissions as $permission) {
-                    $permissionPieces = explode('-', $permission);
-                    $model = '\\App\\Models\\' . str_replace(' ', '', $permissionPieces[1]);
-                    Bouncer::allow($role)->to($permissionPieces[0], $model);
-                }
+                $abilities = Bouncer::ability()->whereIn('name', $permissions)->pluck('id');
+                $role->abilities()->sync($abilities);
             }
 
-            flash("The Role has been updated", 'success');
-            return redirect()->route('company.roles.index', [ 'company' => $company->domain_name ]);
+            flash('The Role has been updated', 'success');
+            return redirect()->route('company.roles.index', [ 'company' => $company ]);
         }
         else
         {
-            return redirect()->route('company.roles.index', [ 'company' => $company->domain_name ]);
+            return redirect()->route('company.roles.index', [ 'company' => $company ]);
         }
     }
 
@@ -158,7 +141,7 @@ class CompanyRoleController extends Controller
         $role->delete();
 
         flash("The Role has been deleted", 'success');
-        return redirect()->route('company.roles.index', [ 'company' => $company->domain_name ]);
+        return redirect()->route('company.roles.index', [ 'company' => $company ]);
     }
 
     public function getFormattedPermissions()

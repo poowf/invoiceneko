@@ -27,8 +27,8 @@ class CreateRoleRequest extends FormRequest
         return [
             'title' => [
                 'required',
-                Rule::unique('roles')->where('scope', auth()->user()->company_id),
-                Rule::unique('roles', 'name')->where('scope', auth()->user()->company_id)
+                Rule::unique('roles')->where('scope', $this->route('company')->id),
+                Rule::unique('roles', 'name')->where('scope', $this->route('company')->id)
             ],
             'permissions' => 'required|array'
         ];

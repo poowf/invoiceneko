@@ -2,6 +2,29 @@
 
 @section("head")
     <style>
+        {{-- TODO: Probably need to do some A/B Testing for the UI on this page --}}
+
+        .all-permission-selector {
+            cursor: pointer;
+        }
+
+        .all-permission-selector:hover {
+            background-color: #299a9a;
+            color: #ffffff;
+        }
+
+        .all-permission-selector h6 {
+            margin: 10px 0;
+        }
+
+        .switch.all-permissions {
+            text-align: right;
+        }
+
+        .switch label .lever
+        {
+            margin-left: 0;
+        }
     </style>
 @stop
 
@@ -29,26 +52,31 @@
                             </div>
                         </div>
                         <div class="row">
-                            @if($permissions->isNotEmpty())
-                                @for($i = 0; $i < $permissions->count(); $i++)
-                                    @if($i != 0  && $permissions[$i]->type != $permissions[$i - 1]->type)
-                                        <div class="col s12 mtop20">
-                                            <h6>{{ $permissions[$i]->type }}</h6>
-                                        </div>
-                                    @endif
-                                    <div class="input-field col s6 m3">
-                                        <label for="permissions[]" class="label-validation">{{ $permissions[$i]->title }}</label>
-                                        <div class="switch mtop20">
-                                            <label>
-                                                Deny
-                                                <input id="permissions[]" name="permissions[]" type="checkbox" value="{{ $permissions[$i]->name . '-' . $permissions[$i]->type }}" @foreach($rolePermissions as $rolePermission) @if(($permissions[$i]->name . $permissions[$i]->entity_type) == ($rolePermission->name . $rolePermission->entity_type)) checked @endif @endforeach>
-                                                <span class="lever"></span>
-                                                Allow
-                                            </label>
-                                        </div>
+                            @for($i = 0; $i < $permissions->count(); $i++)
+                                @if($i != 0 && $permissions[$i]->type != $permissions[$i - 1]->type)
+                                    <div class="col s12 mtop20 all-permission-selector tooltipped" data-permission-type="{{ str_slug(strtolower($permissions[$i]->type)) }}" data-position="top" data-delay="50" data-tooltip="Click here to turn on all permissions">
+                                        <h6>{{ $permissions[$i]->type }}</h6>
+                                        {{--<div class="switch all-permissions mtop10">--}}
+                                        {{--<label>--}}
+                                        {{--<input id="manage-{{ str_slug(strtolower($permissions[$i]->type)) }}" name="permissions[]" class="manage-{{ str_slug(strtolower($permissions[$i]->type)) }}" type="checkbox">--}}
+                                        {{--<span class="lever"></span>--}}
+                                        {{--Allow All--}}
+                                        {{--</label>--}}
+                                        {{--</div>--}}
                                     </div>
-                                @endfor
-                            @endif
+
+                                @endif
+                                <div class="input-field col s6 m3">
+                                    <label for="permissions-{{ $permissions[$i]->name }}" class="label-validation">{{ $permissions[$i]->title }}</label>
+                                    <div class="switch mtop20">
+                                        <label>
+                                            <input id="permissions-{{ $permissions[$i]->name }}" name="permissions[]" data-permission-type="{{ str_slug(strtolower($permissions[$i]->type)) }}" type="checkbox" value="{{ $permissions[$i]->name }}" @foreach($rolePermissions as $rolePermission) @if(($permissions[$i]->name . $permissions[$i]->entity_type) == ($rolePermission->name . $rolePermission->entity_type)) checked @endif @endforeach>
+                                            <span class="lever"></span>
+                                            Allow
+                                        </label>
+                                    </div>
+                                </div>
+                            @endfor
                         </div>
                     </div>
                     <div class="row">
@@ -68,6 +96,43 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
+            $('#edit-role').on('click', '.all-permission-selector', function (event) {
+                let type = $(this).attr('data-permission-type');
+
+                if($('input[data-permission-type=' + type + ']').prop('checked'))
+                {
+                    $('input[data-permission-type=' + type + ']').prop('checked', false);
+                }
+                else
+                {
+                    $('input[data-permission-type=' + type + ']').prop('checked', true);
+                }
+            });
+
+            $('#edit-role').on('click', 'input[id^=permissions-update]', function (event) {
+                let type = $(this).attr('data-permission-type');
+                if(!$('input[id=permissions-view-' + type +']').prop('checked'))
+                {
+                    $('input[id=permissions-view-' + type +']').prop('checked', true);
+                }
+            });
+
+            $('#edit-role').on('click', 'input[id^=permissions-create]', function (event) {
+                let type = $(this).attr('data-permission-type');
+                if(!$('input[id=permissions-view-' + type +']').prop('checked'))
+                {
+                    $('input[id=permissions-view-' + type +']').prop('checked', true);
+                }
+            });
+
+            $('#edit-role').on('click', 'input[id^=permissions-delete]', function (event) {
+                let type = $(this).attr('data-permission-type');
+                if(!$('input[id=permissions-view-' + type +']').prop('checked'))
+                {
+                    $('input[id=permissions-view-' + type +']').prop('checked', true);
+                }
+            });
+
             Unicorn.initParsleyValidation('#edit-role');
         });
     </script>

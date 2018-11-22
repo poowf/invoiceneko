@@ -30,11 +30,11 @@ class CompanySettingsPolicy
 
     public function index(User $user)
     {
-        return $user->can('view-company-settings', CompanySettings::class);
+        return $user->can('update-company-settings', CompanySettings::class);
     }
 
     /**
-     * Determine whether the user can view the companyUserRequest.
+     * Determine whether the user can view the companySettings.
      *
      * @param  \App\Models\User $user
      * @param CompanySettings $companySettings
@@ -57,7 +57,7 @@ class CompanySettingsPolicy
     }
 
     /**
-     * Determine whether the user can update the companyUserRequest.
+     * Determine whether the user can update the companySettings.
      *
      * @param  \App\Models\User $user
      * @param CompanySettings $companySettings
@@ -69,7 +69,7 @@ class CompanySettingsPolicy
     }
 
     /**
-     * Determine whether the user can delete the companyUserRequest.
+     * Determine whether the user can delete the companySettings.
      *
      * @param  \App\Models\User $user
      * @param CompanySettings $companySettings

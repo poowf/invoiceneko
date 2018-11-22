@@ -90,7 +90,7 @@ class CompanyUserRequestController extends Controller
 
         $companyUserRequest->notify(new CompanyUserRequestApprovedNotification($companyUserRequest->token));
 
-        return redirect()->route('company.requests.index', [ 'company' => $company->domain_name ]);
+        return redirect()->route('company.requests.index', [ 'company' => $company ]);
     }
 
     /**
@@ -105,7 +105,7 @@ class CompanyUserRequestController extends Controller
 
         $companyUserRequest->notify(new CompanyUserRequestRejectedNotification());
 
-        return redirect()->route('company.requests.index', [ 'company' => $company->domain_name ]);
+        return redirect()->route('company.requests.index', [ 'company' => $company ]);
     }
 
     /**

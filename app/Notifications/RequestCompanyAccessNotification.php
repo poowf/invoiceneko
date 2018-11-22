@@ -44,7 +44,7 @@ class RequestCompanyAccessNotification extends Notification implements ShouldQue
     {
         $companyUserRequest = $this->companyUserRequest;
         $company = $companyUserRequest->company;
-        $url = route('company.requests.index', [ 'company' => $company->domain_name ]);
+        $url = route('company.requests.index', [ 'company' => $company ]);
 
         return (new MailMessage)
             ->subject($companyUserRequest->full_name . ' has requested to be added to your company on ' . config('app.name'))
