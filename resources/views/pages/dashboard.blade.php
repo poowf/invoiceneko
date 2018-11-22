@@ -46,7 +46,7 @@
                                         <td>${{ $invoice->calculatetotal() }}</td>
                                         <td>{{ $invoice->duedate->format('d F, Y') }}</td>
                                         <td>
-                                            <a href="{{ route('invoice.show', [ 'invoice' => $invoice->id ])  }}" class="btn waves-effect waves-light">View</a>
+                                            <a href="{{ route('invoice.show', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ])  }}" class="btn waves-effect waves-light">View</a>
                                         </td>
                                     </tr>
                                 @endforeach

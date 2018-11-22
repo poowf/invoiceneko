@@ -7,6 +7,7 @@ use App\Models\CompanyUserRequest;
 use App\Notifications\CompanyUserRequestApprovedNotification;
 use App\Notifications\CompanyUserRequestRejectedNotification;
 use App\Notifications\RequestCompanyAccessNotification;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class CompanyUserRequestController extends Controller
@@ -14,12 +15,11 @@ class CompanyUserRequestController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Company $company
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Company $company)
     {
-        $company = auth()->user()->company;
-
         if($company)
         {
             $requests = $company->requests()->paginate(12);
@@ -35,9 +35,10 @@ class CompanyUserRequestController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param Company $company
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Company $company)
     {
         return view('pages.company.requests.create');
     }
@@ -45,10 +46,11 @@ class CompanyUserRequestController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
+     * @param Company $company
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Company $company)
     {
         $email = $request->input('email');
 
@@ -58,11 +60,11 @@ class CompanyUserRequestController extends Controller
 
         if($company)
         {
-            $companyuserrequest = new CompanyUserRequest;
-            $companyuserrequest->fill($request->all());
-            $company->requests()->save($companyuserrequest);
+            $companyUserRequest = new CompanyUserRequest;
+            $companyUserRequest->fill($request->all());
+            $company->requests()->save($companyUserRequest);
 
-            $company->notify(new RequestCompanyAccessNotification($companyuserrequest->full_name, $companyuserrequest->email, $companyuserrequest->phone));
+            $company->notify(new RequestCompanyAccessNotification($companyUserRequest));
 
             flash('The request has been sent to the current owner of the Company', "success");
 
@@ -76,33 +78,44 @@ class CompanyUserRequestController extends Controller
         }
     }
 
-    public function approve(Request $request, CompanyUserRequest $companyUserRequest)
+    /**
+     * @param CompanyUserRequest $companyUserRequest
+     * @param Company $company
+     * @return RedirectResponse
+     */
+    public function approve(Company $company, CompanyUserRequest $companyUserRequest)
     {
         $companyUserRequest->status = CompanyUserRequest::STATUS_APPROVED;
         $companyUserRequest->save();
 
         $companyUserRequest->notify(new CompanyUserRequestApprovedNotification($companyUserRequest->token));
 
-        return redirect()->back();
+        return redirect()->route('company.requests.index', [ 'company' => $company ]);
     }
 
-    public function reject(Request $request, CompanyUserRequest $companyUserRequest)
+    /**
+     * @param CompanyUserRequest $companyUserRequest
+     * @param Company $company
+     * @return RedirectResponse
+     */
+    public function reject(Company $company, CompanyUserRequest $companyUserRequest)
     {
         $companyUserRequest->status = CompanyUserRequest::STATUS_REJECTED;
         $companyUserRequest->save();
 
         $companyUserRequest->notify(new CompanyUserRequestRejectedNotification());
 
-        return redirect()->back();
+        return redirect()->route('company.requests.index', [ 'company' => $company ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\CompanyUserRequest  $companyUserRequest
-     * @return \Illuminate\Http\Response
+     * @param Company $company
+     * @param  \App\Models\CompanyUserRequest $companyUserRequest
+     * @return void
      */
-    public function show(CompanyUserRequest $companyUserRequest)
+    public function show(Company $company, CompanyUserRequest $companyUserRequest)
     {
         //
     }
@@ -110,10 +123,11 @@ class CompanyUserRequestController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\CompanyUserRequest  $companyUserRequest
-     * @return \Illuminate\Http\Response
+     * @param Company $company
+     * @param  \App\Models\CompanyUserRequest $companyUserRequest
+     * @return void
      */
-    public function edit(CompanyUserRequest $companyUserRequest)
+    public function edit(Company $company, CompanyUserRequest $companyUserRequest)
     {
         //
     }
@@ -121,11 +135,10 @@ class CompanyUserRequestController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\CompanyUserRequest  $companyUserRequest
-     * @return \Illuminate\Http\Response
+     * @param CompanyUserRequest $companyUserRequest
+     * @return void
      */
-    public function update(Request $request, CompanyUserRequest $companyUserRequest)
+    public function update(CompanyUserRequest $companyUserRequest)
     {
         //
     }
@@ -133,10 +146,11 @@ class CompanyUserRequestController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\CompanyUserRequest  $companyUserRequest
-     * @return \Illuminate\Http\Response
+     * @param Company $company
+     * @param  \App\Models\CompanyUserRequest $companyUserRequest
+     * @return void
      */
-    public function destroy(CompanyUserRequest $companyUserRequest)
+    public function destroy(Company $company, CompanyUserRequest $companyUserRequest)
     {
         //
     }

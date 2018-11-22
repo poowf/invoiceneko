@@ -38,7 +38,7 @@ class UpdateCompanySettingsRequest extends FormRequest
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
-            $company = auth()->user()->ownedcompany;
+            $company = $this->route('company');
             if(!$company)
             {
                 $validator->errors()->add('Company', 'Please fill in your company information first');

@@ -6,6 +6,7 @@ use App\Http\Requests\CreatePaymentRequest;
 use App\Http\Requests\CreateSoloPaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
 use App\Library\Poowf\Unicorn;
+use App\Models\Company;
 use Illuminate\Http\Request;
 use App\Models\Payment;
 use App\Models\Invoice;
@@ -16,11 +17,11 @@ class PaymentController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Company $company
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Company $company)
     {
-        $company = auth()->user()->company;
         $payments = $company->payments()->with(['invoice', 'client'])->get();
 
         return view('pages.payment.index', compact('payments'));
@@ -29,12 +30,11 @@ class PaymentController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param Company $company
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Company $company)
     {
-        $company = auth()->user()->company;
-
         if($company)
         {
             if ($company->invoices->count() <= 0)
@@ -56,10 +56,11 @@ class PaymentController extends Controller
      * Store a newly created resource in storage.
      *
      * @param CreatePaymentRequest $request
+     * @param Company $company
      * @param Invoice $invoice
      * @return \Illuminate\Http\Response
      */
-    public function store(CreatePaymentRequest $request, Invoice $invoice)
+    public function store(CreatePaymentRequest $request, Company $company, Invoice $invoice)
     {
         $payment = new Payment;
         $payment->fill($request->all());
@@ -80,21 +81,21 @@ class PaymentController extends Controller
 
         flash('Payment Created', 'success');
 
-        return redirect()->route('invoice.show', ['invoice' => $invoice->id]);
+        return redirect()->route('invoice.show', [ 'invoice' => $invoice, 'company' => $company ]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
+     * @param Company $company
      * @return \Illuminate\Http\Response
      */
-    public function createsolo()
+    public function createsolo(Company $company)
     {
-        $company = auth()->user()->company;
-        $invoices = $company->invoices;
-
         if($company)
         {
+            $invoices = $company->invoices;
+
             if ($invoices->count() <= 0)
             {
                 return view('pages.payment.noinvoices');
@@ -114,11 +115,11 @@ class PaymentController extends Controller
      * Store a newly created resource in storage.
      *
      * @param CreateSoloPaymentRequest $request
+     * @param Company $company
      * @return \Illuminate\Http\Response
      */
-    public function storesolo(CreateSoloPaymentRequest $request)
+    public function storesolo(CreateSoloPaymentRequest $request, Company $company)
     {
-        $company = auth()->user()->company;
         $payment = new Payment;
         $payment->fill($request->all());
         $payment->receiveddate = Carbon::createFromFormat('j F, Y', $request->input('receiveddate'))->startOfDay();
@@ -146,16 +147,17 @@ class PaymentController extends Controller
 
         flash('Payment Created', 'success');
 
-        return redirect()->route('payment.index');
+        return redirect()->route('payment.index', [ 'company' => $company ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Payment  $payment
+     * @param Company $company
+     * @param  \App\Models\Payment $payment
      * @return \Illuminate\Http\Response
      */
-    public function show(Payment $payment)
+    public function show(Company $company, Payment $payment)
     {
         return view('pages.payment.show', compact('payment'));
     }
@@ -163,10 +165,11 @@ class PaymentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Payment  $payment
+     * @param Company $company
+     * @param  \App\Models\Payment $payment
      * @return \Illuminate\Http\Response
      */
-    public function edit(Payment $payment)
+    public function edit(Company $company, Payment $payment)
     {
         return view('pages.payment.edit', compact('payment'));
     }
@@ -175,10 +178,11 @@ class PaymentController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdatePaymentRequest $request
+     * @param Company $company
      * @param  \App\Models\Payment $payment
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePaymentRequest $request, Payment $payment)
+    public function update(UpdatePaymentRequest $request, Company $company, Payment $payment)
     {
         $payment->fill($request->all());
         $payment->receiveddate = Carbon::createFromFormat('j F, Y', $request->input('receiveddate'))->startOfDay();
@@ -186,22 +190,23 @@ class PaymentController extends Controller
 
         flash('Payment Updated', 'success');
 
-        return redirect()->route('payment.index');
+        return redirect()->route('payment.index', [ 'company' => $company ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
+     * @param Company $company
      * @param  \App\Models\Payment $payment
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
-    public function destroy(Payment $payment)
+    public function destroy(Company $company, Payment $payment)
     {
         $payment->delete();
 
         flash('Payment Deleted', 'success');
 
-        return redirect()->route('payment.index');
+        return redirect()->route('payment.index', [ 'company' => $company ]);
     }
 }

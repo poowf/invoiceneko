@@ -18,9 +18,9 @@ class CompanyAddressTest extends DuskTestCase
     public function test_updating_company_address()
     {
         $company = factory(Company::class)->create();
-        //Need to assign the company_id to the user
-        $company->owner->company_id = $company->id;
-        $company->owner->save();
+        //Need to attach the company to the user
+        $company->users()->attach($company->user_id);
+
         $faker = Faker::create();
         $this->browse(function (Browser $browser) use ($faker, $company) {
             $streetName = $faker->streetName;
@@ -28,14 +28,15 @@ class CompanyAddressTest extends DuskTestCase
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/dashboard')
-                ->visit('/company/address/edit')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
+                ->visit('/' . $company->domain_name . '/company/address/edit')
                 ->type('block', $faker->buildingNumber)
                 ->type('street', $streetName)
                 ->type('unitnumber', $faker->buildingNumber)
                 ->type('postalcode', $faker->postcode)
                 ->click('label[for="buildingtype-residential"]')
                 ->press('UPDATE')
+                ->assertPathIs('/' . $company->domain_name . '/company/address/edit')
                 ->assertPresent('#edit-address')
                 ->assertInputValue('street', $streetName);
         });

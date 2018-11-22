@@ -33,10 +33,10 @@
 
             <div class="col s6 right mtop30">
                 @can('create', \App\Models\Quote::class)
-                <a href="{{ route('quote.create') }}" class="btn btn-link waves-effect waves-dark">Create</a>
+                <a href="{{ route('quote.create', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}" class="btn btn-link waves-effect waves-dark">Create</a>
                 @endcan
                 @can('index', \App\Models\Quote::class)
-                <a href="{{ route('quote.index.archived') }}" class="btn btn-link waves-effect waves-dark">Archived Quotes</a>
+                <a href="{{ route('quote.index.archived', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}" class="btn btn-link waves-effect waves-dark">Archived Quotes</a>
                 @endcan
             </div>
         </div>
@@ -82,16 +82,16 @@
                                         </td>
                                         <td>
                                             @can('view', $quote)
-                                            <a href="{{ route('quote.show', [ 'quote' => $quote->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Quote"><i class="material-icons">remove_red_eye</i></a>
+                                            <a href="{{ route('quote.show', [ 'quote' => $quote, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Quote"><i class="material-icons">remove_red_eye</i></a>
                                             @endcan
                                             @can('update', $quote)
-                                            <form method="post" action="{{ route('quote.duplicate', [ 'quote' => $quote->id ] ) }}" class="null-form tooltipped" data-position="top" data-delay="50" data-tooltip="Duplicate Quote">
+                                            <form method="post" action="{{ route('quote.duplicate', [ 'quote' => $quote, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form tooltipped" data-position="top" data-delay="50" data-tooltip="Duplicate Quote">
                                                 {{ csrf_field() }}
                                                 <button class="null-btn" type="submit"><i class="material-icons">control_point_duplicate</i></button>
                                             </form>
                                             @endcan
                                             @can('update', $quote)
-                                            <a href="{{ route('quote.edit', [ 'quote' => $quote->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Quote"><i class="material-icons">mode_edit</i></a>
+                                            <a href="{{ route('quote.edit', [ 'quote' => $quote, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Quote"><i class="material-icons">mode_edit</i></a>
                                             @endcan
                                             @can('delete', $quote)
                                             <a href="#" data-id="{{ $quote->id }}" class="quote-delete-btn tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Quote"><i class="material-icons">delete</i></a>
@@ -125,7 +125,7 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            Unicorn.initConfirmationTrigger('#quote-container', '.quote-delete-btn', 'quote', 'destroy', '#delete-confirmation', '#delete-quote-form');
+            Unicorn.initConfirmationTrigger('#quote-container', '.quote-delete-btn', '{{ \App\Library\Poowf\Unicorn::getCompanyKey() }}', 'quote', 'destroy', '#delete-confirmation', '#delete-quote-form');
             Unicorn.initPageSearch('#search-input', '#quote-container .single-quote-row');
         });
     </script>

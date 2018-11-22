@@ -12,11 +12,11 @@
                 <h3>Item Template Details</h3>
             </div>
             <div class="col s6 right">
-                @can('update', $itemtemplate)
-                <a href="{{ route('itemtemplate.edit', [ 'itemtemplate' => $itemtemplate->id ] ) }}" class="btn light-blue waves-effect waves-dark mtop30">Edit</a>
+                @can('update', $itemTemplate)
+                <a href="{{ route('itemtemplate.edit', [ 'itemtemplate' => $itemTemplate, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="btn light-blue waves-effect waves-dark mtop30">Edit</a>
                 @endcan
-                @can('delete', $itemtemplate)
-                <a href="#" data-id="{{ $itemtemplate->id }}" class="btn btn-link waves-effect waves-dark itemtemplate-delete-btn mtop30">Delete</a>
+                @can('delete', $itemTemplate)
+                <a href="#" data-id="{{ $itemTemplate->id }}" class="btn btn-link waves-effect waves-dark itemtemplate-delete-btn mtop30">Delete</a>
                 @endcan
             </div>
         </div>
@@ -25,13 +25,13 @@
                 <div class="card-panel">
                     <dl>
                         <dt>Name</dt>
-                        <dd>{{ $itemtemplate->name ?? '-'}}</dd>
+                        <dd>{{ $itemTemplate->name ?? '-'}}</dd>
                         <dt>Quantity</dt>
-                        <dd>{{ $itemtemplate->quantity ?? '-' }}</dd>
+                        <dd>{{ $itemTemplate->quantity ?? '-' }}</dd>
                         <dt>Price</dt>
-                        <dd>{{ $itemtemplate->price ?? '-' }}</dd>
+                        <dd>{{ $itemTemplate->price ?? '-' }}</dd>
                         <dt>Description</dt>
-                        <dd>{!! $itemtemplate->description !!}</dd>
+                        <dd>{!! $itemTemplate->description !!}</dd>
                     </dl>
                 </div>
             </div>
@@ -57,7 +57,7 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            Unicorn.initConfirmationTrigger('.container', '.itemtemplate-delete-btn', 'itemtemplate', 'destroy', '#delete-confirmation', '#delete-itemtemplate-form');
+            Unicorn.initConfirmationTrigger('.container', '.itemtemplate-delete-btn', '{{ \App\Library\Poowf\Unicorn::getCompanyKey() }}', 'itemtemplate', 'destroy', '#delete-confirmation', '#delete-itemtemplate-form');
         });
     </script>
 @stop

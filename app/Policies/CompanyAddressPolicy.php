@@ -29,11 +29,11 @@ class CompanyAddressPolicy
 
     public function index(User $user)
     {
-        return $user->can('view-company-address', CompanyAddress::class);
+        return $user->can('update-company-address', CompanyAddress::class);
     }
 
     /**
-     * Determine whether the user can view the companyUserRequest.
+     * Determine whether the user can view the companyAddress.
      *
      * @param  \App\Models\User $user
      * @param CompanyAddress $companyAddress
@@ -48,7 +48,6 @@ class CompanyAddressPolicy
      * Determine whether the user can create companies.
      *
      * @param  \App\Models\User $user
-     * @param CompanyAddress $companyAddress
      * @return mixed
      */
     public function create(User $user)
@@ -57,7 +56,7 @@ class CompanyAddressPolicy
     }
 
     /**
-     * Determine whether the user can update the companyUserRequest.
+     * Determine whether the user can update the companyAddress.
      *
      * @param  \App\Models\User $user
      * @param CompanyAddress $companyAddress
@@ -69,7 +68,7 @@ class CompanyAddressPolicy
     }
 
     /**
-     * Determine whether the user can delete the companyUserRequest.
+     * Determine whether the user can delete the companyAddress.
      *
      * @param  \App\Models\User $user
      * @param CompanyAddress $companyAddress

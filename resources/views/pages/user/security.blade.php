@@ -33,8 +33,7 @@
                                         <span class="helper-text"></span>
                                     </div>
                                 </form>
-
-                                <form id="regenerate-2fa-codes" method="post" enctype="multipart/form-data" action="{{ route('user.multifactor.regenerate_codes') }}" class="mtop30">
+                                <form id="regenerate-2fa-codes" method="post" enctype="multipart/form-data" action="{{ route('user.multifactor.regenerate_codes', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}" class="mtop30">
                                     <div class="input-field">
                                         <label for="multifactor-auth" class="label-validation">Multifactor Authentication</label>
                                         {{ csrf_field() }}
@@ -42,7 +41,7 @@
                                     </div>
                                 </form>
                             @else
-                                <form id="enable-2fa" method="post" enctype="multipart/form-data" action="{{ route('user.multifactor.start') }}" class="null-form">
+                                <form id="enable-2fa" method="post" enctype="multipart/form-data" action="{{ route('user.multifactor.start', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}" class="null-form">
                                     <div class="input-field">
                                         <label for="multifactor-auth" class="label-validation">Multifactor Authentication</label>
                                         {{ csrf_field() }}
@@ -81,7 +80,7 @@
                 <p>Disable Multifactor Authentication?</p>
             </div>
             <div class="modal-footer">
-                <form id="disable-user-form" method="post" class="null-form" action="{{ route('user.multifactor.destroy') }}">
+                <form id="disable-user-form" method="post" class="null-form" action="{{ route('user.multifactor.destroy', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}">
                     {{ method_field('DELETE') }}
                     {{ csrf_field() }}
                     <button class="modal-action waves-effect black-text waves-green btn-flat btn-disablemodal user-confirm-disable-btn" type="submit">Disable</button>
@@ -104,7 +103,7 @@
                 if(!$(this).is(':checked'))
                 {
                     event.preventDefault();
-                    $('#disable-user-form').attr('action', "{{ route('user.multifactor.destroy') }}");
+                    $('#disable-user-form').attr('action', "{{ route('user.multifactor.destroy', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}");
                     $('#disable-confirmation').modal('open');
                 }
                 else

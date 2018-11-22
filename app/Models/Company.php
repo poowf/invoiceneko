@@ -61,6 +61,16 @@ class Company extends Model
     }
 
     /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'domain_name';
+    }
+
+    /**
      * Route notifications for the mail channel.
      *
      * @return string
@@ -100,9 +110,13 @@ class Company extends Model
         return $prefix . sprintf('%06d', $this->quote_index);
     }
 
-    public function isOwner(User $user)
+    public function isOwner($user)
     {
         return $this->user_id == $user->id;
+    }
+
+    public function hasUser($user) {
+        return $this->users->contains($user);
     }
 
     public function lastinvoice()
@@ -117,12 +131,17 @@ class Company extends Model
 
     public function users()
     {
-        return $this->hasMany('App\Models\User', 'company_id');
+        return $this->belongsToMany(User::class)->withTimestamps();
     }
 
     public function requests()
     {
         return $this->hasMany('App\Models\CompanyUserRequest', 'company_id');
+    }
+
+    public function invites()
+    {
+        return $this->hasMany('App\Models\CompanyInvite', 'company_id');
     }
 
     public function quotes()

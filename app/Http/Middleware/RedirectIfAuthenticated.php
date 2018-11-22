@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Library\Poowf\Unicorn;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,7 +19,15 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            return redirect()->route('dashboard');
+            $routeKey = Unicorn::getCompanyKey();
+            if($routeKey)
+            {
+                return redirect()->route('dashboard', ['company' => $routeKey]);
+            }
+            else
+            {
+                return redirect()->route('nocompany');
+            }
         }
 
         return $next($request);

@@ -4,7 +4,6 @@ namespace App\Library\Poowf;
 
 use App\Models\Role;
 use Carbon\Carbon;
-use Log;
 use Recurr\Frequency;
 use Recurr\Rule;
 use Validator;
@@ -19,18 +18,20 @@ class Unicorn
         \App\Models\ItemTemplate::class,
         \App\Models\Payment::class,
         \App\Models\Client::class,
-        \App\Models\Company::class,
+        \App\Models\Role::class,
         \App\Models\CompanyAddress::class,
         \App\Models\CompanySettings::class,
         \App\Models\CompanyUserRequest::class,
-        \App\Models\Role::class,
-        \App\Models\User::class
     ];
 
     public function  __construct()
     {
     }
 
+    /**
+     * @param $data
+     * @return bool
+     */
     public static function validateQueryString($data)
     {
         $dataFormat = [
@@ -51,6 +52,11 @@ class Unicorn
         }
     }
 
+    /**
+     * @param $path
+     * @param array $imagesize
+     * @return string
+     */
     public static function getStorageFile($path, $imagesize = [500,500])
     {
         $filepath = "//via.placeholder.com/{$imagesize[0]}x{$imagesize[1]}";
@@ -66,6 +72,18 @@ class Unicorn
         return $filepath;
     }
 
+    /**
+     * @param $startDate
+     * @param $timezone
+     * @param $interval
+     * @param $frequency
+     * @param $until_type
+     * @param $until_meta
+     * @param bool $object
+     * @return Rule|string
+     * @throws \Recurr\Exception\InvalidArgument
+     * @throws \Recurr\Exception\InvalidRRule
+     */
     public static function generateRrule($startDate, $timezone, $interval, $frequency, $until_type, $until_meta, $object = false)
     {
         $rule = (new Rule)
@@ -110,6 +128,9 @@ class Unicorn
         return $rule->getString();
     }
 
+    /**
+     * @param null $scopeId
+     */
     public static function createRoleAndPermissions($scopeId = null)
     {
         Bouncer::scope()->to($scopeId);
@@ -135,6 +156,9 @@ class Unicorn
         self::assignCrudPermissions($scopeId, $user, 'view');
     }
 
+    /**
+     * @param null $scopeId
+     */
     public static function createPermissions($scopeId = null)
     {
         foreach(self::$modelClasses as $key => $model)
@@ -143,6 +167,10 @@ class Unicorn
         }
     }
 
+    /**
+     * @param $scopeId
+     * @param $model
+     */
     protected static function createCrudPermissions($scopeId, $model)
     {
         Bouncer::scope()->to($scopeId);
@@ -169,6 +197,12 @@ class Unicorn
         ])->save();
     }
 
+    /**
+     * @param $scopeId
+     * @param $role
+     * @param string $methodName
+     * @param string $modelClass
+     */
     protected static function assignCrudPermissions($scopeId, $role, $methodName = 'all', $modelClass = 'all')
     {
         switch($methodName)
@@ -194,6 +228,12 @@ class Unicorn
         }
     }
 
+    /**
+     * @param $scopeId
+     * @param $role
+     * @param $methodName
+     * @param $modelClass
+     */
     protected static function assignPermissions($scopeId, $role, $methodName, $modelClass)
     {
         Bouncer::scope()->to($scopeId);
@@ -212,9 +252,36 @@ class Unicorn
         }
     }
 
+    /**
+     * @param $modelClass
+     * @return string
+     */
     protected static function getModelNiceName($modelClass)
     {
         $transformed = trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', str_replace('::class', '', str_replace('App\\Models\\', '', $modelClass))));
         return $transformed;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public static function getCompanyKey()
+    {
+        if(auth()->check())
+        {
+            if(session()->has('current_company_fqdn'))
+            {
+                return session()->get('current_company_fqdn');
+            }
+            else
+            {
+                $user = auth()->user();
+                return $user->getFirstCompanyKey();
+            }
+        }
+        else
+        {
+            return null;
+        }
     }
 }

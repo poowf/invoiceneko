@@ -115,7 +115,7 @@
                 <div class="row">
                     <div class="input-field col s12">
                         {{ csrf_field() }}
-                        <button class="btn waves-effect waves-light col s12 m3 offset-m9" type="submit" name="action">Create</button>
+                        <button class="btn btn-link waves-effect waves-light col s12 m3 offset-m9" type="submit" name="action">Create</button>
                     </div>
                 </div>
                 </form>
@@ -230,7 +230,7 @@
                 if (typeof itemtemplate_id !== typeof undefined && itemtemplate_id !== false) {
                     $.ajax({
                         type: "GET",
-                        url: "/itemtemplate/" + itemtemplate_id +"/retrieve",
+                        url: "/{{ app('request')->route('company')->domain_name }}/itemtemplate/" + itemtemplate_id +"/retrieve",
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }

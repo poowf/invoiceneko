@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateInvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
 use App\Library\Poowf\Unicorn;
+use App\Models\Company;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use App\Models\InvoiceEvent;
@@ -18,6 +19,7 @@ use App\Notifications\InvoiceNotification;
 use DateTime;
 use DateTimeZone;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 use PragmaRX\Countries\Package\Countries;
 use Log;
@@ -36,11 +38,11 @@ class InvoiceController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Company $company
+     * @return Response
      */
-    public function index()
+    public function index(Company $company)
     {
-        $company = auth()->user()->company;
         $overdue = $company->invoices()->with(['client'])->overdue()->notarchived()->get();
         $pending = $company->invoices()->with(['client'])->pending()->notarchived()->get();
         $draft = $company->invoices()->with(['client'])->draft()->notarchived()->get();
@@ -52,11 +54,11 @@ class InvoiceController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Company $company
+     * @return Response
      */
-    public function index_archived()
+    public function index_archived(Company $company)
     {
-        $company = auth()->user()->company;
         $invoices = $company->invoices()->archived()->with(['client'])->get();
 
         return view('pages.invoice.index_archived', compact('invoices'));
@@ -66,52 +68,55 @@ class InvoiceController extends Controller
     /**
      * Set the Invoice to Archived
      *
+     * @param Company $company
      * @param Invoice $invoice
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function archive(Invoice $invoice)
+    public function archive(Company $company, Invoice $invoice)
     {
         $invoice->archived = true;
         $invoice->save();
         flash('Invoice has been archived successfully', "success");
 
-        return redirect()->route('invoice.show', [ 'invoice' => $invoice->id ]);
+        return redirect()->route('invoice.show', [ 'invoice' => $invoice, 'company' => $company ]);
     }
 
     /**
      * Set the Invoice to Written Off
      *
-     * @param Invoice $invoice
-     * @return \Illuminate\Http\Response
+     * @param Company $company
+     * @return void
      */
-    public function writeoff(Invoice $invoice)
+    public function writeoff(Company $company, Invoice $invoice)
     {
         $invoice->status = Invoice::STATUS_WRITTENOFF;
         $invoice->save();
 
-        return redirect()->route('invoice.show', [ 'invoice' => $invoice->id ]);
+        return redirect()->route('invoice.show', [ 'invoice' => $invoice, 'company' => $company ]);
     }
 
-    /**
-     * Set the Invoice Share Token
-     *
-     * @param Invoice $invoice
-     * @return \Illuminate\Http\Response
-     */
-    public function share(Invoice $invoice)
+/**
+ * Set the Invoice Share Token
+ *
+ * @param Company $company
+ * @param Invoice $invoice
+ * @return Response
+ */
+    public function share(Company $company, Invoice $invoice)
     {
         $token = $invoice->generateShareToken(true);
 
         return $token;
     }
 
-    /**
-     * Send Invoice Notification
-     *
-     * @param Invoice $invoice
-     * @return \Illuminate\Http\Response
-     */
-    public function sendnotification(Invoice $invoice)
+/**
+ * Send Invoice Notification
+ *
+ * @param Company $company
+ * @param Invoice $invoice
+ * @return Response
+ */
+    public function sendnotification(Company $company, Invoice $invoice)
     {
         $invoice->notify(new InvoiceNotification($invoice));
         flash('An email notification has been sent to the client', "success");
@@ -119,11 +124,12 @@ class InvoiceController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * @param Request $request
-     * @return mixed
-     */
-    public function showwithtoken(Request $request)
+/**
+ * @param Request $request
+ * @param Company $company
+ * @return mixed
+ */
+    public function showwithtoken(Request $request, Company $company)
     {
         $token = $request->input('token');
         $invoice = Invoice::where('share_token', $token)->first();
@@ -133,21 +139,27 @@ class InvoiceController extends Controller
         return $pdf->inline(str_slug($invoice->nice_invoice_id) . '.pdf');
     }
 
-    public function duplicate(Invoice $invoice)
+    /**
+     * @param Company $company
+     * @param Invoice $invoice
+     * @return \Illuminate\Http\RedirectResponse
+     */
+
+    public function duplicate(Company $company, Invoice $invoice)
     {
         $duplicatedInvoice = $invoice->duplicate();
         flash('Invoice has been Cloned Sucessfully', "success");
-        return redirect()->route('invoice.show', ['invoice' => $duplicatedInvoice->id]);
+        return redirect()->route('invoice.show', [ 'invoice' => $duplicatedInvoice ]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Company $company
+     * @return Response
      */
-    public function create()
+    public function create(Company $company)
     {
-        $company = auth()->user()->company;
         $clients = $company->clients;
         $itemtemplates = $company->itemtemplates;
 
@@ -174,12 +186,13 @@ class InvoiceController extends Controller
      * Store a newly created resource in storage.
      *
      * @param CreateInvoiceRequest $request
-     * @return \Illuminate\Http\Response
+     * @param Company $company
+     * @return Response
+     * @throws \Recurr\Exception\InvalidArgument
+     * @throws \Recurr\Exception\InvalidRRule
      */
-    public function store(CreateInvoiceRequest $request)
+    public function store(CreateInvoiceRequest $request, Company $company)
     {
-        $company = auth()->user()->company;
-
         $invoice = new Invoice;
         $invoice->nice_invoice_id = $company->niceinvoiceid();
         $invoice->fill($request->all());
@@ -262,18 +275,17 @@ class InvoiceController extends Controller
 
         flash('Invoice Created', 'success');
 
-        return redirect()->route('invoice.show', [ 'invoice' => $invoice->id ]);
+        return redirect()->route('invoice.show', [ 'invoice' => $invoice, 'company' => $company ]);
     }
 
     /**
+     * @param Company $company
      * @param Invoice $invoice
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function convertToQuote(Invoice $invoice)
+    public function convertToQuote(Company $company, Invoice $invoice)
     {
-        $company = auth()->user()->company;
-
         $quote = new Quote;
         $quote->nice_quote_id = $company->nicequoteid();
         $quote->date = $invoice->date;
@@ -301,16 +313,17 @@ class InvoiceController extends Controller
 
         flash('Quote Created', 'success');
 
-        return redirect()->route('quote.show', [ 'quote' => $quote->id ]);
+        return redirect()->route('quote.show', [ 'quote' => $quote, 'company' => $company ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Invoice  $invoice
-     * @return \Illuminate\Http\Response
+     * @param Company $company
+     * @param  \App\Models\Invoice $invoice
+     * @return Response
      */
-    public function show(Invoice $invoice)
+    public function show(Company $company, Invoice $invoice)
     {
         $client = $invoice->client;
         $histories = $invoice->history()->orderBy('updated_at', 'desc')->get();
@@ -324,10 +337,11 @@ class InvoiceController extends Controller
     /**
      * Display the print version specified resource.
      *
-     * @param  \App\Models\Invoice  $invoice
-     * @return \Illuminate\Http\Response
+     * @param Company $company
+     * @param  \App\Models\Invoice $invoice
+     * @return Response
      */
-    public function printview(Invoice $invoice)
+    public function printview(Company $company, Invoice $invoice)
     {
         $pdf = $invoice->generatePDFView();
 
@@ -337,10 +351,11 @@ class InvoiceController extends Controller
     /**
      * Download the specified resource.
      *
-     * @param  \App\Models\Invoice  $invoice
-     * @return \Illuminate\Http\Response
+     * @param Company $company
+     * @param  \App\Models\Invoice $invoice
+     * @return Response
      */
-    public function download(Invoice $invoice)
+    public function download(Company $company, Invoice $invoice)
     {
         $pdf = $invoice->generatePDFView();
         return $pdf->download(str_slug($invoice->nice_invoice_id) . '.pdf');
@@ -349,19 +364,19 @@ class InvoiceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Invoice  $invoice
-     * @return \Illuminate\Http\Response
+     * @param Company $company
+     * @param  \App\Models\Invoice $invoice
+     * @return Response
      */
-    public function edit(Invoice $invoice)
+    public function edit(Company $company, Invoice $invoice)
     {
         if($invoice->isLocked())
         {
             flash('More than 120 days has passed since the invoice has been completed, the invoice is now locked', 'error');
 
-            return redirect()->route('invoice.show', [ 'invoice' => $invoice->id ]);
+            return redirect()->route('invoice.show', [ 'invoice' => $invoice, 'company' => $company ]);
         }
 
-        $company = auth()->user()->company;
         $clients = $company->clients;
         $event = ($invoice->event) ? $invoice->event : null;
 
@@ -372,16 +387,17 @@ class InvoiceController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdateInvoiceRequest $request
+     * @param Company $company
      * @param  \App\Models\Invoice $invoice
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function update(UpdateInvoiceRequest $request, Invoice $invoice)
+    public function update(UpdateInvoiceRequest $request, Company $company, Invoice $invoice)
     {
         if($invoice->isLocked())
         {
             flash('More than 120 days has passed since the invoice has been completed, the invoice is now locked', 'error');
 
-            return redirect()->route('invoice.show', [ 'invoice' => $invoice->id ]);
+            return redirect()->route('invoice.show', [ 'invoice' => $invoice, 'company' => $company ]);
         }
 
         $invoice->fill($request->all());
@@ -569,30 +585,32 @@ class InvoiceController extends Controller
 
         flash('Invoice Updated', 'success');
 
-        return redirect()->route('invoice.show', [ 'invoice' => $invoice->id ]);
+        return redirect()->route('invoice.show', [ 'invoice' => $invoice, 'company' => $company ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
+     * @param Company $company
      * @param  \App\Models\Invoice $invoice
-     * @return \Illuminate\Http\Response
+     * @return Response
      * @throws \Exception
      */
-    public function destroy(Invoice $invoice)
+    public function destroy(Company $company, Invoice $invoice)
     {
         $invoice->delete();
 
         flash('Invoice Deleted', 'success');
 
-        return redirect()->route('invoice.index');
+        return redirect()->route('invoice.index', [ 'company' => $company ]);
     }
 
     /**
+     * @param Company $company
      * @param Invoice $invoice
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function history(Invoice $invoice)
+    public function history(Company $company, Invoice $invoice)
     {
         $client = $invoice->client;
         $histories = $invoice->history()->orderBy('created_at', 'desc')->get();
@@ -603,10 +621,11 @@ class InvoiceController extends Controller
     /**
      * Function to check if the invoice has any siblings
      *
+     * @param Company $company
      * @param Invoice $invoice
      * @return \Illuminate\Http\JsonResponse
      */
-    public function checkSiblings(Invoice $invoice)
+    public function checkSiblings(Company $company, Invoice $invoice)
     {
         $hasSiblings = ($invoice->siblings()) ? true : false;
 
@@ -616,15 +635,13 @@ class InvoiceController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Company $company
+     * @return Response
      */
-    public function adhoccreate()
+    public function adhoccreate(Company $company)
     {
-        $company = auth()->user()->company;
-
         if($company)
         {
-
             if ($company->clients->count() == 0)
             {
                 return view('pages.invoice.noclients');

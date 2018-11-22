@@ -16,8 +16,8 @@
             </div>
             <div class="col s6 right mtop30">
                 @if($roles->isNotEmpty())
-                    @can('owner', \App\Models\Company::class)
-                        <a href="{{ route('company.roles.create') }}" class="btn btn-link waves-effect waves-dark">Add Role</a>
+                    @can('owner', app('request')->route('company'))
+                        <a href="{{ route('company.roles.create', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}" class="btn btn-link waves-effect waves-dark">Add Role</a>
                     @endcan
                 @endif
             </div>
@@ -34,7 +34,7 @@
                                 <thead>
                                     <tr>
                                         <th>Role Name</th>
-                                        @can('owner', \App\Models\Company::class)
+                                        @can('owner', app('request')->route('company'))
                                             <th>Action</th>
                                         @endcan
                                     </tr>
@@ -44,10 +44,10 @@
                                     @foreach($roles as $key => $role)
                                         <tr class="single-request-row">
                                             <td>{{ $role->title }}</td>
-                                            @can('owner', \App\Models\Company::class)
+                                            @can('owner', app('request')->route('company'))
                                                 <td>
                                                     @if($role->name != 'global-administrator')
-                                                    <a href="{{ route('company.roles.edit', [ 'role' => $role->name ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Role"><i class="material-icons">mode_edit</i></a>
+                                                    <a href="{{ route('company.roles.edit', [ 'role' => $role->name, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Role"><i class="material-icons">mode_edit</i></a>
                                                     <a href="#" data-id="{{ $role->title }}" class="role-delete-btn tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Role"><i class="material-icons">delete</i></a>
                                                     @endif
                                                 </td>
@@ -90,7 +90,7 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            Unicorn.initConfirmationTrigger('#role-container', '.role-delete-btn', 'company/roles', 'destroy', '#delete-confirmation', '#delete-role-form');
+            Unicorn.initConfirmationTrigger('#role-container', '.role-delete-btn', '{{ \App\Library\Poowf\Unicorn::getCompanyKey() }}', 'company/roles', 'destroy', '#delete-confirmation', '#delete-role-form');
         });
     </script>
 @stop

@@ -19,18 +19,18 @@ class ItemTemplateTest extends DuskTestCase
     public function test_create_an_item_template()
     {
         $company = factory(Company::class)->create();
-        //Need to assign the company_id to the user
-        $company->owner->company_id = $company->id;
-        $company->owner->save();
+        //Need to attach the company to the user
+        $company->users()->attach($company->user_id);
+
         $faker = Faker::create();
         $this->browse(function (Browser $browser) use ($faker, $company) {
             $browser->visit('/signin')
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/dashboard')
-                ->visit('/itemtemplates')
-                ->click("a[href='{$this->baseUrl()}/itemtemplate/create']")
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
+                ->visit('/' . $company->domain_name . '/itemtemplates')
+                ->clickLink('Create')
                 ->type('name', $faker->bs())
                 ->type('quantity', $faker->numberBetween($min = 1, $max = 999999999))
                 ->type('price', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999));
@@ -40,7 +40,7 @@ class ItemTemplateTest extends DuskTestCase
                 ->press('CREATE')
                 ->assertSee('Item Template Details')
                 ->assertPresent('#delete-itemtemplate-form')
-                ->assertPathBeginsWith('/itemtemplate');
+                ->assertPathBeginsWith('/' . $company->domain_name . '/itemtemplate');
             $browser->script('jQuery(".signmeout-btn").click()');
             $browser->assertPathIs('/signin');
         });
@@ -53,9 +53,8 @@ class ItemTemplateTest extends DuskTestCase
             'company_id' => $company->id
         ]);
 
-        //Need to assign the company_id to the user
-        $company->owner->company_id = $company->id;
-        $company->owner->save();
+        //Need to attach the company to the user
+        $company->users()->attach($company->user_id);
 
         $faker = Faker::create();
         $this->browse(function (Browser $browser) use ($faker, $company, $itemTemplate) {
@@ -63,10 +62,10 @@ class ItemTemplateTest extends DuskTestCase
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/dashboard')
-                ->visit('/itemtemplates');
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
+                ->visit('/' . $company->domain_name . '/itemtemplates');
             $browser
-                ->script("jQuery(\"a[href='{$this->baseUrl()}/itemtemplate/{$itemTemplate->id}/edit'] > i\").click();");
+                ->script("jQuery(\"a[href='{$this->baseUrl()}/{$company->domain_name}/itemtemplate/{$itemTemplate->id}/edit'] > i\").click();");
             $browser
                 ->type('name', $faker->bs())
                 ->type('quantity', $faker->numberBetween($min = 1, $max = 999999999))
@@ -77,7 +76,7 @@ class ItemTemplateTest extends DuskTestCase
                 ->press('UPDATE')
                 ->assertSee('Item Template Details')
                 ->assertPresent('#delete-itemtemplate-form')
-                ->assertPathBeginsWith('/itemtemplate');
+                ->assertPathBeginsWith('/' . $company->domain_name . '/itemtemplate');
             $browser->script('jQuery(".signmeout-btn").click()');
             $browser->assertPathIs('/signin');
         });
@@ -90,9 +89,8 @@ class ItemTemplateTest extends DuskTestCase
             'company_id' => $company->id
         ]);
 
-        //Need to assign the company_id to the user
-        $company->owner->company_id = $company->id;
-        $company->owner->save();
+        //Need to attach the company to the user
+        $company->users()->attach($company->user_id);
 
         $faker = Faker::create();
         $this->browse(function (Browser $browser) use ($faker, $company, $itemTemplate) {
@@ -100,15 +98,15 @@ class ItemTemplateTest extends DuskTestCase
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/dashboard')
-                ->visit('/itemtemplates');
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
+                ->visit('/' . $company->domain_name . '/itemtemplates');
             $browser
                 ->script('jQuery(".itemtemplate-delete-btn > i").click();');
             $browser
                 ->pause(500)
                 ->press('DELETE')
                 ->assertPresent('#itemtemplate-container')
-                ->assertPathIs('/itemtemplates');
+                ->assertPathIs('/' . $company->domain_name . '/itemtemplates');
             $browser->script('jQuery(".signmeout-btn").click()');
             $browser->assertPathIs('/signin');
         });
@@ -117,18 +115,18 @@ class ItemTemplateTest extends DuskTestCase
     public function test_end_to_end_item_template()
     {
         $company = factory(Company::class)->create();
-        //Need to assign the company_id to the user
-        $company->owner->company_id = $company->id;
-        $company->owner->save();
+        //Need to attach the company to the user
+        $company->users()->attach($company->user_id);
+
         $faker = Faker::create();
         $this->browse(function (Browser $browser) use ($faker, $company) {
             $browser->visit('/signin')
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/dashboard')
-                ->visit('/itemtemplates')
-                ->click("a[href='{$this->baseUrl()}/itemtemplate/create']")
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
+                ->visit('/' . $company->domain_name . '/itemtemplates')
+                ->clickLink('Create')
                 ->type('name', $faker->bs())
                 ->type('quantity', $faker->numberBetween($min = 1, $max = 999999999))
                 ->type('price', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999));
@@ -138,7 +136,7 @@ class ItemTemplateTest extends DuskTestCase
                 ->press('CREATE')
                 ->assertSee('Item Template Details')
                 ->assertPresent('#delete-itemtemplate-form')
-                ->assertPathBeginsWith('/itemtemplate')
+                ->assertPathBeginsWith('/' . $company->domain_name . '/itemtemplate')
                 ->clickLink('Edit')
                 ->assertSee('Update Item Template')
                 ->type('name', $faker->bs())
@@ -150,12 +148,12 @@ class ItemTemplateTest extends DuskTestCase
                 ->press('UPDATE')
                 ->assertSee('Item Template Details')
                 ->assertPresent('#delete-itemtemplate-form')
-                ->assertPathBeginsWith('/itemtemplate')
+                ->assertPathBeginsWith('/' . $company->domain_name . '/itemtemplate')
                 ->clickLink('Delete')
                 ->pause(500)
                 ->press('DELETE')
                 ->assertPresent('#itemtemplate-container')
-                ->assertPathIs('/itemtemplates');
+                ->assertPathIs('/' . $company->domain_name . '/itemtemplates');
             $browser->script('jQuery(".signmeout-btn").click()');
             $browser->assertPathIs('/signin');
         });

@@ -24,10 +24,10 @@
                 <a href="#" data-id="{{ $quote->id }}" class="quote-share-btn btn btn-link waves-effect waves-dark">
                     Share
                 </a>
-                <a class="btn btn-link waves-effect waves-dark" href="{{ route('quote.download', [ 'quote' => $quote->id] ) }}">
+                <a class="btn btn-link waves-effect waves-dark" href="{{ route('quote.download', [ 'quote' => $quote, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}">
                     Save PDF
                 </a>
-                <a class="btn btn-link waves-effect waves-dark" href="{{ route('quote.printview', [ 'quote' => $quote->id] ) }}">
+                <a class="btn btn-link waves-effect waves-dark" href="{{ route('quote.printview', [ 'quote' => $quote, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}">
                     Print
                 </a>
             </div>
@@ -35,27 +35,27 @@
         @can('update', $quote)
         <div id="quote-action-container" class="row mbtm0 desktop-only">
             <div class="col s12 right">
-                @can('create', \App\Models\Invoice::class)
-                <form method="post" action="{{ route('quote.convert', [ 'quote' => $quote->id ] ) }}" class="null-form">
+                @can('update', $quote)
+                <form method="post" action="{{ route('quote.convert', [ 'quote' => $quote, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form">
                     {{ csrf_field() }}
                     <button class="btn btn-link waves-effect waves-dark null-btn" type="submit">Convert to Invoice</button>
                 </form>
                 @endcan
                 @can('update', $quote)
-                <form method="post" action="{{ route('quote.duplicate', [ 'quote' => $quote->id ] ) }}" class="null-form">
+                <form method="post" action="{{ route('quote.duplicate', [ 'quote' => $quote, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form">
                     {{ csrf_field() }}
                     <button class="btn blue darken-3 waves-effect waves-dark null-btn" type="submit">Clone</button>
                 </form>
                 @endcan
                 @can('update', $quote)
-                <form method="post" action="{{ route('quote.archive', [ 'quote' => $quote->id ] ) }}" class="null-form">
+                <form method="post" action="{{ route('quote.archive', [ 'quote' => $quote, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form">
                     {{ method_field('PATCH') }}
                     {{ csrf_field() }}
                     <button class="btn amber darken-2 waves-effect waves-dark null-btn" type="submit">Archive</button>
                 </form>
                 @endcan
                 @can('update', $quote)
-                <a href="{{ route('quote.edit', [ 'quote' => $quote->id ] ) }}" class="btn light-blue waves-effect waves-dark">
+                <a href="{{ route('quote.edit', [ 'quote' => $quote, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="btn light-blue waves-effect waves-dark">
                     Edit
                 </a>
                 @endcan
@@ -74,7 +74,7 @@
             </a>
             <ul>
                 <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Duplicate Quote">
-                    <form method="post" action="{{ route('quote.duplicate', [ 'quote' => $quote->id ] ) }}" class="null-form">
+                    <form method="post" action="{{ route('quote.duplicate', [ 'quote' => $quote, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form">
                         {{ csrf_field() }}
                         <button class="btn blue darken-3 waves-effect waves-dark null-btn" type="submit">
                             <i class="material-icons">control_point_duplicate</i>
@@ -82,7 +82,7 @@
                     </form>
                 </li>
                 <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Archive Quote">
-                    <form method="post" action="{{ route('quote.archive', [ 'quote' => $quote->id ] ) }}" class="null-form">
+                    <form method="post" action="{{ route('quote.archive', [ 'quote' => $quote, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form">
                         {{ method_field('PATCH') }}
                         {{ csrf_field() }}
                         <button class="btn amber darken-2 waves-effect waves-dark null-btn" type="submit">
@@ -91,7 +91,7 @@
                     </form>
                 </li>
                 <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Quote">
-                    <a href="{{ route('quote.edit', [ 'quote' => $quote->id ] ) }}" class="btn light-blue waves-effect waves-dark">
+                    <a href="{{ route('quote.edit', [ 'quote' => $quote, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="btn light-blue waves-effect waves-dark">
                         <i class="material-icons">edit</i>
                     </a>
                 </li>
@@ -267,7 +267,7 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     method: "PATCH",
-                    url: "{{ route('quote.share', [ 'quote' => $quote->id]) }}",
+                    url: "{{ route('quote.share', [ 'quote' => $quote, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}",
                 })
                 .done(function(data) {
                     $('#shared-link').val("{{ route('quote.token') }}?token=" + data);

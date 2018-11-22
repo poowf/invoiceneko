@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateItemTemplateRequest;
 use App\Http\Requests\UpdateItemTemplateRequest;
+use App\Models\Company;
 use App\Models\ItemTemplate;
 use Illuminate\Http\Request;
 
@@ -12,25 +13,24 @@ class ItemTemplateController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Company $company
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Company $company)
     {
-        $company = auth()->user()->company;
-        $itemtemplates = $company->itemtemplates()->get();
+        $itemTemplates = $company->itemtemplates()->get();
 
-        return view('pages.itemtemplate.index', compact('itemtemplates'));
+        return view('pages.itemtemplate.index', compact('itemTemplates'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
+     * @param Company $company
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Company $company)
     {
-        $company = auth()->user()->company;
-
         if($company)
         {
             return view('pages.itemtemplate.create');
@@ -45,41 +45,42 @@ class ItemTemplateController extends Controller
      * Store a newly created resource in storage.
      *
      * @param CreateItemTemplateRequest $request
+     * @param Company $company
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateItemTemplateRequest $request)
+    public function store(CreateItemTemplateRequest $request, Company $company)
     {
-        $company = auth()->user()->company;
-
-        $itemtemplate = new ItemTemplate;
-        $itemtemplate->fill($request->all());
-        $company->itemtemplates()->save($itemtemplate);
+        $itemTemplate = new ItemTemplate;
+        $itemTemplate->fill($request->all());
+        $company->itemtemplates()->save($itemTemplate);
 
         flash('Item Template Created', 'success');
 
-        return redirect()->route('itemtemplate.show', [ 'itemtemplate' => $itemtemplate->id ]);
+        return redirect()->route('itemtemplate.show', [ 'itemtemplate' => $itemTemplate, 'company' => $company ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ItemTemplate  $itemtemplate
+     * @param Company $company
+     * @param  \App\Models\ItemTemplate $itemTemplate
      * @return \Illuminate\Http\Response
      */
-    public function show(ItemTemplate $itemtemplate)
+    public function show(Company $company, ItemTemplate $itemTemplate)
     {
-        return view('pages.itemtemplate.show', compact('itemtemplate'));
+        return view('pages.itemtemplate.show', compact('itemTemplate'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ItemTemplate  $itemtemplate
+     * @param Company $company
+     * @param  \App\Models\ItemTemplate $itemTemplate
      * @return \Illuminate\Http\Response
      */
-    public function edit(ItemTemplate $itemtemplate)
+    public function edit(Company $company, ItemTemplate $itemTemplate)
     {
-        return view('pages.itemtemplate.edit', compact('itemtemplate'));
+        return view('pages.itemtemplate.edit', compact('itemTemplate'));
 
     }
 
@@ -87,52 +88,58 @@ class ItemTemplateController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdateItemTemplateRequest $request
-     * @param  \App\Models\ItemTemplate $itemtemplate
+     * @param Company $company
+     * @param  \App\Models\ItemTemplate $itemTemplate
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateItemTemplateRequest $request, ItemTemplate $itemtemplate)
+    public function update(UpdateItemTemplateRequest $request, Company $company, ItemTemplate $itemTemplate)
     {
-        $company = auth()->user()->company;
-
-        $itemtemplate->fill($request->all());
-        $company->itemtemplates()->save($itemtemplate);
+        $itemTemplate->fill($request->all());
+        $company->itemtemplates()->save($itemTemplate);
 
         flash('Item Template Updated', 'success');
 
-        return redirect()->route('itemtemplate.show', [ 'itemtemplate' => $itemtemplate->id ]);
+        return redirect()->route('itemtemplate.show', [ 'itemtemplate' => $itemTemplate, 'company' => $company ]);
     }
 
     /**
      * Retrieve the itemtemplate and return as object
      *
-     * @param  \App\Models\ItemTemplate $itemtemplate
+     * @param Company $company
+     * @param  \App\Models\ItemTemplate $itemTemplate
      * @return ItemTemplate
      */
-    public function retrieve(ItemTemplate $itemtemplate)
+    public function retrieve(Company $company, ItemTemplate $itemTemplate)
     {
-        return response()->json($itemtemplate);
+        return response()->json($itemTemplate);
     }
 
-    public function duplicate(ItemTemplate $itemtemplate)
+    /**
+     * @param Company $company
+     * @param ItemTemplate $itemTemplate
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function duplicate(Company $company, ItemTemplate $itemTemplate)
     {
-        $duplicatedItemTemplate = $itemtemplate->duplicate();
+        $duplicatedItemTemplate = $itemTemplate->duplicate();
         flash('Item Template has been Cloned Sucessfully', "success");
-        return redirect()->route('itemtemplate.show', ['itemtemplate' => $duplicatedItemTemplate->id]);
+        return redirect()->route('itemtemplate.show', [ 'itemtemplate' => $duplicatedItemTemplate, 'company' => $company ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ItemTemplate $itemtemplate
+     * @param Company $company
+     * @param  \App\Models\ItemTemplate $itemTemplate
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
-    public function destroy(ItemTemplate $itemtemplate)
+    public function destroy(Company $company, ItemTemplate $itemTemplate)
     {
-        $itemtemplate->delete();
+        $itemTemplate->delete();
 
         flash('Item Template Deleted', 'success');
 
-        return redirect()->route('itemtemplate.index');
+        return redirect()->route('itemtemplate.index', [ 'company' => $company ]);
     }
 }

@@ -14,7 +14,7 @@
                     <h2>You have no invoices created</h2>
                     <div class="error-description">You need at least one invoice to create a payment</div>
                     <div class="error-goback-text">Maybe you should create a invoice first?</div>
-                    <div class="error-goback-button mbtm30"><a href="{{ route('invoice.create') }}" class="btn btn-xl btn-primary btn-link">Create an invoice</a></div>
+                    <div class="error-goback-button mbtm30"><a href="{{ route('invoice.create', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}" class="btn btn-xl btn-primary btn-link">Create an invoice</a></div>
                     <div class="footer">&copy; {{ date('Y') }} {{ config('app.name') }}</div>
                 </div>
             </div>

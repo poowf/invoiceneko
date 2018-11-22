@@ -10,6 +10,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 class CompanyUserRequestApprovedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
+    private $token;
 
     /**
      * Create a new notification instance.

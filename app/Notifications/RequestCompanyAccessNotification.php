@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\CompanyUserRequest;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -10,17 +11,16 @@ use Illuminate\Notifications\Messages\MailMessage;
 class RequestCompanyAccessNotification extends Notification implements ShouldQueue
 {
     use Queueable;
+    private $companyUserRequest;
 
     /**
      * Create a new notification instance.
      *
-     * @return void
+     * @param CompanyUserRequest $companyUserRequest
      */
-    public function __construct($full_name, $email, $phone)
+    public function __construct(CompanyUserRequest $companyUserRequest)
     {
-        $this->full_name = $full_name;
-        $this->email = $email;
-        $this->phone = $phone;
+        $this->companyUserRequest = $companyUserRequest;
     }
 
     /**
@@ -42,10 +42,12 @@ class RequestCompanyAccessNotification extends Notification implements ShouldQue
      */
     public function toMail($notifiable)
     {
-        $url = route('auth.show');
+        $companyUserRequest = $this->companyUserRequest;
+        $company = $companyUserRequest->company;
+        $url = route('company.requests.index', [ 'company' => $company ]);
 
         return (new MailMessage)
-            ->subject("{$this->full_name} has requested to be added to your company on " . config('app.name'))
+            ->subject($companyUserRequest->full_name . ' has requested to be added to your company on ' . config('app.name'))
             ->line('Please login to ' . config('app.name') . ' to approve/reject the user')
             ->action('Sign In', $url)
             ->line('Thank you for using our application!');

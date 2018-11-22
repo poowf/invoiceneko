@@ -35,7 +35,7 @@
 
             <div class="col s6 right mtop30">
                 @can('create', \App\Models\Client::class)
-                <a href="{{ route('client.create') }}" class="btn waves-effect waves-dark">Create</a>
+                <a href="{{ route('client.create', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}" class="btn btn-link waves-effect waves-dark">Create</a>
                 @endcan
             </div>
         </div>
@@ -76,10 +76,10 @@
                                         </dl>
                                         <span class="card-title grey-text text-darken-4 mtop20">Actions</span>
                                         @can('view', $client)
-                                        <a href="{{ route('client.show', [ 'client' => $client ] ) }}" class="btn btn-theme full-width mbth5">More Info</a>
+                                        <a href="{{ route('client.show', [ 'client' => $client, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="btn btn-theme full-width mbth5">More Info</a>
                                         @endcan
                                         @can('update', $client)
-                                        <a href="{{ route('client.edit', [ 'client' => $client ] ) }}" class="btn btn-theme full-width mbth5">Edit</a>
+                                        <a href="{{ route('client.edit', [ 'client' => $client, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="btn btn-theme full-width mbth5">Edit</a>
                                         @endcan
                                         @can('delete', $client)
                                         <a href="#" data-id="{{ $client->id }}" class="btn btn-theme client-delete-btn full-width mbth5">Delete</a>
@@ -113,7 +113,7 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            Unicorn.initConfirmationTrigger('#client-container', '.client-delete-btn', 'client', 'destroy', '#delete-confirmation', '#delete-client-form');
+            Unicorn.initConfirmationTrigger('#client-container', '.client-delete-btn', '{{ \App\Library\Poowf\Unicorn::getCompanyKey() }}', 'client', 'destroy', '#delete-confirmation', '#delete-client-form');
             Unicorn.initPageSearch('#search-input', '#client-container .single-client-card');
         });
     </script>

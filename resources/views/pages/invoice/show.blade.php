@@ -42,22 +42,22 @@
     <div class="mini-container">
         <div id="top-action-container" class="row desktop-only">
             <div class="col s12 mtop30 right">
-                <form method="post" action="{{ route('invoice.send', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
+                <form method="post" action="{{ route('invoice.send', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form">
                     {{ csrf_field() }}
                     <button class="btn btn-link waves-effect waves-dark null-btn" type="submit">Send Notification</button>
                 </form>
                 @can('create', \App\Models\Payment::class)
-                <a class="btn btn-link waves-effect waves-dark" href="{{ route('payment.create', [ 'invoice' => $invoice->id] ) }}">
+                <a class="btn btn-link waves-effect waves-dark" href="{{ route('payment.create', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}">
                     Log Payment
                 </a>
                 @endcan
                 <a href="#" data-id="{{ $invoice->id }}" class="invoice-share-btn btn btn-link waves-effect waves-dark">
                     Share
                 </a>
-                <a class="btn btn-link waves-effect waves-dark" href="{{ route('invoice.download', [ 'invoice' => $invoice->id] ) }}">
+                <a class="btn btn-link waves-effect waves-dark" href="{{ route('invoice.download', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}">
                     Save PDF
                 </a>
-                <a class="btn btn-link waves-effect waves-dark" href="{{ route('invoice.printview', [ 'invoice' => $invoice->id] ) }}">
+                <a class="btn btn-link waves-effect waves-dark" href="{{ route('invoice.printview', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}">
                     Print
                 </a>
             </div>
@@ -66,26 +66,26 @@
         <div id="invoice-action-container" class="row mbtm0 desktop-only">
             <div class="col s12 right">
                 @can('update', $invoice)
-                <form method="post" action="{{ route('invoice.convert', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
+                <form method="post" action="{{ route('invoice.convert', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form">
                     {{ csrf_field() }}
                     <button class="btn btn-link waves-effect waves-dark null-btn" type="submit">Convert back to Quote</button>
                 </form>
                 @endcan
                 @can('update', $invoice)
-                <form method="post" action="{{ route('invoice.duplicate', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
+                <form method="post" action="{{ route('invoice.duplicate', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form">
                     {{ csrf_field() }}
                     <button class="btn blue darken-3 waves-effect waves-dark null-btn" type="submit">Clone</button>
                 </form>
                 @endcan
                 @can('update', $invoice)
-                <form method="post" action="{{ route('invoice.writeoff', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
+                <form method="post" action="{{ route('invoice.writeoff', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form">
                     {{ method_field('PATCH') }}
                     {{ csrf_field() }}
                     <button class="btn deep-orange darken-2 waves-effect waves-dark null-btn" type="submit">Write Off</button>
                 </form>
                 @endcan
                 @can('update', $invoice)
-                <form method="post" action="{{ route('invoice.archive', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
+                <form method="post" action="{{ route('invoice.archive', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form">
                     {{ method_field('PATCH') }}
                     {{ csrf_field() }}
                     <button class="btn amber darken-2 waves-effect waves-dark null-btn" type="submit">Archive</button>
@@ -93,7 +93,7 @@
                 @endcan
                 @can('update', $invoice)
                 @if(!$invoice->isLocked())
-                <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="btn light-blue waves-effect waves-dark">
+                <a href="{{ route('invoice.edit', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="btn light-blue waves-effect waves-dark">
                     Edit
                 </a>
                 @endif
@@ -114,13 +114,13 @@
             <ul>
                 @can('create', \App\Models\Payment::class)
                 <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Log Payment">
-                    <a class="btn btn-link waves-effect waves-dark" href="{{ route('payment.create', [ 'invoice' => $invoice->id] ) }}">
+                    <a class="btn btn-link waves-effect waves-dark" href="{{ route('payment.create', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}">
                         <i class="material-icons">attach_money</i>
                     </a>
                 </li>
                 @endcan
                 <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Duplicate Invoice">
-                    <form method="post" action="{{ route('invoice.duplicate', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
+                    <form method="post" action="{{ route('invoice.duplicate', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form">
                         {{ csrf_field() }}
                         <button class="btn blue darken-3 waves-effect waves-dark null-btn" type="submit">
                             <i class="material-icons">control_point_duplicate</i>
@@ -128,7 +128,7 @@
                     </form>
                 </li>
                 <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Send Notification">
-                    <form method="post" action="{{ route('invoice.send', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
+                    <form method="post" action="{{ route('invoice.send', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form">
                         {{ csrf_field() }}
                         <button class="btn blue-grey waves-effect waves-dark null-btn" type="submit">
                             <i class="material-icons">contact_mail</i>
@@ -136,7 +136,7 @@
                     </form>
                 </li>
                 <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Archive Invoice">
-                    <form method="post" action="{{ route('invoice.archive', [ 'invoice' => $invoice->id ] ) }}" class="null-form">
+                    <form method="post" action="{{ route('invoice.archive', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form">
                         {{ method_field('PATCH') }}
                         {{ csrf_field() }}
                         <button class="btn amber darken-2 waves-effect waves-dark null-btn" type="submit">
@@ -146,7 +146,7 @@
                 </li>
                 @if(!$invoice->isLocked())
                 <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Invoice">
-                    <a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="btn light-blue waves-effect waves-dark">
+                    <a href="{{ route('invoice.edit', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="btn light-blue waves-effect waves-dark">
                         <i class="material-icons">edit</i>
                     </a>
                 </li>
@@ -230,9 +230,9 @@
                             <p>{{ $invoice->updated_at->format('h:i:s a') }}</p>
                             <span class="alt-badge info mtop20">Current Version</span>
                             @can('update', $invoice)
-                            @if(!$invoice->isLocked())<a href="{{ route('invoice.edit', [ 'invoice' => $invoice->id ] ) }}" class="btn btn-theme full-width mtop20">Edit</a>@endif
+                            @if(!$invoice->isLocked())<a href="{{ route('invoice.edit', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="btn btn-theme full-width mtop20">Edit</a>@endif
                             @else
-                            <a href="{{ route('invoice.show', [ 'invoice' => $invoice->id ] ) }}" class="btn btn-theme full-width mtop20">View</a>
+                            <a href="{{ route('invoice.show', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="btn btn-theme full-width mtop20">View</a>
                             @endcan
                         </div>
                     </div>
@@ -243,7 +243,7 @@
                                 <p class="mtop20">{{ $history->updated_at->format('d F, Y') }}</p>
                                 <p>{{ $history->updated_at->format('h:i:s a') }}</p>
                                 <span class="alt-badge warning mtop20">Past Version</span>
-                                <a href="{{ route('invoice.old.show', [ 'oldinvoice' => $history->id ] ) }}" class="btn btn-theme full-width mtop20">View</a>
+                                <a href="{{ route('invoice.old.show', [ 'oldinvoice' => $history->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="btn btn-theme full-width mtop20">View</a>
                             </div>
                         </div>
                     @endforeach
@@ -292,7 +292,7 @@
                                         <td>{{ $sibling->nice_invoice_id }}</td>
                                         <td>{{ $sibling->date->format('d F, Y')  }}</td>
                                         <td>S${{ $sibling->calculatetotal() }}</td>
-                                        <td><a href="{{ route('invoice.show', [ 'invoice' => $sibling->id ] ) }}" class="btn btn-link waves-effect waves-dark tooltipped" data-position="top" data-delay="50" data-tooltip="View Invoice">View</a></td>
+                                        <td><a href="{{ route('invoice.show', [ 'invoice' => $sibling->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="btn btn-link waves-effect waves-dark tooltipped" data-position="top" data-delay="50" data-tooltip="View Invoice">View</a></td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -301,7 +301,7 @@
                 </div>
                 @endif
             </div>
-            @include('partials/invoice')
+            @include('partials/invoice', ['invoice_title' => 'Invoice', 'class' => 's12 l8'])
         </div>
     </div>
     @can('delete', $invoice)
@@ -425,7 +425,7 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     method: "PATCH",
-                    url: "{{ route('invoice.share', [ 'invoice' => $invoice->id]) }}",
+                    url: "{{ route('invoice.share', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}",
                 })
                 .done(function(data) {
                     $('#shared-link').val("{{ route('invoice.token') }}?token=" + data);

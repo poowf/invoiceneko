@@ -26,8 +26,7 @@ class Role extends RoleBase
      */
     public function resolveRouteBinding($value)
     {
-        $user = auth()->user();
-        $role = $this->where($this->getRouteKeyName(), $value)->where('scope', $user->company_id)->first();
+        $role = $this->where($this->getRouteKeyName(), $value)->where('scope', app('request')->route('company')->id)->first();
         return $role;
     }
 }

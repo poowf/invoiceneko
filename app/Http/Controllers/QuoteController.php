@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateQuoteRequest;
 use App\Http\Requests\UpdateQuoteRequest;
 use App\Library\Poowf\Unicorn;
+use App\Models\Company;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use App\Models\Quote;
@@ -21,11 +22,11 @@ class QuoteController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Company $company
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Company $company)
     {
-        $company = auth()->user()->company;
         $quotes = $company->quotes()->notarchived()->with(['client'])->get();
 
         return view('pages.quote.index', compact('quotes'));
@@ -34,11 +35,11 @@ class QuoteController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Company $company
      * @return \Illuminate\Http\Response
      */
-    public function index_archived()
+    public function index_archived(Company $company)
     {
-        $company = auth()->user()->company;
         $quotes = $company->quotes()->archived()->with(['client'])->get();
 
         return view('pages.quote.index_archived', compact('quotes'));
@@ -47,25 +48,27 @@ class QuoteController extends Controller
     /**
      * Set the Quote to Archived
      *
+     * @param Company $company
      * @param Quote $quote
      * @return \Illuminate\Http\Response
      */
-    public function archive(Quote $quote)
+    public function archive(Company $company, Quote $quote)
     {
         $quote->archived = true;
         $quote->save();
         flash('Quote has been archived successfully', "success");
 
-        return redirect()->route('quote.show', [ 'quote' => $quote->id ]);
+        return redirect()->route('quote.show', [ 'quote' => $quote, 'company' => $company ]);
     }
 
     /**
      * Set the Quote Share Token
      *
+     * @param Company $company
      * @param Quote $quote
      * @return \Illuminate\Http\Response
      */
-    public function share(Quote $quote)
+    public function share(Company $company, Quote $quote)
     {
         $token = Uuid::generate(4);
         $quote->share_token = $token;
@@ -76,9 +79,10 @@ class QuoteController extends Controller
 
     /**
      * @param Request $request
+     * @param Company $company
      * @return mixed
      */
-    public function showwithtoken(Request $request)
+    public function showwithtoken(Request $request, Company $company)
     {
         $token = $request->input('token');
         $quote = Quote::where('share_token', $token)->first();
@@ -88,21 +92,26 @@ class QuoteController extends Controller
         return $pdf->inline(str_slug($quote->nice_quote_id) . '.pdf');
     }
 
-    public function duplicate(Quote $quote)
+    /**
+     * @param Company $company
+     * @param Quote $quote
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function duplicate(Company $company, Quote $quote)
     {
         $duplicatedQuote = $quote->duplicate();
         flash('Quote has been Cloned Sucessfully', "success");
-        return redirect()->route('quote.show', ['quote' => $duplicatedQuote->id]);
+        return redirect()->route('quote.show', [ 'quote' => $duplicatedQuote->id, 'company' => $company ]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
+     * @param Company $company
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Company $company)
     {
-        $company = auth()->user()->company;
         $clients = $company->clients;
         $itemtemplates = $company->itemtemplates;
 
@@ -129,12 +138,11 @@ class QuoteController extends Controller
      * Store a newly created resource in storage.
      *
      * @param CreateQuoteRequest $request
+     * @param Company $company
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateQuoteRequest $request)
+    public function store(CreateQuoteRequest $request, Company $company)
     {
-        $company = auth()->user()->company;
-
         $quote = new Quote;
         $quote->nice_quote_id = $company->nicequoteid();
         $quote->fill($request->all());
@@ -157,17 +165,16 @@ class QuoteController extends Controller
 
         flash('Quote Created', 'success');
 
-        return redirect()->route('quote.show', [ 'quote' => $quote->id ]);
+        return redirect()->route('quote.show', [ 'quote' => $quote, 'company' => $company ]);
     }
 
     /**
+     * @param Company $company
      * @param Quote $quote
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function convertToInvoice(Quote $quote)
+    public function convertToInvoice(Company $company, Quote $quote)
     {
-        $company = auth()->user()->company;
-
         $invoice = new Invoice;
         $invoice->nice_invoice_id = $company->niceinvoiceid();
         $duedate = Carbon::now()->addDays($quote->netdays)->startOfDay();
@@ -198,16 +205,17 @@ class QuoteController extends Controller
 
         flash('Invoice Created', 'success');
 
-        return redirect()->route('invoice.show', [ 'invoice' => $invoice->id ]);
+        return redirect()->route('invoice.show', [ 'invoice' => $invoice, 'company' => $company ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Quote  $quote
+     * @param Company $company
+     * @param  \App\Models\Quote $quote
      * @return \Illuminate\Http\Response
      */
-    public function show(Quote $quote)
+    public function show(Company $company, Quote $quote)
     {
         $client = $quote->client;
 
@@ -217,10 +225,11 @@ class QuoteController extends Controller
     /**
      * Display the print version specified resource.
      *
-     * @param  \App\Models\Quote  $quote
+     * @param Company $company
+     * @param  \App\Models\Quote $quote
      * @return \Illuminate\Http\Response
      */
-    public function printview(Quote $quote)
+    public function printview(Company $company, Quote $quote)
     {
         $pdf = $quote->generatePDFView();
 
@@ -230,10 +239,11 @@ class QuoteController extends Controller
     /**
      * Download the specified resource.
      *
-     * @param  \App\Models\Quote  $quote
+     * @param Company $company
+     * @param  \App\Models\Quote $quote
      * @return \Illuminate\Http\Response
      */
-    public function download(Quote $quote)
+    public function download(Company $company, Quote $quote)
     {
         $pdf = $quote->generatePDFView();
 
@@ -243,12 +253,12 @@ class QuoteController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Quote  $quote
+     * @param Company $company
+     * @param  \App\Models\Quote $quote
      * @return \Illuminate\Http\Response
      */
-    public function edit(Quote $quote)
+    public function edit(Company $company, Quote $quote)
     {
-        $company = auth()->user()->company;
         $clients = $company->clients;
 
         return view('pages.quote.edit', compact('quote', 'clients'));
@@ -258,10 +268,11 @@ class QuoteController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdateQuoteRequest $request
+     * @param Company $company
      * @param  \App\Models\Quote $quote
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateQuoteRequest $request, Quote $quote)
+    public function update(UpdateQuoteRequest $request, Company $company, Quote $quote)
     {
         $quote->fill($request->all());
         $quote->save();
@@ -293,22 +304,23 @@ class QuoteController extends Controller
 
         flash('Quote Updated', 'success');
 
-        return redirect()->route('quote.show', [ 'quote' => $quote->id ]);
+        return redirect()->route('quote.show', [ 'quote' => $quote, 'company' => $company ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
+     * @param Company $company
      * @param  \App\Models\Quote $quote
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
-    public function destroy(Quote $quote)
+    public function destroy(Company $company, Quote $quote)
     {
         $quote->delete();
 
         flash('Quote Deleted', 'success');
 
-        return redirect()->route('quote.index');
+        return redirect()->route('quote.index', [ 'company' => $company ]);
     }
 }

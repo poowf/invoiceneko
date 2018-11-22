@@ -3,12 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Library\Poowf\Unicorn;
-use Illuminate\Http\Request;
-
-use App\Models\Invoice;
-use App\Mail\InvoiceMail;
-use Illuminate\Support\Facades\Mail;
-use PDF;
+use App\Models\Company;
 
 class MainController extends Controller
 {
@@ -22,10 +17,10 @@ class MainController extends Controller
         return view('pages.start');
     }
 
-    public function dashboard()
+    public function dashboard(Company $company)
     {
         $user = auth()->user();
-        $company = auth()->user()->company;
+//        $company = auth()->user()->company;
         if($company)
         {
             $overdueinvoices = $company->invoices()->overdue()->take(10)->get();
@@ -40,6 +35,13 @@ class MainController extends Controller
 
     public function nocompany()
     {
-        return view('pages.nocompany');
+        if(is_null(Unicorn::getCompanyKey()))
+        {
+            return view('pages.nocompany');
+        }
+        else
+        {
+            return redirect()->route('dashboard', [ 'company' => Unicorn::getCompanyKey() ]);
+        }
     }
 }

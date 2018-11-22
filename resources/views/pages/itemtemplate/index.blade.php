@@ -33,7 +33,7 @@
 
             <div class="col s6 right mtop30">
                 @can('create', \App\Models\ItemTemplate::class)
-                <a href="{{ route('itemtemplate.create') }}" class="btn btn-link waves-effect waves-dark">Create</a>
+                <a href="{{ route('itemtemplate.create', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}" class="btn btn-link waves-effect waves-dark">Create</a>
                 @endcan
             </div>
         </div>
@@ -56,26 +56,26 @@
                             </thead>
 
                             <tbody>
-                                @foreach($itemtemplates as $key => $itemtemplate)
+                                @foreach($itemTemplates as $key => $itemTemplate)
                                     <tr class="single-itemtemplate-row">
-                                        <td>{{ $itemtemplate->name  }}</td>
-                                        <td>{{ $itemtemplate->quantity }}</td>
-                                        <td>{{ $itemtemplate->price }}</td>
+                                        <td>{{ $itemTemplate->name  }}</td>
+                                        <td>{{ $itemTemplate->quantity }}</td>
+                                        <td>{{ $itemTemplate->price }}</td>
                                         <td>
-                                            @can('view', $itemtemplate)
-                                            <a href="{{ route('itemtemplate.show', [ 'itemtemplate' => $itemtemplate->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Item Template"><i class="material-icons">remove_red_eye</i></a>
+                                            @can('view', $itemTemplate)
+                                            <a href="{{ route('itemtemplate.show', [ 'itemtemplate' => $itemTemplate, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Item Template"><i class="material-icons">remove_red_eye</i></a>
                                             @endcan
-                                            @can('update', $itemtemplate)
-                                            <form method="post" action="{{ route('itemtemplate.duplicate', [ 'itemtemplate' => $itemtemplate->id ] ) }}" class="null-form tooltipped" data-position="top" data-delay="50" data-tooltip="Duplicate Item Template">
+                                            @can('update', $itemTemplate)
+                                            <form method="post" action="{{ route('itemtemplate.duplicate', [ 'itemtemplate' => $itemTemplate, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form tooltipped" data-position="top" data-delay="50" data-tooltip="Duplicate Item Template">
                                                 {{ csrf_field() }}
                                                 <button class="null-btn" type="submit"><i class="material-icons">control_point_duplicate</i></button>
                                             </form>
                                             @endcan
-                                            @can('update', $itemtemplate)
-                                            <a href="{{ route('itemtemplate.edit', [ 'itemtemplate' => $itemtemplate->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Item Template"><i class="material-icons">mode_edit</i></a>
+                                            @can('update', $itemTemplate)
+                                            <a href="{{ route('itemtemplate.edit', [ 'itemtemplate' => $itemTemplate, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Item Template"><i class="material-icons">mode_edit</i></a>
                                             @endcan
-                                            @can('delete', $itemtemplate)
-                                            <a href="#" data-id="{{ $itemtemplate->id }}" class="itemtemplate-delete-btn tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Item Template"><i class="material-icons">delete</i></a>
+                                            @can('delete', $itemTemplate)
+                                            <a href="#" data-id="{{ $itemTemplate->id }}" class="itemtemplate-delete-btn tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Item Template"><i class="material-icons">delete</i></a>
                                             @endcan
                                         </td>
                                     </tr>
@@ -106,7 +106,7 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            Unicorn.initConfirmationTrigger('#itemtemplate-container', '.itemtemplate-delete-btn', 'itemtemplate', 'destroy', '#delete-confirmation', '#delete-itemtemplate-form');
+            Unicorn.initConfirmationTrigger('#itemtemplate-container', '.itemtemplate-delete-btn', '{{ \App\Library\Poowf\Unicorn::getCompanyKey() }}', 'itemtemplate', 'destroy', '#delete-confirmation', '#delete-itemtemplate-form');
             Unicorn.initPageSearch('#search-input', '#itemtemplate-container .single-itemtemplate-row');
         });
     </script>

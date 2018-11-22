@@ -14,12 +14,12 @@ use App\Models\Payment;
 
 class DataMigrationController extends Controller
 {
-    public function create()
+    public function create(Company $company)
     {
         return view('pages.migration.create');
     }
 
-    public function storecontact(Request $request)
+    public function storecontact(Request $request, Company $company)
     {
         $file = $request->file('contactimport');
 
@@ -75,7 +75,7 @@ class DataMigrationController extends Controller
         return redirect()->route('migration.create')->with(compact('errorscollection'));
     }
 
-    public function storeinvoice(Request $request)
+    public function storeinvoice(Request $request, Company $company)
     {
         $file = $request->file('invoiceimport');
 
@@ -173,7 +173,7 @@ class DataMigrationController extends Controller
         }
     }
 
-    public function storepayment(Request $request)
+    public function storepayment(Request $request, Company $company)
     {
         $file = $request->file('paymentimport');
 

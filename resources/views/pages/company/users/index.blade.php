@@ -16,8 +16,8 @@
             </div>
             <div class="col s6 right mtop30">
                 @if($users->isNotEmpty())
-                    @can('owner', \App\Models\Company::class)
-                        <a href="{{ route('company.users.create') }}" class="btn btn-link waves-effect waves-dark">Add User</a>
+                    @can('owner', app('request')->route('company'))
+                        <a href="{{ route('company.invite.create', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}" class="btn btn-link waves-effect waves-dark">Invite User</a>
                     @endcan
                 @endif
             </div>
@@ -38,7 +38,7 @@
                                         <th>Full Name</th>
                                         <th>Phone</th>
                                         <th>Status</th>
-                                        @can('owner', \App\Models\Company::class)
+                                        @can('owner', app('request')->route('company'))
                                             <th>Action</th>
                                         @endcan
                                     </tr>
@@ -53,11 +53,11 @@
                                             <td>{{ $user->full_name }}</td>
                                             <td>{{ $user->phone }}</td>
                                             <td>{{ $user->statusText() }}</td>
-                                            @can('owner', \App\Models\Company::class)
+                                            @can('owner', app('request')->route('company'))
                                                 <td>
-                                                    <a href="{{ route('company.users.edit', [ 'user' => $user->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit User"><i class="material-icons">mode_edit</i></a>
                                                     @if($user->id != auth()->user()->id)
-                                                    <a href="" data-id="{{ $user->id }}"  class="tooltipped user-delete-btn" data-position="top" data-delay="50" data-tooltip="Remove User"><i class="material-icons">remove_circle</i></a>
+                                                        <a href="{{ route('company.users.edit', [ 'user' => $user, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit User"><i class="material-icons">mode_edit</i></a>
+                                                        <a href="" data-id="{{ $user->id }}"  class="tooltipped user-delete-btn" data-position="top" data-delay="50" data-tooltip="Revoke User Access"><i class="material-icons">remove_circle</i></a>
                                                     @endif
                                                 </td>
                                             @endcan
@@ -84,13 +84,13 @@
     </div>
     <div id="delete-confirmation" class="modal">
         <div class="modal-content">
-            <p>Delete User?</p>
+            <p>Revoke User Access?</p>
         </div>
         <div class="modal-footer">
             <form id="delete-user-form" method="post" class="null-form">
                 {{ method_field('DELETE') }}
                 {{ csrf_field() }}
-                <button class="modal-action waves-effect black-text waves-green btn-flat btn-deletemodal user-confirm-delete-btn" type="submit">Delete</button>
+                <button class="modal-action waves-effect black-text waves-green btn-flat btn-deletemodal user-confirm-delete-btn" type="submit">Revoke</button>
             </form>
             <a href="javascript:;" class=" modal-action modal-close waves-effect black-text waves-red btn-flat btn-deletemodal">Cancel</a>
         </div>
@@ -101,7 +101,7 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            Unicorn.initConfirmationTrigger('#user-container', '.user-delete-btn', 'company/users', 'destroy', '#delete-confirmation', '#delete-user-form');
+            Unicorn.initConfirmationTrigger('#user-container', '.user-delete-btn', '{{ \App\Library\Poowf\Unicorn::getCompanyKey() }}', 'company/access', 'revoke', '#delete-confirmation', '#delete-user-form');
         });
     </script>
 @stop

@@ -75,8 +75,8 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{ route('quote.show', [ 'quote' => $quote->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Quote"><i class="material-icons">remove_red_eye</i></a>
-                                            <a href="{{ route('quote.edit', [ 'quote' => $quote->id ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Quote"><i class="material-icons">mode_edit</i></a>
+                                            <a href="{{ route('quote.show', [ 'quote' => $quote, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Quote"><i class="material-icons">remove_red_eye</i></a>
+                                            <a href="{{ route('quote.edit', [ 'quote' => $quote, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Quote"><i class="material-icons">mode_edit</i></a>
                                             <a href="#" data-id="{{ $quote->id }}" class="quote-delete-btn tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Quote"><i class="material-icons">delete</i></a>
                                         </td>
                                     </tr>
@@ -107,7 +107,7 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            Unicorn.initConfirmationTrigger('#quote-container', '.quote-delete-btn', 'quote', 'destroy', '#delete-confirmation', '#delete-quote-form');
+            Unicorn.initConfirmationTrigger('#quote-container', '.quote-delete-btn', '{{ \App\Library\Poowf\Unicorn::getCompanyKey() }}', 'quote', 'destroy', '#delete-confirmation', '#delete-quote-form');
             Unicorn.initPageSearch('#search-input', '#quote-container .single-quote-row');
         });
     </script>

@@ -54,12 +54,24 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <select id="country_code" name="country_code" data-parsley-trigger="change" placeholder="Country">
+                                <select id="country_code" name="country_code" data-parsley-required="false" data-parsley-trigger="change" placeholder="Country">
                                     @foreach($countries as $country)
                                         <option value="{{ $country['iso_3166_1_alpha2'] }}" @if(old('country_code') == $country['iso_3166_1_alpha2']) selected @endif>{{ $country['name']['common'] }}</option>
                                     @endforeach
                                 </select>
                                 <label for="country_code" class="label-validation">Country</label>
+                                <span class="helper-text"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <select id="timezone" name="timezone" data-parsley-required="false" data-parsley-trigger="change">
+                                    <option disabled="" selected="selected" value="">Timezone</option>
+                                    @foreach($timezones as $timezone)
+                                        <option value="{{ $timezone }}" @if(old('timezone') == $timezone) selected @endif> {{ $timezone }}</option>
+                                    @endforeach
+                                </select>
+                                <label for="timezone" class="label-validation">Timezone</label>
                                 <span class="helper-text"></span>
                             </div>
                         </div>
@@ -88,11 +100,20 @@
                                 <span class="helper-text manual-validation"></span>
                             </div>
                         </div>
+                        @if(app('request')->has('hasinvite'))
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="companyinvite" name="companyinvite" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" value="{{ old('companyinvite') }}" placeholder="Invite Code">
+                                <label for="companyinvite" class="label-validation">Invite Code</label>
+                                <span class="helper-text"></span>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
                             {{ csrf_field() }}
-                            <button class="btn waves-effect waves-light col s12 m3 offset-m9" type="submit" name="action">@if($token) Create @else Next @endif</button>
+                            <button class="btn waves-effect waves-light col s12 m3 offset-m9" type="submit" name="action">@if(app('request')->has('token') || app('request')->has('hasinvite')) Create @else Next @endif</button>
                         </div>
                     </div>
                 </form>

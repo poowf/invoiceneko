@@ -21,18 +21,20 @@ class CompanyController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Company $company
      * @return void
      */
-    public function index()
+    public function index(Company $company)
     {
     }
 
     /**
      * Show the form for creating a new resource.
      *
+     * @param Company $company
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Company $company)
     {
         $countries = $this->countries->all();
         $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
@@ -44,16 +46,17 @@ class CompanyController extends Controller
      * Store a newly created resource in storage.
      *
      * @param CreateCompanyRequest $request
+     * @param Company $company
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateCompanyRequest $request)
+    public function store(CreateCompanyRequest $request, Company $company)
     {
-        if ($request->session()->has('user_id')) {
+        if ($request->session()->has('user_id') || auth()->check()) {
             $company = new Company;
             $company->fill($request->all());
-            $company->user_id = $request->session()->pull('user_id');
-            $company->timezone = 'UTC';
-            if($request->has('country_code') && !is_null($request->input('country_code')))
+            $company->user_id = ($request->session()->has('user_id')) ? $request->session()->pull('user_id') : auth()->user()->id;
+
+            if(!is_null($request->input('country_code')) && is_null($request->input('timezone')))
             {
                 if($request->has('timezone') && is_null($request->input('timezone')))
                 {
@@ -66,6 +69,10 @@ class CompanyController extends Controller
                         ->zone_name;
                     $company->timezone = $timezone;
                 }
+            }
+            elseif (is_null($company->timezone))
+            {
+                $company->timezone = 'UTC';
             }
             $company->save();
 
@@ -112,10 +119,7 @@ class CompanyController extends Controller
             }
 
             $company->save();
-
-            $user = User::find($company->user_id);
-            $user->company_id = $company->id;
-            $user->save();
+            $company->users()->attach($company->user_id);
 
             flash('You can now sign in', 'success');
 
@@ -132,22 +136,22 @@ class CompanyController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param Company $company
      * @return void
      */
-    public function show()
+    public function show(Company $company)
     {
-        $company = auth()->user()->company;
         return view('pages.company.show', compact('company'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
+     * @param Company $company
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit(Company $company)
     {
-        $company = auth()->user()->ownedcompany;
         $countries = $this->countries->all();
         $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
 
@@ -158,25 +162,11 @@ class CompanyController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdateCompanyRequest $request
+     * @param Company $company
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCompanyRequest $request)
+    public function update(UpdateCompanyRequest $request, Company $company)
     {
-        $isnew = false;
-
-        if (auth()->user()->ownedcompany)
-        {
-            $company = auth()->user()->ownedcompany;
-        }
-        else
-        {
-            //TODO: Prevent User from registering a company if the domain name has already been registered.
-            $company = new Company;
-            $company->user_id = auth()->user()->id;
-            $isnew = true;
-        }
-
-
         $company->fill($request->all());
         if($request->has('country_code') && !is_null($request->input('country_code')))
         {
@@ -245,13 +235,6 @@ class CompanyController extends Controller
 
         $company->save();
 
-        if ($isnew)
-        {
-            $user = User::find($company->user_id);
-            $user->company_id = $company->id;
-            $user->save();
-        }
-
         flash('Company Updated', 'success');
 
         return redirect()->back();
@@ -260,15 +243,15 @@ class CompanyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param Company $company
      * @return void
      */
-    public function destroy()
+    public function destroy(Company $company)
     {
         //
     }
 
-    public function edit_owner() {
-        $company = auth()->user()->company;
+    public function edit_owner(Company $company) {
 
         if($company)
         {
@@ -284,8 +267,12 @@ class CompanyController extends Controller
         return view('pages.company.owner.edit', compact('company', 'owner', 'users'));
     }
 
-    public function update_owner(UpdateCompanyOwnerRequest $request) {
-        $company = auth()->user()->ownedcompany;
+    /**
+     * @param UpdateCompanyOwnerRequest $request
+     * @param Company $company
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update_owner(UpdateCompanyOwnerRequest $request, Company $company) {
         $user = User::find($request->input('user_id'));
         $company->user_id = $user->id;
         $company->save();
@@ -293,12 +280,21 @@ class CompanyController extends Controller
         return redirect()->back();
     }
 
-    public function show_check()
+    /**
+     * @param Company $company
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show_check(Company $company)
     {
         return view('pages.company.check');
     }
 
-    public function check(Request $request)
+    /**
+     * @param Request $request
+     * @param Company $company
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function check(Request $request, Company $company)
     {
         $email = $request->input('email');
 
@@ -316,5 +312,19 @@ class CompanyController extends Controller
         {
             return redirect()->route('user.create');
         }
+    }
+
+    /**
+     * @param Request $request
+     * @param Company $company
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function switch(Request $request, Company $company)
+    {
+        $companyDomainName = $request->input('domain_name');
+
+        session()->put('current_company_fqdn', $companyDomainName);
+
+        return redirect()->route('dashboard', ['company' => $companyDomainName]);
     }
 }

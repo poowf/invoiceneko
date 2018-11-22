@@ -29,13 +29,14 @@ class UserTest extends TestCase
             'email' => 'bunny@poowf.com',
             'phone' => '+6579328669',
             'gender' => 'female',
-            'remember_token' => 'sadfaxsfie',
-            'company_id' => $company->id
+            'remember_token' => 'sadfaxsfie'
         ]);
 
         User::reguard();
 
-        $this->assertEquals($user->company->name, $company->name);
+        $company->users()->attach($user->id);
+
+        $this->assertTrue($company->hasUser($user));
         $this->assertEquals('bunny@poowf.com', $user->email);
     }
 

@@ -33,7 +33,7 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <select id="country_code" name="country_code" data-parsley-trigger="change" placeholder="Country">
+                                <select id="country_code" name="country_code" data-parsley-required="false" data-parsley-trigger="change" placeholder="Country">
                                     @foreach($countries as $country)
                                         <option value="{{ $country['iso_3166_1_alpha2'] }}" @if(old('country_code') == $country['iso_3166_1_alpha2']) selected @endif>{{ $country['name']['common'] }}</option>
                                     @endforeach
@@ -44,7 +44,7 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <select id="timezone" name="timezone" data-parsley-trigger="change">
+                                <select id="timezone" name="timezone" data-parsley-required="false" data-parsley-trigger="change">
                                     <option disabled="" selected="selected" value="">Timezone</option>
                                     @foreach($timezones as $timezone)
                                         <option value="{{ $timezone }}" @if(old('timezone') == $timezone) selected @endif> {{ $timezone }}</option>
@@ -56,7 +56,7 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="domain_name" name="domain_name" type="text" data-parsley-required="false" data-parsley-trigger="change" value="{{ old('domain_name') }}" placeholder="Company Domain Name">
+                                <input id="domain_name" name="domain_name" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('domain_name') }}" placeholder="Company Domain Name">
                                 <label for="domain_name" class="label-validation">Company Domain Name</label>
                                 <span class="helper-text"></span>
                             </div>
@@ -78,7 +78,7 @@
                         <div class="row">
                             <div class="input-field col s12">
                                 <div class="file-field input-field">
-                                    <div class="btn btn-link tooltipped" data-position="left" data-delay="50" data-tooltip="Recommended Size: 420 (W) x 220 (H) with White Background (Optional)">
+                                    <div class="btn btn-link tooltipped" data-position="top" data-delay="50" data-tooltip="Recommended Size: 420 (W) x 220 (H) with White Background (Optional)">
                                         <span>File</span>
                                         <input id="logo" name="logo" type="file" accept="image/*" data-maxsize="10M"/>
                                     </div>
@@ -94,7 +94,7 @@
                         <div class="row">
                             <div class="input-field col s12">
                                 <div class="file-field input-field">
-                                    <div class="btn btn-link tooltipped" data-position="left" data-delay="50" data-tooltip="Recommended Size: 200 (W) x 200 (H) with White Background (Optional)">
+                                    <div class="btn btn-link tooltipped" data-position="top" data-delay="50" data-tooltip="Recommended Size: 200 (W) x 200 (H) with White Background (Optional)">
                                         <span>File</span>
                                         <input id="smlogo" name="smlogo" type="file" accept="image/*" data-maxsize="10M"/>
                                     </div>

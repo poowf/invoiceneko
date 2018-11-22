@@ -135,8 +135,8 @@
             }
         }
     </style>
-    <div class="col s12 l8">
-        <h3>Invoice</h3>
+    <div class="col {{ $class }}">
+        <h3>{{ $invoice_title }}</h3>
         <div class="invoice card-panel">
             <table cellpadding="0" cellspacing="0">
                 <tr class="top">
@@ -296,10 +296,10 @@
         </div>
         <div class="row invoice-footer">
             <div class="col s12 center">
-                <a class="btn btn-lg btn-space btn-default" href="{{ route('invoice.download', [ 'invoice' => $invoice->id] ) }}">
+                <a class="btn btn-lg btn-space btn-default" href="{{ route('invoice.download', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}">
                     Save PDF
                 </a>
-                <a class="btn btn-lg btn-space btn-default" href="{{ route('invoice.printview', [ 'invoice' => $invoice->id] ) }}">
+                <a class="btn btn-lg btn-space btn-default" href="{{ route('invoice.printview', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}">
                     Print
                 </a>
                 {{--

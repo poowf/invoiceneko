@@ -58,9 +58,9 @@ class CompanyPolicy
      * @param  \App\Models\Company  $company
      * @return mixed
      */
-    public function update(User $user)
+    public function update(User $user, Company $company)
     {
-        return $user->company->isOwner($user) || $user->can('update-company', Company::class);
+        return $user->can('update-company', $company);
     }
 
     /**
@@ -70,28 +70,65 @@ class CompanyPolicy
      * @param  \App\Models\Company  $company
      * @return mixed
      */
-    public function delete(User $user)
+    public function delete(User $user, Company $company)
     {
-        return $user->company->isOwner($user) || $user->can('delete-company', Company::class);
+        if ($company)
+        {
+            return $company->isOwner($user);
+        }
     }
 
     /**
      * Determine whether the user owns the company.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\User $user
+     * @param Company $company
      * @return mixed
      */
-    public function owner(User $user)
+    public function owner(User $user, Company $company)
     {
-        $company = $user->company;
         if ($company)
         {
             return $company->isOwner($user);
         }
-        else
+    }
+
+    /**
+     * Determine whether the user owns the company.
+     *
+     * @param  \App\Models\User $user
+     * @param Company $company
+     * @return mixed
+     */
+    public function member(User $user, Company $company)
+    {
+        if ($company)
         {
-            //Check if the current route name matches company.edit or company.update and return true if it is
-            return (Route::currentRouteName() === 'company.edit' || Route::currentRouteName() === 'company.update');
+            return $company->hasUser($user);
         }
+    }
+
+    /**
+     * Determine whether the user can update the companySettings.
+     *
+     * @param  \App\Models\User $user
+     * @param Company $company
+     * @return mixed
+     */
+    public function settings(User $user, Company $company)
+    {
+        return $user->can('update-company-settings', $company->settings);
+    }
+
+    /**
+     * Determine whether the user can update the companyAddress.
+     *
+     * @param  \App\Models\User $user
+     * @param Company $company
+     * @return mixed
+     */
+    public function address(User $user, Company $company)
+    {
+        return $user->can('update-company-address', $company->address);
     }
 }

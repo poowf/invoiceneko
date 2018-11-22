@@ -17,50 +17,48 @@ class CompanyUsersManagementTest extends DuskTestCase
      * @return void
      * @throws \Throwable
      */
-//    public function test_adding_a_user_to_a_company()
-//    {
-//        $company = factory(Company::class)->create();
-//        //Need to assign the company_id to the user
-//        $company->owner->company_id = $company->id;
-//        $company->owner->save();
-//        $faker = Faker::create();
-//        $this->browse(function (Browser $browser) use ($faker, $company) {
-//            $browser->visit('/signin')
-//                ->type('username', $company->owner->email)
-//                ->type('password', 'secret')
-//                ->press('SIGN IN')
-//                ->assertPathIs('/dashboard')
-//                ->visit('/company/users')
-//                ->clickLink('Add User')
-//                ->type('username', str_random(10))
-//                ->type('email', $faker->unique()->safeEmail)
-//                ->type('full_name', $faker->name)
-//                ->type('phone', '+658' . $faker->numberBetween($min = 1, $max = 8) . $faker->randomNumber(6, true))
-//                ->click('label[for="gender-female"]')
-//                ->press('ADD')
-//                ->assertPresent('#users-table')
-//                ->assertPathIs('/company/users');
-//            $browser->script('jQuery(".signmeout-btn").click()');
-//            $browser->assertPathIs('/signin');
-//        });
-//    }
+    public function test_adding_a_user_to_a_company()
+    {
+        $company = factory(Company::class)->create();
+        //Need to attach the company to the user
+        $company->users()->attach($company->user_id);
+
+        $faker = Faker::create();
+        $this->browse(function (Browser $browser) use ($faker, $company) {
+            $browser->visit('/signin')
+                ->type('username', $company->owner->email)
+                ->type('password', 'secret')
+                ->press('SIGN IN')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
+                ->visit('/' . $company->domain_name . '/company/users')
+                ->clickLink('Add User')
+                ->type('username', str_random(10))
+                ->type('email', $faker->unique()->safeEmail)
+                ->type('full_name', $faker->name)
+                ->type('phone', '+658' . $faker->numberBetween($min = 1, $max = 8) . $faker->randomNumber(6, true))
+                ->click('label[for="gender-female"]');
+            $browser
+                ->script('jQuery("#timezone").selectize()[0].selectize.setValue("UTC");');
+            $browser
+                ->script('jQuery("#roles").selectize()[0].selectize.setValue("user");');
+            $browser
+                ->press('ADD')
+                ->assertPresent('#users-table')
+                ->assertPathIs('/' . $company->domain_name . '/company/users');
+            $browser->script('jQuery(".signmeout-btn").click()');
+            $browser->assertPathIs('/signin');
+        });
+    }
 
     public function test_removing_a_user_from_a_company()
     {
         $company = factory(Company::class)->create();
-        //Need to assign the company_id to the user
-        $company->owner->company_id = $company->id;
-        $company->owner->save();
+        //Need to attach the company to the user
+        $company->users()->attach($company->user_id);
 
-        $user = factory(User::class)->create([
-            'company_id' => $company->id
-        ]);
+        $user = factory(User::class)->create();
 
-
-        $companyUserRequest = factory(CompanyUserRequest::class)->create([
-            'status' => CompanyUserRequest::STATUS_PENDING,
-            'company_id' => $company->id
-        ]);
+        $company->users()->attach($user->id);
 
         $faker = Faker::create();
         $this->browse(function (Browser $browser) use ($faker, $company, $user) {
@@ -68,15 +66,15 @@ class CompanyUsersManagementTest extends DuskTestCase
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/dashboard')
-                ->visit('/company/users');
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
+                ->visit('/' . $company->domain_name . '/company/users');
             $browser
                 ->script("jQuery(\"a[data-tooltip='Remove User'] > i\").click();");
             $browser
                 ->pause(500)
                 ->press('DELETE')
                 ->assertPresent('#user-container')
-                ->assertPathIs('/company/users');
+                ->assertPathIs('/' . $company->domain_name . '/company/users');
             $browser->script('jQuery(".signmeout-btn").click()');
             $browser->assertPathIs('/signin');
         });
@@ -85,9 +83,8 @@ class CompanyUsersManagementTest extends DuskTestCase
     public function test_approve_user_request_to_join_company()
     {
         $company = factory(Company::class)->create();
-        //Need to assign the company_id to the user
-        $company->owner->company_id = $company->id;
-        $company->owner->save();
+        //Need to attach the company to the user
+        $company->users()->attach($company->user_id);
 
         $companyUserRequest = factory(CompanyUserRequest::class)->create([
             'status' => CompanyUserRequest::STATUS_PENDING,
@@ -100,13 +97,13 @@ class CompanyUsersManagementTest extends DuskTestCase
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/dashboard')
-                ->visit('/company/requests');
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
+                ->visit('/' . $company->domain_name . '/company/requests');
             $browser
                 ->script("jQuery(\"form[data-tooltip='Approve User']\").submit();");
             $browser
                 ->assertPresent('#request-container')
-                ->assertPathIs('/company/requests');
+                ->assertPathIs('/' . $company->domain_name . '/company/requests');
             $browser->script('jQuery(".signmeout-btn").click()');
             $browser->assertPathIs('/signin');
         });
@@ -115,9 +112,8 @@ class CompanyUsersManagementTest extends DuskTestCase
     public function test_reject_user_request_to_join_company()
     {
         $company = factory(Company::class)->create();
-        //Need to assign the company_id to the user
-        $company->owner->company_id = $company->id;
-        $company->owner->save();
+        //Need to attach the company to the user
+        $company->users()->attach($company->user_id);
 
         $companyUserRequest = factory(CompanyUserRequest::class)->create([
             'status' => CompanyUserRequest::STATUS_PENDING,
@@ -130,13 +126,13 @@ class CompanyUsersManagementTest extends DuskTestCase
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/dashboard')
-                ->visit('/company/requests');
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
+                ->visit('/' . $company->domain_name . '/company/requests');
             $browser
                 ->script("jQuery(\"form[data-tooltip='Reject User']\").submit();");
             $browser
                 ->assertPresent('#request-container')
-                ->assertPathIs('/company/requests');
+                ->assertPathIs('/' . $company->domain_name . '/company/requests');
             $browser->script('jQuery(".signmeout-btn").click()');
             $browser->assertPathIs('/signin');
         });

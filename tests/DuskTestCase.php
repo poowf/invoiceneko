@@ -10,11 +10,16 @@ use Facebook\WebDriver\Remote\DesiredCapabilities;
 
 abstract class DuskTestCase extends BaseTestCase
 {
-    use CreatesApplication, DatabaseMigrations;
+    use CreatesApplication;
+    use DatabaseMigrations;
 
     /**
      *  Notes for Dusk
-     * ->clickLink('Text Here') does not get affected by CSS and is case sensitive fot the actual text between <a> tags
+     *
+     * Commenting out DatabaseMigrations drastically improves Dusk performance with the increased chance of conflicts
+     * between unique values but good for testing
+     *
+     * ->clickLink('Text Here') does not get affected by CSS and is case sensitive for the actual text between <a> tags
      * ->press only works for buttons and does get affected by CSS e.g. text-transform: uppercase
      *
      *

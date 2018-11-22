@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateCompanyUserRequest;
 use App\Http\Requests\UpdateCompanyUserRequest;
+use App\Models\Company;
 use App\Models\User;
 use App\Notifications\NewCompanyUserNotification;
 use DateTimeZone;
@@ -19,11 +20,11 @@ class CompanyUserController extends Controller
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param Company $company
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(Company $company)
     {
-        $company = auth()->user()->company;
-
         if($company)
         {
             $users = $company->users()->paginate(12);
@@ -38,10 +39,11 @@ class CompanyUserController extends Controller
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param Company $company
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create()
+    public function create(Company $company)
     {
-        $company = auth()->user()->company;
         $countries = $this->countries->all();
         $timezones = \DateTimeZone::listIdentifiers(DateTimeZone::ALL);
         $roles = Bouncer::role()->all();
@@ -52,18 +54,19 @@ class CompanyUserController extends Controller
     /**
      * @param CreateCompanyUserRequest $request
      * @return \Illuminate\Http\RedirectResponse
+     * @param Company $company
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(CreateCompanyUserRequest $request)
+    public function store(CreateCompanyUserRequest $request, Company $company)
     {
-        $company = auth()->user()->company;
-
         $random_password = str_random(16);
 
         $user = new User;
         $user->fill($request->all());
         $user->password = $random_password;
-        $user->company_id = $company->id;
         $user->save();
+
+        $company->users()->attach($user->id);
 
         $roles = $request->input('roles');
 
@@ -71,60 +74,54 @@ class CompanyUserController extends Controller
 
         $user->notify(new NewCompanyUserNotification($user, $random_password));
 
-        return redirect()->route('company.users.index');
+        return redirect()->route('company.users.index', [ 'company' => $company ]);
     }
 
     /**
+     * @param Company $company
      * @param User $user
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(User $user)
+    public function edit(Company $company, User $user)
     {
-        $countries = $this->countries->all();
-        $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
         $roles = Bouncer::role()->all();
         $userRoles = $user->getRoles();
 
-        return view('pages.company.users.edit', compact('user', 'countries', 'timezones', 'roles', 'userRoles'));
+        return view('pages.company.users.edit', compact('user', 'roles', 'userRoles'));
     }
 
     /**
      * @param UpdateCompanyUserRequest $request
+     * @param Company $company
      * @param User $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateCompanyUserRequest $request, User $user)
-    {
-        $user->fill($request->all());
-        if ($request->has('newpassword') && $request->input('newpassword') != null) {
-            $newpass = $request->input('newpassword');
-            $user->password = $newpass;
-        }
-        $user->save();
 
+    public function update(UpdateCompanyUserRequest $request, Company $company, User $user)
+    {
         $roles = $request->input('roles');
 
         Bouncer::sync($user)->roles($roles);
 
+        flash('User has been updated', 'success');
         return redirect()->back();
     }
 
     /**
      * @param Request $request
+     * @param Company $company
      * @param User $user
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function destroy(Request $request, User $user)
+    public function destroy(Request $request, Company $company, User $user)
     {
-
         $auth_user = auth()->user();
-        $usercompany = $user->company;
 
         //TODO: Probably need to rewrite/refactor this logic to somewhere else
-        if ($usercompany)
+        if ($company)
         {
-            if ($usercompany->isOwner($auth_user))
+            if ($company->isOwner($auth_user))
             {
                 if($user->id != $auth_user->id)
                 {
