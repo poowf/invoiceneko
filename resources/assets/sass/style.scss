@@ -1284,6 +1284,12 @@ label.rbtn-label.invalid:after {
   animation: bounce 3s infinite;
 }
 
+.btn-mobile-company{
+  width: 100%;
+  text-align: left;
+  padding: 0px 32px;
+}
+
 @-moz-keyframes bounce {
   0%, 20%, 50%, 80%, 100% {
     -moz-transform: translateY(0);

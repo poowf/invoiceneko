@@ -88,22 +88,22 @@
                                     <li><a href="{{ route('payment.index', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}">Payments</a></li>
                                     @endcan
                                     <li>
-                                        <a class="btn btn-link waves-effect waves-dark dropdown-trigger my-account-mobile-btn" href="javascript:;" data-target="company-dropdown-navigation">
+                                        <a class="btn btn-link waves-effect waves-dark dropdown-trigger my-account-mobile-btn" href="javascript:;" data-target="company-dropdown-navigation-mobile">
                                             <div class="dropdown-text">Companies</div>
                                         </a>
                                     </li>
-                                    <ul id="company-dropdown-navigation" class="dropdown-content">
+                                    <ul id="company-dropdown-navigation-mobile" class="dropdown-content">
                                         @foreach(auth()->user()->companies as $company)
                                         <li>
-                                            <form method="post" action="{{ route('company.switch') }}">
+                                            <form method="post" action="{{ route('company.switch') }}" class="text-center">
                                                 {{ csrf_field() }}
                                                 <input id="domain_name" name="domain_name" class="form-control" type="hidden" value="{{ $company->domain_name }}">
-                                                <button class="null-btn" type="submit">{{ $company->name }}</button>
+                                                <button class="null-btn btn-company-mobile" type="submit">{{ $company->name }}</button>
                                             </form>
                                         </li>
                                         @endforeach
                                         <li>
-                                            <a href="{{ route('company.create') }}">Add Company</a>
+                                            <a href="{{ route('company.create') }}" class="text-center">Add Company</a>
                                         </li>
                                     </ul>
                                     @endif
