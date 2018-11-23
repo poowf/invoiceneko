@@ -32,20 +32,6 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
         });
     }
 
-
-    /**
-     * Configure the Horizon authorization services.
-     *
-     * @return void
-     */
-    protected function authorization()
-    {
-        $this->gate();
-        Telescope::auth(function ($request) {
-            return app()->environment('local') ||
-                Gate::check('viewTelescope', [$request->user()]);
-        });
-    }
     /**
      * Prevent sensitive request details from being logged by Telescope.
      *
