@@ -42,6 +42,13 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
+                                <input id="receipt_prefix" name="receipt_prefix" type="text" data-parsley-trigger="change" data-parsley-minlength="2" value="{{ $companysettings->receipt_prefix ?? '' }}" placeholder="Receipt Prefix" @if(!$company) disabled @endif>
+                                <label for="receipt_prefix" class="label-validation">Receipt Prefix</label>
+                                <span class="helper-text"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
                                 <textarea id="invoice_conditions" name="invoice_conditions" class="trumbowyg-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Invoice Conditions" @if(!$company) disabled @endif>@if(isset($companysettings->invoice_conditions)){!! $companysettings->invoice_conditions !!}@else @endif</textarea>
                                 <label for="invoice_conditions" class="label-validation">Invoice Conditions</label>
                                 <span class="helper-text"></span>

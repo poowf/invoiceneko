@@ -14,6 +14,7 @@ class Unicorn
 {
     private static $modelClasses = [
         \App\Models\Invoice::class,
+        \App\Models\Receipt::class,
         \App\Models\Quote::class,
         \App\Models\ItemTemplate::class,
         \App\Models\Payment::class,

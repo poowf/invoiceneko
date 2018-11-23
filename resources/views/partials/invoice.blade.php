@@ -97,6 +97,7 @@
 
         .invoice-text-larger {
             font-size: 1.3em;
+            padding-bottom: 10px;
         }
 
         @media only screen and (max-width: 600px) {

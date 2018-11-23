@@ -170,6 +170,11 @@ class Invoice extends Model
         return $this->hasMany('App\Models\InvoiceItem', 'invoice_id');
     }
 
+    public function receipt()
+    {
+        return $this->hasOne('App\Models\Receipt', 'invoice_id');
+    }
+
     public function payments()
     {
         return $this->hasMany('App\Models\Payment', 'invoice_id');

@@ -153,6 +153,13 @@ Route::group(['middleware' => ['auth', '2fa']], function() {
 
             Route::get('/invoice/adhoc/create', 'InvoiceController@adhoccreate')->name('invoice.adhoc.create')->middleware('can:create, App\Models\Invoice');
 
+            /* Receipt */
+            Route::post('/invoice/{invoice}/receipt', 'ReceiptController@generate')->name('receipt.generate')->middleware('can:create, App\Models\Receipt');
+            Route::get('/receipts', 'ReceiptController@index')->name('receipt.index')->middleware('can:index, App\Models\Receipt');
+            Route::get('/receipt/{receipt}', 'ReceiptController@show')->name('receipt.show')->middleware('can:view,receipt');
+            Route::get('/receipt/{receipt}/download', 'ReceiptController@download')->name('receipt.download')->middleware('can:view,receipt');
+            Route::get('/receipt/{receipt}/printview', 'ReceiptController@printview')->name('receipt.printview')->middleware('can:view,receipt');
+
             /* Quotes */
             Route::get('/quotes', 'QuoteController@index')->name('quote.index')->middleware('can:index, App\Models\Quote');
             Route::get('/quotes/archived', 'QuoteController@index_archived')->name('quote.index.archived')->middleware('can:index, App\Models\Quote');

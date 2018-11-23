@@ -39,7 +39,8 @@ class Company extends Model
 
     protected $attributes = [
         'invoice_index' => 1,
-        'quote_index' => 1
+        'quote_index' => 1,
+        'receipt_index' => 1
     ];
 
     protected static function boot()
@@ -82,32 +83,35 @@ class Company extends Model
 
     public function niceInvoiceID()
     {
-        $companysettings = $this->settings;
-        if($companysettings->invoice_prefix)
-        {
-            $prefix = $companysettings->invoice_prefix . '-';
-        }
-        else
-        {
-            $prefix = $this->slug . '-';
-        }
-        //Retrieve latest version of the company model otherwise it will use the old index value
-        $company = $this->fresh();
-        return $prefix . sprintf('%06d', $company->invoice_index);
+        return $this->generateNiceID('invoice', '');
     }
 
     public function niceQuoteID()
     {
+        return $this->generateNiceID('quote', 'Q');
+
+    }
+
+    public function niceReceiptID()
+    {
+        return $this->generateNiceID('receipt', 'R');
+    }
+
+    public function generateNiceID($model, $letter)
+    {
         $companysettings = $this->settings;
-        if($companysettings->quote_prefix)
+        if($companysettings->{$model . '_prefix'})
         {
-            $prefix = $companysettings->quote_prefix . '-';
+            $generatedPrefix = $companysettings->{$model . '_prefix'} . '-';
         }
         else
         {
-            $prefix = $this->slug . 'Q-';
+            $generatedPrefix = $this->slug . $letter .'-';
         }
-        return $prefix . sprintf('%06d', $this->quote_index);
+
+        //Retrieve latest version of the company model otherwise it will use the old index value
+        $this->refresh();
+        return $generatedPrefix . sprintf('%06d', $this->{$model . '_index'});
     }
 
     public function isOwner($user)
@@ -152,6 +156,11 @@ class Company extends Model
     public function invoices()
     {
         return $this->hasMany('App\Models\Invoice', 'company_id');
+    }
+
+    public function receipts()
+    {
+        return $this->hasMany('App\Models\Receipt', 'company_id');
     }
 
     public function events()

@@ -27,6 +27,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('company', 'App\Models\Company');
         Route::model('companyinvite', 'App\Models\CompanyInvite');
         Route::model('companyuserrequest', 'App\Models\CompanyUserRequest');
+        Route::model('receipt', 'App\Models\Receipt');
         Route::model('invoice', 'App\Models\Invoice');
         Route::model('invoiceitem', 'App\Models\InvoiceItem');
         Route::model('oldinvoice', 'App\Models\OldInvoice');
@@ -44,6 +45,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::pattern('company', '([A-Za-z0-9-.]+)');
         Route::pattern('companyinvite', '([A-Za-z0-9-]+)');
         Route::pattern('companyuserrequest', '([A-Za-z0-9]+)');
+        Route::pattern('receipt', '([A-Za-z0-9]+)');
         Route::pattern('invoice', '([A-Za-z0-9]+)');
         Route::pattern('invoiceitem', '([A-Za-z0-9]+)');
         Route::pattern('oldinvoice', '([A-Za-z0-9]+)');
