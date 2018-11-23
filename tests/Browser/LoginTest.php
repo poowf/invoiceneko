@@ -23,7 +23,7 @@ class LoginTest extends DuskTestCase
                 ->type('username', $user->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/company/create');
+                ->assertPathIs('/errors/nocompany');
         });
     }
 }

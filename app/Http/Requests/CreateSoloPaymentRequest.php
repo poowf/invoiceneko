@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Payment;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateSoloPaymentRequest extends FormRequest
@@ -13,7 +14,7 @@ class CreateSoloPaymentRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->user()->can('create', Payment::class);
     }
 
     /**

@@ -49,6 +49,18 @@ class UserController extends Controller
             session(['_old_input.phone' => $companyUserRequest->phone]);
         }
 
+        $ipLocation = geoip()->getLocation();
+
+        if($ipLocation->country !== 'NekoCountry')
+        {
+            session(['_old_input.country_code' => $ipLocation->iso_code]);
+        }
+
+        if($ipLocation->timezone !== 'Asia/NekoCountry')
+        {
+            session(['_old_input.timezone' => $ipLocation->timezone]);
+        }
+
         $countries = $this->countries->all();
         $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
 

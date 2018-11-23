@@ -36,6 +36,18 @@ class CompanyController extends Controller
      */
     public function create(Company $company)
     {
+        $ipLocation = geoip()->getLocation();
+
+        if($ipLocation->country !== 'NekoCountry')
+        {
+            session(['_old_input.country_code' => $ipLocation->iso_code]);
+        }
+
+        if($ipLocation->timezone !== 'Asia/NekoCountry')
+        {
+            session(['_old_input.timezone' => $ipLocation->timezone]);
+        }
+
         $countries = $this->countries->all();
         $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
 
