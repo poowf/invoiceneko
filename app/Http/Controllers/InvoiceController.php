@@ -147,7 +147,7 @@ class InvoiceController extends Controller
     {
         $duplicatedInvoice = $invoice->duplicate();
         flash('Invoice has been Cloned Sucessfully', "success");
-        return redirect()->route('invoice.show', [ 'invoice' => $duplicatedInvoice ]);
+        return redirect()->route('invoice.show', [ 'invoice' => $duplicatedInvoice, 'company' => $company ]);
     }
 
     /**
@@ -327,8 +327,9 @@ class InvoiceController extends Controller
         $payments = $invoice->payments;
         $event = $invoice->event;
         $siblings = $invoice->siblings();
+        $notifications = $invoice->notifications;
 
-        return view('pages.invoice.show', compact('invoice', 'event','client', 'histories', 'payments', 'siblings'));
+        return view('pages.invoice.show', compact('invoice', 'event','client', 'histories', 'payments', 'siblings', 'notifications'));
     }
 
     /**

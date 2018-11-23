@@ -256,6 +256,7 @@
                         </div>
                     @endforeach
                 </div>
+                @if($payments->isNotEmpty())
                 <h3>Payment History</h3>
                 <div id="payment-history-container" class="payment-history-container">
                     <div class="card-panel flex">
@@ -281,6 +282,33 @@
                         </table>
                     </div>
                 </div>
+                @endif
+                @if($notifications->isNotEmpty())
+                <h3>Notifications</h3>
+                <div id="notifications-container" class="notifications-container">
+                    <div class="card-panel flex">
+                        <table class="responsive-table">
+                            <thead>
+                                <tr>
+                                    <th>Email</th>
+                                    <th>Date</th>
+                                    <th>Read</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($notifications as $key => $notification)
+                                    <tr>
+                                        <td>{{ $notification->data['email'] }}</td>
+                                        <td>{{ $notification->created_at->format('d F, Y')  }}</td>
+                                        <td>{{ $notification->read_at }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @endif
                 @if($siblings)
                 <h3>Related Invoices</h3>
                 <div id="payment-history-container" class="payment-history-container">
