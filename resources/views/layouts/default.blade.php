@@ -140,6 +140,14 @@
             @endif
         @endif
     });
+
+    $(document).ready(function(){
+        $('.tooltipped').tooltip({
+            exitDelay: 0,
+            enterDelay: 200
+        });
+    });
+
 </script>
 
 @yield("scripts")
