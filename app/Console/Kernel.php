@@ -24,7 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-         $schedule->command('invoice:generate')->hourly(30);
+        $schedule->command('invoice:generate')->hourly(30);
+        $schedule->command('horizon:snapshot')->everyFiveMinutes();
     }
 
     /**
