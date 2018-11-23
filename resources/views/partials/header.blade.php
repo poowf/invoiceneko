@@ -35,7 +35,7 @@
                                             <form method="post" action="{{ route('company.switch') }}">
                                                 {{ csrf_field() }}
                                                 <input id="domain_name" name="domain_name" class="form-control" type="hidden" value="{{ $company->domain_name }}">
-                                                <button class="null-btn" type="submit">{{ $company->name }}t</button>
+                                                <button class="null-btn" type="submit">{{ $company->name }}</button>
                                             </form>
                                         </li>
                                         @endforeach
@@ -87,6 +87,25 @@
                                     @can('index', \App\Models\Payment::class)
                                     <li><a href="{{ route('payment.index', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}">Payments</a></li>
                                     @endcan
+                                    <li>
+                                        <a class="btn btn-link waves-effect waves-dark dropdown-trigger my-account-mobile-btn" href="javascript:;" data-target="company-dropdown-navigation">
+                                            <div class="dropdown-text">Companies</div>
+                                        </a>
+                                    </li>
+                                    <ul id="company-dropdown-navigation" class="dropdown-content">
+                                        @foreach(auth()->user()->companies as $company)
+                                        <li>
+                                            <form method="post" action="{{ route('company.switch') }}">
+                                                {{ csrf_field() }}
+                                                <input id="domain_name" name="domain_name" class="form-control" type="hidden" value="{{ $company->domain_name }}">
+                                                <button class="null-btn" type="submit">{{ $company->name }}</button>
+                                            </form>
+                                        </li>
+                                        @endforeach
+                                        <li>
+                                            <a href="{{ route('company.create') }}">Add Company</a>
+                                        </li>
+                                    </ul>
                                     @endif
                                     <li>
                                         <a class="btn btn-link waves-effect waves-dark dropdown-trigger my-account-mobile-btn" href="javascript:;" data-target="dropdown-mobile-navigation">
