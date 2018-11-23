@@ -18,6 +18,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Models\CompanyAddress' => 'App\Policies\CompanyAddressPolicy',
         'App\Models\CompanySettings' => 'App\Policies\CompanySettingsPolicy',
         'App\Models\CompanyUserRequest' => 'App\Policies\CompanyUserRequestPolicy',
+        'App\Models\Receipt' => 'App\Policies\ReceiptPolicy',
         'App\Models\InvoiceItem' => 'App\Policies\InvoiceItemPolicy',
         'App\Models\Invoice' => 'App\Policies\InvoicePolicy',
         'App\Models\OldInvoiceItem' => 'App\Policies\OldInvoiceItemPolicy',

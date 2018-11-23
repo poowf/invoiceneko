@@ -33,6 +33,9 @@
                 <a href="{{ route('invoice.create', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}" class="btn btn-link waves-effect waves-dark">Create</a>
                 <a href="{{ route('invoice.adhoc.create', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}" class="btn btn-link waves-effect waves-dark disabled">Create Ad-Hoc</a>
                 @endcan
+                @can('index', \App\Models\Receipt::class)
+                    <a href="{{ route('receipt.index', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}" class="btn btn-link waves-effect waves-dark">Receipts</a>
+                @endcan
                 @can('index', \App\Models\Invoice::class)
                 <a href="{{ route('invoice.index.archived', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}" class="btn btn-link waves-effect waves-dark">Archived Invoices</a>
                 @endcan

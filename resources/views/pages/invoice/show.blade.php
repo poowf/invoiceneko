@@ -66,6 +66,14 @@
         <div id="invoice-action-container" class="row mbtm0 desktop-only">
             <div class="col s12 right">
                 @can('update', $invoice)
+                    @if($invoice->status == \App\Models\Invoice::STATUS_CLOSED)
+                    <form method="post" action="{{ route('receipt.generate', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form">
+                        {{ csrf_field() }}
+                        <button class="btn btn-link waves-effect waves-dark null-btn" type="submit">Generate Receipt</button>
+                    </form>
+                    @endcan
+                @endcan
+                @can('update', $invoice)
                 <form method="post" action="{{ route('invoice.convert', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form">
                     {{ csrf_field() }}
                     <button class="btn btn-link waves-effect waves-dark null-btn" type="submit">Convert back to Quote</button>

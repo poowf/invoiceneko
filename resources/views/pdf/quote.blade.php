@@ -124,6 +124,7 @@
 
             .quote-text-larger {
                 font-size: 1.3em;
+                padding-bottom: 10px;
             }
         </style>
     </head>

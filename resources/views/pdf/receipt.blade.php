@@ -17,119 +17,119 @@
                 page-break-after: always;
             }
 
-            .invoice {
+            .receipt {
                 font-size: 1.1em;
                 line-height: 1.5em;
             }
 
-            .invoice table {
+            .receipt table {
                 width: 100%;
                 line-height: inherit;
                 text-align: left;
                 border: 0;
             }
 
-            .invoice table table {
+            .receipt table table {
                 border: 0;
             }
 
-            .invoice table tr {
+            .receipt table tr {
                 border: 0;
             }
 
-            .invoice table td {
+            .receipt table td {
                 padding: 5px;
                 vertical-align: top;
             }
 
-            .invoice table tr.company-information td:nth-child(2) {
+            .receipt table tr.company-information td:nth-child(2) {
                 text-align: center;
             }
 
-            .invoice table tr.information td:nth-child(2) {
+            .receipt table tr.information td:nth-child(2) {
                 text-align: center;
             }
 
-            .invoice table th {
+            .receipt table th {
                 color: #8c8c8c;
                 padding: 10px 5px;
             }
 
-            .invoice table th:nth-child(3) {
+            .receipt table th:nth-child(3) {
                 text-align: right;
             }
 
-            .invoice table tr td:nth-child(3) {
+            .receipt table tr td:nth-child(3) {
                 text-align: right;
             }
 
-            .invoice table tr.top table td {
+            .receipt table tr.top table td {
                 padding-bottom: 20px;
             }
 
-            .invoice table tr table td span {
+            .receipt table tr table td span {
                 color: #8c8c8c;
                 display: block;
             }
 
-            .invoice table tr.information table table {
+            .receipt table tr.information table table {
                 float: left;
             }
 
-            .invoice table tr.information table table tbody {
+            .receipt table tr.information table table tbody {
                 float: right;
             }
 
-            .invoice table tr.information table table td {
+            .receipt table tr.information table table td {
                 padding: 0;
             }
 
-            .invoice table tr.information table td {
+            .receipt table tr.information table td {
                 padding-bottom: 20px;
             }
 
-            .invoice table tr.company-logo td {
+            .receipt table tr.company-logo td {
                 text-align: center;
             }
 
-            .invoice table tr.details td {
+            .receipt table tr.details td {
                 padding: 20px 5px;
             }
 
-            .invoice table tr.details td p {
+            .receipt table tr.details td p {
                 margin: 0;
                 color: #8c8c8c;
             }
 
-            .invoice .bottom-line {
+            .receipt .bottom-line {
                 border-bottom: 1px solid #e0e0e0;
             }
 
-            .invoice .left-line {
+            .receipt .left-line {
                 border-left: 2px solid #e0e0e0;
             }
 
-            .invoice .summary, .invoice .amount, .invoice .quantity {
+            .receipt .summary, .receipt .amount, .receipt .quantity {
                 color: #8c8c8c;
             }
 
-            .invoice .total-value {
+            .receipt .total-value {
                 color: #4da6a6;
             }
 
-            .invoice-bold {
+            .receipt-bold {
                 color: #8c8c8c;
                 font-weight: bold;
             }
 
-            .invoice-text-larger {
+            .receipt-text-larger {
                 font-size: 1.3em;
                 padding-bottom: 10px;
             }
         </style>
     </head>
     <body style="margin: 0; font-family: 'Roboto', Arial, sans-serif;font-size: 13px;">
-        <div class="invoice">
+        <div class="receipt">
             <table cellpadding="0" cellspacing="0">
                 <tr class="top">
                     <td>
@@ -140,10 +140,9 @@
                                 </td>
                                 <td></td>
                                 <td>
-                                    <span class="invoice-id invoice-bold invoice-text-larger">Invoice #{{ $invoice->nice_invoice_id }}</span>
-                                    <span class="invoice-date">Invoice Date: {{ $invoice->date->format('d F, Y') }}</span>
-                                    <span class="invoice-duedate">Payment Due: {{ $invoice->duedate->format('d F, Y') }}</span>
-                                    <span class="invoice-netdays">Payment Terms: Net {{ $invoice->netdays }}</span>
+                                    <span class="receipt-id receipt-bold receipt-text-larger">Receipt #{{ $receipt->nice_receipt_id }}</span>
+                                    <span class="receipt-date">Receipt Date: {{ $receipt->created_at->format('d F, Y') }}</span>
+                                    <span class="receipt-netdays">Receipt for Invoice #{{ $invoice->nice_invoice_id }}</span>
                                 </td>
                             </tr>
                         </table>
@@ -155,7 +154,7 @@
                         <table cellpadding="0" cellspacing="0">
                             <tr>
                                 <td width="250">
-                                    <span class="name invoice-bold invoice-text-larger">Bill To: </span>
+                                    <span class="name receipt-bold receipt-text-larger">Bill To: </span>
                                     <span>{{ $invoice->client->companyname }}</span>
                                     <span>@if($invoice->client->block){{ $invoice->client->block }} @endif {{ $invoice->client->street ?? 'No Street' }}</span>
                                     @if($invoice->client->unitnumber)<span>#{{ $invoice->client->unitnumber }}</span>@endif
@@ -167,10 +166,10 @@
                                 <td width="250">
                                     <table cellpadding="0" cellspacing="0">
                                         <tr>
-                                            <td><span class="name invoice-bold invoice-text-larger">{{ $invoice->company->name ?? 'No Company Name' }}</span></td>
+                                            <td><span class="name receipt-bold receipt-text-larger">{{ $invoice->company->name ?? 'No Company Name' }}</span></td>
                                         </tr>
                                         <tr>
-                                            <td><span class="invoice-bold">{{ $invoice->company->crn ?? 'No Company Registration Number' }}</span></td>
+                                            <td><span class="receipt-bold">{{ $invoice->company->crn ?? 'No Company Registration Number' }}</span></td>
                                         </tr>
                                         <tr>
                                             <td><span>{{ $invoice->company->owner->full_name ?? 'No Company Owner Name' }}</span></td>
@@ -211,7 +210,7 @@
                                 @foreach($invoice->items as $key => $item)
                                     <tr class="bottom-line">
                                         <td class="description" width="800">
-                                            <span class="invoice-bold">{{ $item->name }}</span>
+                                            <span class="receipt-bold">{{ $item->name }}</span>
                                             <p>{!! $item->description !!}</p>
                                         </td>
                                         <td class="quantity" width="160">
@@ -242,10 +241,10 @@
                                 </tr>
                                 <tr>
                                     <td width="800"></td>
-                                    <td class="summary bottom-line total invoice-bold" width="160">
+                                    <td class="summary bottom-line total receipt-bold" width="160">
                                         Total
                                     </td>
-                                    <td class="amount bottom-line invoice-text-larger total-value" width="200">
+                                    <td class="amount bottom-line receipt-text-larger total-value" width="200">
                                         ${{ $invoice->calculatetotal() }}
                                     </td>
                                 </tr>
@@ -272,16 +271,6 @@
                     </td>
                 </tr>
             </table>
-            <div class="invoice break-before">
-                <table cellpadding="0" cellspacing="0">
-                    <tr>
-                        <td><span>Terms & Conditions</span></td>
-                    </tr>
-                    <tr>
-                        <td>{!! $invoice->company->settings->invoice_conditions !!}</td>
-                    </tr>
-                </table>
-            </div>
         </div>
     </body>
 </html>

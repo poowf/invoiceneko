@@ -20,6 +20,7 @@ class CompanySettings extends Model
     protected $fillable = [
         'invoice_prefix',
         'quote_prefix',
+        'receipt_prefix',
         'invoice_conditions',
         'quote_conditions',
         'tax'
@@ -38,6 +39,7 @@ class CompanySettings extends Model
         static::creating(function ($companySettings) {
             $companySettings->invoice_prefix = str_slug($companySettings->company->name);
             $companySettings->quote_prefix = str_slug($companySettings->company->name) . 'Q';
+            $companySettings->receipt_prefix = str_slug($companySettings->company->name) . 'R';
         });
     }
 

@@ -24,6 +24,9 @@ class UpdateCompanySettingsRequest extends FormRequest
     public function rules()
     {
         return [
+            'invoice_prefix' => 'required|string',
+            'quote_prefix' => 'required|string',
+            'receipt_prefix' => 'required|string',
             'invoice_conditions' => 'required|string',
             'quote_conditions' => 'required|string',
         ];
