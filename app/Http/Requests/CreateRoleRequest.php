@@ -14,7 +14,7 @@ class CreateRoleRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->user()->can('owner', app('request')->route('company'));
     }
 
     /**

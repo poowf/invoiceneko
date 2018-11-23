@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Quote;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateQuoteRequest extends FormRequest
@@ -13,7 +14,7 @@ class CreateQuoteRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->user()->can('create', Quote::class);
     }
 
     /**

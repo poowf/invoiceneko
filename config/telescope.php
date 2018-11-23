@@ -58,7 +58,7 @@ return [
     'watchers' => [
         Watchers\CacheWatcher::class => env('TELESCOPE_CACHE_WATCHER', true),
         Watchers\CommandWatcher::class => env('TELESCOPE_COMMAND_WATCHER', true),
-//        Watchers\DumpWatcher::class => env('TELESCOPE_DUMP_WATCHER', true),
+        Watchers\DumpWatcher::class => env('TELESCOPE_DUMP_WATCHER', true),
         Watchers\EventWatcher::class => env('TELESCOPE_EVENT_WATCHER', true),
         Watchers\ExceptionWatcher::class => env('TELESCOPE_EXCEPTION_WATCHER', true),
         Watchers\JobWatcher::class => env('TELESCOPE_JOB_WATCHER', true),

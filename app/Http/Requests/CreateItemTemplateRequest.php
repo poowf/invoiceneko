@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\ItemTemplate;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateItemTemplateRequest extends FormRequest
@@ -13,7 +14,7 @@ class CreateItemTemplateRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->user()->can('create', ItemTemplate::class);
     }
 
     /**

@@ -12,6 +12,18 @@ use App\Models\Role;
 
 class CompanyRoleController extends Controller
 {
+
+    private $defaultRoles;
+
+    public function __construct()
+    {
+        $this->defaultRoles = [
+            'global-administrator',
+            'administrator',
+            'user'
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -83,7 +95,7 @@ class CompanyRoleController extends Controller
      */
     public function edit(Company $company, Role $role)
     {
-        if($role->name != 'global-administrator')
+        if(!in_array($role->name, $this->defaultRoles))
         {
             $rolePermissions = $role->getAbilities();
             $permissions = self::getFormattedPermissions();
@@ -106,7 +118,7 @@ class CompanyRoleController extends Controller
      */
     public function update(UpdateRoleRequest $request, Company $company, Role $role)
     {
-        if($role->name != 'global-administrator')
+        if(!in_array($role->name, $this->defaultRoles))
         {
             $title = $request->input('title');
             $permissions = $request->input('permissions');
@@ -138,8 +150,9 @@ class CompanyRoleController extends Controller
      */
     public function destroy(Company $company, Role $role)
     {
-        $role->delete();
-
+        if(!in_array($role->name, $this->defaultRoles)) {
+            $role->delete();
+        }
         flash("The Role has been deleted", 'success');
         return redirect()->route('company.roles.index', [ 'company' => $company ]);
     }
