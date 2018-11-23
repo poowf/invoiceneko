@@ -11,6 +11,15 @@
 |
 */
 
+Route::get('/mailable', function () {
+    $companyInvite = App\Models\CompanyInvite::find(1);
+    $message = (new App\Notifications\InviteUserNotification($companyInvite))->toMail('test@email.com');
+
+    $markdown = new \Illuminate\Mail\Markdown(view(), config('mail.markdown'));
+
+    return $markdown->render('vendor.notifications.email', $message->toArray());
+});
+
 Route::get('/invoice/view', 'InvoiceController@showwithtoken')->name('invoice.token');
 Route::get('/quote/view', 'QuoteController@showwithtoken')->name('quote.token');
 Route::get('/company/create', 'CompanyController@create')->name('company.create');

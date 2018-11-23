@@ -16,6 +16,7 @@
         "laracasts/flash": "^3.0",
         "laravel/framework": "5.7.*",
         "laravel/horizon": "^2.0",
+        "laravel/telescope": "^1.0",
         "laravel/tinker": "^1.0",
         "laravelista/ekko": "^1.5",
         "maatwebsite/excel": "~3.1.0",
