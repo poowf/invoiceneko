@@ -97,6 +97,9 @@
                                                             </form>
                                                         </li>
                                                     @endforeach
+                                                    <li>
+                                                        <a href="{{ route('company.create') }}">Add Company</a>
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </li>
