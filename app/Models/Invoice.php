@@ -160,9 +160,9 @@ class Invoice extends Model
         return $this->belongsTo('App\Models\Company', 'company_id');
     }
 
-    public function event()
+    public function recurrence()
     {
-        return $this->belongsTo('App\Models\InvoiceEvent', 'invoice_event_id');
+        return $this->belongsTo('App\Models\InvoiceRecurrence', 'invoice_recurrence_id');
     }
 
     public function items()
@@ -206,11 +206,11 @@ class Invoice extends Model
 
     public function siblings()
     {
-        if($this->event)
+        if($this->recurrence)
         {
-            if($this->event->invoices)
+            if($this->recurrence->invoices)
             {
-                return ($this->event->invoices->except($this->id)->isNotEmpty()) ? $this->event->invoices->except($this->id) : null;
+                return ($this->recurrence->invoices->except($this->id)->isNotEmpty()) ? $this->recurrence->invoices->except($this->id) : null;
             }
         }
 
@@ -362,7 +362,7 @@ class Invoice extends Model
         $duedate = $date->addDays($this->netdays)->toDateTimeString();
         $cloned->duedate = $duedate;
         $cloned->status = self::STATUS_DRAFT;
-        $cloned->invoice_event_id = null;
+        $cloned->invoice_recurrence_id = null;
         $cloned->save();
 
         foreach($this->items as $item)

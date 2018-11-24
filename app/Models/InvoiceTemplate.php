@@ -32,7 +32,7 @@ class InvoiceTemplate extends Model
     public function getDateAttribute($value)
     {
         $date = $this->asDateTime($value);
-        return $date->timezone($this->event->company->timezone);
+        return $date->timezone($this->recurrence->company->timezone);
     }
 
     public function client()
@@ -40,9 +40,9 @@ class InvoiceTemplate extends Model
         return $this->belongsTo('App\Models\Client', 'client_id');
     }
 
-    public function event()
+    public function recurrence()
     {
-        return $this->belongsTo('App\Models\InvoiceEvent', 'invoice_event_id');
+        return $this->belongsTo('App\Models\InvoiceRecurrence', 'invoice_recurrence_id');
     }
 
     public function items()

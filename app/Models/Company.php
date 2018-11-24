@@ -165,7 +165,7 @@ class Company extends Model
 
     public function events()
     {
-        return $this->hasMany('App\Models\InvoiceEvent', 'company_id');
+        return $this->hasMany('App\Models\InvoiceRecurrence', 'company_id');
     }
 
     public function itemtemplates()

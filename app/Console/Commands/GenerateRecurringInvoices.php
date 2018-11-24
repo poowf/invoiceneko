@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Invoice;
-use App\Models\InvoiceEvent;
+use App\Models\InvoiceRecurrence;
 use App\Models\InvoiceItem;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -49,20 +49,20 @@ class GenerateRecurringInvoices extends Command
      */
     public function handle()
     {
-        $invoiceEvents = InvoiceEvent::all();
+        $invoiceRecurrences = InvoiceRecurrence::all();
 
-        foreach($invoiceEvents as $event)
+        foreach($invoiceRecurrences as $recurrence)
         {
-            $company = $event->company;
+            $company = $recurrence->company;
             $now = Carbon::now();
-            $template = $event->template;
+            $template = $recurrence->template;
             $templateItems = $template->items;
 
-            $constraintTime = $now->{$this->getDateAdditionOperator($event->time_period)}($event->time_interval + 3);
+            $constraintTime = $now->{$this->getDateAdditionOperator($recurrence->time_period)}($recurrence->time_interval + 3);
             $constraint = new BeforeConstraint($constraintTime);
 
-//            $rrule = Unicorn::generateRrule($event->created_at, $timezone, $event->time_interval, $event->time_period, $event->until_type, $event->until_meta, true);
-            $rrule = Rule::createFromString($event->rule, $template->date);
+//            $rrule = Unicorn::generateRrule($recurrence->created_at, $timezone, $recurrence->time_interval, $recurrence->time_period, $recurrence->until_type, $recurrence->until_meta, true);
+            $rrule = Rule::createFromString($recurrence->rule, $template->date);
             $transformer = new ArrayTransformer();
 
             $recurrences = $transformer->transform($rrule, $constraint);
@@ -79,14 +79,14 @@ class GenerateRecurringInvoices extends Command
                     break;
                 }
 
-//                $template->date = $template->date->{$this->getDateAdditionOperator($event->time_period)}(($event->time_interval * ($key + 1) ));
+//                $template->date = $template->date->{$this->getDateAdditionOperator($recurrence->time_period)}(($recurrence->time_interval * ($key + 1) ));
 
                 $generatedInvoice = new Invoice;
                 $generatedInvoice->fill($template->toArray());
                 $generatedInvoice->date = $recurrence->getEnd();
                 $generatedInvoice->client_id = $template->client_id;
                 $generatedInvoice->company_id = $company->id;
-                $generatedInvoice->invoice_event_id = $event->id;
+                $generatedInvoice->invoice_recurrence_id = $recurrence->id;
                 $generatedInvoice->status = Invoice::STATUS_DRAFT;
                 $generatedInvoice->notify = $template->notify;
 

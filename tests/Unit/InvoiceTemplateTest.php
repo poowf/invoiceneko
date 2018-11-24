@@ -4,7 +4,7 @@ namespace Tests\Unit;
 
 use App\Models\Client;
 use App\Models\Company;
-use App\Models\InvoiceEvent;
+use App\Models\InvoiceRecurrence;
 use App\Models\InvoiceTemplate;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -23,7 +23,7 @@ class InvoiceTemplateTest extends TestCase
         $client = factory(Client::class)->create([
             'company_id' => $company->id
         ]);
-        $invoiceEvent = factory(InvoiceEvent::class)->create([
+        $invoiceEvent = factory(InvoiceRecurrence::class)->create([
             'company_id' => $company->id
         ]);
 

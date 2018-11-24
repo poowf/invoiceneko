@@ -8,7 +8,7 @@ use App\Library\Poowf\Unicorn;
 use App\Models\Company;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
-use App\Models\InvoiceEvent;
+use App\Models\InvoiceRecurrence;
 use App\Models\InvoiceItemTemplate;
 use App\Models\InvoiceTemplate;
 use App\Models\OldInvoice;
@@ -241,23 +241,23 @@ class InvoiceController extends Controller
                 $timezone = config('app.timezone');
                 $rruleString = Unicorn::generateRrule($startDate, $timezone, $repeatsEveryInterval, $repeatsEveryTimePeriod, $repeatUntilOption, $repeatUntilMeta);
 
-                $invoiceEvent = new InvoiceEvent;
-                $invoiceEvent->time_interval = $repeatsEveryInterval;
-                $invoiceEvent->time_period = $repeatsEveryTimePeriod;
-                $invoiceEvent->until_type = $repeatUntilOption;
-                $invoiceEvent->until_meta = $repeatUntilMeta;
-                $invoiceEvent->rule = $rruleString;
-                $invoiceEvent->company_id = $invoice->company_id;
-                $invoiceEvent->save();
+                $invoiceRecurrence = new InvoiceRecurrence;
+                $invoiceRecurrence->time_interval = $repeatsEveryInterval;
+                $invoiceRecurrence->time_period = $repeatsEveryTimePeriod;
+                $invoiceRecurrence->until_type = $repeatUntilOption;
+                $invoiceRecurrence->until_meta = $repeatUntilMeta;
+                $invoiceRecurrence->rule = $rruleString;
+                $invoiceRecurrence->company_id = $invoice->company_id;
+                $invoiceRecurrence->save();
 
-                $invoice->invoice_event_id = $invoiceEvent->id;
+                $invoice->invoice_recurrence_id = $invoiceRecurrence->id;
                 $invoice->save();
 
                 $items = $invoice->items;
 
                 $invoiceTemplate = new InvoiceTemplate;
                 $invoiceTemplate->fill($invoice->toArray());
-                $invoiceTemplate->invoice_event_id = $invoiceEvent->id;
+                $invoiceTemplate->invoice_recurrence_id = $invoiceRecurrence->id;
                 $invoiceTemplate->save();
 
                 foreach($items as $item)
@@ -325,11 +325,11 @@ class InvoiceController extends Controller
         $client = $invoice->getClient();
         $histories = $invoice->history()->orderBy('updated_at', 'desc')->get();
         $payments = $invoice->payments;
-        $event = $invoice->event;
+        $recurrence = $invoice->recurrence;
         $siblings = $invoice->siblings();
         $notifications = $invoice->notifications;
 
-        return view('pages.invoice.show', compact('invoice', 'event','client', 'histories', 'payments', 'siblings', 'notifications'));
+        return view('pages.invoice.show', compact('invoice', 'recurrence','client', 'histories', 'payments', 'siblings', 'notifications'));
     }
 
     /**
@@ -376,9 +376,9 @@ class InvoiceController extends Controller
         }
 
         $clients = $company->clients;
-        $event = ($invoice->event) ? $invoice->event : null;
+        $recurrence = ($invoice->recurrence) ? $invoice->recurrence : null;
 
-        return view('pages.invoice.edit', compact('invoice', 'clients', 'event'));
+        return view('pages.invoice.edit', compact('invoice', 'clients', 'recurrence'));
     }
 
     /**
@@ -476,21 +476,21 @@ class InvoiceController extends Controller
         $invoice = $invoice->fresh();
         $invoice->setInvoiceTotal();
 
-        $eventExists = ($invoice->event) ? true : false;
+        $recurrenceExists = ($invoice->recurrence) ? true : false;
 
         if ($request->has('recurring-invoice-check'))
         {
 
             if($request->input('recurring-invoice-check') === 'on' && $request->input('recurring-details') === 'standalone')
             {
-                $invoicesCount = $invoice->event->invoices()->count();
-                $invoice->invoice_event_id = null;
+                $invoicesCount = $invoice->recurrence->invoices()->count();
+                $invoice->invoice_recurrence_id = null;
                 $invoice->save();
 
                 //Check if last invoice and delete if so
                 if($invoicesCount == 1)
                 {
-                    $invoice->event->delete();
+                    $invoice->recurrence->delete();
                 }
             }
             elseif($request->input('recurring-invoice-check') === 'on')
@@ -521,26 +521,26 @@ class InvoiceController extends Controller
                 $timezone = config('app.timezone');
                 $rruleString = Unicorn::generateRrule($startDate, $timezone, $repeatsEveryInterval, $repeatsEveryTimePeriod, $repeatUntilOption, $repeatUntilMeta);
 
-                $invoiceEvent = ($eventExists) ? $invoice->event : new InvoiceEvent;
-                $invoiceEvent->time_interval = $repeatsEveryInterval;
-                $invoiceEvent->time_period = $repeatsEveryTimePeriod;
-                $invoiceEvent->until_type = $repeatUntilOption;
-                $invoiceEvent->until_meta = $repeatUntilMeta;
-                $invoiceEvent->rule = $rruleString;
-                $invoiceEvent->company_id = $invoice->company_id;
-                $invoiceEvent->save();
+                $invoiceRecurrence = ($recurrenceExists) ? $invoice->recurrence : new InvoiceRecurrence;
+                $invoiceRecurrence->time_interval = $repeatsEveryInterval;
+                $invoiceRecurrence->time_period = $repeatsEveryTimePeriod;
+                $invoiceRecurrence->until_type = $repeatUntilOption;
+                $invoiceRecurrence->until_meta = $repeatUntilMeta;
+                $invoiceRecurrence->rule = $rruleString;
+                $invoiceRecurrence->company_id = $invoice->company_id;
+                $invoiceRecurrence->save();
 
-                $invoice->invoice_event_id = $invoiceEvent->id;
+                $invoice->invoice_recurrence_id = $invoiceRecurrence->id;
                 $invoice->save();
 
                 $items = $invoice->items;
 
-                if ($eventExists) {
+                if ($recurrenceExists) {
                     if($request->input('recurring-details') === 'future')
                     {
                         //TODO: If updating template, delete all generated preview invoices that are in draft status.
                         //Perhaps, it might be a better idea to just display a preview instead of generating the invoices.
-                        $invoiceTemplate = $invoiceEvent->template;
+                        $invoiceTemplate = $invoiceRecurrence->template;
                         $invoiceTemplate->fill($invoice->toArray());
                         $invoiceTemplate->save();
 
@@ -564,7 +564,7 @@ class InvoiceController extends Controller
                     {
                         $invoiceTemplate = new InvoiceTemplate;
                         $invoiceTemplate->fill($invoice->toArray());
-                        $invoiceTemplate->invoice_event_id = $invoiceEvent->id;
+                        $invoiceTemplate->invoice_recurrence_id = $invoiceRecurrence->id;
                         $invoiceTemplate->save();
 
                         foreach ($items as $item) {
@@ -580,7 +580,7 @@ class InvoiceController extends Controller
         }
         else
         {
-            if($eventExists) : $invoice->event->delete(); endif;
+            if($recurrenceExists) : $invoice->recurrence->delete(); endif;
         }
 
         flash('Invoice Updated', 'success');

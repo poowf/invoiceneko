@@ -3,13 +3,13 @@
 namespace Tests\Unit;
 
 use App\Models\Company;
-use App\Models\InvoiceEvent;
+use App\Models\InvoiceRecurrence;
 use Illuminate\Database\Eloquent\MassAssignmentException;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class InvoiceEventTest extends TestCase
+class InvoiceRecurrenceTest extends TestCase
 {
     /**
      * A basic test example.
@@ -20,9 +20,9 @@ class InvoiceEventTest extends TestCase
     {
         $company = factory(Company::class)->create();
 
-        InvoiceEvent::unguard();
+        InvoiceRecurrence::unguard();
 
-        $invoiceEvent = InvoiceEvent::create([
+        $invoiceEvent = InvoiceRecurrence::create([
             'time_interval' => '1',
             'time_period' => 'month',
             'until_type' => 'never',
@@ -31,7 +31,7 @@ class InvoiceEventTest extends TestCase
             'company_id' => $company->id
         ]);
 
-        InvoiceEvent::reguard();
+        InvoiceRecurrence::reguard();
 
         $this->assertEquals($invoiceEvent->company->name, $company->name);
         $this->assertEquals('FREQ=MONTHLY;INTERVAL=1', $invoiceEvent->rule);
@@ -39,9 +39,9 @@ class InvoiceEventTest extends TestCase
 
     public function test_update_invoice_event()
     {
-        $invoiceEvent = factory(InvoiceEvent::class)->create();
+        $invoiceEvent = factory(InvoiceRecurrence::class)->create();
 
-        $this->assertInstanceOf(InvoiceEvent::class, $invoiceEvent);
+        $this->assertInstanceOf(InvoiceRecurrence::class, $invoiceEvent);
 
         $invoiceEvent->time_period = 'week';
         $invoiceEvent->until_type = 'occurence';
@@ -74,11 +74,11 @@ class InvoiceEventTest extends TestCase
     public function test_delete_invoice_event()
     {
         $company = factory(Company::class)->create();
-        $invoiceEvent = factory(InvoiceEvent::class)->create([
+        $invoiceEvent = factory(InvoiceRecurrence::class)->create([
             'company_id' => $company->id
         ]);
 
-        $this->assertInstanceOf(InvoiceEvent::class, $invoiceEvent);
+        $this->assertInstanceOf(InvoiceRecurrence::class, $invoiceEvent);
         $invoiceEvent = $invoiceEvent->delete();
 
         $this->assertEquals('true', json_encode($invoiceEvent));
