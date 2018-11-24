@@ -983,8 +983,15 @@ nav .dropdown-content.top-arrow:before {
 }
 
 .sidenav .user-view {
-  background-color: #299a9a;
   margin-bottom: 0;
+}
+
+.sidenav li.sidenav-profile, .sidenav li.sidenav-company {
+  background-color: #299a9a;
+}
+
+.sidenav li.sidenav-company .row {
+  margin: 0;
 }
 
 .sidenav li.sidenav-company .collapsible-body > ul:not(.collapsible) > li form button
@@ -1021,14 +1028,6 @@ nav .dropdown-content.top-arrow:before {
   background-color: #299a9a;
   right: 15px;
   top: 18px;
-}
-
-.sidenav li.sidenav-company {
-  background-color: #299a9a;
-}
-
-.sidenav li.sidenav-company .row {
-  margin: 0;
 }
 
 .sidenav li > a {

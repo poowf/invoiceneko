@@ -71,7 +71,8 @@
                                 @endif
                             </ul>
                             <ul class="sidenav" id="mobile-menu">
-                                <li><div class="user-view">
+                                <li class="sidenav-profile">
+                                    <div class="user-view">
                                         <div class="background">
                                             <img src="images/office.jpg">
                                         </div>
