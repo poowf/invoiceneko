@@ -22,6 +22,10 @@ class RenameInvoiceEventsToInvoiceRecurrences extends Migration
             $table->dropForeign(['invoice_event_id']);
         });
 
+        Schema::table('invoice_templates', function (Blueprint $table) {
+            $table->dropForeign(['invoice_event_id']);
+        });
+
         Schema::rename('invoice_events', 'invoice_recurrences');
 
         Schema::table('invoice_recurrences', function (Blueprint $table) {
@@ -31,6 +35,13 @@ class RenameInvoiceEventsToInvoiceRecurrences extends Migration
         });
 
         Schema::table('invoices', function (Blueprint $table) {
+            $table->renameColumn('invoice_event_id', 'invoice_recurrence_id');
+            $table->foreign('invoice_recurrence_id')
+                ->references('id')->on('invoice_recurrences')
+                ->onDelete('cascade');
+        });
+
+        Schema::table('invoice_templates', function (Blueprint $table) {
             $table->renameColumn('invoice_event_id', 'invoice_recurrence_id');
             $table->foreign('invoice_recurrence_id')
                 ->references('id')->on('invoice_recurrences')
@@ -54,6 +65,11 @@ class RenameInvoiceEventsToInvoiceRecurrences extends Migration
             $table->renameColumn('invoice_recurrence_id', 'invoice_event_id');
         });
 
+        Schema::table('invoice_templates', function (Blueprint $table) {
+            $table->dropForeign(['invoice_recurrence_id']);
+            $table->renameColumn('invoice_recurrence_id', 'invoice_event_id');
+        });
+
         Schema::rename('invoice_recurrences', 'invoice_events');
 
         Schema::table('invoice_events', function (Blueprint $table) {
@@ -63,6 +79,12 @@ class RenameInvoiceEventsToInvoiceRecurrences extends Migration
         });
 
         Schema::table('invoices', function (Blueprint $table) {
+            $table->foreign('invoice_event_id')
+                ->references('id')->on('invoice_events')
+                ->onDelete('cascade');
+        });
+
+        Schema::table('invoice_templates', function (Blueprint $table) {
             $table->foreign('invoice_event_id')
                 ->references('id')->on('invoice_events')
                 ->onDelete('cascade');
