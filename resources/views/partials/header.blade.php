@@ -5,7 +5,7 @@
                 <div class="row">
                     <div class="col l12">
                         <div class="nav-wrapper">
-                            <a href="#" data-target="mobile-menu" class="sidenav-trigger"><span>&#9776;</span></a>
+                            <a href="#" data-target="mobile-menu" class="sidenav-trigger"><span class="white-text">&#9776;</span></a>
                             <a href="{{ route('main') }}" class="logo black-text"><img src="{{ asset('assets/img/logo.png') }}"><span class="logo-text">{{ config('app.name') }}</span></a>
                             <ul class="left hide-on-med-and-down">
                             </ul>
@@ -31,7 +31,8 @@
                                     </li>
                                     <ul id="company-dropdown-navigation" class="dropdown-content top-arrow">
                                         @foreach(auth()->user()->companies as $company)
-                                        <li>
+                                        <li class="@if(app('request')->route('company')->domain_name == $company->domain_name){{ 'active' }}@endif">
+
                                             <form method="post" action="{{ route('company.switch') }}">
                                                 {{ csrf_field() }}
                                                 <input id="domain_name" name="domain_name" class="form-control" type="hidden" value="{{ $company->domain_name }}">
@@ -70,8 +71,35 @@
                                 @endif
                             </ul>
                             <ul class="sidenav" id="mobile-menu">
-                                <li><a href="{{ route('main', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}">HOME</a></li>
-                                <hr>
+                                <li><div class="user-view">
+                                        <div class="background">
+                                            <img src="images/office.jpg">
+                                        </div>
+                                        <a href="#user"><img class="circle" src="{{ auth()->user()->gravatar }}"></a>
+                                        <a href="#name"><span class="white-text name">{{ auth()->user()->full_name }}</span></a>
+                                        <a href="#email"><span class="white-text email">{{ auth()->user()->email }}</span></a>
+                                    </div>
+                                </li>
+                                <li class="sidenav-company">
+                                    <ul class="collapsible collapsible-accordion">
+                                        <li>
+                                            <a class="collapsible-header white-text"><i class="mdi mdi-office-building white-text"></i>{{ app('request')->route('company')->name }}<i class="material-icons right">arrow_drop_down</i></a>
+                                            <div class="collapsible-body">
+                                                <ul>
+                                                    @foreach(auth()->user()->companies as $company)
+                                                        <li class="@if(app('request')->route('company')->domain_name == $company->domain_name){{ 'active' }}@endif">
+                                                            <form method="post" action="{{ route('company.switch') }}">
+                                                                {{ csrf_field() }}
+                                                                <input id="domain_name" name="domain_name" class="form-control" type="hidden" value="{{ $company->domain_name }}">
+                                                                <button class="null-btn" type="submit">{{ $company->name }}t</button>
+                                                            </form>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
                                 @if(Auth::check())
                                     @if(app('request')->route('company'))
                                     <li><a href="{{ route('dashboard', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}">Dashboard</a></li>

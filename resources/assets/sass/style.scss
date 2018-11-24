@@ -286,6 +286,7 @@ mark {
 }
 
 .null-btn {
+  position: relative;
   outline: none;
   border: none;
   background-color: transparent;
@@ -858,6 +859,14 @@ nav ul li.active a {
   border-bottom: 3px solid #198f9f;
 }
 
+nav ul li.active ul li a {
+  border: none;
+}
+
+nav ul li.active ul li:last-child {
+  border-bottom: 3px solid #ececec;
+}
+
 nav .signout-btn {
   font-size: 16px;
   color: #000;
@@ -926,6 +935,18 @@ nav .dropdown-content.top-arrow li {
   background-color: transparent;
 }
 
+nav .dropdown-content.top-arrow li.active form button:before {
+  position: absolute;
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #299a9a;
+  left: 15px;
+  top: 18px;
+}
+
 nav .dropdown-content.top-arrow li form, nav .dropdown-content.top-arrow li a {
   background-color: #ffffff;
   text-align: center;
@@ -938,12 +959,11 @@ nav .dropdown-content.top-arrow li form button {
 }
 
 nav .dropdown-content.top-arrow li form:hover, nav .dropdown-content.top-arrow li a:hover {
-  background-color: #299a9a;
-  color: #ffffff;
+  background-color: #f2f2f2;
 }
 
 nav .dropdown-content.top-arrow li form:hover button {
-  color: #ffffff;
+  color: #000000;
 }
 
 nav .dropdown-content.top-arrow:before {
@@ -960,6 +980,55 @@ nav .dropdown-content.top-arrow:before {
 
 .sidenav li {
   clear: both;
+}
+
+.sidenav .user-view {
+  background-color: #299a9a;
+  margin-bottom: 0;
+}
+
+.sidenav li.sidenav-company .collapsible-body > ul:not(.collapsible) > li form button
+{
+  padding: 15px 32px;
+  width: 100%;
+  text-align: left;
+}
+
+.sidenav li.sidenav-company .collapsible-body > ul:not(.collapsible) > li:hover
+{
+  background-color: #f2f2f2;
+}
+
+.sidenav li.sidenav-company .collapsible-body > ul:not(.collapsible) > li.active
+{
+  position: relative;
+  background-color: #ffffff;
+}
+
+.sidenav li.sidenav-company .collapsible-body > ul:not(.collapsible) > li.active:hover
+{
+  background-color: #f2f2f2;
+}
+
+.sidenav li.sidenav-company .collapsible-body > ul:not(.collapsible) > li.active:before
+{
+  position: absolute;
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #299a9a;
+  right: 15px;
+  top: 18px;
+}
+
+.sidenav li.sidenav-company {
+  background-color: #299a9a;
+}
+
+.sidenav li.sidenav-company .row {
+  margin: 0;
 }
 
 .sidenav li > a {
@@ -1336,6 +1405,11 @@ label.rbtn-label.invalid:after {
 /* Media Queries */
 
 @media only screen and (min-width: 601px) {
+  nav a.sidenav-trigger, nav a.sidenav-trigger i {
+    height: 80px;
+    line-height: 80px;
+  }
+
   .force-image-size {
     height: 170px;
     margin: auto;
