@@ -13,7 +13,7 @@ class CreateAdhocInvoiceRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->user()->can('create', Invoice::class);
     }
 
     /**
