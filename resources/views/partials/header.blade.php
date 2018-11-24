@@ -36,7 +36,7 @@
                                             <form method="post" action="{{ route('company.switch') }}">
                                                 {{ csrf_field() }}
                                                 <input id="domain_name" name="domain_name" class="form-control" type="hidden" value="{{ $company->domain_name }}">
-                                                <button class="null-btn" type="submit">{{ $company->name }}t</button>
+                                                <button class="null-btn" type="submit">{{ $company->name }}</button>
                                             </form>
                                         </li>
                                         @endforeach
