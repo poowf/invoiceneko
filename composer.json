@@ -25,7 +25,6 @@
         "pragmarx/recovery": "^0.1.0",
         "predis/predis": "^1.1",
         "rinvex/countries": "^5.0",
-        "rollbar/rollbar-laravel": "^4.0",
         "sentry/sentry-laravel": "^0.11.0",
         "silber/bouncer": "v1.0.0-rc.4",
         "simplesoftwareio/simple-qrcode": "^2.0",

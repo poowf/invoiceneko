@@ -36,7 +36,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['rollbar', 'single'],
+            'channels' => ['single'],
         ],
 
         'single' => [
@@ -50,13 +50,6 @@ return [
             'path' => storage_path('logs/laravel.log'),
             'level' => 'debug',
             'days' => 14,
-        ],
-
-        'rollbar' => [
-            'driver' => 'monolog',
-            'handler' => \Rollbar\Laravel\MonologHandler::class,
-            'access_token' => env('ROLLBAR_TOKEN'),
-            'level' => 'debug',
         ],
 
         'slack' => [
