@@ -32,7 +32,6 @@
                                     <ul id="company-dropdown-navigation" class="dropdown-content top-arrow">
                                         @foreach(auth()->user()->companies as $company)
                                         <li class="@if(app('request')->route('company')->domain_name == $company->domain_name){{ 'active' }}@endif">
-
                                             <form method="post" action="{{ route('company.switch') }}">
                                                 {{ csrf_field() }}
                                                 <input id="domain_name" name="domain_name" class="form-control" type="hidden" value="{{ $company->domain_name }}">
@@ -85,7 +84,7 @@
                                 <li class="sidenav-company">
                                     <ul class="collapsible collapsible-accordion">
                                         <li>
-                                            <a class="collapsible-header white-text"><i class="mdi mdi-office-building white-text"></i>{{ app('request')->route('company')->name }}<i class="material-icons right">arrow_drop_down</i></a>
+                                            <a class="collapsible-header white-text"><i class="mdi mdi-office-building white-text"></i>@if(app('request')->route('company')){{ app('request')->route('company')->name ?? 'New Company' }}@else{{ 'New Company' }}@endif<i class="material-icons right">arrow_drop_down</i></a>
                                             <div class="collapsible-body">
                                                 <ul>
                                                     @foreach(auth()->user()->companies as $company)
