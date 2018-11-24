@@ -3,10 +3,10 @@ class Unicorn {
         throw new Error('Cannot construct singleton');
     }
 
-    static initPhoneInput(selector)
+    static initPhoneInput(selector, initialCountry = "sg")
     {
         $(selector).intlTelInput({
-            initialCountry: "sg",
+            initialCountry: initialCountry,
             utilsScript: "/assets/js/utils.js"
         });
 

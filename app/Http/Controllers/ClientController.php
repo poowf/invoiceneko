@@ -15,7 +15,7 @@ use Image;
 class ClientController extends Controller
 {
     public function __construct(){
-        $this->countries = new Countries();
+
     }
 
     /**
@@ -39,7 +39,7 @@ class ClientController extends Controller
      */
     public function create(Company $company)
     {
-        $countries = $this->countries->all();
+        $countries = countries();
 
         return view('pages.client.create', compact('countries'));
     }
@@ -110,7 +110,7 @@ class ClientController extends Controller
      */
     public function edit(Company $company, Client $client)
     {
-        $countries = $this->countries->all();
+        $countries = countries();
 
         return view('pages.client.edit', compact('client', 'countries'));
     }

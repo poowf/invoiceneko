@@ -6,6 +6,7 @@ use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\CompanyUserRequest;
 use Carbon\Carbon;
+use DateTimeZone;
 use Illuminate\Support\Facades\Hash;
 use Log;
 use App\Models\User;
@@ -18,7 +19,7 @@ use PragmaRX\Countries\Package\Countries;
 class UserController extends Controller
 {
     public function __construct(){
-        $this->countries = new Countries();
+
     }
 
     /**
@@ -61,8 +62,8 @@ class UserController extends Controller
             session(['_old_input.timezone' => $ipLocation->timezone]);
         }
 
-        $countries = $this->countries->all();
-        $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
+        $countries = countries();
+        $timezones = DateTimeZone::listIdentifiers(DateTimeZone::ALL);
 
         return view('pages.user.create', compact('countries', 'timezones'));
     }
@@ -82,13 +83,7 @@ class UserController extends Controller
         {
             if($request->has('timezone') && is_null($request->input('timezone')))
             {
-                $timezone = $this->countries
-                    ->where('iso_3166_1_alpha2', $request->input('country_code'))
-                    ->first()
-                    ->hydrate('timezones')
-                    ->timezones
-                    ->first()
-                    ->zone_name;
+                $timezone = DateTimeZone::listIdentifiers(DateTimeZone::PER_COUNTRY, $request->input('country_code'))[0];
                 $user->timezone = $timezone;
             }
         }
@@ -142,8 +137,8 @@ class UserController extends Controller
     public function edit()
     {
         $user = auth()->user();
-        $countries = $this->countries->all();
-        $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
+        $countries = countries();
+        $timezones = DateTimeZone::listIdentifiers(DateTimeZone::ALL);
         return view('pages.user.edit', compact('user', 'countries', 'timezones'));
     }
 

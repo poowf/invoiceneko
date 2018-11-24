@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 class CompanyUserController extends Controller
 {
     public function __construct(){
-        $this->countries = new Countries();
+
     }
 
     /**
@@ -44,7 +44,7 @@ class CompanyUserController extends Controller
      */
     public function create(Company $company)
     {
-        $countries = $this->countries->all();
+        $countries = countries();
         $timezones = \DateTimeZone::listIdentifiers(DateTimeZone::ALL);
         $roles = Bouncer::role()->all();
 

@@ -55,8 +55,9 @@
                         <div class="row">
                             <div class="input-field col s12">
                                 <select id="country_code" name="country_code" data-parsley-required="false" data-parsley-trigger="change" placeholder="Country">
+                                    <option disabled="" selected="selected" value="">Country</option>
                                     @foreach($countries as $country)
-                                        <option value="{{ $country['iso_3166_1_alpha2'] }}" @if(old('country_code') == $country['iso_3166_1_alpha2']) selected @endif>{{ $country['name']['common'] }}</option>
+                                        <option value="{{ $country['iso_3166_1_alpha2'] }}" @if(old('country_code') == $country['iso_3166_1_alpha2']) selected @endif>{{ $country['name'] }}</option>
                                     @endforeach
                                 </select>
                                 <label for="country_code" class="label-validation">Country</label>
@@ -129,7 +130,7 @@
         $(function() {
             Unicorn.initSelectize('#country_code');
             Unicorn.initSelectize('#timezone');
-            Unicorn.initPhoneInput('#phone');
+            Unicorn.initPhoneInput('#phone', {{ old('country_code') ?? 'sg' }});
             Unicorn.initParsleyValidation('#signup');
         });
     </script>

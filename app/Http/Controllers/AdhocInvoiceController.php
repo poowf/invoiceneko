@@ -17,7 +17,7 @@ class AdhocInvoiceController extends Controller
 {
 
     public function __construct(){
-        $this->countries = new Countries();
+
     }
 
     /**
@@ -42,7 +42,7 @@ class AdhocInvoiceController extends Controller
         {
             $invoicenumber = $company->niceinvoiceid();
             $itemtemplates = $company->itemtemplates;
-            $countries = $this->countries->all();
+            $countries = countries();
 
             return view('pages.invoice.adhoc.create', compact('company', 'invoicenumber', 'countries', 'itemtemplates'));
         }
@@ -124,7 +124,7 @@ class AdhocInvoiceController extends Controller
         }
 
         $client = $invoice->getClient();
-        $countries = $this->countries->all();
+        $countries = countries();
 
         return view('pages.invoice.adhoc.edit', compact('invoice', 'client', 'countries'));
     }

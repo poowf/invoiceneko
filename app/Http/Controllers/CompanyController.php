@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateCompanyRequest;
 use App\Http\Requests\UpdateCompanyOwnerRequest;
 use App\Http\Requests\UpdateCompanyRequest;
+use DateTimeZone;
 use Illuminate\Http\Request;
 use PragmaRX\Countries\Package\Countries;
 use App\Models\Company;
@@ -15,7 +16,7 @@ use Image;
 class CompanyController extends Controller
 {
     public function __construct(){
-        $this->countries = new Countries();
+
     }
 
     /**
@@ -48,7 +49,7 @@ class CompanyController extends Controller
             session(['_old_input.timezone' => $ipLocation->timezone]);
         }
 
-        $countries = $this->countries->all();
+        $countries = countries();
         $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
 
         return view('pages.company.create', compact('countries', 'timezones'));
@@ -70,17 +71,8 @@ class CompanyController extends Controller
 
             if(!is_null($request->input('country_code')) && is_null($request->input('timezone')))
             {
-                if($request->has('timezone') && is_null($request->input('timezone')))
-                {
-                    $timezone = $this->countries
-                        ->where('iso_3166_1_alpha2', $request->input('country_code'))
-                        ->first()
-                        ->hydrate('timezones')
-                        ->timezones
-                        ->first()
-                        ->zone_name;
-                    $company->timezone = $timezone;
-                }
+                $timezone = DateTimeZone::listIdentifiers(DateTimeZone::PER_COUNTRY, $request->input('country_code'))[0];
+                $company->timezone = $timezone;
             }
             elseif (is_null($company->timezone))
             {
@@ -164,8 +156,8 @@ class CompanyController extends Controller
      */
     public function edit(Company $company)
     {
-        $countries = $this->countries->all();
-        $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
+        $countries = countries();
+        $timezones = DateTimeZone::listIdentifiers(DateTimeZone::ALL);
 
         return view('pages.company.edit', compact('company', 'countries', 'timezones'));
     }
@@ -184,13 +176,7 @@ class CompanyController extends Controller
         {
             if($request->has('timezone') && is_null($request->input('timezone')))
             {
-                $timezone = $this->countries
-                    ->where('iso_3166_1_alpha2', $request->input('country_code'))
-                    ->first()
-                    ->hydrate('timezones')
-                    ->timezones
-                    ->first()
-                    ->zone_name;
+                $timezone = DateTimeZone::listIdentifiers(DateTimeZone::PER_COUNTRY, $request->input('country_code'))[0];
                 $company->timezone = $timezone;
             }
         }

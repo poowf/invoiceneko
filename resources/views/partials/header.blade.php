@@ -26,12 +26,13 @@
                                     @can('index', \App\Models\Payment::class)
                                     <li><a href="{{ route('payment.index', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}">Payments</a></li>
                                     @endcan
+                                    @endif
                                     <li>
                                         <a class="btn btn-link btn-floating waves-effect waves-dark company-selector-btn dropdown-trigger" href="javascript:;" data-target="company-dropdown-navigation"><i class="mdi mdi-office-building"></i></a>
                                     </li>
                                     <ul id="company-dropdown-navigation" class="dropdown-content top-arrow">
                                         @foreach(auth()->user()->companies as $company)
-                                        <li class="@if(app('request')->route('company')->domain_name == $company->domain_name){{ 'active' }}@endif">
+                                        <li class="@if(app('request')->route('company') && app('request')->route('company')->domain_name == $company->domain_name){{ 'active' }}@endif">
                                             <form method="post" action="{{ route('company.switch') }}">
                                                 {{ csrf_field() }}
                                                 <input id="domain_name" name="domain_name" class="form-control" type="hidden" value="{{ $company->domain_name }}">
@@ -43,7 +44,6 @@
                                             <a href="{{ route('company.create') }}">Add Company</a>
                                         </li>
                                     </ul>
-                                    @endif
                                     <li>
                                         <a class="btn btn-link waves-effect waves-dark dropdown-trigger my-account-btn" href="javascript:;" data-target="dropdown-navigation">
                                             <div class="dropdown-text" style="width: 115px; line-height: 35px; margin-right: 15px;">My Account</div>
@@ -88,7 +88,7 @@
                                             <div class="collapsible-body">
                                                 <ul>
                                                     @foreach(auth()->user()->companies as $company)
-                                                        <li class="@if(app('request')->route('company')->domain_name == $company->domain_name){{ 'active' }}@endif">
+                                                        <li class="@if(app('request')->route('company') && app('request')->route('company')->domain_name == $company->domain_name){{ 'active' }}@endif">
                                                             <form method="post" action="{{ route('company.switch') }}">
                                                                 {{ csrf_field() }}
                                                                 <input id="domain_name" name="domain_name" class="form-control" type="hidden" value="{{ $company->domain_name }}">
