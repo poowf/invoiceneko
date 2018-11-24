@@ -56,7 +56,7 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            $('#roles').selectize({});
+            Unicorn.initSelectize('#roles');
             Unicorn.initParsleyValidation('#company-edit-user');
         });
     </script>

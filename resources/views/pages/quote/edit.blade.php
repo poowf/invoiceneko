@@ -138,7 +138,7 @@
                 }
             });
 
-            $('#client_id').selectize();
+            Unicorn.initSelectize('#client_id');
             $('.modal').modal();
 
             $('#quote-item-add').on('click', function() {

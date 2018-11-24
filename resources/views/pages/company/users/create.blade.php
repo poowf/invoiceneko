@@ -125,9 +125,9 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            $('#country_code').selectize({});
-            $('#timezone').selectize({});
-            $('#roles').selectize({});
+            Unicorn.initSelectize('#country_code');
+            Unicorn.initSelectize('#timezone');
+            Unicorn.initSelectize('#roles');
             Unicorn.initPhoneInput('#phone');
             Unicorn.initParsleyValidation('#company-create-user');
         });

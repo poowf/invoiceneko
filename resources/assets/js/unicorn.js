@@ -19,6 +19,15 @@ class Unicorn {
         });
     }
 
+    static initSelectize(selector)
+    {
+        $(selector).selectize({
+            onChange: function(value, isOnInitialize) {
+                this.$input.parsley().validate();
+            }
+        });
+    }
+
     static initConfirmationTrigger(parent_selector, selector, fqdn, model, model_action, modal_selector, modal_form_selector, trigger = 'click')
     {
         $(parent_selector).on(trigger, selector, function (event) {

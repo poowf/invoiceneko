@@ -171,9 +171,8 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            $('#country_code').selectize({});
-            $('#contactsalutation').selectize({});
-
+            Unicorn.initSelectize('#country_code');
+            Unicorn.initSelectize('#contactsalutation');
             Unicorn.initPhoneInput('#phone');
             Unicorn.initPhoneInput('#contactphone');
             Unicorn.initParsleyValidation('#create-client');

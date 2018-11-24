@@ -93,6 +93,9 @@
                     valueField: 'id',
                     labelField: 'name',
                     searchField: ['name'],
+                    onChange: function(value, isOnInitialize) {
+                        this.$input.parsley().validate();
+                    },
                     options: [
                             @foreach($users as $user) @if(!$user->owns($company)){ id:'{{ $user->id }}', name:'{{ $user->full_name }}' },@endif @endforeach
                     ]

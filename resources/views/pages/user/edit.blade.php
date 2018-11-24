@@ -130,8 +130,8 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            $('#country_code').selectize({});
-            $('#timezone').selectize({});
+            Unicorn.initSelectize('#country_code');
+            Unicorn.initSelectize('#timezone');
 
             Unicorn.initPhoneInput('#phone');
             Unicorn.initParsleyValidation('#edit-profile');
