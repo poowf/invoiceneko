@@ -71,6 +71,7 @@
                                 @endif
                             </ul>
                             <ul class="sidenav" id="mobile-menu">
+                                @if(Auth::check())
                                 <li class="sidenav-profile">
                                     <div class="user-view">
                                         <div class="background">
@@ -101,7 +102,6 @@
                                         </li>
                                     </ul>
                                 </li>
-                                @if(Auth::check())
                                     @if(app('request')->route('company'))
                                     <li><a href="{{ route('dashboard', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}">Dashboard</a></li>
                                     @can('index', \App\Models\Quote::class)
