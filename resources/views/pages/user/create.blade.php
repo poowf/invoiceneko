@@ -130,7 +130,7 @@
         $(function() {
             Unicorn.initSelectize('#country_code');
             Unicorn.initSelectize('#timezone');
-            Unicorn.initPhoneInput('#phone', {{ old('country_code') ?? 'sg' }});
+            Unicorn.initPhoneInput('#phone', '{{ old('country_code') ?? 'sg' }}');
             Unicorn.initParsleyValidation('#signup');
         });
     </script>
