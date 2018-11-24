@@ -130,7 +130,7 @@
                 }
             });
 
-            $('#client_id').selectize();
+            Unicorn.initSelectize('#client_id');
             initElements();
 
             $('#quote-item-add').on('click', function() {
@@ -152,6 +152,9 @@
                     valueField: 'name',
                     labelField: 'name',
                     searchField: ['name'],
+                    onChange: function(value, isOnInitialize) {
+                        this.$input.parsley().validate();
+                    },
                     options: [
                             @foreach($itemtemplates as $itemtemplate){ id:'{{ $itemtemplate->id }}', name:'{{ $itemtemplate->name }}' },@endforeach
                     ],

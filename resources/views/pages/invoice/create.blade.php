@@ -51,7 +51,7 @@
                         <div class="input-field col s12">
                             <label for="notify" class="label-validation">Auto-Notify</label>
                             <div class="switch mtop20">
-                                <label class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Automatically send Invoice to customers on Invoice Date">
+                                <label class="tooltipped" data-position="bottom" data-tooltip="Automatically send Invoice to customers on Invoice Date">
                                     No
                                     <input id="notify" name="notify" type="checkbox">
                                     <span class="lever"></span>
@@ -158,7 +158,7 @@
                 }
             });
 
-            $('#client_id').selectize();
+            Unicorn.initSelectize('#client_id');
             initElements();
 
             $('#invoice-item-add').on('click', function() {
@@ -189,6 +189,9 @@
                     valueField: 'name',
                     labelField: 'name',
                     searchField: ['name'],
+                    onChange: function(value, isOnInitialize) {
+                        this.$input.parsley().validate();
+                    },
                     options: [
                             @foreach($itemtemplates as $itemtemplate){ id:'{{ $itemtemplate->id }}', name:'{{ $itemtemplate->name }}' },@endforeach
                     ],
@@ -204,7 +207,7 @@
             {
                 let recurringelements = '<div class="input-field col s4 l2"> <input id="recurring-time-interval" name="recurring-time-interval" type="number" data-parsley-min="1" data-parsley-max="730" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('recurring-time-interval') or '1' }}"> <label for="recurring-time-interval" class="label-validation">Repeats every</label> <span class="helper-text"></span></div><div class="input-field col s8 l10"> <select id="recurring-time-period" name="recurring-time-period" data-parsley-required="true" data-parsley-trigger="change"><option value="day">Day</option><option value="week">Week</option><option value="month" selected>Month</option><option value="year">Year</option> </select> <label class="recurring-time-period"></label> <span class="helper-text"></span></div><div class="radio-field col s12"> <label id="rbtn-label" class="rbtn-label" for="recurring-until">Until</label><p> <label> <input id="recurring-until-never" name="recurring-until" type="radio" value="never" data-parsley-required="true" data-parsley-trigger="change" checked> <span>The End of Time</span> </label></p><p> <label> <input id="recurring-until-occurence" name="recurring-until" type="radio" value="occurence"> <span> After <input id="recurring-until-occurence-number" name="recurring-until-occurence-number" class="radio-input-inline radio-input-digit" type="number" data-parsley-required="false" data-parsley-min="1" data-parsley-max="730" data-parsley-trigger="change" value="{{ old('recurring-until-occurence-number') ?? '1' }}"> Occurences </span> </label></p><p> <label> <input id="recurring-until-date" name="recurring-until" type="radio" value="date"> <span> On <input id="recurring-until-date-value" name="recurring-until-date-value" class="datepicker radio-input-inline radio-input-date" type="text" data-parsley-required="false" data-parsley-trigger="change" value="{{ old('recurring-until-date-value') ?? \Carbon\Carbon::now()->addMonth(1)->format('j F, Y') }}"> </span> </label></p> <span class="helper-text manual-validation"></span></div>';
                 $('#' + elementid).append(recurringelements);
-                $('#recurring-time-period').selectize();
+                Unicorn.initSelectize('#recurring-time-period');
 
                 $('#recurring-until-date-value').datepicker({
                     autoClose: 'false',

@@ -68,7 +68,10 @@
         $(function() {
             $('#mode').selectize({
                 create: true,
-                sortField: 'text'
+                sortField: 'text',
+                onChange: function(value, isOnInitialize) {
+                    this.$input.parsley().validate();
+                }
             });
 
             $('.datepicker').datepicker({

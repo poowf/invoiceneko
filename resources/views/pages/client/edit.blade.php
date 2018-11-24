@@ -72,7 +72,7 @@
                         <div class="row">
                             <div class="logo-container input-field col s12">
                                 <label for="logo-display" class="label-validation">Logo</label>
-                                <div class="logo-display-container tooltipped" data-position="top" data-delay="50" data-tooltip="Recommended Size: 500 (W) x 500 (H) with White Background (Optional)">
+                                <div class="logo-display-container tooltipped" data-position="top" data-tooltip="Recommended Size: 500 (W) x 500 (H) with White Background (Optional)">
                                     <img id="logo-display" src="@if($client){{ \App\Library\Poowf\Unicorn::getStorageFile($client->logo, [500, 500]) }}@else{!! '//via.placeholder.com/500x500' !!}@endif">
                                     <span class="text-content"><span id="logo-upload">Change?</span></span>
                                 </div>
@@ -162,6 +162,9 @@
                                     <option value="mrs" @if($client->contactsalutation == "mrs") selected @endif>Mrs.</option>
                                     <option value="mdm" @if($client->contactsalutation == "mdm") selected @endif>Mdm.</option>
                                     <option value="miss" @if($client->contactsalutation == "miss") selected @endif>Miss.</option>
+                                    <option value="miss" @if($client->contactsalutation == "dr") selected @endif>Dr.</option>
+                                    <option value="miss" @if($client->contactsalutation == "prof") selected @endif>Prof.</option>
+                                    <option value="miss" @if($client->contactsalutation == "mx") selected @endif>Mx.</option>
                                 </select>
                                 <label for="contactsalutation" class="label-validation">Contact Salutation</label>
                                 <span class="helper-text"></span>
@@ -209,9 +212,8 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            $('#country_code').selectize({});
-            $('#contactsalutation').selectize({});
-
+            Unicorn.initSelectize('#country_code');
+            Unicorn.initSelectize('#contactsalutation');
             Unicorn.initPhoneInput('#phone');
             Unicorn.initPhoneInput('#contactphone');
             Unicorn.initParsleyValidation('#edit-client');

@@ -78,7 +78,7 @@
                         <div class="row">
                             <div class="logo-container input-field col s12">
                                 <label for="logo-display" class="label-validation">Logo</label>
-                                <div class="logo-display-container tooltipped" data-position="top" data-delay="50" data-tooltip="Recommended Size: 420 (W) x 220 (H) with White Background (Optional)">
+                                <div class="logo-display-container tooltipped" data-position="top" data-tooltip="Recommended Size: 420 (W) x 220 (H) with White Background (Optional)">
                                     <img id="logo-display" src="@if($company){{ \App\Library\Poowf\Unicorn::getStorageFile($company->logo, [420, 220]) }}@else{!! '//via.placeholder.com/420x220' !!}@endif">
                                     <span class="text-content"><span id="logo-upload">Change?</span></span>
                                 </div>
@@ -88,7 +88,7 @@
                         <div class="row">
                             <div class="smlogo-container input-field col s12">
                                 <label for="smlogo-display" class="label-validation">Small Logo</label>
-                                <div class="smlogo-display-container tooltipped" data-position="top" data-delay="50" data-tooltip="Recommended Size: 200 (W) x 200 (H) with White Background (Optional)">
+                                <div class="smlogo-display-container tooltipped" data-position="top" data-tooltip="Recommended Size: 200 (W) x 200 (H) with White Background (Optional)">
                                     <img id="smlogo-display" src="@if($company){{ \App\Library\Poowf\Unicorn::getStorageFile($company->smlogo, [200,200]) }}@else{!! '//via.placeholder.com/200x200' !!}@endif"  height="100">
                                     <span class="text-content"><span id="smlogo-upload">Change?</span></span>
                                 </div>
@@ -173,8 +173,8 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            $('#country_code').selectize({});
-            $('#timezone').selectize({});
+            Unicorn.initSelectize('#country_code');
+            Unicorn.initSelectize('#timezone');
             Unicorn.initPhoneInput('#phone');
             Unicorn.initParsleyValidation('#edit-company');
             Unicorn.initImageUpload('#logo', '#logo-upload','#logo-display');

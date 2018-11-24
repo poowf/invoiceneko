@@ -73,7 +73,7 @@
                 <i class="large material-icons">menu</i>
             </a>
             <ul>
-                <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Duplicate Quote">
+                <li class="tooltipped" data-position="top" data-tooltip="Duplicate Quote">
                     <form method="post" action="{{ route('quote.duplicate', [ 'quote' => $quote, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form">
                         {{ csrf_field() }}
                         <button class="btn blue darken-3 waves-effect waves-dark null-btn" type="submit">
@@ -81,7 +81,7 @@
                         </button>
                     </form>
                 </li>
-                <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Archive Quote">
+                <li class="tooltipped" data-position="top" data-tooltip="Archive Quote">
                     <form method="post" action="{{ route('quote.archive', [ 'quote' => $quote, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form">
                         {{ method_field('PATCH') }}
                         {{ csrf_field() }}
@@ -90,13 +90,13 @@
                         </button>
                     </form>
                 </li>
-                <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Quote">
+                <li class="tooltipped" data-position="top" data-tooltip="Edit Quote">
                     <a href="{{ route('quote.edit', [ 'quote' => $quote, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="btn light-blue waves-effect waves-dark">
                         <i class="material-icons">edit</i>
                     </a>
                 </li>
                 @can('delete', $quote)
-                <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Quote">
+                <li class="tooltipped" data-position="top" data-tooltip="Delete Quote">
                     <a href="#" data-id="{{ $quote->id }}" class="quote-delete-btn btn red waves-effect waves-dark">
                         <i class="material-icons">delete</i>
                     </a>

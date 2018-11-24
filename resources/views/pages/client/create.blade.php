@@ -26,7 +26,7 @@
                         <div class="row">
                             <div class="input-field col s12">
                                 <div class="file-field">
-                                    <div class="btn btn-link tooltipped" data-position="left" data-delay="50" data-tooltip="Recommended Size: 500 (W) x 500 (H) with White Background (Optional)">
+                                    <div class="btn btn-link tooltipped" data-position="left" data-tooltip="Recommended Size: 500 (W) x 500 (H) with White Background (Optional)">
                                         <span>File</span>
                                         <input id="logo" name="logo" type="file" accept="image/*" data-maxsize="10M"/>
                                     </div>
@@ -122,6 +122,9 @@
                                     <option value="mrs" @if(old('contactsalutation') == "mrs") selected @endif>Mrs.</option>
                                     <option value="mdm" @if(old('contactsalutation') == "mdm") selected @endif>Mdm.</option>
                                     <option value="miss" @if(old('contactsalutation') == "miss") selected @endif>Miss.</option>
+                                    <option value="miss" @if(old('contactsalutation') == "dr") selected @endif>Dr.</option>
+                                    <option value="miss" @if(old('contactsalutation') == "prof") selected @endif>Prof.</option>
+                                    <option value="miss" @if(old('contactsalutation') == "mx") selected @endif>Mx.</option>
                                 </select>
                                 <label for="contactsalutation" class="label-validation">Salutation</label>
                                 <span class="helper-text"></span>
@@ -168,9 +171,8 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            $('#country_code').selectize({});
-            $('#contactsalutation').selectize({});
-
+            Unicorn.initSelectize('#country_code');
+            Unicorn.initSelectize('#contactsalutation');
             Unicorn.initPhoneInput('#phone');
             Unicorn.initPhoneInput('#contactphone');
             Unicorn.initParsleyValidation('#create-client');

@@ -47,8 +47,8 @@
                                             @can('owner', app('request')->route('company'))
                                                 <td>
                                                     @if($role->name != 'global-administrator' && $role->name != 'administrator' && $role->name != 'user')
-                                                    <a href="{{ route('company.roles.edit', [ 'role' => $role->name, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Role"><i class="material-icons">mode_edit</i></a>
-                                                    <a href="#" data-id="{{ $role->title }}" class="role-delete-btn tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Role"><i class="material-icons">delete</i></a>
+                                                    <a href="{{ route('company.roles.edit', [ 'role' => $role->name, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-tooltip="Edit Role"><i class="material-icons">mode_edit</i></a>
+                                                    <a href="#" data-id="{{ $role->title }}" class="role-delete-btn tooltipped" data-position="top" data-tooltip="Delete Role"><i class="material-icons">delete</i></a>
                                                     @endif
                                                 </td>
                                             @endcan

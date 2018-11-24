@@ -175,8 +175,9 @@ class Quote extends Model
         }
 
         $subtotal = $this->calculatesubtotal(false);
+        $subtotalWithTax = $subtotal * $tax;
 
-        $tax = ($subtotal * $tax)/100;
+        $tax = ($subtotalWithTax != 0) ? $subtotalWithTax/100 : 0;
 
         if ($moneyformat)
         {
@@ -200,8 +201,9 @@ class Quote extends Model
         }
 
         $subtotal = $this->calculatesubtotal(false);
+        $totalWithTax = $subtotal * (100 + $tax);
 
-        $total = ($subtotal * (100 + $tax))/100;
+        $total = ($totalWithTax != 0) ? $totalWithTax/100 : 0;
 
         if ($moneyformat)
         {

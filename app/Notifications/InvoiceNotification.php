@@ -74,7 +74,8 @@ class InvoiceNotification extends Notification implements ShouldQueue
         return [
             'invoice_id' => $this->invoice->id,
             'nice_invoice_id' => $this->invoice->nice_invoice_id,
-            'clientname' => $this->invoice->client->companyname
+            'clientname' => $this->invoice->client->companyname,
+            'email' => $this->invoice->client->contactemail
         ];
     }
 }

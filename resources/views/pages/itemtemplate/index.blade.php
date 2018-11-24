@@ -63,19 +63,19 @@
                                         <td>{{ $itemTemplate->price }}</td>
                                         <td>
                                             @can('view', $itemTemplate)
-                                            <a href="{{ route('itemtemplate.show', [ 'itemtemplate' => $itemTemplate, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Item Template"><i class="material-icons">remove_red_eye</i></a>
+                                            <a href="{{ route('itemtemplate.show', [ 'itemtemplate' => $itemTemplate, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-tooltip="View Item Template"><i class="material-icons">remove_red_eye</i></a>
                                             @endcan
                                             @can('update', $itemTemplate)
-                                            <form method="post" action="{{ route('itemtemplate.duplicate', [ 'itemtemplate' => $itemTemplate, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form tooltipped" data-position="top" data-delay="50" data-tooltip="Duplicate Item Template">
+                                            <form method="post" action="{{ route('itemtemplate.duplicate', [ 'itemtemplate' => $itemTemplate, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form tooltipped" data-position="top" data-tooltip="Duplicate Item Template">
                                                 {{ csrf_field() }}
                                                 <button class="null-btn" type="submit"><i class="material-icons">control_point_duplicate</i></button>
                                             </form>
                                             @endcan
                                             @can('update', $itemTemplate)
-                                            <a href="{{ route('itemtemplate.edit', [ 'itemtemplate' => $itemTemplate, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Item Template"><i class="material-icons">mode_edit</i></a>
+                                            <a href="{{ route('itemtemplate.edit', [ 'itemtemplate' => $itemTemplate, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-tooltip="Edit Item Template"><i class="material-icons">mode_edit</i></a>
                                             @endcan
                                             @can('delete', $itemTemplate)
-                                            <a href="#" data-id="{{ $itemTemplate->id }}" class="itemtemplate-delete-btn tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Item Template"><i class="material-icons">delete</i></a>
+                                            <a href="#" data-id="{{ $itemTemplate->id }}" class="itemtemplate-delete-btn tooltipped" data-position="top" data-tooltip="Delete Item Template"><i class="material-icons">delete</i></a>
                                             @endcan
                                         </td>
                                     </tr>

@@ -80,7 +80,10 @@
         $(function() {
             $('#mode').selectize({
                 create: true,
-                sortField: 'text'
+                sortField: 'text',
+                onChange: function(value, isOnInitialize) {
+                    this.$input.parsley().validate();
+                }
             });
 
             $('.datepicker').datepicker({
@@ -97,7 +100,7 @@
                 $(this).val(parseFloat($(this).val()).toFixed(2));
             });
 
-            $('#invoice_id').selectize();
+            Unicorn.initSelectize('#invoice_id');
 
             Unicorn.initParsleyValidation('#create-payment');
         });

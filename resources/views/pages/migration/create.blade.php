@@ -62,7 +62,7 @@
                         <form id="import-contact" method="post" enctype="multipart/form-data" action="{{ route('migration.import.contact') }}">
                             <div class="input-field col s12 m8">
                                 <div class="file-field input-field">
-                                    <div class="btn btn-link tooltipped" data-position="left" data-delay="50" data-tooltip="Duplicate Contacts will not be imported">
+                                    <div class="btn btn-link tooltipped" data-position="left" data-tooltip="Duplicate Contacts will not be imported">
                                         <span>File</span>
                                         <input id="contactimport" name="contactimport" type="file" accept="text/csv" data-maxsize="10M"/>
                                     </div>
@@ -85,7 +85,7 @@
                         <form id="import-invoice" method="post" enctype="multipart/form-data" action="{{ route('migration.import.invoice') }}">
                             <div class="input-field col s12 m8">
                                 <div class="file-field input-field">
-                                    <div class="btn btn-link tooltipped" data-position="left" data-delay="50" data-tooltip="Duplicate Invoices will not be imported">
+                                    <div class="btn btn-link tooltipped" data-position="left" data-tooltip="Duplicate Invoices will not be imported">
                                         <span>File</span>
                                         <input id="invoiceimport" name="invoiceimport" type="file" accept="text/csv" data-maxsize="10M"/>
                                     </div>
@@ -108,7 +108,7 @@
                         <form id="import-payment" method="post" enctype="multipart/form-data" action="{{ route('migration.import.payment') }}">
                             <div class="input-field col s12 m8">
                                 <div class="file-field input-field">
-                                    <div class="btn btn-link tooltipped" data-position="left" data-delay="50" data-tooltip="Duplicate Payments will not be imported">
+                                    <div class="btn btn-link tooltipped" data-position="left" data-tooltip="Duplicate Payments will not be imported">
                                         <span>File</span>
                                         <input id="paymentimport" name="paymentimport" type="file" accept="text/csv" data-maxsize="10M"/>
                                     </div>

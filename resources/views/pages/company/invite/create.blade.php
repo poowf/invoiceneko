@@ -61,7 +61,7 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            $('.role-selector').selectize({});
+            Unicorn.initSelectize('.role-selector');
             Unicorn.initParsleyValidation('#company-invite-user');
         });
     </script>

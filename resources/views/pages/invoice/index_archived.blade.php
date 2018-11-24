@@ -76,9 +76,9 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{ route('invoice.show', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Invoice"><i class="material-icons">remove_red_eye</i></a>
-                                            @if(!$invoice->isLocked())<a href="{{ route('invoice.edit', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Invoice"><i class="material-icons">mode_edit</i></a>@endif
-                                            <a href="#" data-id="{{ $invoice->id }}" class="invoice-delete-btn tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Invoice"><i class="material-icons">delete</i></a>
+                                            <a href="{{ route('invoice.show', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-tooltip="View Invoice"><i class="material-icons">remove_red_eye</i></a>
+                                            @if(!$invoice->isLocked())<a href="{{ route('invoice.edit', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-tooltip="Edit Invoice"><i class="material-icons">mode_edit</i></a>@endif
+                                            <a href="#" data-id="{{ $invoice->id }}" class="invoice-delete-btn tooltipped" data-position="top" data-tooltip="Delete Invoice"><i class="material-icons">delete</i></a>
                                         </td>
                                     </tr>
                                 @endforeach
