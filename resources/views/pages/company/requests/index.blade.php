@@ -47,11 +47,11 @@
                                             <td>{{ $request->statusText() }}</td>
                                             @can('owner', app('request')->route('company'))
                                                 <td>
-                                                    <form method="post" action="{{ route('company.requests.approve', [ 'companyuserrequest' => $request->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form tooltipped" data-position="top" data-delay="50" data-tooltip="Approve User">
+                                                    <form method="post" action="{{ route('company.requests.approve', [ 'companyuserrequest' => $request->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form tooltipped" data-position="top" data-tooltip="Approve User">
                                                         {{ csrf_field() }}
                                                         <button class="null-btn" type="submit"><i class="material-icons">check</i></button>
                                                     </form>
-                                                    <form method="post" action="{{ route('company.requests.reject', [ 'companyuserrequest' => $request->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form tooltipped" data-position="top" data-delay="50" data-tooltip="Reject User">
+                                                    <form method="post" action="{{ route('company.requests.reject', [ 'companyuserrequest' => $request->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form tooltipped" data-position="top" data-tooltip="Reject User">
                                                         {{ csrf_field() }}
                                                         <button class="null-btn" type="submit"><i class="material-icons">close</i></button>
                                                     </form>

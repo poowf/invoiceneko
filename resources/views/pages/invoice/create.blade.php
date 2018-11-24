@@ -51,7 +51,7 @@
                         <div class="input-field col s12">
                             <label for="notify" class="label-validation">Auto-Notify</label>
                             <div class="switch mtop20">
-                                <label class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Automatically send Invoice to customers on Invoice Date">
+                                <label class="tooltipped" data-position="bottom" data-tooltip="Automatically send Invoice to customers on Invoice Date">
                                     No
                                     <input id="notify" name="notify" type="checkbox">
                                     <span class="lever"></span>

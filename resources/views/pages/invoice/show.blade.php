@@ -121,13 +121,13 @@
             </a>
             <ul>
                 @can('create', \App\Models\Payment::class)
-                <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Log Payment">
+                <li class="tooltipped" data-position="top" data-tooltip="Log Payment">
                     <a class="btn btn-link waves-effect waves-dark" href="{{ route('payment.create', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}">
                         <i class="material-icons">attach_money</i>
                     </a>
                 </li>
                 @endcan
-                <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Duplicate Invoice">
+                <li class="tooltipped" data-position="top" data-tooltip="Duplicate Invoice">
                     <form method="post" action="{{ route('invoice.duplicate', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form">
                         {{ csrf_field() }}
                         <button class="btn blue darken-3 waves-effect waves-dark null-btn" type="submit">
@@ -135,7 +135,7 @@
                         </button>
                     </form>
                 </li>
-                <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Send Notification">
+                <li class="tooltipped" data-position="top" data-tooltip="Send Notification">
                     <form method="post" action="{{ route('invoice.send', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form">
                         {{ csrf_field() }}
                         <button class="btn blue-grey waves-effect waves-dark null-btn" type="submit">
@@ -143,7 +143,7 @@
                         </button>
                     </form>
                 </li>
-                <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Archive Invoice">
+                <li class="tooltipped" data-position="top" data-tooltip="Archive Invoice">
                     <form method="post" action="{{ route('invoice.archive', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form">
                         {{ method_field('PATCH') }}
                         {{ csrf_field() }}
@@ -153,14 +153,14 @@
                     </form>
                 </li>
                 @if(!$invoice->isLocked())
-                <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Invoice">
+                <li class="tooltipped" data-position="top" data-tooltip="Edit Invoice">
                     <a href="@if(is_null($invoice->client_id)){{ route('invoice.adhoc.edit', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}@else{{ route('invoice.edit', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}@endif" class="btn light-blue waves-effect waves-dark">
                         <i class="material-icons">edit</i>
                     </a>
                 </li>
                 @endif
                 @can('delete', $invoice)
-                <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Invoice">
+                <li class="tooltipped" data-position="top" data-tooltip="Delete Invoice">
                     <a href="#" data-id="{{ $invoice->id }}" class="invoice-delete-btn btn red waves-effect waves-dark">
                         <i class="material-icons">delete</i>
                     </a>
@@ -328,7 +328,7 @@
                                         <td>{{ $sibling->nice_invoice_id }}</td>
                                         <td>{{ $sibling->date->format('d F, Y')  }}</td>
                                         <td>S${{ $sibling->calculatetotal() }}</td>
-                                        <td><a href="{{ route('invoice.show', [ 'invoice' => $sibling->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="btn btn-link waves-effect waves-dark tooltipped" data-position="top" data-delay="50" data-tooltip="View Invoice">View</a></td>
+                                        <td><a href="{{ route('invoice.show', [ 'invoice' => $sibling->id, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="btn btn-link waves-effect waves-dark tooltipped" data-position="top" data-tooltip="View Invoice">View</a></td>
                                     </tr>
                                 @endforeach
                             </tbody>

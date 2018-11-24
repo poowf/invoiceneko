@@ -72,7 +72,7 @@
                         <div class="row">
                             <div class="logo-container input-field col s12">
                                 <label for="logo-display" class="label-validation">Logo</label>
-                                <div class="logo-display-container tooltipped" data-position="top" data-delay="50" data-tooltip="Recommended Size: 500 (W) x 500 (H) with White Background (Optional)">
+                                <div class="logo-display-container tooltipped" data-position="top" data-tooltip="Recommended Size: 500 (W) x 500 (H) with White Background (Optional)">
                                     <img id="logo-display" src="@if($client){{ \App\Library\Poowf\Unicorn::getStorageFile($client->logo, [500, 500]) }}@else{!! '//via.placeholder.com/500x500' !!}@endif">
                                     <span class="text-content"><span id="logo-upload">Change?</span></span>
                                 </div>

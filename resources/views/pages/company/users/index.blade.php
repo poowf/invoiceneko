@@ -56,8 +56,8 @@
                                             @can('owner', app('request')->route('company'))
                                                 <td>
                                                     @if($user->id != auth()->user()->id)
-                                                        <a href="{{ route('company.users.edit', [ 'user' => $user, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit User"><i class="material-icons">mode_edit</i></a>
-                                                        <a href="" data-id="{{ $user->id }}"  class="tooltipped user-delete-btn" data-position="top" data-delay="50" data-tooltip="Revoke User Access"><i class="material-icons">remove_circle</i></a>
+                                                        <a href="{{ route('company.users.edit', [ 'user' => $user, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-tooltip="Edit User"><i class="material-icons">mode_edit</i></a>
+                                                        <a href="" data-id="{{ $user->id }}"  class="tooltipped user-delete-btn" data-position="top" data-tooltip="Revoke User Access"><i class="material-icons">remove_circle</i></a>
                                                     @endif
                                                 </td>
                                             @endcan

@@ -54,7 +54,7 @@
                         <div class="row">
                             @for($i = 0; $i < $permissions->count(); $i++)
                                 @if($i != 0 && $permissions[$i]->type != $permissions[$i - 1]->type)
-                                    <div class="col s12 mtop20 all-permission-selector tooltipped" data-permission-type="{{ str_slug(strtolower($permissions[$i]->type)) }}" data-position="top" data-delay="50" data-tooltip="Click here to turn on all permissions">
+                                    <div class="col s12 mtop20 all-permission-selector tooltipped" data-permission-type="{{ str_slug(strtolower($permissions[$i]->type)) }}" data-position="top" data-tooltip="Click here to turn on all permissions">
                                         <h6>{{ $permissions[$i]->type }}</h6>
                                         {{--<div class="switch all-permissions mtop10">--}}
                                         {{--<label>--}}

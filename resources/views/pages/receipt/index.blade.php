@@ -58,7 +58,7 @@
                                         <td>{{ $receipt->invoice->nice_invoice_id  }}</td>
                                         <td>
                                             @can('view', $receipt)
-                                                <a href="{{ route('receipt.show', [ 'receipt' => $receipt, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Receipt"><i class="material-icons">remove_red_eye</i></a>
+                                                <a href="{{ route('receipt.show', [ 'receipt' => $receipt, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-tooltip="View Receipt"><i class="material-icons">remove_red_eye</i></a>
                                             @endcan
                                         </td>
                                     </tr>

@@ -71,7 +71,10 @@
     $(function() {
         $('.collapsible').collapsible();
         $('.sidenav').sidenav();
-        $('.tooltipped').tooltip();
+        $('.tooltipped').tooltip({
+            exitDelay: 0,
+            enterDelay: 200
+        });
         $('.tabs').tabs();
         $('.modal').modal();
         $('.fixed-action-btn').floatingActionButton({
@@ -104,7 +107,7 @@
                     ])
                 @else
                     {{-- 5000 is the duration of the toast, replace with text for unlimited duration --}}
-                    M.toast({ html: "{!! $message['message'] !!} <i class='material-icons'>clear</i>", displayLength: "poowf", classes: "{{ $message['level'] }}"});
+                    M.toast({ html: "{!! $message['message'] !!} <i class='material-icons'>clear</i>", displayLength: "6000", classes: "{{ $message['level'] }}"});
                 @endif
             @endforeach
             {{ session()->forget('flash_notification') }}
@@ -132,11 +135,11 @@
                     subscriptionType: 'pro'
                 });
 
-                Rollbar.configure({
-                    transform: function (obj) {
-                        obj.sessionURL = LogRocket.sessionURL;
-                    },
-                });
+                // Rollbar.configure({
+                //     transform: function (obj) {
+                //         obj.sessionURL = LogRocket.sessionURL;
+                //     },
+                // });
             @endif
         @endif
     });
