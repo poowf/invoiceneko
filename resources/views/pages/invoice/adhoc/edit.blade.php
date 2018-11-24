@@ -194,7 +194,7 @@
                 }
             });
 
-            $('#country_code').selectize({});
+            Unicorn.initSelectize('#country_code');
 
             $('#invoice-item-add').on('click', function() {
                 initInvoiceItem(++invoiceitemcount, 'invoice-items-container');
@@ -218,7 +218,7 @@
                 event.preventDefault();
                 if(invoiceitemcount == 0)
                 {
-                    M.toast({ html: "Unable to delete the last invoice item", displayLength: "poowf", classes: "error"});
+                    M.toast({ html: "Unable to delete the last invoice item", displayLength: "6000", classes: "error"});
                     return;
                 }
                 $('#delete-confirmation').modal('open');

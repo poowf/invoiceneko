@@ -86,7 +86,7 @@
         $(function() {
 
             @if(!$company)
-                M.toast({ html: "You need to fill in your company information first", displayLength: "poowf", classes: "error"});
+                M.toast({ html: "You need to fill in your company information first", displayLength: "6000", classes: "error"});
             @endif
 
             Unicorn.initParsleyValidation('#edit-address');

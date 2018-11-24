@@ -159,7 +159,7 @@
                 }
             });
 
-            $('#country_code').selectize({});
+            Unicorn.initSelectize('#country_code');
             initElements();
 
             $('#invoice-item-add').on('click', function() {
@@ -182,6 +182,9 @@
                     valueField: 'name',
                     labelField: 'name',
                     searchField: ['name'],
+                    onChange: function(value, isOnInitialize) {
+                        this.$input.parsley().validate();
+                    },
                     options: [
                             @foreach($itemtemplates as $itemtemplate){ id:'{{ $itemtemplate->id }}', name:'{{ $itemtemplate->name }}' },@endforeach
                     ],
