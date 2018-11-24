@@ -34,6 +34,7 @@ class OldInvoice extends Model
         'total',
         'status',
         'netdays',
+        'client_data',
         'client_id',
         'company_id',
     ];
@@ -88,6 +89,11 @@ class OldInvoice extends Model
     public function current_invoice()
     {
         return $this->belongsTo('App\Models\Invoice', 'invoice_id');
+    }
+
+    public function getClient()
+    {
+        return ($this->client) ? $this->client: (object) json_decode($this->client_data);
     }
 
     public function calculatesubtotal($moneyformat = true)
@@ -172,12 +178,14 @@ class OldInvoice extends Model
     public function generatePDFView()
     {
         $invoice = $this;
-        $pdf = PDF::loadView('pdf.invoice', compact('invoice'))
+        $client = $this->getClient();
+
+        $pdf = PDF::loadView('pdf.invoice', compact('invoice', 'client'))
             ->setPaper('a4')
-            ->setOption('margin-bottom', '0mm')
-            ->setOption('margin-top', '0mm')
-            ->setOption('margin-right', '0mm')
-            ->setOption('margin-left', '0mm');
+            ->setOption('margin-bottom', '10mm')
+            ->setOption('margin-top', '10mm')
+            ->setOption('margin-right', '10mm')
+            ->setOption('margin-left', '10mm');
 
         return $pdf;
     }

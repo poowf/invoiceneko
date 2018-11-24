@@ -185,6 +185,11 @@ class Invoice extends Model
         return $this->hasMany(OldInvoice::class);
     }
 
+    public function getClient()
+    {
+        return ($this->client) ? $this->client: (object) json_decode($this->client_data);
+    }
+
     public function isLocked()
     {
         if(!is_null($this->payment_complete_date))
@@ -398,7 +403,8 @@ class Invoice extends Model
     public function generatePDFView()
     {
         $invoice = $this;
-        $pdf = PDF::loadView('pdf.invoice', compact('invoice'))
+        $client = $this->getClient();
+        $pdf = PDF::loadView('pdf.invoice', compact('invoice', 'client'))
             ->setPaper('a4')
             ->setOption('margin-bottom', '10mm')
             ->setOption('margin-top', '10mm')

@@ -101,7 +101,7 @@
                 @endcan
                 @can('update', $invoice)
                 @if(!$invoice->isLocked())
-                <a href="{{ route('invoice.edit', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="btn light-blue waves-effect waves-dark">
+                <a href="@if(is_null($invoice->client_id)){{ route('invoice.adhoc.edit', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}@else{{ route('invoice.edit', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}@endif" class="btn light-blue waves-effect waves-dark">
                     Edit
                 </a>
                 @endif
@@ -154,7 +154,7 @@
                 </li>
                 @if(!$invoice->isLocked())
                 <li class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Invoice">
-                    <a href="{{ route('invoice.edit', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="btn light-blue waves-effect waves-dark">
+                    <a href="@if(is_null($invoice->client_id)){{ route('invoice.adhoc.edit', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}@else{{ route('invoice.edit', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}@endif" class="btn light-blue waves-effect waves-dark">
                         <i class="material-icons">edit</i>
                     </a>
                 </li>
@@ -238,7 +238,7 @@
                             <p>{{ $invoice->updated_at->format('h:i:s a') }}</p>
                             <span class="alt-badge info mtop20">Current Version</span>
                             @can('update', $invoice)
-                            @if(!$invoice->isLocked())<a href="{{ route('invoice.edit', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="btn btn-theme full-width mtop20">Edit</a>@endif
+                            @if(!$invoice->isLocked())<a href="@if(is_null($invoice->client_id)){{ route('invoice.adhoc.edit', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}@else{{ route('invoice.edit', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}@endif" class="btn btn-theme full-width mtop20">Edit</a>@endif
                             @else
                             <a href="{{ route('invoice.show', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="btn btn-theme full-width mtop20">View</a>
                             @endcan

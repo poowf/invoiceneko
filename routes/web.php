@@ -151,7 +151,10 @@ Route::group(['middleware' => ['auth', '2fa']], function() {
             Route::delete('/invoice/{invoice}/destroy', 'InvoiceController@destroy')->name('invoice.destroy')->middleware('can:delete,invoice');
             Route::get('/invoice/{invoice}/siblings/check', 'InvoiceController@checkSiblings')->name('invoice.siblings.check')->middleware('can:update,invoice');
 
-            Route::get('/invoice/adhoc/create', 'InvoiceController@adhoccreate')->name('invoice.adhoc.create')->middleware('can:create, App\Models\Invoice');
+            Route::get('/invoice/adhoc/create', 'AdhocInvoiceController@create')->name('invoice.adhoc.create')->middleware('can:create, App\Models\Invoice');
+            Route::post('/invoice/adhoc/create', 'AdhocInvoiceController@store')->name('invoice.adhoc.store')->middleware('can:create, App\Models\Invoice');
+            Route::get('/invoice/adhoc/{invoice}/edit', 'AdhocInvoiceController@edit')->name('invoice.adhoc.edit')->middleware('can:update,invoice');
+            Route::patch('/invoice/adhoc/{invoice}/edit', 'AdhocInvoiceController@update')->name('invoice.adhoc.update')->middleware('can:update,invoice');
 
             /* Receipt */
             Route::post('/invoice/{invoice}/receipt', 'ReceiptController@generate')->name('receipt.generate')->middleware('can:create, App\Models\Receipt');
