@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(\App\Models\InvoiceEvent::class, function (Faker $faker) {
+$factory->define(\App\Models\InvoiceRecurrence::class, function (Faker $faker) {
     return [
         'time_interval' => '3',
         'time_period' => 'week',

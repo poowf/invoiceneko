@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
 
-class InvoiceEvent extends Model
+class InvoiceRecurrence extends Model
 {
     use SoftDeletes, CascadeSoftDeletes;
 
@@ -16,7 +16,7 @@ class InvoiceEvent extends Model
      *
      * @var string
      */
-    protected $table = 'invoice_events';
+    protected $table = 'invoice_recurrences';
 
     public function company()
     {
@@ -25,11 +25,11 @@ class InvoiceEvent extends Model
 
     public function invoices()
     {
-        return $this->hasMany('App\Models\Invoice', 'invoice_event_id');
+        return $this->hasMany('App\Models\Invoice', 'invoice_recurrence_id');
     }
 
     public function template()
     {
-        return $this->hasOne('App\Models\InvoiceTemplate', 'invoice_event_id');
+        return $this->hasOne('App\Models\InvoiceTemplate', 'invoice_recurrence_id');
     }
 }

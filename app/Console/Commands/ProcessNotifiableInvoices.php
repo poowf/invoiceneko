@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Invoice;
-use App\Models\InvoiceEvent;
+use App\Models\InvoiceRecurrence;
 use App\Notifications\InvoiceNotification;
 use Carbon\Carbon;
 use DateTimeZone;

@@ -210,20 +210,20 @@
                         </dd>
                     </dl>
                 </div>
-                @if($event)
+                @if($recurrence)
                 <h3>Recurring Details</h3>
                 <div id="recurring-details-panel" class="card-panel">
                     <dl>
                         <dt>Repeats</dt>
-                        <dd>Every {{ $event->time_interval . ' ' . ucwords($event->time_period) }}</dd>
+                        <dd>Every {{ $recurrence->time_interval . ' ' . ucwords($recurrence->time_period) }}</dd>
                         <dt>Until</dt>
                         <dd>
-                            @if($event->until_type === 'never')
+                            @if($recurrence->until_type === 'never')
                                 {{ 'The End of Time' }}
-                            @elseif($event->until_type == 'occurence')
-                                {{ 'After ' . $event->until_meta . ' Occurences' }}
-                            @elseif($event->until_type == 'date')
-                                {{ 'On ' . \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $event->until_meta)->format('d F, Y') }}
+                            @elseif($recurrence->until_type == 'occurence')
+                                {{ 'After ' . $recurrence->until_meta . ' Occurences' }}
+                            @elseif($recurrence->until_type == 'date')
+                                {{ 'On ' . \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $recurrence->until_meta)->format('d F, Y') }}
                             @endif
                         </dd>
                     </dl>
