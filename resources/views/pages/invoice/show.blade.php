@@ -299,9 +299,9 @@
                             <tbody>
                                 @foreach($notifications as $key => $notification)
                                     <tr>
-                                        <td>{{ $notification->data['email'] }}</td>
-                                        <td>{{ $notification->created_at->format('d F, Y')  }}</td>
-                                        <td>{{ $notification->read_at }}</td>
+                                        <td>@if(array_key_exists('email', $notification->data)){{ $notification->data['email'] }}@else{{ '-' }}@endif</td>
+                                        <td>{{ $notification->created_at->format('d F, Y') ?? '-'  }}</td>
+                                        <td>{{ $notification->read_at ?? '-' }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
