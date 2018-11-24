@@ -21,7 +21,6 @@ use DateTimeZone;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
-use PragmaRX\Countries\Package\Countries;
 use Log;
 use PDF;
 use Uuid;
@@ -32,7 +31,6 @@ use Recurr\Frequency;
 class InvoiceController extends Controller
 {
     public function __construct(){
-        $this->countries = new Countries();
     }
 
     /**
@@ -160,12 +158,11 @@ class InvoiceController extends Controller
      */
     public function create(Company $company)
     {
-        $clients = $company->clients;
-        $itemtemplates = $company->itemtemplates;
-
         if($company)
         {
             $invoicenumber = $company->niceinvoiceid();
+            $clients = $company->clients;
+            $itemtemplates = $company->itemtemplates;
 
             if ($company->clients->count() == 0)
             {
@@ -325,7 +322,7 @@ class InvoiceController extends Controller
      */
     public function show(Company $company, Invoice $invoice)
     {
-        $client = $invoice->client;
+        $client = $invoice->getClient();
         $histories = $invoice->history()->orderBy('updated_at', 'desc')->get();
         $payments = $invoice->payments;
         $event = $invoice->event;
@@ -390,6 +387,8 @@ class InvoiceController extends Controller
      * @param Company $company
      * @param  \App\Models\Invoice $invoice
      * @return Response
+     * @throws \Recurr\Exception\InvalidArgument
+     * @throws \Recurr\Exception\InvalidRRule
      */
     public function update(UpdateInvoiceRequest $request, Company $company, Invoice $invoice)
     {
@@ -612,7 +611,7 @@ class InvoiceController extends Controller
      */
     public function history(Company $company, Invoice $invoice)
     {
-        $client = $invoice->client;
+        $client = $invoice->getClient();
         $histories = $invoice->history()->orderBy('created_at', 'desc')->get();
 
         return view('pages.invoice.history', compact('invoice', 'client', 'histories'));
@@ -630,33 +629,5 @@ class InvoiceController extends Controller
         $hasSiblings = ($invoice->siblings()) ? true : false;
 
         return response()->json(compact('hasSiblings'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @param Company $company
-     * @return Response
-     */
-    public function adhoccreate(Company $company)
-    {
-        if($company)
-        {
-            if ($company->clients->count() == 0)
-            {
-                return view('pages.invoice.noclients');
-            }
-            else
-            {
-                $invoicenumber = $company->niceinvoiceid();
-                $countries = $this->countries->all();
-
-                return view('pages.invoice.adhoccreate', compact('company', 'invoicenumber', 'countries'));
-            }
-        }
-        else
-        {
-            return view('pages.invoice.nocompany');
-        }
     }
 }

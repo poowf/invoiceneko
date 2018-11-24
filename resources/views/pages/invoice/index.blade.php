@@ -31,7 +31,7 @@
             <div class="col s6 right mtop30">
                 @can('create', \App\Models\Invoice::class)
                 <a href="{{ route('invoice.create', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}" class="btn btn-link waves-effect waves-dark">Create</a>
-                <a href="{{ route('invoice.adhoc.create', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}" class="btn btn-link waves-effect waves-dark disabled">Create Ad-Hoc</a>
+                <a href="{{ route('invoice.adhoc.create', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}" class="btn btn-link waves-effect waves-dark">Create Ad-Hoc</a>
                 @endcan
                 @can('index', \App\Models\Receipt::class)
                     <a href="{{ route('receipt.index', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}" class="btn btn-link waves-effect waves-dark">Receipts</a>
@@ -79,8 +79,8 @@
                                         <td>{{ $invoice->nice_invoice_id }}</td>
                                         <td>${{ $invoice->totalmoneyformat  }}</td>
                                         <td>{{ $invoice->duedate->format('d F, Y') }}</td>
-                                        <td>{{ $invoice->client->companyname }}</td>
-                                        <td>{{ $invoice->client->contactphone }}</td>
+                                        <td>{{ $invoice->getClient()->companyname }}</td>
+                                        <td>{{ $invoice->getClient()->contactphone }}</td>
                                         <td>
                                             @if ($invoice->status == App\Models\Invoice::STATUS_OVERDUE)
                                                 <span class="alt-badge error">{{ $invoice->statustext() }}</span>
@@ -99,7 +99,7 @@
                                             <a href="{{ route('invoice.show', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Invoice"><i class="material-icons">remove_red_eye</i></a>
                                             @endcan
                                             @can('update', $invoice)
-                                            @if(!$invoice->isLocked())<a href="{{ route('invoice.edit', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Invoice"><i class="material-icons">mode_edit</i></a>@endif
+                                            @if(!$invoice->isLocked())<a href="@if(is_null($invoice->client_id)){{ route('invoice.adhoc.edit', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}@else{{ route('invoice.edit', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}@endif" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Invoice"><i class="material-icons">mode_edit</i></a>@endif
                                             @endcan
                                             @can('update', $invoice)
                                             <form method="post" action="{{ route('invoice.duplicate', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form tooltipped" data-position="top" data-delay="50" data-tooltip="Duplicate Invoice">
@@ -143,8 +143,8 @@
                                 <td>{{ $invoice->nice_invoice_id }}</td>
                                 <td>${{ $invoice->totalmoneyformat }}</td>
                                 <td>{{ $invoice->duedate->format('d F, Y') }}</td>
-                                <td>{{ $invoice->client->companyname }}</td>
-                                <td>{{ $invoice->client->contactphone }}</td>
+                                <td>{{ $invoice->getClient()->companyname }}</td>
+                                <td>{{ $invoice->getClient()->contactphone }}</td>
                                 <td>
                                     @if ($invoice->status == App\Models\Invoice::STATUS_OVERDUE)
                                         <span class="alt-badge error">{{ $invoice->statustext() }}</span>
@@ -163,7 +163,7 @@
                                     <a href="{{ route('invoice.show', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Invoice"><i class="material-icons">remove_red_eye</i></a>
                                     @endcan
                                     @can('update', $invoice)
-                                    @if(!$invoice->isLocked())<a href="{{ route('invoice.edit', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Invoice"><i class="material-icons">mode_edit</i></a>@endif
+                                    @if(!$invoice->isLocked())<a href="@if(is_null($invoice->client_id)){{ route('invoice.adhoc.edit', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}@else{{ route('invoice.edit', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}@endif" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Invoice"><i class="material-icons">mode_edit</i></a>@endif
                                     @endcan
                                     @can('update', $invoice)
                                     <form method="post" action="{{ route('invoice.duplicate', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form tooltipped" data-position="top" data-delay="50" data-tooltip="Duplicate Invoice">
@@ -207,8 +207,8 @@
                                 <td>{{ $invoice->nice_invoice_id }}</td>
                                 <td>${{ $invoice->totalmoneyformat  }}</td>
                                 <td>{{ $invoice->duedate->format('d F, Y') }}</td>
-                                <td>{{ $invoice->client->companyname }}</td>
-                                <td>{{ $invoice->client->contactphone }}</td>
+                                <td>{{ $invoice->getClient()->companyname }}</td>
+                                <td>{{ $invoice->getClient()->contactphone }}</td>
                                 <td>
                                     @if ($invoice->status == App\Models\Invoice::STATUS_OVERDUE)
                                         <span class="alt-badge error">{{ $invoice->statustext() }}</span>
@@ -227,7 +227,7 @@
                                     <a href="{{ route('invoice.show', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Invoice"><i class="material-icons">remove_red_eye</i></a>
                                     @endcan
                                     @can('update', $invoice)
-                                    @if(!$invoice->isLocked())<a href="{{ route('invoice.edit', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Invoice"><i class="material-icons">mode_edit</i></a>@endif
+                                    @if(!$invoice->isLocked())<a href="@if(is_null($invoice->client_id)){{ route('invoice.adhoc.edit', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}@else{{ route('invoice.edit', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}@endif" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Invoice"><i class="material-icons">mode_edit</i></a>@endif
                                     @endcan
                                     @can('update', $invoice)
                                     <form method="post" action="{{ route('invoice.duplicate', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form tooltipped" data-position="top" data-delay="50" data-tooltip="Duplicate Invoice">
@@ -271,8 +271,8 @@
                                 <td>{{ $invoice->nice_invoice_id }}</td>
                                 <td>${{ $invoice->totalmoneyformat  }}</td>
                                 <td>{{ $invoice->duedate->format('d F, Y') }}</td>
-                                <td>{{ $invoice->client->companyname }}</td>
-                                <td>{{ $invoice->client->contactphone }}</td>
+                                <td>{{ $invoice->getClient()->companyname }}</td>
+                                <td>{{ $invoice->getClient()->contactphone }}</td>
                                 <td>
                                     @if ($invoice->status == App\Models\Invoice::STATUS_OVERDUE)
                                         <span class="alt-badge error">{{ $invoice->statustext() }}</span>
@@ -291,7 +291,7 @@
                                     <a href="{{ route('invoice.show', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="View Invoice"><i class="material-icons">remove_red_eye</i></a>
                                     @endcan
                                     @can('update', $invoice)
-                                    @if(!$invoice->isLocked())<a href="{{ route('invoice.edit', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Invoice"><i class="material-icons">mode_edit</i></a>@endif
+                                    @if(!$invoice->isLocked())<a href="@if(is_null($invoice->client_id)){{ route('invoice.adhoc.edit', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}@else{{ route('invoice.edit', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}@endif" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Invoice"><i class="material-icons">mode_edit</i></a>@endif
                                     @endcan
                                     @can('update', $invoice)
                                     <form method="post" action="{{ route('invoice.duplicate', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form tooltipped" data-position="top" data-delay="50" data-tooltip="Duplicate Invoice">

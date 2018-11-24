@@ -54,7 +54,8 @@ class OldInvoiceController extends Controller
      */
     public function show(Company $company, OldInvoice $invoice)
     {
-        $client = $invoice->client;
+        $client = $invoice->getClient();
+
         return view('pages.oldinvoice.show', compact('invoice', 'client'));
     }
 
@@ -68,7 +69,7 @@ class OldInvoiceController extends Controller
     public function printview(Company $company, OldInvoice $invoice)
     {
         $pdf = $invoice->generatePDFView();
-        return $pdf->inline(str_slug($invoice->nice_invoice_id . ' - ' . $invoice->created_at) . 'test.pdf');
+        return $pdf->inline(str_slug($invoice->nice_invoice_id . ' - ' . $invoice->created_at) . '.pdf');
     }
 
     /**

@@ -156,10 +156,10 @@
                             <tr>
                                 <td width="250">
                                     <span class="name invoice-bold invoice-text-larger">Bill To: </span>
-                                    <span>{{ $invoice->client->companyname }}</span>
-                                    <span>@if($invoice->client->block){{ $invoice->client->block }} @endif {{ $invoice->client->street ?? 'No Street' }}</span>
-                                    @if($invoice->client->unitnumber)<span>#{{ $invoice->client->unitnumber }}</span>@endif
-                                    <span>{{ $invoice->client->country_code ?? 'No Country' }} {{ $invoice->client->postalcode ?? 'No Postal Code' }}</span>
+                                    <span>{{ $client->companyname }}</span>
+                                    <span>@if($client->block){{ $client->block }} @endif {{ $client->street ?? 'No Street' }}</span>
+                                    @if($client->unitnumber)<span>#{{ $client->unitnumber }}</span>@endif
+                                    <span>{{ $client->country_code ?? 'No Country' }} {{ $client->postalcode ?? 'No Postal Code' }}</span>
                                 </td>
                                 <td width="250">
                                     <img src="{{ asset('/assets/img/lefttoright.png') }}" width="80" height="80" />
