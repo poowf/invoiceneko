@@ -17,7 +17,7 @@ class CompanyUsersManagementTest extends DuskTestCase
      * @return void
      * @throws \Throwable
      */
-    public function test_adding_a_user_to_a_company()
+    public function test_inviting_a_user_to_a_company()
     {
         $company = factory(Company::class)->create();
         //Need to attach the company to the user
@@ -31,49 +31,13 @@ class CompanyUsersManagementTest extends DuskTestCase
                 ->press('SIGN IN')
                 ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->visit('/' . $company->domain_name . '/company/users')
-                ->clickLink('Add User')
-                ->type('username', str_random(10))
-                ->type('email', $faker->unique()->safeEmail)
-                ->type('full_name', $faker->name)
-                ->type('phone', '+658' . $faker->numberBetween($min = 1, $max = 8) . $faker->randomNumber(6, true))
-                ->click('label[for="gender-female"]');
+                ->clickLink('Invite User')
+                ->type('#email_0', $faker->unique()->safeEmail);
             $browser
-                ->script('jQuery("#timezone").selectize()[0].selectize.setValue("UTC");');
+                ->script('jQuery("#roles_0").selectize()[0].selectize.setValue("user");');
             $browser
-                ->script('jQuery("#roles").selectize()[0].selectize.setValue("user");');
-            $browser
-                ->press('ADD')
+                ->press('INVITE')
                 ->assertPresent('#users-table')
-                ->assertPathIs('/' . $company->domain_name . '/company/users');
-            $browser->script('jQuery(".signmeout-btn").click()');
-            $browser->assertPathIs('/signin');
-        });
-    }
-
-    public function test_removing_a_user_from_a_company()
-    {
-        $company = factory(Company::class)->create();
-        //Need to attach the company to the user
-        $company->users()->attach($company->user_id);
-
-        $user = factory(User::class)->create();
-
-        $company->users()->attach($user->id);
-
-        $faker = Faker::create();
-        $this->browse(function (Browser $browser) use ($faker, $company, $user) {
-            $browser->visit('/signin')
-                ->type('username', $company->owner->email)
-                ->type('password', 'secret')
-                ->press('SIGN IN')
-                ->assertPathIs('/' . $company->domain_name . '/dashboard')
-                ->visit('/' . $company->domain_name . '/company/users');
-            $browser
-                ->script("jQuery(\"a[data-tooltip='Remove User'] > i\").click();");
-            $browser
-                ->pause(500)
-                ->press('DELETE')
-                ->assertPresent('#user-container')
                 ->assertPathIs('/' . $company->domain_name . '/company/users');
             $browser->script('jQuery(".signmeout-btn").click()');
             $browser->assertPathIs('/signin');

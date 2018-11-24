@@ -28,12 +28,12 @@
                         @for($i = 0; $i < 5; $i++)
                             <div class="row">
                                 <div class="input-field col s12 l6">
-                                    <input name="email[]" type="email" data-parsley-required="@if($i == 0){{ 'true' }}@else{{ 'false' }}@endif" data-parsley-trigger="change" value="{{ old('email') }}" placeholder="Email">
+                                    <input id="email_{{ $i }}" name="email[]" type="email" data-parsley-required="@if($i == 0){{ 'true' }}@else{{ 'false' }}@endif" data-parsley-trigger="change" value="{{ old('email') }}" placeholder="Email">
                                     <label for="email" class="label-validation">Email</label>
                                     <span class="helper-text"></span>
                                 </div>
                                 <div class="input-field col s12 l6">
-                                    <select name="roles[{{ $i }}][]" class="role-selector" data-parsley-required="@if($i == 0){{ 'true' }}@else{{ 'false' }}@endif" data-parsley-trigger="change" placeholder="Roles" multiple>
+                                    <select id="roles_{{ $i }}" name="roles[{{ $i }}][]" class="role-selector" data-parsley-required="@if($i == 0){{ 'true' }}@else{{ 'false' }}@endif" data-parsley-trigger="change" placeholder="Roles" multiple>
                                         @foreach($roles as $role)
                                             <option value="{{ $role->name }}" @if(old('roles') == $role->name) selected @endif>{{ $role->title }}</option>
                                         @endforeach
