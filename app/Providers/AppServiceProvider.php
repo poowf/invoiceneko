@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Dusk\DuskServiceProvider;
 use Silber\Bouncer\BouncerFacade as Bouncer;
@@ -28,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment('local', 'testing', 'staging', 'dusk')) {
             $this->app->register(DuskServiceProvider::class);
             $this->app->register(DuskBrowserServiceProvider::class);
+            $this->app->register(IdeHelperServiceProvider::class);
         }
 
         Bouncer::runAfterPolicies();

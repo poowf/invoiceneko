@@ -18,7 +18,7 @@
 @stop
 
 @section("content")
-    <div class="mini-container">
+    <div class="wide-container">
         <div id="top-action-container" class="row desktop-only">
             <div class="col s12 mtop30 right">
                 <a href="#" data-id="{{ $quote->id }}" class="quote-share-btn btn btn-link waves-effect waves-dark">

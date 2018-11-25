@@ -15,6 +15,9 @@ yarn-error.log
 .env.dusk.local
 .env.testing
 .phpunit.result.cache
+.phpstorm.meta.php
+_ide_helper.php
+_ide_helper_models.php
 TEST-*.xml
 
 .DS_Store

@@ -39,7 +39,7 @@
 @stop
 
 @section("content")
-    <div class="mini-container">
+    <div class="wide-container">
         <div id="top-action-container" class="row desktop-only">
             <div class="col s12 mtop30 right">
                 <form method="post" action="{{ route('invoice.send', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form">

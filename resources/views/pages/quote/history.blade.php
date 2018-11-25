@@ -12,7 +12,7 @@
 @stop
 
 @section("content")
-    <div class="mini-container">
+    <div class="wide-container">
         <div class="row">
             <div class="col s6">
             </div>
