@@ -34,7 +34,7 @@ class InvoiceTemplateTest extends TestCase
             'netdays' => '20',
             'notify' => '0',
             'client_id' => $client->id,
-            'invoice_event_id' => $invoiceEvent->id
+            'invoice_recurrence_id' => $invoiceEvent->id
         ]);
 
         InvoiceTemplate::reguard();

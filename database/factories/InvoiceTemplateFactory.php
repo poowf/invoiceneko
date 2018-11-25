@@ -10,7 +10,7 @@ $factory->define(\App\Models\InvoiceTemplate::class, function (Faker $faker) {
         'client_id' => function () {
             return factory(\App\Models\Client::class)->create()->id;
         },
-        'invoice_event_id' => function () {
+        'invoice_recurrence_id' => function () {
             return factory(\App\Models\InvoiceRecurrence::class)->create()->id;
         }
     ];

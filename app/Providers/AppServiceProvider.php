@@ -32,6 +32,11 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(IdeHelperServiceProvider::class);
         }
 
+        if ($this->app->environment('production', 'local', 'testing', 'staging')) {
+            $this->app->register(HorizonServiceProvider::class);
+            $this->app->register(TelescopeServiceProvider::class);
+        }
+
         Bouncer::runAfterPolicies();
     }
 }

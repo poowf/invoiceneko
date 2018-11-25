@@ -16,13 +16,13 @@ class InvoiceRecurrenceTest extends TestCase
      *
      * @return void
      */
-    public function test_create_invoice_event()
+    public function test_create_invoice_recurrence()
     {
         $company = factory(Company::class)->create();
 
         InvoiceRecurrence::unguard();
 
-        $invoiceEvent = InvoiceRecurrence::create([
+        $invoiceRecurrence = InvoiceRecurrence::create([
             'time_interval' => '1',
             'time_period' => 'month',
             'until_type' => 'never',
@@ -33,23 +33,23 @@ class InvoiceRecurrenceTest extends TestCase
 
         InvoiceRecurrence::reguard();
 
-        $this->assertEquals($invoiceEvent->company->name, $company->name);
-        $this->assertEquals('FREQ=MONTHLY;INTERVAL=1', $invoiceEvent->rule);
+        $this->assertEquals($invoiceRecurrence->company->name, $company->name);
+        $this->assertEquals('FREQ=MONTHLY;INTERVAL=1', $invoiceRecurrence->rule);
     }
 
-    public function test_update_invoice_event()
+    public function test_update_invoice_recurrence()
     {
-        $invoiceEvent = factory(InvoiceRecurrence::class)->create();
+        $invoiceRecurrence = factory(InvoiceRecurrence::class)->create();
 
-        $this->assertInstanceOf(InvoiceRecurrence::class, $invoiceEvent);
+        $this->assertInstanceOf(InvoiceRecurrence::class, $invoiceRecurrence);
 
-        $invoiceEvent->time_period = 'week';
-        $invoiceEvent->until_type = 'occurence';
-        $invoiceEvent->save();
-        $invoiceEvent->refresh();
+        $invoiceRecurrence->time_period = 'week';
+        $invoiceRecurrence->until_type = 'occurence';
+        $invoiceRecurrence->save();
+        $invoiceRecurrence->refresh();
 
-        $this->assertEquals('week', $invoiceEvent->time_period);
-        $this->assertEquals('occurence', $invoiceEvent->until_type);
+        $this->assertEquals('week', $invoiceRecurrence->time_period);
+        $this->assertEquals('occurence', $invoiceRecurrence->until_type);
 
         $data = [
             'time_interval' => '3',
@@ -60,28 +60,28 @@ class InvoiceRecurrenceTest extends TestCase
 
         $this->expectException(MassAssignmentException::class);
 
-        $invoiceEvent->fill($data);
-        $invoiceEvent->save();
-        $invoiceEvent->refresh();
+        $invoiceRecurrence->fill($data);
+        $invoiceRecurrence->save();
+        $invoiceRecurrence->refresh();
 
-        $this->assertNotEquals('3', $invoiceEvent->time_interval);
-        $this->assertNotEquals('year@example.com', $invoiceEvent->time_period);
-        $this->assertNotEquals('date', $invoiceEvent->until_type);
-        $this->assertNotEquals('2020-10-31 00:00:00', $invoiceEvent->until_meta);
+        $this->assertNotEquals('3', $invoiceRecurrence->time_interval);
+        $this->assertNotEquals('year@example.com', $invoiceRecurrence->time_period);
+        $this->assertNotEquals('date', $invoiceRecurrence->until_type);
+        $this->assertNotEquals('2020-10-31 00:00:00', $invoiceRecurrence->until_meta);
     }
 
 
-    public function test_delete_invoice_event()
+    public function test_delete_invoice_recurrence()
     {
         $company = factory(Company::class)->create();
-        $invoiceEvent = factory(InvoiceRecurrence::class)->create([
+        $invoiceRecurrence = factory(InvoiceRecurrence::class)->create([
             'company_id' => $company->id
         ]);
 
-        $this->assertInstanceOf(InvoiceRecurrence::class, $invoiceEvent);
-        $invoiceEvent = $invoiceEvent->delete();
+        $this->assertInstanceOf(InvoiceRecurrence::class, $invoiceRecurrence);
+        $invoiceRecurrence = $invoiceRecurrence->delete();
 
-        $this->assertEquals('true', json_encode($invoiceEvent));
+        $this->assertEquals('true', json_encode($invoiceRecurrence));
         $this->assertEmpty($company->events);
     }
 }
