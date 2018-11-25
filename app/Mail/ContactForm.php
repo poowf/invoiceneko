@@ -10,6 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class ContactForm extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
+    private $name, $email, $message;
 
     /**
      * Create a new message instance.

@@ -6,6 +6,7 @@ use App\Http\Requests\ContactRequest;
 use App\Library\Poowf\Unicorn;
 use App\Mail\ContactForm;
 use App\Models\Company;
+use Arcanedev\NoCaptcha\Facades\NoCaptcha;
 use Mail;
 
 class MainController extends Controller
