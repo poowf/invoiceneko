@@ -5,21 +5,21 @@
                 <div class="row">
                     <div class="col l6 s12">
                         <div class="col s12 center">
-                            <p><img src="/assets/img/logo-white.png" alt=""></p>
+                            <h2>{{ config('app.name') }}</h2>
                         </div>
                     </div>
                     <div class="col l4 offset-l2 s12">
                         <p class="grey-text text-lighten-3">{{ config('app.name') }} is not a Company. Yet.</p>
                         <ul>
-                            <li><a class="grey-text text-lighten-3" href="">THESE</a></li>
-                            <li><a class="grey-text text-lighten-3" href="">NOT</a></li>
-                            <li><a class="grey-text text-lighten-3" href="">DROIDS</a></li>
-                            <li><a class="grey-text text-lighten-3" href="">LOOKING</a></li>
+                            <li><a class="grey-text text-lighten-3" href="{{ route('about') }}">About</a></li>
+                            <li><a class="grey-text text-lighten-3" href="{{ route('community') }}">Community</a></li>
+                            <li><a class="grey-text text-lighten-3" href="{{ route('terms') }}">Terms & Conditions</a></li>
+                            <li><a class="grey-text text-lighten-3" href="{{ route('privacy') }}">Privacy Policy</a></li>
 
-                            <li><a class="grey-text text-lighten-3" href="">ARE</a></li>
-                            <li><a class="grey-text text-lighten-3" href="">THE</a></li>
-                            <li><a class="grey-text text-lighten-3" href="">YOU'RE</a></li>
-                            <li><a class="grey-text text-lighten-3" href="">FOR</a></li>
+                            <li><a class="grey-text text-lighten-3" href="{{ route('auth.show') }}">Sign In</a></li>
+                            <li><a class="grey-text text-lighten-3" href="{{ route('start') }}">Start Here</a></li>
+                            <li><a class="grey-text text-lighten-3" href="{{ route('pricing') }}">Pricing</a></li>
+                            <li><a class="grey-text text-lighten-3" href="{{ route('contact') }}">Contact</a></li>
                         </ul>
                     </div>
                 </div>

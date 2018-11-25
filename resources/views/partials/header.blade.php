@@ -65,6 +65,7 @@
                                         </li>
                                     </ul>
                                 @else
+                                    <li><a href="{{ route('community') }}">Community</a></li>
                                     <li><a href="{{ route('auth.show') }}">Sign In</a></li>
                                     <li><a href="{{ route('start') }}">Start Here</a></li>
                                 @endif

@@ -11,23 +11,22 @@
 |
 */
 
-Route::get('/mailable', function () {
-    $companyInvite = App\Models\CompanyInvite::find(1);
-    $message = (new App\Notifications\InviteUserNotification($companyInvite))->toMail('test@email.com');
-
-    $markdown = new \Illuminate\Mail\Markdown(view(), config('mail.markdown'));
-
-    return $markdown->render('vendor.notifications.email', $message->toArray());
-});
-
 Route::get('/invoice/view', 'InvoiceController@showwithtoken')->name('invoice.token');
 Route::get('/quote/view', 'QuoteController@showwithtoken')->name('quote.token');
 Route::get('/company/create', 'CompanyController@create')->name('company.create');
 Route::post('/company/create', 'CompanyController@store')->name('company.store');
 
+Route::get('/about', 'MainController@about')->name('about');
+Route::get('/pricing', 'MainController@pricing')->name('pricing');
+Route::get('/terms', 'MainController@terms')->name('terms');
+Route::get('/privacy', 'MainController@privacy')->name('privacy');
+Route::get('/contact', 'MainController@contact')->name('contact');
+Route::post('/contact', 'MainController@contactHandle')->name('contact.handle');
+
 Route::group(['middleware' => ['guest']], function() {
     /* Auth */
     Route::get('/', 'MainController@main')->name('main');
+    Route::get('/community', 'MainController@community')->name('community');
     Route::get('/signin', 'AuthController@show')->name('auth.show');
     Route::post('/signin', 'AuthController@process')->name('auth.process');
     Route::get('/forgot', 'ForgotPasswordController@show')->name('forgot');

@@ -64,15 +64,15 @@ a {
 }
 //a:hover, a:focus {
 //  text-decoration: none;
-//  color: #299a9a;
+//  color: #4da6a6;
 //}
 //:: -moz-selection {
-//  color: #299a9a;
+//  color: #4da6a6;
 //  text-shadow: none;
 //  background: #2B2E31;
 //}
 //:: selection {
-//  color: #299a9a;
+//  color: #4da6a6;
 //  text-shadow: none;
 //  background: #2B2E31;
 //}
@@ -390,6 +390,20 @@ mark {
   box-shadow: none;
 }
 
+.card-header {
+  padding: 0.5em 1.5em 0.3em;
+}
+
+.card-header p {
+  font-size: 1.5em;
+  color: #fff;
+}
+
+.card-header p.version {
+  font-size: 1.2em;
+  color: #ececec;
+}
+
 .prefix-inline {
   position: absolute;
   top: 10px;
@@ -547,11 +561,15 @@ mark {
 /* Accents */
 
 .theme-text {
-  color: #299a9a !important;
+  color: #4da6a6 !important;
 }
 
 .theme-color {
-  background-color: #299a9a !important;
+  background-color: #4da6a6 !important;
+}
+
+.theme-color-secondary {
+  background-color: #585454 !important;
 }
 
 .sidenav-trigger {
@@ -559,19 +577,19 @@ mark {
 }
 
 .sidenav .collapsible-body > ul:not(.collapsible) > li.active, .sidenav.sidenav-fixed .collapsible-body > ul:not(.collapsible) > li.active {
-  background-color: #299a9a;
+  background-color: #4da6a6;
 }
 
 .pagination li.active {
-  background-color: #299a9a;
+  background-color: #4da6a6;
 }
 
 .btn-theme {
-  background-color: #299a9a;
+  background-color: #4da6a6;
 }
 
 .btn-theme:hover, .btn-theme:focus {
-  background-color: #299a9a;
+  background-color: #4da6a6;
   box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
 }
 
@@ -669,17 +687,17 @@ mark {
 }
 
 [type="radio"]:checked + label:after {
-  border: 2px solid #299a9a;
-  background-color: #299a9a;
+  border: 2px solid #4da6a6;
+  background-color: #4da6a6;
 }
 
 :root input:not([type]):focus:not([readonly]), :root input[type=text]:focus:not([readonly]), :root input[type=password]:focus:not([readonly]), :root input[type=email]:focus:not([readonly]), :root input[type=url]:focus:not([readonly]), :root input[type=time]:focus:not([readonly]), :root input[type=date]:focus:not([readonly]), :root input[type=datetime-local]:focus:not([readonly]), :root input[type=tel]:focus:not([readonly]), :root input[type=number]:focus:not([readonly]), :root input[type=search]:focus:not([readonly]), :root textarea.materialize-textarea:focus:not([readonly]) {
-  border-bottom: 1px solid #299a9a;
-  box-shadow: 0 1px 0 0 #299a9a;
+  border-bottom: 1px solid #4da6a6;
+  box-shadow: 0 1px 0 0 #4da6a6;
 }
 
 :root input:not([type]):focus:not([readonly]) + label, :root input[type=text]:focus:not([readonly]) + label, :root input[type=password]:focus:not([readonly]) + label, :root input[type=email]:focus:not([readonly]) + label, :root input[type=url]:focus:not([readonly]) + label, :root input[type=time]:focus:not([readonly]) + label, :root input[type=date]:focus:not([readonly]) + label, :root input[type=datetime-local]:focus:not([readonly]) + label, :root input[type=tel]:focus:not([readonly]) + label, :root input[type=number]:focus:not([readonly]) + label, :root input[type=search]:focus:not([readonly]) + label, :root textarea.materialize-textarea:focus:not([readonly]) + label {
-  color: #299a9a;
+  color: #4da6a6;
 }
 
 /* Element Modifications */
@@ -737,11 +755,11 @@ textarea.valid + label:after {
 }
 
 .switch label input[type=checkbox]:checked + .lever {
-  background-color: #299a9a;
+  background-color: #4da6a6;
 }
 
 .switch label input[type=checkbox]:checked + .lever:after {
-  background-color: #299a9a;
+  background-color: #4da6a6;
 }
 
 #toast-container .toast {
@@ -808,7 +826,7 @@ textarea.valid + label:after {
 
 /* Header */
 nav {
-  background-color: #299a9a;
+  background-color: #4da6a6;
   height: 80px;
 }
 
@@ -942,7 +960,7 @@ nav .dropdown-content.top-arrow li.active form button:before {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: #299a9a;
+  background-color: #4da6a6;
   left: 15px;
   top: 18px;
 }
@@ -987,7 +1005,7 @@ nav .dropdown-content.top-arrow:before {
 }
 
 .sidenav li.sidenav-profile, .sidenav li.sidenav-company {
-  background-color: #299a9a;
+  background-color: #4da6a6;
 }
 
 .sidenav li.sidenav-company .row {
@@ -1025,7 +1043,7 @@ nav .dropdown-content.top-arrow:before {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: #299a9a;
+  background-color: #4da6a6;
   right: 15px;
   top: 18px;
 }
@@ -1072,7 +1090,7 @@ nav .dropdown-content.top-arrow:before {
 /* Footer */
 footer.page-footer {
   margin-top: 0;
-  background-color: #299a9a;
+  background-color: #4da6a6;
 }
 
 footer.page-footer .footer-main {
@@ -1161,7 +1179,7 @@ footer .footer-follow p {
 footer.page-footer .footer-copyright {
   height: 200px;
   position: relative;
-  background-color: #4da6a6;
+  background-color: #299a9a;
 }
 
 /* Everything Else */
@@ -1275,6 +1293,28 @@ label.rbtn-label.invalid:after {
 }
 
 /* Main */
+
+.hero-left-wrapper {
+  text-align: center;
+}
+
+.hero-logo-image {
+  width: 120px;
+}
+
+.hero-header {
+  font-weight: bold;
+}
+
+.hero-description {
+  font-size: 1.3em;
+}
+
+.hero-right-image {
+  text-align: left;
+  height: 350px;
+  max-width: 100%;
+}
 
 .thumbnail {
   display: block;
@@ -1449,10 +1489,25 @@ label.rbtn-label.invalid:after {
   img.force-image-size {
     height: 310px;
   }
+
+  .hero-left-wrapper {
+    text-align: left;
+  }
+
+  .hero-logo-image {
+    width: 150px;
+  }
 }
 
 @media only screen and (min-width: 1200px) {
   img.force-image-size {
     height: 360px;
+  }
+}
+
+@media only screen and (min-width: 1600px) {
+  .mini-container {
+    margin: 0 auto;
+    width: 60%;
   }
 }
