@@ -27,6 +27,7 @@
         "pragmarx/google2fa-laravel": "^0.2.0",
         "pragmarx/recovery": "^0.1.0",
         "predis/predis": "^1.1",
+        "rachidlaasri/laravel-installer": "^4.0",
         "rinvex/countries": "^5.0",
         "rollbar/rollbar-laravel": "^4.0",
         "sentry/sentry-laravel": "^0.11.0",
