@@ -6,9 +6,11 @@ use Log;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class ItemTemplate extends Model
+class ItemTemplate extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     use SoftDeletes, CascadeSoftDeletes;
 
     protected $table = 'item_templates';

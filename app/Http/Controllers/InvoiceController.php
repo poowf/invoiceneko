@@ -195,7 +195,7 @@ class InvoiceController extends Controller
         $invoice->fill($request->all());
         $invoice->client_id = $request->input('client_id');
         $invoice->company_id = $company->id;
-        $invoice->notify = $request->has('notify') ? true : false;
+        $invoice->notify = $request->has('notify') ? 1 : 0;
         $invoice->save();
 
         foreach($request->input('item_name') as $key => $item)
@@ -401,7 +401,7 @@ class InvoiceController extends Controller
         }
 
         $invoice->fill($request->all());
-        $invoice->notify = $request->has('notify') ? true : false;
+        $invoice->notify = $request->has('notify') ? 1 : 0;
 
         $ismodified = false;
 

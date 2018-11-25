@@ -30,7 +30,8 @@
         "simplesoftwareio/simple-qrcode": "^2.0",
         "simshaun/recurr": "^3.0",
         "torann/geoip": "^1.0",
-        "webpatser/laravel-uuid": "^3.0"
+        "webpatser/laravel-uuid": "^3.0",
+        "owen-it/laravel-auditing": "^8.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.1",

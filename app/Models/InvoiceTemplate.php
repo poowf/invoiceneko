@@ -5,9 +5,11 @@ namespace App\Models;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class InvoiceTemplate extends Model
+class InvoiceTemplate extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     use SoftDeletes, CascadeSoftDeletes;
 
     /**

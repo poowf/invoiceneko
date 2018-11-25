@@ -10,9 +10,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Silber\Bouncer\Database\HasRolesAndAbilities;
 use Silber\Bouncer\BouncerFacade as Bouncer;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Company extends Model
+class Company extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     use HasRolesAndAbilities, Notifiable, SoftDeletes, CascadeSoftDeletes, UniqueSlug;
 
     /**

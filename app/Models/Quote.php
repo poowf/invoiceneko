@@ -9,9 +9,11 @@ use Iatstuti\Database\Support\CascadeSoftDeletes;
 
 use PDF;
 use Carbon\Carbon;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Quote extends Model
+class Quote extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     use SoftDeletes, CascadeSoftDeletes;
 
     const STATUS_DRAFT = 1;
@@ -88,13 +90,13 @@ class Quote extends Model
     public function getCreatedAtAttribute($value)
     {
         $date = $this->asDateTime($value);
-        return $date->timezone(auth()->user()->timezone);
+        return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
     public function getUpdatedAtAttribute($value)
     {
         $date = $this->asDateTime($value);
-        return $date->timezone(auth()->user()->timezone);
+        return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
     public function getDateAttribute($value)

@@ -7,14 +7,15 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
-
 use Uuid;
 use Log;
 use PDF;
 use Carbon\Carbon;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Invoice extends Model
+class Invoice extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     use SoftDeletes, CascadeSoftDeletes;
     use Notifiable;
 
@@ -106,13 +107,13 @@ class Invoice extends Model
     public function getCreatedAtAttribute($value)
     {
         $date = $this->asDateTime($value);
-        return $date->timezone(auth()->user()->timezone);
+        return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
     public function getUpdatedAtAttribute($value)
     {
         $date = $this->asDateTime($value);
-        return $date->timezone(auth()->user()->timezone);
+        return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
     public function getDateAttribute($value)
