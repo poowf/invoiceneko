@@ -9,8 +9,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Silber\Bouncer\Database\HasRolesAndAbilities;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-class User extends Authenticatable implements Auditable
+class User extends Authenticatable implements MustVerifyEmail, Auditable
 {
     use \OwenIt\Auditing\Auditable;
     use HasRolesAndAbilities, Notifiable, SoftDeletes, CascadeSoftDeletes;

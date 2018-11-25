@@ -382,7 +382,7 @@ class Invoice extends Model implements Auditable
     {
         if ($regenerate)
         {
-            $token = Uuid::generate(4);
+            $token = Uuid::generate(4)->string;
             $this->share_token = $token;
         }
         else
@@ -393,7 +393,7 @@ class Invoice extends Model implements Auditable
             }
             else
             {
-                $token = Uuid::generate(4);
+                $token = Uuid::generate(4)->string;
                 $this->share_token = $token;
             }
         }

@@ -51,7 +51,7 @@ class CompanyInviteController extends Controller
             {
                 $companyInvite = new CompanyInvite;
                 $companyInvite->email = $invitee;
-                $companyInvite->token = Uuid::generate(4);
+                $companyInvite->token = Uuid::generate(4)->string;
                 $companyInvite->expires_at = Carbon::now()->addDays(2);
                 $companyInvite->roles = json_encode($request->input('roles')[$key]);
                 $company->invites()->save($companyInvite);

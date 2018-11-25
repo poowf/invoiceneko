@@ -285,4 +285,17 @@ class Unicorn
             return null;
         }
     }
+
+    public static function redirectTo()
+    {
+        $routeKey = self::getCompanyKey();
+        $url = '/';
+
+        if($routeKey)
+        {
+            $url = route('dashboard', [ 'company' => $routeKey ]);
+        }
+
+        return $url;
+    }
 }

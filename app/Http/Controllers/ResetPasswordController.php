@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Traits\AuthHelper;
+use App\Library\Poowf\Unicorn;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Password;
+use Illuminate\Foundation\Auth\ResetsPasswords;
 
 class ResetPasswordController extends Controller
 {
-    use AuthHelper;
+    use ResetsPasswords;
 
     public function show(Request $request, $token = null)
     {
@@ -18,42 +18,23 @@ class ResetPasswordController extends Controller
         );
     }
 
-    public function process(Request $request)
+    protected function resetPassword($user, $password)
     {
-        $this->validate(
-            $request,
-            [
-                'token' => 'required',
-                'email' => 'required|email',
-                'password' => 'required|confirmed|min:6',
-            ],
-            []);
+        //Override the method in ResetsPasswords Trait and
+        //Remove Hash::make as the hashing is handled in the user model
+        $user->password = $password;
 
-        // Here we will attempt to reset the user's password. If it is successful we
-        // will update the password on an actual user model and persist it to the
-        // database. Otherwise we will parse the error and return the response.
-        $response = $this->broker()->reset(
-            $request->only(
-                'email', 'password', 'password_confirmation', 'token'
-            ), function ($user, $password) {
+        $user->setRememberToken(str_random(60));
 
-            $user->forceFill([
-                'password' => $password,
-                'remember_token' => str_random(60),
-            ])->save();
+        $user->save();
 
-            Auth::guard()->login($user);
-        }
-        );
+        event(new PasswordReset($user));
 
-        // If the password was successfully reset, we will redirect the user back to
-        // the application's home authenticated view. If there is an error we can
-        // redirect them back to where they came from with their error message.
-        return $response == Password::PASSWORD_RESET
-            ? redirect($this->redirectPath())
-                ->with('status', trans($response))
-            : redirect()->back()
-                ->withInput($request->only('email'))
-                ->withErrors(['email' => trans($response)]);
+        $this->guard()->login($user);
+    }
+
+    public function redirectTo()
+    {
+        return Unicorn::redirectTo();
     }
 }

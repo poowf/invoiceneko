@@ -28,11 +28,11 @@ Route::group(['middleware' => ['guest']], function() {
     Route::get('/', 'MainController@main')->name('main');
     Route::get('/community', 'MainController@community')->name('community');
     Route::get('/signin', 'AuthController@show')->name('auth.show');
-    Route::post('/signin', 'AuthController@process')->name('auth.process');
-    Route::get('/forgot', 'ForgotPasswordController@show')->name('forgot');
-    Route::post('/forgot', 'ForgotPasswordController@process')->name('forgot');
-    Route::get('/reset/{token}', 'ResetPasswordController@show')->name('reset');
-    Route::post('/reset/{token}', 'ResetPasswordController@process')->name('reset');
+    Route::post('/signin', 'AuthController@login')->name('auth.process');
+    Route::get('/forgot', 'ForgotPasswordController@show')->name('forgot.show');
+    Route::post('/forgot', 'ForgotPasswordController@sendResetLinkEmail')->name('forgot.process');
+    Route::get('/reset/{token}', 'ResetPasswordController@show')->name('reset.show');
+    Route::post('/reset/{token}', 'ResetPasswordController@reset')->name('reset.process');
 
     Route::get('/start', 'MainController@start')->name('start');
 
@@ -50,18 +50,24 @@ Route::group(['middleware' => ['guest']], function() {
 });
 
 Route::group(['middleware' => ['auth']], function() {
+    /* CompanyInvite */
+    Route::get('/company/join/{companyinvite}', 'CompanyInviteController@show')->name('company.invite.show');
+    Route::post('/company/join/{companyinvite}', 'CompanyInviteController@join')->name('company.invite.join');
+
+    /* Verification */
+    Route::get('/verification/show', 'VerificationController@show')->name('verification.notice');
+    Route::get('/verification/process/{id}', 'VerificationController@process')->name('verification.verify');
+    Route::get('/verification/resend', 'VerificationController@resend')->name('verification.resend');
+
     Route::get('/user/multifactor/backup', 'UserController@multifactor_backup')->name('user.multifactor.backup');
     Route::post('/user/multifactor/backup', 'UserController@multifactor_backup_validate')->name('user.multifactor.backup_validate');
-    Route::post('/signout', 'AuthController@destroy')->name('auth.destroy');
+    Route::post('/signout', 'AuthController@logout')->name('auth.destroy');
 });
 
-Route::group(['middleware' => ['auth', '2fa']], function() {
+Route::group(['middleware' => ['auth', '2fa', 'verified']], function() {
     Route::post('/multifactor/validate', 'AuthController@multifactor_validate')->name('auth.multifactor.validate');
     Route::post('/company/switch', 'CompanyController@switch')->name('company.switch');
     Route::get('/errors/nocompany', 'MainController@nocompany')->name('nocompany');
-
-    Route::get('/company/join/{companyinvite}', 'CompanyInviteController@show')->name('company.invite.show');
-    Route::post('/company/join/{companyinvite}', 'CompanyInviteController@join')->name('company.invite.join');
 
     Route::group(['prefix' => '{company}'], function() {
         /* User */

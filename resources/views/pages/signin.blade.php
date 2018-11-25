@@ -40,11 +40,11 @@
                             <button id="signin-btn" class="btn btn-link waves-effect waves-light full-width" type="submit" name="action">Sign In</button>
                         </form>
                         <br>
-                        <a href="{{ route("forgot") }}">Forgot Password?</a>
+                        <a href="{{ route('forgot.show') }}">Forgot Password?</a>
                     </div>
                 </div>
                 <p>Don't have an account?</p>
-                <a href="@if(strpos(session()->get('url.intended'), '/company/join') !== false){{ route('user.create') }}@else{{ route('start') }}@endif" class="btn light-blue darken-1 waves-effect waves-dark full-width">Get Started</a>
+                <a href="@if(strpos(session()->get('url.intended'), '/company/join') !== false){{ route('user.create', [ 'hasinvite' => 'true' ]) }}@else{{ route('start') }}@endif" class="btn light-blue darken-1 waves-effect waves-dark full-width">Get Started</a>
             </div>
         </div>
     </div>

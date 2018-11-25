@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Google2FA;
 use PragmaRX\Recovery\Recovery;
 use PragmaRX\Countries\Package\Countries;
+use Illuminate\Auth\Events\Registered;
 
 class UserController extends Controller
 {
@@ -41,6 +42,7 @@ class UserController extends Controller
      */
     public function create(Request $request)
     {
+
         if ($request->query->has('token'))
         {
             $token = $request->query->get('token');
@@ -48,6 +50,12 @@ class UserController extends Controller
             session(['_old_input.full_name' => $companyUserRequest->full_name]);
             session(['_old_input.email' => $companyUserRequest->email]);
             session(['_old_input.phone' => $companyUserRequest->phone]);
+        }
+        elseif (strpos(session()->get('url.intended'), '/company/join') !== false)
+        {
+            $joinUrl = session()->get('url.intended');
+            $joinToken = preg_filter('/.*\/company\/join\//', '', $joinUrl);
+            session(['_old_input.companyinvite' => $joinToken]);
         }
 
         $ipLocation = geoip()->getLocation();
@@ -88,6 +96,7 @@ class UserController extends Controller
             }
         }
         $user->save();
+        event(new Registered($user));
 
         if ($request->query->has('token'))
         {
@@ -111,7 +120,8 @@ class UserController extends Controller
         else if($request->query->has('hasinvite'))
         {
             flash('Sign in to accept the invite', 'success');
-            return redirect()->route('company.invite.show', [ 'companyinvite' => $request->input('companyinvite') ]);
+            return redirect()->route('auth.show');
+//            return redirect()->route('company.invite.show', [ 'companyinvite' => $request->input('companyinvite') ]);
         }
 
         $request->session()->put('user_id', $user->id);

@@ -70,7 +70,7 @@ class QuoteController extends Controller
      */
     public function share(Company $company, Quote $quote)
     {
-        $token = Uuid::generate(4);
+        $token = Uuid::generate(4)->string;
         $quote->share_token = $token;
         $quote->save();
 
