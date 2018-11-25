@@ -35,11 +35,11 @@
     <script type="text/javascript">
         "use strict";
         let _rollbarConfig = {
-            accessToken: "{{ env('ROLLBAR_POST_CLIENT_TOKEN') }}",
+            accessToken: "{{ config('app.rollbar_post_client_token') }}",
             captureUncaught: true,
             captureUnhandledRejections: true,
             payload: {
-                environment: "{{ env('ROLLBAR_ENV') }}"
+                environment: "{{ config('app.rollbar_env') }}"
             }
         };
         // Rollbar Snippet
@@ -68,13 +68,13 @@
                         });
 
                         Sentry.init({
-                            dsn: '{{ env('SENTRY_LARAVEL_DSN') }}'
+                            dsn: '{{ config('app.sentry_laravel_dsn' }}'
                         });
 
                         Sentry.showReportDialog({
                             eventId: '{{ Sentry::getLastEventID() }}',
                             // use the public DSN (dont include your secret!)
-                            dsn: '{{ env('SENTRY_LARAVEL_DSN') }}',
+                            dsn: '{{ config('app.sentry_laravel_dsn') }}',
                             user: {
                                 'name': '{{ $user->full_name ?? '' }}',
                                 'email': '{{ $user->email ?? '' }}',

@@ -122,6 +122,23 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Additional Configuration Values
+    |--------------------------------------------------------------------------
+    |
+    | Due to a change since Laravel 5.2, you cannot call env() from blade files
+    | if you are using php artisan config:cache, store them here instead and
+    | call config(app.key)
+    |
+    */
+
+    'rollbar_token' => env('ROLLBAR_TOKEN'),
+    'rollbar_post_client_token' => env('ROLLBAR_POST_CLIENT_TOKEN'),
+    'rollbar_env' => env('ROLLBAR_ENV'),
+    'sentry_laravel_dsn' => env('SENTRY_LARAVEL_DSN'),
+    'tawkto_embed_key' => env('TAWKTO_EMBED_KEY'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Autoloaded Service Providers
     |--------------------------------------------------------------------------
     |
