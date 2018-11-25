@@ -9,7 +9,7 @@
                         </div>
                     </div>
                     <div class="col l4 offset-l2 s12">
-                        <p class="grey-text text-lighten-3">{{ config('app.name') }} is not a Company. Yet.</p>
+                        <p class="grey-text text-lighten-3">{{ config('app.name') }}</p>
                         <ul>
                             <li><a class="grey-text text-lighten-3" href="{{ route('about') }}">About</a></li>
                             <li><a class="grey-text text-lighten-3" href="{{ route('community') }}">Community</a></li>
@@ -38,9 +38,9 @@
                     <div class="footer-follow">
                         <p>FOLLOW US ON</p>
                         <ul>
-                            <a href="https://www.facebook.com/"><li><i class="mdi mdi-facebook" aria-hidden="true"></i></li></a>
-                            <a href="https://www.twitter.com/"><li><i class="mdi mdi-twitter" aria-hidden="true"></i></li></a>
-                            <a href="https://www.instagram.com/"><li><i class="mdi mdi-instagram" aria-hidden="true"></i></li></a>
+                            <a href="//www.facebook.com/invoiceneko"><li><i class="mdi mdi-facebook" aria-hidden="true"></i></li></a>
+                            <a href="//www.twitter.com/invoiceneko"><li><i class="mdi mdi-twitter" aria-hidden="true"></i></li></a>
+                            <a href="//www.instagram.com/invoiceneko"><li><i class="mdi mdi-instagram" aria-hidden="true"></i></li></a>
                         </ul>
                         <p>© {{ date('Y') }} {{ config('app.name') }}</p>
                     </div>
