@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
 use PDF;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Receipt extends Model
+class Receipt extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     use SoftDeletes, CascadeSoftDeletes;
 
     /**

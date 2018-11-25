@@ -8,9 +8,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Silber\Bouncer\Database\HasRolesAndAbilities;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     use HasRolesAndAbilities, Notifiable, SoftDeletes, CascadeSoftDeletes;
 
     const STATUS_ACTIVE = 1;

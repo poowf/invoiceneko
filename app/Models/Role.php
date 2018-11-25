@@ -4,9 +4,11 @@ namespace App\Models;
 
 use \Silber\Bouncer\Database\Role as RoleBase;
 use Silber\Bouncer\BouncerFacade as Bouncer;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Role extends RoleBase
+class Role extends RoleBase implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
 
     /**
      * Get the route key for the model.

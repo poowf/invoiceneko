@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Uuid;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class CompanyUserRequest extends Model
+class CompanyUserRequest extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     use Notifiable, SoftDeletes, CascadeSoftDeletes;
 
     const STATUS_PENDING = 1;

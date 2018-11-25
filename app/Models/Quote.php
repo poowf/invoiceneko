@@ -9,9 +9,11 @@ use Iatstuti\Database\Support\CascadeSoftDeletes;
 
 use PDF;
 use Carbon\Carbon;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Quote extends Model
+class Quote extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     use SoftDeletes, CascadeSoftDeletes;
 
     const STATUS_DRAFT = 1;

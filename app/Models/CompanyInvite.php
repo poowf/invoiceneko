@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class CompanyInvite extends Model
+class CompanyInvite extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     use Notifiable, SoftDeletes;
 
     /**

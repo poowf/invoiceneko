@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
 
 use Carbon\Carbon;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Payment extends Model
+class Payment extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     use SoftDeletes, CascadeSoftDeletes;
 
     /**
