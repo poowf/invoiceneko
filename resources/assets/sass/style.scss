@@ -897,6 +897,11 @@ nav .signout-btn {
   text-align: left;
 }
 
+nav .sidenav-trigger {
+  margin: 0;
+  padding: 0 18px;
+}
+
 nav .sidenav-trigger i {
   height: 80px;
   line-height: 80px;
@@ -905,7 +910,7 @@ nav .sidenav-trigger i {
 
 nav .sidenav-trigger span {
   line-height: 80px;
-  font-size: 2em;
+  font-size: 3em;
 }
 
 nav .company-selector-btn i {
