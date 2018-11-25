@@ -39,6 +39,9 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="col s12">
+                                {!! Arcanedev\NoCaptcha\Facades\NoCaptcha::display() !!}
+                            </div>
                             <div class="input-field col s12">
                                 {{ csrf_field() }}
                                 <button class="btn btn-theme waves-effect waves-light full-width" type="submit" name="action">Submit</button>
@@ -52,6 +55,7 @@
 @stop
 
 @section("scripts")
+    {!! Arcanedev\NoCaptcha\Facades\NoCaptcha::script() !!}
     <script type="text/javascript">
         "use strict";
         $(function() {
