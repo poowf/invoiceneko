@@ -23,13 +23,13 @@ class Receipt extends Model implements Auditable
     public function getCreatedAtAttribute($value)
     {
         $date = $this->asDateTime($value);
-        return $date->timezone(auth()->user()->timezone);
+        return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
     public function getUpdatedAtAttribute($value)
     {
         $date = $this->asDateTime($value);
-        return $date->timezone(auth()->user()->timezone);
+        return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
     public function invoice()

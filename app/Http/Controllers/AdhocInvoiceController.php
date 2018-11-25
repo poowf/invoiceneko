@@ -65,7 +65,7 @@ class AdhocInvoiceController extends Controller
         $invoice->nice_invoice_id = $company->niceinvoiceid();
         $invoice->fill($request->all());
         $invoice->company_id = $company->id;
-        $invoice->notify = $request->has('notify') ? true : false;
+        $invoice->notify = $request->has('notify') ? 1 : 0;
 
         $client = [
             'companyname' => $request->input('companyname'),
@@ -147,7 +147,7 @@ class AdhocInvoiceController extends Controller
         }
 
         $invoice->fill($request->all());
-        $invoice->notify = $request->has('notify') ? true : false;
+        $invoice->notify = $request->has('notify') ? 1 : 0;
 
         $ismodified = false;
 
