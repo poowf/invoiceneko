@@ -123,9 +123,9 @@
                                     <option value="mrs" @if(old('contactsalutation') == "mrs") selected @endif>Mrs.</option>
                                     <option value="mdm" @if(old('contactsalutation') == "mdm") selected @endif>Mdm.</option>
                                     <option value="miss" @if(old('contactsalutation') == "miss") selected @endif>Miss.</option>
-                                    <option value="miss" @if(old('contactsalutation') == "dr") selected @endif>Dr.</option>
-                                    <option value="miss" @if(old('contactsalutation') == "prof") selected @endif>Prof.</option>
-                                    <option value="miss" @if(old('contactsalutation') == "mx") selected @endif>Mx.</option>
+                                    <option value="dr" @if(old('contactsalutation') == "dr") selected @endif>Dr.</option>
+                                    <option value="prof" @if(old('contactsalutation') == "prof") selected @endif>Prof.</option>
+                                    <option value="mx" @if(old('contactsalutation') == "mx") selected @endif>Mx.</option>
                                 </select>
                                 <label for="contactsalutation" class="label-validation">Salutation</label>
                                 <span class="helper-text"></span>

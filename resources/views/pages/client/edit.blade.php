@@ -163,9 +163,9 @@
                                     <option value="mrs" @if($client->contactsalutation == "mrs") selected @endif>Mrs.</option>
                                     <option value="mdm" @if($client->contactsalutation == "mdm") selected @endif>Mdm.</option>
                                     <option value="miss" @if($client->contactsalutation == "miss") selected @endif>Miss.</option>
-                                    <option value="miss" @if($client->contactsalutation == "dr") selected @endif>Dr.</option>
-                                    <option value="miss" @if($client->contactsalutation == "prof") selected @endif>Prof.</option>
-                                    <option value="miss" @if($client->contactsalutation == "mx") selected @endif>Mx.</option>
+                                    <option value="dr" @if($client->contactsalutation == "dr") selected @endif>Dr.</option>
+                                    <option value="prof" @if($client->contactsalutation == "prof") selected @endif>Prof.</option>
+                                    <option value="mx" @if($client->contactsalutation == "mx") selected @endif>Mx.</option>
                                 </select>
                                 <label for="contactsalutation" class="label-validation">Contact Salutation</label>
                                 <span class="helper-text"></span>
