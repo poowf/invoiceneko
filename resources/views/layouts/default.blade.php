@@ -27,7 +27,18 @@
 </head>
 <body>
 @include("partials/header")
-
+    @if(session()->has('notice'))
+        <div class="banner-anchor"></div>
+        <div class="banner">
+            <div class="banner-description">
+                <span>{{ session()->get('notice')['message'] }}</span>
+            </div>
+            <div class="banner-action right">
+                <a href="#!" class="banner-close waves-effect waves-red btn-flat">Dismiss</a>
+                <a href="{{ session()->get('notice')['link'] }}" class="waves-effect waves-green btn-flat">{{ session()->get('notice')['link.text'] }}</a>
+            </div>
+        </div>
+    @endif
 @yield("content")
 
 @include("partials/footer")
@@ -67,6 +78,33 @@
                 $(this).remove();
             });
         });
+
+        @if(session()->has('notice'))
+            $('body').on('click', '.banner-close', function() {
+                let $el = $(this).parent().parent('.banner').removeAttr('style').addClass('close');
+                let $elNext = $el.next().css('margin-top', '0');
+            });
+
+            $(window).scroll(function(e){
+                let $el = $('.banner');
+                let $elNext = $el.next();
+
+                if (!$el.hasClass('close') && $(this).scrollTop() > 80){
+                    $el.css('position', 'fixed');
+                    $el.css('transform', 'translateY(-80px)');
+                    $el.css('z-index', '20');
+                    $elNext.css('margin-top', $el.height() + 'px');
+                    // $el.css('transform', 'translateY(' + (80 - $(this).scrollTop())  + 'px)');
+                }
+                if (!$el.hasClass('close') && $(this).scrollTop() < 80){
+                    $el.css('position', 'relative');
+                    $el.css('transform', 'translateY(0)');
+                    $el.css('z-index', '-1');
+                    $elNext.css('margin-top', '0');
+                    // $el.css('transform', 'translateY(' + (0 - $(this).scrollTop())  + 'px)');
+                }
+            });
+        @endif
 
         @if(session()->has('flash_notification'))
             @foreach (session('flash_notification', collect())->toArray() as $message)
