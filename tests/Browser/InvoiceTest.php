@@ -60,7 +60,7 @@ class InvoiceTest extends DuskTestCase
                 ->pause(2000)
                 ->assertPresent('#invoice-action-container');
             $browser->script('jQuery(".signmeout-btn").click()');
-            $browser->assertPathIs('/signin');
+            $browser->assertPathIs('/');
         });
     }
 
@@ -107,7 +107,7 @@ class InvoiceTest extends DuskTestCase
                 ->press('CREATE')
                 ->assertPresent('#invoice-action-container');
             $browser->script('jQuery(".signmeout-btn").click()');
-            $browser->assertPathIs('/signin');
+            $browser->assertPathIs('/');
         });
     }
 
@@ -161,7 +161,7 @@ class InvoiceTest extends DuskTestCase
                 ->assertPresent('#invoice-action-container')
                 ->assertSee('The Turbo Ultra Turbonator');
             $browser->script('jQuery(".signmeout-btn").click()');
-            $browser->assertPathIs('/signin');
+            $browser->assertPathIs('/');
         });
     }
 
@@ -202,7 +202,7 @@ class InvoiceTest extends DuskTestCase
                 ->press('DELETE')
                 ->assertPresent('#invoice-container');
             $browser->script('jQuery(".signmeout-btn").click()');
-            $browser->assertPathIs('/signin');
+            $browser->assertPathIs('/');
         });
     }
 
@@ -255,7 +255,7 @@ class InvoiceTest extends DuskTestCase
                 ->assertPresent('#invoice-action-container')
                 ->assertPathBeginsWith('/' . $company->domain_name . '/invoice');
             $browser->script('jQuery(".signmeout-btn").click()');
-            $browser->assertPathIs('/signin');
+            $browser->assertPathIs('/');
         });
     }
 
@@ -346,7 +346,7 @@ class InvoiceTest extends DuskTestCase
                 ->assertPresent('#invoice-container')
                 ->assertPathBeginsWith('/' . $company->domain_name . '/invoice');
             $browser->script('jQuery(".signmeout-btn").click()');
-            $browser->assertPathIs('/signin');
+            $browser->assertPathIs('/');
         });
     }
 }

@@ -6,7 +6,17 @@
 @stop
 
 @section("content")
-        <div class="row pall30" style="background-color: #585454;">
+        <div class="banner-anchor"></div>
+        <div class="banner">
+            <div class="banner-description">
+                <span>Verify your email address. Didn't receive a verification email? Click the Resend button to get a new one.</span>
+            </div>
+            <div class="banner-action right">
+                <a href="#!" class="banner-close waves-effect waves-red btn-flat">Dismiss</a>
+                <a href="#!" class="waves-effect waves-green btn-flat">Resend Verification Email</a>
+            </div>
+        </div>
+        <div class="row pall30" style="background-color: #585454; clear: right;">
             <div class="mini-container">
                 <div class="col s12 l6">
                     <div class="hero-left-wrapper">
@@ -52,6 +62,57 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
+
+            $('body').on('click', '.banner-close', function() {
+                let $el = $(this).parent().parent('.banner').removeAttr('style').addClass('close');
+                let $elNext = $el.next().css('margin-top', '0');
+
+            });
+
+            // moveScroller();
+            //
+            // function moveScroller() {
+            //     var $anchor = $(".banner-anchor");
+            //     var $scroller = $('.banner');
+            //
+            //     var move = function() {
+            //         var st = $(window).scrollTop();
+            //         var ot = $anchor.offset().top;
+            //         if(st > ot) {
+            //             $scroller.css({
+            //                 position: "fixed",
+            //                 top: "0px"
+            //             });
+            //         } else {
+            //             $scroller.css({
+            //                 position: "relative",
+            //                 top: ""
+            //             });
+            //         }
+            //     };
+            //     $(window).scroll(move);
+            //     move();
+            // }
+
+            $(window).scroll(function(e){
+                let $el = $('.banner');
+                let $elNext = $el.next();
+
+                if (!$el.hasClass('close') && $(this).scrollTop() > 80){
+                    $el.css('position', 'fixed');
+                    $el.css('transform', 'translateY(-80px)');
+                    $el.css('z-index', '1');
+                    $elNext.css('margin-top', ($el.height() - ($(this).scrollTop() - 80)) + 'px');
+                    // $el.css('transform', 'translateY(' + (80 - $(this).scrollTop())  + 'px)');
+                }
+                if (!$el.hasClass('close') && $(this).scrollTop() < 80){
+                    $el.css('position', 'relative');
+                    $el.css('transform', 'translateY(0)');
+                    $el.css('z-index', '-1');
+                    $elNext.css('margin-top', '0');
+                    // $el.css('transform', 'translateY(' + (0 - $(this).scrollTop())  + 'px)');
+                }
+            });
         });
     </script>
 @stop

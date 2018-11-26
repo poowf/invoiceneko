@@ -42,7 +42,7 @@ class ItemTemplateTest extends DuskTestCase
                 ->assertPresent('#delete-itemtemplate-form')
                 ->assertPathBeginsWith('/' . $company->domain_name . '/itemtemplate');
             $browser->script('jQuery(".signmeout-btn").click()');
-            $browser->assertPathIs('/signin');
+            $browser->assertPathIs('/');
         });
     }
 
@@ -78,7 +78,7 @@ class ItemTemplateTest extends DuskTestCase
                 ->assertPresent('#delete-itemtemplate-form')
                 ->assertPathBeginsWith('/' . $company->domain_name . '/itemtemplate');
             $browser->script('jQuery(".signmeout-btn").click()');
-            $browser->assertPathIs('/signin');
+            $browser->assertPathIs('/');
         });
     }
 
@@ -108,7 +108,7 @@ class ItemTemplateTest extends DuskTestCase
                 ->assertPresent('#itemtemplate-container')
                 ->assertPathIs('/' . $company->domain_name . '/itemtemplates');
             $browser->script('jQuery(".signmeout-btn").click()');
-            $browser->assertPathIs('/signin');
+            $browser->assertPathIs('/');
         });
     }
 
@@ -155,7 +155,7 @@ class ItemTemplateTest extends DuskTestCase
                 ->assertPresent('#itemtemplate-container')
                 ->assertPathIs('/' . $company->domain_name . '/itemtemplates');
             $browser->script('jQuery(".signmeout-btn").click()');
-            $browser->assertPathIs('/signin');
+            $browser->assertPathIs('/');
         });
     }
 }

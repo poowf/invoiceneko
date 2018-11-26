@@ -40,7 +40,7 @@ class CompanyUsersManagementTest extends DuskTestCase
                 ->assertPresent('#users-table')
                 ->assertPathIs('/' . $company->domain_name . '/company/users');
             $browser->script('jQuery(".signmeout-btn").click()');
-            $browser->assertPathIs('/signin');
+            $browser->assertPathIs('/');
         });
     }
 
@@ -69,7 +69,7 @@ class CompanyUsersManagementTest extends DuskTestCase
                 ->assertPresent('#request-container')
                 ->assertPathIs('/' . $company->domain_name . '/company/requests');
             $browser->script('jQuery(".signmeout-btn").click()');
-            $browser->assertPathIs('/signin');
+            $browser->assertPathIs('/');
         });
     }
 
@@ -98,7 +98,7 @@ class CompanyUsersManagementTest extends DuskTestCase
                 ->assertPresent('#request-container')
                 ->assertPathIs('/' . $company->domain_name . '/company/requests');
             $browser->script('jQuery(".signmeout-btn").click()');
-            $browser->assertPathIs('/signin');
+            $browser->assertPathIs('/');
         });
     }
 }

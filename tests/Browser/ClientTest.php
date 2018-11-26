@@ -47,7 +47,7 @@ class ClientTest extends DuskTestCase
                 ->press('CREATE')
                 ->assertPresent('#client-container');
             $browser->script('jQuery(".signmeout-btn").click()');
-            $browser->assertPathIs('/signin');
+            $browser->assertPathIs('/');
         });
     }
 
@@ -88,7 +88,7 @@ class ClientTest extends DuskTestCase
                 ->assertPathBeginsWith('/' . $company->domain_name . '/client')
                 ->assertSee('Client Details');
             $browser->script('jQuery(".signmeout-btn").click()');
-            $browser->assertPathIs('/signin');
+            $browser->assertPathIs('/');
         });
     }
 
@@ -120,7 +120,7 @@ class ClientTest extends DuskTestCase
                 ->press('DELETE')
                 ->assertPresent('#client-container');
             $browser->script('jQuery(".signmeout-btn").click()');
-            $browser->assertPathIs('/signin');
+            $browser->assertPathIs('/');
         });
     }
 
@@ -178,7 +178,7 @@ class ClientTest extends DuskTestCase
                 ->press('DELETE')
                 ->assertPresent('#client-container');
             $browser->script('jQuery(".signmeout-btn").click()');
-            $browser->assertPathIs('/signin');
+            $browser->assertPathIs('/');
         });
     }
 }

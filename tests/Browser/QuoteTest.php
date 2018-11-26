@@ -56,7 +56,7 @@ class QuoteTest extends DuskTestCase
                 ->press('CREATE')
                 ->assertPresent('#quote-action-container');
             $browser->script('jQuery(".signmeout-btn").click()');
-            $browser->assertPathIs('/signin');
+            $browser->assertPathIs('/');
         });
     }
 
@@ -101,7 +101,7 @@ class QuoteTest extends DuskTestCase
                 ->press('CREATE')
                 ->assertPresent('#quote-action-container');
             $browser->script('jQuery(".signmeout-btn").click()');
-            $browser->assertPathIs('/signin');
+            $browser->assertPathIs('/');
         });
     }
 
@@ -153,7 +153,7 @@ class QuoteTest extends DuskTestCase
                 ->assertPresent('#quote-action-container')
                 ->assertSee('The Turbo Ultra Turbonator');
             $browser->script('jQuery(".signmeout-btn").click()');
-            $browser->assertPathIs('/signin');
+            $browser->assertPathIs('/');
         });
     }
 
@@ -192,7 +192,7 @@ class QuoteTest extends DuskTestCase
                 ->press('DELETE')
                 ->assertPresent('#quote-container');
             $browser->script('jQuery(".signmeout-btn").click()');
-            $browser->assertPathIs('/signin');
+            $browser->assertPathIs('/');
         });
     }
 
@@ -259,7 +259,7 @@ class QuoteTest extends DuskTestCase
                 ->assertPresent('#quote-container')
                 ->assertPathBeginsWith('/' . $company->domain_name . '/quote');
             $browser->script('jQuery(".signmeout-btn").click()');
-            $browser->assertPathIs('/signin');
+            $browser->assertPathIs('/');
         });
     }
 }

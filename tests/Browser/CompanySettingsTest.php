@@ -42,6 +42,8 @@ class CompanySettingsTest extends DuskTestCase
                 ->assertPathIs('/' . $company->domain_name . '/company/settings/edit')
                 ->assertPresent('#edit-company-settings')
                 ->assertInputValue('invoice_prefix', $invoicePrefix);
+            $browser->script('jQuery(".signmeout-btn").click()');
+            $browser->assertPathIs('/');
         });
     }
 }

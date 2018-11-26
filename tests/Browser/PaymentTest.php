@@ -48,7 +48,7 @@ class PaymentTest extends DuskTestCase
                 ->press('SUBMIT')
                 ->assertPresent('#payment-container');
             $browser->script('jQuery(".signmeout-btn").click()');
-            $browser->assertPathIs('/signin');
+            $browser->assertPathIs('/');
         });
     }
 
@@ -89,7 +89,7 @@ class PaymentTest extends DuskTestCase
                 ->assertPresent('#payment-container')
                 ->assertPathIs('/' . $company->domain_name . '/payments');
             $browser->script('jQuery(".signmeout-btn").click()');
-            $browser->assertPathIs('/signin');
+            $browser->assertPathIs('/');
         });
     }
 
@@ -123,7 +123,7 @@ class PaymentTest extends DuskTestCase
                 ->assertPresent('#payment-container')
                 ->assertPathIs('/' . $company->domain_name . '/payments');
             $browser->script('jQuery(".signmeout-btn").click()');
-            $browser->assertPathIs('/signin');
+            $browser->assertPathIs('/');
         });
     }
 
@@ -181,7 +181,7 @@ class PaymentTest extends DuskTestCase
                 ->assertPresent('#payment-container')
                 ->assertPathIs('/' . $company->domain_name . '/payments');
             $browser->script('jQuery(".signmeout-btn").click()');
-            $browser->assertPathIs('/signin');
+            $browser->assertPathIs('/');
         });
     }
 }

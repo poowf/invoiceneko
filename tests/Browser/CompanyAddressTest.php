@@ -39,6 +39,8 @@ class CompanyAddressTest extends DuskTestCase
                 ->assertPathIs('/' . $company->domain_name . '/company/address/edit')
                 ->assertPresent('#edit-address')
                 ->assertInputValue('street', $streetName);
+            $browser->script('jQuery(".signmeout-btn").click()');
+            $browser->assertPathIs('/');
         });
     }
 }

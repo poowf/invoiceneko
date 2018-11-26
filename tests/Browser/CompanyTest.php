@@ -41,6 +41,8 @@ class CompanyTest extends DuskTestCase
                 ->assertPathIs('/' . $company->domain_name . '/company/edit')
                 ->assertPresent('#edit-company');
 //                ->assertInputValue('domain_name', "invoiceneko.com");
+            $browser->script('jQuery(".signmeout-btn").click()');
+            $browser->assertPathIs('/');
         });
     }
 
