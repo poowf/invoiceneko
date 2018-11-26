@@ -102,7 +102,7 @@
                     $el.css('position', 'fixed');
                     $el.css('transform', 'translateY(-80px)');
                     $el.css('z-index', '1');
-                    $elNext.css('margin-top', ($el.height() - ($(this).scrollTop() - 80)) + 'px');
+                    $elNext.css('margin-top', $el.height() + 'px');
                     // $el.css('transform', 'translateY(' + (80 - $(this).scrollTop())  + 'px)');
                 }
                 if (!$el.hasClass('close') && $(this).scrollTop() < 80){
