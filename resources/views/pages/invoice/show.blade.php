@@ -399,19 +399,8 @@
             });
 
             @can('delete', $invoice)
-            $('#invoice-action-container').on('click', '.invoice-delete-btn', function (event) {
-                event.preventDefault();
-                let invoiceid = $(this).attr('data-id');
-                $('#delete-invoice-form').attr('action', '/invoice/' + invoiceid + '/destroy');
-                $('#delete-confirmation').modal('open');
-            });
-
-            $('.fixed-action-btn').on('click', '.invoice-delete-btn', function (event) {
-                event.preventDefault();
-                let invoiceid = $(this).attr('data-id');
-                $('#delete-invoice-form').attr('action', '/invoice/' + invoiceid + '/destroy');
-                $('#delete-confirmation').modal('open');
-            });
+            Unicorn.initConfirmationTrigger('#invoice-action-container', '.invoice-delete-btn', '{{ \App\Library\Poowf\Unicorn::getCompanyKey() }}', 'invoice', 'destroy', '#delete-confirmation', '#delete-invoice-form');
+            Unicorn.initConfirmationTrigger('.fixed-action-btn', '.invoice-delete-btn', '{{ \App\Library\Poowf\Unicorn::getCompanyKey() }}', 'invoice', 'destroy', '#delete-confirmation', '#delete-invoice-form');
             @endcan
 
             $('#change-history-container').slick({

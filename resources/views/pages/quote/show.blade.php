@@ -207,19 +207,8 @@
             });
 
             @can('delete', $quote)
-            $('#quote-action-container').on('click', '.quote-delete-btn', function (event) {
-                event.preventDefault();
-                let quoteid = $(this).attr('data-id');
-                $('#delete-quote-form').attr('action', '/quote/' + quoteid + '/destroy');
-                $('#delete-confirmation').modal('open');
-            });
-
-            $('.fixed-action-btn').on('click', '.quote-delete-btn', function (event) {
-                event.preventDefault();
-                let quoteid = $(this).attr('data-id');
-                $('#delete-quote-form').attr('action', '/quote/' + quoteid + '/destroy');
-                $('#delete-confirmation').modal('open');
-            });
+            Unicorn.initConfirmationTrigger('#quote-action-container', '.quote-delete-btn', '{{ \App\Library\Poowf\Unicorn::getCompanyKey() }}', 'quote', 'destroy', '#delete-confirmation', '#delete-quote-form');
+            Unicorn.initConfirmationTrigger('.fixed-action-btn', '.quote-delete-btn', '{{ \App\Library\Poowf\Unicorn::getCompanyKey() }}', 'quote', 'destroy', '#delete-confirmation', '#delete-quote-form');
             @endcan
 
             $('#change-history-container').slick({
