@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ChangedEmail;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\CompanyUserRequest;
@@ -184,6 +185,12 @@ class UserController extends Controller
         if (Hash::check($request->input('password'), $user->password)) {
             $user->fill($request->all());
 
+            $emailChanged = false;
+            if($user->isDirty('email')){
+                $emailChanged = true;
+                $user->email_verified_at = null;
+            }
+
             if($request->has('country_code') && !is_null($request->input('country_code')))
             {
                 if($request->has('timezone') && is_null($request->input('timezone')))
@@ -208,6 +215,8 @@ class UserController extends Controller
                 flash('Failed to Update Profile', 'error');
                 return redirect()->back();
             } else {
+                if($emailChanged) : event(new ChangedEmail($user)); endif;
+
                 flash('Successfully Updated Profile', 'success');
                 return redirect()->back();
             }
