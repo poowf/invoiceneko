@@ -56,7 +56,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     /* Verification */
     Route::get('/verification/show', 'VerificationController@show')->name('verification.notice');
-    Route::get('/verification/process/{id}', 'VerificationController@process')->name('verification.verify');
+    Route::get('/verification/process/{id}', 'VerificationController@verify')->name('verification.verify');
     Route::get('/verification/resend', 'VerificationController@resend')->name('verification.resend');
 
     Route::get('/user/multifactor/backup', 'UserController@multifactor_backup')->name('user.multifactor.backup');

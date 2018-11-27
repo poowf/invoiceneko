@@ -17,11 +17,6 @@ class VerificationController extends Controller
             : view('pages.verify');
     }
 
-    public function process(Request $request)
-    {
-        return $this->verify($request);
-    }
-
     public function redirectTo()
     {
         return Unicorn::redirectTo();

@@ -27,6 +27,10 @@ class EnsureEmailIsVerified
                'link' => route('verification.resend')
             ]);
         }
+        elseif($request->user()->hasVerifiedEmail())
+        {
+            $request->session()->forget('notice');
+        }
 
         return $next($request);
     }
