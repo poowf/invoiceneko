@@ -19,6 +19,7 @@ class SignUpTest extends DuskTestCase
         $faker = Faker::create();
 
         $this->browse(function (Browser $browser) use ($faker) {
+            $browser->maximize();
             $browser->visit('/user/create')
                 ->type('username', str_random(10))
                 ->type('email', $faker->unique()->safeEmail)
