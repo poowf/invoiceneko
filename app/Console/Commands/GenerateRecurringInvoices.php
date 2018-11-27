@@ -51,18 +51,18 @@ class GenerateRecurringInvoices extends Command
     {
         $invoiceRecurrences = InvoiceRecurrence::all();
 
-        foreach($invoiceRecurrences as $recurrence)
+        foreach($invoiceRecurrences as $invoiceRecurrence)
         {
-            $company = $recurrence->company;
+            $company = $invoiceRecurrence->company;
             $now = Carbon::now();
-            $template = $recurrence->template;
+            $template = $invoiceRecurrence->template;
             $templateItems = $template->items;
 
-            $constraintTime = $now->{$this->getDateAdditionOperator($recurrence->time_period)}($recurrence->time_interval + 3);
+            $constraintTime = $now->{$this->getDateAdditionOperator($invoiceRecurrence->time_period)}($invoiceRecurrence->time_interval + 3);
             $constraint = new BeforeConstraint($constraintTime);
 
-//            $rrule = Unicorn::generateRrule($recurrence->created_at, $timezone, $recurrence->time_interval, $recurrence->time_period, $recurrence->until_type, $recurrence->until_meta, true);
-            $rrule = Rule::createFromString($recurrence->rule, $template->date);
+//            $rrule = Unicorn::generateRrule($invoiceRecurrence->created_at, $timezone, $invoiceRecurrence->time_interval, $invoiceRecurrence->time_period, $invoiceRecurrence->until_type, $invoiceRecurrence->until_meta, true);
+            $rrule = Rule::createFromString($invoiceRecurrence->rule, $template->date);
             $transformer = new ArrayTransformer();
 
             $recurrences = $transformer->transform($rrule, $constraint);
@@ -79,14 +79,14 @@ class GenerateRecurringInvoices extends Command
                     break;
                 }
 
-//                $template->date = $template->date->{$this->getDateAdditionOperator($recurrence->time_period)}(($recurrence->time_interval * ($key + 1) ));
+//                $template->date = $template->date->{$this->getDateAdditionOperator($invoiceRecurrence->time_period)}(($invoiceRecurrence->time_interval * ($key + 1) ));
 
                 $generatedInvoice = new Invoice;
                 $generatedInvoice->fill($template->toArray());
                 $generatedInvoice->date = $recurrence->getEnd();
                 $generatedInvoice->client_id = $template->client_id;
                 $generatedInvoice->company_id = $company->id;
-                $generatedInvoice->invoice_recurrence_id = $recurrence->id;
+                $generatedInvoice->invoice_recurrence_id = $invoiceRecurrence->id;
                 $generatedInvoice->status = Invoice::STATUS_DRAFT;
                 $generatedInvoice->notify = $template->notify;
 
