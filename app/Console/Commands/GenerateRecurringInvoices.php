@@ -101,6 +101,7 @@ class GenerateRecurringInvoices extends Command
                 }
                 else
                 {
+                    $generatedInvoice->generated = true;
                     $generatedInvoice->nice_invoice_id = $company->niceinvoiceid();
                     $generatedInvoice->hash = $hash;
                     $generatedInvoice->save();

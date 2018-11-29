@@ -15,6 +15,8 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class Invoice extends Model implements Auditable
 {
+    public $generated = null;
+
     use \OwenIt\Auditing\Auditable;
     use SoftDeletes, CascadeSoftDeletes;
     use Notifiable;
@@ -71,7 +73,7 @@ class Invoice extends Model implements Auditable
         parent::boot();
 
         static::saving(function ($invoice) {
-            if($invoice->status == self::STATUS_DRAFT)
+            if($invoice->status == self::STATUS_DRAFT && !$invoice->generated)
             {
                 $invoice->status = self::STATUS_OPEN;
             }
@@ -364,6 +366,7 @@ class Invoice extends Model implements Auditable
         $cloned->duedate = $duedate;
         $cloned->status = self::STATUS_DRAFT;
         $cloned->invoice_recurrence_id = null;
+        $cloned->generated = true;
         $cloned->save();
 
         foreach($this->items as $item)
