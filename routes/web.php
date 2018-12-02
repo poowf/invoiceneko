@@ -70,6 +70,9 @@ Route::group(['middleware' => ['auth', '2fa', 'verified']], function() {
     Route::get('/errors/nocompany', 'MainController@nocompany')->name('nocompany');
 
     Route::group(['prefix' => '{company}'], function() {
+        /* LUIS */
+        Route::get('/luis/call', 'LUISController@sendLuis')->name('luis.call');
+
         /* User */
         Route::get('/user/edit', 'UserController@edit')->name('user.edit');
         Route::patch('/user/edit', 'UserController@update')->name('user.update');

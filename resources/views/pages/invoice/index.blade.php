@@ -44,6 +44,13 @@
         <div class="row">
             <div class="col s12">
                 <div class="card-panel search-panel">
+                    <input id="luis-search-input" class="card-input" name="luis-search-input" type="search" placeholder="LUIS Search">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <div class="card-panel search-panel">
                     <input id="search-input" class="card-input" name="search-input" type="search" placeholder="Search">
                 </div>
             </div>
@@ -337,6 +344,35 @@
         $(function() {
             Unicorn.initConfirmationTrigger('#invoice-container', '.invoice-delete-btn', '{{ \App\Library\Poowf\Unicorn::getCompanyKey() }}', 'invoice', 'destroy', '#delete-confirmation', '#delete-invoice-form');
             Unicorn.initPageSearch('#search-input', '#invoice-container .single-invoice-row');
+
+            let inputBox = $('#luis-search-input');
+            // let context = document.querySelector(selector_context);
+            // let instance = new Mark(context);
+
+            inputBox.on("change", function() {
+                sendLUISRequest($(this).val());
+            });
+
+            async function sendLUISRequest(input)
+            {
+                axios.get('{{ route('luis.call', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}', {
+                    params: {
+                        utterance: input
+                    }
+                })
+                .then(function (response) {
+                    window.location.href = response['data'];
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+                .then(function () {
+                    // always executed
+                });
+            }
+
+
         });
     </script>
 @stop
