@@ -580,6 +580,7 @@
         },
         {
             "name": "doctrine/dbal",
+<<<<<<< HEAD
             "version": "v2.9.2",
             "source": {
                 "type": "git",
@@ -590,6 +591,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/doctrine/dbal/zipball/22800bd651c1d8d2a9719e2a3dc46d5108ebfcc9",
                 "reference": "22800bd651c1d8d2a9719e2a3dc46d5108ebfcc9",
+=======
+            "version": "v2.9.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/dbal.git",
+                "reference": "21fdabe2fc01e004e1966f200d900554876bc63c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/21fdabe2fc01e004e1966f200d900554876bc63c",
+                "reference": "21fdabe2fc01e004e1966f200d900554876bc63c",
+>>>>>>> Add Composer Package for LUIS
                 "shasum": ""
             },
             "require": {
@@ -658,7 +671,11 @@
                 "php",
                 "queryobject"
             ],
+<<<<<<< HEAD
             "time": "2018-12-31T03:27:51+00:00"
+=======
+            "time": "2018-12-04T04:39:48+00:00"
+>>>>>>> Add Composer Package for LUIS
         },
         {
             "name": "doctrine/event-manager",
@@ -1275,6 +1292,7 @@
         },
         {
             "name": "guzzlehttp/psr7",
+<<<<<<< HEAD
             "version": "1.5.2",
             "source": {
                 "type": "git",
@@ -1285,6 +1303,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/guzzle/psr7/zipball/9f83dded91781a01c63574e387eaa769be769115",
                 "reference": "9f83dded91781a01c63574e387eaa769be769115",
+=======
+            "version": "1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/psr7.git",
+                "reference": "53662d6688033a5eccde987bdd5a4a98ebe2d952"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/53662d6688033a5eccde987bdd5a4a98ebe2d952",
+                "reference": "53662d6688033a5eccde987bdd5a4a98ebe2d952",
+>>>>>>> Add Composer Package for LUIS
                 "shasum": ""
             },
             "require": {
@@ -1338,7 +1368,11 @@
                 "uri",
                 "url"
             ],
+<<<<<<< HEAD
             "time": "2018-12-04T20:46:45+00:00"
+=======
+            "time": "2018-12-03T05:07:51+00:00"
+>>>>>>> Add Composer Package for LUIS
         },
         {
             "name": "iatstuti/laravel-cascade-soft-deletes",
@@ -1662,6 +1696,7 @@
         },
         {
             "name": "laravel/framework",
+<<<<<<< HEAD
             "version": "v5.7.19",
             "source": {
                 "type": "git",
@@ -1672,6 +1707,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/framework/zipball/5c1d1ec7e8563ea31826fd5eb3f6791acf01160c",
                 "reference": "5c1d1ec7e8563ea31826fd5eb3f6791acf01160c",
+=======
+            "version": "v5.7.15",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/framework.git",
+                "reference": "e0dbd6ab143286d81bedf2b34f8820f3d49ea15f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/e0dbd6ab143286d81bedf2b34f8820f3d49ea15f",
+                "reference": "e0dbd6ab143286d81bedf2b34f8820f3d49ea15f",
+>>>>>>> Add Composer Package for LUIS
                 "shasum": ""
             },
             "require": {
@@ -1804,7 +1851,11 @@
                 "framework",
                 "laravel"
             ],
+<<<<<<< HEAD
             "time": "2018-12-18T14:00:38+00:00"
+=======
+            "time": "2018-11-26T14:10:57+00:00"
+>>>>>>> Add Composer Package for LUIS
         },
         {
             "name": "laravel/horizon",
@@ -1990,6 +2041,7 @@
         },
         {
             "name": "laravel/telescope",
+<<<<<<< HEAD
             "version": "v1.0.10",
             "source": {
                 "type": "git",
@@ -2000,6 +2052,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/telescope/zipball/4962a3c3a5da71756dd01dad2ea86e55fbb86df8",
                 "reference": "4962a3c3a5da71756dd01dad2ea86e55fbb86df8",
+=======
+            "version": "v1.0.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/telescope.git",
+                "reference": "807e2ed47ff14887ff2ceb9768e5ee208db88b52"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/telescope/zipball/807e2ed47ff14887ff2ceb9768e5ee208db88b52",
+                "reference": "807e2ed47ff14887ff2ceb9768e5ee208db88b52",
+>>>>>>> Add Composer Package for LUIS
                 "shasum": ""
             },
             "require": {
@@ -2049,7 +2113,11 @@
                 "laravel",
                 "monitoring"
             ],
+<<<<<<< HEAD
             "time": "2018-12-09T16:34:14+00:00"
+=======
+            "time": "2018-11-28T15:33:53+00:00"
+>>>>>>> Add Composer Package for LUIS
         },
         {
             "name": "laravel/tinker",
@@ -3353,6 +3421,7 @@
         },
         {
             "name": "phpoffice/phpspreadsheet",
+<<<<<<< HEAD
             "version": "1.6.0",
             "source": {
                 "type": "git",
@@ -3363,6 +3432,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/PHPOffice/PhpSpreadsheet/zipball/bf00f0cc5f55c354018f9a9ef15e6e3e1a229051",
                 "reference": "bf00f0cc5f55c354018f9a9ef15e6e3e1a229051",
+=======
+            "version": "1.5.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHPOffice/PhpSpreadsheet.git",
+                "reference": "cd60531c44f580fbdfbd55dfb935af791f09be5d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHPOffice/PhpSpreadsheet/zipball/cd60531c44f580fbdfbd55dfb935af791f09be5d",
+                "reference": "cd60531c44f580fbdfbd55dfb935af791f09be5d",
+>>>>>>> Add Composer Package for LUIS
                 "shasum": ""
             },
             "require": {
@@ -3443,6 +3524,7 @@
                 "xls",
                 "xlsx"
             ],
+<<<<<<< HEAD
             "time": "2019-01-02T04:42:54+00:00"
         },
         {
@@ -3466,27 +3548,57 @@
             },
             "require-dev": {
                 "orchestra/testbench": "~3.5"
+=======
+            "time": "2018-11-25T17:40:15+00:00"
+        },
+        {
+            "name": "poowf/laravel-luis",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "../packages/poowf/laravel-luis",
+                "reference": "10a07e55d19dd16dea0653f6eb71c4c2e0d453ea",
+                "shasum": null
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.3"
+>>>>>>> Add Composer Package for LUIS
             },
             "type": "library",
             "extra": {
                 "laravel": {
                     "providers": [
+<<<<<<< HEAD
                         "Poowf\\Otter\\OtterServiceProvider"
                     ]
+=======
+                        "Poowf\\LaravelLuis\\ServiceProvider"
+                    ],
+                    "aliases": {
+                        "Luis": "Poowf\\LaravelLuis\\Facade"
+                    }
+>>>>>>> Add Composer Package for LUIS
                 }
             },
             "autoload": {
                 "psr-4": {
+<<<<<<< HEAD
                     "Poowf\\Otter\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
+=======
+                    "Poowf\\LaravelLuis\\": "src"
+                }
+            },
+>>>>>>> Add Composer Package for LUIS
             "license": [
                 "MIT"
             ],
             "authors": [
                 {
                     "name": "Zane J. Chua",
+<<<<<<< HEAD
                     "email": "zane@poowf.com"
                 }
             ],
@@ -3497,6 +3609,15 @@
                 "laravel"
             ],
             "time": "2019-01-02 15:51:13"
+=======
+                    "email": "zane.jocelyn@gmail.com"
+                }
+            ],
+            "description": "A Laravel wrapper for Azure LUIS",
+            "transport-options": {
+                "symlink": true
+            }
+>>>>>>> Add Composer Package for LUIS
         },
         {
             "name": "pragmarx/google2fa",
@@ -4777,7 +4898,11 @@
         },
         {
             "name": "symfony/console",
+<<<<<<< HEAD
             "version": "v4.2.1",
+=======
+            "version": "v4.2.0",
+>>>>>>> Add Composer Package for LUIS
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
@@ -4846,6 +4971,7 @@
         },
         {
             "name": "symfony/contracts",
+<<<<<<< HEAD
             "version": "v1.0.2",
             "source": {
                 "type": "git",
@@ -4856,6 +4982,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/contracts/zipball/1aa7ab2429c3d594dd70689604b5cf7421254cdf",
                 "reference": "1aa7ab2429c3d594dd70689604b5cf7421254cdf",
+=======
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/contracts.git",
+                "reference": "3edf0ab943d1985a356721952cba36ff31bd6e5f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/contracts/zipball/3edf0ab943d1985a356721952cba36ff31bd6e5f",
+                "reference": "3edf0ab943d1985a356721952cba36ff31bd6e5f",
+>>>>>>> Add Composer Package for LUIS
                 "shasum": ""
             },
             "require": {
@@ -4910,11 +5048,19 @@
                 "interoperability",
                 "standards"
             ],
+<<<<<<< HEAD
             "time": "2018-12-05T08:06:11+00:00"
         },
         {
             "name": "symfony/css-selector",
             "version": "v4.2.1",
+=======
+            "time": "2018-11-24T09:35:08+00:00"
+        },
+        {
+            "name": "symfony/css-selector",
+            "version": "v4.2.0",
+>>>>>>> Add Composer Package for LUIS
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
@@ -4967,7 +5113,11 @@
         },
         {
             "name": "symfony/debug",
+<<<<<<< HEAD
             "version": "v4.2.1",
+=======
+            "version": "v4.2.0",
+>>>>>>> Add Composer Package for LUIS
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
@@ -5020,6 +5170,7 @@
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
             "time": "2018-11-28T18:24:18+00:00"
+<<<<<<< HEAD
         },
         {
             "name": "symfony/dom-crawler",
@@ -5090,6 +5241,21 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/921f49c3158a276d27c0d770a5a347a3b718b328",
                 "reference": "921f49c3158a276d27c0d770a5a347a3b718b328",
+=======
+        },
+        {
+            "name": "symfony/event-dispatcher",
+            "version": "v4.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/event-dispatcher.git",
+                "reference": "9b788b5f7cd6be22918f3d18ee3ff0a78e060137"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/9b788b5f7cd6be22918f3d18ee3ff0a78e060137",
+                "reference": "9b788b5f7cd6be22918f3d18ee3ff0a78e060137",
+>>>>>>> Add Composer Package for LUIS
                 "shasum": ""
             },
             "require": {
@@ -5140,11 +5306,19 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
+<<<<<<< HEAD
             "time": "2018-12-01T08:52:38+00:00"
         },
         {
             "name": "symfony/finder",
             "version": "v4.2.1",
+=======
+            "time": "2018-11-26T10:55:26+00:00"
+        },
+        {
+            "name": "symfony/finder",
+            "version": "v4.2.0",
+>>>>>>> Add Composer Package for LUIS
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
@@ -5193,7 +5367,11 @@
         },
         {
             "name": "symfony/http-foundation",
+<<<<<<< HEAD
             "version": "v4.2.1",
+=======
+            "version": "v4.2.0",
+>>>>>>> Add Composer Package for LUIS
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
@@ -5247,6 +5425,7 @@
         },
         {
             "name": "symfony/http-kernel",
+<<<<<<< HEAD
             "version": "v4.2.1",
             "source": {
                 "type": "git",
@@ -5257,12 +5436,28 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/http-kernel/zipball/b39ceffc0388232c309cbde3a7c3685f2ec0a624",
                 "reference": "b39ceffc0388232c309cbde3a7c3685f2ec0a624",
+=======
+            "version": "v4.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/http-kernel.git",
+                "reference": "500409e5d8a31fc92450a0ec2ea4e4c35af40117"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/500409e5d8a31fc92450a0ec2ea4e4c35af40117",
+                "reference": "500409e5d8a31fc92450a0ec2ea4e4c35af40117",
+>>>>>>> Add Composer Package for LUIS
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1.3",
                 "psr/log": "~1.0",
+<<<<<<< HEAD
                 "symfony/contracts": "^1.0.2",
+=======
+                "symfony/contracts": "^1.0",
+>>>>>>> Add Composer Package for LUIS
                 "symfony/debug": "~3.4|~4.0",
                 "symfony/event-dispatcher": "~4.1",
                 "symfony/http-foundation": "^4.1.1",
@@ -5332,7 +5527,11 @@
             ],
             "description": "Symfony HttpKernel Component",
             "homepage": "https://symfony.com",
+<<<<<<< HEAD
             "time": "2018-12-06T17:39:52+00:00"
+=======
+            "time": "2018-11-30T09:16:14+00:00"
+>>>>>>> Add Composer Package for LUIS
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -5616,7 +5815,11 @@
         },
         {
             "name": "symfony/process",
+<<<<<<< HEAD
             "version": "v4.2.1",
+=======
+            "version": "v4.2.0",
+>>>>>>> Add Composer Package for LUIS
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
@@ -5665,6 +5868,7 @@
         },
         {
             "name": "symfony/routing",
+<<<<<<< HEAD
             "version": "v4.2.1",
             "source": {
                 "type": "git",
@@ -5675,6 +5879,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/routing/zipball/649460207e77da6c545326c7f53618d23ad2c866",
                 "reference": "649460207e77da6c545326c7f53618d23ad2c866",
+=======
+            "version": "v4.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/routing.git",
+                "reference": "97b9f457df748357eec101df5c8b1c649b543241"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/routing/zipball/97b9f457df748357eec101df5c8b1c649b543241",
+                "reference": "97b9f457df748357eec101df5c8b1c649b543241",
+>>>>>>> Add Composer Package for LUIS
                 "shasum": ""
             },
             "require": {
@@ -5738,6 +5954,7 @@
                 "uri",
                 "url"
             ],
+<<<<<<< HEAD
             "time": "2018-12-03T22:08:12+00:00"
         },
         {
@@ -5752,11 +5969,31 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/translation/zipball/c0e2191e9bed845946ab3d99767513b56ca7dcd6",
                 "reference": "c0e2191e9bed845946ab3d99767513b56ca7dcd6",
+=======
+            "time": "2018-11-29T14:48:32+00:00"
+        },
+        {
+            "name": "symfony/translation",
+            "version": "v4.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/translation.git",
+                "reference": "ff9a878c9b8f8bcd4d9138e2d32f508c942773d9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/ff9a878c9b8f8bcd4d9138e2d32f508c942773d9",
+                "reference": "ff9a878c9b8f8bcd4d9138e2d32f508c942773d9",
+>>>>>>> Add Composer Package for LUIS
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1.3",
+<<<<<<< HEAD
                 "symfony/contracts": "^1.0.2",
+=======
+                "symfony/contracts": "^1.0",
+>>>>>>> Add Composer Package for LUIS
                 "symfony/polyfill-mbstring": "~1.0"
             },
             "conflict": {
@@ -5811,11 +6048,19 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
+<<<<<<< HEAD
             "time": "2018-12-06T10:45:32+00:00"
         },
         {
             "name": "symfony/var-dumper",
             "version": "v4.2.1",
+=======
+            "time": "2018-11-27T07:20:32+00:00"
+        },
+        {
+            "name": "symfony/var-dumper",
+            "version": "v4.2.0",
+>>>>>>> Add Composer Package for LUIS
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
@@ -7018,6 +7263,7 @@
         },
         {
             "name": "laravel/dusk",
+<<<<<<< HEAD
             "version": "v4.0.4",
             "source": {
                 "type": "git",
@@ -7028,6 +7274,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/dusk/zipball/3b2df334d92b6215400ddd183253eb4bcc07debb",
                 "reference": "3b2df334d92b6215400ddd183253eb4bcc07debb",
+=======
+            "version": "v4.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/dusk.git",
+                "reference": "94a2497d4a7ff3b4fc75acb55f9faeb50dcb4585"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/dusk/zipball/94a2497d4a7ff3b4fc75acb55f9faeb50dcb4585",
+                "reference": "94a2497d4a7ff3b4fc75acb55f9faeb50dcb4585",
+>>>>>>> Add Composer Package for LUIS
                 "shasum": ""
             },
             "require": {
@@ -7075,6 +7333,7 @@
                 "testing",
                 "webdriver"
             ],
+<<<<<<< HEAD
             "time": "2018-12-19T13:55:39+00:00"
         },
         {
@@ -7124,6 +7383,9 @@
             ],
             "description": "A Laravel package to decompose your installed packages, their dependencies, your app & server environment",
             "time": "2017-08-24T11:24:51+00:00"
+=======
+            "time": "2018-11-25T14:35:43+00:00"
+>>>>>>> Add Composer Package for LUIS
         },
         {
             "name": "maximebf/debugbar",
@@ -7934,6 +8196,7 @@
         },
         {
             "name": "phpunit/phpunit",
+<<<<<<< HEAD
             "version": "7.5.1",
             "source": {
                 "type": "git",
@@ -7944,6 +8207,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/c23d78776ad415d5506e0679723cb461d71f488f",
                 "reference": "c23d78776ad415d5506e0679723cb461d71f488f",
+=======
+            "version": "7.4.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/phpunit.git",
+                "reference": "61d34e8dd6eb3555900f0f2a2fa9e7e570730102"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/61d34e8dd6eb3555900f0f2a2fa9e7e570730102",
+                "reference": "61d34e8dd6eb3555900f0f2a2fa9e7e570730102",
+>>>>>>> Add Composer Package for LUIS
                 "shasum": ""
             },
             "require": {
@@ -8014,7 +8289,11 @@
                 "testing",
                 "xunit"
             ],
+<<<<<<< HEAD
             "time": "2018-12-12T07:20:32+00:00"
+=======
+            "time": "2018-12-03T05:01:24+00:00"
+>>>>>>> Add Composer Package for LUIS
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -8674,7 +8953,11 @@
         },
         {
             "name": "symfony/filesystem",
+<<<<<<< HEAD
             "version": "v4.2.1",
+=======
+            "version": "v4.2.0",
+>>>>>>> Add Composer Package for LUIS
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
@@ -8817,7 +9100,11 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+<<<<<<< HEAD
         "poowf/otter": 20
+=======
+        "poowf/laravel-luis": 20
+>>>>>>> Add Composer Package for LUIS
     },
     "prefer-stable": true,
     "prefer-lowest": false,
