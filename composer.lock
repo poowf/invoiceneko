@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2837f64ab5513737695de2a340b56328",
+    "content-hash": "0ac995ed31a99d15c3390ccdb50b5516",
     "packages": [
         {
             "name": "arcanedev/no-captcha",
@@ -2978,6 +2978,48 @@
                 "xlsx"
             ],
             "time": "2018-11-20T19:51:42+00:00"
+        },
+        {
+            "name": "poowf/otter",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "../packages/poowf/otter",
+                "reference": "53661afeb473881740914375e2a9e2ee1895e178",
+                "shasum": null
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Poowf\\Otter\\OtterServiceProvider"
+                    ],
+                    "aliases": {
+                        "Otter": "Poowf\\Otter\\Facade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Poowf\\Otter\\": "src"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Zane J. Chua",
+                    "email": "zane.jocelyn@gmail.com"
+                }
+            ],
+            "description": "A relatively automatic CRUD backend administration panel",
+            "transport-options": {
+                "symlink": true
+            }
         },
         {
             "name": "pragmarx/google2fa",
@@ -8116,7 +8158,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "poowf/otter": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
