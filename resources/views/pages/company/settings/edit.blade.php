@@ -1,6 +1,7 @@
 @extends("layouts.default", ['page_title' => 'Company | Settings'])
 
 @section("head")
+    <link href="{{ mix('/assets/css/selectize.css') }}" rel="stylesheet" type="text/css">
     <style>
     </style>
 @stop
@@ -23,6 +24,18 @@
                             <div class="input-field col s12">
                                 <input id="tax" name="tax" type="number" data-parsley-trigger="change" value="{{ $companySetting->tax ?? '' }}" placeholder="Company Tax %"  @if(!$company) disabled @endif>
                                 <label for="tax" class="label-validation">Company Tax %</label>
+                                <span class="helper-text"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <select id="currency" name="currency" data-parsley-trigger="change" placeholder="Currency">
+                                    <option disabled="" selected="selected" value="">Currency</option>
+                                    @foreach($currencies as $currency => $symbol)
+                                        <option value="{{ $currency }}" @if($company) @if($company->currency == $currency) selected @endif @endif>{!! $symbol  !!} - {{ $currency }}</option>
+                                    @endforeach
+                                </select>
+                                <label for="currency" class="label-validation">Currency</label>
                                 <span class="helper-text"></span>
                             </div>
                         </div>
@@ -79,6 +92,8 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
+
+            Unicorn.initSelectize('#currency');
 
             @if(!$company)
             M.toast({ html: "You need to fill in your company information first", displayLength: "6000", classes: "error"});

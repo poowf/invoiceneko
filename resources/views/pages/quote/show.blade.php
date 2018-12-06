@@ -44,7 +44,7 @@
                 @can('update', $quote)
                 <form method="post" action="{{ route('quote.duplicate', [ 'quote' => $quote, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form">
                     {{ csrf_field() }}
-                    <button class="btn blue darken-3 waves-effect waves-dark null-btn" type="submit">Clone</button>
+                    <button class="btn blue darken-3 waves-effect waves-dark null-btn" type="submit">Duplicate</button>
                 </form>
                 @endcan
                 @can('update', $quote)

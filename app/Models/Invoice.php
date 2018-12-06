@@ -245,7 +245,7 @@ class Invoice extends Model implements Auditable
 
         if ($moneyformat)
         {
-            setlocale(LC_MONETARY, 'en_US.UTF-8');
+            setlocale(LC_MONETARY, 'ja_JP.UTF-8');
             return money_format('%!.2n', $total);
         }
         else
@@ -297,7 +297,7 @@ class Invoice extends Model implements Auditable
 
         if ($moneyformat)
         {
-            setlocale(LC_MONETARY, 'en_US.UTF-8');
+            setlocale(LC_MONETARY, 'de_DE');
             return money_format('%!.2n', $total);
         }
         else

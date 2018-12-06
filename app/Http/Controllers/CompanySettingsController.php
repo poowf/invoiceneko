@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateCompanySettingRequest;
+use App\Library\Poowf\Unicorn;
 use App\Models\Company;
 use App\Models\CompanySetting;
 use Illuminate\Http\Request;
@@ -72,7 +73,9 @@ class CompanySettingsController extends Controller
             $companySetting = null;
         }
 
-        return view('pages.company.settings.edit', compact('companySetting', 'company'));
+        $currencies = Unicorn::currencies();
+
+        return view('pages.company.settings.edit', compact('companySetting', 'company', 'currencies'));
     }
 
     /**
