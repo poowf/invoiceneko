@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateAdhocInvoiceRequest;
 use App\Http\Requests\UpdateAdhocInvoiceRequest;
-use App\Http\Requests\UpdateInvoiceRequest;
 use App\Models\Company;
 use App\Models\OldInvoice;
 use App\Models\OldInvoiceItem;
