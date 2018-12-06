@@ -57,6 +57,14 @@ class Client extends Model implements Auditable
         return $this->hasMany('App\Models\Invoice', 'client_id');
     }
 
+    /**
+     * Get all the recipients associated to the client
+     */
+    public function recipients()
+    {
+        return $this->morphToMany('App\Models\Recipient', 'recipientable');
+    }
+
     public function company()
     {
         return $this->belongsTo('App\Models\Company', 'company_id');

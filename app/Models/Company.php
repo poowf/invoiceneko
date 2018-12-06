@@ -185,6 +185,14 @@ class Company extends Model implements Auditable
         return $this->hasMany('App\Models\Payment', 'company_id');
     }
 
+    /**
+     * Get the recipients for the blog post.
+     */
+    public function recipients()
+    {
+        return $this->hasMany('App\Models\Recipient', 'company_id');
+    }
+
     public function owner()
     {
         return $this->belongsTo('App\Models\User', 'user_id');
