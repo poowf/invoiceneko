@@ -47,7 +47,7 @@ class InvoiceNotification extends Notification implements ShouldQueue
     {
         $invoice = $this->invoice;
         $company = $invoice->company;
-        $client = $invoice->client;
+        $client = $invoice->getClient();
         $pdf = $invoice->generatePDFView();
         //Cast to string to ensure only a string is returned
         $token = (string) $invoice->generateShareToken();

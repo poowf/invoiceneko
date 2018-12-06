@@ -138,6 +138,11 @@ class Quote extends Model implements Auditable
         return $this->hasMany('App\Models\QuoteItem', 'quote_id');
     }
 
+    public function getClient()
+    {
+        return ($this->client) ? $this->client: (object) json_decode($this->client_data);
+    }
+
     public function owns($model)
     {
         return $this->id == $model->invoice_id;

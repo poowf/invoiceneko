@@ -31,7 +31,7 @@ class CreateInvoiceRequest extends FormRequest
             'item_name.*' => 'required|string',
             'item_quantity.*' => 'required|integer|min:1',
             'item_price.*' => 'required|numeric',
-            'item_description.*' => 'required|string',
+            'item_description.*' => 'string',
             'recurring-time-interval' => 'required_if:recurring-invoice-check,on|integer|min:1',
             'recurring-time-period' => 'required_if:recurring-invoice-check,on|in:day,week,month,year',
             'recurring-until' => 'required_if:recurring-invoice-check,on|in:never,occurence,date',

@@ -34,6 +34,7 @@
             <div class="col s6 right mtop30">
                 @can('create', \App\Models\Quote::class)
                 <a href="{{ route('quote.create', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}" class="btn btn-link waves-effect waves-dark">Create</a>
+                <a href="{{ route('quote.adhoc.create', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}" class="btn btn-link waves-effect waves-dark">Create Ad-Hoc</a>
                 @endcan
                 @can('index', \App\Models\Quote::class)
                 <a href="{{ route('quote.index.archived', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}" class="btn btn-link waves-effect waves-dark">Archived Quotes</a>
@@ -67,8 +68,8 @@
                                         <td>{{ $quote->nice_quote_id }}</td>
                                         <td>${{ $quote->totalmoneyformat  }}</td>
                                         <td>{{ $quote->duedate->format('d F, Y') }}</td>
-                                        <td>{{ $quote->client->companyname }}</td>
-                                        <td>{{ $quote->client->contactphone }}</td>
+                                        <td>{{ $quote->getClient()->companyname }}</td>
+                                        <td>{{ $quote->getClient()->contactphone }}</td>
                                         <td>
                                             @if ($quote->status == App\Models\Quote::STATUS_DRAFT)
                                                 <span class="alt-badge">{{ $quote->statustext() }}</span>

@@ -36,7 +36,7 @@ class InvoiceTest extends TestCase
 
         Invoice::reguard();
 
-        $this->assertEquals($client->company->name, $invoice->client->company->name);
+        $this->assertEquals($client->company->name, $invoice->getClient()->company->name);
         $this->assertEquals('7e57d004-2b97-0e7a-b45f-5387367791cd', $invoice->share_token);
         $this->assertEquals('2018-09-22 00:00:00', $invoice->duedate->timezone(config('app.timezone'))->toDateTimeString());
     }

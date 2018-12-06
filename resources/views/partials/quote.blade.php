@@ -164,10 +164,10 @@
                             <tr>
                                 <td width="250">
                                     <span class="name quote-bold quote-text-larger">Prepared For: </span>
-                                    <span>{{ $quote->client->companyname }}</span>
-                                    <span>@if($quote->client->block){{ $quote->client->block }} @endif {{ $quote->client->street ?? 'No Street' }}</span>
-                                    @if($quote->client->unitnumber)<span>#{{ $quote->client->unitnumber }}</span>@endif
-                                    <span>{{ $quote->client->country_code ?? 'No Country' }} {{ $quote->client->postalcode ?? 'No Postal Code' }}</span>
+                                    <span>{{ $quote->getClient()->companyname }}</span>
+                                    <span>@if($quote->getClient()->block){{ $quote->getClient()->block }} @endif {{ $quote->getClient()->street ?? 'No Street' }}</span>
+                                    @if($quote->getClient()->unitnumber)<span>#{{ $quote->getClient()->unitnumber }}</span>@endif
+                                    <span>{{ $quote->getClient()->country_code ?? 'No Country' }} {{ $quote->getClient()->postalcode ?? 'No Postal Code' }}</span>
                                 </td>
                                 <td width="250">
                                     <img src="{{ asset('/assets/img/lefttoright.png') }}" width="80" height="80" />

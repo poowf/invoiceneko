@@ -112,12 +112,11 @@ class QuoteController extends Controller
      */
     public function create(Company $company)
     {
-        $clients = $company->clients;
-        $itemtemplates = $company->itemtemplates;
-
         if($company)
         {
             $quotenumber = $company->nicequoteid();
+            $clients = $company->clients;
+            $itemtemplates = $company->itemtemplates;
 
             if ($company->clients->count() == 0)
             {
@@ -217,7 +216,7 @@ class QuoteController extends Controller
      */
     public function show(Company $company, Quote $quote)
     {
-        $client = $quote->client;
+        $client = $quote->getClient();
 
         return view('pages.quote.show', compact('quote', 'client'));
     }
