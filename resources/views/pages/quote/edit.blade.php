@@ -116,48 +116,18 @@
         "use strict";
         $(function() {
             let quoteitemcount = {{ ($quote->items()->count() - 1) ?? 0 }};
+            let itemoptions = [ @foreach($itemtemplates as $itemtemplate){ id:'{{ $itemtemplate->id }}', name:'{{ $itemtemplate->name }}' },@endforeach ];
 
             Unicorn.initParsleyValidation('#edit-quote');
-
-            $('.trumbowyg-textarea').trumbowyg({
-                svgPath: '/assets/fonts/trumbowygicons.svg',
-                removeformatPasted: true,
-                resetCss: true,
-                autogrow: true,
-            });
-
-            $('.datepicker').datepicker({
-                autoClose: 'false',
-                format: 'd mmmm, yyyy',
-                yearRange: [1950, {{ \Carbon\Carbon::now()->addYear()->format('Y') }}],
-                defaultDate: new Date("{{ $quote->date ?? Carbon\Carbon::now()->toDateTimeString()  }}"),
-                setDefaultDate: true,
-                onSelect: function() {
-                    // var date = $(this)[0].formats.yyyy() + '-' + $(this)[0].formats.mm() + '-' + $(this)[0].formats.dd()
-                    // $('#receiveddate').val(date);
-                }
-            });
-
+            Unicorn.initDatepicker('#date', '1950', new Date("{{ Carbon\Carbon::now()->addYear()->toDateTimeString() }}").getFullYear(), new Date("{{ Carbon\Carbon::now()->toDateTimeString() }}"));
             Unicorn.initSelectize('#client_id');
-            $('.modal').modal();
-
-            $('#quote-item-add').on('click', function() {
-                initQuoteItem(++quoteitemcount, 'quote-items-container');
+            Unicorn.initItemElement(itemoptions);
+            Unicorn.initListener('#edit-quote', '#quote-item-add', 'click', function (event) {
+                Unicorn.initNewItem(++quoteitemcount, 'quote-items-container', 'quote', itemoptions);
             });
-
-            function initQuoteItem(count, elementid) {
-                let quoteitem = '<div id="quote_item_' + count + '" class="card-panel"><div class="row"><div class="input-field col s12 l8"> <input id="item_name" name="item_name[]" type="text" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Name"> <label for="item_name" class="label-validation">Name</label> <span class="helper-text"></span></div><div class="input-field col s6 l2"> <input id="item_quantity" name="item_quantity[]" type="number" data-parsley-required="true" data-parsley-trigger="change" data-parsley-min="1" placeholder="Item Quantity"> <label for="item_quantity" class="label-validation">Quantity</label> <span class="helper-text"></span></div><div class="input-field col s6 l2"> <input id="item_price" name="item_price[]" type="number" step="0.01" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Price "> <label for="item_price" class="label-validation">Price</label> <span class="helper-text"></span></div><div class="input-field col s12 mtop30"><textarea id="item_description" name="item_description[]" class="trumbowyg-textarea" data-parsley-required="false" data-parsley-trigger="change" placeholder="Item Description"></textarea><label for="item_description" class="label-validation">Description</label> <span class="helper-text"></span></div></div><div class="row"> <button data-id="false" data-count="' + count + '" class="quote-item-delete-btn btn waves-effect waves-light col s12 m3 offset-m9 red">Delete</button></div></div>';
-                $('#' + elementid).append(quoteitem);
-                $('.trumbowyg-textarea').trumbowyg({
-                    svgPath: '/assets/fonts/trumbowygicons.svg',
-                    removeformatPasted: true,
-                    resetCss: true,
-                    autogrow: true,
-                });
-                $('html, body').animate({
-                    scrollTop: $("#quote_item_" + count).offset().top
-                }, 500, 'linear');
-            }
+            Unicorn.initListener('#quote-items-container', '.item-list-selector', 'change', function (event, element) {
+                Unicorn.retrieveItemTemplate("/{{ app('request')->route('company')->domain_name }}", element.siblings().find('.selected').attr('data-id'), element, Unicorn.setItemTemplate);
+            });
 
             $('#quote-items-container').on('click', '.quote-item-delete-btn', function (event) {
                 event.preventDefault();

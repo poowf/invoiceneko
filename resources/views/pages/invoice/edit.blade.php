@@ -193,13 +193,14 @@
                     form.submit();
                 }
             });
-
-            Unicorn.initTrumbowyg('.trumbowyg-textarea');
             Unicorn.initDatepicker('#date', '1950', new Date("{{ Carbon\Carbon::now()->addYear()->toDateTimeString() }}").getFullYear(), new Date("{{ Carbon\Carbon::now()->toDateTimeString() }}"));
             Unicorn.initSelectize('#client_id');
             Unicorn.initItemElement(itemoptions);
             Unicorn.initListener('#edit-invoice', '#invoice-item-add', 'click', function (event) {
                 Unicorn.initNewItem(++invoiceitemcount, 'invoice-items-container', 'invoice', itemoptions);
+            });
+            Unicorn.initListener('#invoice-items-container', '.item-list-selector', 'change', function (event, element) {
+                Unicorn.retrieveItemTemplate("/{{ app('request')->route('company')->domain_name }}", element.siblings().find('.selected').attr('data-id'), element, Unicorn.setItemTemplate);
             });
             Unicorn.initListener('#edit-invoice', '#recurring-invoice-check', 'change', function (event, element) {
                 if (element.prop('checked')) {

@@ -123,9 +123,10 @@ class AdhocInvoiceController extends Controller
         }
 
         $client = $invoice->getClient();
+        $itemtemplates = $company->itemtemplates;
         $countries = countries();
 
-        return view('pages.invoice.adhoc.edit', compact('invoice', 'client', 'countries'));
+        return view('pages.invoice.adhoc.edit', compact('invoice', 'client', 'countries', 'itemtemplates'));
     }
 
     /**

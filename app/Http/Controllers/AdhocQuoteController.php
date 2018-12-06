@@ -114,8 +114,9 @@ class AdhocQuoteController extends Controller
     {
         $client = $quote->getClient();
         $countries = countries();
+        $itemtemplates = $company->itemtemplates;
 
-        return view('pages.quote.adhoc.edit', compact('quote', 'client', 'countries'));
+        return view('pages.quote.adhoc.edit', compact('quote', 'client', 'countries', 'itemtemplates'));
     }
 
     /**

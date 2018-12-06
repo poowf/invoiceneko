@@ -71,12 +71,12 @@ class Unicorn {
 
     static initItemConfirmationTrigger(parent_selector, selector, modal_selector, buttonSelector, trigger = 'click')
     {
-        this.initListener(parent_selector, selector, trigger, function (event) {
+        this.initListener(parent_selector, selector, trigger, function (event, element) {
             event.preventDefault();
             $(modal_selector).modal('open');
 
-            let itemid = $(this).attr('data-id');
-            let count = $(this).attr('data-count');
+            let itemid = element.attr('data-id');
+            let count = element.attr('data-count');
 
             $(modal_selector).children().children(buttonSelector).attr('data-id', itemid);
             $(modal_selector).children().children(buttonSelector).attr('data-count', count);
@@ -85,11 +85,11 @@ class Unicorn {
 
     static executeItemDeleteTrigger(parent_selector, selector, modelType, trigger = 'click')
     {
-        this.initListener(parent_selector, selector, trigger, function (event) {
+        this.initListener(parent_selector, selector, trigger, function (event, element) {
             event.preventDefault();
 
-            let itemid = $(this).attr('data-id');
-            let count = $(this).attr('data-count');
+            let itemid = element.attr('data-id');
+            let count = element.attr('data-count');
 
             if (itemid == "false") {
                 $('#' + modelType + '_item_' + count).remove();
@@ -100,9 +100,9 @@ class Unicorn {
 
     static initConfirmationTrigger(parent_selector, selector, fqdn, model, model_action, modal_selector, modal_form_selector, trigger = 'click')
     {
-        this.initListener(parent_selector, selector, trigger, function (event) {
+        this.initListener(parent_selector, selector, trigger, function (event, element) {
             event.preventDefault();
-            let dataid = $(this).attr('data-id');
+            let dataid = element.attr('data-id');
             $(modal_form_selector).attr('action', '/' + fqdn + '/' + model + '/' + dataid + '/' + model_action);
             $(modal_selector).modal('open');
         });

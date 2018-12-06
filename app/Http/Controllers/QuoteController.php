@@ -259,8 +259,9 @@ class QuoteController extends Controller
     public function edit(Company $company, Quote $quote)
     {
         $clients = $company->clients;
+        $itemtemplates = $company->itemtemplates;
 
-        return view('pages.quote.edit', compact('quote', 'clients'));
+        return view('pages.quote.edit', compact('quote', 'clients', 'itemtemplates'));
     }
 
     /**

@@ -1,6 +1,7 @@
 @extends("layouts.default", ['page_title' => 'Invoice | Edit'])
 
 @section("head")
+    <link href="{{ mix('/assets/css/selectize.css') }}" rel="stylesheet" type="text/css">
     <style>
     </style>
 @stop
@@ -172,48 +173,18 @@
         "use strict";
         $(function() {
             let invoiceitemcount = {{ ($invoice->items()->count() - 1) ?? 0 }};
-            let form = document.getElementById('edit-invoice');
+            let itemoptions = [ @foreach($itemtemplates as $itemtemplate){ id:'{{ $itemtemplate->id }}', name:'{{ $itemtemplate->name }}' },@endforeach ];
 
-            // Unicorn.initParsleyValidation('#edit-invoice');
-
-            $('.trumbowyg-textarea').trumbowyg({
-                svgPath: '/assets/fonts/trumbowygicons.svg',
-                removeformatPasted: true,
-                resetCss: true,
-                autogrow: true,
+            Unicorn.initParsleyValidation('#edit-invoice');
+            Unicorn.initDatepicker('#date', '1950', new Date("{{ Carbon\Carbon::now()->addYear()->toDateTimeString() }}").getFullYear(), new Date("{{ Carbon\Carbon::now()->toDateTimeString() }}"));
+            Unicorn.initSelectize('#client_id');
+            Unicorn.initItemElement(itemoptions);
+            Unicorn.initListener('#edit-invoice', '#invoice-item-add', 'click', function (event) {
+                Unicorn.initNewItem(++invoiceitemcount, 'invoice-items-container', 'invoice', itemoptions);
             });
-
-            $('#date').datepicker({
-                autoClose: 'false',
-                format: 'd mmmm, yyyy',
-                yearRange: [1950, {{ \Carbon\Carbon::now()->addYear()->format('Y') }}],
-                defaultDate: new Date("{{ $invoice->date ?? Carbon\Carbon::now()->toDateTimeString()  }}"),
-                setDefaultDate: true,
-                onSelect: function() {
-                    // var date = $(this)[0].formats.yyyy() + '-' + $(this)[0].formats.mm() + '-' + $(this)[0].formats.dd()
-                    // $('#receiveddate').val(date);
-                }
+            Unicorn.initListener('#invoice-items-container', '.item-list-selector', 'change', function (event, element) {
+                Unicorn.retrieveItemTemplate("/{{ app('request')->route('company')->domain_name }}", element.siblings().find('.selected').attr('data-id'), element, Unicorn.setItemTemplate);
             });
-
-            Unicorn.initSelectize('#country_code');
-
-            $('#invoice-item-add').on('click', function() {
-                initInvoiceItem(++invoiceitemcount, 'invoice-items-container');
-            });
-
-            function initInvoiceItem(count, elementid) {
-                let invoiceitem = '<div id="invoice_item_' + count + '" class="card-panel"><div class="row"><div class="input-field col s12 l8"> <input id="item_name" name="item_name[]" type="text" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Name"> <label for="item_name" class="label-validation">Name</label> <span class="helper-text"></span></div><div class="input-field col s6 l2"> <input id="item_quantity" name="item_quantity[]" type="number" data-parsley-required="true" data-parsley-trigger="change" data-parsley-min="1" placeholder="Item Quantity"> <label for="item_quantity" class="label-validation">Quantity</label> <span class="helper-text"></span></div><div class="input-field col s6 l2"> <input id="item_price" name="item_price[]" type="number" step="0.01" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Price"> <label for="item_price" class="label-validation">Price</label> <span class="helper-text"></span></div><div class="input-field col s12 mtop30"><textarea id="item_description" name="item_description[]" class="trumbowyg-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Description"></textarea><label for="item_description" class="label-validation">Description</label> <span class="helper-text"></span></div></div><div class="row"> <button data-id="false" data-count="' + count + '" class="invoice-item-delete-btn btn waves-effect waves-light col s12 m3 offset-m9 red">Delete</button></div></div>';
-                $('#' + elementid).append(invoiceitem);
-                $('.trumbowyg-textarea').trumbowyg({
-                    svgPath: '/assets/fonts/trumbowygicons.svg',
-                    removeformatPasted: true,
-                    resetCss: true,
-                    autogrow: true,
-                });
-                $('html, body').animate({
-                    scrollTop: $("#invoice_item_" + count).offset().top
-                }, 500, 'linear');
-            }
 
             $('#invoice-items-container').on('click', '.invoice-item-delete-btn', function (event) {
                 event.preventDefault();
@@ -267,33 +238,6 @@
                     $('#delete-confirmation').children().children('.invoice-item-confirm-delete-btn').attr('data-count', '');
                 });
             });
-
-            $('#edit-invoice').parsley({
-                successClass: 'valid',
-                errorClass: 'invalid',
-                errorsContainer: function (velem) {
-                    let $errelem = velem.$element.siblings('span.helper-text');
-                    $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                    return true;
-                },
-                errorsWrapper: '',
-                errorTemplate: ''
-            })
-                .on('field:validated', function(velem) {
-
-                })
-                .on('field:success', function(velem) {
-                    if (velem.$element.is('select')) {
-                        velem.$element.siblings('.selectize-control').removeClass('invalid').addClass('valid');
-                    }
-                })
-                .on('field:error', function(velem) {
-                    if (velem.$element.is('select')) {
-                        velem.$element.siblings('.selectize-control').removeClass('valid').addClass('invalid');
-                    }
-                })
-                .on('form:submit', function(velem) {
-                });
         });
     </script>
 @stop
