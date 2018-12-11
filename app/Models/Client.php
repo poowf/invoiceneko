@@ -58,11 +58,11 @@ class Client extends Model implements Auditable
     }
 
     /**
-     * Get all the recipients associated to the client
+     * Get all of the client's recipients.
      */
     public function recipients()
     {
-        return $this->morphToMany('App\Models\Recipient', 'recipientable');
+        return $this->morphMany('App\Models\Recipient', 'recipientable');
     }
 
     public function company()

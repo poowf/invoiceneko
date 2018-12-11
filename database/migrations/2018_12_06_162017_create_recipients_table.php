@@ -18,8 +18,11 @@ class CreateRecipientsTable extends Migration
             $table->string('salutation')->nullable();
             $table->string('first_name');
             $table->string('last_name')->nullable();
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->string('phone')->nullable();
+            $table->unsignedInteger('recipientable_id');
+            $table->string('recipientable_type');
+            $table->unique(['recipientable_id', 'recipientable_type'], 'recipients_unique');
             $table->unsignedInteger('company_id');
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->timestamps();

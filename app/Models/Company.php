@@ -186,11 +186,11 @@ class Company extends Model implements Auditable
     }
 
     /**
-     * Get the recipients for the blog post.
+     * Get all of the company's recipients.
      */
     public function recipients()
     {
-        return $this->hasMany('App\Models\Recipient', 'company_id');
+        return $this->morphMany('App\Models\Recipient', 'recipientable');
     }
 
     public function owner()

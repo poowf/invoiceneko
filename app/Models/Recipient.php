@@ -20,28 +20,24 @@ class Recipient extends Model implements Auditable
     protected $table = 'recipients';
 
     /**
-     * @param $model
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     * The attributes that are mass assignable.
+     *
+     * @var array
      */
-    public function owner($model)
-    {
-        return $this->morphedByMany($model, 'recipientable');
-    }
+    protected $fillable = [
+        'salutation',
+        'first_name',
+        'last_name',
+        'email',
+        'phone',
+    ];
 
     /**
-     * Get all of the recipients that are associated with a client
+     * Get all of the owning recipientable models.
      */
-    public function clients()
+    public function recipientable()
     {
-        return $this->morphedByMany('App\Models\Client', 'recipientable');
-    }
-
-    /**
-     * Get all of the recipients that are associated with a company
-     */
-    public function companies()
-    {
-        return $this->morphedByMany('App\Models\Company', 'recipientable');
+        return $this->morphTo();
     }
 
     /**
