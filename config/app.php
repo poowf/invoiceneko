@@ -136,6 +136,7 @@ return [
     'rollbar_env' => env('ROLLBAR_ENV'),
     'sentry_laravel_dsn' => env('SENTRY_LARAVEL_DSN'),
     'tawkto_embed_key' => env('TAWKTO_EMBED_KEY'),
+    'logrocket_token' => env('LOGROCKET_TOKEN'),
 
     /*
     |--------------------------------------------------------------------------
