@@ -3,15 +3,16 @@
 namespace App\Otter;
 
 use Illuminate\Http\Request;
+use Poowf\Otter\Http\Resources\OtterResource;
 
-class Invoice
+class Invoice extends OtterResource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = 'App\Invoice';
+    public static $model = 'App\Models\Invoice';
 
     /**
      * Get the fields and types used by the resource
