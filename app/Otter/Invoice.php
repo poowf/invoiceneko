@@ -17,10 +17,9 @@ class Invoice extends OtterResource
     /**
      * Get the fields and types used by the resource
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function fields(Request $request)
+    public function fields()
     {
         return [
             'name' => 'text',

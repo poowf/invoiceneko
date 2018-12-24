@@ -17,17 +17,16 @@ class User extends OtterResource
     /**
      * Get the fields and types used by the resource
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function fields(Request $request)
+    public function fields()
     {
         return [
-            'name' => 'text',
-            'password' => 'password',
+            'full_name' => 'text',
+            'username' => 'text',
             'email' => 'email',
-            'first_name' => 'text',
-            'example-field' => 'type',
+            'phone' => 'text',
+            'gender' => 'text',
         ];
     }
 }
