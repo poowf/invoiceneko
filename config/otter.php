@@ -14,4 +14,9 @@ return [
     */
 
     'middleware' => ['web'],
+
+    'user' => [
+        'name' => 'full_name',
+        'email' => 'email',
+    ],
 ];

@@ -24,9 +24,22 @@ class User extends OtterResource
         return [
             'full_name' => 'text',
             'username' => 'text',
+            'password' => 'password',
             'email' => 'email',
             'phone' => 'text',
             'gender' => 'text',
+        ];
+    }
+
+    /**
+     * Fields to be hidden in the resource collection
+     *
+     * @return array
+     */
+    public function hidden()
+    {
+        return [
+            'password'
         ];
     }
 }
