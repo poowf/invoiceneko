@@ -23,10 +23,12 @@ class Company extends OtterResource
     {
         return [
             'name' => 'text',
-            'password' => 'password',
+            'crn' => 'text',
+            'domain_name' => 'text',
+            'phone' => 'text',
             'email' => 'email',
-            'first_name' => 'text',
-            'example-field' => 'type',
+            'country_code' => 'text',
+            'timezone' => 'text',
         ];
     }
 }

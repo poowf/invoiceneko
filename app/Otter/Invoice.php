@@ -22,11 +22,19 @@ class Invoice extends OtterResource
     public function fields()
     {
         return [
-            'name' => 'text',
-            'password' => 'password',
-            'email' => 'email',
-            'first_name' => 'text',
-            'example-field' => 'type',
+            'nice_invoice_id' => 'text',
+            'date' => 'text',
+            'netdays' => 'text',
+            'total' => 'text',
+            'status' => 'text',
         ];
+    }
+
+    public function toArray($request)
+    {
+        $transformed = parent::toArray($request);
+        $transformed['date'] = $this->date ? $this->date->format('Y-m-d H:i:s') : null;
+
+        return $transformed;
     }
 }
