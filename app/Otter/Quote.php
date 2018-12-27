@@ -4,14 +4,14 @@ namespace App\Otter;
 
 use Poowf\Otter\Http\Resources\OtterResource;
 
-class User extends OtterResource
+class Quote extends OtterResource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = 'App\Models\User';
+    public static $model = 'App\Quote';
 
     /**
      * Get the fields and types used by the resource
@@ -21,12 +21,11 @@ class User extends OtterResource
     public function fields()
     {
         return [
-            'full_name' => 'text',
-            'username' => 'text',
+            'name' => 'text',
             'password' => 'password',
             'email' => 'email',
-            'phone' => 'text',
-            'gender' => 'text',
+            'first_name' => 'text',
+            'example-field' => 'type',
         ];
     }
 

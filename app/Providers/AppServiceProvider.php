@@ -37,6 +37,7 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment('production', 'local', 'testing', 'staging')) {
             $this->app->register(HorizonServiceProvider::class);
             $this->app->register(TelescopeServiceProvider::class);
+            $this->app->register(OtterServiceProvider::class);
         }
 
         Bouncer::runAfterPolicies();

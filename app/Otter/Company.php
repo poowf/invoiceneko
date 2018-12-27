@@ -2,7 +2,6 @@
 
 namespace App\Otter;
 
-use Illuminate\Http\Request;
 use Poowf\Otter\Http\Resources\OtterResource;
 
 class Company extends OtterResource

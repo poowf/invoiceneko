@@ -1,9 +1,14 @@
-# Invoice Neko
-[![Latest Stable Version][release-image]][release-url]
-[![Total Downloads][download-image]][download-url]
-[![Build Status][travis-image]][travis-url]
+<p align="center"><img width="150" height="150" src="https://invoiceneko.blob.core.windows.net/assets/invoiceneko-circle.png"></p>
 
-<img align="center" width="150" height="150" src="https://invoiceneko.blob.core.windows.net/assets/invoiceneko-circle.png">
+<p align="center">
+<a href="https://github.com/poowf/invoiceneko/releases"><img src="https://img.shields.io/github/release/poowf/invoiceneko.svg?style=flat-square" alt="Release"></a>
+<a href="https://github.com/poowf/invoiceneko/releases"><img src="https://img.shields.io/github/downloads/poowf/invoiceneko/total.svg?style=flat-square" alt="Downloads"></a>
+<a href="https://travis-ci.org/poowf/invoiceneko"><img src="https://img.shields.io/travis/poowf/invoiceneko/master.svg?style=flat-square" alt="Build Status"></a>
+</p>
+
+# Introduction
+
+An open-source invoicing system built on a modern backend and developed for anyone who needs to generate out an invoice and manage clients
 
 ## Setup and Deployment
 ```bash
@@ -18,22 +23,8 @@ php artisan storage:link
 php artisan serve --host 0.0.0.0
 ```
 
-## About Invoice Neko
-
-An Invoice System developed for anyone who needs to generate out an invoice and manage clients
-
-
 ## License
 
 Copyright 2018 Zane J. Chua
 
 This project is licensed under the Attribution Assurance License, please refer to the LICENSE file for more details
-
-[release-image]: https://img.shields.io/github/release/poowf/invoiceneko.svg?style=flat-square
-[release-url]: https://github.com/poowf/invoiceneko/releases
-
-[download-image]: https://img.shields.io/github/downloads/poowf/invoiceneko/total.svg?style=flat-square
-[download-url]: https://github.com/poowf/invoiceneko/releases
-
-[travis-image]: https://img.shields.io/travis/poowf/invoiceneko/master.svg?style=flat-square
-[travis-url]: https://travis-ci.org/poowf/invoiceneko
