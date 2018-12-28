@@ -14,6 +14,13 @@ class Company extends OtterResource
     public static $model = 'App\Models\Company';
 
     /**
+     * The column of the model to display in select options
+     *
+     * @var string
+     */
+    public static $title = 'name';
+
+    /**
      * Get the fields and types used by the resource
      *
      * @return array

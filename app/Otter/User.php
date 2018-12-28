@@ -14,6 +14,13 @@ class User extends OtterResource
     public static $model = 'App\Models\User';
 
     /**
+     * The column of the model to display in select options
+     *
+     * @var string
+     */
+    public static $title = 'full_name';
+
+    /**
      * Get the fields and types used by the resource
      *
      * @return array

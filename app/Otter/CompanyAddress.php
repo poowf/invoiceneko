@@ -14,6 +14,13 @@ class CompanyAddress extends OtterResource
     public static $model = 'App\Models\CompanyAddress';
 
     /**
+     * The column of the model to display in select options
+     *
+     * @var string
+     */
+    public static $title = 'street';
+
+    /**
      * Get the fields and types used by the resource
      *
      * @return array

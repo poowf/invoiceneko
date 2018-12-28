@@ -14,6 +14,13 @@ class CompanySetting extends OtterResource
     public static $model = 'App\Models\CompanySetting';
 
     /**
+     * The column of the model to display in select options
+     *
+     * @var string
+     */
+    public static $title = 'invoice_prefix';
+
+    /**
      * Get the fields and types used by the resource
      *
      * @return array

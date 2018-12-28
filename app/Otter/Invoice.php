@@ -14,6 +14,13 @@ class Invoice extends OtterResource
     public static $model = 'App\Models\Invoice';
 
     /**
+     * The column of the model to display in select options
+     *
+     * @var string
+     */
+    public static $title = 'nice_invoice_id';
+
+    /**
      * Get the fields and types used by the resource
      *
      * @return array
