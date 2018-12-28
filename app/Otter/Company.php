@@ -30,4 +30,14 @@ class Company extends OtterResource
             'timezone' => 'text',
         ];
     }
+
+    public function relations()
+    {
+        return [
+            'settings' => 'CompanySetting',
+            'users' => 'User',
+            'invoices' => 'Invoice',
+            'owner' => 'User',
+        ];
+    }
 }

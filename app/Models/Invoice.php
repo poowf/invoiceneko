@@ -256,12 +256,12 @@ class Invoice extends Model implements Auditable
 
     public function calculatetax($moneyformat = true)
     {
-        $companysettings = $this->company->settings;
+        $companySetting = $this->company->settings;
         $tax = 0;
 
-        if($companysettings->tax && $companysettings->tax != 0)
+        if($companySetting->tax && $companySetting->tax != 0)
         {
-            $tax = $companysettings->tax;
+            $tax = $companySetting->tax;
         }
 
         $subtotal = $this->calculatesubtotal(false);
@@ -282,12 +282,12 @@ class Invoice extends Model implements Auditable
 
     public function calculatetotal($moneyformat = true)
     {
-        $companysettings = $this->company->settings;
+        $companySetting = $this->company->settings;
         $tax = 0;
 
-        if($companysettings->tax && $companysettings->tax != 0)
+        if($companySetting->tax && $companySetting->tax != 0)
         {
-            $tax = $companysettings->tax;
+            $tax = $companySetting->tax;
         }
 
         $subtotal = $this->calculatesubtotal(false);
