@@ -29,6 +29,15 @@ class Invoice extends OtterResource
         ];
     }
 
+    public function relations()
+    {
+        return [
+            'client' => 'Client',
+            'company' => 'Company',
+            'items' => 'InvoiceItem'
+        ];
+    }
+
     public function toArray($request)
     {
         $transformed = parent::toArray($request);

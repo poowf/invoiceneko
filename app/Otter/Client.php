@@ -4,14 +4,14 @@ namespace App\Otter;
 
 use Poowf\Otter\Http\Resources\OtterResource;
 
-class Quote extends OtterResource
+class Client extends OtterResource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = 'App\Models\Quote';
+    public static $model = 'App\Models\Client';
 
     /**
      * Get the fields and types used by the resource
@@ -21,11 +21,10 @@ class Quote extends OtterResource
     public function fields()
     {
         return [
-            'nice_quote_id' => 'text',
-            'date' => 'text',
-            'netdays' => 'text',
-            'total' => 'text',
-            'status' => 'text',
+            'companyname' => 'text',
+            'phone' => 'text',
+            'crn' => 'text',
+            'website' => 'text'
         ];
     }
 
@@ -38,13 +37,5 @@ class Quote extends OtterResource
     {
         return [
         ];
-    }
-
-    public function toArray($request)
-    {
-        $transformed = parent::toArray($request);
-        $transformed['date'] = $this->date ? $this->date->format('Y-m-d H:i:s') : null;
-
-        return $transformed;
     }
 }
