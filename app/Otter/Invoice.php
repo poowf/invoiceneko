@@ -25,7 +25,7 @@ class Invoice extends OtterResource
      *
      * @return array
      */
-    public function fields()
+    public static function fields()
     {
         return [
             'nice_invoice_id' => 'text',
@@ -41,7 +41,7 @@ class Invoice extends OtterResource
      *
      * @return array
      */
-    public function relations()
+    public static function relations()
     {
         return [
             'client' => ['Client', 'client_id'],

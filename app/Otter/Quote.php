@@ -25,7 +25,7 @@ class Quote extends OtterResource
      *
      * @return array
      */
-    public function fields()
+    public static function fields()
     {
         return [
             'nice_quote_id' => 'text',
@@ -41,7 +41,7 @@ class Quote extends OtterResource
      *
      * @return array
      */
-    public function hidden()
+    public static function hidden()
     {
         return [
         ];

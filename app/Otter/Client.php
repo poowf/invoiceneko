@@ -25,7 +25,7 @@ class Client extends OtterResource
      *
      * @return array
      */
-    public function fields()
+    public static function fields()
     {
         return [
             'companyname' => 'text',
@@ -40,7 +40,7 @@ class Client extends OtterResource
      *
      * @return array
      */
-    public function hidden()
+    public static function hidden()
     {
         return [
         ];
