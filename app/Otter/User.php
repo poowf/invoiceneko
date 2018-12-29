@@ -48,4 +48,17 @@ class User extends OtterResource
             'password'
         ];
     }
+
+
+    /**
+     * Get the relations used by the resource
+     *
+     * @return array
+     */
+    public function relations()
+    {
+        return [
+            'companies' => 'Company',
+        ];
+    }
 }

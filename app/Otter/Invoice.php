@@ -36,10 +36,15 @@ class Invoice extends OtterResource
         ];
     }
 
+    /**
+     * Get the relations used by the resource
+     *
+     * @return array
+     */
     public function relations()
     {
         return [
-            'client' => 'Client',
+            'client' => ['Client', 'client_id'],
             'company' => 'Company',
             'items' => 'InvoiceItem'
         ];
