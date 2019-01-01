@@ -2,8 +2,8 @@
 
 <p align="center">
 <a href="https://github.com/poowf/invoiceneko/releases"><img src="https://img.shields.io/github/release/poowf/invoiceneko.svg?style=flat-square" alt="Release"></a>
-<a href="https://github.com/poowf/invoiceneko/releases"><img src="https://img.shields.io/github/downloads/poowf/invoiceneko/total.svg?style=flat-square" alt="Downloads"></a>
 <a href="https://travis-ci.org/poowf/invoiceneko"><img src="https://img.shields.io/travis/poowf/invoiceneko/master.svg?style=flat-square" alt="Build Status"></a>
+<a href="https://github.com/poowf/invoiceneko/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-AAB-teal.svg?style=flat-square" alt="License"></a>
 </p>
 
 # Introduction

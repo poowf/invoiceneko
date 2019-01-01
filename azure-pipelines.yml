@@ -31,10 +31,6 @@ steps:
   displayName: 'MySQL Version'
 
 - script: |
-    sudo apt-get -y remove composer
-    sudo wget https://getcomposer.org/composer.phar -O /usr/local/bin/composer
-    sudo chmod +x /usr/local/bin/composer
-    export PATH=$PATH:~/usr/local/bin/
     sudo composer self-update
     composer install --no-interaction --prefer-dist --no-suggest
     composer --version
