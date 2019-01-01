@@ -455,6 +455,36 @@ mark {
   color: #F44336;
 }
 
+:root input[data-parsley-required="true"] + label::after {
+  content: " *";
+  display: contents;
+  opacity: 1;
+  color: #F44336;
+}
+
+:root select[data-parsley-required="true"] ~ label::after {
+  content: " *";
+  display: contents;
+  opacity: 1;
+  color: #F44336;
+}
+
+.datepicker-modal .datepicker-calendar .selects-container .select-month {
+  margin-right: 25px;
+}
+
+.datepicker-modal .datepicker-calendar .selects-container .select-month::after, .datepicker-modal .datepicker-calendar .selects-container .select-year::after {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 4px 4px 0 4px;
+  border-color: #000000 transparent transparent transparent;
+  top: 22px;
+  right: -6px;
+}
+
 /* Selectize */
 
 //TODO: There's a bug with multi select input on width > 1200px, the selected items will jump about. need to find a fix. minor issue.

@@ -100,7 +100,7 @@ class QuoteController extends Controller
     public function duplicate(Company $company, Quote $quote)
     {
         $duplicatedQuote = $quote->duplicate();
-        flash('Quote has been Cloned Sucessfully', "success");
+        flash('Quote has been Duplicated Sucessfully', "success");
         return redirect()->route('quote.show', [ 'quote' => $duplicatedQuote->id, 'company' => $company ]);
     }
 

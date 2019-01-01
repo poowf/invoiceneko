@@ -2,6 +2,7 @@
 
 @section("head")
     <link href="{{ mix('/assets/css/intlTelInput.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ mix('/assets/css/selectize.css') }}" rel="stylesheet" type="text/css">
     <style>
         .logo-display-container, .smlogo-display-container {
             display: inline-block;
