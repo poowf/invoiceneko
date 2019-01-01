@@ -56,7 +56,7 @@ class Company extends Model implements Auditable
 
         //Auto Creation of Settings per Company;
         static::created(function ($company) {
-            $settings = new CompanySettings;
+            $settings = new CompanySetting;
             $company->settings()->save($settings);
             Unicorn::createRoleAndPermissions($company->id);
             Bouncer::assign('global-administrator')->to($company->owner);
@@ -101,10 +101,10 @@ class Company extends Model implements Auditable
 
     public function generateNiceID($model, $letter)
     {
-        $companysettings = $this->settings;
-        if($companysettings->{$model . '_prefix'})
+        $companySetting = $this->settings;
+        if($companySetting->{$model . '_prefix'})
         {
-            $generatedPrefix = $companysettings->{$model . '_prefix'} . '-';
+            $generatedPrefix = $companySetting->{$model . '_prefix'} . '-';
         }
         else
         {
@@ -197,6 +197,6 @@ class Company extends Model implements Auditable
 
     public function settings()
     {
-        return $this->hasOne('App\Models\CompanySettings', 'company_id');
+        return $this->hasOne('App\Models\CompanySetting', 'company_id');
     }
 }

@@ -376,9 +376,10 @@ class InvoiceController extends Controller
         }
 
         $clients = $company->clients;
+        $itemtemplates = $company->itemtemplates;
         $recurrence = ($invoice->recurrence) ? $invoice->recurrence : null;
 
-        return view('pages.invoice.edit', compact('invoice', 'clients', 'recurrence'));
+        return view('pages.invoice.edit', compact('invoice', 'clients', 'recurrence', 'itemtemplates'));
     }
 
     /**

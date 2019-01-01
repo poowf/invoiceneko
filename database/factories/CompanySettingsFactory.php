@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(\App\Models\CompanySettings::class, function (Faker $faker) {
+$factory->define(\App\Models\CompanySetting::class, function (Faker $faker) {
     return [
         'invoice_prefix' => $faker->domainWord,
         'quote_prefix' => $faker->domainWord,

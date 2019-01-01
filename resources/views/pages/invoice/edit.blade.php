@@ -103,7 +103,7 @@
                                         <span class="helper-text"></span>
                                     </div>
                                     <div class="input-field col s12 mtop30">
-                                        <textarea id="item_description" name="item_description[]" class="trumbowyg-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Description">{{ $item->description ?? '' }}</textarea>
+                                        <textarea id="item_description" name="item_description[]" class="trumbowyg-textarea" data-parsley-required="false" data-parsley-trigger="change" placeholder="Item Description">{{ $item->description ?? '' }}</textarea>
                                         <label for="item_description" class="label-validation">Description</label>
                                         <span class="helper-text"></span>
                                     </div>
@@ -174,46 +174,42 @@
             let invoiceitemcount = {{ ($invoice->items()->count() - 1) ?? 0 }};
             let form = document.getElementById('edit-invoice');
             let allowFormSubmission = @if(is_null($recurrence)){{ 'true' }}@else{{ 'false' }}@endif;
+            let itemoptions = [ @foreach($itemtemplates as $itemtemplate){ id:'{{ $itemtemplate->id }}', name:'{{ $itemtemplate->name }}' },@endforeach ];
 
             @if(!is_null($recurrence))initChangeDetection(form);@endif
 
-            // Unicorn.initParsleyValidation('#edit-invoice');
+            Unicorn.initParsleyValidation('#edit-invoice', function() {
+                if (!allowFormSubmission) {
+                    event.preventDefault();
+                }
 
-            $('.trumbowyg-textarea').trumbowyg({
-                svgPath: '/assets/fonts/trumbowygicons.svg',
-                removeformatPasted: true,
-                resetCss: true,
-                autogrow: true,
-            });
-
-            $('#date').datepicker({
-                autoClose: 'false',
-                format: 'd mmmm, yyyy',
-                yearRange: [1950, {{ \Carbon\Carbon::now()->addYear()->format('Y') }}],
-                defaultDate: new Date("{{ $invoice->date ?? Carbon\Carbon::now()->toDateTimeString()  }}"),
-                setDefaultDate: true,
-                onSelect: function() {
-                    // var date = $(this)[0].formats.yyyy() + '-' + $(this)[0].formats.mm() + '-' + $(this)[0].formats.dd()
-                    // $('#receiveddate').val(date);
+                if(hasFormChanged(form) && !allowFormSubmission)
+                {
+                    $('#recurring-confirmation').modal('open');
+                }
+                else
+                {
+                    allowFormSubmission = true;
+                    form.submit();
                 }
             });
 
+            Unicorn.initTrumbowyg('.trumbowyg-textarea');
+            Unicorn.initDatepicker('#date', '1950', new Date("{{ Carbon\Carbon::now()->addYear()->toDateTimeString() }}").getFullYear(), new Date("{{ Carbon\Carbon::now()->toDateTimeString() }}"));
             Unicorn.initSelectize('#client_id');
-
-            $('#invoice-item-add').on('click', function() {
-                initInvoiceItem(++invoiceitemcount, 'invoice-items-container');
+            Unicorn.initItemElement(itemoptions);
+            Unicorn.initListener('#edit-invoice', '#invoice-item-add', 'click', function (event) {
+                Unicorn.initNewItem(++invoiceitemcount, 'invoice-items-container', 'invoice', itemoptions);
             });
-
-            $('#edit-invoice').on('change', '#recurring-invoice-check', function (event) {
-                if ($(this).prop('checked')) {
+            Unicorn.initListener('#edit-invoice', '#recurring-invoice-check', 'change', function (event, element) {
+                if (element.prop('checked')) {
                     initRecurringElements('recurring-invoice-container');
                 } else {
                     $('#recurring-invoice-container').html('');
                 }
             });
-
-            $('#edit-invoice').on('change', '#notify', function (event) {
-                if ($(this).prop('checked')) {
+            Unicorn.initListener('#edit-invoice', '#notify', 'change', function (event, element) {
+                if (element.prop('checked')) {
                     $('#notify-details').val("on");
                 } else {
                     $('#notify-details').val("off");
@@ -242,54 +238,17 @@
                 return false;
             }
 
-            function initRecurringElements(elementid)
+            function initRecurringElements(elementId)
             {
                 @if(is_null($recurrence))
                     let recurringelements = '<div class="input-field col s4 l2"> <input id="recurring-time-interval" name="recurring-time-interval" type="number" data-parsley-min="1" data-parsley-max="730" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('recurring-time-interval') or '1' }}"> <label for="recurring-time-interval" class="label-validation">Repeats every</label> <span class="helper-text"></span></div><div class="input-field col s8 l10"> <select id="recurring-time-period" name="recurring-time-period" data-parsley-required="true" data-parsley-trigger="change"><option value="day">Day</option><option value="week">Week</option><option value="month" selected>Month</option><option value="year">Year</option> </select> <label class="recurring-time-period"></label> <span class="helper-text"></span></div><div class="radio-field col s12"> <label id="rbtn-label" class="rbtn-label" for="recurring-until">Until</label><p> <label> <input id="recurring-until-never" name="recurring-until" type="radio" value="never" data-parsley-required="true" data-parsley-trigger="change"> <span>The End of Time</span> </label></p><p> <label> <input id="recurring-until-occurence" name="recurring-until" type="radio" value="occurence"> <span> After <input id="recurring-until-occurence-number" name="recurring-until-occurence-number" class="radio-input-inline radio-input-digit" type="number" data-parsley-required="false" data-parsley-min="1" data-parsley-max="730" data-parsley-trigger="change" value="{{ old('recurring-until-occurence-number') ?? '1' }}"> Occurences </span> </label></p><p> <label> <input id="recurring-until-date" name="recurring-until" type="radio" value="date"> <span> On <input id="recurring-until-date-value" name="recurring-until-date-value" class="datepicker radio-input-inline radio-input-date" type="text" data-parsley-required="false" data-parsley-trigger="change" value="{{ old('recurring-until-date-value') ?? \Carbon\Carbon::now()->addMonth(1)->format('j F, Y') }}"> </span> </label></p> <span class="helper-text manual-validation"></span></div>';
-                    $('#' + elementid).append(recurringelements);
-                    Unicorn.initSelectize('#recurring-time-period');
-
-                    $('#recurring-until-date-value').datepicker({
-                        autoClose: 'false',
-                        format: 'd mmmm, yyyy',
-                        yearRange: [{{ \Carbon\Carbon::now()->format('Y') }}, {{ \Carbon\Carbon::now()->addYears(50)->format('Y') }}],
-                        onSelect: function() {
-                            // let date = $(this)[0].formats.yyyy() + '-' + $(this)[0].formats.mm() + '-' + $(this)[0].formats.dd()
-                            // $('#receiveddate').val(date);
-                        }
-                    });
+                    Unicorn.initDatepicker('#recurring-until-date-value', new Date("{{ Carbon\Carbon::now()->toDateTimeString() }}"), new Date("{{ Carbon\Carbon::now()->addYears(50)->toDateTimeString() }}").getFullYear(), new Date("{{ Carbon\Carbon::now()->addMonth()->toDateTimeString() }}"));
                 @else
                     let recurringelements = '<div class="input-field col s4 l2"> <input id="recurring-time-interval" name="recurring-time-interval" type="number" data-parsley-min="1" data-parsley-max="730" data-parsley-required="true" data-parsley-trigger="change" value="{{ $recurrence->time_interval ?? '1' }}"> <label for="recurring-time-interval" class="label-validation">Repeats every</label> <span class="helper-text"></span></div><div class="input-field col s8 l10"> <select id="recurring-time-period" name="recurring-time-period" data-parsley-required="true" data-parsley-trigger="change"><option value="day" @if($recurrence->time_period == 'day') selected @endif>Day</option><option value="week" @if($recurrence->time_period == 'week') selected @endif>Week</option><option value="month" @if($recurrence->time_period == 'month') selected @endif selected>Month</option><option value="year" @if($recurrence->time_period == 'year') selected @endif>Year</option> </select> <label class="recurring-time-period"></label> <span class="helper-text"></span></div><div class="radio-field col s12"> <label id="rbtn-label" class="rbtn-label" for="recurring-until">Until</label><p> <label> <input id="recurring-until-never" name="recurring-until" type="radio" value="never" data-parsley-required="true" data-parsley-trigger="change" @if($recurrence->until_type == 'never') checked @endif> <span>The End of Time</span> </label></p><p> <label> <input id="recurring-until-occurence" name="recurring-until" type="radio" value="occurence" @if($recurrence->until_type == 'occurence') checked @endif> <span> After <input id="recurring-until-occurence-number" name="recurring-until-occurence-number" class="radio-input-inline radio-input-digit" type="number" data-parsley-required="false" data-parsley-min="1" data-parsley-max="730" data-parsley-trigger="change" @if($recurrence->until_type == 'occurence') value="{{ $recurrence->until_meta ?? '1' }}" @else value="1" @endif> Occurences </span> </label></p><p> <label> <input id="recurring-until-date" name="recurring-until" type="radio" value="date" @if($recurrence->until_type == 'date') checked @endif> <span> On <input id="recurring-until-date-value" name="recurring-until-date-value" class="datepicker radio-input-inline radio-input-date" type="text" data-parsley-required="false" data-parsley-trigger="change" @if($recurrence->until_type == 'date') value="{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $recurrence->until_meta)->toDateTimeString() ?? \Carbon\Carbon::now()->addMonth(1)->toDateTimeString() }}" @else value="{{ \Carbon\Carbon::now()->addMonth(1)->toDateTimeString() }}" @endif> </span> </label></p> <span class="helper-text manual-validation"></span></div>';
-
-                    $('#' + elementid).append(recurringelements);
-                    Unicorn.initSelectize('#recurring-time-period');
-
-                    $('#recurring-until-date-value').datepicker({
-                        autoClose: 'false',
-                        format: 'd mmmm, yyyy',
-                        yearRange: [{{ \Carbon\Carbon::now()->format('Y') }}, {{ \Carbon\Carbon::now()->addYears(50)->format('Y') }}],
-                        defaultDate: new Date("@if($recurrence->until_type == 'date') {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $recurrence->until_meta)->toDateTimeString() ?? \Carbon\Carbon::now()->addMonth(1)->toDateTimeString() }} @else {{ \Carbon\Carbon::now()->addMonth(1)->toDateTimeString() }} @endif"),
-                        setDefaultDate: true,
-                        onSelect: function() {
-                            // let date = $(this)[0].formats.yyyy() + '-' + $(this)[0].formats.mm() + '-' + $(this)[0].formats.dd()
-                            // $('#receiveddate').val(date);
-                        }
-                    });
+                    Unicorn.initDatepicker('#recurring-until-date-value', new Date("{{ Carbon\Carbon::now()->toDateTimeString() }}"), new Date("{{ Carbon\Carbon::now()->addYears(50)->toDateTimeString() }}").getFullYear(), new Date("@if($recurrence->until_type == 'date') {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $recurrence->until_meta)->toDateTimeString() ?? \Carbon\Carbon::now()->addMonth(1)->toDateTimeString() }} @else {{ \Carbon\Carbon::now()->addMonth(1)->toDateTimeString() }} @endif"));
                 @endif
-            }
-
-            function initInvoiceItem(count, elementid) {
-                let invoiceitem = '<div id="invoice_item_' + count + '" class="card-panel"><div class="row"><div class="input-field col s12 l8"> <input id="item_name" name="item_name[]" type="text" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Name"> <label for="item_name" class="label-validation">Name</label> <span class="helper-text"></span></div><div class="input-field col s6 l2"> <input id="item_quantity" name="item_quantity[]" type="number" data-parsley-required="true" data-parsley-trigger="change" data-parsley-min="1" placeholder="Item Quantity"> <label for="item_quantity" class="label-validation">Quantity</label> <span class="helper-text"></span></div><div class="input-field col s6 l2"> <input id="item_price" name="item_price[]" type="number" step="0.01" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Price"> <label for="item_price" class="label-validation">Price</label> <span class="helper-text"></span></div><div class="input-field col s12 mtop30"><textarea id="item_description" name="item_description[]" class="trumbowyg-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Description"></textarea><label for="item_description" class="label-validation">Description</label> <span class="helper-text"></span></div></div><div class="row"> <button data-id="false" data-count="' + count + '" class="invoice-item-delete-btn btn waves-effect waves-light col s12 m3 offset-m9 red">Delete</button></div></div>';
-                $('#' + elementid).append(invoiceitem);
-                $('.trumbowyg-textarea').trumbowyg({
-                    svgPath: '/assets/fonts/trumbowygicons.svg',
-                    removeformatPasted: true,
-                    resetCss: true,
-                    autogrow: true,
-                });
-                $('html, body').animate({
-                    scrollTop: $("#invoice_item_" + count).offset().top
-                }, 500, 'linear');
+                Unicorn.initSelectize('#recurring-time-period');
+                $('#' + elementId).append(recurringelements);
             }
 
             $('#invoice-items-container').on('click', '.invoice-item-delete-btn', function (event) {
@@ -344,46 +303,6 @@
                     $('#delete-confirmation').children().children('.invoice-item-confirm-delete-btn').attr('data-count', '');
                 });
             });
-
-            $('#edit-invoice').parsley({
-                successClass: 'valid',
-                errorClass: 'invalid',
-                errorsContainer: function (velem) {
-                    let $errelem = velem.$element.siblings('span.helper-text');
-                    $errelem.attr('data-error', window.Parsley.getErrorMessage(velem.validationResult[0].assert));
-                    return true;
-                },
-                errorsWrapper: '',
-                errorTemplate: ''
-            })
-                .on('field:validated', function(velem) {
-
-                })
-                .on('field:success', function(velem) {
-                    if (velem.$element.is('select')) {
-                        velem.$element.siblings('.selectize-control').removeClass('invalid').addClass('valid');
-                    }
-                })
-                .on('field:error', function(velem) {
-                    if (velem.$element.is('select')) {
-                        velem.$element.siblings('.selectize-control').removeClass('valid').addClass('invalid');
-                    }
-                })
-                .on('form:submit', function(velem) {
-                    if (!allowFormSubmission) {
-                        event.preventDefault();
-                    }
-
-                    if(hasFormChanged(form) && !allowFormSubmission)
-                    {
-                        $('#recurring-confirmation').modal('open');
-                    }
-                    else
-                    {
-                        allowFormSubmission = true;
-                        form.submit();
-                    }
-                });
         });
     </script>
 @stop

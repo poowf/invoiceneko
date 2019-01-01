@@ -4,10 +4,10 @@ namespace App\Policies;
 
 use App\Models\CompanyAddress;
 use App\Models\User;
-use App\Models\CompanySettings;
+use App\Models\CompanySetting;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class CompanySettingsPolicy
+class CompanySettingPolicy
 {
     use HandlesAuthorization;
 
@@ -30,17 +30,17 @@ class CompanySettingsPolicy
 
     public function index(User $user)
     {
-        return $user->can('update-company-settings', CompanySettings::class);
+        return $user->can('update-company-settings', CompanySetting::class);
     }
 
     /**
      * Determine whether the user can view the companySettings.
      *
      * @param  \App\Models\User $user
-     * @param CompanySettings $companySettings
+     * @param CompanySetting $companySettings
      * @return mixed
      */
-    public function view(User $user, CompanySettings $companySettings)
+    public function view(User $user, CompanySetting $companySettings)
     {
         return $user->can('view-company-settings', $companySettings);
     }
@@ -53,17 +53,17 @@ class CompanySettingsPolicy
      */
     public function create(User $user)
     {
-        return $user->can('create-company-settings', CompanySettings::class);
+        return $user->can('create-company-settings', CompanySetting::class);
     }
 
     /**
      * Determine whether the user can update the companySettings.
      *
      * @param  \App\Models\User $user
-     * @param CompanySettings $companySettings
+     * @param CompanySetting $companySettings
      * @return mixed
      */
-    public function update(User $user, CompanySettings $companySettings)
+    public function update(User $user, CompanySetting $companySettings)
     {
         return $user->can('update-company-settings', $companySettings);
     }
@@ -72,10 +72,10 @@ class CompanySettingsPolicy
      * Determine whether the user can delete the companySettings.
      *
      * @param  \App\Models\User $user
-     * @param CompanySettings $companySettings
+     * @param CompanySetting $companySettings
      * @return mixed
      */
-    public function delete(User $user, CompanySettings $companySettings)
+    public function delete(User $user, CompanySetting $companySettings)
     {
         return $user->can('delete-company-settings', $companySettings);
     }

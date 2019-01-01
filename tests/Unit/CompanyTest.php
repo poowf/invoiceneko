@@ -4,7 +4,7 @@ namespace Tests\Unit;
 
 use App\Models\Company;
 use App\Models\CompanyAddress;
-use App\Models\CompanySettings;
+use App\Models\CompanySetting;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -95,7 +95,7 @@ class CompanyTest extends TestCase
         //Need to attach the company to the user
 
         $this->assertTrue(isset($company->settings));
-        $this->assertInstanceOf(CompanySettings::class, $company->settings);
+        $this->assertInstanceOf(CompanySetting::class, $company->settings);
         $this->assertEquals($company->id, $company->settings->company_id);
     }
 }

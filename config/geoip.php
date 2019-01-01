@@ -152,7 +152,7 @@ return [
         'timezone' => 'Asia/NekoCountry',
         'continent' => 'NA',
         'default' => true,
-        'currency' => 'USD',
+        'currency' => 'NekoCoin',
     ],
 
 ];

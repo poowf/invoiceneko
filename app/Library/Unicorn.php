@@ -21,7 +21,7 @@ class Unicorn
         \App\Models\Client::class,
         \App\Models\Role::class,
         \App\Models\CompanyAddress::class,
-        \App\Models\CompanySettings::class,
+        \App\Models\CompanySetting::class,
         \App\Models\CompanyUserRequest::class,
     ];
 

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateCompanySettingsRequest;
+use App\Http\Requests\UpdateCompanySettingRequest;
 use App\Models\Company;
-use App\Models\CompanySettings;
+use App\Models\CompanySetting;
 use Illuminate\Http\Request;
 
 class CompanySettingsController extends Controller
@@ -47,10 +47,10 @@ class CompanySettingsController extends Controller
      * Display the specified resource.
      *
      * @param Company $company
-     * @param  \App\Models\CompanySettings $companySettings
+     * @param  \App\Models\CompanySetting $companySetting
      * @return void
      */
-    public function show(Company $company, CompanySettings $companySettings)
+    public function show(Company $company, CompanySetting $companySetting)
     {
         //
     }
@@ -65,34 +65,34 @@ class CompanySettingsController extends Controller
     {
         if($company)
         {
-            $companysettings = $company->settings;
+            $companySetting = $company->settings;
         }
         else
         {
-            $companysettings = null;
+            $companySetting = null;
         }
 
-        return view('pages.company.settings.edit', compact('companysettings', 'company'));
+        return view('pages.company.settings.edit', compact('companySetting', 'company'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param UpdateCompanySettingsRequest $request
+     * @param UpdateCompanySettingRequest $request
      * @param Company $company
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCompanySettingsRequest $request, Company $company)
+    public function update(UpdateCompanySettingRequest $request, Company $company)
     {
-        $companysettings = $company->settings;
+        $companySetting = $company->settings;
 
-        if(!$companysettings)
+        if(!$companySetting)
         {
-            $companysettings = new CompanySettings;
+            $companySetting = new CompanySetting;
         }
 
-        $companysettings->fill($request->all());
-        $company->settings()->save($companysettings);
+        $companySetting->fill($request->all());
+        $company->settings()->save($companySetting);
 
         flash('Company Settings Updated', 'success');
         return redirect()->back();
@@ -102,10 +102,10 @@ class CompanySettingsController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Company $company
-     * @param  \App\Models\CompanySettings $companySettings
+     * @param  \App\Models\CompanySetting $companySetting
      * @return void
      */
-    public function destroy(Company $company, CompanySettings $companySettings)
+    public function destroy(Company $company, CompanySetting $companySetting)
     {
         //
     }
