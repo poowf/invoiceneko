@@ -31,7 +31,11 @@ class Client extends OtterResource
             'companyname' => 'text',
             'phone' => 'text',
             'crn' => 'text',
-            'website' => 'text'
+            'contactsalutation' => 'text',
+            'contactfirstname' => 'text',
+            'contactlastname' => 'text',
+            'contactemail' => 'text',
+            'contactphone' => 'text',
         ];
     }
 

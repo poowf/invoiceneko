@@ -15,6 +15,8 @@ class OtterServiceProvider extends OtterApplicationServiceProvider
      */
     public function boot()
     {
+        Otter::night();
+
         parent::boot();
 
     }
@@ -30,7 +32,7 @@ class OtterServiceProvider extends OtterApplicationServiceProvider
     {
         Gate::define('viewOtter', function ($user) {
             return in_array($user->email, [
-                //
+                'zane@poowf.com'
             ]);
         });
     }

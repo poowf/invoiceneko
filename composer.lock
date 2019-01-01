@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0ac995ed31a99d15c3390ccdb50b5516",
+    "content-hash": "7d611999b287948b6ae5603383760a08",
     "packages": [
         {
             "name": "arcanedev/no-captcha",
@@ -2982,24 +2982,28 @@
         {
             "name": "poowf/otter",
             "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/poowf/otter.git",
+                "reference": "08d3c0cde2df2937c99d400a3fed5757838d7486"
+            },
             "dist": {
-                "type": "path",
-                "url": "../packages/poowf/otter",
-                "reference": "53661afeb473881740914375e2a9e2ee1895e178",
-                "shasum": null
+                "type": "zip",
+                "url": "https://api.github.com/repos/poowf/otter/zipball/08d3c0cde2df2937c99d400a3fed5757838d7486",
+                "reference": "08d3c0cde2df2937c99d400a3fed5757838d7486",
+                "shasum": ""
             },
             "require": {
-                "php": ">=7.1.0"
+                "illuminate/console": "5.5.x|5.6.x|5.7.x",
+                "illuminate/routing": "5.5.x|5.6.x|5.7.x",
+                "php": ">=7.0"
             },
             "type": "library",
             "extra": {
                 "laravel": {
                     "providers": [
                         "Poowf\\Otter\\OtterServiceProvider"
-                    ],
-                    "aliases": {
-                        "Otter": "Poowf\\Otter\\Facade"
-                    }
+                    ]
                 }
             },
             "autoload": {
@@ -3007,19 +3011,23 @@
                     "Poowf\\Otter\\": "src"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "authors": [
                 {
                     "name": "Zane J. Chua",
-                    "email": "zane.jocelyn@gmail.com"
+                    "email": "zane@poowf.com"
                 }
             ],
-            "description": "A relatively automatic CRUD backend administration panel",
-            "transport-options": {
-                "symlink": true
-            }
+            "description": "A relatively automatic CRUD backend administration panel for Laravel",
+            "keywords": [
+                "administration",
+                "backend",
+                "laravel"
+            ],
+            "time": "2018-12-31 21:46:26"
         },
         {
             "name": "pragmarx/google2fa",

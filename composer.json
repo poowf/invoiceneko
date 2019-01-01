@@ -23,6 +23,7 @@
         "laravelista/ekko": "^1.5",
         "maatwebsite/excel": "~3.1.0",
         "owen-it/laravel-auditing": "^8.0",
+        "poowf/otter": "dev-master",
         "pragmarx/google2fa-laravel": "^0.2.0",
         "pragmarx/recovery": "^0.1.0",
         "predis/predis": "^1.1",
@@ -67,15 +68,6 @@
             ]
         }
     },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../packages/poowf/otter",
-            "options": {
-                "symlink": true
-            }
-        }
-    ],
     "scripts": {
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
