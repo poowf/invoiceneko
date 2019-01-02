@@ -12,6 +12,27 @@
         .single-history-wrapper {
         }
 
+        :root .slick-prev:before, :root .slick-next:before{
+            content: initial;
+            color: #000000;
+        }
+
+        :root .slick-prev, :root .slick-next {
+            color: #000000;
+            z-index: 1;
+        }
+
+        :root .slick-prev:hover, :root .slick-next:hover, :root .slick-prev:focus, :root .slick-next:focus {
+            color: #000000;
+        }
+
+        :root .slick-prev {
+            left: -20px;
+        }
+
+        :root .slick-next {
+            right: -5px;
+        }
     </style>
     <link href="{{ mix('/assets/css/slick.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ mix('/assets/css/slick-theme.css') }}" rel="stylesheet" type="text/css">
@@ -111,7 +132,7 @@
                 <div id="details-panel" class="card-panel">
                     <dl>
                         <dt>Company Name</dt>
-                        <dd>{{ $client->companyname }}</dd>
+                        <dd>{{ $client->companyname ?? '-' }}</dd>
                         <dt>Company Block</dt>
                         <dd>{{ $client->block ?? '-' }}</dd>
                         <dt>Company Street</dt>
@@ -123,7 +144,7 @@
                         <dt>Company Nickname</dt>
                         <dd>{{ $client->nickname ?? '-' }}</dd>
                         <dt>Company Registration Number</dt>
-                        <dd>{{ $client->crn }}
+                        <dd>{{ $client->crn ?? '-'  }}
                         <dt>Contact Name</dt>
                         <dd>{{ $client->contactname ?? '-' }}</dd>
                         <dt>Contact Email</dt>

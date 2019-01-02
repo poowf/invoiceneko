@@ -175,7 +175,7 @@
                 <div id="details-panel" class="card-panel">
                     <dl>
                         <dt>Company Name</dt>
-                        <dd>{{ $client->companyname }}</dd>
+                        <dd>{{ $client->companyname ?? '-' }}</dd>
                         <dt>Company Block</dt>
                         <dd>{{ $client->block ?? '-' }}</dd>
                         <dt>Company Street</dt>

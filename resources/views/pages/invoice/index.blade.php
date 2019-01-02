@@ -79,8 +79,8 @@
                                         <td>{{ $invoice->nice_invoice_id }}</td>
                                         <td>${{ $invoice->totalmoneyformat  }}</td>
                                         <td>{{ $invoice->duedate->format('d F, Y') }}</td>
-                                        <td>{{ $invoice->getClient()->companyname }}</td>
-                                        <td>{{ $invoice->getClient()->contactphone }}</td>
+                                        <td>{{ $invoice->getClient()->companyname ?? '-' }}</td>
+                                        <td>{{ $invoice->getClient()->contactphone ?? '-' }}</td>
                                         <td>
                                             @if ($invoice->status == App\Models\Invoice::STATUS_OVERDUE)
                                                 <span class="alt-badge error">{{ $invoice->statustext() }}</span>
@@ -143,8 +143,8 @@
                                 <td>{{ $invoice->nice_invoice_id }}</td>
                                 <td>${{ $invoice->totalmoneyformat }}</td>
                                 <td>{{ $invoice->duedate->format('d F, Y') }}</td>
-                                <td>{{ $invoice->getClient()->companyname }}</td>
-                                <td>{{ $invoice->getClient()->contactphone }}</td>
+                                <td>{{ $invoice->getClient()->companyname ?? '-' }}</td>
+                                <td>{{ $invoice->getClient()->contactphone ?? '-' }}</td>
                                 <td>
                                     @if ($invoice->status == App\Models\Invoice::STATUS_OVERDUE)
                                         <span class="alt-badge error">{{ $invoice->statustext() }}</span>
@@ -207,8 +207,8 @@
                                 <td>{{ $invoice->nice_invoice_id }}</td>
                                 <td>${{ $invoice->totalmoneyformat  }}</td>
                                 <td>{{ $invoice->duedate->format('d F, Y') }}</td>
-                                <td>{{ $invoice->getClient()->companyname }}</td>
-                                <td>{{ $invoice->getClient()->contactphone }}</td>
+                                <td>{{ $invoice->getClient()->companyname ?? '-' }}</td>
+                                <td>{{ $invoice->getClient()->contactphone ?? '-' }}</td>
                                 <td>
                                     @if ($invoice->status == App\Models\Invoice::STATUS_OVERDUE)
                                         <span class="alt-badge error">{{ $invoice->statustext() }}</span>
@@ -271,8 +271,8 @@
                                 <td>{{ $invoice->nice_invoice_id }}</td>
                                 <td>${{ $invoice->totalmoneyformat  }}</td>
                                 <td>{{ $invoice->duedate->format('d F, Y') }}</td>
-                                <td>{{ $invoice->getClient()->companyname }}</td>
-                                <td>{{ $invoice->getClient()->contactphone }}</td>
+                                <td>{{ $invoice->getClient()->companyname ?? '-' }}</td>
+                                <td>{{ $invoice->getClient()->contactphone ?? '-' }}</td>
                                 <td>
                                     @if ($invoice->status == App\Models\Invoice::STATUS_OVERDUE)
                                         <span class="alt-badge error">{{ $invoice->statustext() }}</span>
