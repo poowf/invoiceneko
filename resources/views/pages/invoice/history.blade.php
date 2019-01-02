@@ -36,7 +36,7 @@
                 <div id="details-panel" class="card-panel">
                     <dl>
                         <dt>Company Name</dt>
-                        <dd>{{ $client->companyname }}</dd>
+                        <dd>{{ $client->companyname ?? '-' }}</dd>
                         <dt>Company Block</dt>
                         <dd>{{ $client->block ?? '-' }}</dd>
                         <dt>Company Street</dt>
@@ -48,7 +48,7 @@
                         <dt>Company Nickname</dt>
                         <dd>{{ $client->nickname ?? '-' }}</dd>
                         <dt>Company Registration Number</dt>
-                        <dd>{{ $client->crn }}
+                        <dd>{{ $client->crn ?? '-' }}
                         <dt>Contact Name</dt>
                         <dd>{{ $client->contactname ?? '-' }}</dd>
                         <dt>Contact Email</dt>

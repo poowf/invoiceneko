@@ -129,13 +129,6 @@ class AdhocQuoteController extends Controller
      */
     public function update(UpdateAdhocQuoteRequest $request, Company $company, Quote $quote)
     {
-        if($quote->isLocked())
-        {
-            flash('More than 120 days has passed since the quote has been completed, the quote is now locked', 'error');
-
-            return redirect()->route('quote.show', [ 'quote' => $quote, 'company' => $company ]);
-        }
-
         $quote->fill($request->all());
 
         $client = [

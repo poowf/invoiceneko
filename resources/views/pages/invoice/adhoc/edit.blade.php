@@ -140,32 +140,6 @@
             <a href="javascript:;" class=" modal-action modal-close waves-effect black-text waves-red btn-flat btn-deletemodal">Cancel</a>
         </div>
     </div>
-
-    <div id="recurring-confirmation" class="modal mini-modal">
-        <div class="modal-content">
-            <p>Update Recurring Invoice Details</p>
-            <div class="radio-field col s12">
-                <p>
-                    <label>
-                        <input id="recurring-details-standalone" name="recurring-details-selector" type="radio" value="standalone" data-parsley-required="false" data-parsley-trigger="change" checked>
-                        <span>This invoice only</span>
-                    </label>
-                </p>
-
-                <p>
-                    <label>
-                        <input id="recurring-details-future" name="recurring-details-selector" type="radio" value="future">
-                        <span>This and all future invoices</span>
-                    </label>
-                </p>
-                <span class="helper-text manual-validation"></span>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <a href="javascript:;" class=" modal-action waves-effect black-text waves-green btn-flat recurring-invoice-update-btn">Update</a>
-            <a href="javascript:;" class=" modal-action modal-close waves-effect black-text waves-red btn-flat btn-deletemodal">Cancel</a>
-        </div>
-    </div>
 @stop
 
 @section("scripts")
@@ -177,7 +151,7 @@
 
             Unicorn.initParsleyValidation('#edit-invoice');
             Unicorn.initDatepicker('#date', '1950', new Date("{{ Carbon\Carbon::now()->addYear()->toDateTimeString() }}").getFullYear(), new Date("{{ Carbon\Carbon::now()->toDateTimeString() }}"));
-            Unicorn.initSelectize('#client_id');
+            Unicorn.initSelectize('#country_code');
             Unicorn.initItemElement(itemoptions);
             Unicorn.initListener('#edit-invoice', '#invoice-item-add', 'click', function (event) {
                 Unicorn.initNewItem(++invoiceitemcount, 'invoice-items-container', 'invoice', itemoptions);

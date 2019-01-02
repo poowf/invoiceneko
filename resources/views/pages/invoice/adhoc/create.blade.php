@@ -154,33 +154,6 @@
             Unicorn.initListener('#invoice-items-container', '.item-list-selector', 'change', function (event, element) {
                 Unicorn.retrieveItemTemplate("/{{ app('request')->route('company')->domain_name }}", element.siblings().find('.selected').attr('data-id'), element, Unicorn.setItemTemplate);
             });
-
-            $('#invoice-items-container').on('click', '.invoice-item-delete-btn', function (event) {
-                event.preventDefault();
-                $('#delete-confirmation').modal('open');
-
-                let itemid = $(this).attr('data-id');
-                let count = $(this).attr('data-count');
-
-                $('#delete-confirmation').children().children('.invoice-item-confirm-delete-btn').attr('data-id', itemid);
-                $('#delete-confirmation').children().children('.invoice-item-confirm-delete-btn').attr('data-count', count);
-            });
-
-            $('#invoice-items-container').on('change', '.item-list-selector', function (event) {
-                retrieveItemTemplate($(this).siblings().find('.selected').attr('data-id'), $(this), setItemTemplate);
-            });
-
-            $('#delete-confirmation').on('click', '.invoice-item-confirm-delete-btn', function (event) {
-                event.preventDefault();
-
-                let itemid = $(this).attr('data-id');
-                let count = $(this).attr('data-count');
-
-                if (itemid == "false") {
-                    $('#invoice_item_' + count).remove();
-                    $('#delete-confirmation').modal('close');
-                }
-            });
         });
     </script>
 @stop

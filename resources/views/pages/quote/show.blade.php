@@ -76,7 +76,7 @@
                 </form>
                 @endcan
                 @can('update', $quote)
-                <a href="{{ route('quote.edit', [ 'quote' => $quote, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="btn light-blue waves-effect waves-dark">
+                <a href="@if(is_null($quote->client_id)){{ route('quote.adhoc.edit', [ 'quote' => $quote, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}@else{{ route('quote.edit', [ 'quote' => $quote, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}@endif" class="btn light-blue waves-effect waves-dark">
                     Edit
                 </a>
                 @endcan
