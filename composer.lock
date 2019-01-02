@@ -3451,12 +3451,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/poowf/otter.git",
-                "reference": "d4e77802a69597a13bfc54be53151cd282abd8bf"
+                "reference": "dca3141c752907ce88a58a7bec1732c8b9cb9a1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/poowf/otter/zipball/d4e77802a69597a13bfc54be53151cd282abd8bf",
-                "reference": "d4e77802a69597a13bfc54be53151cd282abd8bf",
+                "url": "https://api.github.com/repos/poowf/otter/zipball/dca3141c752907ce88a58a7bec1732c8b9cb9a1a",
+                "reference": "dca3141c752907ce88a58a7bec1732c8b9cb9a1a",
                 "shasum": ""
             },
             "require": {
@@ -3496,7 +3496,7 @@
                 "backend",
                 "laravel"
             ],
-            "time": "2019-01-02 14:55:35"
+            "time": "2019-01-02 15:51:13"
         },
         {
             "name": "pragmarx/google2fa",
