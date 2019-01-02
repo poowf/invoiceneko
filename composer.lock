@@ -3451,12 +3451,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/poowf/otter.git",
-                "reference": "d89641ae722d07b60b5b69962e1ede39b7ad58ac"
+                "reference": "d4e77802a69597a13bfc54be53151cd282abd8bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/poowf/otter/zipball/d89641ae722d07b60b5b69962e1ede39b7ad58ac",
-                "reference": "d89641ae722d07b60b5b69962e1ede39b7ad58ac",
+                "url": "https://api.github.com/repos/poowf/otter/zipball/d4e77802a69597a13bfc54be53151cd282abd8bf",
+                "reference": "d4e77802a69597a13bfc54be53151cd282abd8bf",
                 "shasum": ""
             },
             "require": {
@@ -3496,7 +3496,7 @@
                 "backend",
                 "laravel"
             ],
-            "time": "2019-01-01 14:51:39"
+            "time": "2019-01-02 14:55:35"
         },
         {
             "name": "pragmarx/google2fa",
@@ -4276,16 +4276,16 @@
         },
         {
             "name": "rollbar/rollbar",
-            "version": "v1.7.2",
+            "version": "v1.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rollbar/rollbar-php.git",
-                "reference": "a2292fe25108bb1f9fb73908aeb80fca0af76b21"
+                "reference": "b0a618a48a36fb40f297548a03bf30beab4aff47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rollbar/rollbar-php/zipball/a2292fe25108bb1f9fb73908aeb80fca0af76b21",
-                "reference": "a2292fe25108bb1f9fb73908aeb80fca0af76b21",
+                "url": "https://api.github.com/repos/rollbar/rollbar-php/zipball/b0a618a48a36fb40f297548a03bf30beab4aff47",
+                "reference": "b0a618a48a36fb40f297548a03bf30beab4aff47",
                 "shasum": ""
             },
             "require": {
@@ -4332,20 +4332,20 @@
                 "logging",
                 "monitoring"
             ],
-            "time": "2018-12-17T03:44:37+00:00"
+            "time": "2019-01-02T14:27:14+00:00"
         },
         {
             "name": "rollbar/rollbar-laravel",
-            "version": "v4.0.2",
+            "version": "v4.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rollbar/rollbar-php-laravel.git",
-                "reference": "ba561c3b509888918c3cb419c13496275488e9cd"
+                "reference": "e4ea0343e32748123ee7d7da8c6bf98593c5f74c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rollbar/rollbar-php-laravel/zipball/ba561c3b509888918c3cb419c13496275488e9cd",
-                "reference": "ba561c3b509888918c3cb419c13496275488e9cd",
+                "url": "https://api.github.com/repos/rollbar/rollbar-php-laravel/zipball/e4ea0343e32748123ee7d7da8c6bf98593c5f74c",
+                "reference": "e4ea0343e32748123ee7d7da8c6bf98593c5f74c",
                 "shasum": ""
             },
             "require": {
@@ -4400,7 +4400,7 @@
                 "monitoring",
                 "rollbar"
             ],
-            "time": "2018-12-17T05:07:09+00:00"
+            "time": "2019-01-01T18:39:35+00:00"
         },
         {
             "name": "sentry/sentry",
