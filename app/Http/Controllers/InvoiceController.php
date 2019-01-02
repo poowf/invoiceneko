@@ -146,7 +146,7 @@ class InvoiceController extends Controller
     public function duplicate(Company $company, Invoice $invoice)
     {
         $duplicatedInvoice = $invoice->duplicate();
-        flash('Invoice has been Cloned Sucessfully', "success");
+        flash('Invoice has been Duplicated Sucessfully', "success");
         return redirect()->route('invoice.show', [ 'invoice' => $duplicatedInvoice, 'company' => $company ]);
     }
 

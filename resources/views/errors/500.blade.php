@@ -52,7 +52,7 @@
             @if(app()->environment('production') && app()->bound('sentry') && !empty(Sentry::getLastEventID()))
                 @if(auth()->check())
                     @if($user = auth()->user())
-                        LogRocket.init('grcixc/invoiceneko');
+                        LogRocket.init('{{ config('app.logrocket_token') }}');
                         LogRocket.identify('{{ $user->id }}', {
                             name: '{{ $user->full_name }}',
                             email: '{{ $user->email }}',
@@ -68,7 +68,7 @@
                         });
 
                         Sentry.init({
-                            dsn: '{{ config('app.sentry_laravel_dsn' }}'
+                            dsn: '{{ config('app.sentry_laravel_dsn') }}'
                         });
 
                         Sentry.showReportDialog({

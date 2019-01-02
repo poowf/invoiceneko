@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateAdhocInvoiceRequest;
 use App\Http\Requests\UpdateAdhocInvoiceRequest;
-use App\Http\Requests\UpdateInvoiceRequest;
 use App\Models\Company;
 use App\Models\OldInvoice;
 use App\Models\OldInvoiceItem;
@@ -124,9 +123,10 @@ class AdhocInvoiceController extends Controller
         }
 
         $client = $invoice->getClient();
+        $itemtemplates = $company->itemtemplates;
         $countries = countries();
 
-        return view('pages.invoice.adhoc.edit', compact('invoice', 'client', 'countries'));
+        return view('pages.invoice.adhoc.edit', compact('invoice', 'client', 'countries', 'itemtemplates'));
     }
 
     /**

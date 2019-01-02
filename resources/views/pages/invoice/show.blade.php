@@ -82,7 +82,7 @@
                 @can('update', $invoice)
                 <form method="post" action="{{ route('invoice.duplicate', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form">
                     {{ csrf_field() }}
-                    <button class="btn blue darken-3 waves-effect waves-dark null-btn" type="submit">Clone</button>
+                    <button class="btn blue darken-3 waves-effect waves-dark null-btn" type="submit">Duplicate</button>
                 </form>
                 @endcan
                 @can('update', $invoice)

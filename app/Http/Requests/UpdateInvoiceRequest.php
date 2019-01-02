@@ -29,7 +29,7 @@ class UpdateInvoiceRequest extends FormRequest
             'item_name.*' => 'required|string',
             'item_quantity.*' => 'required|integer|min:1',
             'item_price.*' => 'required|numeric',
-            'item_description.*' => 'required|string',
+            'item_description.*' => 'string',
             'recurring-details' => 'required|in:none,standalone,future',
             'recurring-time-interval' => 'required_if:recurring-invoice-check,on|integer',
             'recurring-time-period' => 'required_if:recurring-invoice-check,on|in:day,week,month,year',

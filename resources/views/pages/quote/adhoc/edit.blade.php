@@ -36,14 +36,45 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="input-field col s12">
-                                <select id="client_id" name="client_id" data-parsley-required="true" data-parsley-trigger="change" disabled>
-                                    <option disabled="" selected="selected" value="">Pick a Client</option>
-                                    @foreach($clients as $client)
-                                        <option value="{{ $client->id }}" @if($quote->client_id == $client->id) selected @endif>{{ $client->companyname ?? '' }}</option>
+                            <div class="input-field col s12 m6">
+                                <input id="companyname" name="companyname" type="text" data-parsley-required="true"  data-parsley-trigger="change" data-parsley-minlength="4" value="{{ $client->companyname ?? '' }}" placeholder="Client Company Name">
+                                <label for="companyname" class="label-validation">Client Company Name</label>
+                                <span class="helper-text"></span>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <select id="country_code" name="country_code" data-parsley-trigger="change" placeholder="Client Country">
+                                    <option disabled="" selected="selected" value="">Client Country</option>
+                                    @foreach($countries as $country)
+                                        <option value="{{ $country['iso_3166_1_alpha2'] }}" @if($client->country_code == $country['iso_3166_1_alpha2']) selected @endif>{{ $country['name'] }}</option>
                                     @endforeach
                                 </select>
-                                <label for="client_id" class="label-validation">Client</label>
+                                <label for="country" class="label-validation">Client Country</label>
+                                <span class="helper-text"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input id="block" name="block" type="text" data-parsley-trigger="change" value="{{ $client->block ?? '' }}" placeholder="Client Block">
+                                <label for="block" class="label-validation">Client Block</label>
+                                <span class="helper-text"></span>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="street" name="street" type="text" data-parsley-trigger="change" value="{{ $client->street ?? '' }}" placeholder="Client Street">
+                                <label for="street" class="label-validation">Client Street</label>
+                                <span class="helper-text"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <i class="mdi mdi-pound prefix-inline"></i>
+                                <input id="unitnumber" name="unitnumber" type="text" data-parsley-trigger="change" value="{{ $client->unitnumber ?? '' }}" placeholder="Client Unit Number">
+                                <label for="unitnumber" class="label-validation">Client Unit Number</label>
+                                <span class="helper-text"></span>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="postalcode" name="postalcode" type="text" data-parsley-trigger="change" value="{{ $client->postalcode ?? '' }}" placeholder="Client Postal Code">
+                                <label for="postalcode" class="label-validation">Client Postal Code</label>
+                                <span class="helper-text"></span>
                             </div>
                         </div>
                     </div>
@@ -76,15 +107,15 @@
                                         <span class="helper-text"></span>
                                     </div>
                                     <div class="input-field col s12 mtop30">
-                                        <textarea id="item_description" name="item_description[]" class="trumbowyg-textarea" data-parsley-required="false" data-parsley-trigger="change" placeholder="Item Description">{{ $item->description ?? '' }}</textarea>
+                                        <textarea id="item_description" name="item_description[]" class="trumbowyg-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Description">{{ $item->description ?? '' }}</textarea>
                                         <label for="item_description" class="label-validation">Description</label>
                                         <span class="helper-text"></span>
                                     </div>
                                 </div>
                                 @if($key != 0)
-                                <div class="row">
-                                    <button data-id="{{ $item->id }}"  data-count="{{ $key }}" class="quote-item-delete-btn btn waves-effect waves-light col s12 m3 offset-m9 red">Delete</button>
-                                </div>
+                                    <div class="row">
+                                        <button data-id="{{ $item->id }}"  data-count="{{ $key }}" class="quote-item-delete-btn btn waves-effect waves-light col s12 m3 offset-m9 red">Delete</button>
+                                    </div>
                                 @endif
                             </div>
                         @endforeach
@@ -109,6 +140,32 @@
             <a href="javascript:;" class=" modal-action modal-close waves-effect black-text waves-red btn-flat btn-deletemodal">Cancel</a>
         </div>
     </div>
+
+    <div id="recurring-confirmation" class="modal mini-modal">
+        <div class="modal-content">
+            <p>Update Recurring Quote Details</p>
+            <div class="radio-field col s12">
+                <p>
+                    <label>
+                        <input id="recurring-details-standalone" name="recurring-details-selector" type="radio" value="standalone" data-parsley-required="false" data-parsley-trigger="change" checked>
+                        <span>This quote only</span>
+                    </label>
+                </p>
+
+                <p>
+                    <label>
+                        <input id="recurring-details-future" name="recurring-details-selector" type="radio" value="future">
+                        <span>This and all future quotes</span>
+                    </label>
+                </p>
+                <span class="helper-text manual-validation"></span>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:;" class=" modal-action waves-effect black-text waves-green btn-flat recurring-quote-update-btn">Update</a>
+            <a href="javascript:;" class=" modal-action modal-close waves-effect black-text waves-red btn-flat btn-deletemodal">Cancel</a>
+        </div>
+    </div>
 @stop
 
 @section("scripts")
@@ -120,8 +177,7 @@
 
             Unicorn.initParsleyValidation('#edit-quote');
             Unicorn.initDatepicker('#date', '1950', new Date("{{ Carbon\Carbon::now()->addYear()->toDateTimeString() }}").getFullYear(), new Date("{{ Carbon\Carbon::now()->toDateTimeString() }}"));
-            Unicorn.initSelectize('#client_id');
-            Unicorn.initItemElement(itemoptions);
+            Unicorn.initSelectize('#country_code');
             Unicorn.initListener('#edit-quote', '#quote-item-add', 'click', function (event) {
                 Unicorn.initNewItem(++quoteitemcount, 'quote-items-container', 'quote', itemoptions);
             });
@@ -133,7 +189,7 @@
                 event.preventDefault();
                 if(quoteitemcount == 0)
                 {
-                    M.toast({ html: "Unable to delete the last invoice item", displayLength: "6000", classes: "error"});
+                    M.toast({ html: "Unable to delete the last quote item", displayLength: "6000", classes: "error"});
                     return;
                 }
                 $('#delete-confirmation').modal('open');

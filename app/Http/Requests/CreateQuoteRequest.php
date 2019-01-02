@@ -31,7 +31,7 @@ class CreateQuoteRequest extends FormRequest
             'item_name.*' => 'required|string',
             'item_quantity.*' => 'required|integer|min:1',
             'item_price.*' => 'required|numeric',
-            'item_description.*' => 'required|string',
+            'item_description.*' => 'string',
         ];
     }
 }

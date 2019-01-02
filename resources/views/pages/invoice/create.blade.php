@@ -141,7 +141,6 @@
             let itemoptions = [ @foreach($itemtemplates as $itemtemplate){ id:'{{ $itemtemplate->id }}', name:'{{ $itemtemplate->name }}' },@endforeach ];
 
             Unicorn.initParsleyValidation('#create-invoice');
-            Unicorn.initTrumbowyg('.trumbowyg-textarea');
             Unicorn.initDatepicker('#date', '1950', new Date("{{ Carbon\Carbon::now()->addYear()->toDateTimeString() }}").getFullYear(), new Date("{{ Carbon\Carbon::now()->toDateTimeString() }}"));
             Unicorn.initSelectize('#client_id');
             Unicorn.initItemElement(itemoptions);

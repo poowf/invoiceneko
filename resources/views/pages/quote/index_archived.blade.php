@@ -61,8 +61,8 @@
                                         <td>{{ $quote->nice_quote_id }}</td>
                                         <td>${{ $quote->totalmoneyformat  }}</td>
                                         <td>{{ $quote->duedate->format('d F, Y') }}</td>
-                                        <td>{{ $quote->client->companyname }}</td>
-                                        <td>{{ $quote->client->contactphone }}</td>
+                                        <td>{{ $quote->getClient()->companyname }}</td>
+                                        <td>{{ $quote->getClient()->contactphone }}</td>
                                         <td>
                                             @if ($quote->status == App\Models\Quote::STATUS_DRAFT)
                                                 <span class="alt-badge">{{ $quote->statustext() }}</span>

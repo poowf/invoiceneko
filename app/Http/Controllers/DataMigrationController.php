@@ -198,7 +198,7 @@ class DataMigrationController extends Controller
 
                     $amount = number_format($row->amount, 3, '.', '');
 
-                    if (!$payment->duplicatecheck($amount, $row->date, $invoice->id, $invoice->client->id, $auth_companyid)->first())
+                    if (!$payment->duplicatecheck($amount, $row->date, $invoice->id, $invoice->getClient()->id, $auth_companyid)->first())
                     {
                         $payment = new Payment;
                         $payment->amount = $amount;
@@ -206,7 +206,7 @@ class DataMigrationController extends Controller
                         $payment->notes = $row->description . " " . $row->reference_number;
                         $payment->mode = $row->mode;
                         $payment->invoice_id = $invoice->id;
-                        $payment->client_id = $invoice->client->id;
+                        $payment->client_id = $invoice->getClient()->id;
                         $payment->company_id = $auth_companyid;
                         $payment->save();
                     }

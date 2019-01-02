@@ -100,7 +100,7 @@ class QuoteController extends Controller
     public function duplicate(Company $company, Quote $quote)
     {
         $duplicatedQuote = $quote->duplicate();
-        flash('Quote has been Cloned Sucessfully', "success");
+        flash('Quote has been Duplicated Sucessfully', "success");
         return redirect()->route('quote.show', [ 'quote' => $duplicatedQuote->id, 'company' => $company ]);
     }
 
@@ -112,12 +112,11 @@ class QuoteController extends Controller
      */
     public function create(Company $company)
     {
-        $clients = $company->clients;
-        $itemtemplates = $company->itemtemplates;
-
         if($company)
         {
             $quotenumber = $company->nicequoteid();
+            $clients = $company->clients;
+            $itemtemplates = $company->itemtemplates;
 
             if ($company->clients->count() == 0)
             {
@@ -217,7 +216,7 @@ class QuoteController extends Controller
      */
     public function show(Company $company, Quote $quote)
     {
-        $client = $quote->client;
+        $client = $quote->getClient();
 
         return view('pages.quote.show', compact('quote', 'client'));
     }
@@ -260,8 +259,9 @@ class QuoteController extends Controller
     public function edit(Company $company, Quote $quote)
     {
         $clients = $company->clients;
+        $itemtemplates = $company->itemtemplates;
 
-        return view('pages.quote.edit', compact('quote', 'clients'));
+        return view('pages.quote.edit', compact('quote', 'clients', 'itemtemplates'));
     }
 
     /**

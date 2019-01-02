@@ -34,7 +34,7 @@ class QuoteTest extends TestCase
 
         Quote::reguard();
 
-        $this->assertEquals($client->company->name, $quote->client->company->name);
+        $this->assertEquals($client->company->name, $quote->getClient()->company->name);
         $this->assertEquals('7e57d004-2b97-0e7a-b45f-5387367791cd', $quote->share_token);
         $this->assertEquals('2018-08-22 00:00:00', $quote->duedate->timezone(config('app.timezone'))->toDateTimeString());
     }

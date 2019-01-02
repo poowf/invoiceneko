@@ -131,7 +131,7 @@
         @endif
                     
         @if(app()->environment('production'))
-            LogRocket.init('grcixc/invoiceneko');
+            LogRocket.init('{{ config('app.logrocket_token') }}');
         @endif
 
         @if(auth()->check())

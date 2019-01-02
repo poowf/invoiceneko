@@ -185,6 +185,11 @@ Route::group(['middleware' => ['auth', '2fa', 'verified']], function() {
             Route::patch('/quote/{quote}/share', 'QuoteController@share')->name('quote.share')->middleware('can:view,quote');
             Route::delete('/quote/{quote}/destroy', 'QuoteController@destroy')->name('quote.destroy')->middleware('can:delete,quote');
 
+            Route::get('/quote/adhoc/create', 'AdhocQuoteController@create')->name('quote.adhoc.create')->middleware('can:create, App\Models\Quote');
+            Route::post('/quote/adhoc/create', 'AdhocQuoteController@store')->name('quote.adhoc.store')->middleware('can:create, App\Models\Quote');
+            Route::get('/quote/adhoc/{quote}/edit', 'AdhocQuoteController@edit')->name('quote.adhoc.edit')->middleware('can:update,quote');
+            Route::patch('/quote/adhoc/{quote}/edit', 'AdhocQuoteController@update')->name('quote.adhoc.update')->middleware('can:update,quote');
+
             /* OldInvoice */
             Route::get('/oldinvoice/{oldinvoice}', 'OldInvoiceController@show')->name('invoice.old.show')->middleware('can:view,oldinvoice');
             Route::get('/oldinvoice/{oldinvoice}/download', 'OldInvoiceController@download')->name('invoice.old.download')->middleware('can:view,oldinvoice');

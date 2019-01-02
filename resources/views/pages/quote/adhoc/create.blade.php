@@ -1,4 +1,4 @@
-@extends("layouts.default", ['page_title' => 'Invoice | Create'])
+@extends("layouts.default", ['page_title' => 'Quote | Create'])
 
 @section("head")
     <link href="{{ mix('/assets/css/selectize.css') }}" rel="stylesheet" type="text/css">
@@ -10,17 +10,17 @@
     <div class="container">
         <div class="row">
             <div class="col s12">
-                <h3>Create Invoice</h3>
+                <h3>Create Quote</h3>
             </div>
         </div>
         <div class="row">
             <div class="col s12">
-                <form id="create-invoice" method="post" enctype="multipart/form-data">
+                <form id="create-quote" method="post" enctype="multipart/form-data">
                     <div class="card-panel">
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="nice_invoice_id" name="nice_invoice_id" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ $invoicenumber ?? '' }}">
-                                <label for="nice_invoice_id" class="label-validation">Invoice ID</label>
+                                <input id="nice_quote_id" name="nice_quote_id" type="text" data-parsley-required="true" data-parsley-trigger="change" data-parsley-minlength="4" data-parsley-pattern="/^[a-zA-Z0-9\-_]{0,40}$/" value="{{ $quotenumber ?? '' }}">
+                                <label for="nice_quote_id" class="label-validation">Quote ID</label>
                             </div>
                         </div>
                         <div class="row">
@@ -83,11 +83,11 @@
                             <h3>Items</h3>
                         </div>
                         <div class="col s6">
-                            <a id="invoice-item-add" class="btn-floating btn-large waves-effect waves-light red right"><i class="material-icons">add</i></a>
+                            <a id="quote-item-add" class="btn-floating btn-large waves-effect waves-light red right"><i class="material-icons">add</i></a>
                         </div>
                     </div>
-                    <div id="invoice-items-container">
-                        <div id="invoice_item_0" class="card-panel">
+                    <div id="quote-items-container">
+                        <div id="quote_item_0" class="card-panel">
                             <div class="row">
                                 <div class="input-field col s12 l8">
                                     <select id="item_name_0" name="item_name[]" class="item-list-selector" data-parsley-required="true" data-parsley-trigger="change">
@@ -126,10 +126,10 @@
     </div>
     <div id="delete-confirmation" class="modal">
         <div class="modal-content">
-            <p>Delete Invoice Item?</p>
+            <p>Delete Quote Item?</p>
         </div>
         <div class="modal-footer">
-            <a href="javascript:;" class=" modal-action waves-effect black-text waves-green btn-flat btn-deletemodal invoice-item-confirm-delete-btn">Delete</a>
+            <a href="javascript:;" class=" modal-action waves-effect black-text waves-green btn-flat btn-deletemodal quote-item-confirm-delete-btn">Delete</a>
             <a href="javascript:;" class=" modal-action modal-close waves-effect black-text waves-red btn-flat btn-deletemodal">Cancel</a>
         </div>
     </div>
@@ -139,47 +139,20 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            let invoiceitemcount = 0;
+            let quoteitemcount = 0;
             let itemoptions = [ @foreach($itemtemplates as $itemtemplate){ id:'{{ $itemtemplate->id }}', name:'{{ $itemtemplate->name }}' },@endforeach ];
 
-            Unicorn.initParsleyValidation('#create-invoice');
+            Unicorn.initParsleyValidation('#create-quote');
             Unicorn.initDatepicker('#date', '1950', new Date("{{ Carbon\Carbon::now()->addYear()->toDateTimeString() }}").getFullYear(), new Date("{{ Carbon\Carbon::now()->toDateTimeString() }}"));
             Unicorn.initSelectize('#country_code');
             Unicorn.initItemElement(itemoptions);
-            Unicorn.initItemConfirmationTrigger('#invoice-items-container', '.invoice-item-delete-btn', '#delete-confirmation', '.invoice-item-confirm-delete-btn', 'click');
-            Unicorn.executeItemDeleteTrigger('#delete-confirmation', '.invoice-item-confirm-delete-btn', 'invoice', 'click');
-            Unicorn.initListener('#create-invoice', '#invoice-item-add', 'click', function (event) {
-                Unicorn.initNewItem(++invoiceitemcount, 'invoice-items-container', 'invoice', itemoptions);
+            Unicorn.initItemConfirmationTrigger('#quote-items-container', '.quote-item-delete-btn', '#delete-confirmation', '.quote-item-confirm-delete-btn', 'click');
+            Unicorn.executeItemDeleteTrigger('#delete-confirmation', '.quote-item-confirm-delete-btn', 'quote', 'click');
+            Unicorn.initListener('#create-quote', '#quote-item-add', 'click', function (event) {
+                Unicorn.initNewItem(++quoteitemcount, 'quote-items-container', 'quote', itemoptions);
             });
-            Unicorn.initListener('#invoice-items-container', '.item-list-selector', 'change', function (event, element) {
+            Unicorn.initListener('#quote-items-container', '.item-list-selector', 'change', function (event, element) {
                 Unicorn.retrieveItemTemplate("/{{ app('request')->route('company')->domain_name }}", element.siblings().find('.selected').attr('data-id'), element, Unicorn.setItemTemplate);
-            });
-
-            $('#invoice-items-container').on('click', '.invoice-item-delete-btn', function (event) {
-                event.preventDefault();
-                $('#delete-confirmation').modal('open');
-
-                let itemid = $(this).attr('data-id');
-                let count = $(this).attr('data-count');
-
-                $('#delete-confirmation').children().children('.invoice-item-confirm-delete-btn').attr('data-id', itemid);
-                $('#delete-confirmation').children().children('.invoice-item-confirm-delete-btn').attr('data-count', count);
-            });
-
-            $('#invoice-items-container').on('change', '.item-list-selector', function (event) {
-                retrieveItemTemplate($(this).siblings().find('.selected').attr('data-id'), $(this), setItemTemplate);
-            });
-
-            $('#delete-confirmation').on('click', '.invoice-item-confirm-delete-btn', function (event) {
-                event.preventDefault();
-
-                let itemid = $(this).attr('data-id');
-                let count = $(this).attr('data-count');
-
-                if (itemid == "false") {
-                    $('#invoice_item_' + count).remove();
-                    $('#delete-confirmation').modal('close');
-                }
             });
         });
     </script>

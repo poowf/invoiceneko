@@ -21,10 +21,10 @@
     <div class="row invoice-data" style="position: relative; margin-bottom: 320px;">
         <div class="invoice-person" style="position: absolute; left: 0; padding: 0 15px; ">
             <span class="name" style="font-size: 18px; line-height: 26px; display: block; font-weight: 700;">Bill To: </span>
-            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->companyname }}</span>
-            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->contactname }}</span>
-            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->address }}</span>
-            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->client->contactphone }}</span>
+            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->getClient()->companyname }}</span>
+            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->getClient()->contactname }}</span>
+            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->getClient()->address }}</span>
+            <span style="font-size: 18px; line-height: 26px; display: block;">{{ $invoice->getClient()->contactphone }}</span>
         </div>
         <div class="invoice-payment-direction" style="position: absolute; padding-top: 10px; left: 0; right:0; text-align: center;">
             <img src="{{ asset('/assets/img/lefttoright.png') }}" width="80" height="80" />

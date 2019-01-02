@@ -27,7 +27,7 @@ class UpdateItemTemplateRequest extends FormRequest
             'name' => 'required|string',
             'quantity' => 'required|integer|min:1',
             'price' => 'required|numeric',
-            'description' => 'required|string',
+            'description' => 'string',
         ];
     }
 }

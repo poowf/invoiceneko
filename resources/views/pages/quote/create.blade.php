@@ -113,19 +113,16 @@
             let itemoptions = [ @foreach($itemtemplates as $itemtemplate){ id:'{{ $itemtemplate->id }}', name:'{{ $itemtemplate->name }}' },@endforeach ];
 
             Unicorn.initParsleyValidation('#create-quote');
-            Unicorn.initTrumbowyg('.trumbowyg-textarea');
             Unicorn.initDatepicker('#date', '1950', new Date("{{ Carbon\Carbon::now()->addYear()->toDateTimeString() }}").getFullYear(), new Date("{{ Carbon\Carbon::now()->toDateTimeString() }}"));
             Unicorn.initSelectize('#client_id');
             Unicorn.initItemElement(itemoptions);
             Unicorn.initItemConfirmationTrigger('#quote-items-container', '.quote-item-delete-btn', '#delete-confirmation', '.quote-item-confirm-delete-btn', 'click');
             Unicorn.executeItemDeleteTrigger('#delete-confirmation', '.quote-item-confirm-delete-btn', 'quote', 'click');
-
-            $('#quote-item-add').on('click', function() {
+            Unicorn.initListener('#create-quote', '#quote-item-add', 'click', function (event) {
                 Unicorn.initNewItem(++quoteitemcount, 'quote-items-container', 'quote', itemoptions);
             });
-
-            $('#quote-items-container').on('change', '.item-list-selector', function (event) {
-                Unicorn.retrieveItemTemplate("/{{ app('request')->route('company')->domain_name }}", $(this).siblings().find('.selected').attr('data-id'), $(this), Unicorn.setItemTemplate);
+            Unicorn.initListener('#quote-items-container', '.item-list-selector', 'change', function (event, element) {
+                Unicorn.retrieveItemTemplate("/{{ app('request')->route('company')->domain_name }}", element.siblings().find('.selected').attr('data-id'), element, Unicorn.setItemTemplate);
             });
         });
     </script>
