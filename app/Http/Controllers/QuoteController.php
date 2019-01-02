@@ -258,6 +258,9 @@ class QuoteController extends Controller
      */
     public function edit(Company $company, Quote $quote)
     {
+        if(is_null($quote->client_id)) {
+            return redirect()->route('quote.adhoc.edit', ['quote' => $quote, 'company' => Unicorn::getCompanyKey()]);
+        };
         $clients = $company->clients;
         $itemtemplates = $company->itemtemplates;
 

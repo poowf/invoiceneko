@@ -74,9 +74,9 @@
                                 @if(Auth::check())
                                 <li class="sidenav-profile">
                                     <div class="user-view">
-                                        <div class="background">
-                                            <img src="images/office.jpg">
-                                        </div>
+                                        {{--<div class="background">--}}
+                                            {{--<img src="images/office.jpg">--}}
+                                        {{--</div>--}}
                                         <a href="#user"><img class="circle" src="{{ auth()->user()->gravatar }}"></a>
                                         <a href="#name"><span class="white-text name">{{ auth()->user()->full_name }}</span></a>
                                         <a href="#email"><span class="white-text email">{{ auth()->user()->email }}</span></a>

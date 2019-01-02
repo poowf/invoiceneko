@@ -375,6 +375,10 @@ class InvoiceController extends Controller
             return redirect()->route('invoice.show', [ 'invoice' => $invoice, 'company' => $company ]);
         }
 
+        if(is_null($invoice->client_id)) {
+            return redirect()->route('invoice.adhoc.edit', ['invoice' => $invoice, 'company' => Unicorn::getCompanyKey()]);
+        };
+
         $clients = $company->clients;
         $itemtemplates = $company->itemtemplates;
         $recurrence = ($invoice->recurrence) ? $invoice->recurrence : null;
