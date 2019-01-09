@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateClientRequest;
 use App\Library\Poowf\Unicorn;
 use App\Models\Client;
 use App\Models\Company;
+use App\Models\Recipient;
 use PragmaRX\Countries\Package\Countries;
 use Storage;
 use Uuid;
@@ -83,6 +84,15 @@ class ClientController extends Controller
 
         $client->save();
 
+        $recipient = new Recipient;
+        $recipient->salutation = $client->contactsalutation;
+        $recipient->first_name = $client->contactfirstname;
+        $recipient->last_name = $client->contactlastname;
+        $recipient->email = $client->contactemail;
+        $recipient->phone = $client->contactphone;
+        $recipient->company_id = $client->company_id;
+        $client->recipients()->save($recipient);
+
         flash('Client Created', 'success');
 
         return redirect()->route('client.index', [ 'company' => $company ]);
@@ -98,7 +108,8 @@ class ClientController extends Controller
     public function show(Company $company, Client $client)
     {
         $invoices = $client->invoices;
-        return view('pages.client.show', compact('client', 'invoices'));
+        $recipients = $client->recipients;
+        return view('pages.client.show', compact('client', 'recipients', 'invoices'));
     }
 
     /**

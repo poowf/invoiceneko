@@ -97,7 +97,7 @@ class Invoice extends Model implements Auditable
      */
     public function routeNotificationForMail($notification)
     {
-        return $this->client->contactemail;
+        return $this->client->recipients;
     }
 
     public function getTotalMoneyFormatAttribute()

@@ -127,6 +127,12 @@ Route::group(['middleware' => ['auth', '2fa', 'verified']], function() {
             Route::post('/migration/import/invoice', 'DataMigrationController@storeinvoice')->name('migration.import.invoice');
             Route::post('/migration/import/payment', 'DataMigrationController@storepayment')->name('migration.import.payment');
 
+            /* Client Recipients */
+            Route::get('/client/{client}/recipients/create', 'RecipientController@create')->name('client.recipient.create')->middleware('can:create, App\Models\Client');
+            Route::post('/client/{client}/recipients/create', 'RecipientController@store')->name('client.recipient.store')->middleware('can:create, App\Models\Client');
+            Route::get('/client/{client}/recipients/{recipient}/edit', 'RecipientController@edit')->name('client.recipient.edit')->middleware('can:update,recipient');
+            Route::patch('/client/{client}/recipients/{recipient}/edit', 'RecipientController@update')->name('client.recipient.update')->middleware('can:update,recipient');
+
             /* Clients */
             Route::get('/clients', 'ClientController@index')->name('client.index')->middleware('can:index, App\Models\Client');
             Route::get('/client/create', 'ClientController@create')->name('client.create')->middleware('can:create, App\Models\Client');
