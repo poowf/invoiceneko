@@ -79,6 +79,7 @@ Route::group(['middleware' => ['auth', '2fa', 'verified']], function() {
         Route::post('/user/multifactor/create', 'UserController@multifactor_store')->name('user.multifactor.store');
         Route::post('/user/multifactor/regenerate_codes', 'UserController@multifactor_regenerate_codes')->name('user.multifactor.regenerate_codes');
         Route::delete('/user/multifactor/destroy', 'UserController@multifactor_destroy')->name('user.multifactor.destroy');
+        Route::delete('/user/session/{sessionId}/destroy', 'UserController@session_destroy')->name('user.security.session.destroy');
 
         /* Company */
         Route::get('/company/show', 'CompanyController@show')->name('company.show')->middleware('can:member,company');

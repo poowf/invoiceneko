@@ -93,7 +93,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      */
     public function setTwofaSecretAttribute($value)
     {
-        $this->attributes['twofa_secret'] = encrypt($value);
+        $this->attributes['twofa_secret'] = ($value) ? encrypt($value) : null;
     }
 
     /**
@@ -115,7 +115,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      */
     public function setTwofaBackupCodesAttribute($value)
     {
-        $this->attributes['twofa_backup_codes'] = encrypt($value);
+        $this->attributes['twofa_backup_codes'] = ($value) ? encrypt($value) : null;
     }
 
     /**
@@ -215,6 +215,11 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     public function getFirstCompanyKey()
     {
         return (is_null($this->companies->first())) ? null : $this->companies->first()->{(new Company)->getRouteKeyName()};
+    }
+
+    public function sessions()
+    {
+        return $this->hasMany('App\Models\NekoSession', 'user_id');
     }
 
     public function companies()

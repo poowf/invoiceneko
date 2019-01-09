@@ -9,7 +9,6 @@ use App\Models\CompanyUserRequest;
 use Carbon\Carbon;
 use DateTimeZone;
 use Illuminate\Support\Facades\Hash;
-use Log;
 use App\Models\User;
 use App\Models\Company;
 use Illuminate\Http\Request;
@@ -238,8 +237,9 @@ class UserController extends Controller
     public function security()
     {
         $user = auth()->user();
+        $sessions = $user->sessions;
 
-        return view('pages.user.security', compact('user'));
+        return view('pages.user.security', compact('user', 'sessions'));
     }
 
     public function multifactor_start(Company $company)
@@ -299,15 +299,25 @@ class UserController extends Controller
 
     }
 
-    public function multifactor_destroy(Company $company)
+    public function multifactor_destroy(Request $request, Company $company)
     {
         $user = auth()->user();
-        $user->twofa_secret = null;
-        $user->twofa_timestamp = null;
-        $user->twofa_backup_codes = null;
-        $user->save();
+        $secret = $request->input('multifactor_code');
 
-        flash("Multifactor Auth has been disabled for your account", 'warning');
+        $valid = Google2FA::verifyKeyNewer($user->twofa_secret, $secret, $user->twofa_timestamp);
+
+        if ($valid !== false) {
+            $user->twofa_secret = null;
+            $user->twofa_timestamp = null;
+            $user->twofa_backup_codes = null;
+            $user->save();
+
+            flash("Multifactor Auth has been disabled for your account", 'warning');
+        } else {
+            // failed
+            flash("Incorrect code, Multifactor Auth has not been disabled for your account", 'danger');
+        }
+
         return redirect()->back();
     }
 
@@ -363,5 +373,22 @@ class UserController extends Controller
 
         flash("That is an invalid backup code", 'error');
         return redirect()->back();
+    }
+
+    public function session_destroy(Request $request, Company $company, $sessionId)
+    {
+        $user = auth()->user();
+
+        if(session()->getId() != $sessionId)
+        {
+            $session = $user->sessions()->findOrFail($sessionId);
+            $session->delete();
+        }
+        else
+        {
+            flash('You cannot clear the current session', 'error');
+        }
+
+        return redirect()->route('user.security', [ 'company' => $company ]);
     }
 }

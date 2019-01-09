@@ -50,9 +50,38 @@
                                 </form>
                             @endif
                         </div>
+                        <div class="col s12 mtop20">
+                            <h6>Sessions</h6>
+                            <ul id="session-container" class="collection">
+                                @foreach($sessions as $session)
+                                <li class="collection-item avatar">
+                                    <i class="material-icons circle blue-grey">@if($session->isPhone()){{ 'smartphone' }}@else{{ 'computer' }}@endif</i>
+                                    <span class="title">{{ $session->platform_name }} @if(session()->getId() == $session->id)<span class="alt-badge info mleft15">{{ 'Current Session' }}</span>@endif</span>
+                                    <p>
+                                        {{ $session->ip_address }}<br>
+                                        {{ $session->last_activity }}
+                                    </p>
+                                    @if(session()->getId() != $session->id)<a href="#" data-id="{{ $session->id }}" class="secondary-content session-delete-btn tooltipped" data-position="top" data-tooltip="Clear Session"><i class="material-icons">clear</i></a>@endif
+                                </li>
+                                @endforeach
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div id="delete-confirmation" class="modal">
+        <div class="modal-content">
+            <p>Clear Session?</p>
+        </div>
+        <div class="modal-footer">
+            <form id="delete-session-form" method="post" class="null-form">
+                {{ method_field('DELETE') }}
+                {{ csrf_field() }}
+                <button class="modal-action waves-effect black-text waves-green btn-flat btn-deletemodal session-confirm-delete-btn" type="submit">Yes</button>
+            </form>
+            <a href="javascript:;" class=" modal-action modal-close waves-effect black-text waves-red btn-flat btn-deletemodal">No</a>
         </div>
     </div>
     @if(session()->has('codes'))
@@ -76,17 +105,24 @@
     @endif
     @if($user->twofa_timestamp)
         <div id="disable-confirmation" class="modal mini-modal">
-            <div class="modal-content">
-                <p>Disable Multifactor Authentication?</p>
-            </div>
-            <div class="modal-footer">
-                <form id="disable-user-form" method="post" class="null-form" action="{{ route('user.multifactor.destroy', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}">
-                    {{ method_field('DELETE') }}
-                    {{ csrf_field() }}
-                    <button class="modal-action waves-effect black-text waves-green btn-flat btn-disablemodal user-confirm-disable-btn" type="submit">Disable</button>
-                </form>
-                <a href="javascript:;" class=" modal-action modal-close waves-effect black-text waves-red btn-flat btn-disablemodal">Cancel</a>
-            </div>
+            <form id="disable-user-form" method="post" class="null-form" action="{{ route('user.multifactor.destroy', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}">
+                <div class="modal-content">
+                    <p>Disable Multifactor Authentication?</p>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="multifactor_code" name="multifactor_code" type="number" data-parsley-required="true" data-parsley-trigger="change" placeholder="Code">
+                            <label for="multifactor_code" class="label-validation">Code</label>
+                            <span class="helper-text"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                        {{ method_field('DELETE') }}
+                        {{ csrf_field() }}
+                        <button class="modal-action waves-effect black-text waves-green btn-flat btn-disablemodal user-confirm-disable-btn" type="submit">Disable</button>
+                    <a href="javascript:;" class=" modal-action modal-close waves-effect black-text waves-red btn-flat btn-disablemodal">Cancel</a>
+                </div>
+            </form>
         </div>
     @endif
 @stop
@@ -95,6 +131,8 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
+            Unicorn.initConfirmationTrigger('#session-container', '.session-delete-btn', '{{ \App\Library\Poowf\Unicorn::getCompanyKey() }}', 'user/session', 'destroy', '#delete-confirmation', '#delete-session-form');
+
             @if(session()->has('codes'))
                 $('#recovery-codes').modal('open');
             @endif
