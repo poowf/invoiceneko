@@ -53,7 +53,7 @@ class RecipientController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Recipient $recipient
+     * @param Recipient $recipient
      * @return void
      */
     public function show(Recipient $recipient)
@@ -66,7 +66,7 @@ class RecipientController extends Controller
      *
      * @param Company $company
      * @param Client $client
-     * @param  \App\Models\Recipient $recipient
+     * @param Recipient $recipient
      * @return \Illuminate\Http\Response
      */
     public function edit(Company $company, Client $client, Recipient $recipient)
@@ -80,7 +80,7 @@ class RecipientController extends Controller
      * @param UpdateRecipientRequest $request
      * @param Company $company
      * @param Client $client
-     * @param  \App\Models\Recipient $recipient
+     * @param Recipient $recipient
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateRecipientRequest $request, Company $company, Client $client, Recipient $recipient)
@@ -97,7 +97,7 @@ class RecipientController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Recipient $recipient
+     * @param Recipient $recipient
      * @return void
      */
     public function destroy(Recipient $recipient)
