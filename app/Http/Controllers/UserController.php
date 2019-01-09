@@ -237,8 +237,9 @@ class UserController extends Controller
     public function security()
     {
         $user = auth()->user();
+        $sessions = $user->sessions;
 
-        return view('pages.user.security', compact('user'));
+        return view('pages.user.security', compact('user', 'sessions'));
     }
 
     public function multifactor_start(Company $company)
@@ -372,5 +373,22 @@ class UserController extends Controller
 
         flash("That is an invalid backup code", 'error');
         return redirect()->back();
+    }
+
+    public function session_destroy(Request $request, Company $company, $sessionId)
+    {
+        $user = auth()->user();
+
+        if(session()->getId() != $sessionId)
+        {
+            $session = $user->sessions()->findOrFail($sessionId);
+            $session->delete();
+        }
+        else
+        {
+            flash('You cannot clear the current session', 'error');
+        }
+
+        return redirect()->route('user.security', [ 'company' => $company ]);
     }
 }

@@ -217,6 +217,11 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
         return (is_null($this->companies->first())) ? null : $this->companies->first()->{(new Company)->getRouteKeyName()};
     }
 
+    public function sessions()
+    {
+        return $this->hasMany('App\Models\NekoSession', 'user_id');
+    }
+
     public function companies()
     {
         return $this->belongsToMany(Company::class)->withTimestamps();
