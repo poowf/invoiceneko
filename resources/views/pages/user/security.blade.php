@@ -76,17 +76,24 @@
     @endif
     @if($user->twofa_timestamp)
         <div id="disable-confirmation" class="modal mini-modal">
-            <div class="modal-content">
-                <p>Disable Multifactor Authentication?</p>
-            </div>
-            <div class="modal-footer">
-                <form id="disable-user-form" method="post" class="null-form" action="{{ route('user.multifactor.destroy', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}">
-                    {{ method_field('DELETE') }}
-                    {{ csrf_field() }}
-                    <button class="modal-action waves-effect black-text waves-green btn-flat btn-disablemodal user-confirm-disable-btn" type="submit">Disable</button>
-                </form>
-                <a href="javascript:;" class=" modal-action modal-close waves-effect black-text waves-red btn-flat btn-disablemodal">Cancel</a>
-            </div>
+            <form id="disable-user-form" method="post" class="null-form" action="{{ route('user.multifactor.destroy', [ 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ]) }}">
+                <div class="modal-content">
+                    <p>Disable Multifactor Authentication?</p>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="multifactor_code" name="multifactor_code" type="number" data-parsley-required="true" data-parsley-trigger="change" placeholder="Code">
+                            <label for="multifactor_code" class="label-validation">Code</label>
+                            <span class="helper-text"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                        {{ method_field('DELETE') }}
+                        {{ csrf_field() }}
+                        <button class="modal-action waves-effect black-text waves-green btn-flat btn-disablemodal user-confirm-disable-btn" type="submit">Disable</button>
+                    <a href="javascript:;" class=" modal-action modal-close waves-effect black-text waves-red btn-flat btn-disablemodal">Cancel</a>
+                </div>
+            </form>
         </div>
     @endif
 @stop

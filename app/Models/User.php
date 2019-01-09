@@ -93,7 +93,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      */
     public function setTwofaSecretAttribute($value)
     {
-        $this->attributes['twofa_secret'] = encrypt($value);
+        $this->attributes['twofa_secret'] = ($value) ? encrypt($value) : null;
     }
 
     /**
@@ -115,7 +115,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      */
     public function setTwofaBackupCodesAttribute($value)
     {
-        $this->attributes['twofa_backup_codes'] = encrypt($value);
+        $this->attributes['twofa_backup_codes'] = ($value) ? encrypt($value) : null;
     }
 
     /**
