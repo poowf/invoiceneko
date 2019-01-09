@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateRecipientRequest;
+use App\Http\Requests\UpdateRecipientRequest;
+use App\Models\Client;
+use App\Models\Company;
 use App\Models\Recipient;
-use Illuminate\Http\Request;
 
 class RecipientController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function index()
     {
@@ -22,27 +25,36 @@ class RecipientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Company $company)
     {
-        //
+        return view('pages.client.recipient.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param CreateRecipientRequest $request
+     * @param Company $company
+     * @param Client $client
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateRecipientRequest $request, Company $company, Client $client)
     {
-        //
+        $recipient = new Recipient;
+        $recipient->fill($request->all());
+        $recipient->company_id = $company->id;
+        $client->recipients()->save($recipient);
+
+        flash("You have sucessfully created a recipient", 'success');
+
+        return redirect()->route('client.show', [ 'company' => $company, 'client' => $client ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Recipient  $recipient
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\Recipient $recipient
+     * @return void
      */
     public function show(Recipient $recipient)
     {
@@ -52,31 +64,41 @@ class RecipientController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Recipient  $recipient
+     * @param Company $company
+     * @param Client $client
+     * @param  \App\Models\Recipient $recipient
      * @return \Illuminate\Http\Response
      */
-    public function edit(Recipient $recipient)
+    public function edit(Company $company, Client $client, Recipient $recipient)
     {
-        //
+        return view('pages.client.recipient.edit', compact('recipient'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Recipient  $recipient
+     * @param UpdateRecipientRequest $request
+     * @param Company $company
+     * @param Client $client
+     * @param  \App\Models\Recipient $recipient
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Recipient $recipient)
+    public function update(UpdateRecipientRequest $request, Company $company, Client $client, Recipient $recipient)
     {
-        //
+        $recipient->fill($request->all());
+        $recipient->company_id = $company->id;
+        $client->recipients()->save($recipient);
+
+        flash("You have sucessfully updated a recipient", 'success');
+
+        return redirect()->route('client.show', [ 'company' => $company, 'client' => $client ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Recipient  $recipient
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\Recipient $recipient
+     * @return void
      */
     public function destroy(Recipient $recipient)
     {

@@ -32,6 +32,11 @@ class Recipient extends Model implements Auditable
         'phone',
     ];
 
+    public function getNameAttribute()
+    {
+        return ucwords("{$this->first_name} {$this->last_name}");
+    }
+
     /**
      * Get all of the owning recipientable models.
      */

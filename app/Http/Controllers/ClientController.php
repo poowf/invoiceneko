@@ -98,7 +98,8 @@ class ClientController extends Controller
     public function show(Company $company, Client $client)
     {
         $invoices = $client->invoices;
-        return view('pages.client.show', compact('client', 'invoices'));
+        $recipients = $client->recipients;
+        return view('pages.client.show', compact('client', 'recipients', 'invoices'));
     }
 
     /**

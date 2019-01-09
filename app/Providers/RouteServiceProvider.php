@@ -23,6 +23,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Route::model('recipient', 'App\Models\Recipient');
         Route::model('client', 'App\Models\Client');
         Route::model('company', 'App\Models\Company');
         Route::model('companyinvite', 'App\Models\CompanyInvite');
@@ -41,6 +42,7 @@ class RouteServiceProvider extends ServiceProvider
 
 
         Route::pattern('token', '([A-Za-z0-9-]+)');
+        Route::pattern('recipient', '([A-Za-z0-9]+)');
         Route::pattern('client', '([A-Za-z0-9]+)');
         Route::pattern('company', '([A-Za-z0-9-.]+)');
         Route::pattern('companyinvite', '([A-Za-z0-9-]+)');

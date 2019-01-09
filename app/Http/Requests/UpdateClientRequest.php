@@ -34,7 +34,7 @@ class UpdateClientRequest extends FormRequest
             'nickname' => '',
             'crn' => '',
             'website' => '',
-            'contactsalutation' => 'required|in:mr,mrs,mdm,miss',
+            'contactsalutation' => 'required|in:mr,mrs,mdm,miss,dr,prof,mx',
             'contactfirstname' => 'required|string',
             'contactlastname' => '',
             'contactgender' => '',
