@@ -36,7 +36,7 @@ class CompanyInvite extends Model implements Auditable
         'expires_at',
         'created_at',
         'updated_at',
-        'deleted_at'
+        'deleted_at',
     ];
 
     /**

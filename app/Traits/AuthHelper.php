@@ -4,7 +4,8 @@ namespace App\Traits;
 
 use Illuminate\Support\Facades\Password;
 
-trait AuthHelper {
+trait AuthHelper
+{
     /**
      * Get the broker to be used during password reset.
      *

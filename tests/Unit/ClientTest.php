@@ -4,9 +4,8 @@ namespace Tests\Unit;
 
 use App\Models\Client;
 use App\Models\Company;
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class ClientTest extends TestCase
 {
@@ -15,7 +14,6 @@ class ClientTest extends TestCase
      *
      * @return void
      */
-
     public function test_create_client()
     {
         self::refreshDatabase();
@@ -24,23 +22,23 @@ class ClientTest extends TestCase
         Client::unguard();
 
         $client = Client::create([
-            'companyname' => 'Poowf Labs',
-            'phone' => '+6581234567',
-            'block' => '123',
-            'street' => '123 Street Name',
-            'unitnumber' => '00-00',
-            'postalcode' => '123456',
-            'country_code' => 'SG',
-            'nickname' => 'Poowf the Bunny',
-            'crn' => '201810000A',
-            'website' => 'http://poowf.com',
+            'companyname'       => 'Poowf Labs',
+            'phone'             => '+6581234567',
+            'block'             => '123',
+            'street'            => '123 Street Name',
+            'unitnumber'        => '00-00',
+            'postalcode'        => '123456',
+            'country_code'      => 'SG',
+            'nickname'          => 'Poowf the Bunny',
+            'crn'               => '201810000A',
+            'website'           => 'http://poowf.com',
             'contactsalutation' => 'Ms.',
-            'contactfirstname' => 'Poowf',
-            'contactlastname' => 'Bunny',
-            'contactgender' => 'female',
-            'contactemail' => 'bunny@poowf.com',
-            'contactphone' => '+6579328669',
-            'company_id' => $company->id
+            'contactfirstname'  => 'Poowf',
+            'contactlastname'   => 'Bunny',
+            'contactgender'     => 'female',
+            'contactemail'      => 'bunny@poowf.com',
+            'contactphone'      => '+6579328669',
+            'company_id'        => $company->id,
         ]);
 
         Client::reguard();
@@ -54,7 +52,7 @@ class ClientTest extends TestCase
         $company = factory(Company::class)->create();
         $company2 = factory(Company::class)->create();
         $client = factory(Client::class)->create([
-            'company_id' => $company->id
+            'company_id' => $company->id,
         ]);
 
         $this->assertInstanceOf(Client::class, $client);
@@ -68,12 +66,12 @@ class ClientTest extends TestCase
         $this->assertEquals('+6564142762', $client->phone);
 
         $data = [
-            'postalcode' => '585151',
+            'postalcode'   => '585151',
             'country_code' => 'SG',
-            'nickname' => 'Shoop da Whoop',
-            'crn' => 'C-ARE-AND',
-            'website' => 'itsawebsite.com',
-            'company_id' => $company2->id
+            'nickname'     => 'Shoop da Whoop',
+            'crn'          => 'C-ARE-AND',
+            'website'      => 'itsawebsite.com',
+            'company_id'   => $company2->id,
         ];
 
         $client->fill($data);
@@ -92,7 +90,7 @@ class ClientTest extends TestCase
     {
         $company = factory(Company::class)->create();
         $client = factory(Client::class)->create([
-            'company_id' => $company->id
+            'company_id' => $company->id,
         ]);
 
         $this->assertInstanceOf(Client::class, $client);

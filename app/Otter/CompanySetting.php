@@ -14,31 +14,31 @@ class CompanySetting extends OtterResource
     public static $model = 'App\Models\CompanySetting';
 
     /**
-     * The column of the model to display in select options
+     * The column of the model to display in select options.
      *
      * @var string
      */
     public static $title = 'invoice_prefix';
 
     /**
-     * Get the fields and types used by the resource
+     * Get the fields and types used by the resource.
      *
      * @return array
      */
     public static function fields()
     {
         return [
-            'invoice_prefix' => 'text',
-            'quote_prefix' => 'text',
-            'receipt_prefix' => 'text',
+            'invoice_prefix'     => 'text',
+            'quote_prefix'       => 'text',
+            'receipt_prefix'     => 'text',
             'invoice_conditions' => 'text',
-            'quote_conditions' => 'text',
-            'tax' => 'text'
+            'quote_conditions'   => 'text',
+            'tax'                => 'text',
         ];
     }
 
     /**
-     * Fields to be hidden in the resource collection
+     * Fields to be hidden in the resource collection.
      *
      * @return array
      */

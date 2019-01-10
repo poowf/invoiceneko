@@ -6,8 +6,6 @@ use App\Models\Company;
 use App\Models\InvoiceRecurrence;
 use Illuminate\Database\Eloquent\MassAssignmentException;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class InvoiceRecurrenceTest extends TestCase
 {
@@ -24,11 +22,11 @@ class InvoiceRecurrenceTest extends TestCase
 
         $invoiceRecurrence = InvoiceRecurrence::create([
             'time_interval' => '1',
-            'time_period' => 'month',
-            'until_type' => 'never',
-            'until_meta' => null,
-            'rule' => 'FREQ=MONTHLY;INTERVAL=1',
-            'company_id' => $company->id
+            'time_period'   => 'month',
+            'until_type'    => 'never',
+            'until_meta'    => null,
+            'rule'          => 'FREQ=MONTHLY;INTERVAL=1',
+            'company_id'    => $company->id,
         ]);
 
         InvoiceRecurrence::reguard();
@@ -53,9 +51,9 @@ class InvoiceRecurrenceTest extends TestCase
 
         $data = [
             'time_interval' => '3',
-            'time_period' => 'year',
-            'until_type' => 'date',
-            'until_meta' => '2020-10-31 00:00:00',
+            'time_period'   => 'year',
+            'until_type'    => 'date',
+            'until_meta'    => '2020-10-31 00:00:00',
         ];
 
         $this->expectException(MassAssignmentException::class);
@@ -70,12 +68,11 @@ class InvoiceRecurrenceTest extends TestCase
         $this->assertNotEquals('2020-10-31 00:00:00', $invoiceRecurrence->until_meta);
     }
 
-
     public function test_delete_invoice_recurrence()
     {
         $company = factory(Company::class)->create();
         $invoiceRecurrence = factory(InvoiceRecurrence::class)->create([
-            'company_id' => $company->id
+            'company_id' => $company->id,
         ]);
 
         $this->assertInstanceOf(InvoiceRecurrence::class, $invoiceRecurrence);

@@ -4,25 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateClientRequest;
 use App\Http\Requests\UpdateClientRequest;
-use App\Library\Poowf\Unicorn;
 use App\Models\Client;
 use App\Models\Company;
 use App\Models\Recipient;
+use Image;
 use PragmaRX\Countries\Package\Countries;
 use Storage;
-use Uuid;
-use Image;
 
 class ClientController extends Controller
 {
-    public function __construct(){
-
+    public function __construct()
+    {
     }
 
     /**
      * Display a listing of the resource.
      *
      * @param Company $company
+     *
      * @return \Illuminate\Http\Response
      */
     public function index(Company $company)
@@ -36,6 +35,7 @@ class ClientController extends Controller
      * Show the form for creating a new resource.
      *
      * @param Company $company
+     *
      * @return \Illuminate\Http\Response
      */
     public function create(Company $company)
@@ -49,42 +49,41 @@ class ClientController extends Controller
      * Store a newly created resource in storage.
      *
      * @param CreateClientRequest $request
-     * @param Company $company
+     * @param Company             $company
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(CreateClientRequest $request, Company $company)
     {
-        $client = new Client;
+        $client = new Client();
         $client->fill($request->all());
         $client->company_id = $company->id;
         $client->save();
 
-        $storedirectory = '/perm_store/company/' . $client->company_id . '/clients/' . $client->id . '/photos/';
+        $storedirectory = '/perm_store/company/'.$client->company_id.'/clients/'.$client->id.'/photos/';
 
         Storage::makeDirectory($storedirectory);
 
-        if ($request->file('logo'))
-        {
+        if ($request->file('logo')) {
             $file = $request->file('logo');
             $uuid = str_random(25);
-            $filename = $uuid . '.png';
+            $filename = $uuid.'.png';
 
-            if (!Storage::exists($storedirectory . 'logo_' . $filename))
-            {
+            if (!Storage::exists($storedirectory.'logo_'.$filename)) {
                 $image = Image::make($file)->fit(500, 500, function ($constraint) {
                     $constraint->upsize();
                 }, 'center');
-                Storage::put($storedirectory . 'logo_' . $filename, $image->stream('jpg')->detach());
+                Storage::put($storedirectory.'logo_'.$filename, $image->stream('jpg')->detach());
             }
 
-            $filepath = $storedirectory . 'logo_' . $filename;
+            $filepath = $storedirectory.'logo_'.$filename;
 
             $client->logo = $filepath;
         }
 
         $client->save();
 
-        $recipient = new Recipient;
+        $recipient = new Recipient();
         $recipient->salutation = $client->contactsalutation;
         $recipient->first_name = $client->contactfirstname;
         $recipient->last_name = $client->contactlastname;
@@ -95,28 +94,31 @@ class ClientController extends Controller
 
         flash('Client Created', 'success');
 
-        return redirect()->route('client.index', [ 'company' => $company ]);
+        return redirect()->route('client.index', ['company' => $company]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param Company $company
-     * @param  \App\Models\Client $client
+     * @param Company            $company
+     * @param \App\Models\Client $client
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(Company $company, Client $client)
     {
         $invoices = $client->invoices;
         $recipients = $client->recipients;
+
         return view('pages.client.show', compact('client', 'recipients', 'invoices'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Company $company
-     * @param  \App\Models\Client $client
+     * @param Company            $company
+     * @param \App\Models\Client $client
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit(Company $company, Client $client)
@@ -130,8 +132,9 @@ class ClientController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdateClientRequest $request
-     * @param Company $company
-     * @param  \App\Models\Client $client
+     * @param Company             $company
+     * @param \App\Models\Client  $client
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateClientRequest $request, Company $company, Client $client)
@@ -139,25 +142,23 @@ class ClientController extends Controller
         $client->fill($request->all());
         $client->save();
 
-        $storedirectory = '/perm_store/company/' . $client->company_id . '/clients/' . $client->id . '/photos/';
+        $storedirectory = '/perm_store/company/'.$client->company_id.'/clients/'.$client->id.'/photos/';
 
         Storage::makeDirectory($storedirectory);
 
-        if ($request->file('logo'))
-        {
+        if ($request->file('logo')) {
             $file = $request->file('logo');
             $uuid = str_random(25);
-            $filename = $uuid . '.png';
+            $filename = $uuid.'.png';
 
-            if (!Storage::exists($storedirectory . 'logo_' . $filename))
-            {
+            if (!Storage::exists($storedirectory.'logo_'.$filename)) {
                 $image = Image::make($file)->fit(500, 500, function ($constraint) {
                     $constraint->upsize();
                 }, 'center');
-                Storage::put($storedirectory . 'logo_' . $filename, $image->stream('jpg')->detach());
+                Storage::put($storedirectory.'logo_'.$filename, $image->stream('jpg')->detach());
             }
 
-            $filepath = $storedirectory . 'logo_' . $filename;
+            $filepath = $storedirectory.'logo_'.$filename;
 
             $client->logo = $filepath;
         }
@@ -166,16 +167,18 @@ class ClientController extends Controller
 
         flash('Client Updated', 'success');
 
-        return redirect()->route('client.show', [ 'client' => $client, 'company' => $company ]);
+        return redirect()->route('client.show', ['client' => $client, 'company' => $company]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param Company $company
-     * @param  \App\Models\Client $client
-     * @return \Illuminate\Http\Response
+     * @param Company            $company
+     * @param \App\Models\Client $client
+     *
      * @throws \Exception
+     *
+     * @return \Illuminate\Http\Response
      */
     public function destroy(Company $company, Client $client)
     {
@@ -183,19 +186,19 @@ class ClientController extends Controller
 
         flash('Client Deleted', 'success');
 
-        return redirect()->route('client.index', [ 'company' => $company ]);
+        return redirect()->route('client.index', ['company' => $company]);
     }
 
     /**
      * @param Company $company
-     * @param Client $client
+     * @param Client  $client
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function invoicecreate(Company $company, Client $client)
     {
-        return redirect()->route('invoice.create', [ 'company' => $company ])->withInput([
-            'client_id' => $client->id
+        return redirect()->route('invoice.create', ['company' => $company])->withInput([
+            'client_id' => $client->id,
         ]);
     }
-
 }

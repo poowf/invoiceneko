@@ -41,7 +41,7 @@ return [
     */
 
     'user' => [
-        'name' => 'full_name',
+        'name'  => 'full_name',
         'email' => 'email',
     ],
 ];

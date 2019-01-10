@@ -4,13 +4,13 @@ namespace App\Models;
 
 use App\Library\Poowf\Unicorn;
 use App\Traits\UniqueSlug;
-use Illuminate\Notifications\Notifiable;
+use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Iatstuti\Database\Support\CascadeSoftDeletes;
-use Silber\Bouncer\Database\HasRolesAndAbilities;
-use Silber\Bouncer\BouncerFacade as Bouncer;
+use Illuminate\Notifications\Notifiable;
 use OwenIt\Auditing\Contracts\Auditable;
+use Silber\Bouncer\BouncerFacade as Bouncer;
+use Silber\Bouncer\Database\HasRolesAndAbilities;
 
 class Company extends Model implements Auditable
 {
@@ -41,8 +41,8 @@ class Company extends Model implements Auditable
 
     protected $attributes = [
         'invoice_index' => 1,
-        'quote_index' => 1,
-        'receipt_index' => 1
+        'quote_index'   => 1,
+        'receipt_index' => 1,
     ];
 
     protected static function boot()
@@ -56,7 +56,7 @@ class Company extends Model implements Auditable
 
         //Auto Creation of Settings per Company;
         static::created(function ($company) {
-            $settings = new CompanySetting;
+            $settings = new CompanySetting();
             $company->settings()->save($settings);
             Unicorn::createRoleAndPermissions($company->id);
             Bouncer::assign('global-administrator')->to($company->owner);
@@ -91,7 +91,6 @@ class Company extends Model implements Auditable
     public function niceQuoteID()
     {
         return $this->generateNiceID('quote', 'Q');
-
     }
 
     public function niceReceiptID()
@@ -102,18 +101,16 @@ class Company extends Model implements Auditable
     public function generateNiceID($model, $letter)
     {
         $companySetting = $this->settings;
-        if($companySetting->{$model . '_prefix'})
-        {
-            $generatedPrefix = $companySetting->{$model . '_prefix'} . '-';
-        }
-        else
-        {
-            $generatedPrefix = $this->slug . $letter .'-';
+        if ($companySetting->{$model.'_prefix'}) {
+            $generatedPrefix = $companySetting->{$model.'_prefix'}.'-';
+        } else {
+            $generatedPrefix = $this->slug.$letter.'-';
         }
 
         //Retrieve latest version of the company model otherwise it will use the old index value
         $this->refresh();
-        return $generatedPrefix . sprintf('%06d', $this->{$model . '_index'});
+
+        return $generatedPrefix.sprintf('%06d', $this->{$model.'_index'});
     }
 
     public function isOwner($user)
@@ -121,7 +118,8 @@ class Company extends Model implements Auditable
         return $this->user_id == $user->id;
     }
 
-    public function hasUser($user) {
+    public function hasUser($user)
+    {
         return $this->users->contains($user);
     }
 

@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use Log;
+use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Iatstuti\Database\Support\CascadeSoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class QuoteItem extends Model implements Auditable
@@ -28,6 +27,7 @@ class QuoteItem extends Model implements Auditable
     public function moneyFormatPrice()
     {
         setlocale(LC_MONETARY, 'en_US.UTF-8');
+
         return money_format('%!.2n', $this->price);
     }
 

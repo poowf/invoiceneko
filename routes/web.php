@@ -23,7 +23,7 @@ Route::get('/privacy', 'MainController@privacy')->name('privacy');
 Route::get('/contact', 'MainController@contact')->name('contact');
 Route::post('/contact', 'MainController@contactHandle')->name('contact.handle');
 
-Route::group(['middleware' => ['guest']], function() {
+Route::group(['middleware' => ['guest']], function () {
     /* Auth */
     Route::get('/', 'MainController@main')->name('main');
     Route::get('/community', 'MainController@community')->name('community');
@@ -46,10 +46,9 @@ Route::group(['middleware' => ['guest']], function() {
 
     Route::get('/company/requests/create', 'CompanyUserRequestController@create')->name('company.requests.create');
     Route::post('/company/requests/create', 'CompanyUserRequestController@store')->name('company.requests.store');
-
 });
 
-Route::group(['middleware' => ['auth']], function() {
+Route::group(['middleware' => ['auth']], function () {
     /* CompanyInvite */
     Route::get('/company/join/{companyinvite}', 'CompanyInviteController@show')->name('company.invite.show');
     Route::post('/company/join/{companyinvite}', 'CompanyInviteController@join')->name('company.invite.join');
@@ -64,12 +63,12 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/signout', 'AuthController@logout')->name('auth.destroy');
 });
 
-Route::group(['middleware' => ['auth', '2fa', 'verified']], function() {
+Route::group(['middleware' => ['auth', '2fa', 'verified']], function () {
     Route::post('/multifactor/validate', 'AuthController@multifactor_validate')->name('auth.multifactor.validate');
     Route::post('/company/switch', 'CompanyController@switch')->name('company.switch');
     Route::get('/errors/nocompany', 'MainController@nocompany')->name('nocompany');
 
-    Route::group(['prefix' => '{company}'], function() {
+    Route::group(['prefix' => '{company}'], function () {
         /* User */
         Route::get('/user/edit', 'UserController@edit')->name('user.edit');
         Route::patch('/user/edit', 'UserController@update')->name('user.update');
@@ -86,7 +85,7 @@ Route::group(['middleware' => ['auth', '2fa', 'verified']], function() {
         Route::get('/company/edit', 'CompanyController@edit')->name('company.edit')->middleware('can:owner,company');
         Route::patch('/company/edit', 'CompanyController@update')->name('company.update')->middleware('can:owner,company');
 
-        Route::group(['middleware' => ['hascompany']], function() {
+        Route::group(['middleware' => ['hascompany']], function () {
             Route::get('/dashboard', 'MainController@dashboard')->name('dashboard');
 
             Route::get('/user/{user}/retrieve', 'UserController@retrieve')->name('user.retrieve')->middleware('can:owner,company');

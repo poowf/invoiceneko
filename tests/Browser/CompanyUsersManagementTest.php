@@ -6,16 +6,17 @@ use App\Models\Company;
 use App\Models\CompanyUserRequest;
 use App\Models\User;
 use Faker\Factory as Faker;
-use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
+use Tests\DuskTestCase;
 
 class CompanyUsersManagementTest extends DuskTestCase
 {
     /**
      * A Dusk test example.
      *
-     * @return void
      * @throws \Throwable
+     *
+     * @return void
      */
     public function test_inviting_a_user_to_a_company()
     {
@@ -29,8 +30,8 @@ class CompanyUsersManagementTest extends DuskTestCase
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/' . $company->domain_name . '/dashboard')
-                ->visit('/' . $company->domain_name . '/company/users')
+                ->assertPathIs('/'.$company->domain_name.'/dashboard')
+                ->visit('/'.$company->domain_name.'/company/users')
                 ->clickLink('Invite User')
                 ->type('#email_0', $faker->unique()->safeEmail);
             $browser
@@ -38,7 +39,7 @@ class CompanyUsersManagementTest extends DuskTestCase
             $browser
                 ->press('INVITE')
                 ->assertPresent('#users-table')
-                ->assertPathIs('/' . $company->domain_name . '/company/users');
+                ->assertPathIs('/'.$company->domain_name.'/company/users');
             $browser->script('jQuery(".signmeout-btn").click()');
             $browser->assertPathIs('/');
         });
@@ -51,8 +52,8 @@ class CompanyUsersManagementTest extends DuskTestCase
         $company->users()->attach($company->user_id);
 
         $companyUserRequest = factory(CompanyUserRequest::class)->create([
-            'status' => CompanyUserRequest::STATUS_PENDING,
-            'company_id' => $company->id
+            'status'     => CompanyUserRequest::STATUS_PENDING,
+            'company_id' => $company->id,
         ]);
 
         $faker = Faker::create();
@@ -61,13 +62,13 @@ class CompanyUsersManagementTest extends DuskTestCase
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/' . $company->domain_name . '/dashboard')
-                ->visit('/' . $company->domain_name . '/company/requests');
+                ->assertPathIs('/'.$company->domain_name.'/dashboard')
+                ->visit('/'.$company->domain_name.'/company/requests');
             $browser
                 ->script("jQuery(\"form[data-tooltip='Approve User']\").submit();");
             $browser
                 ->assertPresent('#request-container')
-                ->assertPathIs('/' . $company->domain_name . '/company/requests');
+                ->assertPathIs('/'.$company->domain_name.'/company/requests');
             $browser->script('jQuery(".signmeout-btn").click()');
             $browser->assertPathIs('/');
         });
@@ -80,8 +81,8 @@ class CompanyUsersManagementTest extends DuskTestCase
         $company->users()->attach($company->user_id);
 
         $companyUserRequest = factory(CompanyUserRequest::class)->create([
-            'status' => CompanyUserRequest::STATUS_PENDING,
-            'company_id' => $company->id
+            'status'     => CompanyUserRequest::STATUS_PENDING,
+            'company_id' => $company->id,
         ]);
 
         $faker = Faker::create();
@@ -90,13 +91,13 @@ class CompanyUsersManagementTest extends DuskTestCase
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/' . $company->domain_name . '/dashboard')
-                ->visit('/' . $company->domain_name . '/company/requests');
+                ->assertPathIs('/'.$company->domain_name.'/dashboard')
+                ->visit('/'.$company->domain_name.'/company/requests');
             $browser
                 ->script("jQuery(\"form[data-tooltip='Reject User']\").submit();");
             $browser
                 ->assertPresent('#request-container')
-                ->assertPathIs('/' . $company->domain_name . '/company/requests');
+                ->assertPathIs('/'.$company->domain_name.'/company/requests');
             $browser->script('jQuery(".signmeout-btn").click()');
             $browser->assertPathIs('/');
         });

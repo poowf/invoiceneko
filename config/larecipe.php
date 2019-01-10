@@ -34,8 +34,8 @@ return [
     'versions'      => [
         'default'   => '1.0',
         'published' => [
-            '1.0'
-        ]
+            '1.0',
+        ],
     ],
 
     /*
@@ -52,7 +52,7 @@ return [
 
     'settings' => [
         'auth'  => false,
-        'ga_id' => ''
+        'ga_id' => '',
     ],
 
     /*
@@ -70,7 +70,7 @@ return [
 
     'cache'       => [
         'enabled' => false,
-        'period'  => 5
+        'period'  => 5,
     ],
 
     /*
@@ -92,9 +92,9 @@ return [
         'engines'       => [
             'algolia'   => [
                 'key'   => '',
-                'index' => ''
-            ]
-        ]
+                'index' => '',
+            ],
+        ],
     ],
 
     /*
@@ -111,7 +111,7 @@ return [
 
     'repository'   => [
         'provider' => 'github',
-        'url'      => 'https://github.com/saleem-hadad/larecipe'
+        'url'      => 'https://github.com/saleem-hadad/larecipe',
     ],
 
     /*
@@ -138,7 +138,7 @@ return [
         'colors'         => [
             'primary'    => '#787AF6',
             'secondary'  => '#2b9cf2',
-            'selection'  => '#f4f5f7'
+            'selection'  => '#f4f5f7',
         ],
         'additional_css' => [
             //'css/custom.css',
@@ -170,7 +170,7 @@ return [
             'url'         => '',
             'image'       => '',
             'description' => '',
-        ]
+        ],
     ],
 
    /*
@@ -192,7 +192,7 @@ return [
         'services'          => [
             'disqus'        => [
                 'site_name' => '', // yoursite.disqus.com
-            ]
-        ]
-    ]
+            ],
+        ],
+    ],
 ];

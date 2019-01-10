@@ -2,8 +2,8 @@
 
 namespace App\Traits;
 
-trait UniqueSlug {
-
+trait UniqueSlug
+{
     public static function generateSlug($model)
     {
         $latestSlug =
@@ -16,7 +16,7 @@ trait UniqueSlug {
 
             $number = intval(end($pieces));
 
-            $model->slug .= '-' . ($number + 1);
+            $model->slug .= '-'.($number + 1);
         }
     }
 }

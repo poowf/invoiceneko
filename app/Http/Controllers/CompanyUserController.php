@@ -8,29 +8,27 @@ use App\Models\Company;
 use App\Models\User;
 use App\Notifications\NewCompanyUserNotification;
 use DateTimeZone;
+use Illuminate\Http\Request;
 use PragmaRX\Countries\Package\Countries;
 use Silber\Bouncer\BouncerFacade as Bouncer;
-use Illuminate\Http\Request;
 
 class CompanyUserController extends Controller
 {
-    public function __construct(){
-
+    public function __construct()
+    {
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @param Company $company
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Company $company)
     {
-        if($company)
-        {
+        if ($company) {
             $users = $company->users()->paginate(12);
-        }
-        else
-        {
+        } else {
             $users = collect();
         }
 
@@ -38,8 +36,9 @@ class CompanyUserController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @param Company $company
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create(Company $company)
@@ -53,15 +52,16 @@ class CompanyUserController extends Controller
 
     /**
      * @param CreateCompanyUserRequest $request
+     * @param Company                  $company
+     *
      * @return \Illuminate\Http\RedirectResponse
-     * @param Company $company
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(CreateCompanyUserRequest $request, Company $company)
     {
         $random_password = str_random(16);
 
-        $user = new User;
+        $user = new User();
         $user->fill($request->all());
         $user->password = $random_password;
         $user->save();
@@ -74,12 +74,13 @@ class CompanyUserController extends Controller
 
         $user->notify(new NewCompanyUserNotification($user, $random_password));
 
-        return redirect()->route('company.users.index', [ 'company' => $company ]);
+        return redirect()->route('company.users.index', ['company' => $company]);
     }
 
     /**
      * @param Company $company
-     * @param User $user
+     * @param User    $user
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(Company $company, User $user)
@@ -92,11 +93,11 @@ class CompanyUserController extends Controller
 
     /**
      * @param UpdateCompanyUserRequest $request
-     * @param Company $company
-     * @param User $user
+     * @param Company                  $company
+     * @param User                     $user
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
-
     public function update(UpdateCompanyUserRequest $request, Company $company, User $user)
     {
         $roles = $request->input('roles');
@@ -104,42 +105,36 @@ class CompanyUserController extends Controller
         Bouncer::sync($user)->roles($roles);
 
         flash('User has been updated', 'success');
+
         return redirect()->back();
     }
 
     /**
      * @param Request $request
      * @param Company $company
-     * @param User $user
-     * @return \Illuminate\Http\RedirectResponse
+     * @param User    $user
+     *
      * @throws \Exception
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Request $request, Company $company, User $user)
     {
         $auth_user = auth()->user();
 
         //TODO: Probably need to rewrite/refactor this logic to somewhere else
-        if ($company)
-        {
-            if ($company->isOwner($auth_user))
-            {
-                if($user->id != $auth_user->id)
-                {
+        if ($company) {
+            if ($company->isOwner($auth_user)) {
+                if ($user->id != $auth_user->id) {
                     $user->delete();
                     flash('User Deleted', 'success');
-                }
-                else
-                {
+                } else {
                     flash('You cannot delete the owner of the Company', 'error');
                 }
-            }
-            else
-            {
+            } else {
                 flash('Unauthorised', 'error');
             }
-        }
-        else
-        {
+        } else {
             flash('Nothing was done', 'error');
         }
 

@@ -2,10 +2,9 @@
 
 namespace App\Policies;
 
-use App\Models\User;
 use App\Models\Quote;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Silber\Bouncer\BouncerFacade as Bouncer;
 
 class QuotePolicy
 {
@@ -31,8 +30,9 @@ class QuotePolicy
     /**
      * Determine whether the user can view the quote.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Quote  $quote
+     * @param \App\Models\User  $user
+     * @param \App\Models\Quote $quote
+     *
      * @return mixed
      */
     public function view(User $user, Quote $quote)
@@ -43,7 +43,8 @@ class QuotePolicy
     /**
      * Determine whether the user can create quotes.
      *
-     * @param  \App\Models\User  $user
+     * @param \App\Models\User $user
+     *
      * @return mixed
      */
     public function create(User $user)
@@ -54,8 +55,9 @@ class QuotePolicy
     /**
      * Determine whether the user can update the quote.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Quote  $quote
+     * @param \App\Models\User  $user
+     * @param \App\Models\Quote $quote
+     *
      * @return mixed
      */
     public function update(User $user, Quote $quote)
@@ -66,8 +68,9 @@ class QuotePolicy
     /**
      * Determine whether the user can delete the quote.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Quote  $quote
+     * @param \App\Models\User  $user
+     * @param \App\Models\Quote $quote
+     *
      * @return mixed
      */
     public function delete(User $user, Quote $quote)

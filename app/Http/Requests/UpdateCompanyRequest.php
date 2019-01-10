@@ -24,11 +24,11 @@ class UpdateCompanyRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
-            'crn' => 'required|string',
-            'phone' => 'required|string',
-            'email' => 'required|email',
-            'domain_name' => 'required|unique:companies,domain_name,' . $this->route('company')->id
+            'name'        => 'required|string',
+            'crn'         => 'required|string',
+            'phone'       => 'required|string',
+            'email'       => 'required|email',
+            'domain_name' => 'required|unique:companies,domain_name,'.$this->route('company')->id,
         ];
     }
 }

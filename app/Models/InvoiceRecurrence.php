@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use Log;
+use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Iatstuti\Database\Support\CascadeSoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class InvoiceRecurrence extends Model implements Auditable

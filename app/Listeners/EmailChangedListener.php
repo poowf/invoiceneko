@@ -8,10 +8,12 @@ class EmailChangedListener
 {
     /**
      * Handle user login events.
+     *
      * @param $event
      */
-    public function process($event) {
-        if ($event->user instanceof MustVerifyEmail && ! $event->user->hasVerifiedEmail()) {
+    public function process($event)
+    {
+        if ($event->user instanceof MustVerifyEmail && !$event->user->hasVerifiedEmail()) {
             $event->user->save();
             $event->user->sendEmailVerificationNotification();
         }
@@ -20,7 +22,7 @@ class EmailChangedListener
     /**
      * Register the listeners for the subscriber.
      *
-     * @param  Illuminate\Events\Dispatcher  $events
+     * @param Illuminate\Events\Dispatcher $events
      */
     public function subscribe($events)
     {

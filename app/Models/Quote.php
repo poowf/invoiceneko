@@ -2,14 +2,12 @@
 
 namespace App\Models;
 
-use Log;
+use Carbon\Carbon;
+use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Iatstuti\Database\Support\CascadeSoftDeletes;
-
-use PDF;
-use Carbon\Carbon;
 use OwenIt\Auditing\Contracts\Auditable;
+use PDF;
 
 class Quote extends Model implements Auditable
 {
@@ -20,7 +18,6 @@ class Quote extends Model implements Auditable
     const STATUS_OPEN = 2;
     const STATUS_EXPIRED = 3;
     const STATUS_COMPLETED = 4;
-
 
     /**
      * The database table used by the model.
@@ -49,15 +46,15 @@ class Quote extends Model implements Auditable
         'duedate',
         'created_at',
         'updated_at',
-        'deleted_at'
+        'deleted_at',
     ];
 
     protected $attributes = [
-        'status' => self::STATUS_OPEN
+        'status' => self::STATUS_OPEN,
     ];
 
     protected $cascadeDeletes = [
-        'items'
+        'items',
     ];
 
     protected static function boot()
@@ -65,8 +62,7 @@ class Quote extends Model implements Auditable
         parent::boot();
 
         static::saving(function ($quote) {
-            if($quote->status == self::STATUS_DRAFT)
-            {
+            if ($quote->status == self::STATUS_DRAFT) {
                 $quote->status = self::STATUS_OPEN;
             }
             $date = clone $quote->date;
@@ -84,41 +80,43 @@ class Quote extends Model implements Auditable
     public function getTotalMoneyFormatAttribute()
     {
         setlocale(LC_MONETARY, 'en_US.UTF-8');
+
         return money_format('%!.2n', $this->total);
     }
 
     public function getCreatedAtAttribute($value)
     {
         $date = $this->asDateTime($value);
+
         return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
     public function getUpdatedAtAttribute($value)
     {
         $date = $this->asDateTime($value);
+
         return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
     public function getDateAttribute($value)
     {
         $date = $this->asDateTime($value);
+
         return $date->timezone($this->company->timezone);
     }
 
     public function getDuedateAttribute($value)
     {
         $date = $this->asDateTime($value);
+
         return $date->timezone($this->company->timezone);
     }
 
     public function setDateAttribute($value)
     {
-        if($value instanceof \DateTime)
-        {
+        if ($value instanceof \DateTime) {
             $this->attributes['date'] = $value;
-        }
-        else
-        {
+        } else {
             $this->attributes['date'] = $value = Carbon::createFromFormat('j F, Y', $value)->startOfDay();
         }
     }
@@ -140,7 +138,7 @@ class Quote extends Model implements Auditable
 
     public function getClient()
     {
-        return ($this->client) ? $this->client: (object) json_decode($this->client_data);
+        return ($this->client) ? $this->client : (object) json_decode($this->client_data);
     }
 
     public function owns($model)
@@ -153,20 +151,17 @@ class Quote extends Model implements Auditable
         $items = $this->items;
         $total = 0;
 
-        foreach($items as $item)
-        {
+        foreach ($items as $item) {
             $itemtotal = $item->quantity * $item->price;
 
             $total += $itemtotal;
         }
 
-        if ($moneyformat)
-        {
+        if ($moneyformat) {
             setlocale(LC_MONETARY, 'en_US.UTF-8');
+
             return money_format('%!.2n', $total);
-        }
-        else
-        {
+        } else {
             return $total;
         }
     }
@@ -176,23 +171,20 @@ class Quote extends Model implements Auditable
         $companySetting = $this->company->settings;
         $tax = 0;
 
-        if($companySetting->tax && $companySetting->tax != 0)
-        {
+        if ($companySetting->tax && $companySetting->tax != 0) {
             $tax = $companySetting->tax;
         }
 
         $subtotal = $this->calculatesubtotal(false);
         $subtotalWithTax = $subtotal * $tax;
 
-        $tax = ($subtotalWithTax != 0) ? $subtotalWithTax/100 : 0;
+        $tax = ($subtotalWithTax != 0) ? $subtotalWithTax / 100 : 0;
 
-        if ($moneyformat)
-        {
+        if ($moneyformat) {
             setlocale(LC_MONETARY, 'en_US.UTF-8');
+
             return money_format('%!.2n', $tax);
-        }
-        else
-        {
+        } else {
             return $tax;
         }
     }
@@ -202,23 +194,20 @@ class Quote extends Model implements Auditable
         $companySetting = $this->company->settings;
         $tax = 0;
 
-        if($companySetting->tax && $companySetting->tax != 0)
-        {
+        if ($companySetting->tax && $companySetting->tax != 0) {
             $tax = $companySetting->tax;
         }
 
         $subtotal = $this->calculatesubtotal(false);
         $totalWithTax = $subtotal * (100 + $tax);
 
-        $total = ($totalWithTax != 0) ? $totalWithTax/100 : 0;
+        $total = ($totalWithTax != 0) ? $totalWithTax / 100 : 0;
 
-        if ($moneyformat)
-        {
+        if ($moneyformat) {
             setlocale(LC_MONETARY, 'en_US.UTF-8');
+
             return money_format('%!.2n', $total);
-        }
-        else
-        {
+        } else {
             return $total;
         }
     }
@@ -233,22 +222,21 @@ class Quote extends Model implements Auditable
     {
         $status = $this->status;
 
-        switch($status)
-        {
+        switch ($status) {
             default:
-                $textstatus = "Open";
+                $textstatus = 'Open';
                 break;
             case self::STATUS_DRAFT:
-                $textstatus = "Draft";
+                $textstatus = 'Draft';
                 break;
             case self::STATUS_OPEN:
-                $textstatus = "Open";
+                $textstatus = 'Open';
                 break;
             case self::STATUS_EXPIRED:
-                $textstatus = "Expired";
+                $textstatus = 'Expired';
                 break;
             case self::STATUS_COMPLETED:
-                $textstatus = "Completed";
+                $textstatus = 'Completed';
                 break;
         }
 
@@ -266,8 +254,7 @@ class Quote extends Model implements Auditable
         $cloned->status = self::STATUS_DRAFT;
         $cloned->save();
 
-        foreach($this->items as $item)
-        {
+        foreach ($this->items as $item) {
             $clonedrelation = $item->replicate();
             $clonedrelation->save();
             $cloned->items()->save($clonedrelation);
@@ -318,5 +305,4 @@ class Quote extends Model implements Auditable
         return $query
             ->where('archived', false);
     }
-
 }
