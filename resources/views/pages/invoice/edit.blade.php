@@ -278,7 +278,7 @@
                 if (typeof itemid !== typeof undefined && itemid !== false && itemid !== "false") {
                     var deleteinvoiceitemreq = $.ajax({
                         type: "DELETE",
-                        url: "/invoice/item/" + itemid + "/destroy",
+                        url: "/{{ \App\Library\Poowf\Unicorn::getCompanyKey() }}/invoice/item/" + itemid + "/destroy",
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }

@@ -57,7 +57,7 @@ class InvoiceNotification extends Notification implements ShouldQueue
         return (new MailMessage)
                     ->subject("New Invoice #{$invoice->nice_invoice_id} from {$company->name}")
                     ->greeting("Hello {$client->companyname}!")
-                    ->line('You have a new Invoice.')
+                    ->line("You have a new Invoice from {$company->name}")
                     ->action('View Invoice', $url)
                     ->line('Thank you for using our application!')
                     ->attachData($pdf->inline($invoice_slug), $invoice_slug);

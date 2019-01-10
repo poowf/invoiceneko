@@ -150,7 +150,7 @@
                 Unicorn.initNewItem(++invoiceitemcount, 'invoice-items-container', 'invoice', itemoptions);
             });
             Unicorn.initListener('#invoice-items-container', '.item-list-selector', 'change', function (event, element) {
-                Unicorn.retrieveItemTemplate("/{{ app('request')->route('company')->domain_name }}", element.siblings().find('.selected').attr('data-id'), element, Unicorn.setItemTemplate);
+                Unicorn.retrieveItemTemplate("/{{ \App\Library\Poowf\Unicorn::getCompanyKey() }}", element.siblings().find('.selected').attr('data-id'), element, Unicorn.setItemTemplate);
             });
 
             Unicorn.initListener('#create-invoice', '#recurring-invoice-check', 'change', function (event, element) {
