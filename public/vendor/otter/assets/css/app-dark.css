@@ -3,7 +3,7 @@ body {
   background-color: #1C1C1C;
 }
 
-span {
+.page span {
   color: #E2EDF4;
 }
 
@@ -39,9 +39,16 @@ span {
   border-top: 1px solid rgba(210, 188, 167, 0.12);
 }
 
-.btn-dark {
+.btn-black {
   color: #E2EDF4;
   background-color: #343434;
+  border-color: #343434;
+}
+
+.btn-black:hover,
+.btn-black:focus {
+  background-color: #343434;
+  border-color: #343434;
 }
 
 .btn.btn-pill.btn-secondary.btn-resource-navigation {

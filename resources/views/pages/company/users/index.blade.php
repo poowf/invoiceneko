@@ -2,9 +2,6 @@
 
 @section("head")
     <style>
-        #user-container {
-            margin: 0px;
-        }
     </style>
 @stop
 
@@ -27,7 +24,7 @@
                 @include("partials/sidenav-company")
             </div>
             <div class="col s12 m9 xl10">
-                <div id="user-container" class="row">
+                <div id="user-container" class="row mall0">
                     @if($users->isNotEmpty())
                         <div class="card-panel flex">
                             <table id="users-table" class="responsive-table striped">

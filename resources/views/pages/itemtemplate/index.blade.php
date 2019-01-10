@@ -2,25 +2,6 @@
 
 @section("head")
     <style>
-        .card-panel.tab-panel {
-            margin-top: 0;
-        }
-        .tab {
-            background-color: #299a9a;
-        }
-        .tabs .tab a {
-            color: #cbdede;
-        }
-        .tabs .tab a:hover, .tabs .tab a.active {
-            color: #fff;
-        }
-        .tabs .indicator {
-            height: 5px;
-            background-color: #FFD264;
-        }
-        #itemtemplate-container {
-            margin: 0px;
-        }
     </style>
 @stop
 

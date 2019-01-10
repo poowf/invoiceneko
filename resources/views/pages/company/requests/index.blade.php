@@ -2,9 +2,6 @@
 
 @section("head")
     <style>
-        #request-container {
-            margin: 0px;
-        }
     </style>
 @stop
 
@@ -22,7 +19,7 @@
                 @include("partials/sidenav-company")
             </div>
             <div class="col s12 m9 xl10">
-                <div id="request-container" class="row">
+                <div id="request-container" class="row mall0">
                     @if($requests->isNotEmpty())
                         <div class="card-panel flex">
                             <table id="requests-table" class="responsive-table striped">

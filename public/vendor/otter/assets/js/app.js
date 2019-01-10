@@ -305,6 +305,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "ShowComponent",
@@ -11104,8 +11114,7 @@ var render = function() {
               relationKey
             ) {
               return _c("div", [
-                relation.relationshipType === "HasMany" ||
-                relation.relationshipType === "BelongsToMany"
+                relation.relationshipType === "HasMany"
                   ? _c(
                       "div",
                       [
@@ -11114,6 +11123,25 @@ var render = function() {
                             relationship: "true",
                             relation: relation,
                             "parent-resource-id": relation.relationshipId,
+                            "parent-resource-name": _vm.resourceName,
+                            "resource-name": relation.resourceName,
+                            "resource-fields": relation.resourceFields
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                relation.relationshipType === "BelongsToMany"
+                  ? _c(
+                      "div",
+                      [
+                        _c("table-component", {
+                          attrs: {
+                            relationship: "true",
+                            relation: relation,
+                            "parent-resource-id": relation.resourceId,
                             "parent-resource-name": _vm.resourceName,
                             "resource-name": relation.resourceName,
                             "resource-fields": relation.resourceFields
@@ -12172,7 +12200,7 @@ var render = function() {
                   "btn",
                   "btn-primary",
                   "btn-block",
-                  "btn-dark",
+                  "btn-black",
                   this.loading ? "btn-loading" : ""
                 ],
                 attrs: { type: "button" },

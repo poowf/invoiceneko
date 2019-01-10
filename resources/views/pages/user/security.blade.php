@@ -2,60 +2,11 @@
 
 @section("head")
     <style>
-        .session-descriptors {
-            font-size: 14px;
-        }
-
-        .session-description-list {
-            max-width: 600px;
-            margin: 0;
-        }
-
-        .session-description-list dt {
-            margin-right: 0;
-        }
-
-        .session-description-list dd {
-            margin-left: 25%;
-            margin-bottom: .2em;
-        }
-
-        @media only screen and (max-width: 768px) {
-            .session-description-list {
-                padding: 10px;
-            }
-
-            .session-description-list dd {
-                margin-left: 30%;
-            }
-
-            .collection .collection-item.avatar.custom-avatar {
-                padding: 0;
-            }
-
-            :root .collection .collection-item.avatar.custom-avatar i.circle {
-                position: relative;
-                text-align: center;
-                border-radius: 0;
-                width: 100%;
-                left: 0;
-            }
-            .collection .collection-item.avatar.custom-avatar .secondary-content {
-                top: 8px;
-                color: #ffffff;
-            }
-        }
-
-        @media only screen and (min-width: 1200px) {
-            .session-description-list dd {
-                margin-left: 20%;
-            }
-        }
     </style>
 @stop
 
 @section("content")
-    <div class="container">
+    <div class="container session-wrapper">
         <div class="row">
             <div class="col s12">
                 <h3>Security</h3>

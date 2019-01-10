@@ -2,12 +2,6 @@
 
 @section("head")
     <style>
-        :root .card.single-history {
-            overflow: hidden;
-            margin: 10px 0px;
-            padding: 35px;
-            text-align: center;
-        }
     </style>
 @stop
 

@@ -202,6 +202,10 @@ mark {
   margin-bottom: 60px;
 }
 
+.mall0 {
+  margin: 0;
+}
+
 .mleft15 {
   margin-left: 15px;
 }
@@ -878,6 +882,66 @@ textarea.valid + label:after {
   padding: 7.5px 15px;
 }
 
+.logo-display-container, .smlogo-display-container {
+  display: inline-block;
+}
+
+.logo-display-container img, .smlogo-display-container img {
+  margin-top: 15px;
+  object-fit: cover;
+  object-position: center right;
+}
+
+.logo-display-container img {
+  width: 250px;
+  height: 250px;
+}
+
+.logo-display-container.company-logo img {
+  width: 220px;
+  height: 110px;
+}
+
+.smlogo-display-container.company-logo img{
+  width: 100px;
+  height: 100px;
+}
+
+.logo-display-container.company-logo span.text-content {
+  width: 220px;
+}
+
+.smlogo-display-container.company-logo span.text-content {
+  width: 100px;
+}
+
+.logo-display-container span.text-content, .smlogo-display-container span.text-content {
+  width: 250px;
+  padding: 10px 0;
+  margin-top: 15px;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  cursor: pointer;
+  display: table;
+  position: absolute;
+  top: 0;
+  opacity: 0;
+  -webkit-transition: opacity 500ms;
+  -moz-transition: opacity 500ms;
+  -o-transition: opacity 500ms;
+  transition: opacity 500ms;
+}
+
+.logo-display-container span.text-content span, .smlogo-display-container span.text-content span {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.logo-display-container:hover span.text-content, .smlogo-display-container:hover span.text-content {
+  opacity: 1;
+}
+
 /* Fonts */
 /* Rules for sizing the icon. */
 .material-icons.md-18 { font-size: 18px; }
@@ -1339,6 +1403,119 @@ label.rbtn-label.invalid:after {
   outline: 2px solid #4CAF50;
 }
 
+/* Client */
+.single-client-card .card-content {
+  height: 130px;
+  overflow: hidden;
+}
+
+.single-client-card .card-content .card-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  -webkit-transition: 2s;
+  -moz-transition: 2s;
+  transition: 2s;
+  -webkit-transition-timing-function: linear;
+  -moz-transition-timing-function: linear;
+  transition-timing-function: linear;
+  max-height: 32px;
+}
+
+.single-client-card .card-content .card-title:hover {
+  margin-left: -50%;
+}
+
+/* Company Roles Page */
+.all-permission-selector {
+  cursor: pointer;
+}
+
+.all-permission-selector:hover {
+  background-color: #299a9a;
+  color: #ffffff;
+}
+
+.all-permission-selector h6 {
+  margin: 10px 0;
+}
+
+#create-role .switch label .lever, #edit-role .switch label .lever
+{
+  margin-left: 0;
+}
+
+/* Invoice History Page */
+:root .card.single-history {
+  overflow: hidden;
+  margin: 10px 0px;
+  padding: 35px;
+  text-align: center;
+}
+
+/* Invoice Page */
+.invoice-wrapper .card-panel.tab-panel {
+  margin-top: 0;
+}
+.invoice-wrapper .tab {
+  background-color: #299a9a;
+}
+.invoice-wrapper .tabs .tab a {
+  color: #cbdede;
+}
+.invoice-wrapper .tabs .tab a:hover, .tabs .tab a.active {
+  color: #fff;
+}
+.invoice-wrapper .tabs .indicator {
+  height: 5px;
+  background-color: #FFD264;
+}
+:root .invoice-wrapper .card.single-history, :root .quote-wrapper .card.single-history {
+  overflow: hidden;
+  margin: 0px 20px;
+  padding: 35px;
+  text-align: center;
+}
+
+:root .invoice-wrapper .slick-prev:before, :root .invoice-wrapper .slick-next:before, :root .quote-wrapper .slick-prev:before, :root .quote-wrapper .slick-next:before {
+  content: initial;
+  color: #000000;
+}
+
+:root .invoice-wrapper .slick-prev, :root .invoice-wrapper .slick-next, :root .quote-wrapper .slick-prev, :root .quote-wrapper .slick-next {
+  color: #000000;
+  z-index: 1;
+}
+
+:root .invoice-wrapper .slick-prev:hover, :root .invoice-wrapper .slick-next:hover, :root .invoice-wrapper .slick-prev:focus, :root .invoice-wrapper .slick-next:focus,
+:root .quote-wrapper .slick-prev:hover, :root .quote-wrapper .slick-next:hover, :root .quote-wrapper .slick-prev:focus, :root .quote-wrapper .slick-next:focus
+{
+  color: #000000;
+}
+
+:root .invoice-wrapper .slick-prev, :root .quote-wrapper .slick-prev {
+  left: -20px;
+}
+
+:root .invoice-wrapper .slick-next, :root .quote-wrapper .slick-next {
+  right: -5px;
+}
+
+/* Security Page */
+.session-wrapper .session-description-list {
+  max-width: 600px;
+  margin: 0;
+}
+
+.session-wrapper .session-description-list dt {
+  margin-right: 0;
+}
+
+.session-wrapper .session-description-list dd {
+  margin-left: 25%;
+  margin-bottom: .2em;
+}
+
 /* Sign In Page */
 .login-container {
   position: relative;
@@ -1547,6 +1724,32 @@ label.rbtn-label.invalid:after {
   }
 }
 
+@media only screen and (max-width: 768px) {
+  .session-wrapper .session-description-list {
+    padding: 10px;
+  }
+
+  .session-wrapper .session-description-list dd {
+    margin-left: 30%;
+  }
+
+  .session-wrapper .collection .collection-item.avatar.custom-avatar {
+    padding: 0;
+  }
+
+  :root .session-wrapper .collection .collection-item.avatar.custom-avatar i.circle {
+    position: relative;
+    text-align: center;
+    border-radius: 0;
+    width: 100%;
+    left: 0;
+  }
+  .session-wrapper .collection .collection-item.avatar.custom-avatar .secondary-content {
+    top: 8px;
+    color: #ffffff;
+  }
+}
+
 @media only screen and (min-width: 768px) {
   img.force-image-size {
     height: 240px;
@@ -1576,6 +1779,9 @@ label.rbtn-label.invalid:after {
 @media only screen and (min-width: 1200px) {
   img.force-image-size {
     height: 360px;
+  }
+  .session-wrapper .session-description-list dd {
+    margin-left: 20%;
   }
 }
 

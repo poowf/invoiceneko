@@ -1,7 +1,7 @@
 @extends("layouts.default", ['page_title' => 'Contact'])
 
 @section("head")
-    <style type="text/css">
+    <style>
     </style>
 @stop
 

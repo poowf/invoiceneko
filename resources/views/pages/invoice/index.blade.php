@@ -2,27 +2,11 @@
 
 @section("head")
     <style>
-        .card-panel.tab-panel {
-            margin-top: 0;
-        }
-        .tab {
-            background-color: #299a9a;
-        }
-        .tabs .tab a {
-            color: #cbdede;
-        }
-        .tabs .tab a:hover, .tabs .tab a.active {
-            color: #fff;
-        }
-        .tabs .indicator {
-            height: 5px;
-            background-color: #FFD264;
-        }
     </style>
 @stop
 
 @section("content")
-    <div class="wide-container">
+    <div class="wide-container invoice-wrapper">
         <div class="row">
             <div class="col s6">
                 <h3>Invoices</h3>

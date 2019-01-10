@@ -4,61 +4,6 @@
     <link href="{{ mix('/assets/css/intlTelInput.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ mix('/assets/css/selectize.css') }}" rel="stylesheet" type="text/css">
     <style>
-        .logo-display-container, .smlogo-display-container {
-            display: inline-block;
-        }
-
-        .logo-display-container img, .smlogo-display-container img {
-            margin-top: 15px;
-
-            object-fit: cover;
-            object-position: center right;
-        }
-
-        .logo-display-container img {
-            width: 220px;
-            height: 110px;
-        }
-
-        .smlogo-display-container img {
-            width: 100px;
-            height: 100px;
-        }
-
-        .logo-display-container span.text-content {
-            width: 220px;
-        }
-
-        .smlogo-display-container span.text-content {
-            width: 100px;
-        }
-
-        span.text-content {
-            width: 300px;
-            padding: 10px 0;
-            margin-top: 15px;
-            background: rgba(0,0,0,0.5);
-            color: white;
-            cursor: pointer;
-            display: table;
-            position: absolute;
-            top: 0;
-            opacity: 0;
-            -webkit-transition: opacity 500ms;
-            -moz-transition: opacity 500ms;
-            -o-transition: opacity 500ms;
-            transition: opacity 500ms;
-        }
-
-        span.text-content span {
-            display: table-cell;
-            text-align: center;
-            vertical-align: middle;
-        }
-
-        .logo-display-container:hover span.text-content, .smlogo-display-container:hover span.text-content {
-            opacity: 1;
-        }
     </style>
 @stop
 
@@ -79,7 +24,7 @@
                         <div class="row">
                             <div class="logo-container input-field col s12">
                                 <label for="logo-display" class="label-validation">Logo</label>
-                                <div class="logo-display-container tooltipped" data-position="top" data-tooltip="Recommended Size: 420 (W) x 220 (H) with White Background (Optional)">
+                                <div class="logo-display-container company-logo tooltipped" data-position="top" data-tooltip="Recommended Size: 420 (W) x 220 (H) with White Background (Optional)">
                                     <img id="logo-display" src="@if($company){{ \App\Library\Poowf\Unicorn::getStorageFile($company->logo, [420, 220]) }}@else{!! '//via.placeholder.com/420x220' !!}@endif">
                                     <span class="text-content"><span id="logo-upload">Change?</span></span>
                                 </div>
@@ -89,7 +34,7 @@
                         <div class="row">
                             <div class="smlogo-container input-field col s12">
                                 <label for="smlogo-display" class="label-validation">Small Logo</label>
-                                <div class="smlogo-display-container tooltipped" data-position="top" data-tooltip="Recommended Size: 200 (W) x 200 (H) with White Background (Optional)">
+                                <div class="smlogo-display-container company-logo tooltipped" data-position="top" data-tooltip="Recommended Size: 200 (W) x 200 (H) with White Background (Optional)">
                                     <img id="smlogo-display" src="@if($company){{ \App\Library\Poowf\Unicorn::getStorageFile($company->smlogo, [200,200]) }}@else{!! '//via.placeholder.com/200x200' !!}@endif"  height="100">
                                     <span class="text-content"><span id="smlogo-upload">Change?</span></span>
                                 </div>
