@@ -152,7 +152,7 @@
                 Unicorn.initNewItem(++quoteitemcount, 'quote-items-container', 'quote', itemoptions);
             });
             Unicorn.initListener('#quote-items-container', '.item-list-selector', 'change', function (event, element) {
-                Unicorn.retrieveItemTemplate("/{{ app('request')->route('company')->domain_name }}", element.siblings().find('.selected').attr('data-id'), element, Unicorn.setItemTemplate);
+                Unicorn.retrieveItemTemplate("/{{ \App\Library\Poowf\Unicorn::getCompanyKey() }}", element.siblings().find('.selected').attr('data-id'), element, Unicorn.setItemTemplate);
             });
         });
     </script>

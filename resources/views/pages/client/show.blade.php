@@ -12,8 +12,8 @@
                 <h3>Client Details</h3>
             </div>
             <div class="col s6 right">
-                @can('create', \App\Models\Invoice::class)
-                <a href="{{ route('client.invoice.create', [ 'client' => $client, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey()  ]) }}" class="btn btn-link waves-effect waves-dark mtop30">Create Invoice</a>
+                @can('update', $client)
+                    <a href="{{ route('client.edit', [ 'client' => $client, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="btn btn-link waves-effect waves-dark mtop30">Edit Client</a>
                 @endcan
             </div>
         </div>
@@ -87,8 +87,15 @@
             </div>
         </div>
         <div class="row">
-            <div class="col s12">
+            <div class="col s6">
                 <h5>Invoices</h5>
+            </div>
+            <div class="col s6 right">
+                @can('create', \App\Models\Invoice::class)
+                    <a href="{{ route('client.invoice.create', [ 'client' => $client, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey()  ]) }}" class="btn btn-link waves-effect waves-dark">Create Invoice</a>
+                @endcan
+            </div>
+            <div class="col s12">
                 <div class="card-panel flex">
                     <table id="invoice-container" class="responsive-table striped">
                         <thead>

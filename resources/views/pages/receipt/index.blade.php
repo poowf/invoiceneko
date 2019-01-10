@@ -2,25 +2,6 @@
 
 @section("head")
     <style>
-        .card-panel.tab-panel {
-            margin-top: 0;
-        }
-        .tab {
-            background-color: #299a9a;
-        }
-        .tabs .tab a {
-            color: #cbdede;
-        }
-        .tabs .tab a:hover, .tabs .tab a.active {
-            color: #fff;
-        }
-        .tabs .indicator {
-            height: 5px;
-            background-color: #FFD264;
-        }
-        #receipt-container {
-            margin: 0px;
-        }
     </style>
 @stop
 
@@ -40,7 +21,7 @@
                     <input id="search-input" class="card-input" name="search-input" type="search" placeholder="Search">
                 </div>
 
-                <div id="receipt-container" class="row">
+                <div id="receipt-container" class="row mall0">
                     <div class="card-panel flex">
                         <table id="receipts-table" class="responsive-table striped">
                             <thead>

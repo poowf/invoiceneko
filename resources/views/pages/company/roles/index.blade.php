@@ -2,9 +2,6 @@
 
 @section("head")
     <style>
-        #request-container {
-            margin: 0px;
-        }
     </style>
 @stop
 

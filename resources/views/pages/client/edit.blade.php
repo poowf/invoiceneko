@@ -5,51 +5,6 @@
     <link href="{{ mix('/assets/css/selectize.css') }}" rel="stylesheet" type="text/css">
 
     <style>
-        .logo-display-container {
-            display: inline-block;
-        }
-
-        .logo-display-container img {
-            margin-top: 15px;
-            object-fit: cover;
-            object-position: center right;
-        }
-
-        .logo-display-container img {
-            width: 250px;
-            height: 250px;
-        }
-
-        .logo-display-container span.text-content {
-            width: 250px;
-        }
-
-        span.text-content {
-            width: 300px;
-            padding: 10px 0;
-            margin-top: 15px;
-            background: rgba(0,0,0,0.5);
-            color: white;
-            cursor: pointer;
-            display: table;
-            position: absolute;
-            top: 0;
-            opacity: 0;
-            -webkit-transition: opacity 500ms;
-            -moz-transition: opacity 500ms;
-            -o-transition: opacity 500ms;
-            transition: opacity 500ms;
-        }
-
-        span.text-content span {
-            display: table-cell;
-            text-align: center;
-            vertical-align: middle;
-        }
-
-        .logo-display-container:hover span.text-content {
-            opacity: 1;
-        }
     </style>
 @stop
 

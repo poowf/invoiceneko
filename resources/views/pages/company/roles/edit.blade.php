@@ -3,28 +3,6 @@
 @section("head")
     <style>
         {{-- TODO: Probably need to do some A/B Testing for the UI on this page --}}
-
-        .all-permission-selector {
-            cursor: pointer;
-        }
-
-        .all-permission-selector:hover {
-            background-color: #299a9a;
-            color: #ffffff;
-        }
-
-        .all-permission-selector h6 {
-            margin: 10px 0;
-        }
-
-        .switch.all-permissions {
-            text-align: right;
-        }
-
-        .switch label .lever
-        {
-            margin-left: 0;
-        }
     </style>
 @stop
 

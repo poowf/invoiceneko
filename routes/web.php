@@ -144,12 +144,16 @@ Route::group(['middleware' => ['auth', '2fa', 'verified']], function() {
             Route::patch('/client/{client}/edit', 'ClientController@update')->name('client.update')->middleware('can:update,client');
             Route::delete('/client/{client}/destroy', 'ClientController@destroy')->name('client.destroy')->middleware('can:delete,client');
 
+            /* InvoiceItem */
+            Route::delete('/invoice/item/{invoiceitem}/destroy', 'InvoiceItemController@destroy')->name('invoice.item.destroy')->middleware('can:delete,invoiceitem');
+
             /* Invoice */
             Route::get('/invoices', 'InvoiceController@index')->name('invoice.index')->middleware('can:index, App\Models\Invoice');
             Route::get('/invoices/archived', 'InvoiceController@index_archived')->name('invoice.index.archived')->middleware('can:index, App\Models\Invoice');
             Route::get('/invoice/create', 'InvoiceController@create')->name('invoice.create')->middleware('can:create, App\Models\Invoice');
             Route::post('/invoice/create', 'InvoiceController@store')->name('invoice.store')->middleware('can:create, App\Models\Invoice');
             Route::get('/invoice/{invoice}', 'InvoiceController@show')->name('invoice.show')->middleware('can:view,invoice');
+            Route::get('/invoice/{invoice}/history', 'InvoiceController@history')->name('invoice.history.show')->middleware('can:view,invoice');
             Route::post('/invoice/{invoice}/duplicate', 'InvoiceController@duplicate')->name('invoice.duplicate')->middleware('can:update,invoice');
             Route::post('/invoice/{invoice}/convert', 'InvoiceController@convertToQuote')->name('invoice.convert')->middleware('can:update,invoice');
             Route::get('/invoice/{invoice}/download', 'InvoiceController@download')->name('invoice.download')->middleware('can:view,invoice');
@@ -201,12 +205,6 @@ Route::group(['middleware' => ['auth', '2fa', 'verified']], function() {
             Route::get('/oldinvoice/{oldinvoice}', 'OldInvoiceController@show')->name('invoice.old.show')->middleware('can:view,oldinvoice');
             Route::get('/oldinvoice/{oldinvoice}/download', 'OldInvoiceController@download')->name('invoice.old.download')->middleware('can:view,oldinvoice');
             Route::get('/oldinvoice/{oldinvoice}/printview', 'OldInvoiceController@printview')->name('invoice.old.printview')->middleware('can:view,oldinvoice');
-
-            /* Invoice History */
-            Route::get('/invoice/{invoice}/history', 'InvoiceController@history')->name('invoice.history.show')->middleware('can:view,invoice');
-
-            /* InvoiceItem */
-            Route::delete('/invoice/item/{invoiceitem}/destroy', 'InvoiceItemController@destroy')->name('invoice.item.destroy')->middleware('can:delete,invoiceitem');
 
             /* ItemTemplate */
             Route::get('/itemtemplates', 'ItemTemplateController@index')->name('itemtemplate.index')->middleware('can:index, App\Models\ItemTemplate');

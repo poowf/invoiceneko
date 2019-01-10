@@ -2,44 +2,13 @@
 
 @section("head")
     <style>
-        :root .card.single-history {
-            overflow: hidden;
-            margin: 0px 20px;
-            padding: 35px;
-            text-align: center;
-        }
-
-        .single-history-wrapper {
-        }
-
-        :root .slick-prev:before, :root .slick-next:before{
-            content: initial;
-            color: #000000;
-        }
-
-        :root .slick-prev, :root .slick-next {
-            color: #000000;
-            z-index: 1;
-        }
-
-        :root .slick-prev:hover, :root .slick-next:hover, :root .slick-prev:focus, :root .slick-next:focus {
-            color: #000000;
-        }
-
-        :root .slick-prev {
-            left: -20px;
-        }
-
-        :root .slick-next {
-            right: -5px;
-        }
     </style>
     <link href="{{ mix('/assets/css/slick.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ mix('/assets/css/slick-theme.css') }}" rel="stylesheet" type="text/css">
 @stop
 
 @section("content")
-    <div class="wide-container">
+    <div class="wide-container invoice-wrapper">
         <div id="top-action-container" class="row desktop-only">
             <div class="col s12 mtop30 right">
                 <form method="post" action="{{ route('invoice.send', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form">

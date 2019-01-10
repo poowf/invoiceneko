@@ -34,15 +34,15 @@ class NekoSession extends Model
     public function getPlatformAttribute()
     {
         $agent = $this->setupAgent();
-        $device = $agent->platform();
-        return $device;
+        $platform = $agent->platform();
+        return $platform;
     }
 
     public function getBrowserAttribute()
     {
         $agent = $this->setupAgent();
-        $device = $agent->browser();
-        return $device;
+        $browser = $agent->browser();
+        return $browser;
     }
 
     public function isPhone()

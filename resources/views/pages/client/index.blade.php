@@ -2,27 +2,6 @@
 
 @section("head")
     <style>
-        .single-client-card .card-content {
-            height: 130px;
-            overflow: hidden;
-        }
-
-        .single-client-card .card-content .card-title {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            -webkit-transition: 2s;
-            -moz-transition: 2s;
-            transition: 2s;
-            -webkit-transition-timing-function: linear;
-            -moz-transition-timing-function: linear;
-            transition-timing-function: linear;
-            max-height: 32px;
-        }
-
-        .single-client-card .card-content .card-title:hover {
-            margin-left: -50%;
-        }
     </style>
 @stop
 

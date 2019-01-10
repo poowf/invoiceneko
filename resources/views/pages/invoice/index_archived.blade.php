@@ -2,30 +2,11 @@
 
 @section("head")
     <style>
-        .card-panel.tab-panel {
-            margin-top: 0;
-        }
-        .tab {
-            background-color: #299a9a;
-        }
-        .tabs .tab a {
-            color: #cbdede;
-        }
-        .tabs .tab a:hover, .tabs .tab a.active {
-            color: #fff;
-        }
-        .tabs .indicator {
-            height: 5px;
-            background-color: #FFD264;
-        }
-        #invoice-container {
-            margin: 0px;
-        }
     </style>
 @stop
 
 @section("content")
-    <div class="wide-container">
+    <div class="wide-container invoice-wrapper">
         <div class="row">
             <div class="col s6">
                 <h3>Archived Invoices</h3>
@@ -39,7 +20,7 @@
                     <input id="search-input" class="card-input" name="search-input" type="search" placeholder="Search">
                 </div>
 
-                <div id="invoice-container" class="row">
+                <div id="invoice-container" class="row mall0">
                     <div class="card-panel flex">
                         <table id="invoices-table" class="responsive-table striped">
                             <thead>
