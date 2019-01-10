@@ -2,6 +2,55 @@
 
 @section("head")
     <style>
+        .session-descriptors {
+            font-size: 14px;
+        }
+
+        .session-description-list {
+            max-width: 600px;
+            margin: 0;
+        }
+
+        .session-description-list dt {
+            margin-right: 0;
+        }
+
+        .session-description-list dd {
+            margin-left: 25%;
+            margin-bottom: .2em;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .session-description-list {
+                padding: 10px;
+            }
+
+            .session-description-list dd {
+                margin-left: 30%;
+            }
+
+            .collection .collection-item.avatar.custom-avatar {
+                padding: 0;
+            }
+
+            :root .collection .collection-item.avatar.custom-avatar i.circle {
+                position: relative;
+                text-align: center;
+                border-radius: 0;
+                width: 100%;
+                left: 0;
+            }
+            .collection .collection-item.avatar.custom-avatar .secondary-content {
+                top: 8px;
+                color: #ffffff;
+            }
+        }
+
+        @media only screen and (min-width: 1200px) {
+            .session-description-list dd {
+                margin-left: 20%;
+            }
+        }
     </style>
 @stop
 
@@ -54,13 +103,16 @@
                             <h6>Sessions</h6>
                             <ul id="session-container" class="collection">
                                 @foreach($sessions as $session)
-                                <li class="collection-item avatar">
+                                <li class="collection-item avatar custom-avatar">
                                     <i class="material-icons circle blue-grey">@if($session->isPhone()){{ 'smartphone' }}@else{{ 'computer' }}@endif</i>
-                                    <span class="title">{{ $session->platform_name }} @if(session()->getId() == $session->id)<span class="alt-badge info mleft15">{{ 'Current Session' }}</span>@endif</span>
-                                    <p>
-                                        {{ $session->ip_address }}<br>
-                                        {{ $session->last_activity }}
-                                    </p>
+                                    <dl class="session-description-list">
+                                        <dt>Device:</dt>
+                                        <dd>{{ $session->platform_name }} @if(session()->getId() == $session->id)<br><span class="alt-badge info">{{ 'Current Session' }}</span>@endif</dd>
+                                        <dt>IP Address:</dt>
+                                        <dd>{{ $session->ip_address }}</dd>
+                                        <dt>Last Used:</dt>
+                                        <dd>{{ $session->last_activity }}</dd>
+                                    </dl>
                                     @if(session()->getId() != $session->id)<a href="#" data-id="{{ $session->id }}" class="secondary-content session-delete-btn tooltipped" data-position="top" data-tooltip="Clear Session"><i class="material-icons">clear</i></a>@endif
                                 </li>
                                 @endforeach
