@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use Log;
+use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Iatstuti\Database\Support\CascadeSoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class InvoiceItem extends Model implements Auditable
@@ -28,6 +27,7 @@ class InvoiceItem extends Model implements Auditable
     public function moneyFormatPrice()
     {
         setlocale(LC_MONETARY, 'en_US.UTF-8');
+
         return money_format('%!.2n', $this->price);
     }
 
@@ -37,29 +37,24 @@ class InvoiceItem extends Model implements Auditable
         $original = $this;
         $price = number_format($price, 3, '.', '');
 
-        if($original->name != $name)
-        {
+        if ($original->name != $name) {
             $ismodified = true;
         }
 
-        if($original->description != $description)
-        {
+        if ($original->description != $description) {
             $ismodified = true;
         }
 
-        if($original->quantity != $quantity)
-        {
+        if ($original->quantity != $quantity) {
             $ismodified = true;
         }
 
-        if($original->price != $price)
-        {
+        if ($original->price != $price) {
             $ismodified = true;
         }
 
         return $ismodified;
     }
-
 
     public function scopeDuplicateCheck($query, $price, $quantity, $invoiceid)
     {

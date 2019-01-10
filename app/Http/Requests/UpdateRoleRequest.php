@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Silber\Bouncer\BouncerFacade as Bouncer;
 
 class UpdateRoleRequest extends FormRequest
 {
@@ -29,9 +28,9 @@ class UpdateRoleRequest extends FormRequest
             'title' => [
                 'required',
                 Rule::unique('roles')->where('scope', $this->route('company')->id)->ignore($this->role->id),
-                Rule::unique('roles', 'name')->where('scope', $this->route('company')->id)->ignore($this->role->id)
+                Rule::unique('roles', 'name')->where('scope', $this->route('company')->id)->ignore($this->role->id),
             ],
-            'permissions' => 'required|array'
+            'permissions' => 'required|array',
         ];
     }
 }

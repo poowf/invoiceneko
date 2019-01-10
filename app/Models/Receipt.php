@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
+use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Iatstuti\Database\Support\CascadeSoftDeletes;
-use PDF;
 use OwenIt\Auditing\Contracts\Auditable;
+use PDF;
 
 class Receipt extends Model implements Auditable
 {
@@ -23,12 +23,14 @@ class Receipt extends Model implements Auditable
     public function getCreatedAtAttribute($value)
     {
         $date = $this->asDateTime($value);
+
         return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
     public function getUpdatedAtAttribute($value)
     {
         $date = $this->asDateTime($value);
+
         return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
@@ -47,6 +49,7 @@ class Receipt extends Model implements Auditable
             ->setOption('margin-top', '10mm')
             ->setOption('margin-right', '10mm')
             ->setOption('margin-left', '10mm');
+
         return $pdf;
     }
 }

@@ -5,8 +5,6 @@ namespace Tests\Unit;
 use App\Models\InvoiceItemTemplate;
 use App\Models\InvoiceTemplate;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class InvoiceItemTemplateTest extends TestCase
 {
@@ -22,11 +20,11 @@ class InvoiceItemTemplateTest extends TestCase
         InvoiceItemTemplate::unguard();
 
         $invoiceItemTemplate = InvoiceItemTemplate::create([
-            'name' => 'This is an Invoice Item Template la',
-            'quantity' => '250',
-            'price' => '5.00',
-            'description' => 'asfdasfasfasfsf<p>asasdfasdfasfas</p>',
-            'invoice_template_id' => $invoiceTemplate->id
+            'name'                => 'This is an Invoice Item Template la',
+            'quantity'            => '250',
+            'price'               => '5.00',
+            'description'         => 'asfdasfasfasfsf<p>asasdfasdfasfas</p>',
+            'invoice_template_id' => $invoiceTemplate->id,
         ]);
 
         InvoiceItemTemplate::reguard();
@@ -40,12 +38,12 @@ class InvoiceItemTemplateTest extends TestCase
         $invoiceTemplate = factory(InvoiceTemplate::class)->create();
         $invoiceTemplate2 = factory(InvoiceTemplate::class)->create();
         $invoiceItemTemplate = factory(InvoiceItemTemplate::class)->create([
-            'invoice_template_id' => $invoiceTemplate->id
+            'invoice_template_id' => $invoiceTemplate->id,
         ]);
         $this->assertInstanceOf(InvoiceItemTemplate::class, $invoiceItemTemplate);
 
-        $invoiceItemTemplate->price = "500.00";
-        $invoiceItemTemplate->quantity = "2000";
+        $invoiceItemTemplate->price = '500.00';
+        $invoiceItemTemplate->quantity = '2000';
         $invoiceItemTemplate->save();
         $invoiceItemTemplate->refresh();
 
@@ -53,8 +51,8 @@ class InvoiceItemTemplateTest extends TestCase
         $this->assertEquals('2000', $invoiceItemTemplate->quantity);
 
         $data = [
-            'price' => '213131.00',
-            'quantity' => '25000',
+            'price'               => '213131.00',
+            'quantity'            => '25000',
             'invoice_template_id' => $invoiceTemplate2->id,
         ];
 
@@ -71,7 +69,7 @@ class InvoiceItemTemplateTest extends TestCase
     {
         $invoiceTemplate = factory(InvoiceTemplate::class)->create();
         $invoiceItemTemplate = factory(InvoiceItemTemplate::class)->create([
-            'invoice_template_id' => $invoiceTemplate->id
+            'invoice_template_id' => $invoiceTemplate->id,
         ]);
 
         $this->assertInstanceOf(InvoiceItemTemplate::class, $invoiceItemTemplate);

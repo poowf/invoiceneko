@@ -3,8 +3,8 @@
 namespace App\Policies;
 
 use App\Models\Invoice;
-use App\Models\User;
 use App\Models\InvoiceItem;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class InvoiceItemPolicy
@@ -30,8 +30,9 @@ class InvoiceItemPolicy
     /**
      * Determine whether the user can view the invoiceItem.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\InvoiceItem  $invoiceItem
+     * @param \App\Models\User        $user
+     * @param \App\Models\InvoiceItem $invoiceItem
+     *
      * @return mixed
      */
     public function view(User $user, InvoiceItem $invoiceItem)
@@ -42,7 +43,8 @@ class InvoiceItemPolicy
     /**
      * Determine whether the user can create invoiceItems.
      *
-     * @param  \App\Models\User  $user
+     * @param \App\Models\User $user
+     *
      * @return mixed
      */
     public function create(User $user)
@@ -53,8 +55,9 @@ class InvoiceItemPolicy
     /**
      * Determine whether the user can update the invoiceItem.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\InvoiceItem  $invoiceItem
+     * @param \App\Models\User        $user
+     * @param \App\Models\InvoiceItem $invoiceItem
+     *
      * @return mixed
      */
     public function update(User $user, InvoiceItem $invoiceItem)
@@ -65,8 +68,9 @@ class InvoiceItemPolicy
     /**
      * Determine whether the user can delete the invoiceItem.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\InvoiceItem  $invoiceItem
+     * @param \App\Models\User        $user
+     * @param \App\Models\InvoiceItem $invoiceItem
+     *
      * @return mixed
      */
     public function delete(User $user, InvoiceItem $invoiceItem)

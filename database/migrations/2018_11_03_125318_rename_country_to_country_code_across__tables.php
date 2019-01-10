@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class RenameCountryToCountryCodeAcrossTables extends Migration
 {
@@ -13,15 +13,15 @@ class RenameCountryToCountryCodeAcrossTables extends Migration
      */
     public function up()
     {
-        Schema::table('clients', function(Blueprint $table) {
+        Schema::table('clients', function (Blueprint $table) {
             $table->renameColumn('country', 'country_code');
         });
 
-        Schema::table('users', function(Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             $table->renameColumn('country', 'country_code');
         });
 
-        Schema::table('companies', function(Blueprint $table) {
+        Schema::table('companies', function (Blueprint $table) {
             $table->renameColumn('country', 'country_code');
         });
     }
@@ -33,15 +33,15 @@ class RenameCountryToCountryCodeAcrossTables extends Migration
      */
     public function down()
     {
-        Schema::table('clients', function(Blueprint $table) {
+        Schema::table('clients', function (Blueprint $table) {
             $table->renameColumn('country_code', 'country');
         });
 
-        Schema::table('users', function(Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             $table->renameColumn('country_code', 'country');
         });
 
-        Schema::table('companies', function(Blueprint $table) {
+        Schema::table('companies', function (Blueprint $table) {
             $table->renameColumn('country_code', 'country');
         });
     }

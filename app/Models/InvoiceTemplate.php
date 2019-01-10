@@ -28,12 +28,13 @@ class InvoiceTemplate extends Model implements Auditable
         'date',
         'netdays',
         'notify',
-        'client_id'
+        'client_id',
     ];
 
     public function getDateAttribute($value)
     {
         $date = $this->asDateTime($value);
+
         return $date->timezone($this->recurrence->company->timezone);
     }
 

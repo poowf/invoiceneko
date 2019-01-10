@@ -3,16 +3,17 @@
 namespace Tests\Browser;
 
 use Faker\Factory as Faker;
-use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
+use Tests\DuskTestCase;
 
 class SignUpTest extends DuskTestCase
 {
     /**
      * A Dusk test example.
      *
-     * @return void
      * @throws \Throwable
+     *
+     * @return void
      */
     public function test_creating_a_user_and_company()
     {
@@ -26,7 +27,7 @@ class SignUpTest extends DuskTestCase
                 ->type('password', 'secret')
                 ->type('password_confirmation', 'secret')
                 ->type('full_name', $faker->name)
-                ->type('phone', '+659' . $faker->numberBetween($min = 0, $max = 8) . $faker->randomNumber(6, true))
+                ->type('phone', '+659'.$faker->numberBetween($min = 0, $max = 8).$faker->randomNumber(6, true))
                 ->click('label[for="gender-male"]')
                 ->press('NEXT')
                 ->assertPathIs('/company/create')
@@ -34,7 +35,7 @@ class SignUpTest extends DuskTestCase
                 ->type('crn', $faker->ean8)
                 ->type('domain_name', $faker->domainName)
                 ->type('email', $faker->unique()->companyEmail)
-                ->type('phone', '+658' . $faker->numberBetween($min = 1, $max = 8) . $faker->randomNumber(6, true))
+                ->type('phone', '+658'.$faker->numberBetween($min = 1, $max = 8).$faker->randomNumber(6, true))
                 ->attach('logo', __DIR__.'/assets/files/logo.png')
                 ->attach('smlogo', __DIR__.'/assets/files/smlogo.png')
                 ->press('CREATE')

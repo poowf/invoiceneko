@@ -14,27 +14,27 @@ class Company extends OtterResource
     public static $model = 'App\Models\Company';
 
     /**
-     * The column of the model to display in select options
+     * The column of the model to display in select options.
      *
      * @var string
      */
     public static $title = 'name';
 
     /**
-     * Get the fields and types used by the resource
+     * Get the fields and types used by the resource.
      *
      * @return array
      */
     public static function fields()
     {
         return [
-            'name' => 'text',
-            'crn' => 'text',
-            'domain_name' => 'text',
-            'phone' => 'text',
-            'email' => 'email',
+            'name'         => 'text',
+            'crn'          => 'text',
+            'domain_name'  => 'text',
+            'phone'        => 'text',
+            'email'        => 'email',
             'country_code' => 'text',
-            'timezone' => 'text',
+            'timezone'     => 'text',
         ];
     }
 
@@ -42,9 +42,9 @@ class Company extends OtterResource
     {
         return [
             'settings' => 'CompanySetting',
-            'users' => 'User',
+            'users'    => 'User',
             'invoices' => 'Invoice',
-            'owner' => 'User',
+            'owner'    => 'User',
         ];
     }
 }

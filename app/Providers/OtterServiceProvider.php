@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use Poowf\Otter\Otter;
 use Illuminate\Support\Facades\Gate;
+use Poowf\Otter\Otter;
 use Poowf\Otter\OtterApplicationServiceProvider;
 
 class OtterServiceProvider extends OtterApplicationServiceProvider
@@ -18,7 +18,6 @@ class OtterServiceProvider extends OtterApplicationServiceProvider
         Otter::night();
 
         parent::boot();
-
     }
 
     /**
@@ -32,7 +31,7 @@ class OtterServiceProvider extends OtterApplicationServiceProvider
     {
         Gate::define('viewOtter', function ($user) {
             return in_array($user->email, [
-                'zane@poowf.com'
+                'zane@poowf.com',
             ]);
         });
     }

@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Iatstuti\Database\Support\CascadeSoftDeletes;
 use PDF;
 
 class OldInvoice extends Model
@@ -40,34 +40,38 @@ class OldInvoice extends Model
     ];
 
     protected $attributes = [
-        'status' => self::STATUS_OPEN
+        'status' => self::STATUS_OPEN,
     ];
 
     protected $cascadeDeletes = [
-        'olditems'
+        'olditems',
     ];
 
     public function getCreatedAtAttribute($value)
     {
         $date = $this->asDateTime($value);
+
         return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
     public function getUpdatedAtAttribute($value)
     {
         $date = $this->asDateTime($value);
+
         return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
     public function getDateAttribute($value)
     {
         $date = $this->asDateTime($value);
+
         return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
     public function getDuedateAttribute($value)
     {
         $date = $this->asDateTime($value);
+
         return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
@@ -93,7 +97,7 @@ class OldInvoice extends Model
 
     public function getClient()
     {
-        return ($this->client) ? $this->client: (object) json_decode($this->client_data);
+        return ($this->client) ? $this->client : (object) json_decode($this->client_data);
     }
 
     public function calculatesubtotal($moneyformat = true)
@@ -101,20 +105,17 @@ class OldInvoice extends Model
         $items = $this->items;
         $total = 0;
 
-        foreach($items as $item)
-        {
+        foreach ($items as $item) {
             $itemtotal = $item->quantity * $item->price;
 
             $total += $itemtotal;
         }
 
-        if ($moneyformat)
-        {
+        if ($moneyformat) {
             setlocale(LC_MONETARY, 'en_US.UTF-8');
+
             return money_format('%!.2n', $total);
-        }
-        else
-        {
+        } else {
             return $total;
         }
     }
@@ -124,22 +125,19 @@ class OldInvoice extends Model
         $companySetting = $this->company->settings;
         $tax = 0;
 
-        if($companySetting->tax && $companySetting->tax != 0)
-        {
+        if ($companySetting->tax && $companySetting->tax != 0) {
             $tax = $companySetting->tax;
         }
 
         $subtotal = $this->calculatesubtotal(false);
 
-        $tax = ($subtotal * $tax)/100;
+        $tax = ($subtotal * $tax) / 100;
 
-        if ($moneyformat)
-        {
+        if ($moneyformat) {
             setlocale(LC_MONETARY, 'en_US.UTF-8');
+
             return money_format('%!.2n', $tax);
-        }
-        else
-        {
+        } else {
             return $tax;
         }
     }
@@ -149,22 +147,19 @@ class OldInvoice extends Model
         $companySetting = $this->company->settings;
         $tax = 0;
 
-        if($companySetting->tax && $companySetting->tax != 0)
-        {
+        if ($companySetting->tax && $companySetting->tax != 0) {
             $tax = $companySetting->tax;
         }
 
         $subtotal = $this->calculatesubtotal(false);
 
-        $total = ($subtotal * (100 + $tax))/100;
+        $total = ($subtotal * (100 + $tax)) / 100;
 
-        if ($moneyformat)
-        {
+        if ($moneyformat) {
             setlocale(LC_MONETARY, 'en_US.UTF-8');
+
             return money_format('%!.2n', $total);
-        }
-        else
-        {
+        } else {
             return $total;
         }
     }

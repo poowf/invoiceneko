@@ -3,17 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Models\Invoice;
-use App\Models\InvoiceRecurrence;
 use App\Notifications\InvoiceNotification;
 use Carbon\Carbon;
-use DateTimeZone;
 use Illuminate\Console\Command;
-use App\Library\Poowf\Unicorn;
-use Illuminate\Support\Facades\Log;
-use Recurr\Rule;
-use Recurr\Transformer\ArrayTransformer;
-use Recurr\Transformer\Constraint\AfterConstraint;
-use Recurr\Transformer\Constraint\BeforeConstraint;
 
 class ProcessNotifiableInvoices extends Command
 {
@@ -51,16 +43,13 @@ class ProcessNotifiableInvoices extends Command
         $startDate = Carbon::now()->subDay();
         $endDate = Carbon::now()->addDay();
         $invoices = Invoice::datebetween($startDate, $endDate)->notifiable()->get();
-        foreach($invoices as $invoice)
-        {
+        foreach ($invoices as $invoice) {
             $company = $invoice->company;
             $localDate = Carbon::now($company->timezone);
             $localInvoiceDate = $invoice->date;
 
-            if(date_diff($localDate, $localInvoiceDate)->format('%a') === '0')
-            {
-                if($invoice->status = Invoice::STATUS_DRAFT)
-                {
+            if (date_diff($localDate, $localInvoiceDate)->format('%a') === '0') {
+                if ($invoice->status = Invoice::STATUS_DRAFT) {
                     $invoice->status = Invoice::STATUS_OPEN;
                     $invoice->save();
                 }

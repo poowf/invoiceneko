@@ -6,9 +6,9 @@ use App\Models\Role;
 use Carbon\Carbon;
 use Recurr\Frequency;
 use Recurr\Rule;
-use Validator;
-use Storage;
 use Silber\Bouncer\BouncerFacade as Bouncer;
+use Storage;
+use Validator;
 
 class Unicorn
 {
@@ -25,30 +25,28 @@ class Unicorn
         \App\Models\CompanyUserRequest::class,
     ];
 
-    public function  __construct()
+    public function __construct()
     {
     }
 
     /**
      * @param $data
+     *
      * @return bool
      */
     public static function validateQueryString($data)
     {
         $dataFormat = [
-            'value' => $data
+            'value' => $data,
         ];
 
         $validator = Validator::make($dataFormat, [
-           'value' => 'regex:([A-Za-z0-9,-]+)'
+           'value' => 'regex:([A-Za-z0-9,-]+)',
         ]);
 
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             return false;
-        }
-        else
-        {
+        } else {
             return true;
         }
     }
@@ -56,17 +54,16 @@ class Unicorn
     /**
      * @param $path
      * @param array $imagesize
+     *
      * @return string
      */
-    public static function getStorageFile($path, $imagesize = [500,500])
+    public static function getStorageFile($path, $imagesize = [500, 500])
     {
         $filepath = "//via.placeholder.com/{$imagesize[0]}x{$imagesize[1]}";
-        if($path)
-        {
+        if ($path) {
             try {
                 $filepath = Storage::url($path);
-            } catch(\Exception $exception) {
-
+            } catch (\Exception $exception) {
             }
         }
 
@@ -81,19 +78,20 @@ class Unicorn
      * @param $until_type
      * @param $until_meta
      * @param bool $object
-     * @return Rule|string
+     *
      * @throws \Recurr\Exception\InvalidArgument
      * @throws \Recurr\Exception\InvalidRRule
+     *
+     * @return Rule|string
      */
     public static function generateRrule($startDate, $timezone, $interval, $frequency, $until_type, $until_meta, $object = false)
     {
-        $rule = (new Rule)
+        $rule = (new Rule())
             ->setStartDate($startDate)
             ->setTimezone($timezone)
             ->setInterval($interval);
 
-        switch($until_type)
-        {
+        switch ($until_type) {
             case 'occurence':
                 $rule->setCount($until_meta);
                 break;
@@ -103,8 +101,7 @@ class Unicorn
                 break;
         }
 
-        switch($frequency)
-        {
+        switch ($frequency) {
             case 'day':
                 $frequency = Frequency::DAILY;
                 break;
@@ -121,8 +118,7 @@ class Unicorn
 
         $rule->setFreq($frequency);
 
-        if($object)
-        {
+        if ($object) {
             return $rule;
         }
 
@@ -138,17 +134,17 @@ class Unicorn
         Bouncer::useRoleModel(Role::class);
 
         $gadmin = Bouncer::role()->firstOrCreate([
-            'name' => str_slug('Global Administrator'),
+            'name'  => str_slug('Global Administrator'),
             'title' => 'Global Administrator',
         ]);
 
         $admin = Bouncer::role()->firstOrCreate([
-            'name' => str_slug('Administrator'),
+            'name'  => str_slug('Administrator'),
             'title' => 'Administrator',
         ]);
 
         $user = Bouncer::role()->firstOrCreate([
-            'name' => str_slug('User'),
+            'name'  => str_slug('User'),
             'title' => 'User',
         ]);
 
@@ -162,8 +158,7 @@ class Unicorn
      */
     public static function createPermissions($scopeId = null)
     {
-        foreach(self::$modelClasses as $key => $model)
-        {
+        foreach (self::$modelClasses as $key => $model) {
             self::createCrudPermissions($scopeId, $model);
         }
     }
@@ -178,23 +173,23 @@ class Unicorn
         Bouncer::useRoleModel(Role::class);
 
         Bouncer::ability()->makeForModel($model, [
-            'name' => 'view-' . str_slug(strtolower(self::getModelNiceName($model))),
-            'title' => 'View ' . self::getModelNiceName($model),
+            'name'  => 'view-'.str_slug(strtolower(self::getModelNiceName($model))),
+            'title' => 'View '.self::getModelNiceName($model),
         ])->save();
 
         Bouncer::ability()->makeForModel($model, [
-            'name' => 'create-' . str_slug(strtolower(self::getModelNiceName($model))),
-            'title' => 'Create ' . self::getModelNiceName($model),
+            'name'  => 'create-'.str_slug(strtolower(self::getModelNiceName($model))),
+            'title' => 'Create '.self::getModelNiceName($model),
         ])->save();
 
         Bouncer::ability()->makeForModel($model, [
-            'name' => 'update-' . str_slug(strtolower(self::getModelNiceName($model))),
-            'title' => 'Update ' . self::getModelNiceName($model),
+            'name'  => 'update-'.str_slug(strtolower(self::getModelNiceName($model))),
+            'title' => 'Update '.self::getModelNiceName($model),
         ])->save();
 
         Bouncer::ability()->makeForModel($model, [
-            'name' => 'delete-' . str_slug(strtolower(self::getModelNiceName($model))),
-            'title' => 'Delete ' . self::getModelNiceName($model),
+            'name'  => 'delete-'.str_slug(strtolower(self::getModelNiceName($model))),
+            'title' => 'Delete '.self::getModelNiceName($model),
         ])->save();
     }
 
@@ -206,8 +201,7 @@ class Unicorn
      */
     protected static function assignCrudPermissions($scopeId, $role, $methodName = 'all', $modelClass = 'all')
     {
-        switch($methodName)
-        {
+        switch ($methodName) {
             case 'all':
                 self::assignPermissions($scopeId, $role, 'view', $modelClass);
                 self::assignPermissions($scopeId, $role, 'create', $modelClass);
@@ -240,26 +234,24 @@ class Unicorn
         Bouncer::scope()->to($scopeId);
         Bouncer::useRoleModel(Role::class);
 
-        if($modelClass === 'all')
-        {
-            foreach(self::$modelClasses as $key => $model)
-            {
-                Bouncer::allow($role)->to($methodName . '-' . str_slug(strtolower(self::getModelNiceName($model))), $model);
+        if ($modelClass === 'all') {
+            foreach (self::$modelClasses as $key => $model) {
+                Bouncer::allow($role)->to($methodName.'-'.str_slug(strtolower(self::getModelNiceName($model))), $model);
             }
-        }
-        else
-        {
-            Bouncer::allow($role)->to($methodName . '-' . str_slug(strtolower(self::getModelNiceName($modelClass))), $modelClass);
+        } else {
+            Bouncer::allow($role)->to($methodName.'-'.str_slug(strtolower(self::getModelNiceName($modelClass))), $modelClass);
         }
     }
 
     /**
      * @param $modelClass
+     *
      * @return string
      */
     protected static function getModelNiceName($modelClass)
     {
         $transformed = trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', str_replace('::class', '', str_replace('App\\Models\\', '', $modelClass))));
+
         return $transformed;
     }
 
@@ -268,21 +260,16 @@ class Unicorn
      */
     public static function getCompanyKey()
     {
-        if(auth()->check())
-        {
-            if(session()->has('current_company_fqdn'))
-            {
+        if (auth()->check()) {
+            if (session()->has('current_company_fqdn')) {
                 return session()->get('current_company_fqdn');
-            }
-            else
-            {
+            } else {
                 $user = auth()->user();
+
                 return $user->getFirstCompanyKey();
             }
-        }
-        else
-        {
-            return null;
+        } else {
+            return;
         }
     }
 
@@ -291,9 +278,8 @@ class Unicorn
         $routeKey = self::getCompanyKey();
         $url = '/';
 
-        if($routeKey)
-        {
-            $url = route('dashboard', [ 'company' => $routeKey ]);
+        if ($routeKey) {
+            $url = route('dashboard', ['company' => $routeKey]);
         }
 
         return $url;

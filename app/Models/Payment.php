@@ -2,11 +2,9 @@
 
 namespace App\Models;
 
+use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Iatstuti\Database\Support\CascadeSoftDeletes;
-
-use Carbon\Carbon;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Payment extends Model implements Auditable
@@ -41,42 +39,48 @@ class Payment extends Model implements Auditable
         'receiveddate',
         'created_at',
         'updated_at',
-        'deleted_at'
+        'deleted_at',
     ];
 
     /**
      * Get the price.
      *
-     * @param  string  $value
+     * @param string $value
+     *
      * @return string
      */
     public function getMoneyFormatAttribute()
     {
         setlocale(LC_MONETARY, 'en_US.UTF-8');
+
         return money_format('%!.2n', $this->amount);
     }
 
     public function getPercentageAttribute()
     {
         $invoiceTotal = $this->invoice->total;
-        return money_format('%!.2n', ($this->amount/$invoiceTotal)*100);
+
+        return money_format('%!.2n', ($this->amount / $invoiceTotal) * 100);
     }
 
     public function getCreatedAtAttribute($value)
     {
         $date = $this->asDateTime($value);
+
         return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
     public function getUpdatedAtAttribute($value)
     {
         $date = $this->asDateTime($value);
+
         return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
     public function getReceiveddateAttribute($value)
     {
         $date = $this->asDateTime($value);
+
         return $date->timezone($this->company->timezone);
     }
 

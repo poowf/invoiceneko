@@ -14,28 +14,28 @@ class ItemTemplate extends OtterResource
     public static $model = 'App\Models\ItemTemplate';
 
     /**
-     * The column of the model to display in select options
+     * The column of the model to display in select options.
      *
      * @var string
      */
     public static $title = 'title';
 
     /**
-     * Get the fields and types used by the resource
+     * Get the fields and types used by the resource.
      *
      * @return array
      */
     public static function fields()
     {
         return [
-            'name' => 'text',
+            'name'     => 'text',
             'quantity' => 'text',
-            'price' => 'text',
+            'price'    => 'text',
         ];
     }
 
     /**
-     * Fields to be hidden in the resource collection
+     * Fields to be hidden in the resource collection.
      *
      * @return array
      */
@@ -46,36 +46,36 @@ class ItemTemplate extends OtterResource
     }
 
     /**
-    * Get the validation rules used by the resource
-    *
-    * @return array
-    */
+     * Get the validation rules used by the resource.
+     *
+     * @return array
+     */
     public static function validations()
     {
         return [
         'client' => [
             'create' => [
-                /**
+                /*
                 * Client side create resource validation
                 */
             ],
             'update' => [
-                /**
+                /*
                 * Client side update resource validation
                 */
-            ]
+            ],
         ],
         'server' => [
             'create' => [
-                /**
+                /*
                 * Server side create resource validation
                 */
             ],
             'update' => [
-                /**
+                /*
                 * Server side update resource validation
                 */
-            ]
+            ],
         ],
     ];
     }

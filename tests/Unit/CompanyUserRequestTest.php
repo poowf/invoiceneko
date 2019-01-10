@@ -5,8 +5,6 @@ namespace Tests\Unit;
 use App\Models\Company;
 use App\Models\CompanyUserRequest;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CompanyUserRequestTest extends TestCase
 {
@@ -22,12 +20,12 @@ class CompanyUserRequestTest extends TestCase
         CompanyUserRequest::unguard();
 
         $companyUserRequest = CompanyUserRequest::create([
-            'full_name' => 'Poowf Bunny',
-            'email' => 'bunny@poowf.com',
-            'phone' => '+6579328669',
-            'token' => 'asdfounasifdnasfinasasdfasf',
-            'status' => '1',
-            'company_id' => $company->id
+            'full_name'  => 'Poowf Bunny',
+            'email'      => 'bunny@poowf.com',
+            'phone'      => '+6579328669',
+            'token'      => 'asdfounasifdnasfinasasdfasf',
+            'status'     => '1',
+            'company_id' => $company->id,
         ]);
 
         CompanyUserRequest::reguard();
@@ -40,7 +38,7 @@ class CompanyUserRequestTest extends TestCase
     {
         $company = factory(Company::class)->create();
         $companyUserRequest = factory(CompanyUserRequest::class)->create([
-            'company_id' => $company->id
+            'company_id' => $company->id,
         ]);
 
         $this->assertInstanceOf(CompanyUserRequest::class, $companyUserRequest);
@@ -55,9 +53,9 @@ class CompanyUserRequestTest extends TestCase
 
         $data = [
             'full_name' => 'NyanIndustries',
-            'email' => 'nowaythiscannotbe@example.com',
-            'phone' => '+659774123',
-            'token' => 'asdfnasuifasuifnasidfas',
+            'email'     => 'nowaythiscannotbe@example.com',
+            'phone'     => '+659774123',
+            'token'     => 'asdfnasuifasuifnasidfas',
         ];
 
         $companyUserRequest->fill($data);
@@ -70,12 +68,11 @@ class CompanyUserRequestTest extends TestCase
         $this->assertNotEquals('asdfnasuifasuifnasidfas', $companyUserRequest->token);
     }
 
-
     public function test_delete_company_user_request()
     {
         $company = factory(Company::class)->create();
         $companyUserRequest = factory(CompanyUserRequest::class)->create([
-            'company_id' => $company->id
+            'company_id' => $company->id,
         ]);
 
         $this->assertInstanceOf(CompanyUserRequest::class, $companyUserRequest);

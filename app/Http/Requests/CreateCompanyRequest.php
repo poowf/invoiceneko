@@ -24,11 +24,11 @@ class CreateCompanyRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
-            'crn' => 'required|string',
-            'phone' => 'required',
-            'email' => 'required|email',
-            'domain_name' => 'required|unique:companies'
+            'name'        => 'required|string',
+            'crn'         => 'required|string',
+            'phone'       => 'required',
+            'email'       => 'required|email',
+            'domain_name' => 'required|unique:companies',
         ];
     }
 }

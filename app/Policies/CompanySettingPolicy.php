@@ -2,9 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\CompanyAddress;
-use App\Models\User;
 use App\Models\CompanySetting;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CompanySettingPolicy
@@ -36,8 +35,9 @@ class CompanySettingPolicy
     /**
      * Determine whether the user can view the companySettings.
      *
-     * @param  \App\Models\User $user
-     * @param CompanySetting $companySettings
+     * @param \App\Models\User $user
+     * @param CompanySetting   $companySettings
+     *
      * @return mixed
      */
     public function view(User $user, CompanySetting $companySettings)
@@ -48,7 +48,8 @@ class CompanySettingPolicy
     /**
      * Determine whether the user can create companies.
      *
-     * @param  \App\Models\User  $user
+     * @param \App\Models\User $user
+     *
      * @return mixed
      */
     public function create(User $user)
@@ -59,8 +60,9 @@ class CompanySettingPolicy
     /**
      * Determine whether the user can update the companySettings.
      *
-     * @param  \App\Models\User $user
-     * @param CompanySetting $companySettings
+     * @param \App\Models\User $user
+     * @param CompanySetting   $companySettings
+     *
      * @return mixed
      */
     public function update(User $user, CompanySetting $companySettings)
@@ -71,8 +73,9 @@ class CompanySettingPolicy
     /**
      * Determine whether the user can delete the companySettings.
      *
-     * @param  \App\Models\User $user
-     * @param CompanySetting $companySettings
+     * @param \App\Models\User $user
+     * @param CompanySetting   $companySettings
+     *
      * @return mixed
      */
     public function delete(User $user, CompanySetting $companySettings)

@@ -5,8 +5,6 @@ namespace Tests\Unit;
 use App\Models\Company;
 use App\Models\ItemTemplate;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ItemTemplateTest extends TestCase
 {
@@ -22,11 +20,11 @@ class ItemTemplateTest extends TestCase
         ItemTemplate::unguard();
 
         $itemTemplate = ItemTemplate::create([
-            'name' => 'This is an Item Template la',
-            'quantity' => '250',
-            'price' => '5.00',
+            'name'        => 'This is an Item Template la',
+            'quantity'    => '250',
+            'price'       => '5.00',
             'description' => 'asfdasfasfasfsf<p>asasdfasdfasfas</p>',
-            'company_id' => $company->id
+            'company_id'  => $company->id,
         ]);
 
         ItemTemplate::reguard();
@@ -40,12 +38,12 @@ class ItemTemplateTest extends TestCase
         $company = factory(Company::class)->create();
         $company2 = factory(Company::class)->create();
         $itemTemplate = factory(ItemTemplate::class)->create([
-            'company_id' => $company->id
+            'company_id' => $company->id,
         ]);
         $this->assertInstanceOf(ItemTemplate::class, $itemTemplate);
 
-        $itemTemplate->price = "500.00";
-        $itemTemplate->quantity = "2000";
+        $itemTemplate->price = '500.00';
+        $itemTemplate->quantity = '2000';
         $itemTemplate->save();
         $itemTemplate->refresh();
 
@@ -53,8 +51,8 @@ class ItemTemplateTest extends TestCase
         $this->assertEquals('2000', $itemTemplate->quantity);
 
         $data = [
-            'price' => '213131.00',
-            'quantity' => '25000',
+            'price'      => '213131.00',
+            'quantity'   => '25000',
             'company_id' => $company2->id,
         ];
 
@@ -71,7 +69,7 @@ class ItemTemplateTest extends TestCase
     {
         $company = factory(Company::class)->create();
         $itemTemplate = factory(ItemTemplate::class)->create([
-            'company_id' => $company->id
+            'company_id' => $company->id,
         ]);
 
         $this->assertInstanceOf(ItemTemplate::class, $itemTemplate);

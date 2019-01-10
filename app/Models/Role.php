@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use \Silber\Bouncer\Database\Role as RoleBase;
-use Silber\Bouncer\BouncerFacade as Bouncer;
 use OwenIt\Auditing\Contracts\Auditable;
+use Silber\Bouncer\Database\Role as RoleBase;
 
 class Role extends RoleBase implements Auditable
 {
@@ -23,12 +22,14 @@ class Role extends RoleBase implements Auditable
     /**
      * Retrieve the model for a bound value.
      *
-     * @param  mixed  $value
+     * @param mixed $value
+     *
      * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function resolveRouteBinding($value)
     {
         $role = $this->where($this->getRouteKeyName(), $value)->where('scope', app('request')->route('company')->id)->first();
+
         return $role;
     }
 }

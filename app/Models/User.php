@@ -4,13 +4,13 @@ namespace App\Models;
 
 use App\Notifications\ResetPasswordNotification;
 use App\Notifications\VerifyEmail;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
-use Silber\Bouncer\Database\HasRolesAndAbilities;
-use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use OwenIt\Auditing\Contracts\Auditable;
+use Silber\Bouncer\Database\HasRolesAndAbilities;
 
 class User extends Authenticatable implements MustVerifyEmail, Auditable
 {
@@ -52,12 +52,12 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
         'password',
         'remember_token',
         'twofa_secret',
-        'twofa_timestamp'
+        'twofa_timestamp',
     ];
 
     protected $attributes = [
         'timezone' => 'UTC',
-        'status' => self::STATUS_ACTIVE
+        'status'   => self::STATUS_ACTIVE,
     ];
 
     /**
@@ -70,8 +70,8 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
         return 'id';
     }
 
-    public function setUsernameAttribute($username){
-
+    public function setUsernameAttribute($username)
+    {
         $this->attributes['username'] = strtolower($username);
     }
 
@@ -88,7 +88,8 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     /**
      * Encrypt the user's google_2fa secret.
      *
-     * @param  string  $value
+     * @param string $value
+     *
      * @return string
      */
     public function setTwofaSecretAttribute($value)
@@ -99,7 +100,8 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     /**
      * Decrypt the user's google_2fa secret.
      *
-     * @param  string  $value
+     * @param string $value
+     *
      * @return string
      */
     public function getTwofaSecretAttribute($value)
@@ -110,7 +112,8 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     /**
      * Encrypt the user's google_2fa secret.
      *
-     * @param  string  $value
+     * @param string $value
+     *
      * @return string
      */
     public function setTwofaBackupCodesAttribute($value)
@@ -121,7 +124,8 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     /**
      * Decrypt the user's google_2fa secret.
      *
-     * @param  string  $value
+     * @param string $value
+     *
      * @return string
      */
     public function getTwofaBackupCodesAttribute($value)
@@ -130,7 +134,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     }
 
     /**
-     * Retrieve the users's gravatar logo
+     * Retrieve the users's gravatar logo.
      *
      * @return string
      */
@@ -144,7 +148,8 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     /**
      * Send the password reset notification.
      *
-     * @param  string  $token
+     * @param string $token
+     *
      * @return void
      */
     public function sendPasswordResetNotification($token)
@@ -159,7 +164,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      */
     public function sendEmailVerificationNotification()
     {
-        $this->notify(new VerifyEmail);
+        $this->notify(new VerifyEmail());
     }
 
     /**
@@ -187,19 +192,18 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     {
         $status = $this->status;
 
-        switch($status)
-        {
+        switch ($status) {
             default:
-                $textstatus = "Unknown";
+                $textstatus = 'Unknown';
                 break;
             case self::STATUS_ACTIVE:
-                $textstatus = "Active";
+                $textstatus = 'Active';
                 break;
             case self::STATUS_BANNED:
-                $textstatus = "Banned";
+                $textstatus = 'Banned';
                 break;
             case self::STATUS_DISABLED:
-                $textstatus = "Disabled";
+                $textstatus = 'Disabled';
                 break;
         }
 
@@ -214,7 +218,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
 
     public function getFirstCompanyKey()
     {
-        return (is_null($this->companies->first())) ? null : $this->companies->first()->{(new Company)->getRouteKeyName()};
+        return (is_null($this->companies->first())) ? null : $this->companies->first()->{(new Company())->getRouteKeyName()};
     }
 
     public function sessions()

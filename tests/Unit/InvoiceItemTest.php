@@ -6,8 +6,6 @@ use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use Illuminate\Database\Eloquent\MassAssignmentException;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class InvoiceItemTest extends TestCase
 {
@@ -23,11 +21,11 @@ class InvoiceItemTest extends TestCase
         InvoiceItem::unguard();
 
         $invoiceItem = InvoiceItem::create([
-            'name' => 'This is an Invoice Item la',
-            'quantity' => '250',
-            'price' => '5.00',
+            'name'        => 'This is an Invoice Item la',
+            'quantity'    => '250',
+            'price'       => '5.00',
             'description' => 'asfdasfasfasfsf<p>asasdfasdfasfas</p>',
-            'invoice_id' => $invoice->id
+            'invoice_id'  => $invoice->id,
         ]);
 
         InvoiceItem::reguard();
@@ -40,12 +38,12 @@ class InvoiceItemTest extends TestCase
     {
         $invoice = factory(Invoice::class)->create();
         $invoiceItem = factory(InvoiceItem::class)->create([
-            'invoice_id' => $invoice->id
+            'invoice_id' => $invoice->id,
         ]);
         $this->assertInstanceOf(InvoiceItem::class, $invoiceItem);
 
-        $invoiceItem->price = "500.00";
-        $invoiceItem->quantity = "2000";
+        $invoiceItem->price = '500.00';
+        $invoiceItem->quantity = '2000';
         $invoiceItem->save();
         $invoiceItem->refresh();
 
@@ -53,7 +51,7 @@ class InvoiceItemTest extends TestCase
         $this->assertEquals('2000', $invoiceItem->quantity);
 
         $data = [
-            'price' => '213131.00',
+            'price'    => '213131.00',
             'quantity' => '25000',
         ];
 
@@ -71,7 +69,7 @@ class InvoiceItemTest extends TestCase
     {
         $invoice = factory(Invoice::class)->create();
         $invoiceItem = factory(InvoiceItem::class)->create([
-                'invoice_id' => $invoice->id
+                'invoice_id' => $invoice->id,
         ]);
 
         $this->assertInstanceOf(InvoiceItem::class, $invoiceItem);

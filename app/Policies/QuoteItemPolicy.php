@@ -3,8 +3,8 @@
 namespace App\Policies;
 
 use App\Models\Quote;
-use App\Models\User;
 use App\Models\QuoteItem;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class QuoteItemPolicy
@@ -30,8 +30,9 @@ class QuoteItemPolicy
     /**
      * Determine whether the user can view the quoteItem.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\QuoteItem  $quoteItem
+     * @param \App\Models\User      $user
+     * @param \App\Models\QuoteItem $quoteItem
+     *
      * @return mixed
      */
     public function view(User $user, QuoteItem $quoteItem)
@@ -42,7 +43,8 @@ class QuoteItemPolicy
     /**
      * Determine whether the user can create quoteItems.
      *
-     * @param  \App\Models\User  $user
+     * @param \App\Models\User $user
+     *
      * @return mixed
      */
     public function create(User $user)
@@ -53,8 +55,9 @@ class QuoteItemPolicy
     /**
      * Determine whether the user can update the quoteItem.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\QuoteItem  $quoteItem
+     * @param \App\Models\User      $user
+     * @param \App\Models\QuoteItem $quoteItem
+     *
      * @return mixed
      */
     public function update(User $user, QuoteItem $quoteItem)
@@ -65,8 +68,9 @@ class QuoteItemPolicy
     /**
      * Determine whether the user can delete the quoteItem.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\QuoteItem  $quoteItem
+     * @param \App\Models\User      $user
+     * @param \App\Models\QuoteItem $quoteItem
+     *
      * @return mixed
      */
     public function delete(User $user, QuoteItem $quoteItem)

@@ -2,16 +2,14 @@
 
 namespace App\Console\Commands;
 
+use App\Library\Poowf\Unicorn;
 use App\Models\Invoice;
-use App\Models\InvoiceRecurrence;
 use App\Models\InvoiceItem;
+use App\Models\InvoiceRecurrence;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use App\Library\Poowf\Unicorn;
-use Illuminate\Support\Facades\Log;
 use Recurr\Rule;
 use Recurr\Transformer\ArrayTransformer;
-use Recurr\Transformer\Constraint\AfterConstraint;
 use Recurr\Transformer\Constraint\BeforeConstraint;
 
 class GenerateRecurringInvoices extends Command
@@ -43,16 +41,16 @@ class GenerateRecurringInvoices extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
      * @throws \Recurr\Exception\InvalidRRule
      * @throws \Recurr\Exception\InvalidWeekday
+     *
+     * @return mixed
      */
     public function handle()
     {
         $invoiceRecurrences = InvoiceRecurrence::all();
 
-        foreach($invoiceRecurrences as $invoiceRecurrence)
-        {
+        foreach ($invoiceRecurrences as $invoiceRecurrence) {
             $company = $invoiceRecurrence->company;
             $now = Carbon::now();
             $template = $invoiceRecurrence->template;
@@ -67,21 +65,17 @@ class GenerateRecurringInvoices extends Command
 
             $recurrences = $transformer->transform($rrule, $constraint);
 
-            foreach($recurrences as $key => $recurrence)
-            {
-                if($key == 0)
-                {
+            foreach ($recurrences as $key => $recurrence) {
+                if ($key == 0) {
                     //Skip the first instance as it is the original invoice.
                     continue;
-                }
-                elseif($key == 3)
-                {
+                } elseif ($key == 3) {
                     break;
                 }
 
 //                $template->date = $template->date->{$this->getDateAdditionOperator($invoiceRecurrence->time_period)}(($invoiceRecurrence->time_interval * ($key + 1) ));
 
-                $generatedInvoice = new Invoice;
+                $generatedInvoice = new Invoice();
                 $generatedInvoice->fill($template->toArray());
                 $generatedInvoice->date = $recurrence->getEnd();
                 $generatedInvoice->client_id = $template->client_id;
@@ -92,27 +86,22 @@ class GenerateRecurringInvoices extends Command
 
                 //Generate hash based on the serialized version of the invoice;
                 //Only retrieve the invoice data without any relations
-                $hash = hash('sha512', serialize(json_encode($generatedInvoice->getAttributes()) . $templateItems));
+                $hash = hash('sha512', serialize(json_encode($generatedInvoice->getAttributes()).$templateItems));
 
-                if(Invoice::where('hash', $hash)->count() == 1)
-                {
+                if (Invoice::where('hash', $hash)->count() == 1) {
                     print_r("Invoice already generated\n");
                     continue;
-                }
-                else
-                {
+                } else {
                     $generatedInvoice->generated = true;
                     $generatedInvoice->nice_invoice_id = $company->niceinvoiceid();
                     $generatedInvoice->hash = $hash;
                     $generatedInvoice->save();
 
-
-                    foreach($templateItems as $key => $item)
-                    {
-                        $invoiceitem = new InvoiceItem;
+                    foreach ($templateItems as $key => $item) {
+                        $invoiceitem = new InvoiceItem();
                         $invoiceitem->name = $item->name;
                         $invoiceitem->description = $item->description;
-                        $invoiceitem->quantity   = $item->quantity;
+                        $invoiceitem->quantity = $item->quantity;
                         $invoiceitem->price = $item->price;
                         $invoiceitem->invoice_id = $generatedInvoice->id;
                         $invoiceitem->save();
@@ -126,8 +115,7 @@ class GenerateRecurringInvoices extends Command
 
     public function getDateAdditionOperator($timePeriod)
     {
-        switch($timePeriod)
-        {
+        switch ($timePeriod) {
             case 'day':
                 return 'addDays';
                 break;

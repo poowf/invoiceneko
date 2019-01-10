@@ -14,14 +14,14 @@ class Invoice extends OtterResource
     public static $model = 'App\Models\Invoice';
 
     /**
-     * The column of the model to display in select options
+     * The column of the model to display in select options.
      *
      * @var string
      */
     public static $title = 'nice_invoice_id';
 
     /**
-     * Get the fields and types used by the resource
+     * Get the fields and types used by the resource.
      *
      * @return array
      */
@@ -29,24 +29,24 @@ class Invoice extends OtterResource
     {
         return [
             'nice_invoice_id' => 'text',
-            'date' => 'text',
-            'netdays' => 'text',
-            'total' => 'text',
-            'status' => 'text',
+            'date'            => 'text',
+            'netdays'         => 'text',
+            'total'           => 'text',
+            'status'          => 'text',
         ];
     }
 
     /**
-     * Get the relations used by the resource
+     * Get the relations used by the resource.
      *
      * @return array
      */
     public static function relations()
     {
         return [
-            'client' => ['Client', 'client_id'],
+            'client'  => ['Client', 'client_id'],
             'company' => 'Company',
-            'items' => 'InvoiceItem'
+            'items'   => 'InvoiceItem',
         ];
     }
 

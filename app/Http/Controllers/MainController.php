@@ -6,7 +6,6 @@ use App\Http\Requests\ContactRequest;
 use App\Library\Poowf\Unicorn;
 use App\Mail\ContactForm;
 use App\Models\Company;
-use Arcanedev\NoCaptcha\Facades\NoCaptcha;
 use Mail;
 
 class MainController extends Controller
@@ -55,6 +54,7 @@ class MainController extends Controller
         ));
 
         flash('Cool! We will get back to you soon.', 'success');
+
         return redirect()->back();
     }
 
@@ -67,12 +67,9 @@ class MainController extends Controller
     {
         $user = auth()->user();
 //        $company = auth()->user()->company;
-        if($company)
-        {
+        if ($company) {
             $overdueinvoices = $company->invoices()->overdue()->take(10)->get();
-        }
-        else
-        {
+        } else {
             $overdueinvoices = null;
         }
 
@@ -81,13 +78,10 @@ class MainController extends Controller
 
     public function nocompany()
     {
-        if(is_null(Unicorn::getCompanyKey()))
-        {
+        if (is_null(Unicorn::getCompanyKey())) {
             return view('pages.nocompany');
-        }
-        else
-        {
-            return redirect()->route('dashboard', [ 'company' => Unicorn::getCompanyKey() ]);
+        } else {
+            return redirect()->route('dashboard', ['company' => Unicorn::getCompanyKey()]);
         }
     }
 }

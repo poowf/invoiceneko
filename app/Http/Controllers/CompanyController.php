@@ -5,24 +5,25 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateCompanyRequest;
 use App\Http\Requests\UpdateCompanyOwnerRequest;
 use App\Http\Requests\UpdateCompanyRequest;
-use DateTimeZone;
-use Illuminate\Http\Request;
-use PragmaRX\Countries\Package\Countries;
 use App\Models\Company;
 use App\Models\User;
-use Storage;
+use DateTimeZone;
+use Illuminate\Http\Request;
 use Image;
+use PragmaRX\Countries\Package\Countries;
+use Storage;
 
 class CompanyController extends Controller
 {
-    public function __construct(){
-
+    public function __construct()
+    {
     }
 
     /**
      * Display a listing of the resource.
      *
      * @param Company $company
+     *
      * @return void
      */
     public function index(Company $company)
@@ -33,19 +34,18 @@ class CompanyController extends Controller
      * Show the form for creating a new resource.
      *
      * @param Company $company
+     *
      * @return \Illuminate\Http\Response
      */
     public function create(Company $company)
     {
         $ipLocation = geoip()->getLocation();
 
-        if($ipLocation->country !== 'NekoCountry')
-        {
+        if ($ipLocation->country !== 'NekoCountry') {
             session(['_old_input.country_code' => $ipLocation->iso_code]);
         }
 
-        if($ipLocation->timezone !== 'Asia/NekoCountry')
-        {
+        if ($ipLocation->timezone !== 'Asia/NekoCountry') {
             session(['_old_input.timezone' => $ipLocation->timezone]);
         }
 
@@ -59,65 +59,59 @@ class CompanyController extends Controller
      * Store a newly created resource in storage.
      *
      * @param CreateCompanyRequest $request
-     * @param Company $company
+     * @param Company              $company
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(CreateCompanyRequest $request, Company $company)
     {
         if ($request->session()->has('user_id') || auth()->check()) {
-            $company = new Company;
+            $company = new Company();
             $company->fill($request->all());
             $company->user_id = ($request->session()->has('user_id')) ? $request->session()->pull('user_id') : auth()->user()->id;
 
-            if(!is_null($request->input('country_code')) && is_null($request->input('timezone')))
-            {
+            if (!is_null($request->input('country_code')) && is_null($request->input('timezone'))) {
                 $timezone = DateTimeZone::listIdentifiers(DateTimeZone::PER_COUNTRY, $request->input('country_code'))[0];
                 $company->timezone = $timezone;
-            }
-            elseif (is_null($company->timezone))
-            {
+            } elseif (is_null($company->timezone)) {
                 $company->timezone = 'UTC';
             }
             $company->save();
 
-            $storedirectory = '/perm_store/company/' . $company->id . '/photos/';
+            $storedirectory = '/perm_store/company/'.$company->id.'/photos/';
 
             Storage::makeDirectory($storedirectory);
 
-            if ($request->file('logo'))
-            {
+            if ($request->file('logo')) {
                 $file = $request->file('logo');
                 $uuid = str_random(25);
-                $filename = $uuid . '.png';
+                $filename = $uuid.'.png';
 
-                if (!Storage::exists($storedirectory . 'logo_' . $filename))
-                {
+                if (!Storage::exists($storedirectory.'logo_'.$filename)) {
                     $image = Image::make($file)->fit(420, 220, function ($constraint) {
                         $constraint->upsize();
                     }, 'center');
-                    Storage::put($storedirectory . 'logo_' . $filename, $image->stream('jpg')->detach());
+                    Storage::put($storedirectory.'logo_'.$filename, $image->stream('jpg')->detach());
                 }
 
-                $filepath = $storedirectory . 'logo_' . $filename;
+                $filepath = $storedirectory.'logo_'.$filename;
 
                 $company->logo = $filepath;
             }
 
-            if ($request->file('smlogo'))
-            {
+            if ($request->file('smlogo')) {
                 $file = $request->file('smlogo');
                 $uuid = str_random(25);
-                $filename = $uuid . '.png';
+                $filename = $uuid.'.png';
 
-                if (!Storage::exists($storedirectory . 'smlogo_' . $filename))
-                {
+                if (!Storage::exists($storedirectory.'smlogo_'.$filename)) {
                     $image = Image::make($file)->fit(200, 200, function ($constraint) {
                         $constraint->upsize();
                     }, 'center');
-                    Storage::put($storedirectory . 'smlogo_' . $filename, $image->stream('jpg')->detach());
+                    Storage::put($storedirectory.'smlogo_'.$filename, $image->stream('jpg')->detach());
                 }
 
-                $filepath = $storedirectory . 'smlogo_' . $filename;
+                $filepath = $storedirectory.'smlogo_'.$filename;
 
                 $company->smlogo = $filepath;
             }
@@ -128,9 +122,7 @@ class CompanyController extends Controller
             flash('You can now sign in', 'success');
 
             return redirect()->route('auth.show');
-        }
-        else
-        {
+        } else {
             flash('Something went wrong', 'error');
 
             return redirect()->route('user.create');
@@ -141,6 +133,7 @@ class CompanyController extends Controller
      * Display the specified resource.
      *
      * @param Company $company
+     *
      * @return void
      */
     public function show(Company $company)
@@ -152,6 +145,7 @@ class CompanyController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param Company $company
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit(Company $company)
@@ -166,67 +160,60 @@ class CompanyController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdateCompanyRequest $request
-     * @param Company $company
+     * @param Company              $company
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateCompanyRequest $request, Company $company)
     {
         $company->fill($request->all());
-        if($request->has('country_code') && !is_null($request->input('country_code')))
-        {
-            if($request->has('timezone') && is_null($request->input('timezone')))
-            {
+        if ($request->has('country_code') && !is_null($request->input('country_code'))) {
+            if ($request->has('timezone') && is_null($request->input('timezone'))) {
                 $timezone = DateTimeZone::listIdentifiers(DateTimeZone::PER_COUNTRY, $request->input('country_code'))[0];
                 $company->timezone = $timezone;
             }
-        }
-        elseif (is_null($company->timezone))
-        {
+        } elseif (is_null($company->timezone)) {
             $company->timezone = 'UTC';
         }
         $company->save();
 
-        $storedirectory = '/perm_store/company/' . $company->id . '/photos/';
+        $storedirectory = '/perm_store/company/'.$company->id.'/photos/';
         Storage::makeDirectory($storedirectory);
 
-        if ($request->file('logo'))
-        {
+        if ($request->file('logo')) {
             $file = $request->file('logo');
             $uuid = str_random(25);
-            $filename = $uuid . '.png';
+            $filename = $uuid.'.png';
 
-            if (!Storage::exists($storedirectory . 'logo_' . $filename))
-            {
+            if (!Storage::exists($storedirectory.'logo_'.$filename)) {
                 $image = Image::make($file)
                     ->encode('png', 100)
                     ->fit(420, 220, function ($constraint) {
-                    $constraint->upsize();
-                }, 'center');
-                Storage::put($storedirectory . 'logo_' . $filename, $image->stream('jpg')->detach());
+                        $constraint->upsize();
+                    }, 'center');
+                Storage::put($storedirectory.'logo_'.$filename, $image->stream('jpg')->detach());
             }
 
-            $filepath = $storedirectory . 'logo_' . $filename;
+            $filepath = $storedirectory.'logo_'.$filename;
 
             $company->logo = $filepath;
         }
 
-        if ($request->file('smlogo'))
-        {
+        if ($request->file('smlogo')) {
             $file = $request->file('smlogo');
             $uuid = str_random(25);
-            $filename = $uuid . '.png';
+            $filename = $uuid.'.png';
 
-            if (!Storage::exists($storedirectory . 'smlogo_' . $filename))
-            {
+            if (!Storage::exists($storedirectory.'smlogo_'.$filename)) {
                 $image = Image::make($file)
                     ->encode('png', 100)
                     ->fit(200, 200, function ($constraint) {
-                    $constraint->upsize();
-                }, 'center');
-                Storage::put($storedirectory . 'smlogo_' . $filename, $image->stream('jpg')->detach());
+                        $constraint->upsize();
+                    }, 'center');
+                Storage::put($storedirectory.'smlogo_'.$filename, $image->stream('jpg')->detach());
             }
 
-            $filepath = $storedirectory . 'smlogo_' . $filename;
+            $filepath = $storedirectory.'smlogo_'.$filename;
 
             $company->smlogo = $filepath;
         }
@@ -242,6 +229,7 @@ class CompanyController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Company $company
+     *
      * @return void
      */
     public function destroy(Company $company)
@@ -249,15 +237,12 @@ class CompanyController extends Controller
         //
     }
 
-    public function edit_owner(Company $company) {
-
-        if($company)
-        {
+    public function edit_owner(Company $company)
+    {
+        if ($company) {
             $owner = $company->owner;
             $users = $company->users;
-        }
-        else
-        {
+        } else {
             $owner = collect();
             $users = collect();
         }
@@ -267,10 +252,12 @@ class CompanyController extends Controller
 
     /**
      * @param UpdateCompanyOwnerRequest $request
-     * @param Company $company
+     * @param Company                   $company
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update_owner(UpdateCompanyOwnerRequest $request, Company $company) {
+    public function update_owner(UpdateCompanyOwnerRequest $request, Company $company)
+    {
         $user = User::find($request->input('user_id'));
         $company->user_id = $user->id;
         $company->save();
@@ -280,6 +267,7 @@ class CompanyController extends Controller
 
     /**
      * @param Company $company
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show_check(Company $company)
@@ -290,6 +278,7 @@ class CompanyController extends Controller
     /**
      * @param Request $request
      * @param Company $company
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function check(Request $request, Company $company)
@@ -298,16 +287,13 @@ class CompanyController extends Controller
 
 //        $domain = preg_filter("/([^@]+)/","", $email);
 
-        $explode = explode("@", $email);
+        $explode = explode('@', $email);
         $domain = array_pop($explode);
         $company = Company::where('domain_name', $domain)->first();
 
-        if($company)
-        {
+        if ($company) {
             return redirect()->route('company.requests.create');
-        }
-        else
-        {
+        } else {
             return redirect()->route('user.create');
         }
     }
@@ -315,6 +301,7 @@ class CompanyController extends Controller
     /**
      * @param Request $request
      * @param Company $company
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function switch(Request $request, Company $company)

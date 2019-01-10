@@ -13,6 +13,7 @@ class ReceiptController extends Controller
      * Display a listing of the resource.
      *
      * @param Company $company
+     *
      * @return void
      */
     public function index(Company $company)
@@ -26,6 +27,7 @@ class ReceiptController extends Controller
      * Show the form for creating a new resource.
      *
      * @param Company $company
+     *
      * @return void
      */
     public function create(Company $company)
@@ -36,8 +38,9 @@ class ReceiptController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param Company $company
+     * @param \Illuminate\Http\Request $request
+     * @param Company                  $company
+     *
      * @return void
      */
     public function store(Request $request, Company $company)
@@ -48,8 +51,9 @@ class ReceiptController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Company $company
-     * @param  \App\Models\Receipt $receipt
+     * @param Company             $company
+     * @param \App\Models\Receipt $receipt
+     *
      * @return void
      */
     public function show(Company $company, Receipt $receipt)
@@ -63,8 +67,9 @@ class ReceiptController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Company $company
-     * @param  \App\Models\Receipt $receipt
+     * @param Company             $company
+     * @param \App\Models\Receipt $receipt
+     *
      * @return void
      */
     public function edit(Company $company, Receipt $receipt)
@@ -75,9 +80,10 @@ class ReceiptController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param Company $company
-     * @param  \App\Models\Receipt $receipt
+     * @param \Illuminate\Http\Request $request
+     * @param Company                  $company
+     * @param \App\Models\Receipt      $receipt
+     *
      * @return void
      */
     public function update(Request $request, Company $company, Receipt $receipt)
@@ -88,8 +94,9 @@ class ReceiptController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Company $company
-     * @param  \App\Models\Receipt $receipt
+     * @param Company             $company
+     * @param \App\Models\Receipt $receipt
+     *
      * @return void
      */
     public function destroy(Company $company, Receipt $receipt)
@@ -99,40 +106,43 @@ class ReceiptController extends Controller
 
     public function generate(Company $company, Invoice $invoice)
     {
-        if(!$invoice->receipt)
-        {
-            $receipt = new Receipt;
+        if (!$invoice->receipt) {
+            $receipt = new Receipt();
             $receipt->nice_receipt_id = $company->niceReceiptID();
             $receipt->company_id = $company->id;
             $invoice->receipt()->save($receipt);
         }
 
-        return redirect()->route('receipt.show', [ 'company' => $company, 'receipt' => $invoice->receipt ]);
+        return redirect()->route('receipt.show', ['company' => $company, 'receipt' => $invoice->receipt]);
     }
 
     /**
      * Display the print version specified resource.
      *
-     * @param Company $company
-     * @param  \App\Models\Receipt $receipt
+     * @param Company             $company
+     * @param \App\Models\Receipt $receipt
+     *
      * @return Response
      */
     public function printview(Company $company, Receipt $receipt)
     {
         $pdf = $receipt->generatePDFView();
-        return $pdf->inline(str_slug($receipt->nice_receipt_id) . '.pdf');
+
+        return $pdf->inline(str_slug($receipt->nice_receipt_id).'.pdf');
     }
 
     /**
      * Download the specified resource.
      *
-     * @param Company $company
-     * @param  \App\Models\Receipt $receipt
+     * @param Company             $company
+     * @param \App\Models\Receipt $receipt
+     *
      * @return Response
      */
     public function download(Company $company, Receipt $receipt)
     {
         $pdf = $receipt->generatePDFView();
-        return $pdf->download(str_slug($receipt->nice_receipt_id) . '.pdf');
+
+        return $pdf->download(str_slug($receipt->nice_receipt_id).'.pdf');
     }
 }

@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Iatstuti\Database\Support\CascadeSoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Client extends Model implements Auditable

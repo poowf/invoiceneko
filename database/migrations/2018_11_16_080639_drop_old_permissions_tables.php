@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class DropOldPermissionsTables extends Migration
 {
@@ -26,7 +26,7 @@ class DropOldPermissionsTables extends Migration
      */
     public function down()
     {
-        Schema::create('roles', function(Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
             $table->string('label')->nullable();
@@ -34,7 +34,7 @@ class DropOldPermissionsTables extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('permissions', function(Blueprint $table) {
+        Schema::create('permissions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
             $table->string('label')->nullable();
@@ -42,7 +42,7 @@ class DropOldPermissionsTables extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('role_user', function(Blueprint $table) {
+        Schema::create('role_user', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('role_id')->unsigned();
@@ -52,7 +52,7 @@ class DropOldPermissionsTables extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('permission_role', function(Blueprint $table) {
+        Schema::create('permission_role', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('role_id')->unsigned();
             $table->integer('permission_id')->unsigned();

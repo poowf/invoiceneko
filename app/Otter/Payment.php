@@ -14,14 +14,14 @@ class Payment extends OtterResource
     public static $model = 'App\Models\Payment';
 
     /**
-     * The column of the model to display in select options
+     * The column of the model to display in select options.
      *
      * @var string
      */
     public static $title = 'title';
 
     /**
-     * Get the fields and types used by the resource
+     * Get the fields and types used by the resource.
      *
      * @return array
      */
@@ -29,13 +29,13 @@ class Payment extends OtterResource
     {
         return [
             'amount' => 'text',
-            'mode' => 'text',
-            'notes' => 'text',
+            'mode'   => 'text',
+            'notes'  => 'text',
         ];
     }
 
     /**
-     * Fields to be hidden in the resource collection
+     * Fields to be hidden in the resource collection.
      *
      * @return array
      */
@@ -46,7 +46,7 @@ class Payment extends OtterResource
     }
 
     /**
-     * Get the relations used by the resource
+     * Get the relations used by the resource.
      *
      * @return array
      */
@@ -54,41 +54,41 @@ class Payment extends OtterResource
     {
         return [
             'company' => 'Company',
-            'invoice' => 'Invoice'
+            'invoice' => 'Invoice',
         ];
     }
 
     /**
-    * Get the validation rules used by the resource
-    *
-    * @return array
-    */
+     * Get the validation rules used by the resource.
+     *
+     * @return array
+     */
     public static function validations()
     {
         return [
         'client' => [
             'create' => [
-                /**
+                /*
                 * Client side create resource validation
                 */
             ],
             'update' => [
-                /**
+                /*
                 * Client side update resource validation
                 */
-            ]
+            ],
         ],
         'server' => [
             'create' => [
-                /**
+                /*
                 * Server side create resource validation
                 */
             ],
             'update' => [
-                /**
+                /*
                 * Server side update resource validation
                 */
-            ]
+            ],
         ],
     ];
     }

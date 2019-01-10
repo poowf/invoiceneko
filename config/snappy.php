@@ -1,22 +1,20 @@
 <?php
 
-return array(
+return [
 
-
-    'pdf' => array(
+    'pdf' => [
         'enabled' => true,
         'binary'  => '/usr/bin/xvfb-run -a /usr/bin/wkhtmltopdf',
         'timeout' => false,
-        'options' => array(),
-        'env'     => array(),
-    ),
-    'image' => array(
+        'options' => [],
+        'env'     => [],
+    ],
+    'image' => [
         'enabled' => true,
         'binary'  => '/usr/bin/xvfb-run -a /usr/bin/wkhtmltoimage',
         'timeout' => false,
-        'options' => array(),
-        'env'     => array(),
-    ),
+        'options' => [],
+        'env'     => [],
+    ],
 
-
-);
+];

@@ -14,28 +14,28 @@ class InvoiceItem extends OtterResource
     public static $model = 'App\Models\InvoiceItem';
 
     /**
-     * The column of the model to display in select options
+     * The column of the model to display in select options.
      *
      * @var string
      */
     public static $title = 'name';
 
     /**
-     * Get the fields and types used by the resource
+     * Get the fields and types used by the resource.
      *
      * @return array
      */
     public static function fields()
     {
         return [
-            'name' => 'text',
+            'name'     => 'text',
             'quantity' => 'text',
-            'price' => 'text',
+            'price'    => 'text',
         ];
     }
 
     /**
-     * Fields to be hidden in the resource collection
+     * Fields to be hidden in the resource collection.
      *
      * @return array
      */

@@ -8,8 +8,6 @@ use Jenssegers\Agent\Agent;
 
 class NekoSession extends Model
 {
-
-
     /**
      * The table associated with the model.
      *
@@ -19,7 +17,7 @@ class NekoSession extends Model
 
     public $incrementing = false;
 
-    public function __construct(array $attributes = array())
+    public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
     }
@@ -28,6 +26,7 @@ class NekoSession extends Model
     {
         $agent = $this->setupAgent();
         $device = $agent->device();
+
         return $device;
     }
 
@@ -35,6 +34,7 @@ class NekoSession extends Model
     {
         $agent = $this->setupAgent();
         $platform = $agent->platform();
+
         return $platform;
     }
 
@@ -42,12 +42,14 @@ class NekoSession extends Model
     {
         $agent = $this->setupAgent();
         $browser = $agent->browser();
+
         return $browser;
     }
 
     public function isPhone()
     {
         $agent = $this->setupAgent();
+
         return $agent->isPhone();
     }
 

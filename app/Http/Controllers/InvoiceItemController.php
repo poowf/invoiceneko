@@ -12,6 +12,7 @@ class InvoiceItemController extends Controller
      * Display a listing of the resource.
      *
      * @param Company $company
+     *
      * @return void
      */
     public function index(Company $company)
@@ -23,6 +24,7 @@ class InvoiceItemController extends Controller
      * Show the form for creating a new resource.
      *
      * @param Company $company
+     *
      * @return void
      */
     public function create(Company $company)
@@ -33,8 +35,9 @@ class InvoiceItemController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param Company $company
+     * @param \Illuminate\Http\Request $request
+     * @param Company                  $company
+     *
      * @return void
      */
     public function store(Request $request, Company $company)
@@ -45,8 +48,9 @@ class InvoiceItemController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Company $company
-     * @param  \App\Models\InvoiceItem $invoiceItem
+     * @param Company                 $company
+     * @param \App\Models\InvoiceItem $invoiceItem
+     *
      * @return void
      */
     public function show(Company $company, InvoiceItem $invoiceItem)
@@ -57,8 +61,9 @@ class InvoiceItemController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Company $company
-     * @param  \App\Models\InvoiceItem $invoiceItem
+     * @param Company                 $company
+     * @param \App\Models\InvoiceItem $invoiceItem
+     *
      * @return void
      */
     public function edit(Company $company, InvoiceItem $invoiceItem)
@@ -69,9 +74,10 @@ class InvoiceItemController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param Company $company
-     * @param  \App\Models\InvoiceItem $invoiceItem
+     * @param \Illuminate\Http\Request $request
+     * @param Company                  $company
+     * @param \App\Models\InvoiceItem  $invoiceItem
+     *
      * @return void
      */
     public function update(Request $request, Company $company, InvoiceItem $invoiceItem)
@@ -82,16 +88,17 @@ class InvoiceItemController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Company $company
-     * @param  \App\Models\InvoiceItem $invoiceItem
-     * @return void
+     * @param Company                 $company
+     * @param \App\Models\InvoiceItem $invoiceItem
+     *
      * @throws \Exception
+     *
+     * @return void
      */
     public function destroy(Company $company, InvoiceItem $invoiceItem)
     {
         $invoice = $invoiceItem->invoice;
-        if($invoice->items->count() != 1)
-        {
+        if ($invoice->items->count() != 1) {
             $invoiceItem->delete();
         }
     }

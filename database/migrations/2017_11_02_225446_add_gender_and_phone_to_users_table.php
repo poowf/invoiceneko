@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class AddGenderAndPhoneToUsersTable extends Migration
 {
@@ -13,7 +13,7 @@ class AddGenderAndPhoneToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function(Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             $table->renameColumn('name', 'full_name');
             $table->string('gender')->after('password');
             $table->string('phone')->after('password');
@@ -27,7 +27,7 @@ class AddGenderAndPhoneToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function(Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('phone');
             $table->dropColumn('gender');
             $table->renameColumn('full_name', 'name');

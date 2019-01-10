@@ -24,26 +24,26 @@ class UpdateCompanySettingRequest extends FormRequest
     public function rules()
     {
         return [
-            'invoice_prefix' => 'required|string',
-            'quote_prefix' => 'required|string',
-            'receipt_prefix' => 'required|string',
+            'invoice_prefix'     => 'required|string',
+            'quote_prefix'       => 'required|string',
+            'receipt_prefix'     => 'required|string',
             'invoice_conditions' => 'required|string',
-            'quote_conditions' => 'required|string',
+            'quote_conditions'   => 'required|string',
         ];
     }
 
     /**
      * Configure the validator instance.
      *
-     * @param  \Illuminate\Validation\Validator  $validator
+     * @param \Illuminate\Validation\Validator $validator
+     *
      * @return void
      */
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
             $company = $this->route('company');
-            if(!$company)
-            {
+            if (!$company) {
                 $validator->errors()->add('Company', 'Please fill in your company information first');
             }
         });

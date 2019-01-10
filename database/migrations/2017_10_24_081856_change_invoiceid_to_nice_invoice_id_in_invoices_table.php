@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class ChangeInvoiceidToNiceInvoiceIdInInvoicesTable extends Migration
 {
@@ -13,7 +13,7 @@ class ChangeInvoiceidToNiceInvoiceIdInInvoicesTable extends Migration
      */
     public function up()
     {
-        Schema::table('invoices', function(Blueprint $table) {
+        Schema::table('invoices', function (Blueprint $table) {
             $table->renameColumn('invoiceid', 'nice_invoice_id');
         });
     }
@@ -25,7 +25,7 @@ class ChangeInvoiceidToNiceInvoiceIdInInvoicesTable extends Migration
      */
     public function down()
     {
-        Schema::table('invoices', function(Blueprint $table) {
+        Schema::table('invoices', function (Blueprint $table) {
             $table->renameColumn('nice_invoice_id', 'invoiceid');
         });
     }

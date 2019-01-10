@@ -18,7 +18,7 @@ class HasCompany
     /**
      * Create a new filter instance.
      *
-     * @param  Guard  $auth
+     * @param Guard $auth
      */
     public function __construct(Guard $auth)
     {
@@ -28,24 +28,21 @@ class HasCompany
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure                 $next
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
         $routeKey = Unicorn::getCompanyKey();
         if ($routeKey) {
-            if($request->route('company')->hasUser($request->user()))
-            {
+            if ($request->route('company')->hasUser($request->user())) {
                 return $next($request);
-            }
-            else {
+            } else {
                 abort(401);
             }
-        }
-        else
-        {
+        } else {
             return redirect()->route('nocompany');
         }
     }

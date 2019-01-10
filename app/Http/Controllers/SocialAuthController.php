@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class SocialAuthController extends Controller
 {
     /**
@@ -27,10 +25,9 @@ class SocialAuthController extends Controller
 
         $user = User::where('email', $socialuser->email)->first();
 
-        if(!$user)
-        {
-            $user = new User;
-            $user->username = preg_replace('/\s/', '', $socialuser->name) . '_' . str_random(5);
+        if (!$user) {
+            $user = new User();
+            $user->username = preg_replace('/\s/', '', $socialuser->name).'_'.str_random(5);
             $user->email = $socialuser->email;
             $user->password = str_random(10);
             $user->full_name = $socialuser->name;
@@ -40,8 +37,7 @@ class SocialAuthController extends Controller
 
         $smt = $user->socialmediatoken;
 
-        switch($provider)
-        {
+        switch ($provider) {
             case 'facebook':
                 $smt->facebook_token = $socialuser->token;
                 break;
@@ -58,5 +54,4 @@ class SocialAuthController extends Controller
 
         return redirect()->route('main');
     }
-
 }

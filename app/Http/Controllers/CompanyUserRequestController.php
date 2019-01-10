@@ -16,16 +16,14 @@ class CompanyUserRequestController extends Controller
      * Display a listing of the resource.
      *
      * @param Company $company
+     *
      * @return \Illuminate\Http\Response
      */
     public function index(Company $company)
     {
-        if($company)
-        {
+        if ($company) {
             $requests = $company->requests()->paginate(12);
-        }
-        else
-        {
+        } else {
             $requests = collect();
         }
 
@@ -36,6 +34,7 @@ class CompanyUserRequestController extends Controller
      * Show the form for creating a new resource.
      *
      * @param Company $company
+     *
      * @return \Illuminate\Http\Response
      */
     public function create(Company $company)
@@ -46,33 +45,31 @@ class CompanyUserRequestController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param Company $company
+     * @param \Illuminate\Http\Request $request
+     * @param Company                  $company
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, Company $company)
     {
         $email = $request->input('email');
 
-        $explode = explode("@", $email);
+        $explode = explode('@', $email);
         $domain = array_pop($explode);
         $company = Company::where('domain_name', $domain)->first();
 
-        if($company)
-        {
-            $companyUserRequest = new CompanyUserRequest;
+        if ($company) {
+            $companyUserRequest = new CompanyUserRequest();
             $companyUserRequest->fill($request->all());
             $company->requests()->save($companyUserRequest);
 
             $company->notify(new RequestCompanyAccessNotification($companyUserRequest));
 
-            flash('The request has been sent to the current owner of the Company', "success");
+            flash('The request has been sent to the current owner of the Company', 'success');
 
             return redirect()->route('main');
-        }
-        else
-        {
-            flash('Unable to find your company', "error");
+        } else {
+            flash('Unable to find your company', 'error');
 
             return redirect()->back();
         }
@@ -80,7 +77,8 @@ class CompanyUserRequestController extends Controller
 
     /**
      * @param CompanyUserRequest $companyUserRequest
-     * @param Company $company
+     * @param Company            $company
+     *
      * @return RedirectResponse
      */
     public function approve(Company $company, CompanyUserRequest $companyUserRequest)
@@ -90,12 +88,13 @@ class CompanyUserRequestController extends Controller
 
         $companyUserRequest->notify(new CompanyUserRequestApprovedNotification($companyUserRequest->token));
 
-        return redirect()->route('company.requests.index', [ 'company' => $company ]);
+        return redirect()->route('company.requests.index', ['company' => $company]);
     }
 
     /**
      * @param CompanyUserRequest $companyUserRequest
-     * @param Company $company
+     * @param Company            $company
+     *
      * @return RedirectResponse
      */
     public function reject(Company $company, CompanyUserRequest $companyUserRequest)
@@ -105,14 +104,15 @@ class CompanyUserRequestController extends Controller
 
         $companyUserRequest->notify(new CompanyUserRequestRejectedNotification());
 
-        return redirect()->route('company.requests.index', [ 'company' => $company ]);
+        return redirect()->route('company.requests.index', ['company' => $company]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param Company $company
-     * @param  \App\Models\CompanyUserRequest $companyUserRequest
+     * @param Company                        $company
+     * @param \App\Models\CompanyUserRequest $companyUserRequest
+     *
      * @return void
      */
     public function show(Company $company, CompanyUserRequest $companyUserRequest)
@@ -123,8 +123,9 @@ class CompanyUserRequestController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Company $company
-     * @param  \App\Models\CompanyUserRequest $companyUserRequest
+     * @param Company                        $company
+     * @param \App\Models\CompanyUserRequest $companyUserRequest
+     *
      * @return void
      */
     public function edit(Company $company, CompanyUserRequest $companyUserRequest)
@@ -136,6 +137,7 @@ class CompanyUserRequestController extends Controller
      * Update the specified resource in storage.
      *
      * @param CompanyUserRequest $companyUserRequest
+     *
      * @return void
      */
     public function update(CompanyUserRequest $companyUserRequest)
@@ -146,8 +148,9 @@ class CompanyUserRequestController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Company $company
-     * @param  \App\Models\CompanyUserRequest $companyUserRequest
+     * @param Company                        $company
+     * @param \App\Models\CompanyUserRequest $companyUserRequest
+     *
      * @return void
      */
     public function destroy(Company $company, CompanyUserRequest $companyUserRequest)

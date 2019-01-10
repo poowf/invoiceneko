@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\User;
 use App\Models\Payment;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class PaymentPolicy
@@ -29,8 +29,9 @@ class PaymentPolicy
     /**
      * Determine whether the user can view the payment.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Payment  $payment
+     * @param \App\Models\User    $user
+     * @param \App\Models\Payment $payment
+     *
      * @return mixed
      */
     public function view(User $user, Payment $payment)
@@ -41,7 +42,8 @@ class PaymentPolicy
     /**
      * Determine whether the user can create payments.
      *
-     * @param  \App\Models\User  $user
+     * @param \App\Models\User $user
+     *
      * @return mixed
      */
     public function create(User $user)
@@ -52,8 +54,9 @@ class PaymentPolicy
     /**
      * Determine whether the user can update the payment.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Payment  $payment
+     * @param \App\Models\User    $user
+     * @param \App\Models\Payment $payment
+     *
      * @return mixed
      */
     public function update(User $user, Payment $payment)
@@ -64,8 +67,9 @@ class PaymentPolicy
     /**
      * Determine whether the user can delete the payment.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Payment  $payment
+     * @param \App\Models\User    $user
+     * @param \App\Models\Payment $payment
+     *
      * @return mixed
      */
     public function delete(User $user, Payment $payment)

@@ -2,9 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\CompanyAddress;
-use App\Models\User;
 use App\Models\CompanyUserRequest;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CompanyUserRequestPolicy
@@ -36,8 +35,9 @@ class CompanyUserRequestPolicy
     /**
      * Determine whether the user can view the companyUserRequest.
      *
-     * @param  \App\Models\User $user
+     * @param \App\Models\User   $user
      * @param CompanyUserRequest $companyUserRequest
+     *
      * @return mixed
      */
     public function view(User $user, CompanyUserRequest $companyUserRequest)
@@ -48,7 +48,8 @@ class CompanyUserRequestPolicy
     /**
      * Determine whether the user can create companies.
      *
-     * @param  \App\Models\User  $user
+     * @param \App\Models\User $user
+     *
      * @return mixed
      */
     public function create(User $user)
@@ -59,8 +60,9 @@ class CompanyUserRequestPolicy
     /**
      * Determine whether the user can update the companyUserRequest.
      *
-     * @param  \App\Models\User $user
+     * @param \App\Models\User   $user
      * @param CompanyUserRequest $companyUserRequest
+     *
      * @return mixed
      */
     public function update(User $user, CompanyUserRequest $companyUserRequest)
@@ -71,8 +73,9 @@ class CompanyUserRequestPolicy
     /**
      * Determine whether the user can delete the companyUserRequest.
      *
-     * @param  \App\Models\User $user
+     * @param \App\Models\User   $user
      * @param CompanyUserRequest $companyUserRequest
+     *
      * @return mixed
      */
     public function delete(User $user, CompanyUserRequest $companyUserRequest)

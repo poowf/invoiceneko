@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Iatstuti\Database\Support\CascadeSoftDeletes;
 
 class OldInvoiceItem extends Model
 {
@@ -37,6 +37,7 @@ class OldInvoiceItem extends Model
     public function moneyFormatPrice()
     {
         setlocale(LC_MONETARY, 'en_US.UTF-8');
+
         return money_format('%!.2n', $this->price);
     }
 }

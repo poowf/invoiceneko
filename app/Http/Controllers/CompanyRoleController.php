@@ -4,15 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
-use App\Library\Poowf\Unicorn;
 use App\Models\Company;
-use Illuminate\Http\Request;
-use Silber\Bouncer\BouncerFacade as Bouncer;
 use App\Models\Role;
+use Silber\Bouncer\BouncerFacade as Bouncer;
 
 class CompanyRoleController extends Controller
 {
-
     private $defaultRoles;
 
     public function __construct()
@@ -20,7 +17,7 @@ class CompanyRoleController extends Controller
         $this->defaultRoles = [
             'global-administrator',
             'administrator',
-            'user'
+            'user',
         ];
     }
 
@@ -28,6 +25,7 @@ class CompanyRoleController extends Controller
      * Display a listing of the resource.
      *
      * @param Company $company
+     *
      * @return \Illuminate\Http\Response
      */
     public function index(Company $company)
@@ -41,6 +39,7 @@ class CompanyRoleController extends Controller
      * Show the form for creating a new resource.
      *
      * @param Company $company
+     *
      * @return \Illuminate\Http\Response
      */
     public function create(Company $company)
@@ -54,31 +53,34 @@ class CompanyRoleController extends Controller
      * Store a newly created resource in storage.
      *
      * @param CreateRoleRequest $request
-     * @param Company $company
+     * @param Company           $company
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(CreateRoleRequest $request, Company $company)
     {
         $title = $request->input('title');
         $permissions = $request->input('permissions');
-        $role = new Role;
+        $role = new Role();
         $role->title = $title;
         $role->name = str_slug($title);
         $role->save();
 
-        if(!empty($permissions)) {
+        if (!empty($permissions)) {
             $abilities = Bouncer::ability()->whereIn('name', $permissions)->pluck('id');
             $role->abilities()->sync($abilities);
         }
 
         flash('The Role has been created', 'success');
-        return redirect()->route('company.roles.index', [ 'company' => $company ]);
+
+        return redirect()->route('company.roles.index', ['company' => $company]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param int $id
+     *
      * @return void
      */
     public function show($id)
@@ -90,21 +92,19 @@ class CompanyRoleController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param Company $company
-     * @param Role $role
+     * @param Role    $role
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit(Company $company, Role $role)
     {
-        if(!in_array($role->name, $this->defaultRoles))
-        {
+        if (!in_array($role->name, $this->defaultRoles)) {
             $rolePermissions = $role->getAbilities();
             $permissions = self::getFormattedPermissions();
 
             return view('pages.company.roles.edit', compact('role', 'rolePermissions', 'permissions'));
-        }
-        else
-        {
-            return redirect()->route('company.roles.index', [ 'company' => $company ]);
+        } else {
+            return redirect()->route('company.roles.index', ['company' => $company]);
         }
     }
 
@@ -112,31 +112,30 @@ class CompanyRoleController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdateRoleRequest $request
-     * @param Company $company
-     * @param Role $role
+     * @param Company           $company
+     * @param Role              $role
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateRoleRequest $request, Company $company, Role $role)
     {
-        if(!in_array($role->name, $this->defaultRoles))
-        {
+        if (!in_array($role->name, $this->defaultRoles)) {
             $title = $request->input('title');
             $permissions = $request->input('permissions');
             $role->title = $title;
             $role->name = str_slug($title);
             $role->save();
 
-            if(!empty($permissions)) {
+            if (!empty($permissions)) {
                 $abilities = Bouncer::ability()->whereIn('name', $permissions)->pluck('id');
                 $role->abilities()->sync($abilities);
             }
 
             flash('The Role has been updated', 'success');
-            return redirect()->route('company.roles.index', [ 'company' => $company ]);
-        }
-        else
-        {
-            return redirect()->route('company.roles.index', [ 'company' => $company ]);
+
+            return redirect()->route('company.roles.index', ['company' => $company]);
+        } else {
+            return redirect()->route('company.roles.index', ['company' => $company]);
         }
     }
 
@@ -144,27 +143,28 @@ class CompanyRoleController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Company $company
-     * @param Role $role
-     * @return \Illuminate\Http\Response
+     * @param Role    $role
+     *
      * @throws \Exception
+     *
+     * @return \Illuminate\Http\Response
      */
     public function destroy(Company $company, Role $role)
     {
-        if(!in_array($role->name, $this->defaultRoles)) {
+        if (!in_array($role->name, $this->defaultRoles)) {
             $role->delete();
         }
-        flash("The Role has been deleted", 'success');
-        return redirect()->route('company.roles.index', [ 'company' => $company ]);
+        flash('The Role has been deleted', 'success');
+
+        return redirect()->route('company.roles.index', ['company' => $company]);
     }
 
     public function getFormattedPermissions()
     {
         $permissions = Bouncer::ability()->all();
 
-        foreach($permissions as $key => $permission)
-        {
-            if($permission->name === '*')
-            {
+        foreach ($permissions as $key => $permission) {
+            if ($permission->name === '*') {
                 $permission->title = 'All Permissions';
                 continue;
             }

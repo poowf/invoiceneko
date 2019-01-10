@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use Log;
+use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Iatstuti\Database\Support\CascadeSoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class ItemTemplate extends Model implements Auditable
@@ -26,7 +25,6 @@ class ItemTemplate extends Model implements Auditable
         'price',
         'description',
     ];
-
 
     public function duplicate()
     {

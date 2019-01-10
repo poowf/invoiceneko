@@ -2,11 +2,9 @@
 
 namespace Tests\Unit;
 
-use App\Models\Invoice;
 use App\Models\Client;
+use App\Models\Invoice;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class InvoiceTest extends TestCase
 {
@@ -23,15 +21,15 @@ class InvoiceTest extends TestCase
 
         $invoice = Invoice::create([
             'nice_invoice_id' => 'PWF-000001',
-            'date' => '2 September, 2018',
-            'netdays' => '20',
-            'total' => '650.80',
-            'share_token' => '7e57d004-2b97-0e7a-b45f-5387367791cd',
-            'status' => '2',
-            'archived' => '0',
-            'notify' => '0',
-            'client_id' => $client->id,
-            'company_id' => $client->company->id
+            'date'            => '2 September, 2018',
+            'netdays'         => '20',
+            'total'           => '650.80',
+            'share_token'     => '7e57d004-2b97-0e7a-b45f-5387367791cd',
+            'status'          => '2',
+            'archived'        => '0',
+            'notify'          => '0',
+            'client_id'       => $client->id,
+            'company_id'      => $client->company->id,
         ]);
 
         Invoice::reguard();
@@ -54,9 +52,9 @@ class InvoiceTest extends TestCase
 
         //Testing fillable properties
         $data = [
-            'date' => '1 November, 2018',
+            'date'    => '1 November, 2018',
             'netdays' => '25',
-            'total' => '19293313.00',
+            'total'   => '19293313.00',
         ];
 
         $invoice->fill($data);

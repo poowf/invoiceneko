@@ -3,8 +3,8 @@
 namespace App\Policies;
 
 use App\Models\Invoice;
-use App\Models\User;
 use App\Models\OldInvoiceItem;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class OldInvoiceItemPolicy
@@ -30,8 +30,9 @@ class OldInvoiceItemPolicy
     /**
      * Determine whether the user can view the oldInvoiceItem.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\OldInvoiceItem  $oldInvoiceItem
+     * @param \App\Models\User           $user
+     * @param \App\Models\OldInvoiceItem $oldInvoiceItem
+     *
      * @return mixed
      */
     public function view(User $user, OldInvoiceItem $oldInvoiceItem)
@@ -42,7 +43,8 @@ class OldInvoiceItemPolicy
     /**
      * Determine whether the user can create oldInvoiceItems.
      *
-     * @param  \App\Models\User  $user
+     * @param \App\Models\User $user
+     *
      * @return mixed
      */
     public function create(User $user)
@@ -53,8 +55,9 @@ class OldInvoiceItemPolicy
     /**
      * Determine whether the user can update the oldInvoiceItem.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\OldInvoiceItem  $oldInvoiceItem
+     * @param \App\Models\User           $user
+     * @param \App\Models\OldInvoiceItem $oldInvoiceItem
+     *
      * @return mixed
      */
     public function update(User $user, OldInvoiceItem $oldInvoiceItem)
@@ -65,8 +68,9 @@ class OldInvoiceItemPolicy
     /**
      * Determine whether the user can delete the oldInvoiceItem.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\OldInvoiceItem  $oldInvoiceItem
+     * @param \App\Models\User           $user
+     * @param \App\Models\OldInvoiceItem $oldInvoiceItem
+     *
      * @return mixed
      */
     public function delete(User $user, OldInvoiceItem $oldInvoiceItem)
