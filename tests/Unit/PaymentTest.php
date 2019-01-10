@@ -7,8 +7,6 @@ use App\Models\Company;
 use App\Models\Invoice;
 use App\Models\Payment;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class PaymentTest extends TestCase
 {
@@ -21,19 +19,19 @@ class PaymentTest extends TestCase
     {
         $company = factory(Company::class)->create();
         $invoice = factory(Invoice::class)->create([
-            'company_id' => $company->id
+            'company_id' => $company->id,
         ]);
         $client = factory(Client::class)->create([
-            'company_id' => $company->id
+            'company_id' => $company->id,
         ]);
         Payment::unguard();
 
         $payment = Payment::create([
-            'amount' => '516556.52',
+            'amount'       => '516556.52',
             'receiveddate' => '2018-11-01 00:00:00',
-            'invoice_id' => $invoice->id,
-            'client_id' => $client->id,
-            'company_id' => $company->id
+            'invoice_id'   => $invoice->id,
+            'client_id'    => $client->id,
+            'company_id'   => $company->id,
         ]);
 
         Payment::reguard();
@@ -46,20 +44,20 @@ class PaymentTest extends TestCase
     {
         $company = factory(Company::class)->create();
         $invoice = factory(Invoice::class)->create([
-            'company_id' => $company->id
+            'company_id' => $company->id,
         ]);
         $client = factory(Client::class)->create([
-            'company_id' => $company->id
+            'company_id' => $company->id,
         ]);
         $payment = factory(Payment::class)->create([
             'invoice_id' => $invoice->id,
-            'client_id' => $client->id,
-            'company_id' => $company->id
+            'client_id'  => $client->id,
+            'company_id' => $company->id,
         ]);
         $this->assertInstanceOf(Payment::class, $payment);
 
-        $payment->amount = "1891818.41";
-        $payment->notes = "asdfasfasfasdfasfsfaffsa";
+        $payment->amount = '1891818.41';
+        $payment->notes = 'asdfasfasfasdfasfsfaffsa';
         $payment->save();
         $payment->refresh();
 
@@ -67,9 +65,9 @@ class PaymentTest extends TestCase
         $this->assertEquals('asdfasfasfasdfasfsfaffsa', $payment->notes);
 
         $data = [
-            'amount' => '12341451541.00',
-            'notes' => 'sdfasfasdvcasd asodcnaio9sjecoamfoe[casmo;cnasi;cndik; andio;asno;asdcnio; asdnio;asdcno;asdncio;asdn;',
-            'receiveddate' => '2018-12-01 00:00:00'
+            'amount'       => '12341451541.00',
+            'notes'        => 'sdfasfasdvcasd asodcnaio9sjecoamfoe[casmo;cnasi;cndik; andio;asno;asdcnio; asdnio;asdcno;asdncio;asdn;',
+            'receiveddate' => '2018-12-01 00:00:00',
         ];
 
         $payment->fill($data);
@@ -85,15 +83,15 @@ class PaymentTest extends TestCase
     {
         $company = factory(Company::class)->create();
         $invoice = factory(Invoice::class)->create([
-            'company_id' => $company->id
+            'company_id' => $company->id,
         ]);
         $client = factory(Client::class)->create([
-            'company_id' => $company->id
+            'company_id' => $company->id,
         ]);
         $payment = factory(Payment::class)->create([
             'invoice_id' => $invoice->id,
-            'client_id' => $client->id,
-            'company_id' => $company->id
+            'client_id'  => $client->id,
+            'company_id' => $company->id,
         ]);
 
         $this->assertInstanceOf(Payment::class, $payment);

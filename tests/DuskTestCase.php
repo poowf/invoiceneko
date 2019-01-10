@@ -2,11 +2,11 @@
 
 namespace Tests;
 
+use Facebook\WebDriver\Chrome\ChromeOptions;
+use Facebook\WebDriver\Remote\DesiredCapabilities;
+use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\TestCase as BaseTestCase;
-use Facebook\WebDriver\Chrome\ChromeOptions;
-use Facebook\WebDriver\Remote\RemoteWebDriver;
-use Facebook\WebDriver\Remote\DesiredCapabilities;
 
 abstract class DuskTestCase extends BaseTestCase
 {
@@ -14,7 +14,7 @@ abstract class DuskTestCase extends BaseTestCase
     use DatabaseMigrations;
 
     /**
-     *  Notes for Dusk
+     *  Notes for Dusk.
      *
      * Commenting out DatabaseMigrations drastically improves Dusk performance with the increased chance of conflicts
      * between unique values but good for testing
@@ -25,16 +25,17 @@ abstract class DuskTestCase extends BaseTestCase
      *
      *
      * /
-
-    /**
+     *
+     * /**
      * Prepare for Dusk test execution.
      *
      * @beforeClass
+     *
      * @return void
      */
     public static function prepare()
     {
-//	    static::useChromedriver('/usr/local/bin/chromedriver');
+        //	    static::useChromedriver('/usr/local/bin/chromedriver');
         static::startChromeDriver();
     }
 
@@ -49,10 +50,8 @@ abstract class DuskTestCase extends BaseTestCase
             return RemoteWebDriver::create(
                 'http://selenium:4444/wd/hub', DesiredCapabilities::chrome()
             );
-        }
-        else
-        {
-            $options = (new ChromeOptions)->addArguments([
+        } else {
+            $options = (new ChromeOptions())->addArguments([
                 '--window-size=1024,768',
                 '--disable-gpu',
                 '--headless',

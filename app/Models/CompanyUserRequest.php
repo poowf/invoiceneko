@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
+use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Illuminate\Notifications\Notifiable;
-use Uuid;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class CompanyUserRequest extends Model implements Auditable
@@ -37,7 +36,7 @@ class CompanyUserRequest extends Model implements Auditable
     ];
 
     protected $attributes = [
-        'status' => self::STATUS_PENDING
+        'status' => self::STATUS_PENDING,
     ];
 
     protected static function boot()
@@ -58,19 +57,18 @@ class CompanyUserRequest extends Model implements Auditable
     {
         $status = $this->status;
 
-        switch($status)
-        {
+        switch ($status) {
             default:
-                $textstatus = "Pending";
+                $textstatus = 'Pending';
                 break;
             case self::STATUS_PENDING:
-                $textstatus = "Pending";
+                $textstatus = 'Pending';
                 break;
             case self::STATUS_APPROVED:
-                $textstatus = "Approved";
+                $textstatus = 'Approved';
                 break;
             case self::STATUS_REJECTED:
-                $textstatus = "Rejected";
+                $textstatus = 'Rejected';
                 break;
         }
 

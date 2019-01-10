@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\User;
 use App\Models\CompanyAddress;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CompanyAddressPolicy
@@ -35,8 +35,9 @@ class CompanyAddressPolicy
     /**
      * Determine whether the user can view the companyAddress.
      *
-     * @param  \App\Models\User $user
-     * @param CompanyAddress $companyAddress
+     * @param \App\Models\User $user
+     * @param CompanyAddress   $companyAddress
+     *
      * @return mixed
      */
     public function view(User $user, CompanyAddress $companyAddress)
@@ -47,7 +48,8 @@ class CompanyAddressPolicy
     /**
      * Determine whether the user can create companies.
      *
-     * @param  \App\Models\User $user
+     * @param \App\Models\User $user
+     *
      * @return mixed
      */
     public function create(User $user)
@@ -58,8 +60,9 @@ class CompanyAddressPolicy
     /**
      * Determine whether the user can update the companyAddress.
      *
-     * @param  \App\Models\User $user
-     * @param CompanyAddress $companyAddress
+     * @param \App\Models\User $user
+     * @param CompanyAddress   $companyAddress
+     *
      * @return mixed
      */
     public function update(User $user, CompanyAddress $companyAddress)
@@ -70,8 +73,9 @@ class CompanyAddressPolicy
     /**
      * Determine whether the user can delete the companyAddress.
      *
-     * @param  \App\Models\User $user
-     * @param CompanyAddress $companyAddress
+     * @param \App\Models\User $user
+     * @param CompanyAddress   $companyAddress
+     *
      * @return mixed
      */
     public function delete(User $user, CompanyAddress $companyAddress)

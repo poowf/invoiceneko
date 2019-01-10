@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Library\Poowf\Unicorn;
-
-use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -26,6 +25,7 @@ class AuthController extends Controller
         $username = request()->input('username');
         $field = filter_var($username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
         request()->merge([$field => $username]);
+
         return $field;
     }
 

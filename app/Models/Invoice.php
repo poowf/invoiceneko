@@ -2,16 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
+use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Iatstuti\Database\Support\CascadeSoftDeletes;
-use Uuid;
-use Log;
-use PDF;
-use Carbon\Carbon;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Mail;
 use OwenIt\Auditing\Contracts\Auditable;
+use PDF;
+use Uuid;
 
 class Invoice extends Model implements Auditable
 {
@@ -56,11 +55,11 @@ class Invoice extends Model implements Auditable
         'payment_complete_date',
         'created_at',
         'updated_at',
-        'deleted_at'
+        'deleted_at',
     ];
 
     protected $attributes = [
-        'status' => self::STATUS_OPEN
+        'status' => self::STATUS_OPEN,
     ];
 
     protected $cascadeDeletes = [
@@ -73,8 +72,7 @@ class Invoice extends Model implements Auditable
         parent::boot();
 
         static::saving(function ($invoice) {
-            if($invoice->status == self::STATUS_DRAFT && !$invoice->generated)
-            {
+            if ($invoice->status == self::STATUS_DRAFT && !$invoice->generated) {
                 $invoice->status = self::STATUS_OPEN;
             }
             $date = clone $invoice->date;
@@ -92,7 +90,8 @@ class Invoice extends Model implements Auditable
     /**
      * Route notifications for the mail channel.
      *
-     * @param  \Illuminate\Notifications\Notification  $notification
+     * @param \Illuminate\Notifications\Notification $notification
+     *
      * @return string
      */
     public function routeNotificationForMail($notification)
@@ -103,52 +102,52 @@ class Invoice extends Model implements Auditable
     public function getTotalMoneyFormatAttribute()
     {
         setlocale(LC_MONETARY, 'en_US.UTF-8');
+
         return money_format('%!.2n', $this->total);
     }
 
     public function getCreatedAtAttribute($value)
     {
         $date = $this->asDateTime($value);
+
         return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
     public function getUpdatedAtAttribute($value)
     {
         $date = $this->asDateTime($value);
+
         return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
     public function getDateAttribute($value)
     {
         $date = $this->asDateTime($value);
+
         return $date->timezone($this->company->timezone);
     }
 
     public function getDuedateAttribute($value)
     {
         $date = $this->asDateTime($value);
+
         return $date->timezone($this->company->timezone);
     }
 
     public function getPaymentCompleteDateAttribute($value)
     {
-        if(!is_null($value))
-        {
+        if (!is_null($value)) {
             $date = $this->asDateTime($value);
+
             return $date->timezone($this->company->timezone);
         }
-
-        return null;
     }
 
     public function setDateAttribute($value)
     {
-        if($value instanceof \DateTime)
-        {
+        if ($value instanceof \DateTime) {
             $this->attributes['date'] = $value;
-        }
-        else
-        {
+        } else {
             $this->attributes['date'] = $value = Carbon::createFromFormat('j F, Y', $value)->startOfDay();
         }
     }
@@ -190,16 +189,14 @@ class Invoice extends Model implements Auditable
 
     public function getClient()
     {
-        return ($this->client) ? $this->client: (object) json_decode($this->client_data);
+        return ($this->client) ? $this->client : (object) json_decode($this->client_data);
     }
 
     public function isLocked()
     {
-        if(!is_null($this->payment_complete_date))
-        {
+        if (!is_null($this->payment_complete_date)) {
             $now = Carbon::now();
-            if(date_diff($now, $this->payment_complete_date)->format('%a') >= '120')
-            {
+            if (date_diff($now, $this->payment_complete_date)->format('%a') >= '120') {
                 return true;
             }
         }
@@ -209,20 +206,17 @@ class Invoice extends Model implements Auditable
 
     public function siblings()
     {
-        if($this->recurrence)
-        {
-            if($this->recurrence->invoices)
-            {
+        if ($this->recurrence) {
+            if ($this->recurrence->invoices) {
                 return ($this->recurrence->invoices->except($this->id)->isNotEmpty()) ? $this->recurrence->invoices->except($this->id) : null;
             }
         }
-
-        return null;
     }
 
     public function hash()
     {
-        $hash = hash('sha512', serialize($this . $this->items));
+        $hash = hash('sha512', serialize($this.$this->items));
+
         return $hash;
     }
 
@@ -236,20 +230,17 @@ class Invoice extends Model implements Auditable
         $items = $this->items;
         $total = 0;
 
-        foreach($items as $item)
-        {
+        foreach ($items as $item) {
             $itemtotal = $item->quantity * $item->price;
 
             $total += $itemtotal;
         }
 
-        if ($moneyformat)
-        {
+        if ($moneyformat) {
             setlocale(LC_MONETARY, 'en_US.UTF-8');
+
             return money_format('%!.2n', $total);
-        }
-        else
-        {
+        } else {
             return $total;
         }
     }
@@ -259,23 +250,20 @@ class Invoice extends Model implements Auditable
         $companySetting = $this->company->settings;
         $tax = 0;
 
-        if($companySetting->tax && $companySetting->tax != 0)
-        {
+        if ($companySetting->tax && $companySetting->tax != 0) {
             $tax = $companySetting->tax;
         }
 
         $subtotal = $this->calculatesubtotal(false);
         $subtotalWithTax = $subtotal * $tax;
 
-        $tax = ($subtotalWithTax != 0) ? $subtotalWithTax/100 : 0;
+        $tax = ($subtotalWithTax != 0) ? $subtotalWithTax / 100 : 0;
 
-        if ($moneyformat)
-        {
+        if ($moneyformat) {
             setlocale(LC_MONETARY, 'en_US.UTF-8');
+
             return money_format('%!.2n', $tax);
-        }
-        else
-        {
+        } else {
             return $tax;
         }
     }
@@ -285,23 +273,20 @@ class Invoice extends Model implements Auditable
         $companySetting = $this->company->settings;
         $tax = 0;
 
-        if($companySetting->tax && $companySetting->tax != 0)
-        {
+        if ($companySetting->tax && $companySetting->tax != 0) {
             $tax = $companySetting->tax;
         }
 
         $subtotal = $this->calculatesubtotal(false);
         $totalWithTax = $subtotal * (100 + $tax);
 
-        $total = ($totalWithTax != 0) ? $totalWithTax/100 : 0;
+        $total = ($totalWithTax != 0) ? $totalWithTax / 100 : 0;
 
-        if ($moneyformat)
-        {
+        if ($moneyformat) {
             setlocale(LC_MONETARY, 'en_US.UTF-8');
+
             return money_format('%!.2n', $total);
-        }
-        else
-        {
+        } else {
             return $total;
         }
     }
@@ -317,8 +302,7 @@ class Invoice extends Model implements Auditable
         $payments = $this->payments;
         $total = $this->total;
 
-        foreach($payments as $payment)
-        {
+        foreach ($payments as $payment) {
             $total -= $payment->amount;
         }
 
@@ -329,25 +313,24 @@ class Invoice extends Model implements Auditable
     {
         $status = $this->status;
 
-        switch($status)
-        {
+        switch ($status) {
             default:
-                $textstatus = "Pending";
+                $textstatus = 'Pending';
                 break;
             case self::STATUS_DRAFT:
-                $textstatus = "Draft";
+                $textstatus = 'Draft';
                 break;
             case self::STATUS_OPEN:
-                $textstatus = "Pending";
+                $textstatus = 'Pending';
                 break;
             case self::STATUS_OVERDUE:
-                $textstatus = "Overdue";
+                $textstatus = 'Overdue';
                 break;
             case self::STATUS_CLOSED:
-                $textstatus = "Paid";
+                $textstatus = 'Paid';
                 break;
             case self::STATUS_WRITTENOFF:
-                $textstatus = "Written Off";
+                $textstatus = 'Written Off';
                 break;
         }
 
@@ -369,8 +352,7 @@ class Invoice extends Model implements Auditable
         $cloned->generated = true;
         $cloned->save();
 
-        foreach($this->items as $item)
-        {
+        foreach ($this->items as $item) {
             $clonedrelation = $item->replicate();
             $clonedrelation->save();
             $cloned->items()->save($clonedrelation);
@@ -383,19 +365,13 @@ class Invoice extends Model implements Auditable
 
     public function generateShareToken($regenerate = false)
     {
-        if ($regenerate)
-        {
+        if ($regenerate) {
             $token = Uuid::generate(4)->string;
             $this->share_token = $token;
-        }
-        else
-        {
-            if($this->share_token)
-            {
+        } else {
+            if ($this->share_token) {
                 $token = $this->share_token;
-            }
-            else
-            {
+            } else {
                 $token = Uuid::generate(4)->string;
                 $this->share_token = $token;
             }
@@ -477,5 +453,4 @@ class Invoice extends Model implements Auditable
         return $query
             ->where('archived', false);
     }
-
 }

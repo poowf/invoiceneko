@@ -25,18 +25,18 @@ class CreateInvoiceRequest extends FormRequest
     public function rules()
     {
         return [
-            'date' => 'required|date_format:"j F, Y"',
-            'netdays' => 'required|integer|min:0',
-            'client_id' => 'required',
-            'item_name.*' => 'required|string',
-            'item_quantity.*' => 'required|integer|min:1',
-            'item_price.*' => 'required|numeric',
-            'item_description.*' => 'string',
-            'recurring-time-interval' => 'required_if:recurring-invoice-check,on|integer|min:1',
-            'recurring-time-period' => 'required_if:recurring-invoice-check,on|in:day,week,month,year',
-            'recurring-until' => 'required_if:recurring-invoice-check,on|in:never,occurence,date',
+            'date'                             => 'required|date_format:"j F, Y"',
+            'netdays'                          => 'required|integer|min:0',
+            'client_id'                        => 'required',
+            'item_name.*'                      => 'required|string',
+            'item_quantity.*'                  => 'required|integer|min:1',
+            'item_price.*'                     => 'required|numeric',
+            'item_description.*'               => 'string',
+            'recurring-time-interval'          => 'required_if:recurring-invoice-check,on|integer|min:1',
+            'recurring-time-period'            => 'required_if:recurring-invoice-check,on|in:day,week,month,year',
+            'recurring-until'                  => 'required_if:recurring-invoice-check,on|in:never,occurence,date',
             'recurring-until-occurence-number' => 'required_if:recurring-invoice-check,on|integer|min:1',
-            'recurring-until-date-value' => 'required_if:recurring-invoice-check,on|date_format:"j F, Y"',
+            'recurring-until-date-value'       => 'required_if:recurring-invoice-check,on|date_format:"j F, Y"',
         ];
     }
 }

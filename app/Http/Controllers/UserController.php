@@ -5,22 +5,22 @@ namespace App\Http\Controllers;
 use App\Events\ChangedEmail;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Company;
 use App\Models\CompanyUserRequest;
+use App\Models\User;
 use Carbon\Carbon;
 use DateTimeZone;
-use Illuminate\Support\Facades\Hash;
-use App\Models\User;
-use App\Models\Company;
-use Illuminate\Http\Request;
 use Google2FA;
-use PragmaRX\Recovery\Recovery;
-use PragmaRX\Countries\Package\Countries;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use PragmaRX\Countries\Package\Countries;
+use PragmaRX\Recovery\Recovery;
 
 class UserController extends Controller
 {
-    public function __construct(){
-
+    public function __construct()
+    {
     }
 
     /**
@@ -37,22 +37,19 @@ class UserController extends Controller
      * Show the form for creating a new resource.
      *
      * @param Request $request
-     * @param null $token
+     * @param null    $token
+     *
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
     {
-
-        if ($request->query->has('token'))
-        {
+        if ($request->query->has('token')) {
             $token = $request->query->get('token');
             $companyUserRequest = CompanyUserRequest::where('token', $token)->first();
             session(['_old_input.full_name' => $companyUserRequest->full_name]);
             session(['_old_input.email' => $companyUserRequest->email]);
             session(['_old_input.phone' => $companyUserRequest->phone]);
-        }
-        elseif (strpos(session()->get('url.intended'), '/company/join') !== false)
-        {
+        } elseif (strpos(session()->get('url.intended'), '/company/join') !== false) {
             $joinUrl = session()->get('url.intended');
             $joinToken = preg_filter('/.*\/company\/join\//', '', $joinUrl);
             session(['_old_input.companyinvite' => $joinToken]);
@@ -60,13 +57,11 @@ class UserController extends Controller
 
         $ipLocation = geoip()->getLocation();
 
-        if($ipLocation->country !== 'NekoCountry')
-        {
+        if ($ipLocation->country !== 'NekoCountry') {
             session(['_old_input.country_code' => $ipLocation->iso_code]);
         }
 
-        if($ipLocation->timezone !== 'Asia/NekoCountry')
-        {
+        if ($ipLocation->timezone !== 'Asia/NekoCountry') {
             session(['_old_input.timezone' => $ipLocation->timezone]);
         }
 
@@ -80,17 +75,16 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      *
      * @param CreateUserRequest $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(CreateUserRequest $request)
     {
-        $user = new User;
+        $user = new User();
         $user->fill($request->all());
         $user->password = $request->input('password');
-        if($request->has('country_code') && !is_null($request->input('country_code')))
-        {
-            if($request->has('timezone') && is_null($request->input('timezone')))
-            {
+        if ($request->has('country_code') && !is_null($request->input('country_code'))) {
+            if ($request->has('timezone') && is_null($request->input('timezone'))) {
                 $timezone = DateTimeZone::listIdentifiers(DateTimeZone::PER_COUNTRY, $request->input('country_code'))[0];
                 $user->timezone = $timezone;
             }
@@ -98,8 +92,7 @@ class UserController extends Controller
         $user->save();
         event(new Registered($user));
 
-        if ($request->query->has('token'))
-        {
+        if ($request->query->has('token')) {
             $token = $request->query->get('token');
             $companyUserRequest = CompanyUserRequest::where('token', $token)->first();
             $user->save();
@@ -116,10 +109,9 @@ class UserController extends Controller
             flash('You can now sign in', 'success');
 
             return redirect()->route('auth.show');
-        }
-        else if($request->query->has('hasinvite'))
-        {
+        } elseif ($request->query->has('hasinvite')) {
             flash('Sign in to accept the invite', 'success');
+
             return redirect()->route('auth.show');
 //            return redirect()->route('company.invite.show', [ 'companyinvite' => $request->input('companyinvite') ]);
         }
@@ -149,22 +141,23 @@ class UserController extends Controller
         $user = auth()->user();
         $countries = countries();
         $timezones = DateTimeZone::listIdentifiers(DateTimeZone::ALL);
+
         return view('pages.user.edit', compact('user', 'countries', 'timezones'));
     }
 
     /**
-     * Retrieve the user and return as object
+     * Retrieve the user and return as object.
      *
-     * @param Company $company
-     * @param  \App\Models\User $user
+     * @param Company          $company
+     * @param \App\Models\User $user
+     *
      * @return \Illuminate\Http\JsonResponse|void
      */
     public function retrieve(Company $company, User $user)
     {
         $authedUser = auth()->user();
 
-        if ($company->hasUser($user) && $company->isOwner($authedUser))
-        {
+        if ($company->hasUser($user) && $company->isOwner($authedUser)) {
             return response()->json($user);
         }
 
@@ -175,6 +168,7 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdateUserRequest $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateUserRequest $request)
@@ -185,15 +179,13 @@ class UserController extends Controller
             $user->fill($request->all());
 
             $emailChanged = false;
-            if($user->isDirty('email')){
+            if ($user->isDirty('email')) {
                 $emailChanged = true;
                 $user->email_verified_at = null;
             }
 
-            if($request->has('country_code') && !is_null($request->input('country_code')))
-            {
-                if($request->has('timezone') && is_null($request->input('timezone')))
-                {
+            if ($request->has('country_code') && !is_null($request->input('country_code'))) {
+                if ($request->has('timezone') && is_null($request->input('timezone'))) {
                     $timezone = $this->countries
                         ->where('iso_3166_1_alpha2', $request->input('country_code'))
                         ->first()
@@ -212,11 +204,14 @@ class UserController extends Controller
 
             if (!$user->save()) {
                 flash('Failed to Update Profile', 'error');
+
                 return redirect()->back();
             } else {
-                if($emailChanged) : event(new ChangedEmail($user)); endif;
+                if ($emailChanged) : event(new ChangedEmail($user));
+                endif;
 
                 flash('Successfully Updated Profile', 'success');
+
                 return redirect()->back();
             }
         }
@@ -244,21 +239,19 @@ class UserController extends Controller
 
     public function multifactor_start(Company $company)
     {
-        return redirect()->route('user.multifactor.create', [ 'company' => $company ]);
+        return redirect()->route('user.multifactor.create', ['company' => $company]);
     }
 
     public function multifactor_create(Company $company)
     {
         $user = auth()->user();
-        if(is_null($user->twofa_secret))
-        {
+        if (is_null($user->twofa_secret)) {
             $twofa_secret = Google2FA::generateSecretKey(32);
             session()->put('twofa_secret', $twofa_secret);
-        }
-        else
-        {
+        } else {
             flash('Multifactor Auth is already enabled', 'warning');
-            return redirect()->route('user.security', [ 'company' => $company ]);
+
+            return redirect()->route('user.security', ['company' => $company]);
         }
 
         $twoFactorUrl = Google2FA::getQRCodeUrl(
@@ -289,14 +282,14 @@ class UserController extends Controller
             $user->twofa_backup_codes = $codesJSON;
             $user->save();
 
-            flash("Multifactor Auth has been enabled for your account", 'success');
-            return redirect()->route('user.security', [ 'company' => $company ])->with(compact( 'codes'));
+            flash('Multifactor Auth has been enabled for your account', 'success');
 
+            return redirect()->route('user.security', ['company' => $company])->with(compact('codes'));
         } else {
-            flash("Something went wrong, please try again", 'error');
+            flash('Something went wrong, please try again', 'error');
+
             return redirect()->back();
         }
-
     }
 
     public function multifactor_destroy(Request $request, Company $company)
@@ -312,10 +305,10 @@ class UserController extends Controller
             $user->twofa_backup_codes = null;
             $user->save();
 
-            flash("Multifactor Auth has been disabled for your account", 'warning');
+            flash('Multifactor Auth has been disabled for your account', 'warning');
         } else {
             // failed
-            flash("Incorrect code, Multifactor Auth has not been disabled for your account", 'danger');
+            flash('Incorrect code, Multifactor Auth has not been disabled for your account', 'danger');
         }
 
         return redirect()->back();
@@ -331,8 +324,9 @@ class UserController extends Controller
         $user->twofa_backup_codes = $codesJSON;
         $user->save();
 
-        flash("Your backup codes have been regenerated", 'success');
-        return redirect()->route('user.security', [ 'company' => $company ])->with(compact('codes'));
+        flash('Your backup codes have been regenerated', 'success');
+
+        return redirect()->route('user.security', ['company' => $company])->with(compact('codes'));
     }
 
     public function multifactor_backup()
@@ -347,31 +341,28 @@ class UserController extends Controller
 
         $backup_codes = json_decode($user->twofa_backup_codes);
 
-        foreach($backup_codes as $key => $backup_code)
-        {
-            if($backup_code === $code)
-            {
+        foreach ($backup_codes as $key => $backup_code) {
+            if ($backup_code === $code) {
                 unset($backup_codes[$key]); // remove item at index 0
                 $backup_codes = array_values($backup_codes);
                 $user->twofa_timestamp = Google2FA::getTimestamp();
                 $user->twofa_backup_codes = json_encode($backup_codes);
                 $user->save();
 
-                session()->put('multifactor_status',[
-                    "otp_timestamp" => true,
-                    "auth_passed" => true,
-                    "auth_time" => Carbon::now()
+                session()->put('multifactor_status', [
+                    'otp_timestamp' => true,
+                    'auth_passed'   => true,
+                    'auth_time'     => Carbon::now(),
                 ]);
 
-                return redirect()->route('dashboard', [ 'company' => $company ]);
-            }
-            else
-            {
+                return redirect()->route('dashboard', ['company' => $company]);
+            } else {
                 continue;
             }
         }
 
-        flash("That is an invalid backup code", 'error');
+        flash('That is an invalid backup code', 'error');
+
         return redirect()->back();
     }
 
@@ -379,16 +370,13 @@ class UserController extends Controller
     {
         $user = auth()->user();
 
-        if(session()->getId() != $sessionId)
-        {
+        if (session()->getId() != $sessionId) {
             $session = $user->sessions()->findOrFail($sessionId);
             $session->delete();
-        }
-        else
-        {
+        } else {
             flash('You cannot clear the current session', 'error');
         }
 
-        return redirect()->route('user.security', [ 'company' => $company ]);
+        return redirect()->route('user.security', ['company' => $company]);
     }
 }

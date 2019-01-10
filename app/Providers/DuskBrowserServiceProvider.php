@@ -14,7 +14,7 @@ class DuskBrowserServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        /**
+        /*
          * Scrolls page to a specific element.
          *
          * Leaves a buffer at the top to account for a fixed header.
@@ -34,6 +34,5 @@ class DuskBrowserServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
     }
 }

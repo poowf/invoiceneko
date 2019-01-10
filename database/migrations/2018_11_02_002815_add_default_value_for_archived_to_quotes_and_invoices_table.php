@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class AddDefaultValueForArchivedToQuotesAndInvoicesTable extends Migration
 {
@@ -30,11 +30,11 @@ class AddDefaultValueForArchivedToQuotesAndInvoicesTable extends Migration
     public function down()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            $table->boolean('archived')->default(NULL)->change();
+            $table->boolean('archived')->default(null)->change();
         });
 
         Schema::table('quotes', function (Blueprint $table) {
-            $table->boolean('archived')->default(NULL)->change();
+            $table->boolean('archived')->default(null)->change();
         });
     }
 }

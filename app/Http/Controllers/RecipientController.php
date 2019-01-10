@@ -34,26 +34,28 @@ class RecipientController extends Controller
      * Store a newly created resource in storage.
      *
      * @param CreateRecipientRequest $request
-     * @param Company $company
-     * @param Client $client
+     * @param Company                $company
+     * @param Client                 $client
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(CreateRecipientRequest $request, Company $company, Client $client)
     {
-        $recipient = new Recipient;
+        $recipient = new Recipient();
         $recipient->fill($request->all());
         $recipient->company_id = $company->id;
         $client->recipients()->save($recipient);
 
-        flash("You have sucessfully created a recipient", 'success');
+        flash('You have sucessfully created a recipient', 'success');
 
-        return redirect()->route('client.show', [ 'company' => $company, 'client' => $client ]);
+        return redirect()->route('client.show', ['company' => $company, 'client' => $client]);
     }
 
     /**
      * Display the specified resource.
      *
      * @param Recipient $recipient
+     *
      * @return void
      */
     public function show(Recipient $recipient)
@@ -64,9 +66,10 @@ class RecipientController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Company $company
-     * @param Client $client
+     * @param Company   $company
+     * @param Client    $client
      * @param Recipient $recipient
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit(Company $company, Client $client, Recipient $recipient)
@@ -78,9 +81,10 @@ class RecipientController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdateRecipientRequest $request
-     * @param Company $company
-     * @param Client $client
-     * @param Recipient $recipient
+     * @param Company                $company
+     * @param Client                 $client
+     * @param Recipient              $recipient
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateRecipientRequest $request, Company $company, Client $client, Recipient $recipient)
@@ -89,15 +93,16 @@ class RecipientController extends Controller
         $recipient->company_id = $company->id;
         $client->recipients()->save($recipient);
 
-        flash("You have sucessfully updated a recipient", 'success');
+        flash('You have sucessfully updated a recipient', 'success');
 
-        return redirect()->route('client.show', [ 'company' => $company, 'client' => $client ]);
+        return redirect()->route('client.show', ['company' => $company, 'client' => $client]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param Recipient $recipient
+     *
      * @return void
      */
     public function destroy(Recipient $recipient)

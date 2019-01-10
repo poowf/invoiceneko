@@ -5,8 +5,6 @@ namespace Tests\Unit;
 use App\Models\Company;
 use App\Models\CompanySetting;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CompanySettingsTest extends TestCase
 {
@@ -22,12 +20,12 @@ class CompanySettingsTest extends TestCase
         CompanySetting::unguard();
 
         $companySettings = CompanySetting::create([
-            'invoice_prefix' => 'PWF',
-            'quote_prefix' => 'PWFQ',
+            'invoice_prefix'     => 'PWF',
+            'quote_prefix'       => 'PWFQ',
             'invoice_conditions' => 'asdfasfdasfasfasdf <strong>asdfasdfasdf</strong> asfdassafas <p>asdfasdfasdfas</p>',
-            'quote_conditions' => 'asdfasfdasfasfasdf <strong>asdfasdfasdf</strong> asfdassafas <p>asdfasdfasdfas</p>',
-            'tax' => '20',
-            'company_id' => $company->id
+            'quote_conditions'   => 'asdfasfdasfasfasdf <strong>asdfasdfasdf</strong> asfdassafas <p>asdfasdfasdfas</p>',
+            'tax'                => '20',
+            'company_id'         => $company->id,
         ]);
 
         CompanySetting::reguard();
@@ -40,7 +38,7 @@ class CompanySettingsTest extends TestCase
     {
         $company = factory(Company::class)->create();
         $companySettings = factory(CompanySetting::class)->create([
-            'company_id' => $company->id
+            'company_id' => $company->id,
         ]);
 
         $this->assertInstanceOf(CompanySetting::class, $companySettings);
@@ -54,10 +52,10 @@ class CompanySettingsTest extends TestCase
         $this->assertEquals('12', $companySettings->tax);
 
         $data = [
-            'quote_prefix' => 'OINKQ',
+            'quote_prefix'       => 'OINKQ',
             'invoice_conditions' => 'I TAWT I SAW A PUTTY TAT',
-            'quote_conditions' => 'THIS IS TEH CONDIXION.',
-            'tax' => '5',
+            'quote_conditions'   => 'THIS IS TEH CONDIXION.',
+            'tax'                => '5',
         ];
 
         $companySettings->fill($data);
@@ -69,7 +67,6 @@ class CompanySettingsTest extends TestCase
         $this->assertEquals('THIS IS TEH CONDIXION.', $companySettings->quote_conditions);
         $this->assertEquals('5', $companySettings->tax);
     }
-
 
     public function test_delete_company_settings()
     {

@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Library\Poowf\Unicorn;
+use App\Http\Requests\UpdateCompanyAddressRequest;
 use App\Models\Company;
 use App\Models\CompanyAddress;
 use Illuminate\Http\Request;
-use App\Http\Requests\UpdateCompanyAddressRequest;
 
 class CompanyAddressController extends Controller
 {
@@ -14,6 +13,7 @@ class CompanyAddressController extends Controller
      * Display a listing of the resource.
      *
      * @param Company $company
+     *
      * @return void
      */
     public function index(Company $company)
@@ -25,6 +25,7 @@ class CompanyAddressController extends Controller
      * Show the form for creating a new resource.
      *
      * @param Company $company
+     *
      * @return void
      */
     public function create(Company $company)
@@ -35,8 +36,9 @@ class CompanyAddressController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param Company $company
+     * @param \Illuminate\Http\Request $request
+     * @param Company                  $company
+     *
      * @return void
      */
     public function store(Request $request, Company $company)
@@ -47,8 +49,9 @@ class CompanyAddressController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Company $company
-     * @param  \App\Models\CompanyAddress $companyAddress
+     * @param Company                    $company
+     * @param \App\Models\CompanyAddress $companyAddress
+     *
      * @return void
      */
     public function show(Company $company, CompanyAddress $companyAddress)
@@ -60,16 +63,14 @@ class CompanyAddressController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param Company $company
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit(Company $company)
     {
-        if($company)
-        {
+        if ($company) {
             $companyaddress = $company->address;
-        }
-        else
-        {
+        } else {
             $companyaddress = null;
         }
 
@@ -80,16 +81,16 @@ class CompanyAddressController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdateCompanyAddressRequest $request
-     * @param Company $company
+     * @param Company                     $company
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateCompanyAddressRequest $request, Company $company)
     {
         $companyaddress = $company->address;
 
-        if(!$companyaddress)
-        {
-           $companyaddress = new CompanyAddress;
+        if (!$companyaddress) {
+            $companyaddress = new CompanyAddress();
         }
 
         $companyaddress->fill($request->all());
@@ -103,8 +104,9 @@ class CompanyAddressController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Company $company
-     * @param  \App\Models\CompanyAddress $companyAddress
+     * @param Company                    $company
+     * @param \App\Models\CompanyAddress $companyAddress
+     *
      * @return void
      */
     public function destroy(Company $company, CompanyAddress $companyAddress)

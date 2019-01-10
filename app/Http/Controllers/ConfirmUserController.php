@@ -15,25 +15,22 @@ class ConfirmUserController extends Controller
 
     public function postConfirmEmail(Request $request, $token = null)
     {
-        if (!$token)
-        {
+        if (!$token) {
             $token = $request->input('confirmation_token');
         }
 
         $user = User::where('confirmation_token', $token)->first();
 
-        if ($user)
-        {
+        if ($user) {
             $user->confirmEmail();
             flash('Thanks for confirming your email! You may now sign in.', 'success');
+
             return redirect()->route('signin');
-        }
-        else
-        {
+        } else {
             flash('Something went wrong, please request a new confirmation email', 'error');
+
             return redirect()->route('confirm.request');
         }
-
     }
 
     public function getRegenerateConfirmEmail()
@@ -48,6 +45,7 @@ class ConfirmUserController extends Controller
         $user->sendConfirmEmailNotification();
 
         flash('You will receive your confirmation email soon.', 'success');
+
         return redirect()->route('confirm');
     }
 }

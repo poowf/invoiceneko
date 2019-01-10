@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Library\Poowf\Unicorn;
 use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\Request;
 
 class ResetPasswordController extends Controller
 {

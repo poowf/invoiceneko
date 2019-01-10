@@ -4,16 +4,17 @@ namespace Tests\Browser;
 
 use App\Models\Company;
 use Faker\Factory as Faker;
-use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
+use Tests\DuskTestCase;
 
 class CompanyAddressTest extends DuskTestCase
 {
     /**
      * A Dusk test example.
      *
-     * @return void
      * @throws \Throwable
+     *
+     * @return void
      */
     public function test_updating_company_address()
     {
@@ -28,15 +29,15 @@ class CompanyAddressTest extends DuskTestCase
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/' . $company->domain_name . '/dashboard')
-                ->visit('/' . $company->domain_name . '/company/address/edit')
+                ->assertPathIs('/'.$company->domain_name.'/dashboard')
+                ->visit('/'.$company->domain_name.'/company/address/edit')
                 ->type('block', $faker->buildingNumber)
                 ->type('street', $streetName)
                 ->type('unitnumber', $faker->buildingNumber)
                 ->type('postalcode', $faker->postcode)
                 ->click('label[for="buildingtype-residential"]')
                 ->press('UPDATE')
-                ->assertPathIs('/' . $company->domain_name . '/company/address/edit')
+                ->assertPathIs('/'.$company->domain_name.'/company/address/edit')
                 ->assertPresent('#edit-address')
                 ->assertInputValue('street', $streetName);
             $browser->script('jQuery(".signmeout-btn").click()');

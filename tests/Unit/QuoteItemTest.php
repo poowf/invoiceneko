@@ -6,8 +6,6 @@ use App\Models\Quote;
 use App\Models\QuoteItem;
 use Illuminate\Database\Eloquent\MassAssignmentException;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class QuoteItemTest extends TestCase
 {
@@ -23,11 +21,11 @@ class QuoteItemTest extends TestCase
         QuoteItem::unguard();
 
         $quoteItem = QuoteItem::create([
-            'name' => 'This is a Quote Item la',
-            'quantity' => '250',
-            'price' => '5.00',
+            'name'        => 'This is a Quote Item la',
+            'quantity'    => '250',
+            'price'       => '5.00',
             'description' => 'asfdasfasfasfsf<p>asasdfasdfasfas</p>',
-            'quote_id' => $quote->id
+            'quote_id'    => $quote->id,
         ]);
 
         QuoteItem::reguard();
@@ -40,12 +38,12 @@ class QuoteItemTest extends TestCase
     {
         $quote = factory(Quote::class)->create();
         $quoteItem = factory(QuoteItem::class)->create([
-            'quote_id' => $quote->id
+            'quote_id' => $quote->id,
         ]);
         $this->assertInstanceOf(QuoteItem::class, $quoteItem);
 
-        $quoteItem->price = "500.00";
-        $quoteItem->quantity = "2000";
+        $quoteItem->price = '500.00';
+        $quoteItem->quantity = '2000';
         $quoteItem->save();
         $quoteItem->refresh();
 
@@ -53,7 +51,7 @@ class QuoteItemTest extends TestCase
         $this->assertEquals('2000', $quoteItem->quantity);
 
         $data = [
-            'price' => '213131.00',
+            'price'    => '213131.00',
             'quantity' => '25000',
         ];
 
@@ -71,7 +69,7 @@ class QuoteItemTest extends TestCase
     {
         $quote = factory(Quote::class)->create();
         $quoteItem = factory(QuoteItem::class)->create([
-            'quote_id' => $quote->id
+            'quote_id' => $quote->id,
         ]);
 
         $this->assertInstanceOf(QuoteItem::class, $quoteItem);

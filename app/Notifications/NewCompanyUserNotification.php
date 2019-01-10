@@ -4,9 +4,9 @@ namespace App\Notifications;
 
 use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 
 class NewCompanyUserNotification extends Notification implements ShouldQueue
 {
@@ -26,7 +26,8 @@ class NewCompanyUserNotification extends Notification implements ShouldQueue
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
+     *
      * @return array
      */
     public function via($notifiable)
@@ -37,7 +38,8 @@ class NewCompanyUserNotification extends Notification implements ShouldQueue
     /**
      * Get the mail representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
+     *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
@@ -46,10 +48,10 @@ class NewCompanyUserNotification extends Notification implements ShouldQueue
         $password = $this->password;
         $url = route('auth.show');
 
-        return (new MailMessage)
-            ->subject("You have been added to a company on " . config('app.name'))
+        return (new MailMessage())
+            ->subject('You have been added to a company on '.config('app.name'))
             ->greeting("Hello {$user->full_name}!")
-            ->line('A new account has been created for you on ' . config('app.name'))
+            ->line('A new account has been created for you on '.config('app.name'))
             ->line('You account details are: ')
             ->line("Username: {$user->username}")
             ->line("Password: {$password}")
@@ -60,7 +62,8 @@ class NewCompanyUserNotification extends Notification implements ShouldQueue
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
+     *
      * @return array
      */
     public function toArray($notifiable)

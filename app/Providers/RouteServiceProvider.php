@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -40,7 +40,6 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('role', 'App\Models\Role');
         Route::model('user', 'App\Models\User');
 
-
         Route::pattern('token', '([A-Za-z0-9-]+)');
         Route::pattern('recipient', '([A-Za-z0-9]+)');
         Route::pattern('client', '([A-Za-z0-9]+)');
@@ -61,8 +60,6 @@ class RouteServiceProvider extends ServiceProvider
         Route::pattern('user', '([A-Za-z0-9]+)');
 
         parent::boot();
-
-
     }
 
     /**

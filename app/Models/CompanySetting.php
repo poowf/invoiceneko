@@ -25,13 +25,13 @@ class CompanySetting extends Model implements Auditable
         'receipt_prefix',
         'invoice_conditions',
         'quote_conditions',
-        'tax'
+        'tax',
     ];
 
     protected $attributes = [
         'invoice_conditions' => 'Terms & Conditions for your Invoice',
-        'quote_conditions' => 'Terms & Conditions for your Quote',
-        'tax' => 0,
+        'quote_conditions'   => 'Terms & Conditions for your Quote',
+        'tax'                => 0,
     ];
 
     protected static function boot()
@@ -40,8 +40,8 @@ class CompanySetting extends Model implements Auditable
 
         static::creating(function ($companySettings) {
             $companySettings->invoice_prefix = str_slug($companySettings->company->name);
-            $companySettings->quote_prefix = str_slug($companySettings->company->name) . 'Q';
-            $companySettings->receipt_prefix = str_slug($companySettings->company->name) . 'R';
+            $companySettings->quote_prefix = str_slug($companySettings->company->name).'Q';
+            $companySettings->receipt_prefix = str_slug($companySettings->company->name).'R';
         });
     }
 

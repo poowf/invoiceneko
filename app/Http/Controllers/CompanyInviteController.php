@@ -8,8 +8,8 @@ use App\Models\User;
 use App\Notifications\InviteUserNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Uuid;
 use Silber\Bouncer\BouncerFacade as Bouncer;
+use Uuid;
 
 class CompanyInviteController extends Controller
 {
@@ -27,6 +27,7 @@ class CompanyInviteController extends Controller
      * Show the form for creating a new resource.
      *
      * @param Company $company
+     *
      * @return \Illuminate\Http\Response
      */
     public function create(Company $company)
@@ -39,17 +40,16 @@ class CompanyInviteController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param Company $company
+     * @param \Illuminate\Http\Request $request
+     * @param Company                  $company
+     *
      * @return void
      */
     public function store(Request $request, Company $company)
     {
-        foreach($request->input('email') as $key => $invitee)
-        {
-            if($invitee)
-            {
-                $companyInvite = new CompanyInvite;
+        foreach ($request->input('email') as $key => $invitee) {
+            if ($invitee) {
+                $companyInvite = new CompanyInvite();
                 $companyInvite->email = $invitee;
                 $companyInvite->token = Uuid::generate(4)->string;
                 $companyInvite->expires_at = Carbon::now()->addDays(2);
@@ -61,22 +61,23 @@ class CompanyInviteController extends Controller
         }
 
         flash('Invite has been successfully sent to the user', 'success');
-        return redirect()->route('company.users.index', [ 'company' => $company ]);
+
+        return redirect()->route('company.users.index', ['company' => $company]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\CompanyInvite  $companyInvite
+     * @param \App\Models\CompanyInvite $companyInvite
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(CompanyInvite $companyInvite)
     {
         $company = $companyInvite->company;
         $user = auth()->user();
-        if($company->hasUser($user))
-        {
-            return redirect()->route('dashboard', [ 'company' => $company ]);
+        if ($company->hasUser($user)) {
+            return redirect()->route('dashboard', ['company' => $company]);
         }
 
         return view('pages.company.invite.show', compact('companyInvite'));
@@ -85,17 +86,18 @@ class CompanyInviteController extends Controller
     /**
      * Process the specified resource.
      *
-     * @param Request $request
-     * @param  \App\Models\CompanyInvite $companyInvite
-     * @return void
+     * @param Request                   $request
+     * @param \App\Models\CompanyInvite $companyInvite
+     *
      * @throws \Exception
+     *
+     * @return void
      */
     public function join(Request $request, CompanyInvite $companyInvite)
     {
         $user = auth()->user();
         $now = Carbon::now();
-        if(date_diff($now, $companyInvite->expires_at)->invert === 0)
-        {
+        if (date_diff($now, $companyInvite->expires_at)->invert === 0) {
             $company = $companyInvite->company;
             $roles = json_decode($companyInvite->roles);
 
@@ -105,10 +107,8 @@ class CompanyInviteController extends Controller
 
             $companyInvite->delete();
 
-            return redirect()->route('dashboard', [ 'company' => $company ]);
-        }
-        else
-        {
+            return redirect()->route('dashboard', ['company' => $company]);
+        } else {
             return redirect()->route('dashboard');
         }
     }
@@ -116,7 +116,8 @@ class CompanyInviteController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\CompanyInvite  $companyInvite
+     * @param \App\Models\CompanyInvite $companyInvite
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit(CompanyInvite $companyInvite)
@@ -127,8 +128,9 @@ class CompanyInviteController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\CompanyInvite  $companyInvite
+     * @param \Illuminate\Http\Request  $request
+     * @param \App\Models\CompanyInvite $companyInvite
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, CompanyInvite $companyInvite)
@@ -139,7 +141,8 @@ class CompanyInviteController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\CompanyInvite  $companyInvite
+     * @param \App\Models\CompanyInvite $companyInvite
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(CompanyInvite $companyInvite)
@@ -150,18 +153,18 @@ class CompanyInviteController extends Controller
     /**
      * @param Request $request
      * @param Company $company
-     * @param User $user
+     * @param User    $user
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function revoke(Request $request, Company $company, User $user)
     {
-        if($company->hasUser($user))
-        {
+        if ($company->hasUser($user)) {
             Bouncer::sync($user)->roles([]);
             Bouncer::sync($user)->abilities([]);
             $company->users()->detach($user->id);
         }
 
-        return redirect()->route('company.users.index', [ 'company' => $company ]);
+        return redirect()->route('company.users.index', ['company' => $company]);
     }
 }

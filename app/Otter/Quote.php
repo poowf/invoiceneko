@@ -14,14 +14,14 @@ class Quote extends OtterResource
     public static $model = 'App\Models\Quote';
 
     /**
-     * The column of the model to display in select options
+     * The column of the model to display in select options.
      *
      * @var string
      */
     public static $title = 'nice_quote_id';
 
     /**
-     * Get the fields and types used by the resource
+     * Get the fields and types used by the resource.
      *
      * @return array
      */
@@ -29,15 +29,15 @@ class Quote extends OtterResource
     {
         return [
             'nice_quote_id' => 'text',
-            'date' => 'text',
-            'netdays' => 'text',
-            'total' => 'text',
-            'status' => 'text',
+            'date'          => 'text',
+            'netdays'       => 'text',
+            'total'         => 'text',
+            'status'        => 'text',
         ];
     }
 
     /**
-     * Fields to be hidden in the resource collection
+     * Fields to be hidden in the resource collection.
      *
      * @return array
      */

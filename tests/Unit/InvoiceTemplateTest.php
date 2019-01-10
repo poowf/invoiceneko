@@ -7,8 +7,6 @@ use App\Models\Company;
 use App\Models\InvoiceRecurrence;
 use App\Models\InvoiceTemplate;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class InvoiceTemplateTest extends TestCase
 {
@@ -21,20 +19,20 @@ class InvoiceTemplateTest extends TestCase
     {
         $company = factory(Company::class)->create();
         $client = factory(Client::class)->create([
-            'company_id' => $company->id
+            'company_id' => $company->id,
         ]);
         $invoiceEvent = factory(InvoiceRecurrence::class)->create([
-            'company_id' => $company->id
+            'company_id' => $company->id,
         ]);
 
         InvoiceTemplate::unguard();
 
         $invoiceTemplate = InvoiceTemplate::create([
-            'date' => '2018-11-01 00:00:00',
-            'netdays' => '20',
-            'notify' => '0',
-            'client_id' => $client->id,
-            'invoice_recurrence_id' => $invoiceEvent->id
+            'date'                  => '2018-11-01 00:00:00',
+            'netdays'               => '20',
+            'notify'                => '0',
+            'client_id'             => $client->id,
+            'invoice_recurrence_id' => $invoiceEvent->id,
         ]);
 
         InvoiceTemplate::reguard();
@@ -59,9 +57,9 @@ class InvoiceTemplateTest extends TestCase
 
         //Testing fillable properties
         $data = [
-            'date' => '2018-11-26 00:00:00',
+            'date'    => '2018-11-26 00:00:00',
             'netdays' => '30',
-            'notify' => '1'
+            'notify'  => '1',
         ];
 
         $invoiceTemplate->fill($data);

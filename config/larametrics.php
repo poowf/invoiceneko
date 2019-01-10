@@ -13,7 +13,7 @@ return [
     |
     */
     'modelsWatched' => [
-        'App\Models\User'
+        'App\Models\User',
     ],
 
     /*
@@ -21,10 +21,10 @@ return [
     | Models Watched - Expire Days
     |--------------------------------------------------------------------------
     |
-    | By default, model changes are stored in the database for 30 days. You 
+    | By default, model changes are stored in the database for 30 days. You
     | can set your own expiration time (in days) here. During each time a change
     | is added to the database, any records older than the expiration time will
-    | be removed. 
+    | be removed.
     |
     */
     'modelsWatchedExpireDays' => 30,
@@ -104,9 +104,9 @@ return [
     |--------------------------------------------------------------------------
     |
     | By default, logs  are stored in the database for an unlimited amount
-    | of time. You can set your own expiration time (in days) here. Each 
-    | time a log is added to the database, any records older than the 
-    | expiration time will be removed. 
+    | of time. You can set your own expiration time (in days) here. Each
+    | time a log is added to the database, any records older than the
+    | expiration time will be removed.
     |
     */
     'logsWatchedExpireDays' => 0,
@@ -145,7 +145,7 @@ return [
     */
     'notificationMethods' => [
         'email' => env('LARAMETRICS_NOTIFICATION_EMAIL', 'admin@localhost'),
-        'slack' => env('LARAMETRICS_NOTIFICATION_SLACK_WEBHOOK', '')
-    ]
+        'slack' => env('LARAMETRICS_NOTIFICATION_SLACK_WEBHOOK', ''),
+    ],
 
 ];

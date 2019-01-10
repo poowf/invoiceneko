@@ -3,14 +3,16 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class ContactForm extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
-    private $name, $email, $message;
+    private $name;
+    private $email;
+    private $message;
 
     /**
      * Create a new message instance.
@@ -33,8 +35,8 @@ class ContactForm extends Mailable implements ShouldQueue
     {
         return $this->markdown('emails.contact')
             ->with([
-                'name' => $this->name,
-                'email' => $this->email,
+                'name'    => $this->name,
+                'email'   => $this->email,
                 'message' => $this->message,
             ]);
     }

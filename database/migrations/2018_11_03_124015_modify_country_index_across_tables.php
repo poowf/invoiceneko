@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class ModifyCountryIndexAcrossTables extends Migration
 {
@@ -13,15 +13,15 @@ class ModifyCountryIndexAcrossTables extends Migration
      */
     public function up()
     {
-        Schema::table('clients', function(Blueprint $table) {
+        Schema::table('clients', function (Blueprint $table) {
             $table->string('country', 2)->change();
         });
 
-        Schema::table('users', function(Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             $table->string('country', 2)->change();
         });
 
-        Schema::table('companies', function(Blueprint $table) {
+        Schema::table('companies', function (Blueprint $table) {
             $table->string('country', 2)->change();
         });
     }
@@ -33,15 +33,15 @@ class ModifyCountryIndexAcrossTables extends Migration
      */
     public function down()
     {
-        Schema::table('clients', function(Blueprint $table) {
+        Schema::table('clients', function (Blueprint $table) {
             $table->string('country', 255)->change();
         });
 
-        Schema::table('users', function(Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             $table->string('country', 255)->change();
         });
 
-        Schema::table('companies', function(Blueprint $table) {
+        Schema::table('companies', function (Blueprint $table) {
             $table->string('country', 255)->change();
         });
     }

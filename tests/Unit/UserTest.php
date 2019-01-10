@@ -5,8 +5,6 @@ namespace Tests\Unit;
 use App\Models\Company;
 use App\Models\User;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserTest extends TestCase
 {
@@ -15,7 +13,6 @@ class UserTest extends TestCase
      *
      * @return void
      */
-
     public function test_create_user()
     {
         $company = factory(Company::class)->create();
@@ -23,13 +20,13 @@ class UserTest extends TestCase
         User::unguard();
 
         $user = User::create([
-            'full_name' => 'Poowf Bunny',
-            'username' => 'poowf',
-            'password' => 'secret',
-            'email' => 'bunny@poowf.com',
-            'phone' => '+6579328669',
-            'gender' => 'female',
-            'remember_token' => 'sadfaxsfie'
+            'full_name'      => 'Poowf Bunny',
+            'username'       => 'poowf',
+            'password'       => 'secret',
+            'email'          => 'bunny@poowf.com',
+            'phone'          => '+6579328669',
+            'gender'         => 'female',
+            'remember_token' => 'sadfaxsfie',
         ]);
 
         User::reguard();
@@ -56,12 +53,12 @@ class UserTest extends TestCase
         $this->assertEquals('bargabarbararba', $user->remember_token);
 
         $data = [
-            'username' => 'NyanIndustries',
-            'email' => 'nowaythiscannotbe@example.com',
-            'phone' => '+659774123',
-            'gender' => 'female',
+            'username'     => 'NyanIndustries',
+            'email'        => 'nowaythiscannotbe@example.com',
+            'phone'        => '+659774123',
+            'gender'       => 'female',
             'country_code' => 'SG',
-            'company_id' => $company->id
+            'company_id'   => $company->id,
         ];
 
         $user->fill($data);
@@ -75,7 +72,6 @@ class UserTest extends TestCase
         $this->assertEquals('SG', $user->country_code);
         $this->assertNotEquals($company->id, $user->company_id);
     }
-
 
     public function test_delete_user()
     {
