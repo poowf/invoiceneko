@@ -32,17 +32,17 @@ class PaymentTest extends DuskTestCase
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/'.$company->domain_name.'/dashboard')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->clickLink('Payments')
-                ->assertPathIs('/'.$company->domain_name.'/payments')
+                ->assertPathIs('/' . $company->domain_name . '/payments')
                 ->clickLink('Create')
-                ->assertPathIs('/'.$company->domain_name.'/payment/create')
+                ->assertPathIs('/' . $company->domain_name . '/payment/create')
                 ->type('amount', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999))
                 ->type('notes', $faker->text(50));
             $browser
-                ->script('jQuery("#receiveddate").datepicker("setDate", new Date());jQuery("#receiveddate").val("'.Carbon::now()->format('j F, Y').'");');
+                ->script('jQuery("#receiveddate").datepicker("setDate", new Date());jQuery("#receiveddate").val("' . Carbon::now()->format('j F, Y') . '");');
             $browser
-                ->script('jQuery("#invoice_id").selectize()[0].selectize.setValue("'.$invoice->id.'");');
+                ->script('jQuery("#invoice_id").selectize()[0].selectize.setValue("' . $invoice->id . '");');
             $browser
                 ->script('jQuery("#mode").selectize()[0].selectize.setValue("Cheque");');
             $browser
@@ -72,23 +72,23 @@ class PaymentTest extends DuskTestCase
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/'.$company->domain_name.'/dashboard')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->clickLink('Payments')
-                ->assertPathIs('/'.$company->domain_name.'/payments');
+                ->assertPathIs('/' . $company->domain_name . '/payments');
             $browser
                 ->script("jQuery(\"a[href='{$this->baseUrl()}/{$company->domain_name}/payment/{$payment->id}/edit'] > i\").click();");
             $browser
-                ->assertPathBeginsWith('/'.$company->domain_name.'/payment')
+                ->assertPathBeginsWith('/' . $company->domain_name . '/payment')
                 ->type('amount', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999))
                 ->type('notes', $faker->text(50));
             $browser
-                ->script('jQuery("#receiveddate").datepicker("setDate", new Date());jQuery("#receiveddate").val("'.Carbon::now()->format('j F, Y').'");');
+                ->script('jQuery("#receiveddate").datepicker("setDate", new Date());jQuery("#receiveddate").val("' . Carbon::now()->format('j F, Y') . '");');
             $browser
                 ->script('jQuery("#mode").selectize()[0].selectize.setValue("Cheque");');
             $browser
                 ->press('SUBMIT')
                 ->assertPresent('#payment-container')
-                ->assertPathIs('/'.$company->domain_name.'/payments');
+                ->assertPathIs('/' . $company->domain_name . '/payments');
             $browser->script('jQuery(".signmeout-btn").click()');
             $browser->assertPathIs('/');
         });
@@ -113,16 +113,16 @@ class PaymentTest extends DuskTestCase
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/'.$company->domain_name.'/dashboard')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->clickLink('Payments')
-                ->assertPathIs('/'.$company->domain_name.'/payments');
+                ->assertPathIs('/' . $company->domain_name . '/payments');
             $browser
                 ->script('jQuery(".payment-delete-btn > i").click();');
             $browser
                 ->pause(500)
                 ->press('DELETE')
                 ->assertPresent('#payment-container')
-                ->assertPathIs('/'.$company->domain_name.'/payments');
+                ->assertPathIs('/' . $company->domain_name . '/payments');
             $browser->script('jQuery(".signmeout-btn").click()');
             $browser->assertPathIs('/');
         });
@@ -142,45 +142,45 @@ class PaymentTest extends DuskTestCase
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/'.$company->domain_name.'/dashboard')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->clickLink('Payments')
-                ->assertPathIs('/'.$company->domain_name.'/payments')
+                ->assertPathIs('/' . $company->domain_name . '/payments')
                 ->clickLink('Create')
-                ->assertPathIs('/'.$company->domain_name.'/payment/create')
+                ->assertPathIs('/' . $company->domain_name . '/payment/create')
                 ->type('amount', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999))
                 ->type('notes', $faker->text(50));
             $browser
-                ->script('jQuery("#receiveddate").datepicker("setDate", new Date());jQuery("#receiveddate").val("'.Carbon::now()->format('j F, Y').'");');
+                ->script('jQuery("#receiveddate").datepicker("setDate", new Date());jQuery("#receiveddate").val("' . Carbon::now()->format('j F, Y') . '");');
             $browser
-                ->script('jQuery("#invoice_id").selectize()[0].selectize.setValue("'.$invoice->id.'");');
+                ->script('jQuery("#invoice_id").selectize()[0].selectize.setValue("' . $invoice->id . '");');
             $browser
                 ->script('jQuery("#mode").selectize()[0].selectize.setValue("Cheque");');
             $browser
                 ->press('SUBMIT')
                 ->assertPresent('#payment-container')
                 ->clickLink('Payments')
-                ->assertPathIs('/'.$company->domain_name.'/payments');
+                ->assertPathIs('/' . $company->domain_name . '/payments');
             $browser
                 ->script("jQuery(\"a[data-tooltip='Edit Payment'] > i\").click();");
             $browser
-                ->assertPathBeginsWith('/'.$company->domain_name.'/payment')
+                ->assertPathBeginsWith('/' . $company->domain_name . '/payment')
                 ->type('amount', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999))
                 ->type('notes', $faker->text(50));
             $browser
-                ->script('jQuery("#receiveddate").datepicker("setDate", new Date());jQuery("#receiveddate").val("'.Carbon::now()->format('j F, Y').'");');
+                ->script('jQuery("#receiveddate").datepicker("setDate", new Date());jQuery("#receiveddate").val("' . Carbon::now()->format('j F, Y') . '");');
             $browser
                 ->script('jQuery("#mode").selectize()[0].selectize.setValue("Cheque");');
             $browser
                 ->press('SUBMIT')
                 ->assertPresent('#payment-container')
-                ->assertPathIs('/'.$company->domain_name.'/payments');
+                ->assertPathIs('/' . $company->domain_name . '/payments');
             $browser
                 ->script('jQuery(".payment-delete-btn > i").click();');
             $browser
                 ->pause(500)
                 ->press('DELETE')
                 ->assertPresent('#payment-container')
-                ->assertPathIs('/'.$company->domain_name.'/payments');
+                ->assertPathIs('/' . $company->domain_name . '/payments');
             $browser->script('jQuery(".signmeout-btn").click()');
             $browser->assertPathIs('/');
         });

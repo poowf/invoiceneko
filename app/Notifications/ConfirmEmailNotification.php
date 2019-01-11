@@ -43,7 +43,7 @@ class ConfirmEmailNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage())
-            ->line('Thanks for Signing up to '.config('app.name'))
+            ->line('Thanks for Signing up to ' . config('app.name'))
             ->line('Please confirm your email!')
             ->action('Confirm Email', route('confirm', ['token' => $this->token]))
             ->line('Thank you for using our application!');

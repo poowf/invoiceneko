@@ -93,7 +93,7 @@ class QuoteController extends Controller
 
         $pdf = $quote->generatePDFView();
 
-        return $pdf->inline(str_slug($quote->nice_quote_id).'.pdf');
+        return $pdf->inline(str_slug($quote->nice_quote_id) . '.pdf');
     }
 
     /**
@@ -235,7 +235,7 @@ class QuoteController extends Controller
     {
         $pdf = $quote->generatePDFView();
 
-        return $pdf->inline(str_slug($quote->nice_quote_id).'quote.pdf');
+        return $pdf->inline(str_slug($quote->nice_quote_id) . 'quote.pdf');
     }
 
     /**
@@ -250,7 +250,7 @@ class QuoteController extends Controller
     {
         $pdf = $quote->generatePDFView();
 
-        return $pdf->download(str_slug($quote->nice_quote_id).'.pdf');
+        return $pdf->download(str_slug($quote->nice_quote_id) . '.pdf');
     }
 
     /**

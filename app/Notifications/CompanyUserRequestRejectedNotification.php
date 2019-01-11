@@ -43,7 +43,7 @@ class CompanyUserRequestRejectedNotification extends Notification implements Sho
     public function toMail($notifiable)
     {
         return (new MailMessage())
-            ->subject('Your requested to be added to your company on '.config('app.name').' has been rejected')
+            ->subject('Your requested to be added to your company on ' . config('app.name') . ' has been rejected')
             ->line('Please contact your company administrator for the reason')
             ->line('Thank you for using our application!');
     }

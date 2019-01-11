@@ -215,7 +215,7 @@ class Invoice extends Model implements Auditable
 
     public function hash()
     {
-        $hash = hash('sha512', serialize($this.$this->items));
+        $hash = hash('sha512', serialize($this . $this->items));
 
         return $hash;
     }

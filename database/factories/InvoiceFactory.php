@@ -4,7 +4,7 @@ use Faker\Generator as Faker;
 
 $factory->define(\App\Models\Invoice::class, function (Faker $faker) {
     return [
-        'nice_invoice_id' => substr($faker->slug, 0, 20).'sasdf',
+        'nice_invoice_id' => substr($faker->slug, 0, 20) . 'sasdf',
         'date'            => $faker->dateTime,
         'duedate'         => $faker->dateTime,
         'netdays'         => $faker->numberBetween($min = 1, $max = 60),
