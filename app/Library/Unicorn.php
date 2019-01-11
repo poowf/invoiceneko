@@ -173,23 +173,23 @@ class Unicorn
         Bouncer::useRoleModel(Role::class);
 
         Bouncer::ability()->makeForModel($model, [
-            'name'  => 'view-'.str_slug(strtolower(self::getModelNiceName($model))),
-            'title' => 'View '.self::getModelNiceName($model),
+            'name'  => 'view-' . str_slug(strtolower(self::getModelNiceName($model))),
+            'title' => 'View ' . self::getModelNiceName($model),
         ])->save();
 
         Bouncer::ability()->makeForModel($model, [
-            'name'  => 'create-'.str_slug(strtolower(self::getModelNiceName($model))),
-            'title' => 'Create '.self::getModelNiceName($model),
+            'name'  => 'create-' . str_slug(strtolower(self::getModelNiceName($model))),
+            'title' => 'Create ' . self::getModelNiceName($model),
         ])->save();
 
         Bouncer::ability()->makeForModel($model, [
-            'name'  => 'update-'.str_slug(strtolower(self::getModelNiceName($model))),
-            'title' => 'Update '.self::getModelNiceName($model),
+            'name'  => 'update-' . str_slug(strtolower(self::getModelNiceName($model))),
+            'title' => 'Update ' . self::getModelNiceName($model),
         ])->save();
 
         Bouncer::ability()->makeForModel($model, [
-            'name'  => 'delete-'.str_slug(strtolower(self::getModelNiceName($model))),
-            'title' => 'Delete '.self::getModelNiceName($model),
+            'name'  => 'delete-' . str_slug(strtolower(self::getModelNiceName($model))),
+            'title' => 'Delete ' . self::getModelNiceName($model),
         ])->save();
     }
 
@@ -236,10 +236,10 @@ class Unicorn
 
         if ($modelClass === 'all') {
             foreach (self::$modelClasses as $key => $model) {
-                Bouncer::allow($role)->to($methodName.'-'.str_slug(strtolower(self::getModelNiceName($model))), $model);
+                Bouncer::allow($role)->to($methodName . '-' . str_slug(strtolower(self::getModelNiceName($model))), $model);
             }
         } else {
-            Bouncer::allow($role)->to($methodName.'-'.str_slug(strtolower(self::getModelNiceName($modelClass))), $modelClass);
+            Bouncer::allow($role)->to($methodName . '-' . str_slug(strtolower(self::getModelNiceName($modelClass))), $modelClass);
         }
     }
 

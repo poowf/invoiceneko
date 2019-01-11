@@ -30,8 +30,8 @@ class CompanyUsersManagementTest extends DuskTestCase
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/'.$company->domain_name.'/dashboard')
-                ->visit('/'.$company->domain_name.'/company/users')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
+                ->visit('/' . $company->domain_name . '/company/users')
                 ->clickLink('Invite User')
                 ->type('#email_0', $faker->unique()->safeEmail);
             $browser
@@ -39,7 +39,7 @@ class CompanyUsersManagementTest extends DuskTestCase
             $browser
                 ->press('INVITE')
                 ->assertPresent('#users-table')
-                ->assertPathIs('/'.$company->domain_name.'/company/users');
+                ->assertPathIs('/' . $company->domain_name . '/company/users');
             $browser->script('jQuery(".signmeout-btn").click()');
             $browser->assertPathIs('/');
         });
@@ -62,13 +62,13 @@ class CompanyUsersManagementTest extends DuskTestCase
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/'.$company->domain_name.'/dashboard')
-                ->visit('/'.$company->domain_name.'/company/requests');
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
+                ->visit('/' . $company->domain_name . '/company/requests');
             $browser
                 ->script("jQuery(\"form[data-tooltip='Approve User']\").submit();");
             $browser
                 ->assertPresent('#request-container')
-                ->assertPathIs('/'.$company->domain_name.'/company/requests');
+                ->assertPathIs('/' . $company->domain_name . '/company/requests');
             $browser->script('jQuery(".signmeout-btn").click()');
             $browser->assertPathIs('/');
         });
@@ -91,13 +91,13 @@ class CompanyUsersManagementTest extends DuskTestCase
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/'.$company->domain_name.'/dashboard')
-                ->visit('/'.$company->domain_name.'/company/requests');
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
+                ->visit('/' . $company->domain_name . '/company/requests');
             $browser
                 ->script("jQuery(\"form[data-tooltip='Reject User']\").submit();");
             $browser
                 ->assertPresent('#request-container')
-                ->assertPathIs('/'.$company->domain_name.'/company/requests');
+                ->assertPathIs('/' . $company->domain_name . '/company/requests');
             $browser->script('jQuery(".signmeout-btn").click()');
             $browser->assertPathIs('/');
         });

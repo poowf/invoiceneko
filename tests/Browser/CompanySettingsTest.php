@@ -29,18 +29,18 @@ class CompanySettingsTest extends DuskTestCase
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/'.$company->domain_name.'/dashboard')
-                ->visit('/'.$company->domain_name.'/company/settings/edit')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
+                ->visit('/' . $company->domain_name . '/company/settings/edit')
                 ->type('tax', $faker->numberBetween($min = 1, $max = 100))
                 ->type('invoice_prefix', $invoicePrefix)
                 ->type('quote_prefix', $faker->domainWord);
             $browser
-                ->script('jQuery("#invoice_conditions").trumbowyg("html", "'.$faker->text(200).'");');
+                ->script('jQuery("#invoice_conditions").trumbowyg("html", "' . $faker->text(200) . '");');
             $browser
-                ->script('jQuery("#quote_conditions").trumbowyg("html", "'.$faker->text(200).'");');
+                ->script('jQuery("#quote_conditions").trumbowyg("html", "' . $faker->text(200) . '");');
             $browser
                 ->press('UPDATE')
-                ->assertPathIs('/'.$company->domain_name.'/company/settings/edit')
+                ->assertPathIs('/' . $company->domain_name . '/company/settings/edit')
                 ->assertPresent('#edit-company-settings')
                 ->assertInputValue('invoice_prefix', $invoicePrefix);
             $browser->script('jQuery(".signmeout-btn").click()');

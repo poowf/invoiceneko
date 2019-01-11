@@ -135,7 +135,7 @@ class InvoiceController extends Controller
 
         $pdf = $invoice->generatePDFView();
 
-        return $pdf->inline(str_slug($invoice->nice_invoice_id).'.pdf');
+        return $pdf->inline(str_slug($invoice->nice_invoice_id) . '.pdf');
     }
 
     /**
@@ -340,7 +340,7 @@ class InvoiceController extends Controller
     {
         $pdf = $invoice->generatePDFView();
 
-        return $pdf->inline(str_slug($invoice->nice_invoice_id).'.pdf');
+        return $pdf->inline(str_slug($invoice->nice_invoice_id) . '.pdf');
     }
 
     /**
@@ -355,7 +355,7 @@ class InvoiceController extends Controller
     {
         $pdf = $invoice->generatePDFView();
 
-        return $pdf->download(str_slug($invoice->nice_invoice_id).'.pdf');
+        return $pdf->download(str_slug($invoice->nice_invoice_id) . '.pdf');
     }
 
     /**

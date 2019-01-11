@@ -60,23 +60,23 @@ class ClientController extends Controller
         $client->company_id = $company->id;
         $client->save();
 
-        $storedirectory = '/perm_store/company/'.$client->company_id.'/clients/'.$client->id.'/photos/';
+        $storedirectory = '/perm_store/company/' . $client->company_id . '/clients/' . $client->id . '/photos/';
 
         Storage::makeDirectory($storedirectory);
 
         if ($request->file('logo')) {
             $file = $request->file('logo');
             $uuid = str_random(25);
-            $filename = $uuid.'.png';
+            $filename = $uuid . '.png';
 
-            if (!Storage::exists($storedirectory.'logo_'.$filename)) {
+            if (!Storage::exists($storedirectory . 'logo_' . $filename)) {
                 $image = Image::make($file)->fit(500, 500, function ($constraint) {
                     $constraint->upsize();
                 }, 'center');
-                Storage::put($storedirectory.'logo_'.$filename, $image->stream('jpg')->detach());
+                Storage::put($storedirectory . 'logo_' . $filename, $image->stream('jpg')->detach());
             }
 
-            $filepath = $storedirectory.'logo_'.$filename;
+            $filepath = $storedirectory . 'logo_' . $filename;
 
             $client->logo = $filepath;
         }
@@ -142,23 +142,23 @@ class ClientController extends Controller
         $client->fill($request->all());
         $client->save();
 
-        $storedirectory = '/perm_store/company/'.$client->company_id.'/clients/'.$client->id.'/photos/';
+        $storedirectory = '/perm_store/company/' . $client->company_id . '/clients/' . $client->id . '/photos/';
 
         Storage::makeDirectory($storedirectory);
 
         if ($request->file('logo')) {
             $file = $request->file('logo');
             $uuid = str_random(25);
-            $filename = $uuid.'.png';
+            $filename = $uuid . '.png';
 
-            if (!Storage::exists($storedirectory.'logo_'.$filename)) {
+            if (!Storage::exists($storedirectory . 'logo_' . $filename)) {
                 $image = Image::make($file)->fit(500, 500, function ($constraint) {
                     $constraint->upsize();
                 }, 'center');
-                Storage::put($storedirectory.'logo_'.$filename, $image->stream('jpg')->detach());
+                Storage::put($storedirectory . 'logo_' . $filename, $image->stream('jpg')->detach());
             }
 
-            $filepath = $storedirectory.'logo_'.$filename;
+            $filepath = $storedirectory . 'logo_' . $filename;
 
             $client->logo = $filepath;
         }

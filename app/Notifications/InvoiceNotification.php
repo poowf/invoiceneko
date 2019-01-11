@@ -53,7 +53,7 @@ class InvoiceNotification extends Notification implements ShouldQueue
         //Cast to string to ensure only a string is returned
         $token = (string) $invoice->generateShareToken();
         $url = route('invoice.token', ['token' => $token]);
-        $invoice_slug = str_slug($invoice->nice_invoice_id).'.pdf';
+        $invoice_slug = str_slug($invoice->nice_invoice_id) . '.pdf';
 
         return (new MailMessage())
                     ->subject("New Invoice #{$invoice->nice_invoice_id} from {$company->name}")

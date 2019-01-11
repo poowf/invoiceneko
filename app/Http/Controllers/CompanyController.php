@@ -78,23 +78,23 @@ class CompanyController extends Controller
             }
             $company->save();
 
-            $storedirectory = '/perm_store/company/'.$company->id.'/photos/';
+            $storedirectory = '/perm_store/company/' . $company->id . '/photos/';
 
             Storage::makeDirectory($storedirectory);
 
             if ($request->file('logo')) {
                 $file = $request->file('logo');
                 $uuid = str_random(25);
-                $filename = $uuid.'.png';
+                $filename = $uuid . '.png';
 
-                if (!Storage::exists($storedirectory.'logo_'.$filename)) {
+                if (!Storage::exists($storedirectory . 'logo_' . $filename)) {
                     $image = Image::make($file)->fit(420, 220, function ($constraint) {
                         $constraint->upsize();
                     }, 'center');
-                    Storage::put($storedirectory.'logo_'.$filename, $image->stream('jpg')->detach());
+                    Storage::put($storedirectory . 'logo_' . $filename, $image->stream('jpg')->detach());
                 }
 
-                $filepath = $storedirectory.'logo_'.$filename;
+                $filepath = $storedirectory . 'logo_' . $filename;
 
                 $company->logo = $filepath;
             }
@@ -102,16 +102,16 @@ class CompanyController extends Controller
             if ($request->file('smlogo')) {
                 $file = $request->file('smlogo');
                 $uuid = str_random(25);
-                $filename = $uuid.'.png';
+                $filename = $uuid . '.png';
 
-                if (!Storage::exists($storedirectory.'smlogo_'.$filename)) {
+                if (!Storage::exists($storedirectory . 'smlogo_' . $filename)) {
                     $image = Image::make($file)->fit(200, 200, function ($constraint) {
                         $constraint->upsize();
                     }, 'center');
-                    Storage::put($storedirectory.'smlogo_'.$filename, $image->stream('jpg')->detach());
+                    Storage::put($storedirectory . 'smlogo_' . $filename, $image->stream('jpg')->detach());
                 }
 
-                $filepath = $storedirectory.'smlogo_'.$filename;
+                $filepath = $storedirectory . 'smlogo_' . $filename;
 
                 $company->smlogo = $filepath;
             }
@@ -177,24 +177,24 @@ class CompanyController extends Controller
         }
         $company->save();
 
-        $storedirectory = '/perm_store/company/'.$company->id.'/photos/';
+        $storedirectory = '/perm_store/company/' . $company->id . '/photos/';
         Storage::makeDirectory($storedirectory);
 
         if ($request->file('logo')) {
             $file = $request->file('logo');
             $uuid = str_random(25);
-            $filename = $uuid.'.png';
+            $filename = $uuid . '.png';
 
-            if (!Storage::exists($storedirectory.'logo_'.$filename)) {
+            if (!Storage::exists($storedirectory . 'logo_' . $filename)) {
                 $image = Image::make($file)
                     ->encode('png', 100)
                     ->fit(420, 220, function ($constraint) {
                         $constraint->upsize();
                     }, 'center');
-                Storage::put($storedirectory.'logo_'.$filename, $image->stream('jpg')->detach());
+                Storage::put($storedirectory . 'logo_' . $filename, $image->stream('jpg')->detach());
             }
 
-            $filepath = $storedirectory.'logo_'.$filename;
+            $filepath = $storedirectory . 'logo_' . $filename;
 
             $company->logo = $filepath;
         }
@@ -202,18 +202,18 @@ class CompanyController extends Controller
         if ($request->file('smlogo')) {
             $file = $request->file('smlogo');
             $uuid = str_random(25);
-            $filename = $uuid.'.png';
+            $filename = $uuid . '.png';
 
-            if (!Storage::exists($storedirectory.'smlogo_'.$filename)) {
+            if (!Storage::exists($storedirectory . 'smlogo_' . $filename)) {
                 $image = Image::make($file)
                     ->encode('png', 100)
                     ->fit(200, 200, function ($constraint) {
                         $constraint->upsize();
                     }, 'center');
-                Storage::put($storedirectory.'smlogo_'.$filename, $image->stream('jpg')->detach());
+                Storage::put($storedirectory . 'smlogo_' . $filename, $image->stream('jpg')->detach());
             }
 
-            $filepath = $storedirectory.'smlogo_'.$filename;
+            $filepath = $storedirectory . 'smlogo_' . $filename;
 
             $company->smlogo = $filepath;
         }

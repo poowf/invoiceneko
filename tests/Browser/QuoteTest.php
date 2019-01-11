@@ -37,21 +37,21 @@ class QuoteTest extends DuskTestCase
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/'.$company->domain_name.'/dashboard')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->clickLink('Quotes')
-                ->assertPathIs('/'.$company->domain_name.'/quotes')
+                ->assertPathIs('/' . $company->domain_name . '/quotes')
                 ->clickLink('Create')
-                ->assertPathIs('/'.$company->domain_name.'/quote/create')
-                ->type('nice_quote_id', substr($faker->slug, 0, 20).'sasdf')
+                ->assertPathIs('/' . $company->domain_name . '/quote/create')
+                ->type('nice_quote_id', substr($faker->slug, 0, 20) . 'sasdf')
                 ->type('netdays', $faker->numberBetween($min = 1, $max = 60))
                 ->type('item_quantity[]', $faker->numberBetween($min = 1, $max = 999999999))
                 ->type('item_price[]', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999));
             $browser
-                ->script('jQuery("#client_id").selectize()[0].selectize.setValue('.$client->id.');');
+                ->script('jQuery("#client_id").selectize()[0].selectize.setValue(' . $client->id . ');');
             $browser
-                ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("'.Carbon::now()->format('j F, Y').'");');
+                ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("' . Carbon::now()->format('j F, Y') . '");');
             $browser
-                ->script('jQuery("#item_name_0").selectize()[0].selectize.setValue("'.addslashes($itemTemplate->name).'");');
+                ->script('jQuery("#item_name_0").selectize()[0].selectize.setValue("' . addslashes($itemTemplate->name) . '");');
             $browser->pause(2000);
             $browser
                 ->press('CREATE')
@@ -78,25 +78,25 @@ class QuoteTest extends DuskTestCase
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/'.$company->domain_name.'/dashboard')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->clickLink('Quotes')
-                ->assertPathIs('/'.$company->domain_name.'/quotes')
+                ->assertPathIs('/' . $company->domain_name . '/quotes')
                 ->clickLink('Create')
-                ->assertPathIs('/'.$company->domain_name.'/quote/create')
-                ->type('nice_quote_id', substr($faker->slug, 0, 20).'sasdf')
+                ->assertPathIs('/' . $company->domain_name . '/quote/create')
+                ->type('nice_quote_id', substr($faker->slug, 0, 20) . 'sasdf')
                 ->type('netdays', $faker->numberBetween($min = 1, $max = 60))
                 ->type('item_quantity[]', $faker->numberBetween($min = 1, $max = 999999999))
                 ->type('item_price[]', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999));
             $browser
-                ->script('jQuery("#client_id").selectize()[0].selectize.setValue('.$client->id.');');
+                ->script('jQuery("#client_id").selectize()[0].selectize.setValue(' . $client->id . ');');
             $browser
-                ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("'.Carbon::now()->format('j F, Y').'");');
+                ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("' . Carbon::now()->format('j F, Y') . '");');
             $browser
-                ->script('jQuery("#item_name_0").selectize()[0].selectize.setValue("'.addslashes($itemTemplates[0]->name).'");');
+                ->script('jQuery("#item_name_0").selectize()[0].selectize.setValue("' . addslashes($itemTemplates[0]->name) . '");');
             $browser
                 ->click('a[id="quote-item-add"]');
             $browser
-                ->script('jQuery("#item_name_1").selectize()[0].selectize.setValue("'.addslashes($itemTemplates[1]->name).'");');
+                ->script('jQuery("#item_name_1").selectize()[0].selectize.setValue("' . addslashes($itemTemplates[1]->name) . '");');
             $browser->pause(2000);
             $browser
                 ->press('CREATE')
@@ -134,9 +134,9 @@ class QuoteTest extends DuskTestCase
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/'.$company->domain_name.'/dashboard')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->clickLink('Quotes')
-                ->assertPathIs('/'.$company->domain_name.'/quotes');
+                ->assertPathIs('/' . $company->domain_name . '/quotes');
             $browser
                 ->script("jQuery(\"a[href='{$this->baseUrl()}/{$company->domain_name}/quote/{$quote->id}/edit'] > i\").click();");
             $browser
@@ -145,9 +145,9 @@ class QuoteTest extends DuskTestCase
                 ->type('item_quantity[]', $faker->numberBetween($min = 1, $max = 999999999))
                 ->type('item_price[]', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999));
             $browser
-                ->script('jQuery("#client_id").selectize()[0].selectize.setValue('.$client->id.');');
+                ->script('jQuery("#client_id").selectize()[0].selectize.setValue(' . $client->id . ');');
             $browser
-                ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("'.Carbon::now()->format('j F, Y').'");');
+                ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("' . Carbon::now()->format('j F, Y') . '");');
             $browser
                 ->pause(2000)
                 ->press('UPDATE')
@@ -183,9 +183,9 @@ class QuoteTest extends DuskTestCase
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/'.$company->domain_name.'/dashboard')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->clickLink('Quotes')
-                ->assertPathIs('/'.$company->domain_name.'/quotes');
+                ->assertPathIs('/' . $company->domain_name . '/quotes');
             $browser
                 ->script('jQuery(".quote-delete-btn > i").click();');
             $browser
@@ -214,27 +214,27 @@ class QuoteTest extends DuskTestCase
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/'.$company->domain_name.'/dashboard')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->clickLink('Quotes')
-                ->assertPathIs('/'.$company->domain_name.'/quotes')
+                ->assertPathIs('/' . $company->domain_name . '/quotes')
                 ->clickLink('Create')
-                ->assertPathIs('/'.$company->domain_name.'/quote/create')
-                ->type('nice_quote_id', substr($faker->slug, 0, 20).'sasdf')
+                ->assertPathIs('/' . $company->domain_name . '/quote/create')
+                ->type('nice_quote_id', substr($faker->slug, 0, 20) . 'sasdf')
                 ->type('netdays', $faker->numberBetween($min = 1, $max = 60))
                 ->type('item_quantity[]', $faker->numberBetween($min = 1, $max = 999999999))
                 ->type('item_price[]', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999));
             $browser
-                ->script('jQuery("#client_id").selectize()[0].selectize.setValue('.$client->id.');');
+                ->script('jQuery("#client_id").selectize()[0].selectize.setValue(' . $client->id . ');');
             $browser
-                ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("'.Carbon::now()->format('j F, Y').'");');
+                ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("' . Carbon::now()->format('j F, Y') . '");');
             $browser
-                ->script('jQuery("#item_name_0").selectize()[0].selectize.setValue("'.addslashes($itemTemplate->name).'");');
+                ->script('jQuery("#item_name_0").selectize()[0].selectize.setValue("' . addslashes($itemTemplate->name) . '");');
             $browser->pause(2000);
             $browser
                 ->press('CREATE')
                 ->assertPresent('#quote-action-container')
                 ->clickLink('Quotes')
-                ->assertPathIs('/'.$company->domain_name.'/quotes');
+                ->assertPathIs('/' . $company->domain_name . '/quotes');
             $browser
                 ->script("jQuery(\"a[data-tooltip='Edit Quote'] > i\").click();");
             $browser
@@ -243,22 +243,22 @@ class QuoteTest extends DuskTestCase
                 ->type('item_quantity[]', $faker->numberBetween($min = 1, $max = 999999999))
                 ->type('item_price[]', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999));
             $browser
-                ->script('jQuery("#client_id").selectize()[0].selectize.setValue('.$client->id.');');
+                ->script('jQuery("#client_id").selectize()[0].selectize.setValue(' . $client->id . ');');
             $browser
-                ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("'.Carbon::now()->format('j F, Y').'");');
+                ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("' . Carbon::now()->format('j F, Y') . '");');
             $browser
                 ->pause(2000)
                 ->press('UPDATE')
                 ->assertPresent('#quote-action-container')
                 ->clickLink('Quotes')
-                ->assertPathIs('/'.$company->domain_name.'/quotes');
+                ->assertPathIs('/' . $company->domain_name . '/quotes');
             $browser
                 ->script('jQuery(".quote-delete-btn > i").click();');
             $browser
                 ->pause(500)
                 ->press('DELETE')
                 ->assertPresent('#quote-container')
-                ->assertPathBeginsWith('/'.$company->domain_name.'/quote');
+                ->assertPathBeginsWith('/' . $company->domain_name . '/quote');
             $browser->script('jQuery(".signmeout-btn").click()');
             $browser->assertPathIs('/');
         });

@@ -86,7 +86,7 @@ class GenerateRecurringInvoices extends Command
 
                 //Generate hash based on the serialized version of the invoice;
                 //Only retrieve the invoice data without any relations
-                $hash = hash('sha512', serialize(json_encode($generatedInvoice->getAttributes()).$templateItems));
+                $hash = hash('sha512', serialize(json_encode($generatedInvoice->getAttributes()) . $templateItems));
 
                 if (Invoice::where('hash', $hash)->count() == 1) {
                     print_r("Invoice already generated\n");

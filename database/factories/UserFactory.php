@@ -23,7 +23,7 @@ $factory->define(\App\Models\User::class, function (Faker $faker) {
         'country_code'      => $faker->countryCode,
         'timezone'          => $faker->timezone,
         'password'          => $password ?: $password = 'secret',
-        'phone'             => '+658'.$faker->numberBetween($min = 1, $max = 8).$faker->randomNumber(6, true),
+        'phone'             => '+658' . $faker->numberBetween($min = 1, $max = 8) . $faker->randomNumber(6, true),
         'gender'            => 'male' | 'female',
         'remember_token'    => str_random(10),
         'status'            => $faker->numberBetween($min = 1, $max = 3),
