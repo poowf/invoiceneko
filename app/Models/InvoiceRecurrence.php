@@ -19,17 +19,17 @@ class InvoiceRecurrence extends Model implements Auditable
      */
     protected $table = 'invoice_recurrences';
 
-    public function company()
+    public function company ()
     {
         return $this->belongsTo('App\Models\Company', 'company_id');
     }
 
-    public function invoices()
+    public function invoices ()
     {
         return $this->hasMany('App\Models\Invoice', 'invoice_recurrence_id');
     }
 
-    public function template()
+    public function template ()
     {
         return $this->hasOne('App\Models\InvoiceTemplate', 'invoice_recurrence_id');
     }

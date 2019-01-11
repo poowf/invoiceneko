@@ -19,7 +19,7 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Company $company)
+    public function index (Company $company)
     {
         $payments = $company->payments()->with(['invoice', 'client'])->get();
 
@@ -33,7 +33,7 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Company $company)
+    public function create (Company $company)
     {
         if ($company) {
             if ($company->invoices->count() <= 0) {
@@ -55,7 +55,7 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(CreatePaymentRequest $request, Company $company, Invoice $invoice)
+    public function store (CreatePaymentRequest $request, Company $company, Invoice $invoice)
     {
         $payment = new Payment();
         $payment->fill($request->all());
@@ -85,7 +85,7 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function createsolo(Company $company)
+    public function createsolo (Company $company)
     {
         if ($company) {
             $invoices = $company->invoices;
@@ -108,7 +108,7 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function storesolo(CreateSoloPaymentRequest $request, Company $company)
+    public function storesolo (CreateSoloPaymentRequest $request, Company $company)
     {
         $payment = new Payment();
         $payment->fill($request->all());
@@ -147,7 +147,7 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Company $company, Payment $payment)
+    public function show (Company $company, Payment $payment)
     {
         return view('pages.payment.show', compact('payment'));
     }
@@ -160,7 +160,7 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Company $company, Payment $payment)
+    public function edit (Company $company, Payment $payment)
     {
         return view('pages.payment.edit', compact('payment'));
     }
@@ -174,7 +174,7 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePaymentRequest $request, Company $company, Payment $payment)
+    public function update (UpdatePaymentRequest $request, Company $company, Payment $payment)
     {
         $payment->fill($request->all());
         $payment->receiveddate = Carbon::createFromFormat('j F, Y', $request->input('receiveddate'))->startOfDay();
@@ -195,7 +195,7 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Company $company, Payment $payment)
+    public function destroy (Company $company, Payment $payment)
     {
         $payment->delete();
 

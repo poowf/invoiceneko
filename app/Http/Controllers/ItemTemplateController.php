@@ -16,7 +16,7 @@ class ItemTemplateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Company $company)
+    public function index (Company $company)
     {
         $itemTemplates = $company->itemtemplates()->get();
 
@@ -30,7 +30,7 @@ class ItemTemplateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Company $company)
+    public function create (Company $company)
     {
         if ($company) {
             return view('pages.itemtemplate.create');
@@ -47,7 +47,7 @@ class ItemTemplateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateItemTemplateRequest $request, Company $company)
+    public function store (CreateItemTemplateRequest $request, Company $company)
     {
         $itemTemplate = new ItemTemplate();
         $itemTemplate->fill($request->all());
@@ -66,7 +66,7 @@ class ItemTemplateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Company $company, ItemTemplate $itemTemplate)
+    public function show (Company $company, ItemTemplate $itemTemplate)
     {
         return view('pages.itemtemplate.show', compact('itemTemplate'));
     }
@@ -79,7 +79,7 @@ class ItemTemplateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Company $company, ItemTemplate $itemTemplate)
+    public function edit (Company $company, ItemTemplate $itemTemplate)
     {
         return view('pages.itemtemplate.edit', compact('itemTemplate'));
     }
@@ -93,7 +93,7 @@ class ItemTemplateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateItemTemplateRequest $request, Company $company, ItemTemplate $itemTemplate)
+    public function update (UpdateItemTemplateRequest $request, Company $company, ItemTemplate $itemTemplate)
     {
         $itemTemplate->fill($request->all());
         $company->itemtemplates()->save($itemTemplate);
@@ -111,7 +111,7 @@ class ItemTemplateController extends Controller
      *
      * @return ItemTemplate
      */
-    public function retrieve(Company $company, ItemTemplate $itemTemplate)
+    public function retrieve (Company $company, ItemTemplate $itemTemplate)
     {
         return response()->json($itemTemplate);
     }
@@ -122,7 +122,7 @@ class ItemTemplateController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function duplicate(Company $company, ItemTemplate $itemTemplate)
+    public function duplicate (Company $company, ItemTemplate $itemTemplate)
     {
         $duplicatedItemTemplate = $itemTemplate->duplicate();
         flash('Item Template has been Cloned Sucessfully', 'success');
@@ -140,7 +140,7 @@ class ItemTemplateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Company $company, ItemTemplate $itemTemplate)
+    public function destroy (Company $company, ItemTemplate $itemTemplate)
     {
         $itemTemplate->delete();
 

@@ -57,11 +57,11 @@ class Quote extends Model implements Auditable
         'items',
     ];
 
-    protected static function boot()
+    protected static function boot ()
     {
         parent::boot();
 
-        static::saving(function ($quote) {
+        static::saving(function($quote) {
             if ($quote->status == self::STATUS_DRAFT) {
                 $quote->status = self::STATUS_OPEN;
             }
@@ -70,49 +70,49 @@ class Quote extends Model implements Auditable
         });
 
         //Auto Increment of quote_index per Company;
-        static::created(function ($quote) {
+        static::created(function($quote) {
             $company = $quote->company;
             $company->quote_index = $company->quote_index + 1;
             $company->save();
         });
     }
 
-    public function getTotalMoneyFormatAttribute()
+    public function getTotalMoneyFormatAttribute ()
     {
         setlocale(LC_MONETARY, 'en_US.UTF-8');
 
         return money_format('%!.2n', $this->total);
     }
 
-    public function getCreatedAtAttribute($value)
+    public function getCreatedAtAttribute ($value)
     {
         $date = $this->asDateTime($value);
 
         return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
-    public function getUpdatedAtAttribute($value)
+    public function getUpdatedAtAttribute ($value)
     {
         $date = $this->asDateTime($value);
 
         return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
-    public function getDateAttribute($value)
+    public function getDateAttribute ($value)
     {
         $date = $this->asDateTime($value);
 
         return $date->timezone($this->company->timezone);
     }
 
-    public function getDuedateAttribute($value)
+    public function getDuedateAttribute ($value)
     {
         $date = $this->asDateTime($value);
 
         return $date->timezone($this->company->timezone);
     }
 
-    public function setDateAttribute($value)
+    public function setDateAttribute ($value)
     {
         if ($value instanceof \DateTime) {
             $this->attributes['date'] = $value;
@@ -121,32 +121,32 @@ class Quote extends Model implements Auditable
         }
     }
 
-    public function client()
+    public function client ()
     {
         return $this->belongsTo('App\Models\Client', 'client_id');
     }
 
-    public function company()
+    public function company ()
     {
         return $this->belongsTo('App\Models\Company', 'company_id');
     }
 
-    public function items()
+    public function items ()
     {
         return $this->hasMany('App\Models\QuoteItem', 'quote_id');
     }
 
-    public function getClient()
+    public function getClient ()
     {
         return ($this->client) ? $this->client : (object) json_decode($this->client_data);
     }
 
-    public function owns($model)
+    public function owns ($model)
     {
         return $this->id == $model->invoice_id;
     }
 
-    public function calculatesubtotal($moneyformat = true)
+    public function calculatesubtotal ($moneyformat = true)
     {
         $items = $this->items;
         $total = 0;
@@ -166,7 +166,7 @@ class Quote extends Model implements Auditable
         }
     }
 
-    public function calculatetax($moneyformat = true)
+    public function calculatetax ($moneyformat = true)
     {
         $companySetting = $this->company->settings;
         $tax = 0;
@@ -189,7 +189,7 @@ class Quote extends Model implements Auditable
         }
     }
 
-    public function calculatetotal($moneyformat = true)
+    public function calculatetotal ($moneyformat = true)
     {
         $companySetting = $this->company->settings;
         $tax = 0;
@@ -212,13 +212,13 @@ class Quote extends Model implements Auditable
         }
     }
 
-    public function setQuoteTotal()
+    public function setQuoteTotal ()
     {
         $this->total = self::calculatetotal(false);
         $this->save();
     }
 
-    public function statusText()
+    public function statusText ()
     {
         $status = $this->status;
 
@@ -243,7 +243,7 @@ class Quote extends Model implements Auditable
         return $textstatus;
     }
 
-    public function duplicate()
+    public function duplicate ()
     {
         $company = $this->company;
         $cloned = $this->replicate();
@@ -263,7 +263,7 @@ class Quote extends Model implements Auditable
         return $cloned;
     }
 
-    public function generatePDFView()
+    public function generatePDFView ()
     {
         $quote = $this;
         $pdf = PDF::loadView('pdf.quote', compact('quote'))
@@ -276,31 +276,31 @@ class Quote extends Model implements Auditable
         return $pdf;
     }
 
-    public function scopeDraft($query)
+    public function scopeDraft ($query)
     {
         return $query
             ->where('status', self::STATUS_DRAFT);
     }
 
-    public function scopePending($query)
+    public function scopePending ($query)
     {
         return $query
             ->where('status', self::STATUS_OPEN);
     }
 
-    public function scopeExpired($query)
+    public function scopeExpired ($query)
     {
         return $query
             ->where('status', self::STATUS_EXPIRED);
     }
 
-    public function scopeArchived($query)
+    public function scopeArchived ($query)
     {
         return $query
             ->where('archived', true);
     }
 
-    public function scopeNotArchived($query)
+    public function scopeNotArchived ($query)
     {
         return $query
             ->where('archived', false);

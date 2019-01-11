@@ -15,19 +15,19 @@ class CompanyAddressPolicy
      *
      * @return void
      */
-    public function __construct()
+    public function __construct ()
     {
         //
     }
 
-    public function before($user, $ability)
+    public function before ($user, $ability)
     {
         if ($user->isAn('global-administrator')) {
             return true;
         }
     }
 
-    public function index(User $user)
+    public function index (User $user)
     {
         return $user->can('update-company-address', CompanyAddress::class);
     }
@@ -40,7 +40,7 @@ class CompanyAddressPolicy
      *
      * @return mixed
      */
-    public function view(User $user, CompanyAddress $companyAddress)
+    public function view (User $user, CompanyAddress $companyAddress)
     {
         return $user->can('view-company-address', $companyAddress);
     }
@@ -52,7 +52,7 @@ class CompanyAddressPolicy
      *
      * @return mixed
      */
-    public function create(User $user)
+    public function create (User $user)
     {
         return $user->can('create-company-address', CompanyAddress::class);
     }
@@ -65,7 +65,7 @@ class CompanyAddressPolicy
      *
      * @return mixed
      */
-    public function update(User $user, CompanyAddress $companyAddress)
+    public function update (User $user, CompanyAddress $companyAddress)
     {
         return $user->can('update-company-address', $companyAddress);
     }
@@ -78,7 +78,7 @@ class CompanyAddressPolicy
      *
      * @return mixed
      */
-    public function delete(User $user, CompanyAddress $companyAddress)
+    public function delete (User $user, CompanyAddress $companyAddress)
     {
         return $user->can('delete-company-address', $companyAddress);
     }

@@ -19,7 +19,7 @@ use PragmaRX\Recovery\Recovery;
 
 class UserController extends Controller
 {
-    public function __construct()
+    public function __construct ()
     {
     }
 
@@ -28,7 +28,7 @@ class UserController extends Controller
      *
      * @return void
      */
-    public function index()
+    public function index ()
     {
         //
     }
@@ -41,7 +41,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create (Request $request)
     {
         if ($request->query->has('token')) {
             $token = $request->query->get('token');
@@ -78,7 +78,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateUserRequest $request)
+    public function store (CreateUserRequest $request)
     {
         $user = new User();
         $user->fill($request->all());
@@ -126,7 +126,7 @@ class UserController extends Controller
      *
      * @return void
      */
-    public function show()
+    public function show ()
     {
         //
     }
@@ -136,7 +136,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit ()
     {
         $user = auth()->user();
         $countries = countries();
@@ -153,7 +153,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse|void
      */
-    public function retrieve(Company $company, User $user)
+    public function retrieve (Company $company, User $user)
     {
         $authedUser = auth()->user();
 
@@ -171,7 +171,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request)
+    public function update (UpdateUserRequest $request)
     {
         $user = auth()->user();
 
@@ -224,12 +224,12 @@ class UserController extends Controller
      *
      * @return void
      */
-    public function destroy()
+    public function destroy ()
     {
         //
     }
 
-    public function security()
+    public function security ()
     {
         $user = auth()->user();
         $sessions = $user->sessions;
@@ -237,12 +237,12 @@ class UserController extends Controller
         return view('pages.user.security', compact('user', 'sessions'));
     }
 
-    public function multifactor_start(Company $company)
+    public function multifactor_start (Company $company)
     {
         return redirect()->route('user.multifactor.create', ['company' => $company]);
     }
 
-    public function multifactor_create(Company $company)
+    public function multifactor_create (Company $company)
     {
         $user = auth()->user();
         if (is_null($user->twofa_secret)) {
@@ -263,7 +263,7 @@ class UserController extends Controller
         return view('pages.user.multifactor.create', compact('twoFactorUrl', 'twofa_secret'));
     }
 
-    public function multifactor_store(Request $request, Company $company)
+    public function multifactor_store (Request $request, Company $company)
     {
         $multifactor_code = $request->input('multifactor_code');
         $twofa_secret = session()->pull('twofa_secret');
@@ -292,7 +292,7 @@ class UserController extends Controller
         }
     }
 
-    public function multifactor_destroy(Request $request, Company $company)
+    public function multifactor_destroy (Request $request, Company $company)
     {
         $user = auth()->user();
         $secret = $request->input('multifactor_code');
@@ -314,7 +314,7 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function multifactor_regenerate_codes(Request $request, Company $company)
+    public function multifactor_regenerate_codes (Request $request, Company $company)
     {
         $recovery = new Recovery();
         $codesJSON = $recovery->toJson();
@@ -329,12 +329,12 @@ class UserController extends Controller
         return redirect()->route('user.security', ['company' => $company])->with(compact('codes'));
     }
 
-    public function multifactor_backup()
+    public function multifactor_backup ()
     {
         return view('pages.multifactor-backup');
     }
 
-    public function multifactor_backup_validate(Request $request, Company $company)
+    public function multifactor_backup_validate (Request $request, Company $company)
     {
         $code = $request->input('multifactor-backup-code');
         $user = auth()->user();
@@ -366,7 +366,7 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function session_destroy(Request $request, Company $company, $sessionId)
+    public function session_destroy (Request $request, Company $company, $sessionId)
     {
         $user = auth()->user();
 

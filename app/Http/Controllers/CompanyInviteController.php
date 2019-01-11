@@ -18,7 +18,7 @@ class CompanyInviteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index ()
     {
         //
     }
@@ -30,7 +30,7 @@ class CompanyInviteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Company $company)
+    public function create (Company $company)
     {
         $roles = Bouncer::role()->all();
 
@@ -45,7 +45,7 @@ class CompanyInviteController extends Controller
      *
      * @return void
      */
-    public function store(Request $request, Company $company)
+    public function store (Request $request, Company $company)
     {
         foreach ($request->input('email') as $key => $invitee) {
             if ($invitee) {
@@ -72,7 +72,7 @@ class CompanyInviteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(CompanyInvite $companyInvite)
+    public function show (CompanyInvite $companyInvite)
     {
         $company = $companyInvite->company;
         $user = auth()->user();
@@ -93,7 +93,7 @@ class CompanyInviteController extends Controller
      *
      * @return void
      */
-    public function join(Request $request, CompanyInvite $companyInvite)
+    public function join (Request $request, CompanyInvite $companyInvite)
     {
         $user = auth()->user();
         $now = Carbon::now();
@@ -120,7 +120,7 @@ class CompanyInviteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(CompanyInvite $companyInvite)
+    public function edit (CompanyInvite $companyInvite)
     {
         //
     }
@@ -133,7 +133,7 @@ class CompanyInviteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CompanyInvite $companyInvite)
+    public function update (Request $request, CompanyInvite $companyInvite)
     {
         //
     }
@@ -145,7 +145,7 @@ class CompanyInviteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CompanyInvite $companyInvite)
+    public function destroy (CompanyInvite $companyInvite)
     {
         //
     }
@@ -157,7 +157,7 @@ class CompanyInviteController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function revoke(Request $request, Company $company, User $user)
+    public function revoke (Request $request, Company $company, User $user)
     {
         if ($company->hasUser($user)) {
             Bouncer::sync($user)->roles([]);

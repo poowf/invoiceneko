@@ -11,7 +11,7 @@ class UpdateCompanyOwnerRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize ()
     {
         return auth()->user()->can('owner', $this->route('company'));
     }
@@ -21,7 +21,7 @@ class UpdateCompanyOwnerRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules ()
     {
         return [
             'user_id' => 'required|integer',

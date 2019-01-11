@@ -47,12 +47,12 @@ class Client extends Model implements Auditable
         'invoices',
     ];
 
-    public function getContactNameAttribute()
+    public function getContactNameAttribute ()
     {
         return "{$this->contactfirstname} {$this->contactlastname}";
     }
 
-    public function invoices()
+    public function invoices ()
     {
         return $this->hasMany('App\Models\Invoice', 'client_id');
     }
@@ -60,17 +60,17 @@ class Client extends Model implements Auditable
     /**
      * Get all of the client's recipients.
      */
-    public function recipients()
+    public function recipients ()
     {
         return $this->morphMany('App\Models\Recipient', 'recipientable');
     }
 
-    public function company()
+    public function company ()
     {
         return $this->belongsTo('App\Models\Company', 'company_id');
     }
 
-    public function scopeDuplicateCheck($query, $companyname)
+    public function scopeDuplicateCheck ($query, $companyname)
     {
         return $query
             ->where('companyname', $companyname);

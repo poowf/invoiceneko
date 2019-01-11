@@ -11,7 +11,7 @@ class UpdateItemTemplateRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize ()
     {
         return auth()->user()->can('update', $this->route('itemtemplate'));
     }
@@ -21,7 +21,7 @@ class UpdateItemTemplateRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules ()
     {
         return [
             'name'        => 'required|string',

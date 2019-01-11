@@ -10,18 +10,18 @@ class ItemTemplatePolicy
 {
     use HandlesAuthorization;
 
-    public function __construct()
+    public function __construct ()
     {
     }
 
-    public function before($user, $ability)
+    public function before ($user, $ability)
     {
         if ($user->isAn('global-administrator')) {
             return true;
         }
     }
 
-    public function index(User $user)
+    public function index (User $user)
     {
         return $user->can('view-item-template', ItemTemplate::class);
     }
@@ -34,7 +34,7 @@ class ItemTemplatePolicy
      *
      * @return mixed
      */
-    public function view(User $user, ItemTemplate $itemtemplate)
+    public function view (User $user, ItemTemplate $itemtemplate)
     {
         return $user->can('view-item-template', $itemtemplate);
     }
@@ -47,7 +47,7 @@ class ItemTemplatePolicy
      *
      * @return mixed
      */
-    public function create(User $user)
+    public function create (User $user)
     {
         return $user->can('create-item-template', ItemTemplate::class);
     }
@@ -60,7 +60,7 @@ class ItemTemplatePolicy
      *
      * @return mixed
      */
-    public function update(User $user, ItemTemplate $itemtemplate)
+    public function update (User $user, ItemTemplate $itemtemplate)
     {
         return $user->can('update-item-template', $itemtemplate);
     }
@@ -73,7 +73,7 @@ class ItemTemplatePolicy
      *
      * @return mixed
      */
-    public function delete(User $user, ItemTemplate $itemtemplate)
+    public function delete (User $user, ItemTemplate $itemtemplate)
     {
         return $user->can('delete-item-template', $itemtemplate);
     }

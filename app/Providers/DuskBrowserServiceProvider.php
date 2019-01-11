@@ -12,14 +12,14 @@ class DuskBrowserServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot ()
     {
         /*
          * Scrolls page to a specific element.
          *
          * Leaves a buffer at the top to account for a fixed header.
          */
-        Browser::macro('scrollTo', function ($id) {
+        Browser::macro('scrollTo', function($id) {
             $this->script("document.getElementById('$id').scrollIntoView()");
             $this->script('window.scroll(0, window.scrollY - 50)');
 
@@ -32,7 +32,7 @@ class DuskBrowserServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register ()
     {
     }
 }

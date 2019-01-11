@@ -32,7 +32,7 @@ class CompanyAddress extends Model implements Auditable
     const BUILDINGTYPE_RESIDENTIAL = 1;
     const BUILDINGTYPE_BUSINESS = 2;
 
-    public function company()
+    public function company ()
     {
         return $this->belongsTo('App\Models\Company', 'company_id');
     }

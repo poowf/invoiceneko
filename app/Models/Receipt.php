@@ -20,26 +20,26 @@ class Receipt extends Model implements Auditable
      */
     protected $table = 'receipts';
 
-    public function getCreatedAtAttribute($value)
+    public function getCreatedAtAttribute ($value)
     {
         $date = $this->asDateTime($value);
 
         return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
-    public function getUpdatedAtAttribute($value)
+    public function getUpdatedAtAttribute ($value)
     {
         $date = $this->asDateTime($value);
 
         return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
-    public function invoice()
+    public function invoice ()
     {
         return $this->belongsTo('App\Models\Invoice', 'invoice_id');
     }
 
-    public function generatePDFView()
+    public function generatePDFView ()
     {
         $receipt = $this;
         $invoice = $this->invoice;

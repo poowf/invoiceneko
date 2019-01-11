@@ -15,7 +15,7 @@ use Storage;
 
 class CompanyController extends Controller
 {
-    public function __construct()
+    public function __construct ()
     {
     }
 
@@ -26,7 +26,7 @@ class CompanyController extends Controller
      *
      * @return void
      */
-    public function index(Company $company)
+    public function index (Company $company)
     {
     }
 
@@ -37,7 +37,7 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Company $company)
+    public function create (Company $company)
     {
         $ipLocation = geoip()->getLocation();
 
@@ -63,7 +63,7 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateCompanyRequest $request, Company $company)
+    public function store (CreateCompanyRequest $request, Company $company)
     {
         if ($request->session()->has('user_id') || auth()->check()) {
             $company = new Company();
@@ -88,7 +88,7 @@ class CompanyController extends Controller
                 $filename = $uuid . '.png';
 
                 if (!Storage::exists($storedirectory . 'logo_' . $filename)) {
-                    $image = Image::make($file)->fit(420, 220, function ($constraint) {
+                    $image = Image::make($file)->fit(420, 220, function($constraint) {
                         $constraint->upsize();
                     }, 'center');
                     Storage::put($storedirectory . 'logo_' . $filename, $image->stream('jpg')->detach());
@@ -105,7 +105,7 @@ class CompanyController extends Controller
                 $filename = $uuid . '.png';
 
                 if (!Storage::exists($storedirectory . 'smlogo_' . $filename)) {
-                    $image = Image::make($file)->fit(200, 200, function ($constraint) {
+                    $image = Image::make($file)->fit(200, 200, function($constraint) {
                         $constraint->upsize();
                     }, 'center');
                     Storage::put($storedirectory . 'smlogo_' . $filename, $image->stream('jpg')->detach());
@@ -136,7 +136,7 @@ class CompanyController extends Controller
      *
      * @return void
      */
-    public function show(Company $company)
+    public function show (Company $company)
     {
         return view('pages.company.show', compact('company'));
     }
@@ -148,7 +148,7 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Company $company)
+    public function edit (Company $company)
     {
         $countries = countries();
         $timezones = DateTimeZone::listIdentifiers(DateTimeZone::ALL);
@@ -164,7 +164,7 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCompanyRequest $request, Company $company)
+    public function update (UpdateCompanyRequest $request, Company $company)
     {
         $company->fill($request->all());
         if ($request->has('country_code') && !is_null($request->input('country_code'))) {
@@ -188,7 +188,7 @@ class CompanyController extends Controller
             if (!Storage::exists($storedirectory . 'logo_' . $filename)) {
                 $image = Image::make($file)
                     ->encode('png', 100)
-                    ->fit(420, 220, function ($constraint) {
+                    ->fit(420, 220, function($constraint) {
                         $constraint->upsize();
                     }, 'center');
                 Storage::put($storedirectory . 'logo_' . $filename, $image->stream('jpg')->detach());
@@ -207,7 +207,7 @@ class CompanyController extends Controller
             if (!Storage::exists($storedirectory . 'smlogo_' . $filename)) {
                 $image = Image::make($file)
                     ->encode('png', 100)
-                    ->fit(200, 200, function ($constraint) {
+                    ->fit(200, 200, function($constraint) {
                         $constraint->upsize();
                     }, 'center');
                 Storage::put($storedirectory . 'smlogo_' . $filename, $image->stream('jpg')->detach());
@@ -232,12 +232,12 @@ class CompanyController extends Controller
      *
      * @return void
      */
-    public function destroy(Company $company)
+    public function destroy (Company $company)
     {
         //
     }
 
-    public function edit_owner(Company $company)
+    public function edit_owner (Company $company)
     {
         if ($company) {
             $owner = $company->owner;
@@ -256,7 +256,7 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update_owner(UpdateCompanyOwnerRequest $request, Company $company)
+    public function update_owner (UpdateCompanyOwnerRequest $request, Company $company)
     {
         $user = User::find($request->input('user_id'));
         $company->user_id = $user->id;
@@ -270,7 +270,7 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show_check(Company $company)
+    public function show_check (Company $company)
     {
         return view('pages.company.check');
     }
@@ -281,7 +281,7 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function check(Request $request, Company $company)
+    public function check (Request $request, Company $company)
     {
         $email = $request->input('email');
 
@@ -304,7 +304,7 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function switch(Request $request, Company $company)
+    public function switch (Request $request, Company $company)
     {
         $companyDomainName = $request->input('domain_name');
 

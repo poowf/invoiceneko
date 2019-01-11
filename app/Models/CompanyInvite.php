@@ -44,7 +44,7 @@ class CompanyInvite extends Model implements Auditable
      *
      * @return string
      */
-    public function getRouteKeyName()
+    public function getRouteKeyName ()
     {
         return 'token';
     }
@@ -54,12 +54,12 @@ class CompanyInvite extends Model implements Auditable
      *
      * @return string
      */
-    public function routeNotificationForMail()
+    public function routeNotificationForMail ()
     {
         return $this->email;
     }
 
-    public function company()
+    public function company ()
     {
         return $this->belongsTo('App\Models\Company', 'company_id');
     }

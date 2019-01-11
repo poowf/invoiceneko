@@ -28,7 +28,7 @@ class ProcessNotifiableInvoices extends Command
      *
      * @return void
      */
-    public function __construct()
+    public function __construct ()
     {
         parent::__construct();
     }
@@ -38,7 +38,7 @@ class ProcessNotifiableInvoices extends Command
      *
      * @return mixed
      */
-    public function handle()
+    public function handle ()
     {
         $startDate = Carbon::now()->subDay();
         $endDate = Carbon::now()->addDay();

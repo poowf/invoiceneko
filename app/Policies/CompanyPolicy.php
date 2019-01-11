@@ -10,18 +10,18 @@ class CompanyPolicy
 {
     use HandlesAuthorization;
 
-    public function __construct()
+    public function __construct ()
     {
     }
 
-    public function before($user, $ability)
+    public function before ($user, $ability)
     {
         if ($user->isAn('global-administrator')) {
             return true;
         }
     }
 
-    public function index(User $user)
+    public function index (User $user)
     {
         return $user->can('view-company', Company::class);
     }
@@ -34,7 +34,7 @@ class CompanyPolicy
      *
      * @return mixed
      */
-    public function view(User $user, Company $company)
+    public function view (User $user, Company $company)
     {
         return $user->can('view-company', $company);
     }
@@ -46,7 +46,7 @@ class CompanyPolicy
      *
      * @return mixed
      */
-    public function create(User $user)
+    public function create (User $user)
     {
         //
     }
@@ -59,7 +59,7 @@ class CompanyPolicy
      *
      * @return mixed
      */
-    public function update(User $user, Company $company)
+    public function update (User $user, Company $company)
     {
         return $user->can('update-company', $company);
     }
@@ -72,7 +72,7 @@ class CompanyPolicy
      *
      * @return mixed
      */
-    public function delete(User $user, Company $company)
+    public function delete (User $user, Company $company)
     {
         if ($company) {
             return $company->isOwner($user);
@@ -87,7 +87,7 @@ class CompanyPolicy
      *
      * @return mixed
      */
-    public function owner(User $user, Company $company)
+    public function owner (User $user, Company $company)
     {
         if ($company) {
             return $company->isOwner($user);
@@ -102,7 +102,7 @@ class CompanyPolicy
      *
      * @return mixed
      */
-    public function member(User $user, Company $company)
+    public function member (User $user, Company $company)
     {
         if ($company) {
             return $company->hasUser($user);
@@ -117,7 +117,7 @@ class CompanyPolicy
      *
      * @return mixed
      */
-    public function settings(User $user, Company $company)
+    public function settings (User $user, Company $company)
     {
         return $user->can('update-company-settings', $company->settings);
     }
@@ -130,7 +130,7 @@ class CompanyPolicy
      *
      * @return mixed
      */
-    public function address(User $user, Company $company)
+    public function address (User $user, Company $company)
     {
         return $user->can('update-company-address', $company->address);
     }

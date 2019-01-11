@@ -33,7 +33,7 @@ class GenerateRecurringInvoices extends Command
      *
      * @return void
      */
-    public function __construct()
+    public function __construct ()
     {
         parent::__construct();
     }
@@ -46,7 +46,7 @@ class GenerateRecurringInvoices extends Command
      *
      * @return mixed
      */
-    public function handle()
+    public function handle ()
     {
         $invoiceRecurrences = InvoiceRecurrence::all();
 
@@ -113,7 +113,7 @@ class GenerateRecurringInvoices extends Command
         }
     }
 
-    public function getDateAdditionOperator($timePeriod)
+    public function getDateAdditionOperator ($timePeriod)
     {
         switch ($timePeriod) {
             case 'day':

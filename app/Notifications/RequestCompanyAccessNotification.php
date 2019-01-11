@@ -18,7 +18,7 @@ class RequestCompanyAccessNotification extends Notification implements ShouldQue
      *
      * @param CompanyUserRequest $companyUserRequest
      */
-    public function __construct(CompanyUserRequest $companyUserRequest)
+    public function __construct (CompanyUserRequest $companyUserRequest)
     {
         $this->companyUserRequest = $companyUserRequest;
     }
@@ -30,7 +30,7 @@ class RequestCompanyAccessNotification extends Notification implements ShouldQue
      *
      * @return array
      */
-    public function via($notifiable)
+    public function via ($notifiable)
     {
         return ['mail'];
     }
@@ -42,7 +42,7 @@ class RequestCompanyAccessNotification extends Notification implements ShouldQue
      *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail ($notifiable)
     {
         $companyUserRequest = $this->companyUserRequest;
         $company = $companyUserRequest->company;
@@ -62,7 +62,7 @@ class RequestCompanyAccessNotification extends Notification implements ShouldQue
      *
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray ($notifiable)
     {
         return [
             //

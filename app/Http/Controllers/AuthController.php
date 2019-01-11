@@ -10,17 +10,17 @@ class AuthController extends Controller
 {
     use AuthenticatesUsers;
 
-    public function show()
+    public function show ()
     {
         return view('pages.signin');
     }
 
-    public function multifactor_validate(Request $request)
+    public function multifactor_validate (Request $request)
     {
         return redirect()->intended();
     }
 
-    public function username()
+    public function username ()
     {
         $username = request()->input('username');
         $field = filter_var($username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
@@ -29,7 +29,7 @@ class AuthController extends Controller
         return $field;
     }
 
-    public function redirectTo()
+    public function redirectTo ()
     {
         return Unicorn::redirectTo();
     }

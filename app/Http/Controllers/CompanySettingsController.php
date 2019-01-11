@@ -16,7 +16,7 @@ class CompanySettingsController extends Controller
      *
      * @return void
      */
-    public function index(Company $company)
+    public function index (Company $company)
     {
         //
     }
@@ -28,7 +28,7 @@ class CompanySettingsController extends Controller
      *
      * @return void
      */
-    public function create(Company $company)
+    public function create (Company $company)
     {
         //
     }
@@ -41,7 +41,7 @@ class CompanySettingsController extends Controller
      *
      * @return void
      */
-    public function store(Request $request, Company $company)
+    public function store (Request $request, Company $company)
     {
         //
     }
@@ -54,7 +54,7 @@ class CompanySettingsController extends Controller
      *
      * @return void
      */
-    public function show(Company $company, CompanySetting $companySetting)
+    public function show (Company $company, CompanySetting $companySetting)
     {
         //
     }
@@ -66,7 +66,7 @@ class CompanySettingsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Company $company)
+    public function edit (Company $company)
     {
         if ($company) {
             $companySetting = $company->settings;
@@ -85,7 +85,7 @@ class CompanySettingsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCompanySettingRequest $request, Company $company)
+    public function update (UpdateCompanySettingRequest $request, Company $company)
     {
         $companySetting = $company->settings;
 
@@ -109,7 +109,7 @@ class CompanySettingsController extends Controller
      *
      * @return void
      */
-    public function destroy(Company $company, CompanySetting $companySetting)
+    public function destroy (Company $company, CompanySetting $companySetting)
     {
         //
     }

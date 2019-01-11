@@ -13,7 +13,7 @@ use Storage;
 
 class ClientController extends Controller
 {
-    public function __construct()
+    public function __construct ()
     {
     }
 
@@ -24,7 +24,7 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Company $company)
+    public function index (Company $company)
     {
         $clients = $company->clients;
 
@@ -38,7 +38,7 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Company $company)
+    public function create (Company $company)
     {
         $countries = countries();
 
@@ -53,7 +53,7 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateClientRequest $request, Company $company)
+    public function store (CreateClientRequest $request, Company $company)
     {
         $client = new Client();
         $client->fill($request->all());
@@ -70,7 +70,7 @@ class ClientController extends Controller
             $filename = $uuid . '.png';
 
             if (!Storage::exists($storedirectory . 'logo_' . $filename)) {
-                $image = Image::make($file)->fit(500, 500, function ($constraint) {
+                $image = Image::make($file)->fit(500, 500, function($constraint) {
                     $constraint->upsize();
                 }, 'center');
                 Storage::put($storedirectory . 'logo_' . $filename, $image->stream('jpg')->detach());
@@ -105,7 +105,7 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Company $company, Client $client)
+    public function show (Company $company, Client $client)
     {
         $invoices = $client->invoices;
         $recipients = $client->recipients;
@@ -121,7 +121,7 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Company $company, Client $client)
+    public function edit (Company $company, Client $client)
     {
         $countries = countries();
 
@@ -137,7 +137,7 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateClientRequest $request, Company $company, Client $client)
+    public function update (UpdateClientRequest $request, Company $company, Client $client)
     {
         $client->fill($request->all());
         $client->save();
@@ -152,7 +152,7 @@ class ClientController extends Controller
             $filename = $uuid . '.png';
 
             if (!Storage::exists($storedirectory . 'logo_' . $filename)) {
-                $image = Image::make($file)->fit(500, 500, function ($constraint) {
+                $image = Image::make($file)->fit(500, 500, function($constraint) {
                     $constraint->upsize();
                 }, 'center');
                 Storage::put($storedirectory . 'logo_' . $filename, $image->stream('jpg')->detach());
@@ -180,7 +180,7 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Company $company, Client $client)
+    public function destroy (Company $company, Client $client)
     {
         $client->delete();
 
@@ -195,7 +195,7 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function invoicecreate(Company $company, Client $client)
+    public function invoicecreate (Company $company, Client $client)
     {
         return redirect()->route('invoice.create', ['company' => $company])->withInput([
             'client_id' => $client->id,

@@ -25,7 +25,7 @@ class Quote extends OtterResource
      *
      * @return array
      */
-    public static function fields()
+    public static function fields ()
     {
         return [
             'nice_quote_id' => 'text',
@@ -41,13 +41,13 @@ class Quote extends OtterResource
      *
      * @return array
      */
-    public static function hidden()
+    public static function hidden ()
     {
         return [
         ];
     }
 
-    public function toArray($request)
+    public function toArray ($request)
     {
         $transformed = parent::toArray($request);
         $transformed['date'] = $this->date ? $this->date->format('Y-m-d H:i:s') : null;

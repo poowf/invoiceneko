@@ -12,7 +12,7 @@ class ContactRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize ()
     {
         return true;
     }
@@ -22,7 +22,7 @@ class ContactRequest extends FormRequest
      *
      * @return array
      */
-    public function messages()
+    public function messages ()
     {
         return [
             'g-recaptcha-response.required' => 'Captcha verification is required',
@@ -35,7 +35,7 @@ class ContactRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules ()
     {
         return [
             'name'                 => 'required',

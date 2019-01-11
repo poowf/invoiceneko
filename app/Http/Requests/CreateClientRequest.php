@@ -12,7 +12,7 @@ class CreateClientRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize ()
     {
         return auth()->user()->can('create', Client::class);
     }
@@ -22,7 +22,7 @@ class CreateClientRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules ()
     {
         return [
             'companyname'       => 'required|string',

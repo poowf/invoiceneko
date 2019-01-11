@@ -45,17 +45,17 @@ class Company extends Model implements Auditable
         'receipt_index' => 1,
     ];
 
-    protected static function boot()
+    protected static function boot ()
     {
         parent::boot();
 
-        static::saving(function ($company) {
+        static::saving(function($company) {
             $company->slug = str_slug($company->name);
             static::generateSlug($company);
         });
 
         //Auto Creation of Settings per Company;
-        static::created(function ($company) {
+        static::created(function($company) {
             $settings = new CompanySetting();
             $company->settings()->save($settings);
             Unicorn::createRoleAndPermissions($company->id);
@@ -68,7 +68,7 @@ class Company extends Model implements Auditable
      *
      * @return string
      */
-    public function getRouteKeyName()
+    public function getRouteKeyName ()
     {
         return 'domain_name';
     }
@@ -78,27 +78,27 @@ class Company extends Model implements Auditable
      *
      * @return string
      */
-    public function routeNotificationForMail()
+    public function routeNotificationForMail ()
     {
         return $this->email;
     }
 
-    public function niceInvoiceID()
+    public function niceInvoiceID ()
     {
         return $this->generateNiceID('invoice', '');
     }
 
-    public function niceQuoteID()
+    public function niceQuoteID ()
     {
         return $this->generateNiceID('quote', 'Q');
     }
 
-    public function niceReceiptID()
+    public function niceReceiptID ()
     {
         return $this->generateNiceID('receipt', 'R');
     }
 
-    public function generateNiceID($model, $letter)
+    public function generateNiceID ($model, $letter)
     {
         $companySetting = $this->settings;
         if ($companySetting->{$model . '_prefix'}) {
@@ -113,72 +113,72 @@ class Company extends Model implements Auditable
         return $generatedPrefix . sprintf('%06d', $this->{$model . '_index'});
     }
 
-    public function isOwner($user)
+    public function isOwner ($user)
     {
         return $this->user_id == $user->id;
     }
 
-    public function hasUser($user)
+    public function hasUser ($user)
     {
         return $this->users->contains($user);
     }
 
-    public function lastinvoice()
+    public function lastinvoice ()
     {
         return $this->hasOne('App\Models\Invoice')->latest()->limit(1)->first();
     }
 
-    public function lastquote()
+    public function lastquote ()
     {
         return $this->hasOne('App\Models\Quote')->latest()->limit(1)->first();
     }
 
-    public function users()
+    public function users ()
     {
         return $this->belongsToMany(User::class)->withTimestamps();
     }
 
-    public function requests()
+    public function requests ()
     {
         return $this->hasMany('App\Models\CompanyUserRequest', 'company_id');
     }
 
-    public function invites()
+    public function invites ()
     {
         return $this->hasMany('App\Models\CompanyInvite', 'company_id');
     }
 
-    public function quotes()
+    public function quotes ()
     {
         return $this->hasMany('App\Models\Quote', 'company_id');
     }
 
-    public function invoices()
+    public function invoices ()
     {
         return $this->hasMany('App\Models\Invoice', 'company_id');
     }
 
-    public function receipts()
+    public function receipts ()
     {
         return $this->hasMany('App\Models\Receipt', 'company_id');
     }
 
-    public function events()
+    public function events ()
     {
         return $this->hasMany('App\Models\InvoiceRecurrence', 'company_id');
     }
 
-    public function itemtemplates()
+    public function itemtemplates ()
     {
         return $this->hasMany('App\Models\ItemTemplate', 'company_id');
     }
 
-    public function clients()
+    public function clients ()
     {
         return $this->hasMany('App\Models\Client', 'company_id');
     }
 
-    public function payments()
+    public function payments ()
     {
         return $this->hasMany('App\Models\Payment', 'company_id');
     }
@@ -186,22 +186,22 @@ class Company extends Model implements Auditable
     /**
      * Get all of the company's recipients.
      */
-    public function recipients()
+    public function recipients ()
     {
         return $this->morphMany('App\Models\Recipient', 'recipientable');
     }
 
-    public function owner()
+    public function owner ()
     {
         return $this->belongsTo('App\Models\User', 'user_id');
     }
 
-    public function address()
+    public function address ()
     {
         return $this->hasOne('App\Models\CompanyAddress', 'company_id');
     }
 
-    public function settings()
+    public function settings ()
     {
         return $this->hasOne('App\Models\CompanySetting', 'company_id');
     }

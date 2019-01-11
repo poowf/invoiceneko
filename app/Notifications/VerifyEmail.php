@@ -27,7 +27,7 @@ class VerifyEmail extends Notification implements ShouldQueue
      *
      * @return array|string
      */
-    public function via($notifiable)
+    public function via ($notifiable)
     {
         return ['mail'];
     }
@@ -39,7 +39,7 @@ class VerifyEmail extends Notification implements ShouldQueue
      *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail ($notifiable)
     {
         if (static::$toMailCallback) {
             return call_user_func(static::$toMailCallback, $notifiable);
@@ -62,7 +62,7 @@ class VerifyEmail extends Notification implements ShouldQueue
      *
      * @return string
      */
-    protected function verificationUrl($notifiable)
+    protected function verificationUrl ($notifiable)
     {
         return URL::temporarySignedRoute(
             'verification.verify', Carbon::now()->addMinutes(60), ['id' => $notifiable->getKey()]
@@ -76,7 +76,7 @@ class VerifyEmail extends Notification implements ShouldQueue
      *
      * @return void
      */
-    public static function toMailUsing($callback)
+    public static function toMailUsing ($callback)
     {
         static::$toMailCallback = $callback;
     }

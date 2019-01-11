@@ -10,18 +10,18 @@ class RolePolicy
 {
     use HandlesAuthorization;
 
-    public function __construct()
+    public function __construct ()
     {
     }
 
-    public function before($user, $ability)
+    public function before ($user, $ability)
     {
         if ($user->isAn('global-administrator')) {
             return true;
         }
     }
 
-    public function index(User $user)
+    public function index (User $user)
     {
         return $user->can('view-role', Role::class);
     }
@@ -34,7 +34,7 @@ class RolePolicy
      *
      * @return mixed
      */
-    public function view(User $user, Role $role)
+    public function view (User $user, Role $role)
     {
         return $user->can('view-role', $role);
     }
@@ -46,7 +46,7 @@ class RolePolicy
      *
      * @return mixed
      */
-    public function create(User $user)
+    public function create (User $user)
     {
         return $user->can('create-role', Role::class);
     }
@@ -59,7 +59,7 @@ class RolePolicy
      *
      * @return mixed
      */
-    public function update(User $user, Role $role)
+    public function update (User $user, Role $role)
     {
         return $user->can('update-role', $role);
     }
@@ -72,7 +72,7 @@ class RolePolicy
      *
      * @return mixed
      */
-    public function delete(User $user, Role $role)
+    public function delete (User $user, Role $role)
     {
         return $user->can('delete-role', $role);
     }

@@ -16,7 +16,7 @@ class OldInvoiceController extends Controller
      *
      * @return void
      */
-    public function index(Company $company)
+    public function index (Company $company)
     {
         //
     }
@@ -28,7 +28,7 @@ class OldInvoiceController extends Controller
      *
      * @return void
      */
-    public function create(Company $company)
+    public function create (Company $company)
     {
         //
     }
@@ -41,7 +41,7 @@ class OldInvoiceController extends Controller
      *
      * @return void
      */
-    public function store(Request $request, Company $company)
+    public function store (Request $request, Company $company)
     {
         //
     }
@@ -54,7 +54,7 @@ class OldInvoiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Company $company, OldInvoice $invoice)
+    public function show (Company $company, OldInvoice $invoice)
     {
         $client = $invoice->getClient();
 
@@ -69,7 +69,7 @@ class OldInvoiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function printview(Company $company, OldInvoice $invoice)
+    public function printview (Company $company, OldInvoice $invoice)
     {
         $pdf = $invoice->generatePDFView();
 
@@ -84,7 +84,7 @@ class OldInvoiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function download(Company $company, OldInvoice $invoice)
+    public function download (Company $company, OldInvoice $invoice)
     {
         $pdf = $invoice->generatePDFView();
 
@@ -99,7 +99,7 @@ class OldInvoiceController extends Controller
      *
      * @return void
      */
-    public function edit(Company $company, OldInvoice $invoice)
+    public function edit (Company $company, OldInvoice $invoice)
     {
         //
     }
@@ -113,7 +113,7 @@ class OldInvoiceController extends Controller
      *
      * @return void
      */
-    public function update(Request $request, Company $company, OldInvoice $invoice)
+    public function update (Request $request, Company $company, OldInvoice $invoice)
     {
         //
     }
@@ -126,7 +126,7 @@ class OldInvoiceController extends Controller
      *
      * @return void
      */
-    public function destroy(Company $company, OldInvoice $invoice)
+    public function destroy (Company $company, OldInvoice $invoice)
     {
         //
     }

@@ -25,7 +25,7 @@ class User extends OtterResource
      *
      * @return array
      */
-    public static function fields()
+    public static function fields ()
     {
         return [
             'full_name' => 'text',
@@ -42,7 +42,7 @@ class User extends OtterResource
      *
      * @return array
      */
-    public static function validations()
+    public static function validations ()
     {
         return [
             'client' => [
@@ -88,7 +88,7 @@ class User extends OtterResource
      *
      * @return array
      */
-    public static function hidden()
+    public static function hidden ()
     {
         return [
             'password',
@@ -100,7 +100,7 @@ class User extends OtterResource
      *
      * @return array
      */
-    public static function relations()
+    public static function relations ()
     {
         return [
             'companies' => 'Company',

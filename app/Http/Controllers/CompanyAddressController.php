@@ -16,7 +16,7 @@ class CompanyAddressController extends Controller
      *
      * @return void
      */
-    public function index(Company $company)
+    public function index (Company $company)
     {
         //
     }
@@ -28,7 +28,7 @@ class CompanyAddressController extends Controller
      *
      * @return void
      */
-    public function create(Company $company)
+    public function create (Company $company)
     {
         //
     }
@@ -41,7 +41,7 @@ class CompanyAddressController extends Controller
      *
      * @return void
      */
-    public function store(Request $request, Company $company)
+    public function store (Request $request, Company $company)
     {
         //
     }
@@ -54,7 +54,7 @@ class CompanyAddressController extends Controller
      *
      * @return void
      */
-    public function show(Company $company, CompanyAddress $companyAddress)
+    public function show (Company $company, CompanyAddress $companyAddress)
     {
         //
     }
@@ -66,7 +66,7 @@ class CompanyAddressController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Company $company)
+    public function edit (Company $company)
     {
         if ($company) {
             $companyaddress = $company->address;
@@ -85,7 +85,7 @@ class CompanyAddressController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCompanyAddressRequest $request, Company $company)
+    public function update (UpdateCompanyAddressRequest $request, Company $company)
     {
         $companyaddress = $company->address;
 
@@ -109,7 +109,7 @@ class CompanyAddressController extends Controller
      *
      * @return void
      */
-    public function destroy(Company $company, CompanyAddress $companyAddress)
+    public function destroy (Company $company, CompanyAddress $companyAddress)
     {
         //
     }

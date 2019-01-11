@@ -6,14 +6,14 @@ use Illuminate\Http\Request;
 
 class ConfirmUserController extends Controller
 {
-    public function getConfirmEmail($token = null)
+    public function getConfirmEmail ($token = null)
     {
         $user = User::where('confirmation_token', $token)->first();
 
         return view('pages.confirm', compact('token'));
     }
 
-    public function postConfirmEmail(Request $request, $token = null)
+    public function postConfirmEmail (Request $request, $token = null)
     {
         if (!$token) {
             $token = $request->input('confirmation_token');
@@ -33,12 +33,12 @@ class ConfirmUserController extends Controller
         }
     }
 
-    public function getRegenerateConfirmEmail()
+    public function getRegenerateConfirmEmail ()
     {
         return view('pages.confirmrequest');
     }
 
-    public function postRegenerateConfirmEmail(Request $request)
+    public function postRegenerateConfirmEmail (Request $request)
     {
         $user = User::where('email', $request->input('email'))->first();
 

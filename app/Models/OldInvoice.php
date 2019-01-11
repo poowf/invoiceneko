@@ -47,60 +47,60 @@ class OldInvoice extends Model
         'olditems',
     ];
 
-    public function getCreatedAtAttribute($value)
+    public function getCreatedAtAttribute ($value)
     {
         $date = $this->asDateTime($value);
 
         return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
-    public function getUpdatedAtAttribute($value)
+    public function getUpdatedAtAttribute ($value)
     {
         $date = $this->asDateTime($value);
 
         return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
-    public function getDateAttribute($value)
+    public function getDateAttribute ($value)
     {
         $date = $this->asDateTime($value);
 
         return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
-    public function getDuedateAttribute($value)
+    public function getDuedateAttribute ($value)
     {
         $date = $this->asDateTime($value);
 
         return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
-    public function items()
+    public function items ()
     {
         return $this->hasMany('App\Models\OldInvoiceItem', 'old_invoice_id');
     }
 
-    public function client()
+    public function client ()
     {
         return $this->belongsTo('App\Models\Client', 'client_id');
     }
 
-    public function company()
+    public function company ()
     {
         return $this->belongsTo('App\Models\Company', 'company_id');
     }
 
-    public function current_invoice()
+    public function current_invoice ()
     {
         return $this->belongsTo('App\Models\Invoice', 'invoice_id');
     }
 
-    public function getClient()
+    public function getClient ()
     {
         return ($this->client) ? $this->client : (object) json_decode($this->client_data);
     }
 
-    public function calculatesubtotal($moneyformat = true)
+    public function calculatesubtotal ($moneyformat = true)
     {
         $items = $this->items;
         $total = 0;
@@ -120,7 +120,7 @@ class OldInvoice extends Model
         }
     }
 
-    public function calculatetax($moneyformat = true)
+    public function calculatetax ($moneyformat = true)
     {
         $companySetting = $this->company->settings;
         $tax = 0;
@@ -142,7 +142,7 @@ class OldInvoice extends Model
         }
     }
 
-    public function calculatetotal($moneyformat = true)
+    public function calculatetotal ($moneyformat = true)
     {
         $companySetting = $this->company->settings;
         $tax = 0;
@@ -164,13 +164,13 @@ class OldInvoice extends Model
         }
     }
 
-    public function setInvoiceTotal()
+    public function setInvoiceTotal ()
     {
         $this->total = self::calculatetotal(false);
         $this->save();
     }
 
-    public function generatePDFView()
+    public function generatePDFView ()
     {
         $invoice = $this;
         $client = $this->getClient();

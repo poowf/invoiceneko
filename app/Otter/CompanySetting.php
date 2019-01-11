@@ -25,7 +25,7 @@ class CompanySetting extends OtterResource
      *
      * @return array
      */
-    public static function fields()
+    public static function fields ()
     {
         return [
             'invoice_prefix'     => 'text',
@@ -42,7 +42,7 @@ class CompanySetting extends OtterResource
      *
      * @return array
      */
-    public static function hidden()
+    public static function hidden ()
     {
         return [
         ];

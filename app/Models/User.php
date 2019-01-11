@@ -65,12 +65,12 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      *
      * @return string
      */
-    public function getRouteKeyName()
+    public function getRouteKeyName ()
     {
         return 'id';
     }
 
-    public function setUsernameAttribute($username)
+    public function setUsernameAttribute ($username)
     {
         $this->attributes['username'] = strtolower($username);
     }
@@ -80,7 +80,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      *
      * @param string $password
      */
-    public function setPasswordAttribute($password)
+    public function setPasswordAttribute ($password)
     {
         $this->attributes['password'] = bcrypt($password);
     }
@@ -92,7 +92,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      *
      * @return string
      */
-    public function setTwofaSecretAttribute($value)
+    public function setTwofaSecretAttribute ($value)
     {
         $this->attributes['twofa_secret'] = ($value) ? encrypt($value) : null;
     }
@@ -104,7 +104,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      *
      * @return string
      */
-    public function getTwofaSecretAttribute($value)
+    public function getTwofaSecretAttribute ($value)
     {
         return ($value) ? decrypt($value) : null;
     }
@@ -116,7 +116,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      *
      * @return string
      */
-    public function setTwofaBackupCodesAttribute($value)
+    public function setTwofaBackupCodesAttribute ($value)
     {
         $this->attributes['twofa_backup_codes'] = ($value) ? encrypt($value) : null;
     }
@@ -128,7 +128,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      *
      * @return string
      */
-    public function getTwofaBackupCodesAttribute($value)
+    public function getTwofaBackupCodesAttribute ($value)
     {
         return ($value) ? decrypt($value) : null;
     }
@@ -138,7 +138,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      *
      * @return string
      */
-    public function getGravatarAttribute()
+    public function getGravatarAttribute ()
     {
         $hash = md5(strtolower(trim($this->attributes['email'])));
 
@@ -152,7 +152,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      *
      * @return void
      */
-    public function sendPasswordResetNotification($token)
+    public function sendPasswordResetNotification ($token)
     {
         $this->notify(new ResetPasswordNotification($token));
     }
@@ -162,7 +162,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      *
      * @return void
      */
-    public function sendEmailVerificationNotification()
+    public function sendEmailVerificationNotification ()
     {
         $this->notify(new VerifyEmail());
     }
@@ -172,23 +172,23 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      *
      * @return string
      */
-    public function routeNotificationForMail()
+    public function routeNotificationForMail ()
     {
         return $this->email;
     }
 
-    public function owns($model)
+    public function owns ($model)
     {
         return $this->id == $model->user_id;
     }
 
-    public function confirmEmail()
+    public function confirmEmail ()
     {
         $this->confirmation_token = null;
         $this->save();
     }
 
-    public function statusText()
+    public function statusText ()
     {
         $status = $this->status;
 
@@ -210,28 +210,28 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
         return $textstatus;
     }
 
-    public function sendConfirmEmailNotification()
+    public function sendConfirmEmailNotification ()
     {
         $token = $this->confirmation_token;
         $this->notify(new ConfirmEmailNotification($token));
     }
 
-    public function getFirstCompanyKey()
+    public function getFirstCompanyKey ()
     {
         return (is_null($this->companies->first())) ? null : $this->companies->first()->{(new Company())->getRouteKeyName()};
     }
 
-    public function sessions()
+    public function sessions ()
     {
         return $this->hasMany('App\Models\NekoSession', 'user_id');
     }
 
-    public function companies()
+    public function companies ()
     {
         return $this->belongsToMany(Company::class)->withTimestamps();
     }
 
-    public function ownedCompanies()
+    public function ownedCompanies ()
     {
         return $this->hasMany('App\Models\Company', 'user_id');
     }

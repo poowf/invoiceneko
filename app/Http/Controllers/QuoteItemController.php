@@ -15,7 +15,7 @@ class QuoteItemController extends Controller
      *
      * @return void
      */
-    public function index(Company $company)
+    public function index (Company $company)
     {
         //
     }
@@ -27,7 +27,7 @@ class QuoteItemController extends Controller
      *
      * @return void
      */
-    public function create(Company $company)
+    public function create (Company $company)
     {
         //
     }
@@ -40,7 +40,7 @@ class QuoteItemController extends Controller
      *
      * @return void
      */
-    public function store(Request $request, Company $company)
+    public function store (Request $request, Company $company)
     {
         //
     }
@@ -53,7 +53,7 @@ class QuoteItemController extends Controller
      *
      * @return void
      */
-    public function show(Company $company, QuoteItem $quoteItem)
+    public function show (Company $company, QuoteItem $quoteItem)
     {
         //
     }
@@ -66,7 +66,7 @@ class QuoteItemController extends Controller
      *
      * @return void
      */
-    public function edit(Company $company, QuoteItem $quoteItem)
+    public function edit (Company $company, QuoteItem $quoteItem)
     {
         //
     }
@@ -79,7 +79,7 @@ class QuoteItemController extends Controller
      *
      * @return void
      */
-    public function update(Request $request, QuoteItem $quoteItem)
+    public function update (Request $request, QuoteItem $quoteItem)
     {
         //
     }
@@ -94,7 +94,7 @@ class QuoteItemController extends Controller
      *
      * @return void
      */
-    public function destroy(Company $company, QuoteItem $quoteItem)
+    public function destroy (Company $company, QuoteItem $quoteItem)
     {
         $quote = $quoteItem->quote;
         if ($quote->items->count() != 1) {

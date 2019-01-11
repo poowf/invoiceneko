@@ -19,7 +19,7 @@ class InviteUserNotification extends Notification implements ShouldQueue
      *
      * @param CompanyInvite $companyInvite
      */
-    public function __construct(CompanyInvite $companyInvite)
+    public function __construct (CompanyInvite $companyInvite)
     {
         $this->companyInvite = $companyInvite;
     }
@@ -31,7 +31,7 @@ class InviteUserNotification extends Notification implements ShouldQueue
      *
      * @return array
      */
-    public function via($notifiable)
+    public function via ($notifiable)
     {
         return ['mail'];
     }
@@ -43,7 +43,7 @@ class InviteUserNotification extends Notification implements ShouldQueue
      *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail ($notifiable)
     {
         $companyInvite = $this->companyInvite;
         $company = $companyInvite->company;
@@ -66,7 +66,7 @@ class InviteUserNotification extends Notification implements ShouldQueue
      *
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray ($notifiable)
     {
         return [
             //

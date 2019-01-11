@@ -32,7 +32,7 @@ class Recipient extends Model implements Auditable
         'phone',
     ];
 
-    public function getNameAttribute()
+    public function getNameAttribute ()
     {
         return ucwords("{$this->first_name} {$this->last_name}");
     }
@@ -40,7 +40,7 @@ class Recipient extends Model implements Auditable
     /**
      * Get all of the owning recipientable models.
      */
-    public function recipientable()
+    public function recipientable ()
     {
         return $this->morphTo();
     }
@@ -48,7 +48,7 @@ class Recipient extends Model implements Auditable
     /**
      * Get the company that owns the recipient.
      */
-    public function company()
+    public function company ()
     {
         return $this->belongsTo('App\Models\Company');
     }

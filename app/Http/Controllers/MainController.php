@@ -10,42 +10,42 @@ use Mail;
 
 class MainController extends Controller
 {
-    public function main()
+    public function main ()
     {
         return view('pages.main');
     }
 
-    public function about()
+    public function about ()
     {
         return view('pages.about');
     }
 
-    public function community()
+    public function community ()
     {
         return view('pages.community');
     }
 
-    public function pricing()
+    public function pricing ()
     {
         return view('pages.pricing');
     }
 
-    public function terms()
+    public function terms ()
     {
         return view('pages.terms');
     }
 
-    public function privacy()
+    public function privacy ()
     {
         return view('pages.privacy');
     }
 
-    public function contact()
+    public function contact ()
     {
         return view('pages.contact');
     }
 
-    public function contactHandle(ContactRequest $request)
+    public function contactHandle (ContactRequest $request)
     {
         Mail::to(env('MAIL_TO_ADDRESS', 'support@poowflabs.com'))->send(new ContactForm(
             $request->input('name'),
@@ -58,12 +58,12 @@ class MainController extends Controller
         return redirect()->back();
     }
 
-    public function start()
+    public function start ()
     {
         return view('pages.start');
     }
 
-    public function dashboard(Company $company)
+    public function dashboard (Company $company)
     {
         $user = auth()->user();
 //        $company = auth()->user()->company;
@@ -76,7 +76,7 @@ class MainController extends Controller
         return view('pages.dashboard', compact('user', 'overdueinvoices'));
     }
 
-    public function nocompany()
+    public function nocompany ()
     {
         if (is_null(Unicorn::getCompanyKey())) {
             return view('pages.nocompany');

@@ -25,7 +25,7 @@ class Payment extends OtterResource
      *
      * @return array
      */
-    public static function fields()
+    public static function fields ()
     {
         return [
             'amount' => 'text',
@@ -39,7 +39,7 @@ class Payment extends OtterResource
      *
      * @return array
      */
-    public static function hidden()
+    public static function hidden ()
     {
         return [
         ];
@@ -50,7 +50,7 @@ class Payment extends OtterResource
      *
      * @return array
      */
-    public static function relations()
+    public static function relations ()
     {
         return [
             'company' => 'Company',
@@ -63,7 +63,7 @@ class Payment extends OtterResource
      *
      * @return array
      */
-    public static function validations()
+    public static function validations ()
     {
         return [
         'client' => [

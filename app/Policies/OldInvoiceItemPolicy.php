@@ -11,18 +11,18 @@ class OldInvoiceItemPolicy
 {
     use HandlesAuthorization;
 
-    public function __construct()
+    public function __construct ()
     {
     }
 
-    public function before($user, $ability)
+    public function before ($user, $ability)
     {
         if ($user->isAn('global-administrator')) {
             return true;
         }
     }
 
-    public function index(User $user)
+    public function index (User $user)
     {
         return $user->can('view-invoice', OldInvoiceItem::class);
     }
@@ -35,7 +35,7 @@ class OldInvoiceItemPolicy
      *
      * @return mixed
      */
-    public function view(User $user, OldInvoiceItem $oldInvoiceItem)
+    public function view (User $user, OldInvoiceItem $oldInvoiceItem)
     {
         return $user->can('view-invoice', Invoice::class);
     }
@@ -47,7 +47,7 @@ class OldInvoiceItemPolicy
      *
      * @return mixed
      */
-    public function create(User $user)
+    public function create (User $user)
     {
         return $user->can('create-invoice', Invoice::class);
     }
@@ -60,7 +60,7 @@ class OldInvoiceItemPolicy
      *
      * @return mixed
      */
-    public function update(User $user, OldInvoiceItem $oldInvoiceItem)
+    public function update (User $user, OldInvoiceItem $oldInvoiceItem)
     {
         return $user->can('update-invoice', Invoice::class);
     }
@@ -73,7 +73,7 @@ class OldInvoiceItemPolicy
      *
      * @return mixed
      */
-    public function delete(User $user, OldInvoiceItem $oldInvoiceItem)
+    public function delete (User $user, OldInvoiceItem $oldInvoiceItem)
     {
         return $user->can('delete-invoice', Invoice::class);
     }

@@ -16,7 +16,7 @@ class ConfirmEmailNotification extends Notification implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($token)
+    public function __construct ($token)
     {
         $this->token = $token;
     }
@@ -28,7 +28,7 @@ class ConfirmEmailNotification extends Notification implements ShouldQueue
      *
      * @return array
      */
-    public function via($notifiable)
+    public function via ($notifiable)
     {
         return ['mail'];
     }
@@ -40,7 +40,7 @@ class ConfirmEmailNotification extends Notification implements ShouldQueue
      *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail ($notifiable)
     {
         return (new MailMessage())
             ->line('Thanks for Signing up to ' . config('app.name'))
@@ -56,7 +56,7 @@ class ConfirmEmailNotification extends Notification implements ShouldQueue
      *
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray ($notifiable)
     {
         return [
             //

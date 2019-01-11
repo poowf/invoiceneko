@@ -9,11 +9,11 @@ class UserPolicy
 {
     use HandlesAuthorization;
 
-    public function __construct()
+    public function __construct ()
     {
     }
 
-    public function before($user, $ability)
+    public function before ($user, $ability)
     {
         if ($user->isAn('global-administrator')) {
             return true;
@@ -27,7 +27,7 @@ class UserPolicy
      *
      * @return mixed
      */
-    public function view(User $user)
+    public function view (User $user)
     {
         //
     }
@@ -39,7 +39,7 @@ class UserPolicy
      *
      * @return mixed
      */
-    public function create(User $user)
+    public function create (User $user)
     {
         //
     }
@@ -51,7 +51,7 @@ class UserPolicy
      *
      * @return mixed
      */
-    public function update(User $user)
+    public function update (User $user)
     {
     }
 
@@ -62,7 +62,7 @@ class UserPolicy
      *
      * @return mixed
      */
-    public function delete(User $user)
+    public function delete (User $user)
     {
         //
     }

@@ -8,7 +8,7 @@ class ForgotPasswordController extends Controller
 {
     use SendsPasswordResetEmails;
 
-    public function show()
+    public function show ()
     {
         return view('pages.forgot');
     }

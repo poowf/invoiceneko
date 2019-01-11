@@ -17,7 +17,7 @@ class NewCompanyUserNotification extends Notification implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(User $user, $password)
+    public function __construct (User $user, $password)
     {
         $this->user = $user;
         $this->password = $password;
@@ -30,7 +30,7 @@ class NewCompanyUserNotification extends Notification implements ShouldQueue
      *
      * @return array
      */
-    public function via($notifiable)
+    public function via ($notifiable)
     {
         return ['mail'];
     }
@@ -42,7 +42,7 @@ class NewCompanyUserNotification extends Notification implements ShouldQueue
      *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail ($notifiable)
     {
         $user = $this->user;
         $password = $this->password;
@@ -66,7 +66,7 @@ class NewCompanyUserNotification extends Notification implements ShouldQueue
      *
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray ($notifiable)
     {
         return [
             //

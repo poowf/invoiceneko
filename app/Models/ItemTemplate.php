@@ -26,7 +26,7 @@ class ItemTemplate extends Model implements Auditable
         'description',
     ];
 
-    public function duplicate()
+    public function duplicate ()
     {
         $cloned = $this->replicate();
         $cloned->save();
@@ -34,7 +34,7 @@ class ItemTemplate extends Model implements Auditable
         return $cloned;
     }
 
-    public function company()
+    public function company ()
     {
         return $this->belongsTo('App\Models\Company', 'company_id');
     }

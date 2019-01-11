@@ -29,12 +29,12 @@ class OldInvoiceItem extends Model
         'price',
     ];
 
-    public function invoice()
+    public function invoice ()
     {
         return $this->belongsTo('App\Models\OldInvoice', 'old_invoice_id');
     }
 
-    public function moneyFormatPrice()
+    public function moneyFormatPrice ()
     {
         setlocale(LC_MONETARY, 'en_US.UTF-8');
 

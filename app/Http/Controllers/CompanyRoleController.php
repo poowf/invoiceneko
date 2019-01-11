@@ -12,7 +12,7 @@ class CompanyRoleController extends Controller
 {
     private $defaultRoles;
 
-    public function __construct()
+    public function __construct ()
     {
         $this->defaultRoles = [
             'global-administrator',
@@ -28,7 +28,7 @@ class CompanyRoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Company $company)
+    public function index (Company $company)
     {
         $roles = Role::all();
 
@@ -42,7 +42,7 @@ class CompanyRoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Company $company)
+    public function create (Company $company)
     {
         $permissions = self::getFormattedPermissions();
 
@@ -57,7 +57,7 @@ class CompanyRoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateRoleRequest $request, Company $company)
+    public function store (CreateRoleRequest $request, Company $company)
     {
         $title = $request->input('title');
         $permissions = $request->input('permissions');
@@ -83,7 +83,7 @@ class CompanyRoleController extends Controller
      *
      * @return void
      */
-    public function show($id)
+    public function show ($id)
     {
         //
     }
@@ -96,7 +96,7 @@ class CompanyRoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Company $company, Role $role)
+    public function edit (Company $company, Role $role)
     {
         if (!in_array($role->name, $this->defaultRoles)) {
             $rolePermissions = $role->getAbilities();
@@ -117,7 +117,7 @@ class CompanyRoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRoleRequest $request, Company $company, Role $role)
+    public function update (UpdateRoleRequest $request, Company $company, Role $role)
     {
         if (!in_array($role->name, $this->defaultRoles)) {
             $title = $request->input('title');
@@ -149,7 +149,7 @@ class CompanyRoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Company $company, Role $role)
+    public function destroy (Company $company, Role $role)
     {
         if (!in_array($role->name, $this->defaultRoles)) {
             $role->delete();
@@ -159,7 +159,7 @@ class CompanyRoleController extends Controller
         return redirect()->route('company.roles.index', ['company' => $company]);
     }
 
-    public function getFormattedPermissions()
+    public function getFormattedPermissions ()
     {
         $permissions = Bouncer::ability()->all();
 

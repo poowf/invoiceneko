@@ -15,19 +15,19 @@ class CompanyUserRequestPolicy
      *
      * @return void
      */
-    public function __construct()
+    public function __construct ()
     {
         //
     }
 
-    public function before($user, $ability)
+    public function before ($user, $ability)
     {
         if ($user->isAn('global-administrator')) {
             return true;
         }
     }
 
-    public function index(User $user)
+    public function index (User $user)
     {
         return $user->can('update-company-user-request', CompanyUserRequest::class);
     }
@@ -40,7 +40,7 @@ class CompanyUserRequestPolicy
      *
      * @return mixed
      */
-    public function view(User $user, CompanyUserRequest $companyUserRequest)
+    public function view (User $user, CompanyUserRequest $companyUserRequest)
     {
         return $user->can('view-company-user-request', $companyUserRequest);
     }
@@ -52,7 +52,7 @@ class CompanyUserRequestPolicy
      *
      * @return mixed
      */
-    public function create(User $user)
+    public function create (User $user)
     {
         return $user->can('create-company-user-request', CompanyUserRequest::class);
     }
@@ -65,7 +65,7 @@ class CompanyUserRequestPolicy
      *
      * @return mixed
      */
-    public function update(User $user, CompanyUserRequest $companyUserRequest)
+    public function update (User $user, CompanyUserRequest $companyUserRequest)
     {
         return $user->can('update-company-user-request', $companyUserRequest);
     }
@@ -78,7 +78,7 @@ class CompanyUserRequestPolicy
      *
      * @return mixed
      */
-    public function delete(User $user, CompanyUserRequest $companyUserRequest)
+    public function delete (User $user, CompanyUserRequest $companyUserRequest)
     {
         return $user->can('delete-company-user-request', $companyUserRequest);
     }

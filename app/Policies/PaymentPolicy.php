@@ -10,18 +10,18 @@ class PaymentPolicy
 {
     use HandlesAuthorization;
 
-    public function __construct()
+    public function __construct ()
     {
     }
 
-    public function before($user, $ability)
+    public function before ($user, $ability)
     {
         if ($user->isAn('global-administrator')) {
             return true;
         }
     }
 
-    public function index(User $user)
+    public function index (User $user)
     {
         return $user->can('view-payment', Payment::class);
     }
@@ -34,7 +34,7 @@ class PaymentPolicy
      *
      * @return mixed
      */
-    public function view(User $user, Payment $payment)
+    public function view (User $user, Payment $payment)
     {
         return $user->can('view-payment', $payment);
     }
@@ -46,7 +46,7 @@ class PaymentPolicy
      *
      * @return mixed
      */
-    public function create(User $user)
+    public function create (User $user)
     {
         return $user->can('create-payment', Payment::class);
     }
@@ -59,7 +59,7 @@ class PaymentPolicy
      *
      * @return mixed
      */
-    public function update(User $user, Payment $payment)
+    public function update (User $user, Payment $payment)
     {
         return $user->can('update-payment', $payment);
     }
@@ -72,7 +72,7 @@ class PaymentPolicy
      *
      * @return mixed
      */
-    public function delete(User $user, Payment $payment)
+    public function delete (User $user, Payment $payment)
     {
         return $user->can('delete-payment', $payment);
     }

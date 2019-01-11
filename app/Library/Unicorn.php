@@ -25,7 +25,7 @@ class Unicorn
         \App\Models\CompanyUserRequest::class,
     ];
 
-    public function __construct()
+    public function __construct ()
     {
     }
 
@@ -34,14 +34,14 @@ class Unicorn
      *
      * @return bool
      */
-    public static function validateQueryString($data)
+    public static function validateQueryString ($data)
     {
         $dataFormat = [
             'value' => $data,
         ];
 
         $validator = Validator::make($dataFormat, [
-           'value' => 'regex:([A-Za-z0-9,-]+)',
+            'value' => 'regex:([A-Za-z0-9,-]+)',
         ]);
 
         if ($validator->fails()) {
@@ -57,7 +57,7 @@ class Unicorn
      *
      * @return string
      */
-    public static function getStorageFile($path, $imagesize = [500, 500])
+    public static function getStorageFile ($path, $imagesize = [500, 500])
     {
         $filepath = "//via.placeholder.com/{$imagesize[0]}x{$imagesize[1]}";
         if ($path) {
@@ -84,7 +84,7 @@ class Unicorn
      *
      * @return Rule|string
      */
-    public static function generateRrule($startDate, $timezone, $interval, $frequency, $until_type, $until_meta, $object = false)
+    public static function generateRrule ($startDate, $timezone, $interval, $frequency, $until_type, $until_meta, $object = false)
     {
         $rule = (new Rule())
             ->setStartDate($startDate)
@@ -128,7 +128,7 @@ class Unicorn
     /**
      * @param null $scopeId
      */
-    public static function createRoleAndPermissions($scopeId = null)
+    public static function createRoleAndPermissions ($scopeId = null)
     {
         Bouncer::scope()->to($scopeId);
         Bouncer::useRoleModel(Role::class);
@@ -156,7 +156,7 @@ class Unicorn
     /**
      * @param null $scopeId
      */
-    public static function createPermissions($scopeId = null)
+    public static function createPermissions ($scopeId = null)
     {
         foreach (self::$modelClasses as $key => $model) {
             self::createCrudPermissions($scopeId, $model);
@@ -167,7 +167,7 @@ class Unicorn
      * @param $scopeId
      * @param $model
      */
-    protected static function createCrudPermissions($scopeId, $model)
+    protected static function createCrudPermissions ($scopeId, $model)
     {
         Bouncer::scope()->to($scopeId);
         Bouncer::useRoleModel(Role::class);
@@ -199,7 +199,7 @@ class Unicorn
      * @param string $methodName
      * @param string $modelClass
      */
-    protected static function assignCrudPermissions($scopeId, $role, $methodName = 'all', $modelClass = 'all')
+    protected static function assignCrudPermissions ($scopeId, $role, $methodName = 'all', $modelClass = 'all')
     {
         switch ($methodName) {
             case 'all':
@@ -229,7 +229,7 @@ class Unicorn
      * @param $methodName
      * @param $modelClass
      */
-    protected static function assignPermissions($scopeId, $role, $methodName, $modelClass)
+    protected static function assignPermissions ($scopeId, $role, $methodName, $modelClass)
     {
         Bouncer::scope()->to($scopeId);
         Bouncer::useRoleModel(Role::class);
@@ -248,7 +248,7 @@ class Unicorn
      *
      * @return string
      */
-    protected static function getModelNiceName($modelClass)
+    protected static function getModelNiceName ($modelClass)
     {
         $transformed = trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', str_replace('::class', '', str_replace('App\\Models\\', '', $modelClass))));
 
@@ -258,7 +258,7 @@ class Unicorn
     /**
      * @return mixed|null
      */
-    public static function getCompanyKey()
+    public static function getCompanyKey ()
     {
         if (auth()->check()) {
             if (session()->has('current_company_fqdn')) {
@@ -273,7 +273,7 @@ class Unicorn
         }
     }
 
-    public static function redirectTo()
+    public static function redirectTo ()
     {
         $routeKey = self::getCompanyKey();
         $url = '/';

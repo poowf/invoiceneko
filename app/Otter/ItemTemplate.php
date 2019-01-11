@@ -25,7 +25,7 @@ class ItemTemplate extends OtterResource
      *
      * @return array
      */
-    public static function fields()
+    public static function fields ()
     {
         return [
             'name'     => 'text',
@@ -39,7 +39,7 @@ class ItemTemplate extends OtterResource
      *
      * @return array
      */
-    public static function hidden()
+    public static function hidden ()
     {
         return [
         ];
@@ -50,7 +50,7 @@ class ItemTemplate extends OtterResource
      *
      * @return array
      */
-    public static function validations()
+    public static function validations ()
     {
         return [
         'client' => [

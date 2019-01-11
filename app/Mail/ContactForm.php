@@ -19,7 +19,7 @@ class ContactForm extends Mailable implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($name, $email, $message)
+    public function __construct ($name, $email, $message)
     {
         $this->name = $name;
         $this->email = $email;
@@ -31,7 +31,7 @@ class ContactForm extends Mailable implements ShouldQueue
      *
      * @return $this
      */
-    public function build()
+    public function build ()
     {
         return $this->markdown('emails.contact')
             ->with([

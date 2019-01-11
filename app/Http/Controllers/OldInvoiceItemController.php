@@ -15,7 +15,7 @@ class OldInvoiceItemController extends Controller
      *
      * @return void
      */
-    public function index(Company $company)
+    public function index (Company $company)
     {
         //
     }
@@ -27,7 +27,7 @@ class OldInvoiceItemController extends Controller
      *
      * @return void
      */
-    public function create(Company $company)
+    public function create (Company $company)
     {
         //
     }
@@ -40,7 +40,7 @@ class OldInvoiceItemController extends Controller
      *
      * @return void
      */
-    public function store(Request $request, Company $company)
+    public function store (Request $request, Company $company)
     {
         //
     }
@@ -53,7 +53,7 @@ class OldInvoiceItemController extends Controller
      *
      * @return void
      */
-    public function show(Company $company, OldInvoiceItem $oldInvoiceItem)
+    public function show (Company $company, OldInvoiceItem $oldInvoiceItem)
     {
         //
     }
@@ -66,7 +66,7 @@ class OldInvoiceItemController extends Controller
      *
      * @return void
      */
-    public function edit(Company $company, OldInvoiceItem $oldInvoiceItem)
+    public function edit (Company $company, OldInvoiceItem $oldInvoiceItem)
     {
         //
     }
@@ -80,7 +80,7 @@ class OldInvoiceItemController extends Controller
      *
      * @return void
      */
-    public function update(Request $request, Company $company, OldInvoiceItem $oldInvoiceItem)
+    public function update (Request $request, Company $company, OldInvoiceItem $oldInvoiceItem)
     {
         //
     }
@@ -93,7 +93,7 @@ class OldInvoiceItemController extends Controller
      *
      * @return void
      */
-    public function destroy(Company $company, OldInvoiceItem $oldInvoiceItem)
+    public function destroy (Company $company, OldInvoiceItem $oldInvoiceItem)
     {
         //
     }

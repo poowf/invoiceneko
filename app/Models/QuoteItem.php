@@ -19,19 +19,19 @@ class QuoteItem extends Model implements Auditable
      */
     protected $table = 'quote_items';
 
-    public function quote()
+    public function quote ()
     {
         return $this->belongsTo('App\Models\Quote', 'quote_id');
     }
 
-    public function moneyFormatPrice()
+    public function moneyFormatPrice ()
     {
         setlocale(LC_MONETARY, 'en_US.UTF-8');
 
         return money_format('%!.2n', $this->price);
     }
 
-    public function scopeDuplicateCheck($query, $price, $quantity, $invoiceid)
+    public function scopeDuplicateCheck ($query, $price, $quantity, $invoiceid)
     {
         return $query
             ->where('price', $price)

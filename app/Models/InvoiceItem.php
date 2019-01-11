@@ -19,19 +19,19 @@ class InvoiceItem extends Model implements Auditable
      */
     protected $table = 'invoice_items';
 
-    public function invoice()
+    public function invoice ()
     {
         return $this->belongsTo('App\Models\Invoice', 'invoice_id');
     }
 
-    public function moneyFormatPrice()
+    public function moneyFormatPrice ()
     {
         setlocale(LC_MONETARY, 'en_US.UTF-8');
 
         return money_format('%!.2n', $this->price);
     }
 
-    public function modified($name, $description, $quantity, $price)
+    public function modified ($name, $description, $quantity, $price)
     {
         $ismodified = false;
         $original = $this;
@@ -56,7 +56,7 @@ class InvoiceItem extends Model implements Auditable
         return $ismodified;
     }
 
-    public function scopeDuplicateCheck($query, $price, $quantity, $invoiceid)
+    public function scopeDuplicateCheck ($query, $price, $quantity, $invoiceid)
     {
         return $query
             ->where('price', $price)

@@ -20,7 +20,7 @@ class HasCompany
      *
      * @param Guard $auth
      */
-    public function __construct(Guard $auth)
+    public function __construct (Guard $auth)
     {
         $this->auth = $auth;
     }
@@ -33,7 +33,7 @@ class HasCompany
      *
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle ($request, Closure $next)
     {
         $routeKey = Unicorn::getCompanyKey();
         if ($routeKey) {

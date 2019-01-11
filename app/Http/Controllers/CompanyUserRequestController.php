@@ -19,7 +19,7 @@ class CompanyUserRequestController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Company $company)
+    public function index (Company $company)
     {
         if ($company) {
             $requests = $company->requests()->paginate(12);
@@ -37,7 +37,7 @@ class CompanyUserRequestController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Company $company)
+    public function create (Company $company)
     {
         return view('pages.company.requests.create');
     }
@@ -50,7 +50,7 @@ class CompanyUserRequestController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Company $company)
+    public function store (Request $request, Company $company)
     {
         $email = $request->input('email');
 
@@ -81,7 +81,7 @@ class CompanyUserRequestController extends Controller
      *
      * @return RedirectResponse
      */
-    public function approve(Company $company, CompanyUserRequest $companyUserRequest)
+    public function approve (Company $company, CompanyUserRequest $companyUserRequest)
     {
         $companyUserRequest->status = CompanyUserRequest::STATUS_APPROVED;
         $companyUserRequest->save();
@@ -97,7 +97,7 @@ class CompanyUserRequestController extends Controller
      *
      * @return RedirectResponse
      */
-    public function reject(Company $company, CompanyUserRequest $companyUserRequest)
+    public function reject (Company $company, CompanyUserRequest $companyUserRequest)
     {
         $companyUserRequest->status = CompanyUserRequest::STATUS_REJECTED;
         $companyUserRequest->save();
@@ -115,7 +115,7 @@ class CompanyUserRequestController extends Controller
      *
      * @return void
      */
-    public function show(Company $company, CompanyUserRequest $companyUserRequest)
+    public function show (Company $company, CompanyUserRequest $companyUserRequest)
     {
         //
     }
@@ -128,7 +128,7 @@ class CompanyUserRequestController extends Controller
      *
      * @return void
      */
-    public function edit(Company $company, CompanyUserRequest $companyUserRequest)
+    public function edit (Company $company, CompanyUserRequest $companyUserRequest)
     {
         //
     }
@@ -140,7 +140,7 @@ class CompanyUserRequestController extends Controller
      *
      * @return void
      */
-    public function update(CompanyUserRequest $companyUserRequest)
+    public function update (CompanyUserRequest $companyUserRequest)
     {
         //
     }
@@ -153,7 +153,7 @@ class CompanyUserRequestController extends Controller
      *
      * @return void
      */
-    public function destroy(Company $company, CompanyUserRequest $companyUserRequest)
+    public function destroy (Company $company, CompanyUserRequest $companyUserRequest)
     {
         //
     }

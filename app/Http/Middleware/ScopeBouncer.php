@@ -20,7 +20,7 @@ class ScopeBouncer
      *
      * @param \Silber\Bouncer\Bouncer $bouncer
      */
-    public function __construct(Bouncer $bouncer)
+    public function __construct (Bouncer $bouncer)
     {
         $this->bouncer = $bouncer;
     }
@@ -33,7 +33,7 @@ class ScopeBouncer
      *
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle ($request, Closure $next)
     {
         // Here you may use whatever mechanism you use in your app
         // to determine the current tenant. To demonstrate, the

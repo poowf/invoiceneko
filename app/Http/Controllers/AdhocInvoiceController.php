@@ -13,7 +13,7 @@ use PragmaRX\Countries\Package\Countries;
 
 class AdhocInvoiceController extends Controller
 {
-    public function __construct()
+    public function __construct ()
     {
     }
 
@@ -22,7 +22,7 @@ class AdhocInvoiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index ()
     {
         //
     }
@@ -34,7 +34,7 @@ class AdhocInvoiceController extends Controller
      *
      * @return Response
      */
-    public function create(Company $company)
+    public function create (Company $company)
     {
         if ($company) {
             $invoicenumber = $company->niceinvoiceid();
@@ -55,7 +55,7 @@ class AdhocInvoiceController extends Controller
      *
      * @return Response
      */
-    public function store(CreateAdhocInvoiceRequest $request, Company $company)
+    public function store (CreateAdhocInvoiceRequest $request, Company $company)
     {
         $invoice = new Invoice();
         $invoice->nice_invoice_id = $company->niceinvoiceid();
@@ -99,7 +99,7 @@ class AdhocInvoiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show ($id)
     {
         //
     }
@@ -111,7 +111,7 @@ class AdhocInvoiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Company $company, Invoice $invoice)
+    public function edit (Company $company, Invoice $invoice)
     {
         if ($invoice->isLocked()) {
             flash('More than 120 days has passed since the invoice has been completed, the invoice is now locked', 'error');
@@ -135,7 +135,7 @@ class AdhocInvoiceController extends Controller
      *
      * @return Response
      */
-    public function update(UpdateAdhocInvoiceRequest $request, Company $company, Invoice $invoice)
+    public function update (UpdateAdhocInvoiceRequest $request, Company $company, Invoice $invoice)
     {
         if ($invoice->isLocked()) {
             flash('More than 120 days has passed since the invoice has been completed, the invoice is now locked', 'error');
@@ -233,7 +233,7 @@ class AdhocInvoiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy ($id)
     {
         //
     }

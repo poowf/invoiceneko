@@ -4,7 +4,7 @@ namespace App\Traits;
 
 trait UniqueSlug
 {
-    public static function generateSlug($model)
+    public static function generateSlug ($model)
     {
         $latestSlug =
             $model::whereRaw("slug = '$model->slug' or slug LIKE '$model->slug-%'")

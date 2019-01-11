@@ -20,7 +20,7 @@ class InvoiceNotification extends Notification implements ShouldQueue
      *
      * @param Invoice $invoice
      */
-    public function __construct(Invoice $invoice)
+    public function __construct (Invoice $invoice)
     {
         $this->invoice = $invoice;
     }
@@ -32,7 +32,7 @@ class InvoiceNotification extends Notification implements ShouldQueue
      *
      * @return array
      */
-    public function via($notifiable)
+    public function via ($notifiable)
     {
         return ['mail', 'database'];
     }
@@ -44,7 +44,7 @@ class InvoiceNotification extends Notification implements ShouldQueue
      *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail ($notifiable)
     {
         $invoice = $this->invoice;
         $company = $invoice->company;
@@ -71,7 +71,7 @@ class InvoiceNotification extends Notification implements ShouldQueue
      *
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray ($notifiable)
     {
         return [
             'invoice_id'      => $this->invoice->id,

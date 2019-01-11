@@ -14,13 +14,13 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register ()
     {
         Telescope::night();
 
         $this->hideSensitiveRequestDetails();
 
-        Telescope::filter(function (IncomingEntry $entry) {
+        Telescope::filter(function(IncomingEntry $entry) {
             if ($this->app->isLocal()) {
                 return true;
             }
@@ -37,7 +37,7 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
      *
      * @return void
      */
-    protected function hideSensitiveRequestDetails()
+    protected function hideSensitiveRequestDetails ()
     {
         if ($this->app->isLocal()) {
             return;
@@ -59,9 +59,9 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
      *
      * @return void
      */
-    protected function gate()
+    protected function gate ()
     {
-        Gate::define('viewTelescope', function ($user) {
+        Gate::define('viewTelescope', function($user) {
             return in_array($user->email, [
                 'zane@poowf.com',
             ]);

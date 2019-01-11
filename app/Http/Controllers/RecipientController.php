@@ -15,7 +15,7 @@ class RecipientController extends Controller
      *
      * @return void
      */
-    public function index()
+    public function index ()
     {
         //
     }
@@ -25,7 +25,7 @@ class RecipientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Company $company)
+    public function create (Company $company)
     {
         return view('pages.client.recipient.create');
     }
@@ -39,7 +39,7 @@ class RecipientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateRecipientRequest $request, Company $company, Client $client)
+    public function store (CreateRecipientRequest $request, Company $company, Client $client)
     {
         $recipient = new Recipient();
         $recipient->fill($request->all());
@@ -58,7 +58,7 @@ class RecipientController extends Controller
      *
      * @return void
      */
-    public function show(Recipient $recipient)
+    public function show (Recipient $recipient)
     {
         //
     }
@@ -72,7 +72,7 @@ class RecipientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Company $company, Client $client, Recipient $recipient)
+    public function edit (Company $company, Client $client, Recipient $recipient)
     {
         return view('pages.client.recipient.edit', compact('recipient'));
     }
@@ -87,7 +87,7 @@ class RecipientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRecipientRequest $request, Company $company, Client $client, Recipient $recipient)
+    public function update (UpdateRecipientRequest $request, Company $company, Client $client, Recipient $recipient)
     {
         $recipient->fill($request->all());
         $recipient->company_id = $company->id;
@@ -105,7 +105,7 @@ class RecipientController extends Controller
      *
      * @return void
      */
-    public function destroy(Recipient $recipient)
+    public function destroy (Recipient $recipient)
     {
         //
     }

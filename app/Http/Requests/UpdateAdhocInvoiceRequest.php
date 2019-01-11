@@ -11,7 +11,7 @@ class UpdateAdhocInvoiceRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize ()
     {
         return auth()->user()->can('update', $this->route('invoice'));
     }
@@ -21,7 +21,7 @@ class UpdateAdhocInvoiceRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules ()
     {
         return [
             'date'               => 'required|date_format:"j F, Y"',

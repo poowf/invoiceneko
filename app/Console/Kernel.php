@@ -23,7 +23,7 @@ class Kernel extends ConsoleKernel
      *
      * @return void
      */
-    protected function schedule(Schedule $schedule)
+    protected function schedule (Schedule $schedule)
     {
         $schedule->command('invoice:generate')->hourly(30);
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
@@ -34,7 +34,7 @@ class Kernel extends ConsoleKernel
      *
      * @return void
      */
-    protected function commands()
+    protected function commands ()
     {
         $this->load(__DIR__ . '/Commands');
 

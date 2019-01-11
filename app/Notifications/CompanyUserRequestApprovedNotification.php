@@ -17,7 +17,7 @@ class CompanyUserRequestApprovedNotification extends Notification implements Sho
      *
      * @return void
      */
-    public function __construct($token)
+    public function __construct ($token)
     {
         $this->token = $token;
     }
@@ -29,7 +29,7 @@ class CompanyUserRequestApprovedNotification extends Notification implements Sho
      *
      * @return array
      */
-    public function via($notifiable)
+    public function via ($notifiable)
     {
         return ['mail'];
     }
@@ -41,7 +41,7 @@ class CompanyUserRequestApprovedNotification extends Notification implements Sho
      *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail ($notifiable)
     {
         $url = route('user.create', ['token' => $this->token]);
 
@@ -59,7 +59,7 @@ class CompanyUserRequestApprovedNotification extends Notification implements Sho
      *
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray ($notifiable)
     {
         return [
             //

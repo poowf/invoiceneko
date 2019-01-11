@@ -15,7 +15,7 @@ class EnsureEmailIsVerified
      *
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle($request, Closure $next)
+    public function handle ($request, Closure $next)
     {
         if (!$request->user() ||
             ($request->user() instanceof MustVerifyEmail &&

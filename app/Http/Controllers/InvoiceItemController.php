@@ -15,7 +15,7 @@ class InvoiceItemController extends Controller
      *
      * @return void
      */
-    public function index(Company $company)
+    public function index (Company $company)
     {
         //
     }
@@ -27,7 +27,7 @@ class InvoiceItemController extends Controller
      *
      * @return void
      */
-    public function create(Company $company)
+    public function create (Company $company)
     {
         //
     }
@@ -40,7 +40,7 @@ class InvoiceItemController extends Controller
      *
      * @return void
      */
-    public function store(Request $request, Company $company)
+    public function store (Request $request, Company $company)
     {
         //
     }
@@ -53,7 +53,7 @@ class InvoiceItemController extends Controller
      *
      * @return void
      */
-    public function show(Company $company, InvoiceItem $invoiceItem)
+    public function show (Company $company, InvoiceItem $invoiceItem)
     {
         //
     }
@@ -66,7 +66,7 @@ class InvoiceItemController extends Controller
      *
      * @return void
      */
-    public function edit(Company $company, InvoiceItem $invoiceItem)
+    public function edit (Company $company, InvoiceItem $invoiceItem)
     {
         //
     }
@@ -80,7 +80,7 @@ class InvoiceItemController extends Controller
      *
      * @return void
      */
-    public function update(Request $request, Company $company, InvoiceItem $invoiceItem)
+    public function update (Request $request, Company $company, InvoiceItem $invoiceItem)
     {
         //
     }
@@ -95,7 +95,7 @@ class InvoiceItemController extends Controller
      *
      * @return void
      */
-    public function destroy(Company $company, InvoiceItem $invoiceItem)
+    public function destroy (Company $company, InvoiceItem $invoiceItem)
     {
         $invoice = $invoiceItem->invoice;
         if ($invoice->items->count() != 1) {

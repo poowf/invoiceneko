@@ -24,7 +24,7 @@ class QuoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Company $company)
+    public function index (Company $company)
     {
         $quotes = $company->quotes()->notarchived()->with(['client'])->get();
 
@@ -38,7 +38,7 @@ class QuoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index_archived(Company $company)
+    public function index_archived (Company $company)
     {
         $quotes = $company->quotes()->archived()->with(['client'])->get();
 
@@ -53,7 +53,7 @@ class QuoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function archive(Company $company, Quote $quote)
+    public function archive (Company $company, Quote $quote)
     {
         $quote->archived = true;
         $quote->save();
@@ -70,7 +70,7 @@ class QuoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function share(Company $company, Quote $quote)
+    public function share (Company $company, Quote $quote)
     {
         $token = Uuid::generate(4)->string;
         $quote->share_token = $token;
@@ -85,7 +85,7 @@ class QuoteController extends Controller
      *
      * @return mixed
      */
-    public function showwithtoken(Request $request, Company $company)
+    public function showwithtoken (Request $request, Company $company)
     {
         $token = $request->input('token');
         $quote = Quote::where('share_token', $token)->first();
@@ -102,7 +102,7 @@ class QuoteController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function duplicate(Company $company, Quote $quote)
+    public function duplicate (Company $company, Quote $quote)
     {
         $duplicatedQuote = $quote->duplicate();
         flash('Quote has been Duplicated Sucessfully', 'success');
@@ -117,7 +117,7 @@ class QuoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Company $company)
+    public function create (Company $company)
     {
         if ($company) {
             $quotenumber = $company->nicequoteid();
@@ -142,7 +142,7 @@ class QuoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateQuoteRequest $request, Company $company)
+    public function store (CreateQuoteRequest $request, Company $company)
     {
         $quote = new Quote();
         $quote->nice_quote_id = $company->nicequoteid();
@@ -174,7 +174,7 @@ class QuoteController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function convertToInvoice(Company $company, Quote $quote)
+    public function convertToInvoice (Company $company, Quote $quote)
     {
         $invoice = new Invoice();
         $invoice->nice_invoice_id = $company->niceinvoiceid();
@@ -216,7 +216,7 @@ class QuoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Company $company, Quote $quote)
+    public function show (Company $company, Quote $quote)
     {
         $client = $quote->getClient();
 
@@ -231,7 +231,7 @@ class QuoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function printview(Company $company, Quote $quote)
+    public function printview (Company $company, Quote $quote)
     {
         $pdf = $quote->generatePDFView();
 
@@ -246,7 +246,7 @@ class QuoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function download(Company $company, Quote $quote)
+    public function download (Company $company, Quote $quote)
     {
         $pdf = $quote->generatePDFView();
 
@@ -261,7 +261,7 @@ class QuoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Company $company, Quote $quote)
+    public function edit (Company $company, Quote $quote)
     {
         if (is_null($quote->client_id)) {
             return redirect()->route('quote.adhoc.edit', ['quote' => $quote, 'company' => Unicorn::getCompanyKey()]);
@@ -281,7 +281,7 @@ class QuoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateQuoteRequest $request, Company $company, Quote $quote)
+    public function update (UpdateQuoteRequest $request, Company $company, Quote $quote)
     {
         $quote->fill($request->all());
         $quote->save();
@@ -321,7 +321,7 @@ class QuoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Company $company, Quote $quote)
+    public function destroy (Company $company, Quote $quote)
     {
         $quote->delete();
 

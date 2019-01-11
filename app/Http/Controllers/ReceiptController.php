@@ -16,7 +16,7 @@ class ReceiptController extends Controller
      *
      * @return void
      */
-    public function index(Company $company)
+    public function index (Company $company)
     {
         $receipts = $company->receipts;
 
@@ -30,7 +30,7 @@ class ReceiptController extends Controller
      *
      * @return void
      */
-    public function create(Company $company)
+    public function create (Company $company)
     {
         //
     }
@@ -43,7 +43,7 @@ class ReceiptController extends Controller
      *
      * @return void
      */
-    public function store(Request $request, Company $company)
+    public function store (Request $request, Company $company)
     {
         //
     }
@@ -56,7 +56,7 @@ class ReceiptController extends Controller
      *
      * @return void
      */
-    public function show(Company $company, Receipt $receipt)
+    public function show (Company $company, Receipt $receipt)
     {
         $receipt = $receipt;
         $invoice = $receipt->invoice;
@@ -72,7 +72,7 @@ class ReceiptController extends Controller
      *
      * @return void
      */
-    public function edit(Company $company, Receipt $receipt)
+    public function edit (Company $company, Receipt $receipt)
     {
         //
     }
@@ -86,7 +86,7 @@ class ReceiptController extends Controller
      *
      * @return void
      */
-    public function update(Request $request, Company $company, Receipt $receipt)
+    public function update (Request $request, Company $company, Receipt $receipt)
     {
         //
     }
@@ -99,12 +99,12 @@ class ReceiptController extends Controller
      *
      * @return void
      */
-    public function destroy(Company $company, Receipt $receipt)
+    public function destroy (Company $company, Receipt $receipt)
     {
         //
     }
 
-    public function generate(Company $company, Invoice $invoice)
+    public function generate (Company $company, Invoice $invoice)
     {
         if (!$invoice->receipt) {
             $receipt = new Receipt();
@@ -124,7 +124,7 @@ class ReceiptController extends Controller
      *
      * @return Response
      */
-    public function printview(Company $company, Receipt $receipt)
+    public function printview (Company $company, Receipt $receipt)
     {
         $pdf = $receipt->generatePDFView();
 
@@ -139,7 +139,7 @@ class ReceiptController extends Controller
      *
      * @return Response
      */
-    public function download(Company $company, Receipt $receipt)
+    public function download (Company $company, Receipt $receipt)
     {
         $pdf = $receipt->generatePDFView();
 

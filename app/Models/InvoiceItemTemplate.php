@@ -31,7 +31,7 @@ class InvoiceItemTemplate extends Model implements Auditable
         'description',
     ];
 
-    public function template()
+    public function template ()
     {
         return $this->belongsTo('App\Models\InvoiceTemplate', 'invoice_template_id');
     }

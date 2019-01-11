@@ -10,18 +10,18 @@ class ReceiptPolicy
 {
     use HandlesAuthorization;
 
-    public function __construct()
+    public function __construct ()
     {
     }
 
-    public function before($user, $ability)
+    public function before ($user, $ability)
     {
         if ($user->isAn('global-administrator')) {
             return true;
         }
     }
 
-    public function index(User $user)
+    public function index (User $user)
     {
         return $user->can('view-receipt', Receipt::class);
     }
@@ -34,7 +34,7 @@ class ReceiptPolicy
      *
      * @return mixed
      */
-    public function view(User $user, Receipt $receipt)
+    public function view (User $user, Receipt $receipt)
     {
         return $user->can('view-receipt', $receipt);
     }
@@ -46,7 +46,7 @@ class ReceiptPolicy
      *
      * @return mixed
      */
-    public function create(User $user)
+    public function create (User $user)
     {
         return $user->can('create-receipt', Receipt::class);
     }
@@ -59,7 +59,7 @@ class ReceiptPolicy
      *
      * @return mixed
      */
-    public function update(User $user, Receipt $receipt)
+    public function update (User $user, Receipt $receipt)
     {
         return $user->can('update-receipt', $receipt);
     }
@@ -72,7 +72,7 @@ class ReceiptPolicy
      *
      * @return mixed
      */
-    public function delete(User $user, Receipt $receipt)
+    public function delete (User $user, Receipt $receipt)
     {
         return $user->can('delete-receipt', $receipt);
     }

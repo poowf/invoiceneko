@@ -11,7 +11,7 @@ class UpdateCompanyAddressRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize ()
     {
         return auth()->user()->can('address', $this->route('company'));
     }
@@ -21,7 +21,7 @@ class UpdateCompanyAddressRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules ()
     {
         return [
             'block'        => 'required|string',
@@ -39,9 +39,9 @@ class UpdateCompanyAddressRequest extends FormRequest
      *
      * @return void
      */
-    public function withValidator($validator)
+    public function withValidator ($validator)
     {
-        $validator->after(function ($validator) {
+        $validator->after(function($validator) {
             $company = $this->route('company');
             if (!$company) {
                 $validator->errors()->add('Company', 'Please fill in your company information first');

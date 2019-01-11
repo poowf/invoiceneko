@@ -11,7 +11,7 @@ trait AuthHelper
      *
      * @return \Illuminate\Contracts\Auth\PasswordBroker
      */
-    public function broker()
+    public function broker ()
     {
         return Password::broker();
     }
@@ -21,7 +21,7 @@ trait AuthHelper
      *
      * @return string
      */
-    public function redirectPath()
+    public function redirectPath ()
     {
         return property_exists($this, 'redirectTo') ? $this->redirectTo : '/';
     }

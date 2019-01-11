@@ -16,7 +16,7 @@ class CompanyUserRequestRejectedNotification extends Notification implements Sho
      *
      * @return void
      */
-    public function __construct()
+    public function __construct ()
     {
         //
     }
@@ -28,7 +28,7 @@ class CompanyUserRequestRejectedNotification extends Notification implements Sho
      *
      * @return array
      */
-    public function via($notifiable)
+    public function via ($notifiable)
     {
         return ['mail'];
     }
@@ -40,7 +40,7 @@ class CompanyUserRequestRejectedNotification extends Notification implements Sho
      *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail ($notifiable)
     {
         return (new MailMessage())
             ->subject('Your requested to be added to your company on ' . config('app.name') . ' has been rejected')
@@ -55,7 +55,7 @@ class CompanyUserRequestRejectedNotification extends Notification implements Sho
      *
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray ($notifiable)
     {
         return [
             //

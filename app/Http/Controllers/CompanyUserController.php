@@ -14,7 +14,7 @@ use Silber\Bouncer\BouncerFacade as Bouncer;
 
 class CompanyUserController extends Controller
 {
-    public function __construct()
+    public function __construct ()
     {
     }
 
@@ -24,7 +24,7 @@ class CompanyUserController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(Company $company)
+    public function index (Company $company)
     {
         if ($company) {
             $users = $company->users()->paginate(12);
@@ -41,7 +41,7 @@ class CompanyUserController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create(Company $company)
+    public function create (Company $company)
     {
         $countries = countries();
         $timezones = \DateTimeZone::listIdentifiers(DateTimeZone::ALL);
@@ -57,7 +57,7 @@ class CompanyUserController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(CreateCompanyUserRequest $request, Company $company)
+    public function store (CreateCompanyUserRequest $request, Company $company)
     {
         $random_password = str_random(16);
 
@@ -83,7 +83,7 @@ class CompanyUserController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(Company $company, User $user)
+    public function edit (Company $company, User $user)
     {
         $roles = Bouncer::role()->all();
         $userRoles = $user->getRoles();
@@ -98,7 +98,7 @@ class CompanyUserController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateCompanyUserRequest $request, Company $company, User $user)
+    public function update (UpdateCompanyUserRequest $request, Company $company, User $user)
     {
         $roles = $request->input('roles');
 
@@ -118,7 +118,7 @@ class CompanyUserController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Request $request, Company $company, User $user)
+    public function destroy (Request $request, Company $company, User $user)
     {
         $auth_user = auth()->user();
 

@@ -19,7 +19,7 @@ class InvoiceMail extends Mailable implements ShouldQueue
      *
      * @param Invoice $invoice
      */
-    public function __construct(Invoice $invoice)
+    public function __construct (Invoice $invoice)
     {
         $this->invoice = $invoice;
     }
@@ -29,7 +29,7 @@ class InvoiceMail extends Mailable implements ShouldQueue
      *
      * @return $this
      */
-    public function build()
+    public function build ()
     {
         return $this->view('emails.invoice');
     }

@@ -25,7 +25,7 @@ class Invoice extends OtterResource
      *
      * @return array
      */
-    public static function fields()
+    public static function fields ()
     {
         return [
             'nice_invoice_id' => 'text',
@@ -41,7 +41,7 @@ class Invoice extends OtterResource
      *
      * @return array
      */
-    public static function relations()
+    public static function relations ()
     {
         return [
             'client'  => ['Client', 'client_id'],
@@ -50,7 +50,7 @@ class Invoice extends OtterResource
         ];
     }
 
-    public function toArray($request)
+    public function toArray ($request)
     {
         $transformed = parent::toArray($request);
         $transformed['date'] = $this->date ? $this->date->format('Y-m-d H:i:s') : null;

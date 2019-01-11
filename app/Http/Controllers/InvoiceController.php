@@ -23,7 +23,7 @@ use PDF;
 
 class InvoiceController extends Controller
 {
-    public function __construct()
+    public function __construct ()
     {
     }
 
@@ -34,7 +34,7 @@ class InvoiceController extends Controller
      *
      * @return Response
      */
-    public function index(Company $company)
+    public function index (Company $company)
     {
         $overdue = $company->invoices()->with(['client'])->overdue()->notarchived()->get();
         $pending = $company->invoices()->with(['client'])->pending()->notarchived()->get();
@@ -51,7 +51,7 @@ class InvoiceController extends Controller
      *
      * @return Response
      */
-    public function index_archived(Company $company)
+    public function index_archived (Company $company)
     {
         $invoices = $company->invoices()->archived()->with(['client'])->get();
 
@@ -66,7 +66,7 @@ class InvoiceController extends Controller
      *
      * @return Response
      */
-    public function archive(Company $company, Invoice $invoice)
+    public function archive (Company $company, Invoice $invoice)
     {
         $invoice->archived = true;
         $invoice->save();
@@ -82,7 +82,7 @@ class InvoiceController extends Controller
      *
      * @return void
      */
-    public function writeoff(Company $company, Invoice $invoice)
+    public function writeoff (Company $company, Invoice $invoice)
     {
         $invoice->status = Invoice::STATUS_WRITTENOFF;
         $invoice->save();
@@ -98,7 +98,7 @@ class InvoiceController extends Controller
      *
      * @return Response
      */
-    public function share(Company $company, Invoice $invoice)
+    public function share (Company $company, Invoice $invoice)
     {
         $token = $invoice->generateShareToken(true);
 
@@ -113,7 +113,7 @@ class InvoiceController extends Controller
      *
      * @return Response
      */
-    public function sendnotification(Company $company, Invoice $invoice)
+    public function sendnotification (Company $company, Invoice $invoice)
     {
         $invoice->notify(new InvoiceNotification($invoice));
         flash('An email notification has been sent to the client', 'success');
@@ -127,7 +127,7 @@ class InvoiceController extends Controller
      *
      * @return mixed
      */
-    public function showwithtoken(Request $request, Company $company)
+    public function showwithtoken (Request $request, Company $company)
     {
         $token = $request->input('token');
         $invoice = Invoice::where('share_token', $token)->first();
@@ -144,7 +144,7 @@ class InvoiceController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function duplicate(Company $company, Invoice $invoice)
+    public function duplicate (Company $company, Invoice $invoice)
     {
         $duplicatedInvoice = $invoice->duplicate();
         flash('Invoice has been Duplicated Sucessfully', 'success');
@@ -159,7 +159,7 @@ class InvoiceController extends Controller
      *
      * @return Response
      */
-    public function create(Company $company)
+    public function create (Company $company)
     {
         if ($company) {
             $invoicenumber = $company->niceinvoiceid();
@@ -187,7 +187,7 @@ class InvoiceController extends Controller
      *
      * @return Response
      */
-    public function store(CreateInvoiceRequest $request, Company $company)
+    public function store (CreateInvoiceRequest $request, Company $company)
     {
         $invoice = new Invoice();
         $invoice->nice_invoice_id = $company->niceinvoiceid();
@@ -277,7 +277,7 @@ class InvoiceController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function convertToQuote(Company $company, Invoice $invoice)
+    public function convertToQuote (Company $company, Invoice $invoice)
     {
         $quote = new Quote();
         $quote->nice_quote_id = $company->nicequoteid();
@@ -316,7 +316,7 @@ class InvoiceController extends Controller
      *
      * @return Response
      */
-    public function show(Company $company, Invoice $invoice)
+    public function show (Company $company, Invoice $invoice)
     {
         $client = $invoice->getClient();
         $histories = $invoice->history()->orderBy('updated_at', 'desc')->get();
@@ -336,7 +336,7 @@ class InvoiceController extends Controller
      *
      * @return Response
      */
-    public function printview(Company $company, Invoice $invoice)
+    public function printview (Company $company, Invoice $invoice)
     {
         $pdf = $invoice->generatePDFView();
 
@@ -351,7 +351,7 @@ class InvoiceController extends Controller
      *
      * @return Response
      */
-    public function download(Company $company, Invoice $invoice)
+    public function download (Company $company, Invoice $invoice)
     {
         $pdf = $invoice->generatePDFView();
 
@@ -366,7 +366,7 @@ class InvoiceController extends Controller
      *
      * @return Response
      */
-    public function edit(Company $company, Invoice $invoice)
+    public function edit (Company $company, Invoice $invoice)
     {
         if ($invoice->isLocked()) {
             flash('More than 120 days has passed since the invoice has been completed, the invoice is now locked', 'error');
@@ -397,7 +397,7 @@ class InvoiceController extends Controller
      *
      * @return Response
      */
-    public function update(UpdateInvoiceRequest $request, Company $company, Invoice $invoice)
+    public function update (UpdateInvoiceRequest $request, Company $company, Invoice $invoice)
     {
         if ($invoice->isLocked()) {
             flash('More than 120 days has passed since the invoice has been completed, the invoice is now locked', 'error');
@@ -582,7 +582,7 @@ class InvoiceController extends Controller
      *
      * @return Response
      */
-    public function destroy(Company $company, Invoice $invoice)
+    public function destroy (Company $company, Invoice $invoice)
     {
         $invoice->delete();
 
@@ -597,7 +597,7 @@ class InvoiceController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function history(Company $company, Invoice $invoice)
+    public function history (Company $company, Invoice $invoice)
     {
         $client = $invoice->getClient();
         $histories = $invoice->history()->orderBy('created_at', 'desc')->get();
@@ -613,7 +613,7 @@ class InvoiceController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function checkSiblings(Company $company, Invoice $invoice)
+    public function checkSiblings (Company $company, Invoice $invoice)
     {
         $hasSiblings = ($invoice->siblings()) ? true : false;
 

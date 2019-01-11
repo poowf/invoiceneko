@@ -36,7 +36,7 @@ class Handler extends ExceptionHandler
      *
      * @return void
      */
-    public function report(Exception $exception)
+    public function report (Exception $exception)
     {
         if (app()->environment('production') && app()->bound('sentry') && $this->shouldReport($exception)) {
             app('sentry')->captureException($exception);
@@ -53,7 +53,7 @@ class Handler extends ExceptionHandler
      *
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
+    public function render ($request, Exception $exception)
     {
         return parent::render($request, $exception);
     }
@@ -67,7 +67,7 @@ class Handler extends ExceptionHandler
      *
      * @return \Illuminate\Http\Response
      */
-    protected function unauthenticated($request, AuthenticationException $exception)
+    protected function unauthenticated ($request, AuthenticationException $exception)
     {
         return $request->expectsJson()
             ? response()->json(['message' => 'Unauthenticated.'], 401)

@@ -25,7 +25,7 @@ class CompanyAddress extends OtterResource
      *
      * @return array
      */
-    public static function fields()
+    public static function fields ()
     {
         return [
             'block'        => 'text',
@@ -41,7 +41,7 @@ class CompanyAddress extends OtterResource
      *
      * @return array
      */
-    public static function hidden()
+    public static function hidden ()
     {
         return [
         ];

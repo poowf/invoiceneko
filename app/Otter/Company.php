@@ -25,7 +25,7 @@ class Company extends OtterResource
      *
      * @return array
      */
-    public static function fields()
+    public static function fields ()
     {
         return [
             'name'         => 'text',
@@ -38,7 +38,7 @@ class Company extends OtterResource
         ];
     }
 
-    public static function relations()
+    public static function relations ()
     {
         return [
             'settings' => 'CompanySetting',

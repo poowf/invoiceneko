@@ -39,21 +39,21 @@ class CompanyUserRequest extends Model implements Auditable
         'status' => self::STATUS_PENDING,
     ];
 
-    protected static function boot()
+    protected static function boot ()
     {
         parent::boot();
 
-        static::creating(function ($companyuserrequest) {
+        static::creating(function($companyuserrequest) {
             $companyuserrequest->token = str_random(30);
         });
     }
 
-    public function company()
+    public function company ()
     {
         return $this->belongsTo('App\Models\Company', 'company_id');
     }
 
-    public function statusText()
+    public function statusText ()
     {
         $status = $this->status;
 

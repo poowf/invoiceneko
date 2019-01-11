@@ -20,7 +20,7 @@ class ChangedEmail
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct ($user)
     {
         $this->user = $user;
     }

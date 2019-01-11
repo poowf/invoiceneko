@@ -13,12 +13,12 @@ use Log;
 
 class DataMigrationController extends Controller
 {
-    public function create(Company $company)
+    public function create (Company $company)
     {
         return view('pages.migration.create');
     }
 
-    public function storecontact(Request $request, Company $company)
+    public function storecontact (Request $request, Company $company)
     {
         $file = $request->file('contactimport');
 
@@ -26,7 +26,7 @@ class DataMigrationController extends Controller
 
         $errorscollection = new Collection();
 
-        Excel::load($file, function ($reader) use ($errorscollection) {
+        Excel::load($file, function($reader) use ($errorscollection) {
             // ->all() is a wrapper for ->get() and will work the same
             $results = $reader->all();
 
@@ -67,7 +67,7 @@ class DataMigrationController extends Controller
         return redirect()->route('migration.create')->with(compact('errorscollection'));
     }
 
-    public function storeinvoice(Request $request, Company $company)
+    public function storeinvoice (Request $request, Company $company)
     {
         $file = $request->file('invoiceimport');
 
@@ -75,7 +75,7 @@ class DataMigrationController extends Controller
 
         $errorscollection = new Collection();
 
-        Excel::load($file, function ($reader) use ($errorscollection) {
+        Excel::load($file, function($reader) use ($errorscollection) {
             // ->all() is a wrapper for ->get() and will work the same
             $results = $reader->all();
 
@@ -141,7 +141,7 @@ class DataMigrationController extends Controller
         return redirect()->route('migration.create')->with(compact('errorscollection'));
     }
 
-    public function createInvoiceItem($name, $description, $price, $quantity, $invoiceid)
+    public function createInvoiceItem ($name, $description, $price, $quantity, $invoiceid)
     {
         $invoiceitem = InvoiceItem::query();
         $price = number_format($price, 3, '.', '');
@@ -157,7 +157,7 @@ class DataMigrationController extends Controller
         }
     }
 
-    public function storepayment(Request $request, Company $company)
+    public function storepayment (Request $request, Company $company)
     {
         $file = $request->file('paymentimport');
 
@@ -165,7 +165,7 @@ class DataMigrationController extends Controller
 
         $errorscollection = new Collection();
 
-        Excel::load($file, function ($reader) use ($errorscollection) {
+        Excel::load($file, function($reader) use ($errorscollection) {
             // ->all() is a wrapper for ->get() and will work the same
             $results = $reader->all();
 

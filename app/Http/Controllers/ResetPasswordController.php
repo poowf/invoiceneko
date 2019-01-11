@@ -11,14 +11,14 @@ class ResetPasswordController extends Controller
 {
     use ResetsPasswords;
 
-    public function show(Request $request, $token = null)
+    public function show (Request $request, $token = null)
     {
         return view('pages.reset')->with(
             ['token' => $token, 'email' => $request->email]
         );
     }
 
-    protected function resetPassword($user, $password)
+    protected function resetPassword ($user, $password)
     {
         //Override the method in ResetsPasswords Trait and
         //Remove Hash::make as the hashing is handled in the user model
@@ -33,7 +33,7 @@ class ResetPasswordController extends Controller
         $this->guard()->login($user);
     }
 
-    public function redirectTo()
+    public function redirectTo ()
     {
         return Unicorn::redirectTo();
     }

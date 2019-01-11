@@ -11,7 +11,7 @@ class UpdateCompanyUserRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize ()
     {
         return auth()->user()->can('owner', $this->route('company'));
     }
@@ -21,7 +21,7 @@ class UpdateCompanyUserRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules ()
     {
         //this->user works because the user model is in the path
         return [

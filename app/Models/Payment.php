@@ -49,57 +49,57 @@ class Payment extends Model implements Auditable
      *
      * @return string
      */
-    public function getMoneyFormatAttribute()
+    public function getMoneyFormatAttribute ()
     {
         setlocale(LC_MONETARY, 'en_US.UTF-8');
 
         return money_format('%!.2n', $this->amount);
     }
 
-    public function getPercentageAttribute()
+    public function getPercentageAttribute ()
     {
         $invoiceTotal = $this->invoice->total;
 
         return money_format('%!.2n', ($this->amount / $invoiceTotal) * 100);
     }
 
-    public function getCreatedAtAttribute($value)
+    public function getCreatedAtAttribute ($value)
     {
         $date = $this->asDateTime($value);
 
         return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
-    public function getUpdatedAtAttribute($value)
+    public function getUpdatedAtAttribute ($value)
     {
         $date = $this->asDateTime($value);
 
         return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
-    public function getReceiveddateAttribute($value)
+    public function getReceiveddateAttribute ($value)
     {
         $date = $this->asDateTime($value);
 
         return $date->timezone($this->company->timezone);
     }
 
-    public function invoice()
+    public function invoice ()
     {
         return $this->belongsTo('App\Models\Invoice', 'invoice_id');
     }
 
-    public function company()
+    public function company ()
     {
         return $this->belongsTo('App\Models\Company', 'company_id');
     }
 
-    public function client()
+    public function client ()
     {
         return $this->belongsTo('App\Models\Client', 'client_id');
     }
 
-    public function scopeDuplicateCheck($query, $amount, $receiveddate, $invoiceid, $clientid, $companyid)
+    public function scopeDuplicateCheck ($query, $amount, $receiveddate, $invoiceid, $clientid, $companyid)
     {
         return $query
             ->where('amount', $amount)

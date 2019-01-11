@@ -12,7 +12,7 @@ class CreateSoloPaymentRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize ()
     {
         return auth()->user()->can('create', Payment::class);
     }
@@ -22,7 +22,7 @@ class CreateSoloPaymentRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules ()
     {
         return [
             'invoice_id'   => 'required',

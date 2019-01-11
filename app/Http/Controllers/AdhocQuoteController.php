@@ -11,7 +11,7 @@ use PragmaRX\Countries\Package\Countries;
 
 class AdhocQuoteController extends Controller
 {
-    public function __construct()
+    public function __construct ()
     {
     }
 
@@ -20,7 +20,7 @@ class AdhocQuoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index ()
     {
         //
     }
@@ -32,7 +32,7 @@ class AdhocQuoteController extends Controller
      *
      * @return Response
      */
-    public function create(Company $company)
+    public function create (Company $company)
     {
         if ($company) {
             $quotenumber = $company->nicequoteid();
@@ -53,7 +53,7 @@ class AdhocQuoteController extends Controller
      *
      * @return Response
      */
-    public function store(CreateAdhocQuoteRequest $request, Company $company)
+    public function store (CreateAdhocQuoteRequest $request, Company $company)
     {
         $quote = new Quote();
         $quote->nice_quote_id = $company->nicequoteid();
@@ -96,7 +96,7 @@ class AdhocQuoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show ($id)
     {
         //
     }
@@ -108,7 +108,7 @@ class AdhocQuoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Company $company, Quote $quote)
+    public function edit (Company $company, Quote $quote)
     {
         $client = $quote->getClient();
         $countries = countries();
@@ -126,7 +126,7 @@ class AdhocQuoteController extends Controller
      *
      * @return Response
      */
-    public function update(UpdateAdhocQuoteRequest $request, Company $company, Quote $quote)
+    public function update (UpdateAdhocQuoteRequest $request, Company $company, Quote $quote)
     {
         $quote->fill($request->all());
 
@@ -175,7 +175,7 @@ class AdhocQuoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy ($id)
     {
         //
     }

@@ -11,7 +11,7 @@ class EmailChangedListener
      *
      * @param $event
      */
-    public function process($event)
+    public function process ($event)
     {
         if ($event->user instanceof MustVerifyEmail && !$event->user->hasVerifiedEmail()) {
             $event->user->save();
@@ -24,7 +24,7 @@ class EmailChangedListener
      *
      * @param Illuminate\Events\Dispatcher $events
      */
-    public function subscribe($events)
+    public function subscribe ($events)
     {
         $events->listen(
             'Illuminate\Auth\Events\Registered',

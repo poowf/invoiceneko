@@ -11,18 +11,18 @@ class QuoteItemPolicy
 {
     use HandlesAuthorization;
 
-    public function __construct()
+    public function __construct ()
     {
     }
 
-    public function before($user, $ability)
+    public function before ($user, $ability)
     {
         if ($user->isAn('global-administrator')) {
             return true;
         }
     }
 
-    public function index(User $user)
+    public function index (User $user)
     {
         return $user->can('view-quote', QuoteItem::class);
     }
@@ -35,7 +35,7 @@ class QuoteItemPolicy
      *
      * @return mixed
      */
-    public function view(User $user, QuoteItem $quoteItem)
+    public function view (User $user, QuoteItem $quoteItem)
     {
         return $user->can('view-quote', Quote::class);
     }
@@ -47,7 +47,7 @@ class QuoteItemPolicy
      *
      * @return mixed
      */
-    public function create(User $user)
+    public function create (User $user)
     {
         return $user->can('create-quote', Quote::class);
     }
@@ -60,7 +60,7 @@ class QuoteItemPolicy
      *
      * @return mixed
      */
-    public function update(User $user, QuoteItem $quoteItem)
+    public function update (User $user, QuoteItem $quoteItem)
     {
         return $user->can('update-quote', Quote::class);
     }
@@ -73,7 +73,7 @@ class QuoteItemPolicy
      *
      * @return mixed
      */
-    public function delete(User $user, QuoteItem $quoteItem)
+    public function delete (User $user, QuoteItem $quoteItem)
     {
         return $user->can('delete-quote', Quote::class);
     }

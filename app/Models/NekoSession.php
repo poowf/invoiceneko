@@ -17,12 +17,12 @@ class NekoSession extends Model
 
     public $incrementing = false;
 
-    public function __construct(array $attributes = [])
+    public function __construct (array $attributes = [])
     {
         parent::__construct($attributes);
     }
 
-    public function getDeviceAttribute()
+    public function getDeviceAttribute ()
     {
         $agent = $this->setupAgent();
         $device = $agent->device();
@@ -30,7 +30,7 @@ class NekoSession extends Model
         return $device;
     }
 
-    public function getPlatformAttribute()
+    public function getPlatformAttribute ()
     {
         $agent = $this->setupAgent();
         $platform = $agent->platform();
@@ -38,7 +38,7 @@ class NekoSession extends Model
         return $platform;
     }
 
-    public function getBrowserAttribute()
+    public function getBrowserAttribute ()
     {
         $agent = $this->setupAgent();
         $browser = $agent->browser();
@@ -46,24 +46,24 @@ class NekoSession extends Model
         return $browser;
     }
 
-    public function isPhone()
+    public function isPhone ()
     {
         $agent = $this->setupAgent();
 
         return $agent->isPhone();
     }
 
-    public function getPlatformNameAttribute()
+    public function getPlatformNameAttribute ()
     {
         return "{$this->device} {$this->platform}, {$this->browser}";
     }
 
-    public function getLastActivityAttribute($value)
+    public function getLastActivityAttribute ($value)
     {
         return Carbon::createFromTimestamp($value)->format('d M Y');
     }
 
-    public function setupAgent()
+    public function setupAgent ()
     {
         $agent = new Agent();
         $agent->setUserAgent($this->user_agent);

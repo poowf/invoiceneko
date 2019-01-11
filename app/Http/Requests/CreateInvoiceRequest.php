@@ -12,7 +12,7 @@ class CreateInvoiceRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize ()
     {
         return auth()->user()->can('create', Invoice::class);
     }
@@ -22,7 +22,7 @@ class CreateInvoiceRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules ()
     {
         return [
             'date'                             => 'required|date_format:"j F, Y"',

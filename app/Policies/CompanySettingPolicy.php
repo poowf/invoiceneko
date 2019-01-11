@@ -15,19 +15,19 @@ class CompanySettingPolicy
      *
      * @return void
      */
-    public function __construct()
+    public function __construct ()
     {
         //
     }
 
-    public function before($user, $ability)
+    public function before ($user, $ability)
     {
         if ($user->isAn('global-administrator')) {
             return true;
         }
     }
 
-    public function index(User $user)
+    public function index (User $user)
     {
         return $user->can('update-company-settings', CompanySetting::class);
     }
@@ -40,7 +40,7 @@ class CompanySettingPolicy
      *
      * @return mixed
      */
-    public function view(User $user, CompanySetting $companySettings)
+    public function view (User $user, CompanySetting $companySettings)
     {
         return $user->can('view-company-settings', $companySettings);
     }
@@ -52,7 +52,7 @@ class CompanySettingPolicy
      *
      * @return mixed
      */
-    public function create(User $user)
+    public function create (User $user)
     {
         return $user->can('create-company-settings', CompanySetting::class);
     }
@@ -65,7 +65,7 @@ class CompanySettingPolicy
      *
      * @return mixed
      */
-    public function update(User $user, CompanySetting $companySettings)
+    public function update (User $user, CompanySetting $companySettings)
     {
         return $user->can('update-company-settings', $companySettings);
     }
@@ -78,7 +78,7 @@ class CompanySettingPolicy
      *
      * @return mixed
      */
-    public function delete(User $user, CompanySetting $companySettings)
+    public function delete (User $user, CompanySetting $companySettings)
     {
         return $user->can('delete-company-settings', $companySettings);
     }

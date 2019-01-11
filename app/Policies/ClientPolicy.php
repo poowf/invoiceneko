@@ -10,18 +10,18 @@ class ClientPolicy
 {
     use HandlesAuthorization;
 
-    public function __construct()
+    public function __construct ()
     {
     }
 
-    public function before($user, $ability)
+    public function before ($user, $ability)
     {
         if ($user->isAn('global-administrator')) {
             return true;
         }
     }
 
-    public function index(User $user)
+    public function index (User $user)
     {
         return $user->can('view-client', Client::class);
     }
@@ -34,7 +34,7 @@ class ClientPolicy
      *
      * @return mixed
      */
-    public function view(User $user, Client $client)
+    public function view (User $user, Client $client)
     {
         return $user->can('view-client', $client);
     }
@@ -46,7 +46,7 @@ class ClientPolicy
      *
      * @return mixed
      */
-    public function create(User $user)
+    public function create (User $user)
     {
         return $user->can('create-client', Client::class);
     }
@@ -59,7 +59,7 @@ class ClientPolicy
      *
      * @return mixed
      */
-    public function update(User $user, Client $client)
+    public function update (User $user, Client $client)
     {
         return $user->can('update-client', $client);
     }
@@ -72,7 +72,7 @@ class ClientPolicy
      *
      * @return mixed
      */
-    public function delete(User $user, Client $client)
+    public function delete (User $user, Client $client)
     {
         return $user->can('delete-client', $client);
     }

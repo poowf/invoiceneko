@@ -31,24 +31,24 @@ class InvoiceTemplate extends Model implements Auditable
         'client_id',
     ];
 
-    public function getDateAttribute($value)
+    public function getDateAttribute ($value)
     {
         $date = $this->asDateTime($value);
 
         return $date->timezone($this->recurrence->company->timezone);
     }
 
-    public function client()
+    public function client ()
     {
         return $this->belongsTo('App\Models\Client', 'client_id');
     }
 
-    public function recurrence()
+    public function recurrence ()
     {
         return $this->belongsTo('App\Models\InvoiceRecurrence', 'invoice_recurrence_id');
     }
 
-    public function items()
+    public function items ()
     {
         return $this->hasMany('App\Models\InvoiceItemTemplate', 'invoice_template_id');
     }

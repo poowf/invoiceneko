@@ -12,7 +12,7 @@ class CreateItemTemplateRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize ()
     {
         return auth()->user()->can('create', ItemTemplate::class);
     }
@@ -22,7 +22,7 @@ class CreateItemTemplateRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules ()
     {
         return [
             'name'        => 'required|string',

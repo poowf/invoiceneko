@@ -10,14 +10,14 @@ class VerificationController extends Controller
 {
     use VerifiesEmails;
 
-    public function show(Request $request)
+    public function show (Request $request)
     {
         return $request->user()->hasVerifiedEmail()
             ? redirect($this->redirectPath())
             : view('pages.verify');
     }
 
-    public function redirectTo()
+    public function redirectTo ()
     {
         return Unicorn::redirectTo();
     }

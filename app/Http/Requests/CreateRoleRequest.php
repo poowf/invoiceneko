@@ -12,7 +12,7 @@ class CreateRoleRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize ()
     {
         return auth()->user()->can('owner', app('request')->route('company'));
     }
@@ -22,7 +22,7 @@ class CreateRoleRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules ()
     {
         return [
             'title' => [
