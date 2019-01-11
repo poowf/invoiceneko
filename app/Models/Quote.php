@@ -61,7 +61,7 @@ class Quote extends Model implements Auditable
     {
         parent::boot();
 
-        static::saving(function ($quote) {
+        static::saving(function($quote) {
             if ($quote->status == self::STATUS_DRAFT) {
                 $quote->status = self::STATUS_OPEN;
             }
@@ -70,7 +70,7 @@ class Quote extends Model implements Auditable
         });
 
         //Auto Increment of quote_index per Company;
-        static::created(function ($quote) {
+        static::created(function($quote) {
             $company = $quote->company;
             $company->quote_index = $company->quote_index + 1;
             $company->save();

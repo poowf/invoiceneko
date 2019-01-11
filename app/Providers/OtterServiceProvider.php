@@ -29,7 +29,7 @@ class OtterServiceProvider extends OtterApplicationServiceProvider
      */
     protected function gate()
     {
-        Gate::define('viewOtter', function ($user) {
+        Gate::define('viewOtter', function($user) {
             return in_array($user->email, [
                 'zane@poowf.com',
             ]);

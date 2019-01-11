@@ -88,7 +88,7 @@ class CompanyController extends Controller
                 $filename = $uuid . '.png';
 
                 if (!Storage::exists($storedirectory . 'logo_' . $filename)) {
-                    $image = Image::make($file)->fit(420, 220, function ($constraint) {
+                    $image = Image::make($file)->fit(420, 220, function($constraint) {
                         $constraint->upsize();
                     }, 'center');
                     Storage::put($storedirectory . 'logo_' . $filename, $image->stream('jpg')->detach());
@@ -105,7 +105,7 @@ class CompanyController extends Controller
                 $filename = $uuid . '.png';
 
                 if (!Storage::exists($storedirectory . 'smlogo_' . $filename)) {
-                    $image = Image::make($file)->fit(200, 200, function ($constraint) {
+                    $image = Image::make($file)->fit(200, 200, function($constraint) {
                         $constraint->upsize();
                     }, 'center');
                     Storage::put($storedirectory . 'smlogo_' . $filename, $image->stream('jpg')->detach());
@@ -188,7 +188,7 @@ class CompanyController extends Controller
             if (!Storage::exists($storedirectory . 'logo_' . $filename)) {
                 $image = Image::make($file)
                     ->encode('png', 100)
-                    ->fit(420, 220, function ($constraint) {
+                    ->fit(420, 220, function($constraint) {
                         $constraint->upsize();
                     }, 'center');
                 Storage::put($storedirectory . 'logo_' . $filename, $image->stream('jpg')->detach());
@@ -207,7 +207,7 @@ class CompanyController extends Controller
             if (!Storage::exists($storedirectory . 'smlogo_' . $filename)) {
                 $image = Image::make($file)
                     ->encode('png', 100)
-                    ->fit(200, 200, function ($constraint) {
+                    ->fit(200, 200, function($constraint) {
                         $constraint->upsize();
                     }, 'center');
                 Storage::put($storedirectory . 'smlogo_' . $filename, $image->stream('jpg')->detach());
@@ -304,7 +304,7 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function switch(Request $request, Company $company)
+    public function switch (Request $request, Company $company)
     {
         $companyDomainName = $request->input('domain_name');
 

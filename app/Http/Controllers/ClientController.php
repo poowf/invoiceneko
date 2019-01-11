@@ -70,7 +70,7 @@ class ClientController extends Controller
             $filename = $uuid . '.png';
 
             if (!Storage::exists($storedirectory . 'logo_' . $filename)) {
-                $image = Image::make($file)->fit(500, 500, function ($constraint) {
+                $image = Image::make($file)->fit(500, 500, function($constraint) {
                     $constraint->upsize();
                 }, 'center');
                 Storage::put($storedirectory . 'logo_' . $filename, $image->stream('jpg')->detach());
@@ -152,7 +152,7 @@ class ClientController extends Controller
             $filename = $uuid . '.png';
 
             if (!Storage::exists($storedirectory . 'logo_' . $filename)) {
-                $image = Image::make($file)->fit(500, 500, function ($constraint) {
+                $image = Image::make($file)->fit(500, 500, function($constraint) {
                     $constraint->upsize();
                 }, 'center');
                 Storage::put($storedirectory . 'logo_' . $filename, $image->stream('jpg')->detach());

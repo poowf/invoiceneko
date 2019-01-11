@@ -41,7 +41,7 @@ class Unicorn
         ];
 
         $validator = Validator::make($dataFormat, [
-           'value' => 'regex:([A-Za-z0-9,-]+)',
+            'value' => 'regex:([A-Za-z0-9,-]+)',
         ]);
 
         if ($validator->fails()) {

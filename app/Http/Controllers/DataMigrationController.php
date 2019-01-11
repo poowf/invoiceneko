@@ -26,7 +26,7 @@ class DataMigrationController extends Controller
 
         $errorscollection = new Collection();
 
-        Excel::load($file, function ($reader) use ($errorscollection) {
+        Excel::load($file, function($reader) use ($errorscollection) {
             // ->all() is a wrapper for ->get() and will work the same
             $results = $reader->all();
 
@@ -75,7 +75,7 @@ class DataMigrationController extends Controller
 
         $errorscollection = new Collection();
 
-        Excel::load($file, function ($reader) use ($errorscollection) {
+        Excel::load($file, function($reader) use ($errorscollection) {
             // ->all() is a wrapper for ->get() and will work the same
             $results = $reader->all();
 
@@ -165,7 +165,7 @@ class DataMigrationController extends Controller
 
         $errorscollection = new Collection();
 
-        Excel::load($file, function ($reader) use ($errorscollection) {
+        Excel::load($file, function($reader) use ($errorscollection) {
             // ->all() is a wrapper for ->get() and will work the same
             $results = $reader->all();
 

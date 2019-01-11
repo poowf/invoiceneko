@@ -49,13 +49,13 @@ class Company extends Model implements Auditable
     {
         parent::boot();
 
-        static::saving(function ($company) {
+        static::saving(function($company) {
             $company->slug = str_slug($company->name);
             static::generateSlug($company);
         });
 
         //Auto Creation of Settings per Company;
-        static::created(function ($company) {
+        static::created(function($company) {
             $settings = new CompanySetting();
             $company->settings()->save($settings);
             Unicorn::createRoleAndPermissions($company->id);

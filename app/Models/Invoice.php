@@ -71,7 +71,7 @@ class Invoice extends Model implements Auditable
     {
         parent::boot();
 
-        static::saving(function ($invoice) {
+        static::saving(function($invoice) {
             if ($invoice->status == self::STATUS_DRAFT && !$invoice->generated) {
                 $invoice->status = self::STATUS_OPEN;
             }
@@ -80,7 +80,7 @@ class Invoice extends Model implements Auditable
         });
 
         //Auto Increment of invoice_index per Company;
-        static::created(function ($invoice) {
+        static::created(function($invoice) {
             $company = $invoice->company;
             $company->invoice_index = $company->invoice_index + 1;
             $company->save();

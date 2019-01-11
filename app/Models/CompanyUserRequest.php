@@ -43,7 +43,7 @@ class CompanyUserRequest extends Model implements Auditable
     {
         parent::boot();
 
-        static::creating(function ($companyuserrequest) {
+        static::creating(function($companyuserrequest) {
             $companyuserrequest->token = str_random(30);
         });
     }
