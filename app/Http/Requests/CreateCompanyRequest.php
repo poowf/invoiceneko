@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\Hostname;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateCompanyRequest extends FormRequest
@@ -28,7 +29,7 @@ class CreateCompanyRequest extends FormRequest
             'crn'         => 'required|string',
             'phone'       => 'required',
             'email'       => 'required|email',
-            'domain_name' => 'required|unique:companies',
+            'domain_name' => ['required', 'unique:companies', new Hostname],
         ];
     }
 }

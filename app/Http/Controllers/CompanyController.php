@@ -177,6 +177,13 @@ class CompanyController extends Controller
         }
         $company->save();
 
+        if($company->domain_name != $company->getOriginal('domain_name')) {
+            if(session()->has('current_company_fqdn'))
+            {
+                session()->put('current_company_fqdn', $company->domain_name);
+            }
+        }
+
         $storedirectory = '/perm_store/company/' . $company->id . '/photos/';
         Storage::makeDirectory($storedirectory);
 
@@ -222,7 +229,7 @@ class CompanyController extends Controller
 
         flash('Company Updated', 'success');
 
-        return redirect()->back();
+        return redirect()->route('company.edit', ['company' => Unicorn::getCompanyKey()]);
     }
 
     /**

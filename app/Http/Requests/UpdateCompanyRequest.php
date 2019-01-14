@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\Hostname;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateCompanyRequest extends FormRequest
@@ -28,7 +29,7 @@ class UpdateCompanyRequest extends FormRequest
             'crn'         => 'required|string',
             'phone'       => 'required|string',
             'email'       => 'required|email',
-            'domain_name' => 'required|unique:companies,domain_name,' . $this->route('company')->id,
+            'domain_name' => ['required', 'unique:companies,domain_name,' . $this->route('company')->id, new Hostname],
         ];
     }
 }
