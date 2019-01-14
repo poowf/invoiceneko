@@ -1056,8 +1056,6 @@ nav a {
 nav .logo {
   position: relative;
   float: left;
-  padding-left: 20px;
-  padding-right: 20px;
   max-height: 80px;
 }
 
@@ -1185,8 +1183,8 @@ nav .dropdown-content.top-arrow li.active form button::before {
   height: 10px;
   border-radius: 50%;
   background-color: $primary-theme-color;
-  left: 15px;
-  top: 18px;
+  left: 10px;
+  top: 38%;
 }
 
 nav .dropdown-content.top-arrow li form,
@@ -1197,7 +1195,7 @@ nav .dropdown-content.top-arrow li a {
 }
 
 nav .dropdown-content.top-arrow li form button {
-  padding: 15px 0;
+  padding: 15px 20px;
   width: 100%;
 }
 
@@ -1233,6 +1231,22 @@ nav .dropdown-content.top-arrow::before {
 .sidenav li.sidenav-profile,
 .sidenav li.sidenav-company {
   background-color: $primary-theme-color;
+}
+
+.sidenav li.sidenav-company .company-logo {
+  position: absolute;
+  margin: 0;
+  padding: 0 5px;
+  left: 0px;
+}
+
+.sidenav li.sidenav-company .company-text {
+  position: relative;
+  padding-left: 32px;
+}
+
+.sidenav li.sidenav-company ul li.active > .company-logo {
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 .sidenav li.sidenav-company .row {
@@ -1271,8 +1285,8 @@ nav .dropdown-content.top-arrow::before {
   height: 10px;
   border-radius: 50%;
   background-color: $primary-theme-color;
-  right: 15px;
-  top: 18px;
+  left: 10px;
+  top: 38%;
 }
 
 .sidenav li > a {
@@ -1873,6 +1887,10 @@ label.rbtn-label.invalid::after {
 }
 
 @media only screen and (min-width: 993px) {
+  nav .logo {
+    padding: 0 20px;
+  }
+
   .desktop-only {
     display: block;
   }

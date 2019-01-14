@@ -85,7 +85,7 @@
                                 <li class="sidenav-company">
                                     <ul class="collapsible collapsible-accordion">
                                         <li>
-                                            <a class="collapsible-header white-text"><i class="mdi mdi-office-building white-text"></i>@if(app('request')->route('company')){{ app('request')->route('company')->name ?? 'New Company' }}@else{{ 'New Company' }}@endif<i class="material-icons right">arrow_drop_down</i></a>
+                                            <a class="collapsible-header white-text company-text"><i class="mdi mdi-office-building white-text company-logo"></i>@if(app('request')->route('company')){{ app('request')->route('company')->name ?? 'New Company' }}@else{{ 'New Company' }}@endif<i class="material-icons right">arrow_drop_down</i></a>
                                             <div class="collapsible-body">
                                                 <ul>
                                                     @foreach(auth()->user()->companies as $company)
