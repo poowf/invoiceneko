@@ -84,6 +84,11 @@ class Payment extends Model implements Auditable
         return $date->timezone($this->company->timezone);
     }
 
+    public function getClient()
+    {
+        return ($this->client) ? $this->client : (object) json_decode($this->invoice->client_data);
+    }
+
     public function invoice()
     {
         return $this->belongsTo('App\Models\Invoice', 'invoice_id');
