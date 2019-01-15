@@ -3,8 +3,8 @@
 @section("head")
     <style>
     </style>
-    <link href="{{ mix('/assets/css/slick.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ mix('/assets/css/slick-theme.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset(mix('/assets/css/slick.css')) }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset(mix('/assets/css/slick-theme.css')) }}" rel="stylesheet" type="text/css">
 @stop
 
 @section("content")

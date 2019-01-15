@@ -12,11 +12,11 @@
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#00aba9">
     <meta name="theme-color" content="#ffffff">
-    <link href="{{ mix('/assets/css/materialize.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ mix('/assets/css/core.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ mix('/assets/css/style.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ mix('/assets/css/trumbowyg.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ mix('/assets/css/materialdesignicons.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset(mix('/assets/css/materialize.css')) }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset(mix('/assets/css/core.css')) }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset(mix('/assets/css/style.css')) }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset(mix('/assets/css/trumbowyg.css')) }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset(mix('/assets/css/materialdesignicons.css')) }}" rel="stylesheet" type="text/css">
     <title>{{ config('app.name') }}@if(!isActiveRoute('main')){{ ' | ' }}@endif{{ $page_title ?? '' }} </title>
     @yield("head")
     <script>
@@ -43,10 +43,10 @@
 
 @include("partials/footer")
 
-<script type="text/javascript" src="{{ mix('/assets/js/manifest.js') }}"></script>
-<script type="text/javascript" src="{{ mix('/assets/js/vendor.js') }}"></script>
-<script type="text/javascript" src="{{ mix('/assets/js/app.js') }}"></script>
-<script type="text/javascript" src="{{ mix('/assets/js/core.js') }}"></script>
+<script type="text/javascript" src="{{ asset(mix('/assets/js/manifest.js')) }}"></script>
+<script type="text/javascript" src="{{ asset(mix('/assets/js/vendor.js')) }}"></script>
+<script type="text/javascript" src="{{ asset(mix('/assets/js/app.js')) }}"></script>
+<script type="text/javascript" src="{{ asset(mix('/assets/js/core.js')) }}"></script>
 
 <script type="text/javascript">
     "use strict";
