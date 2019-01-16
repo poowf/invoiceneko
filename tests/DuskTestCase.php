@@ -17,13 +17,13 @@ abstract class DuskTestCase extends BaseTestCase
     /**
      *  Notes for Dusk.
      *
+     * Remember to include the APP_URL in the VM/Container hosts file if a FQDN is being used
+     *
      * Commenting out DatabaseMigrations drastically improves Dusk performance with the increased chance of conflicts
      * between unique values but good for testing
      *
      * ->clickLink('Text Here') does not get affected by CSS and is case sensitive for the actual text between <a> tags
      * ->press only works for buttons and does get affected by CSS e.g. text-transform: uppercase
-     *
-     *
      *
      * /
      *
