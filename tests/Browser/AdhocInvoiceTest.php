@@ -12,7 +12,8 @@ use Tests\DuskTestCase;
 class AdhocInvoiceTest extends DuskTestCase
 {
     /**
-     * Creating an Adhoc Invoice
+     * Creating an Adhoc Invoice.
+     *
      * @throws \Throwable
      */
     public function test_creating_an_adhoc_invoice()
@@ -60,7 +61,7 @@ class AdhocInvoiceTest extends DuskTestCase
     }
 
     /**
-     * Creating and Updating an Adhoc Invoice
+     * Creating and Updating an Adhoc Invoice.
      *
      * @throws \Throwable
      */
@@ -128,7 +129,8 @@ class AdhocInvoiceTest extends DuskTestCase
     }
 
     /**
-     * Creating and Deleting an Adhoc Invoice
+     * Creating and Deleting an Adhoc Invoice.
+     *
      * @throws \Throwable
      */
     public function test_deleting_an_adhoc_invoice()
@@ -180,9 +182,9 @@ class AdhocInvoiceTest extends DuskTestCase
         });
     }
 
-
     /**
-     * Creating and Logging a Payment for an Adhoc Invoice
+     * Creating and Logging a Payment for an Adhoc Invoice.
+     *
      * @throws \Throwable
      */
     public function test_log_payment_on_an_adhoc_invoice()
@@ -242,7 +244,8 @@ class AdhocInvoiceTest extends DuskTestCase
     }
 
     /**
-     * Creating, Updating, Logging a Payment and Deleting an Adhoc Invoice
+     * Creating, Updating, Logging a Payment and Deleting an Adhoc Invoice.
+     *
      * @throws \Throwable
      */
     public function test_end_to_end_adhoc_invoice()

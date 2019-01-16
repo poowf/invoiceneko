@@ -14,7 +14,8 @@ use Tests\DuskTestCase;
 class InvoiceTest extends DuskTestCase
 {
     /**
-     * Creating an Invoice
+     * Creating an Invoice.
+     *
      * @throws \Throwable
      */
     public function test_creating_an_invoice()
@@ -62,7 +63,8 @@ class InvoiceTest extends DuskTestCase
     }
 
     /**
-     * Adding a second invoice item to an Invoice
+     * Adding a second invoice item to an Invoice.
+     *
      * @throws \Throwable
      */
     public function test_adding_a_second_invoice_item()
@@ -113,7 +115,8 @@ class InvoiceTest extends DuskTestCase
     }
 
     /**
-     * Updating an Invoice
+     * Updating an Invoice.
+     *
      * @throws \Throwable
      */
     public function test_updating_an_invoice()
@@ -171,7 +174,8 @@ class InvoiceTest extends DuskTestCase
     }
 
     /**
-     * Deleting an Invoice
+     * Deleting an Invoice.
+     *
      * @throws \Throwable
      */
     public function test_deleting_an_invoice()
@@ -216,7 +220,8 @@ class InvoiceTest extends DuskTestCase
     }
 
     /**
-     * Logging a Payment for an Invoice
+     * Logging a Payment for an Invoice.
+     *
      * @throws \Throwable
      */
     public function test_invoice_log_payment()
@@ -273,7 +278,8 @@ class InvoiceTest extends DuskTestCase
     }
 
     /**
-     * Creating, Updating, Logging a Payment and Deleting an Invoice
+     * Creating, Updating, Logging a Payment and Deleting an Invoice.
+     *
      * @throws \Throwable
      */
     public function test_end_to_end_invoice()

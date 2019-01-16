@@ -178,9 +178,8 @@ class CompanyController extends Controller
         }
         $company->save();
 
-        if($company->domain_name != $company->getOriginal('domain_name')) {
-            if(session()->has('current_company_fqdn'))
-            {
+        if ($company->domain_name != $company->getOriginal('domain_name')) {
+            if (session()->has('current_company_fqdn')) {
                 session()->put('current_company_fqdn', $company->domain_name);
             }
         }
