@@ -26,8 +26,7 @@ class RedirectIfAuthenticated
             } else {
                 return redirect()->route('nocompany');
             }
-        }
-        elseif ($request->session()->has('notice')) {
+        } elseif ($request->session()->has('notice')) {
             $request->session()->forget('notice');
         }
 

@@ -2,12 +2,12 @@
 
 namespace Tests;
 
+use BeyondCode\DuskDashboard\Testing\TestCase as BaseTestCase;
 use Facebook\WebDriver\Chrome\ChromeOptions;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 //use Laravel\Dusk\TestCase as BaseTestCase;
-use BeyondCode\DuskDashboard\Testing\TestCase as BaseTestCase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 abstract class DuskTestCase extends BaseTestCase
 {
@@ -51,7 +51,7 @@ abstract class DuskTestCase extends BaseTestCase
             '--window-size=1024,768',
             '--disable-gpu',
             '--headless',
-            '--no-sandbox'
+            '--no-sandbox',
         ]);
 
         if (env('USE_SELENIUM', 'false') == 'true') {
@@ -61,7 +61,6 @@ abstract class DuskTestCase extends BaseTestCase
             )
             );
         } else {
-
             return RemoteWebDriver::create(
                 'http://localhost:9515', DesiredCapabilities::chrome()->setCapability(
                 ChromeOptions::CAPABILITY, $options

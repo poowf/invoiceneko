@@ -19,5 +19,3 @@ $factory->define(\App\Models\Company::class, function (Faker $faker) {
         },
     ];
 });
-
-

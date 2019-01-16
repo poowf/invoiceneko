@@ -29,7 +29,7 @@ class CreateCompanyRequest extends FormRequest
             'crn'         => 'required|string',
             'phone'       => 'required',
             'email'       => 'required|email',
-            'domain_name' => ['required', 'unique:companies', new Hostname],
+            'domain_name' => ['required', 'unique:companies', new Hostname()],
         ];
     }
 }
