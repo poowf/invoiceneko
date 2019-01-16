@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateCompanyRequest;
 use App\Http\Requests\UpdateCompanyOwnerRequest;
 use App\Http\Requests\UpdateCompanyRequest;
+use App\Library\Poowf\Unicorn;
 use App\Models\Company;
 use App\Models\User;
 use DateTimeZone;
@@ -177,9 +178,8 @@ class CompanyController extends Controller
         }
         $company->save();
 
-        if($company->domain_name != $company->getOriginal('domain_name')) {
-            if(session()->has('current_company_fqdn'))
-            {
+        if ($company->domain_name != $company->getOriginal('domain_name')) {
+            if (session()->has('current_company_fqdn')) {
                 session()->put('current_company_fqdn', $company->domain_name);
             }
         }

@@ -1,8 +1,8 @@
 @extends("layouts.default", ['page_title' => 'Company | Users | Edit'])
 
 @section("head")
-    <link href="{{ mix('/assets/css/intlTelInput.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ mix('/assets/css/selectize.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset(mix('/assets/css/intlTelInput.css')) }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset(mix('/assets/css/selectize.css')) }}" rel="stylesheet" type="text/css">
     <style>
     </style>
 @stop

@@ -25,19 +25,19 @@
                         <dt>Payment Notes</dt>
                         <dd>{{ $payment->notes ?? '-' }}</dd>
                         <dt>Company Name</dt>
-                        <dd>{{ $payment->client->companyname }}</dd>
+                        <dd>{{ $payment->getClient()->companyname ?? '-' }}</dd>
                         <dt>Company Block</dt>
-                        <dd>{{ $payment->client->block ?? '-' }}</dd>
+                        <dd>{{ $payment->getClient()->block ?? '-' }}</dd>
                         <dt>Company Street</dt>
-                        <dd>{{ $payment->client->street ?? '-' }}</dd>
+                        <dd>{{ $payment->getClient()->street ?? '-' }}</dd>
                         <dt>Company Unit Number</dt>
-                        <dd>{{ $payment->client->unitnumber ?? '-' }}</dd>
+                        <dd>{{ $payment->getClient()->unitnumber ?? '-' }}</dd>
                         <dt>Company Postal Code</dt>
-                        <dd>{{ $payment->client->postalcode ?? '-' }}</dd>
+                        <dd>{{ $payment->getClient()->postalcode ?? '-' }}</dd>
                         <dt>Company Nickname</dt>
-                        <dd>{{ $payment->client->nickname ?? '-' }}</dd>
+                        <dd>{{ $payment->getClient()->nickname ?? '-' }}</dd>
                         <dt>Company Registration Number</dt>
-                        <dd>{{ $payment->client->crn }}</dd>
+                        <dd>{{ $payment->getClient()->crn ?? '-' }}</dd>
                     </dl>
                 </div>
             </div>

@@ -61,7 +61,7 @@ class PaymentController extends Controller
         $payment->fill($request->all());
         $payment->receiveddate = Carbon::createFromFormat('j F, Y', $request->input('receiveddate'))->startOfDay();
         $payment->invoice_id = $invoice->id;
-        $payment->client_id = $invoice->getClient()->id;
+        $payment->client_id = $invoice->client_id;
         $payment->company_id = $invoice->company_id;
         $payment->save();
 

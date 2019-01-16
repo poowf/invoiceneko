@@ -1,8 +1,8 @@
 @extends("layouts.default", ['page_title' => 'User | Create'])
 
 @section("head")
-    <link href="{{ mix('/assets/css/intlTelInput.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ mix('/assets/css/selectize.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset(mix('/assets/css/intlTelInput.css')) }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset(mix('/assets/css/selectize.css')) }}" rel="stylesheet" type="text/css">
     <style>
     </style>
 @stop
@@ -125,7 +125,7 @@
 @stop
 
 @section("scripts")
-    <script type="text/javascript" src="{{ mix('/assets/js/intlTelInput.js') }}"></script>
+    <script type="text/javascript" src="{{ asset(mix('/assets/js/intlTelInput.js')) }}"></script>
     <script type="text/javascript">
         "use strict";
         $(function() {

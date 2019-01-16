@@ -1,7 +1,7 @@
 @extends("layouts.default", ['page_title' => 'Company | Settings'])
 
 @section("head")
-    <link href="{{ mix('/assets/css/selectize.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset(mix('/assets/css/selectize.css')) }}" rel="stylesheet" type="text/css">
     <style>
     </style>
 @stop

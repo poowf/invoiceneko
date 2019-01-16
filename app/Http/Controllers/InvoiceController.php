@@ -569,6 +569,10 @@ class InvoiceController extends Controller
 
         flash('Invoice Updated', 'success');
 
+        if (is_null($invoice->client_id)) {
+            return redirect()->route('invoice.adhoc.edit', ['invoice' => $invoice, 'company' => $company]);
+        }
+
         return redirect()->route('invoice.show', ['invoice' => $invoice, 'company' => $company]);
     }
 

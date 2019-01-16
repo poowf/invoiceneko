@@ -5,7 +5,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="{{ mix('/assets/css/core.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset(mix('/assets/css/core.css')) }}" rel="stylesheet" type="text/css">
     <style>
         body {
             background: #f5f5f5;
@@ -95,9 +95,9 @@
 
 @yield("content")
 
-<script type="text/javascript" src="{{ mix('/assets/js/manifest.js') }}"></script>
-<script type="text/javascript" src="{{ mix('/assets/js/vendor.js') }}"></script>
-<script type="text/javascript" src="{{ mix('/assets/js/app.js') }}"></script>
+<script type="text/javascript" src="{{ asset(mix('/assets/js/manifest.js')) }}"></script>
+<script type="text/javascript" src="{{ asset(mix('/assets/js/vendor.js')) }}"></script>
+<script type="text/javascript" src="{{ asset(mix('/assets/js/app.js')) }}"></script>
 
 @yield("scripts")
 
