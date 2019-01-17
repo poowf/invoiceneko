@@ -27,8 +27,8 @@
         </div>
         <div class="row">
             <div class="col s12">
-                <div class="card-panel flex">
-                    <table id="payment-container" class="responsive-table striped">
+                <div id="payment-container" class="card-panel flex">
+                    <table id="payments-table" class="responsive-table striped">
                         <thead>
                         <tr>
                             <th>Invoice #</th>

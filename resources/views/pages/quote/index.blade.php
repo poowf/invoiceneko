@@ -27,67 +27,69 @@
                 <div class="card-panel search-panel">
                     <input id="search-input" class="card-input" name="search-input" type="search" placeholder="Search">
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <div id="quote-container" class="card-panel flex">
+                    <table id="quotes-table" class="responsive-table striped">
+                        <thead>
+                            <tr>
+                                <th>Quote ID</th>
+                                <th>Amount</th>
+                                <th>Due Date</th>
+                                <th>Client Name</th>
+                                <th>Client Phone</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
 
-                <div id="quote-container" class="row mall0">
-                    <div class="card-panel flex">
-                        <table id="quotes-table" class="responsive-table striped">
-                            <thead>
-                                <tr>
-                                    <th>Quote ID</th>
-                                    <th>Amount</th>
-                                    <th>Due Date</th>
-                                    <th>Client Name</th>
-                                    <th>Client Phone</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                @foreach($quotes as $key => $quote)
-                                    <tr class="single-quote-row">
-                                        <td>{{ $quote->nice_quote_id }}</td>
-                                        <td>${{ $quote->totalmoneyformat  }}</td>
-                                        <td>{{ $quote->duedate->format('d F, Y') }}</td>
-                                        <td>{{ $quote->getClient()->companyname ?? '-' }}</td>
-                                        <td>{{ $quote->getClient()->contactphone ?? '-' }}</td>
-                                        <td>
-                                            @if ($quote->status == App\Models\Quote::STATUS_DRAFT)
-                                                <span class="alt-badge">{{ $quote->statustext() }}</span>
-                                            @elseif ($quote->status == App\Models\Quote::STATUS_OPEN)
-                                                <span class="alt-badge warning">{{ $quote->statustext() }}</span>
-                                            @elseif ($quote->status == App\Models\Quote::STATUS_EXPIRED)
-                                                <span class="alt-badge error">{{ $quote->statustext() }}</span>
-                                            @elseif ($quote->status == App\Models\Quote::STATUS_COMPLETED)
-                                                <span class="alt-badge success">{{ $quote->statustext() }}</span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @can('view', $quote)
+                        <tbody>
+                            @foreach($quotes as $key => $quote)
+                                <tr class="single-quote-row">
+                                    <td>{{ $quote->nice_quote_id }}</td>
+                                    <td>${{ $quote->totalmoneyformat  }}</td>
+                                    <td>{{ $quote->duedate->format('d F, Y') }}</td>
+                                    <td>{{ $quote->getClient()->companyname ?? '-' }}</td>
+                                    <td>{{ $quote->getClient()->contactphone ?? '-' }}</td>
+                                    <td>
+                                        @if ($quote->status == App\Models\Quote::STATUS_DRAFT)
+                                            <span class="alt-badge">{{ $quote->statustext() }}</span>
+                                        @elseif ($quote->status == App\Models\Quote::STATUS_OPEN)
+                                            <span class="alt-badge warning">{{ $quote->statustext() }}</span>
+                                        @elseif ($quote->status == App\Models\Quote::STATUS_EXPIRED)
+                                            <span class="alt-badge error">{{ $quote->statustext() }}</span>
+                                        @elseif ($quote->status == App\Models\Quote::STATUS_COMPLETED)
+                                            <span class="alt-badge success">{{ $quote->statustext() }}</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @can('view', $quote)
                                             <a href="{{ route('quote.show', [ 'quote' => $quote, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-tooltip="View Quote"><i class="material-icons">remove_red_eye</i></a>
-                                            @endcan
-                                            @can('update', $quote)
+                                        @endcan
+                                        @can('update', $quote)
                                             <form method="post" action="{{ route('quote.duplicate', [ 'quote' => $quote, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form tooltipped" data-position="top" data-tooltip="Duplicate Quote">
                                                 {{ csrf_field() }}
                                                 <button class="null-btn" type="submit"><i class="material-icons">control_point_duplicate</i></button>
                                             </form>
-                                            @endcan
-                                            @can('update', $quote)
+                                        @endcan
+                                        @can('update', $quote)
                                             <a href="@if(is_null($quote->client_id)){{ route('quote.adhoc.edit', [ 'quote' => $quote, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}@else{{ route('quote.edit', [ 'quote' => $quote, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}@endif" class="tooltipped" data-position="top" data-tooltip="Edit Quote"><i class="material-icons">mode_edit</i></a>
-                                            @endcan
-                                            @can('delete', $quote)
+                                        @endcan
+                                        @can('delete', $quote)
                                             <a href="#" data-id="{{ $quote->id }}" class="quote-delete-btn tooltipped" data-position="top" data-tooltip="Delete Quote"><i class="material-icons">delete</i></a>
-                                            @endcan
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                                        @endcan
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+
     <div id="delete-confirmation" class="modal">
         <div class="modal-content">
             <p>Delete Quote?</p>
