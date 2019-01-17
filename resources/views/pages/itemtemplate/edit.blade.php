@@ -58,13 +58,7 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            $('.trumbowyg-textarea').trumbowyg({
-                svgPath: '/assets/fonts/trumbowygicons.svg',
-                removeformatPasted: true,
-                resetCss: true,
-                autogrow: true,
-            });
-
+            Unicorn.initTrumbowyg('.trumbowyg-textarea');
             Unicorn.initParsleyValidation('#edit-itemtemplate');
         });
     </script>
