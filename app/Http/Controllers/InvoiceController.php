@@ -115,8 +115,10 @@ class InvoiceController extends Controller
      */
     public function sendnotification(Company $company, Invoice $invoice)
     {
-        $invoice->notify(new InvoiceNotification($invoice));
-        flash('An email notification has been sent to the client', 'success');
+        if (!is_null($invoice->client_id)) {
+            $invoice->notify(new InvoiceNotification($invoice));
+            flash('An email notification has been sent to the client', 'success');
+        }
 
         return redirect()->back();
     }

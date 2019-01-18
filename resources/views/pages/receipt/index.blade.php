@@ -20,33 +20,34 @@
                 <div class="card-panel search-panel">
                     <input id="search-input" class="card-input" name="search-input" type="search" placeholder="Search">
                 </div>
+            </div>
+        </div>
+        <div id="receipt-container" class="row">
+            <div class="col s12">
+                <div id="receipt-container" class="card-panel flex">
+                    <table id="receipts-table" class="responsive-table striped">
+                        <thead>
+                            <tr>
+                                <th>Receipt ID</th>
+                                <th>Invoice ID</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
 
-                <div id="receipt-container" class="row mall0">
-                    <div class="card-panel flex">
-                        <table id="receipts-table" class="responsive-table striped">
-                            <thead>
-                                <tr>
-                                    <th>Receipt ID</th>
-                                    <th>Invoice ID</th>
-                                    <th>Action</th>
+                        <tbody>
+                            @foreach($receipts as $key => $receipt)
+                                <tr class="single-receipt-row">
+                                    <td>{{ $receipt->nice_receipt_id }}</td>
+                                    <td>{{ $receipt->invoice->nice_invoice_id  }}</td>
+                                    <td>
+                                        @can('view', $receipt)
+                                            <a href="{{ route('receipt.show', [ 'receipt' => $receipt, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-tooltip="View Receipt"><i class="material-icons">remove_red_eye</i></a>
+                                        @endcan
+                                    </td>
                                 </tr>
-                            </thead>
-
-                            <tbody>
-                                @foreach($receipts as $key => $receipt)
-                                    <tr class="single-receipt-row">
-                                        <td>{{ $receipt->nice_receipt_id }}</td>
-                                        <td>{{ $receipt->invoice->nice_invoice_id  }}</td>
-                                        <td>
-                                            @can('view', $receipt)
-                                                <a href="{{ route('receipt.show', [ 'receipt' => $receipt, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-tooltip="View Receipt"><i class="material-icons">remove_red_eye</i></a>
-                                            @endcan
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

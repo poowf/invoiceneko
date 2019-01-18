@@ -11,10 +11,12 @@
     <div class="wide-container invoice-wrapper">
         <div id="top-action-container" class="row desktop-only">
             <div class="col s12 mtop30 right">
+                @if(!is_null($invoice->client_id))
                 <form method="post" action="{{ route('invoice.send', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form">
                     {{ csrf_field() }}
                     <button class="btn btn-link waves-effect waves-dark null-btn" type="submit">Send Notification</button>
                 </form>
+                @endif
                 @can('create', \App\Models\Payment::class)
                 <a class="btn btn-link waves-effect waves-dark" href="{{ route('payment.create', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}">
                     Log Payment
@@ -104,6 +106,7 @@
                         </button>
                     </form>
                 </li>
+                @if(!is_null($invoice->client_id))
                 <li class="tooltipped" data-position="top" data-tooltip="Send Notification">
                     <form method="post" action="{{ route('invoice.send', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form">
                         {{ csrf_field() }}
@@ -112,6 +115,7 @@
                         </button>
                     </form>
                 </li>
+                @endif
                 <li class="tooltipped" data-position="top" data-tooltip="Archive Invoice">
                     <form method="post" action="{{ route('invoice.archive', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form">
                         {{ method_field('PATCH') }}

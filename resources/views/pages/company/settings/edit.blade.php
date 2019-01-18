@@ -85,13 +85,7 @@
             M.toast({ html: "You need to fill in your company information first", displayLength: "6000", classes: "error"});
             @endif
 
-            $('.trumbowyg-textarea').trumbowyg({
-                svgPath: '/assets/fonts/trumbowygicons.svg',
-                removeformatPasted: true,
-                resetCss: true,
-                autogrow: true,
-            });
-
+            Unicorn.initTrumbowyg('.trumbowyg-textarea');
             Unicorn.initParsleyValidation('#edit-company-settings');
         });
     </script>
