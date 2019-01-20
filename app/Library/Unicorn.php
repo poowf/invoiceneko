@@ -4,9 +4,12 @@ namespace App\Library\Poowf;
 
 use App\Models\Role;
 use Carbon\Carbon;
+use GuzzleHttp\Client;
+use Parsedown;
 use Recurr\Frequency;
 use Recurr\Rule;
 use Silber\Bouncer\BouncerFacade as Bouncer;
+use stdClass;
 use Storage;
 use Validator;
 
@@ -27,6 +30,71 @@ class Unicorn
 
     public function __construct()
     {
+    }
+
+    public static function getGithubReleases($filter = true)
+    {
+        $client = new Client(['base_uri' => 'https://api.github.com/']);
+        // Send a request to https://foo.com/api/test
+        $response = $client->request('GET', 'repos/poowf/invoiceneko/releases', [
+            'headers' => [
+                'Authorization' => 'token ' . config('app.github_token')
+            ]
+        ]);
+
+        $releases = json_decode($response->getBody()->getContents());
+
+        if ($filter) {
+            $stable = null;
+            $unstable = null;
+
+            $Parsedown = new Parsedown();
+            $Parsedown->setSafeMode(true);
+
+            foreach ($releases as $release)
+            {
+                if(is_null($unstable) && is_null($stable))
+                {
+                    if(is_null($unstable) && $release->prerelease)
+                    {
+                        $release->commit_data = self::getGithubCommitDataByTag($release->tag_name);
+                        $release->body_html = $Parsedown->text($release->body);
+                        $unstable = $release;
+                    }
+                    else if(is_null($stable) && !$release->prerelease)
+                    {
+                        $release->commit_data = self::getGithubCommitDataByTag($release->tag_name);
+                        $release->body_html = $Parsedown->text($release->body);
+                        $stable = $release;
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            $response = new StdClass;
+            $response->stable = $stable;
+            $response->unstable = $unstable;
+
+            return $response;
+        } else {
+            return $releases;
+        }
+    }
+
+    public static function getGithubCommitDataByTag($tagname)
+    {
+        $client = new Client(['base_uri' => 'https://api.github.com/']);
+        $response = $client->request('GET', 'repos/poowf/invoiceneko/git/refs/tags/' . $tagname, [
+            'headers' => [
+                'Authorization' => 'token ' . config('app.github_token')
+            ]
+        ]);
+        $body = json_decode($response->getBody()->getContents());
+
+        return $body;
     }
 
     /**
