@@ -35,12 +35,15 @@ class Unicorn
     public static function getGithubReleases($filter = true)
     {
         $client = new Client(['base_uri' => 'https://api.github.com/']);
-        // Send a request to https://foo.com/api/test
-        $response = $client->request('GET', 'repos/poowf/invoiceneko/releases', [
-            'headers' => [
-                'Authorization' => 'token ' . config('app.github_token')
-            ]
-        ]);
+        if(config('app.github_token')) {
+            $response = $client->request('GET', 'repos/poowf/invoiceneko/releases', [
+                'headers' => [
+                    'Authorization' => 'token ' . config('app.github_token')
+                ]
+            ]);
+        } else {
+            $response = $client->request('GET', 'repos/poowf/invoiceneko/releases');
+        }
 
         $releases = json_decode($response->getBody()->getContents());
 
@@ -87,11 +90,16 @@ class Unicorn
     public static function getGithubCommitDataByTag($tagname)
     {
         $client = new Client(['base_uri' => 'https://api.github.com/']);
-        $response = $client->request('GET', 'repos/poowf/invoiceneko/git/refs/tags/' . $tagname, [
-            'headers' => [
-                'Authorization' => 'token ' . config('app.github_token')
-            ]
-        ]);
+        if(config('app.github_token')) {
+            $response = $client->request('GET', 'repos/poowf/invoiceneko/git/refs/tags/' . $tagname, [
+                'headers' => [
+                    'Authorization' => 'token ' . config('app.github_token')
+                ]
+            ]);
+        } else {
+            $response = $client->request('GET', 'repos/poowf/invoiceneko/git/refs/tags/' . $tagname);
+        }
+
         $body = json_decode($response->getBody()->getContents());
 
         return $body;
