@@ -22,6 +22,8 @@
     @slot('footer')
         @component('mail::footer')
             © {{ date('Y') }} {{ config('app.name') }}. @lang('All rights reserved.')
+            <a href="{{ route('privacy') }}">Privacy Policy</a>
+            <a href="{{ route('terms') }}">Terms & Conditions</a>
         @endcomponent
     @endslot
 @endcomponent

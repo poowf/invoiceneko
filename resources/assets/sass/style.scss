@@ -926,6 +926,17 @@ textarea.valid + label::after {
   margin-top: 15px;
 }
 
+.tooltip-content ul {
+  text-align: left;
+  padding: 5px 5px 5px 20px;
+  margin: 0;
+  list-style-type: disc;
+}
+
+.tooltip-content ul li {
+  list-style-type: disc;
+}
+
 /* Custom Elements */
 .banner {
   position: relative;
@@ -1639,6 +1650,30 @@ label.rbtn-label.invalid::after {
 .session-wrapper .session-description-list dd {
   margin-left: 25%;
   margin-bottom: .2em;
+}
+
+/* Community Page */
+dl.releases-description-list {
+  width: 150px;
+  margin: 0 auto;
+}
+
+dl.releases-description-list dt {
+  margin-right: 0%;
+}
+
+dl.releases-description-list dd {
+  margin-left: 30%;
+  text-align: left;
+}
+
+.changelog-badge {
+  cursor: pointer;
+}
+
+/* Term + Privacy */
+.terms-content p, .privacy-content p {
+  padding-bottom: 5px;
 }
 
 /* Sign In Page */

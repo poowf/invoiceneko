@@ -137,6 +137,7 @@ return [
     'sentry_laravel_dsn'        => env('SENTRY_LARAVEL_DSN'),
     'tawkto_embed_key'          => env('TAWKTO_EMBED_KEY'),
     'logrocket_token'           => env('LOGROCKET_TOKEN'),
+    'github_token'              => env('GITHUB_TOKEN'),
 
     /*
     |--------------------------------------------------------------------------

@@ -11,26 +11,46 @@
             <div class="col s12 m6">
                 <div class="card center pbtm20">
                     <div class="card-header theme-color-secondary">
-                        <p>Latest Stable</p>
-                        <p class="version">v1.0.0</p>
+                        <p>Latest Release</p>
+                        <p class="version">{{ $releases->stable->tag_name ?? '-' }}</p>
                     </div>
                     <div class="card-content">
-                        <p>Latest stable release for Invoice Neko</p>
-                        <p>SHA256:</p>
-                        <p>SHA512:</p>
-                        <a href="//github.com/poowf/invoiceneko" class="btn btn-large btn-link">Download</a>
+                        @if($releases->stable->tag_name)
+                            <dl class="releases-description-list">
+                                <dt>Date:</dt>
+                                <dd>{{ ($releases->stable->created_at) ? \Carbon\Carbon::parse($releases->stable->created_at)->format('d M Y') : '-' }}</dd>
+                                <dt>Hash:</dt>
+                                <dd>{{ str_limit($releases->stable->commit_data->object->sha, 7, '') ?? '-' }}</dd>
+                            </dl>
+                            <p><a class="alt-badge info tooltipped changelog-badge" data-position="bottom" data-tooltip="{{ $releases->stable->body_html ?? '-' }}">Changelog</a></p>
+                            <a href="{{ $releases->stable->html_url ?? 'javascript:;' }}" class="btn btn-large btn-link mtop10">Download</a>
+                        @else
+                            <i class="material-icons" style="font-size: 3em; color: grey;">sentiment_dissatisfied</i>
+                            <p style="font-size: 15px; font-weight: 400; color: grey;">There's no releases</p>
+                        @endif
                     </div>
                 </div>
             </div>
             <div class="col s12 m6">
                 <div class="card center">
                     <div class="card-header theme-color-secondary">
-                        <p>Latest Stable</p>
-                        <p class="version">master</p>
+                        <p>Latest Pre-release</p>
+                        <p class="version">{{ $releases->unstable->tag_name ?? '-' }}</p>
                     </div>
                     <div class="card-content">
-                        <p>Latest rolling release</p>
-                        <a href="//github.com/poowf/invoiceneko" class="btn btn-large btn-link">Download</a>
+                        @if($releases->unstable->tag_name)
+                            <dl class="releases-description-list">
+                                <dt>Date:</dt>
+                                <dd>{{ ($releases->unstable->created_at) ? \Carbon\Carbon::parse($releases->unstable->created_at)->format('d M Y') : '-' }}</dd>
+                                <dt>Hash:</dt>
+                                <dd>{{ str_limit($releases->unstable->commit_data->object->sha, 7, '') ?? '-' }}</dd>
+                            </dl>
+                            <p><a class="alt-badge info tooltipped changelog-badge" data-position="bottom" data-tooltip="{{ $releases->unstable->body_html ?? '-' }}">Changelog</a></p>
+                            <a href="{{ $releases->unstable->html_url ?? 'javascript:;' }}" class="btn btn-large btn-link mtop10">Download</a>
+                        @else
+                            <i class="material-icons" style="font-size: 3em; color: grey;">sentiment_dissatisfied</i>
+                            <p style="font-size: 15px; font-weight: 400; color: grey;">There's no releases</p>
+                        @endif
                     </div>
                 </div>
             </div>
