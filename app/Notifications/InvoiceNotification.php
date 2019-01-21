@@ -3,10 +3,8 @@
 namespace App\Notifications;
 
 use App\Models\Invoice;
-use Gitonomy\Git\Log;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use PDF;
 
