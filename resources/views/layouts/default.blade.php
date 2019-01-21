@@ -18,6 +18,15 @@
     <link href="{{ asset(mix('/assets/css/trumbowyg.css')) }}" rel="stylesheet" type="text/css">
     <link href="{{ asset(mix('/assets/css/materialdesignicons.css')) }}" rel="stylesheet" type="text/css">
     <title>{{ config('app.name') }}@if(!isActiveRoute('main')){{ ' | ' }}@endif{{ $page_title ?? '' }} </title>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ config('app.googleua') }}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', '{{ config('app.googleua') }}');
+    </script>
     @yield("head")
     <script>
         window.Laravel = {!! json_encode([
