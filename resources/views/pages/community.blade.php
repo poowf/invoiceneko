@@ -15,7 +15,7 @@
                         <p class="version">{{ $releases->stable->tag_name ?? '-' }}</p>
                     </div>
                     <div class="card-content">
-                        @if($releases->stable->tag_name)
+                        @if($releases->stable)
                             <dl class="releases-description-list">
                                 <dt>Date:</dt>
                                 <dd>{{ ($releases->stable->created_at) ? \Carbon\Carbon::parse($releases->stable->created_at)->format('d M Y') : '-' }}</dd>
@@ -38,7 +38,7 @@
                         <p class="version">{{ $releases->unstable->tag_name ?? '-' }}</p>
                     </div>
                     <div class="card-content">
-                        @if($releases->unstable->tag_name)
+                        @if($releases->unstable)
                             <dl class="releases-description-list">
                                 <dt>Date:</dt>
                                 <dd>{{ ($releases->unstable->created_at) ? \Carbon\Carbon::parse($releases->unstable->created_at)->format('d M Y') : '-' }}</dd>
