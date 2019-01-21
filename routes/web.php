@@ -13,6 +13,7 @@
 
 Route::get('/invoice/view', 'InvoiceController@showwithtoken')->name('invoice.token');
 Route::get('/quote/view', 'QuoteController@showwithtoken')->name('quote.token');
+Route::get('/notifications/view/{notification_id}', 'NotificationController@pixel')->name('notification.pixel');
 Route::get('/company/create', 'CompanyController@create')->name('company.create');
 Route::post('/company/create', 'CompanyController@store')->name('company.store');
 

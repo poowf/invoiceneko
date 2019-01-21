@@ -33,6 +33,10 @@
 @endcomponent
 @endisset
 
+@if (isset($content))
+{!! $content !!}
+@endif
+
 {{-- Outro Lines --}}
 @foreach ($outroLines as $line)
 {{ $line }}

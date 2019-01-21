@@ -274,7 +274,7 @@
                                     <tr>
                                         <td>@if(array_key_exists('email', $notification->data)){{ $notification->data['email'] }}@else{{ '-' }}@endif</td>
                                         <td>{{ $notification->created_at->format('d F, Y') ?? '-'  }}</td>
-                                        <td>{{ $notification->read_at ?? '-' }}</td>
+                                        <td>{{ ($notification->read_at) ? $notification->read_at->format('d M, Y H:i A') : '-' }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

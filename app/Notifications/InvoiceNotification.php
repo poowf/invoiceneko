@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Models\Invoice;
+use Gitonomy\Git\Log;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -53,14 +54,16 @@ class InvoiceNotification extends Notification implements ShouldQueue
         //Cast to string to ensure only a string is returned
         $token = (string) $invoice->generateShareToken();
         $url = route('invoice.token', ['token' => $token]);
+        $pixelRoute = route('notification.pixel', ['notification_id' => $this->id]);
         $invoice_slug = str_slug($invoice->nice_invoice_id) . '.pdf';
 
-        return (new MailMessage())
+        return (new NekoMailMessage())
                     ->subject("New Invoice #{$invoice->nice_invoice_id} from {$company->name}")
                     ->greeting("Hello {$client->companyname}!")
                     ->line("You have a new Invoice from {$company->name}")
                     ->action('View Invoice', $url)
                     ->line('Thank you for using our application!')
+                    ->content('<img src="' . $pixelRoute . '">')
                     ->attachData($pdf->inline($invoice_slug), $invoice_slug);
     }
 
