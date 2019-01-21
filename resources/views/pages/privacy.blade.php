@@ -186,6 +186,21 @@
                             </li>
                         </ul>
 
+                        <h5>Payments</h5>
+                        <p>We may provide paid products and/or services within the Service. In that case, we use third-party services for payment processing (e.g. payment processors).</p>
+                        <p>We will not store or collect your payment card details. That information is provided directly to our third-party payment processors whose use of your personal information is governed by their Privacy Policy. These payment processors adhere to the standards set by PCI-DSS as managed by the PCI Security Standards Council, which is a joint effort of brands like Visa, MasterCard, American Express and Discover. PCI-DSS requirements help ensure the secure handling of payment information.</p>
+                        <p>The payment processors we work with are:</p>
+                        <ul>
+                            <li>
+                                <p><strong>PayPal / Braintree</strong></p>
+                                <p>Their Privacy Policy can be viewed at <a href="https://www.paypal.com/webapps/mpp/ua/privacy-full">https://www.paypal.com/webapps/mpp/ua/privacy-full</a></p>
+                            </li>
+                            <li>
+                                <p><strong>Stripe</strong></p>
+                                <p>Their Privacy Policy can be viewed at <a href="https://stripe.com/privacy">https://stripe.com/privacy</a></p>
+                            </li>
+                        </ul>
+
                         <h3>Links to Other Sites</h3>
                         <p>Our Service may contain links to other sites that are not operated by us. If you click a third party link, you will be directed to that third party's site. We strongly advise you to review the Privacy Policy of every site you visit.</p>
                         <p>We have no control over and assume no responsibility for the content, privacy policies or practices of any third party sites or services.</p>
