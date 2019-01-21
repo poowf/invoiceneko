@@ -35,11 +35,11 @@ class Unicorn
     public static function getGithubReleases($filter = true)
     {
         $client = new Client(['base_uri' => 'https://api.github.com/']);
-        if(config('app.github_token')) {
+        if (config('app.github_token')) {
             $response = $client->request('GET', 'repos/poowf/invoiceneko/releases', [
                 'headers' => [
-                    'Authorization' => 'token ' . config('app.github_token')
-                ]
+                    'Authorization' => 'token ' . config('app.github_token'),
+                ],
             ]);
         } else {
             $response = $client->request('GET', 'repos/poowf/invoiceneko/releases');
@@ -54,30 +54,23 @@ class Unicorn
             $Parsedown = new Parsedown();
             $Parsedown->setSafeMode(true);
 
-            foreach ($releases as $release)
-            {
-                if(is_null($unstable) && is_null($stable))
-                {
-                    if(is_null($unstable) && $release->prerelease)
-                    {
+            foreach ($releases as $release) {
+                if (is_null($unstable) && is_null($stable)) {
+                    if (is_null($unstable) && $release->prerelease) {
                         $release->commit_data = self::getGithubCommitDataByTag($release->tag_name);
                         $release->body_html = $Parsedown->text($release->body);
                         $unstable = $release;
-                    }
-                    else if(is_null($stable) && !$release->prerelease)
-                    {
+                    } elseif (is_null($stable) && !$release->prerelease) {
                         $release->commit_data = self::getGithubCommitDataByTag($release->tag_name);
                         $release->body_html = $Parsedown->text($release->body);
                         $stable = $release;
                     }
-                }
-                else
-                {
+                } else {
                     break;
                 }
             }
 
-            $response = new StdClass;
+            $response = new StdClass();
             $response->stable = $stable;
             $response->unstable = $unstable;
 
@@ -90,11 +83,11 @@ class Unicorn
     public static function getGithubCommitDataByTag($tagname)
     {
         $client = new Client(['base_uri' => 'https://api.github.com/']);
-        if(config('app.github_token')) {
+        if (config('app.github_token')) {
             $response = $client->request('GET', 'repos/poowf/invoiceneko/git/refs/tags/' . $tagname, [
                 'headers' => [
-                    'Authorization' => 'token ' . config('app.github_token')
-                ]
+                    'Authorization' => 'token ' . config('app.github_token'),
+                ],
             ]);
         } else {
             $response = $client->request('GET', 'repos/poowf/invoiceneko/git/refs/tags/' . $tagname);

@@ -23,6 +23,7 @@ class MainController extends Controller
     public function community()
     {
         $releases = Unicorn::getGithubReleases();
+
         return view('pages.community', compact('releases'));
     }
 
