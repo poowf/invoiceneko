@@ -1671,6 +1671,11 @@ dl.releases-description-list dd {
   cursor: pointer;
 }
 
+/* Term + Privacy */
+.terms-content p, .privacy-content p {
+  padding-bottom: 5px;
+}
+
 /* Sign In Page */
 .login-container {
   position: relative;
