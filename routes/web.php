@@ -163,7 +163,7 @@ Route::group(['middleware' => ['auth', '2fa', 'verified']], function () {
             Route::patch('/invoice/{invoice}/archive', 'InvoiceController@archive')->name('invoice.archive')->middleware('can:update,invoice');
             Route::patch('/invoice/{invoice}/writeoff', 'InvoiceController@writeoff')->name('invoice.writeoff')->middleware('can:update,invoice');
             Route::patch('/invoice/{invoice}/share', 'InvoiceController@share')->name('invoice.share')->middleware('can:view,invoice');
-            Route::post('/invoice/{invoice}/send', 'InvoiceController@sendnotification')->name('invoice.send')->middleware('can:view,invoice');
+            Route::post('/invoice/{invoice}/send', 'InvoiceController@sendnotification')->name('invoice.send')->middleware(['throttle:60,1', 'can:view,invoice']);
             Route::delete('/invoice/{invoice}/destroy', 'InvoiceController@destroy')->name('invoice.destroy')->middleware('can:delete,invoice');
             Route::get('/invoice/{invoice}/siblings/check', 'InvoiceController@checkSiblings')->name('invoice.siblings.check')->middleware('can:update,invoice');
 
