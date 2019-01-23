@@ -187,6 +187,16 @@ class Invoice extends Model implements Auditable
         return $this->hasMany(OldInvoice::class);
     }
 
+    /**
+     * Get the entity's notifications.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function notifications()
+    {
+        return $this->morphMany(NekoNotification::class, 'notifiable')->orderBy('created_at', 'desc');
+    }
+
     public function getClient()
     {
         return ($this->client) ? $this->client : (object) json_decode($this->client_data);
