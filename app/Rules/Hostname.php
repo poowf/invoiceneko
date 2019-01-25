@@ -26,7 +26,7 @@ class Hostname implements Rule
      */
     public function passes($attribute, $value)
     {
-        return (bool) filter_var($value, FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME);
+        return (bool) (filter_var($value, FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME) && preg_match('@\.(.*[A-Za-z])@', $value));
     }
 
     /**

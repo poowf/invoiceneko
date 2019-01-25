@@ -41,5 +41,4 @@ class NekoNotification extends DatabaseNotification
 
         return ($date) ? $date->timezone($timezone) : null;
     }
-
 }
