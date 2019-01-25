@@ -55,7 +55,7 @@ class Unicorn
             $Parsedown->setSafeMode(true);
 
             foreach ($releases as $release) {
-                if (is_null($unstable) && is_null($stable)) {
+                if (is_null($unstable) || is_null($stable)) {
                     if (is_null($unstable) && $release->prerelease) {
                         $release->commit_data = self::getGithubCommitDataByTag($release->tag_name);
                         $release->body_html = $Parsedown->text($release->body);

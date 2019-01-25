@@ -926,6 +926,10 @@ textarea.valid + label::after {
   margin-top: 15px;
 }
 
+.tooltip-content p {
+  color: $white-color;
+}
+
 .tooltip-content ul {
   text-align: left;
   padding: 5px 5px 5px 20px;
