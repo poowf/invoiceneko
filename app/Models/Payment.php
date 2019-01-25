@@ -59,8 +59,13 @@ class Payment extends Model implements Auditable
     public function getPercentageAttribute()
     {
         $invoiceTotal = $this->invoice->total;
+        if ($invoiceTotal == 0 && $this->amount == 0) {
+            $percentage = 100;
+        } else {
+            $percentage = ($invoiceTotal != 0) ? ($this->amount / $invoiceTotal) * 100 : 0;
+        }
 
-        return money_format('%!.2n', ($this->amount / $invoiceTotal) * 100);
+        return money_format('%!.2n', $percentage);
     }
 
     public function getCreatedAtAttribute($value)
