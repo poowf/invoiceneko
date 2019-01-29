@@ -1546,6 +1546,11 @@ label.rbtn-label.invalid::after {
   margin-left: -50%;
 }
 
+.single-client-card .card-content .card-title, .single-client-card .card-reveal .card-title {
+  font-size: 20px;
+  line-height: 24px;
+}
+
 /* Company Roles Page */
 .all-permission-selector {
   cursor: pointer;
@@ -1965,5 +1970,235 @@ dl.releases-description-list dd {
   .mini-container {
     margin: 0 auto;
     width: 60%;
+  }
+}
+
+@media only screen and (min-width: 1601px) {
+  .row .col.ul1 {
+    width: 8.33333333%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+  }
+
+  .row .col.ul2 {
+    width: 16.66666667%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+  }
+
+  .row .col.ul3 {
+    width: 25%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+  }
+
+  .row .col.ul4 {
+    width: 33.33333333%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+  }
+
+  .row .col.ul5 {
+    width: 41.66666667%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+  }
+
+  .row .col.ul6 {
+    width: 50%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+  }
+
+  .row .col.ul7 {
+    width: 58.33333333%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+  }
+
+  .row .col.ul8 {
+    width: 66.66666667%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+  }
+
+  .row .col.ul9 {
+    width: 75%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+  }
+
+  .row .col.ul10 {
+    width: 83.33333333%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+  }
+
+  .row .col.ul11 {
+    width: 91.66666667%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+  }
+
+  .row .col.ul12 {
+    width: 100%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+  }
+
+  .row .col.offset-ul1 {
+    margin-left: 8.33333333%;
+  }
+
+  .row .col.pull-ul1 {
+    right: 8.33333333%;
+  }
+
+  .row .col.push-ul1 {
+    left: 8.33333333%;
+  }
+
+  .row .col.offset-ul2 {
+    margin-left: 16.66666667%;
+  }
+
+  .row .col.pull-ul2 {
+    right: 16.66666667%;
+  }
+
+  .row .col.push-ul2 {
+    left: 16.66666667%;
+  }
+
+  .row .col.offset-ul3 {
+    margin-left: 25%;
+  }
+
+  .row .col.pull-ul3 {
+    right: 25%;
+  }
+
+  .row .col.push-ul3 {
+    left: 25%;
+  }
+
+  .row .col.offset-ul4 {
+    margin-left: 33.33333333%;
+  }
+
+  .row .col.pull-ul4 {
+    right: 33.33333333%;
+  }
+
+  .row .col.push-ul4 {
+    left: 33.33333333%;
+  }
+
+  .row .col.offset-ul5 {
+    margin-left: 41.66666667%;
+  }
+
+  .row .col.pull-ul5 {
+    right: 41.66666667%;
+  }
+
+  .row .col.push-ul5 {
+    left: 41.66666667%;
+  }
+
+  .row .col.offset-ul6 {
+    margin-left: 50%;
+  }
+
+  .row .col.pull-ul6 {
+    right: 50%;
+  }
+
+  .row .col.push-ul6 {
+    left: 50%;
+  }
+
+  .row .col.offset-ul7 {
+    margin-left: 58.33333333%;
+  }
+
+  .row .col.pull-ul7 {
+    right: 58.33333333%;
+  }
+
+  .row .col.push-ul7 {
+    left: 58.33333333%;
+  }
+
+  .row .col.offset-ul8 {
+    margin-left: 66.66666667%;
+  }
+
+  .row .col.pull-ul8 {
+    right: 66.66666667%;
+  }
+
+  .row .col.push-ul8 {
+    left: 66.66666667%;
+  }
+
+  .row .col.offset-ul9 {
+    margin-left: 75%;
+  }
+
+  .row .col.pull-ul9 {
+    right: 75%;
+  }
+
+  .row .col.push-ul9 {
+    left: 75%;
+  }
+
+  .row .col.offset-ul10 {
+    margin-left: 83.33333333%;
+  }
+
+  .row .col.pull-ul10 {
+    right: 83.33333333%;
+  }
+
+  .row .col.push-ul10 {
+    left: 83.33333333%;
+  }
+
+  .row .col.offset-ul11 {
+    margin-left: 91.66666667%;
+  }
+
+  .row .col.pull-ul11 {
+    right: 91.66666667%;
+  }
+
+  .row .col.push-ul11 {
+    left: 91.66666667%;
+  }
+
+  .row .col.offset-ul12 {
+    margin-left: 100%;
+  }
+
+  .row .col.pull-ul12 {
+    right: 100%;
+  }
+
+  .row .col.push-ul12 {
+    left: 100%;
   }
 }

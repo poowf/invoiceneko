@@ -9,7 +9,8 @@ class NotificationController extends Controller
 {
     public function pixel($notificationId)
     {
-        $notification = NekoNotification::findOrFail($notificationId);
+        //Do not fail even if id is not found, this is so that even if the id is missing, the transparent pixel will still display properly in the email.
+        $notification = NekoNotification::find($notificationId);
 
         ignore_user_abort(true);
 
