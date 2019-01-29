@@ -23,6 +23,9 @@ php artisan storage:link
 php artisan serve --host 0.0.0.0
 ```
 
+## Security
+If you discover a security vulnerability within this application, please send an e-mail to Zane J. Chua at zane@poowf.com. All security vulnerabilities will be addressed promptly.
+
 ## License
 
 Copyright 2018 Zane J. Chua
