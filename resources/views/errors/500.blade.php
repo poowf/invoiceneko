@@ -68,7 +68,8 @@
                         });
 
                         Sentry.init({
-                            dsn: '{{ config('app.sentry_laravel_dsn') }}'
+                            dsn: '{{ config('app.sentry_laravel_dsn') }}',
+                            release: '{{ 'invoiceneko@' . config('sentry.release') }}'
                         });
 
                         Sentry.showReportDialog({
