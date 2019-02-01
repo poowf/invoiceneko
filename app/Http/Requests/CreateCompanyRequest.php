@@ -30,6 +30,8 @@ class CreateCompanyRequest extends FormRequest
             'phone'       => 'required',
             'email'       => 'required|email',
             'domain_name' => ['required', 'unique:companies', new Hostname()],
+            'logo'        => 'mimes:jpeg,bmp,png',
+            'smlogo'      => 'mimes:jpeg,bmp,png',
         ];
     }
 }

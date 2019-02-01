@@ -30,6 +30,8 @@ class UpdateCompanyRequest extends FormRequest
             'phone'       => 'required|string',
             'email'       => 'required|email',
             'domain_name' => ['required', 'unique:companies,domain_name,' . $this->route('company')->id, new Hostname()],
+            'logo'        => 'mimes:jpeg,bmp,png',
+            'smlogo'      => 'mimes:jpeg,bmp,png',
         ];
     }
 }
