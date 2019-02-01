@@ -29,7 +29,7 @@ class UpdateQuoteRequest extends FormRequest
             'item_name.*'        => 'required|string',
             'item_quantity.*'    => 'required|integer|min:1',
             'item_price.*'       => 'required|numeric',
-            'item_description.*' => 'string',
+            'item_description.*' => 'nullable|string',
         ];
     }
 }

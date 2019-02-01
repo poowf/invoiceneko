@@ -75,7 +75,7 @@ class AdhocQuoteController extends Controller
         foreach ($request->input('item_name') as $key => $item) {
             $quoteitem = new QuoteItem();
             $quoteitem->name = $item;
-            $quoteitem->description = $request->input('item_description')[$key];
+            $quoteitem->description = (array_key_exists($key, $request->input('item_description'))) ? $request->input('item_description')[$key] : null;
             $quoteitem->quantity = $request->input('item_quantity')[$key];
             $quoteitem->price = $request->input('item_price')[$key];
             $quoteitem->quote_id = $quote->id;
@@ -153,7 +153,7 @@ class AdhocQuoteController extends Controller
                 $quoteitem = new QuoteItem();
             }
             $quoteitem->name = $itemname;
-            $quoteitem->description = $request->input('item_description')[$key];
+            $quoteitem->description = (array_key_exists($key, $request->input('item_description'))) ? $request->input('item_description')[$key] : null;
             $quoteitem->quantity = $request->input('item_quantity')[$key];
             $quoteitem->price = $request->input('item_price')[$key];
             $quoteitem->quote_id = $quote->id;

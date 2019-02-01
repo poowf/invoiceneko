@@ -154,7 +154,7 @@ class QuoteController extends Controller
         foreach ($request->input('item_name') as $key => $item) {
             $quoteitem = new QuoteItem();
             $quoteitem->name = $item;
-            $quoteitem->description = $request->input('item_description')[$key];
+            $quoteitem->description = (array_key_exists($key, $request->input('item_description'))) ? $request->input('item_description')[$key] : null;
             $quoteitem->quantity = $request->input('item_quantity')[$key];
             $quoteitem->price = $request->input('item_price')[$key];
             $quoteitem->quote_id = $quote->id;
@@ -182,7 +182,11 @@ class QuoteController extends Controller
         $invoice->date = Carbon::now()->startOfDay();
         $invoice->netdays = $quote->netdays;
         $invoice->duedate = $duedate;
-        $invoice->client_id = $quote->client_id;
+        if ($quote->client_id) {
+            $invoice->client_id = $quote->client_id;
+        } else {
+            $invoice->client_data = $quote->client_data;
+        }
         $invoice->company_id = $company->id;
         $invoice->notify = false;
         $invoice->save();
@@ -296,7 +300,7 @@ class QuoteController extends Controller
                 $quoteitem = new QuoteItem();
             }
             $quoteitem->name = $itemname;
-            $quoteitem->description = $request->input('item_description')[$key];
+            $quoteitem->description = (array_key_exists($key, $request->input('item_description'))) ? $request->input('item_description')[$key] : null;
             $quoteitem->quantity = $request->input('item_quantity')[$key];
             $quoteitem->price = $request->input('item_price')[$key];
             $quoteitem->quote_id = $quote->id;

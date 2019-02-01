@@ -202,7 +202,7 @@ class InvoiceController extends Controller
         foreach ($request->input('item_name') as $key => $item) {
             $invoiceitem = new InvoiceItem();
             $invoiceitem->name = $item;
-            $invoiceitem->description = $request->input('item_description')[$key];
+            $invoiceitem->description = (array_key_exists($key, $request->input('item_description'))) ? $request->input('item_description')[$key] : null;
             $invoiceitem->quantity = $request->input('item_quantity')[$key];
             $invoiceitem->price = $request->input('item_price')[$key];
             $invoiceitem->invoice_id = $invoice->id;
@@ -286,7 +286,11 @@ class InvoiceController extends Controller
         $quote->date = $invoice->date;
         $quote->netdays = $invoice->netdays;
         $quote->duedate = $invoice->duedate;
-        $quote->client_id = $invoice->client_id;
+        if ($invoice->client_id) {
+            $quote->client_id = $invoice->client_id;
+        } else {
+            $quote->client_data = $invoice->client_data;
+        }
         $quote->company_id = $company->id;
         $quote->status = Quote::STATUS_DRAFT;
         $quote->save();
@@ -464,7 +468,7 @@ class InvoiceController extends Controller
                 $invoiceitem = new InvoiceItem();
             }
             $invoiceitem->name = $itemname;
-            $invoiceitem->description = $request->input('item_description')[$key];
+            $invoiceitem->description = (array_key_exists($key, $request->input('item_description'))) ? $request->input('item_description')[$key] : null;
             $invoiceitem->quantity = $request->input('item_quantity')[$key];
             $invoiceitem->price = $request->input('item_price')[$key];
             $invoiceitem->invoice_id = $invoice->id;

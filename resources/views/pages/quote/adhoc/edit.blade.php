@@ -107,7 +107,7 @@
                                         <span class="helper-text"></span>
                                     </div>
                                     <div class="input-field col s12 mtop30">
-                                        <textarea id="item_description" name="item_description[]" class="trumbowyg-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Description">{{ $item->description ?? '' }}</textarea>
+                                        <textarea id="item_description" name="item_description[]" class="trumbowyg-textarea" data-parsley-trigger="change" placeholder="Item Description">{{ $item->description ?? '' }}</textarea>
                                         <label for="item_description" class="label-validation">Description</label>
                                         <span class="helper-text"></span>
                                     </div>

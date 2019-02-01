@@ -107,7 +107,7 @@
                                     <span class="helper-text"></span>
                                 </div>
                                 <div class="input-field col s12 mtop30">
-                                    <textarea id="item_description_0" name="item_description[]" class="item-description-textarea trumbowyg-textarea" data-parsley-required="true" data-parsley-trigger="change" placeholder="Item Description">{{ old('item_description') }}</textarea>
+                                    <textarea id="item_description_0" name="item_description[]" class="item-description-textarea trumbowyg-textarea" data-parsley-trigger="change" placeholder="Item Description">{{ old('item_description') }}</textarea>
                                     <label for="item_description_0" class="label-validation">Description</label>
                                     <span class="helper-text"></span>
                                 </div>

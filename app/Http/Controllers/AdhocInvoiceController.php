@@ -78,7 +78,7 @@ class AdhocInvoiceController extends Controller
         foreach ($request->input('item_name') as $key => $item) {
             $invoiceitem = new InvoiceItem();
             $invoiceitem->name = $item;
-            $invoiceitem->description = $request->input('item_description')[$key];
+            $invoiceitem->description = (array_key_exists($key, $request->input('item_description'))) ? $request->input('item_description')[$key] : null;
             $invoiceitem->quantity = $request->input('item_quantity')[$key];
             $invoiceitem->price = $request->input('item_price')[$key];
             $invoiceitem->invoice_id = $invoice->id;
@@ -211,7 +211,7 @@ class AdhocInvoiceController extends Controller
                 $invoiceitem = new InvoiceItem();
             }
             $invoiceitem->name = $itemname;
-            $invoiceitem->description = $request->input('item_description')[$key];
+            $invoiceitem->description = (array_key_exists($key, $request->input('item_description'))) ? $request->input('item_description')[$key] : null;
             $invoiceitem->quantity = $request->input('item_quantity')[$key];
             $invoiceitem->price = $request->input('item_price')[$key];
             $invoiceitem->invoice_id = $invoice->id;
