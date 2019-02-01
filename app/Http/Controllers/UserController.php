@@ -14,7 +14,6 @@ use Google2FA;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use PragmaRX\Countries\Package\Countries;
 use PragmaRX\Recovery\Recovery;
 
 class UserController extends Controller
