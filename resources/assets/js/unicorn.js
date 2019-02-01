@@ -210,7 +210,7 @@ class Unicorn {
     }
 
     static retrieveItemTemplate(baseEndpoint, itemTemplateId, element, callback) {
-        if (typeof itemTemplateId !== typeof undefined && itemTemplateId !== false) {
+        if (typeof itemTemplateId !== typeof undefined && itemTemplateId !== false && itemTemplateId !== 'undefined') {
             $.ajax({
                 type: "GET",
                 url: baseEndpoint + "/itemtemplate/" + itemTemplateId + "/retrieve",
