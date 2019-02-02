@@ -16,9 +16,6 @@ class ItemTemplatePolicy
 
     public function before($user, $ability)
     {
-        if ($user->isAn('global-administrator')) {
-            return true;
-        }
     }
 
     public function index(User $user)
@@ -36,7 +33,8 @@ class ItemTemplatePolicy
      */
     public function view(User $user, ItemTemplate $itemtemplate)
     {
-        return $user->can('view-item-template', $itemtemplate);
+        $userCompanies = $user->companies()->pluck('companies.id');
+        return $userCompanies->contains($itemtemplate->company_id) && $user->can('view-item-template', $itemtemplate);
     }
 
     /**
@@ -62,7 +60,8 @@ class ItemTemplatePolicy
      */
     public function update(User $user, ItemTemplate $itemtemplate)
     {
-        return $user->can('update-item-template', $itemtemplate);
+        $userCompanies = $user->companies()->pluck('companies.id');
+        return $userCompanies->contains($itemtemplate->company_id) && $user->can('update-item-template', $itemtemplate);
     }
 
     /**
@@ -75,6 +74,7 @@ class ItemTemplatePolicy
      */
     public function delete(User $user, ItemTemplate $itemtemplate)
     {
-        return $user->can('delete-item-template', $itemtemplate);
+        $userCompanies = $user->companies()->pluck('companies.id');
+        return $userCompanies->contains($itemtemplate->company_id) && $user->can('delete-item-template', $itemtemplate);
     }
 }

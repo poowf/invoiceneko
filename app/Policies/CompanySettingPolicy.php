@@ -22,9 +22,6 @@ class CompanySettingPolicy
 
     public function before($user, $ability)
     {
-        if ($user->isAn('global-administrator')) {
-            return true;
-        }
     }
 
     public function index(User $user)
@@ -42,7 +39,8 @@ class CompanySettingPolicy
      */
     public function view(User $user, CompanySetting $companySettings)
     {
-        return $user->can('view-company-settings', $companySettings);
+        $userCompanies = $user->companies()->pluck('companies.id');
+        return $userCompanies->contains($companySettings->company_id) && $user->can('view-company-settings', $companySettings);
     }
 
     /**
@@ -67,7 +65,8 @@ class CompanySettingPolicy
      */
     public function update(User $user, CompanySetting $companySettings)
     {
-        return $user->can('update-company-settings', $companySettings);
+        $userCompanies = $user->companies()->pluck('companies.id');
+        return $userCompanies->contains($companySettings->company_id) && $user->can('update-company-settings', $companySettings);
     }
 
     /**
@@ -80,6 +79,7 @@ class CompanySettingPolicy
      */
     public function delete(User $user, CompanySetting $companySettings)
     {
-        return $user->can('delete-company-settings', $companySettings);
+        $userCompanies = $user->companies()->pluck('companies.id');
+        return $userCompanies->contains($companySettings->company_id) && $user->can('delete-company-settings', $companySettings);
     }
 }

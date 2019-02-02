@@ -16,9 +16,6 @@ class InvoicePolicy
 
     public function before($user, $ability)
     {
-        if ($user->isAn('global-administrator')) {
-            return true;
-        }
     }
 
     public function index(User $user)
@@ -36,7 +33,8 @@ class InvoicePolicy
      */
     public function view(User $user, Invoice $invoice)
     {
-        return $user->can('view-invoice', $invoice);
+        $userCompanies = $user->companies()->pluck('companies.id');
+        return $userCompanies->contains($invoice->company_id) && $user->can('view-invoice', $invoice);
     }
 
     /**
@@ -61,7 +59,8 @@ class InvoicePolicy
      */
     public function update(User $user, Invoice $invoice)
     {
-        return $user->can('update-invoice', $invoice);
+        $userCompanies = $user->companies()->pluck('companies.id');
+        return $userCompanies->contains($invoice->company_id) && $user->can('update-invoice', $invoice);
     }
 
     /**
@@ -74,6 +73,7 @@ class InvoicePolicy
      */
     public function delete(User $user, Invoice $invoice)
     {
-        return $user->can('delete-invoice', $invoice);
+        $userCompanies = $user->companies()->pluck('companies.id');
+        return $userCompanies->contains($invoice->company_id) && $user->can('delete-invoice', $invoice);
     }
 }

@@ -16,9 +16,6 @@ class ReceiptPolicy
 
     public function before($user, $ability)
     {
-        if ($user->isAn('global-administrator')) {
-            return true;
-        }
     }
 
     public function index(User $user)
@@ -36,7 +33,8 @@ class ReceiptPolicy
      */
     public function view(User $user, Receipt $receipt)
     {
-        return $user->can('view-receipt', $receipt);
+        $userCompanies = $user->companies()->pluck('companies.id');
+        return $userCompanies->contains($receipt->company_id) && $user->can('view-receipt', $receipt);
     }
 
     /**
@@ -61,7 +59,8 @@ class ReceiptPolicy
      */
     public function update(User $user, Receipt $receipt)
     {
-        return $user->can('update-receipt', $receipt);
+        $userCompanies = $user->companies()->pluck('companies.id');
+        return $userCompanies->contains($receipt->company_id) && $user->can('update-receipt', $receipt);
     }
 
     /**
@@ -74,6 +73,7 @@ class ReceiptPolicy
      */
     public function delete(User $user, Receipt $receipt)
     {
-        return $user->can('delete-receipt', $receipt);
+        $userCompanies = $user->companies()->pluck('companies.id');
+        return $userCompanies->contains($receipt->company_id) && $user->can('delete-receipt', $receipt);
     }
 }

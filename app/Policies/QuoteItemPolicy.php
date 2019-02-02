@@ -17,9 +17,6 @@ class QuoteItemPolicy
 
     public function before($user, $ability)
     {
-        if ($user->isAn('global-administrator')) {
-            return true;
-        }
     }
 
     public function index(User $user)
@@ -37,7 +34,8 @@ class QuoteItemPolicy
      */
     public function view(User $user, QuoteItem $quoteItem)
     {
-        return $user->can('view-quote', Quote::class);
+        $userCompanies = $user->companies()->pluck('companies.id');
+        return $userCompanies->contains($quoteItem->quote->company_id) && $user->can('view-quote', Quote::class);
     }
 
     /**
@@ -62,7 +60,8 @@ class QuoteItemPolicy
      */
     public function update(User $user, QuoteItem $quoteItem)
     {
-        return $user->can('update-quote', Quote::class);
+        $userCompanies = $user->companies()->pluck('companies.id');
+        return $userCompanies->contains($quoteItem->quote->company_id) && $user->can('update-quote', Quote::class);
     }
 
     /**
@@ -75,6 +74,7 @@ class QuoteItemPolicy
      */
     public function delete(User $user, QuoteItem $quoteItem)
     {
-        return $user->can('delete-quote', Quote::class);
+        $userCompanies = $user->companies()->pluck('companies.id');
+        return $userCompanies->contains($quoteItem->quote->company_id) && $user->can('delete-quote', Quote::class);
     }
 }

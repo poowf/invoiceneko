@@ -22,9 +22,6 @@ class CompanyAddressPolicy
 
     public function before($user, $ability)
     {
-        if ($user->isAn('global-administrator')) {
-            return true;
-        }
     }
 
     public function index(User $user)
@@ -42,7 +39,8 @@ class CompanyAddressPolicy
      */
     public function view(User $user, CompanyAddress $companyAddress)
     {
-        return $user->can('view-company-address', $companyAddress);
+        $userCompanies = $user->companies()->pluck('companies.id');
+        return $userCompanies->contains($companyAddress->company_id) &&  $user->can('view-company-address', $companyAddress);
     }
 
     /**
@@ -67,7 +65,8 @@ class CompanyAddressPolicy
      */
     public function update(User $user, CompanyAddress $companyAddress)
     {
-        return $user->can('update-company-address', $companyAddress);
+        $userCompanies = $user->companies()->pluck('companies.id');
+        return $userCompanies->contains($companyAddress->company_id) &&  $user->can('update-company-address', $companyAddress);
     }
 
     /**
@@ -80,6 +79,7 @@ class CompanyAddressPolicy
      */
     public function delete(User $user, CompanyAddress $companyAddress)
     {
-        return $user->can('delete-company-address', $companyAddress);
+        $userCompanies = $user->companies()->pluck('companies.id');
+        return $userCompanies->contains($companyAddress->company_id) &&  $user->can('delete-company-address', $companyAddress);
     }
 }

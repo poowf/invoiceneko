@@ -22,9 +22,6 @@ class CompanyUserRequestPolicy
 
     public function before($user, $ability)
     {
-        if ($user->isAn('global-administrator')) {
-            return true;
-        }
     }
 
     public function index(User $user)
@@ -42,7 +39,8 @@ class CompanyUserRequestPolicy
      */
     public function view(User $user, CompanyUserRequest $companyUserRequest)
     {
-        return $user->can('view-company-user-request', $companyUserRequest);
+        $userCompanies = $user->companies()->pluck('companies.id');
+        return $userCompanies->contains($companyUserRequest->company_id) && $user->can('view-company-user-request', $companyUserRequest);
     }
 
     /**
@@ -67,7 +65,8 @@ class CompanyUserRequestPolicy
      */
     public function update(User $user, CompanyUserRequest $companyUserRequest)
     {
-        return $user->can('update-company-user-request', $companyUserRequest);
+        $userCompanies = $user->companies()->pluck('companies.id');
+        return $userCompanies->contains($companyUserRequest->company_id) && $user->can('update-company-user-request', $companyUserRequest);
     }
 
     /**
@@ -80,6 +79,7 @@ class CompanyUserRequestPolicy
      */
     public function delete(User $user, CompanyUserRequest $companyUserRequest)
     {
-        return $user->can('delete-company-user-request', $companyUserRequest);
+        $userCompanies = $user->companies()->pluck('companies.id');
+        return $userCompanies->contains($companyUserRequest->company_id) && $user->can('delete-company-user-request', $companyUserRequest);
     }
 }

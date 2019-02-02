@@ -16,9 +16,6 @@ class PaymentPolicy
 
     public function before($user, $ability)
     {
-        if ($user->isAn('global-administrator')) {
-            return true;
-        }
     }
 
     public function index(User $user)
@@ -36,7 +33,8 @@ class PaymentPolicy
      */
     public function view(User $user, Payment $payment)
     {
-        return $user->can('view-payment', $payment);
+        $userCompanies = $user->companies()->pluck('companies.id');
+        return $userCompanies->contains($payment->company_id) && $user->can('view-payment', $payment);
     }
 
     /**
@@ -61,7 +59,8 @@ class PaymentPolicy
      */
     public function update(User $user, Payment $payment)
     {
-        return $user->can('update-payment', $payment);
+        $userCompanies = $user->companies()->pluck('companies.id');
+        return $userCompanies->contains($payment->company_id) && $user->can('update-payment', $payment);
     }
 
     /**
@@ -74,6 +73,7 @@ class PaymentPolicy
      */
     public function delete(User $user, Payment $payment)
     {
-        return $user->can('delete-payment', $payment);
+        $userCompanies = $user->companies()->pluck('companies.id');
+        return $userCompanies->contains($payment->company_id) && $user->can('delete-payment', $payment);
     }
 }

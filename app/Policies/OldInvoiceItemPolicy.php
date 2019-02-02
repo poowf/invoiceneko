@@ -17,9 +17,6 @@ class OldInvoiceItemPolicy
 
     public function before($user, $ability)
     {
-        if ($user->isAn('global-administrator')) {
-            return true;
-        }
     }
 
     public function index(User $user)
@@ -37,7 +34,8 @@ class OldInvoiceItemPolicy
      */
     public function view(User $user, OldInvoiceItem $oldInvoiceItem)
     {
-        return $user->can('view-invoice', Invoice::class);
+        $userCompanies = $user->companies()->pluck('companies.id');
+        return $userCompanies->contains($oldInvoiceItem->invoice->company_id) && $user->can('view-invoice', Invoice::class);
     }
 
     /**
@@ -62,7 +60,8 @@ class OldInvoiceItemPolicy
      */
     public function update(User $user, OldInvoiceItem $oldInvoiceItem)
     {
-        return $user->can('update-invoice', Invoice::class);
+        $userCompanies = $user->companies()->pluck('companies.id');
+        return $userCompanies->contains($oldInvoiceItem->invoice->company_id) && $user->can('update-invoice', Invoice::class);
     }
 
     /**
@@ -75,6 +74,7 @@ class OldInvoiceItemPolicy
      */
     public function delete(User $user, OldInvoiceItem $oldInvoiceItem)
     {
-        return $user->can('delete-invoice', Invoice::class);
+        $userCompanies = $user->companies()->pluck('companies.id');
+        return $userCompanies->contains($oldInvoiceItem->invoice->company_id) && $user->can('delete-invoice', Invoice::class);
     }
 }
