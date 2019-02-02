@@ -18,6 +18,7 @@ Route::get('/company/create', 'CompanyController@create')->name('company.create'
 Route::post('/company/create', 'CompanyController@store')->name('company.store');
 
 Route::get('/about', 'MainController@about')->name('about');
+Route::get('/community', 'MainController@community')->name('community');
 Route::get('/pricing', 'MainController@pricing')->name('pricing');
 Route::get('/terms', 'MainController@terms')->name('terms');
 Route::get('/privacy', 'MainController@privacy')->name('privacy');
@@ -27,7 +28,6 @@ Route::post('/contact', 'MainController@contactHandle')->name('contact.handle');
 Route::group(['middleware' => ['guest']], function () {
     /* Auth */
     Route::get('/', 'MainController@main')->name('main');
-    Route::get('/community', 'MainController@community')->name('community');
     Route::get('/signin', 'AuthController@show')->name('auth.show');
     Route::post('/signin', 'AuthController@login')->name('auth.process');
     Route::get('/forgot', 'ForgotPasswordController@show')->name('forgot.show');
