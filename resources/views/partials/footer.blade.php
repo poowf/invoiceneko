@@ -40,7 +40,7 @@
                         <ul>
                             <a href="//www.facebook.com/invoiceneko"><li><i class="mdi mdi-facebook" aria-hidden="true"></i></li></a>
                             <a href="//www.twitter.com/invoiceneko"><li><i class="mdi mdi-twitter" aria-hidden="true"></i></li></a>
-                            <a href="//www.instagram.com/invoiceneko"><li><i class="mdi mdi-instagram" aria-hidden="true"></i></li></a>
+                            <a href="//github.com/poowf/invoiceneko"><li><i class="mdi mdi-github-face" aria-hidden="true"></i></li></a>
                         </ul>
                         <p>© {{ date('Y') }} {{ config('app.name') }}</p>
                     </div>
