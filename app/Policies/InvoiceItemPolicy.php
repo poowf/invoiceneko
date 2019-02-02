@@ -35,6 +35,7 @@ class InvoiceItemPolicy
     public function view(User $user, InvoiceItem $invoiceItem)
     {
         $userCompanies = $user->companies()->pluck('companies.id');
+
         return $userCompanies->contains($invoiceItem->invoice->company_id) && $user->can('view-invoice', Invoice::class);
     }
 
@@ -61,6 +62,7 @@ class InvoiceItemPolicy
     public function update(User $user, InvoiceItem $invoiceItem)
     {
         $userCompanies = $user->companies()->pluck('companies.id');
+
         return $userCompanies->contains($invoiceItem->invoice->company_id) && $user->can('update-invoice', Invoice::class);
     }
 
@@ -75,6 +77,7 @@ class InvoiceItemPolicy
     public function delete(User $user, InvoiceItem $invoiceItem)
     {
         $userCompanies = $user->companies()->pluck('companies.id');
+
         return $userCompanies->contains($invoiceItem->invoice->company_id) && $user->can('delete-invoice', Invoice::class);
     }
 }

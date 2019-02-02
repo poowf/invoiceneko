@@ -35,6 +35,7 @@ class OldInvoicePolicy
     public function view(User $user, OldInvoice $oldInvoice)
     {
         $userCompanies = $user->companies()->pluck('companies.id');
+
         return $userCompanies->contains($oldInvoice->company_id) && $user->can('view-invoice', Invoice::class);
     }
 
@@ -61,6 +62,7 @@ class OldInvoicePolicy
     public function update(User $user, OldInvoice $oldInvoice)
     {
         $userCompanies = $user->companies()->pluck('companies.id');
+
         return $userCompanies->contains($oldInvoice->company_id) && $user->can('update-invoice', Invoice::class);
     }
 
@@ -75,6 +77,7 @@ class OldInvoicePolicy
     public function delete(User $user, OldInvoice $oldInvoice)
     {
         $userCompanies = $user->companies()->pluck('companies.id');
+
         return $userCompanies->contains($oldInvoice->company_id) && $user->can('delete-invoice', Invoice::class);
     }
 }

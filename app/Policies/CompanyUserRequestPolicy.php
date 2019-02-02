@@ -40,6 +40,7 @@ class CompanyUserRequestPolicy
     public function view(User $user, CompanyUserRequest $companyUserRequest)
     {
         $userCompanies = $user->companies()->pluck('companies.id');
+
         return $userCompanies->contains($companyUserRequest->company_id) && $user->can('view-company-user-request', $companyUserRequest);
     }
 
@@ -66,6 +67,7 @@ class CompanyUserRequestPolicy
     public function update(User $user, CompanyUserRequest $companyUserRequest)
     {
         $userCompanies = $user->companies()->pluck('companies.id');
+
         return $userCompanies->contains($companyUserRequest->company_id) && $user->can('update-company-user-request', $companyUserRequest);
     }
 
@@ -80,6 +82,7 @@ class CompanyUserRequestPolicy
     public function delete(User $user, CompanyUserRequest $companyUserRequest)
     {
         $userCompanies = $user->companies()->pluck('companies.id');
+
         return $userCompanies->contains($companyUserRequest->company_id) && $user->can('delete-company-user-request', $companyUserRequest);
     }
 }

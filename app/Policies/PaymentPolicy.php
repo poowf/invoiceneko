@@ -34,6 +34,7 @@ class PaymentPolicy
     public function view(User $user, Payment $payment)
     {
         $userCompanies = $user->companies()->pluck('companies.id');
+
         return $userCompanies->contains($payment->company_id) && $user->can('view-payment', $payment);
     }
 
@@ -60,6 +61,7 @@ class PaymentPolicy
     public function update(User $user, Payment $payment)
     {
         $userCompanies = $user->companies()->pluck('companies.id');
+
         return $userCompanies->contains($payment->company_id) && $user->can('update-payment', $payment);
     }
 
@@ -74,6 +76,7 @@ class PaymentPolicy
     public function delete(User $user, Payment $payment)
     {
         $userCompanies = $user->companies()->pluck('companies.id');
+
         return $userCompanies->contains($payment->company_id) && $user->can('delete-payment', $payment);
     }
 }

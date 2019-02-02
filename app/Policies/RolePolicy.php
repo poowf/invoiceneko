@@ -34,6 +34,7 @@ class RolePolicy
     public function view(User $user, Role $role)
     {
         $userCompanies = $user->companies()->pluck('companies.id');
+
         return $userCompanies->contains($role->scope) && $user->can('view-role', $role);
     }
 
@@ -60,6 +61,7 @@ class RolePolicy
     public function update(User $user, Role $role)
     {
         $userCompanies = $user->companies()->pluck('companies.id');
+
         return $userCompanies->contains($role->scope) && $user->can('update-role', $role);
     }
 
@@ -74,6 +76,7 @@ class RolePolicy
     public function delete(User $user, Role $role)
     {
         $userCompanies = $user->companies()->pluck('companies.id');
+
         return $userCompanies->contains($role->scope) && $user->can('delete-role', $role);
     }
 }

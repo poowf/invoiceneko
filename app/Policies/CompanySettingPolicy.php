@@ -40,6 +40,7 @@ class CompanySettingPolicy
     public function view(User $user, CompanySetting $companySettings)
     {
         $userCompanies = $user->companies()->pluck('companies.id');
+
         return $userCompanies->contains($companySettings->company_id) && $user->can('view-company-settings', $companySettings);
     }
 
@@ -66,6 +67,7 @@ class CompanySettingPolicy
     public function update(User $user, CompanySetting $companySettings)
     {
         $userCompanies = $user->companies()->pluck('companies.id');
+
         return $userCompanies->contains($companySettings->company_id) && $user->can('update-company-settings', $companySettings);
     }
 
@@ -80,6 +82,7 @@ class CompanySettingPolicy
     public function delete(User $user, CompanySetting $companySettings)
     {
         $userCompanies = $user->companies()->pluck('companies.id');
+
         return $userCompanies->contains($companySettings->company_id) && $user->can('delete-company-settings', $companySettings);
     }
 }
