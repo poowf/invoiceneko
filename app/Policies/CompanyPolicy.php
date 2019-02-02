@@ -34,6 +34,7 @@ class CompanyPolicy
     public function view(User $user, Company $company)
     {
         $userCompanies = $user->companies()->pluck('companies.id');
+
         return $userCompanies->contains($company->id) && $user->can('view-company', $company);
     }
 
@@ -60,6 +61,7 @@ class CompanyPolicy
     public function update(User $user, Company $company)
     {
         $userCompanies = $user->companies()->pluck('companies.id');
+
         return $userCompanies->contains($company->id) && $user->can('update-company', $company);
     }
 
@@ -119,6 +121,7 @@ class CompanyPolicy
     public function settings(User $user, Company $company)
     {
         $userCompanies = $user->companies()->pluck('companies.id');
+
         return $userCompanies->contains($company->id) && $user->can('update-company-settings', $company->settings);
     }
 
@@ -133,6 +136,7 @@ class CompanyPolicy
     public function address(User $user, Company $company)
     {
         $userCompanies = $user->companies()->pluck('companies.id');
+
         return $userCompanies->contains($company->id) && $user->can('update-company-address', $company->address);
     }
 }

@@ -34,6 +34,7 @@ class ClientPolicy
     public function view(User $user, Client $client)
     {
         $userCompanies = $user->companies()->pluck('companies.id');
+
         return $userCompanies->contains($client->company_id) && $user->can('view-client', $client);
     }
 
@@ -60,6 +61,7 @@ class ClientPolicy
     public function update(User $user, Client $client)
     {
         $userCompanies = $user->companies()->pluck('companies.id');
+
         return $userCompanies->contains($client->company_id) && $user->can('update-client', $client);
     }
 
@@ -74,6 +76,7 @@ class ClientPolicy
     public function delete(User $user, Client $client)
     {
         $userCompanies = $user->companies()->pluck('companies.id');
+
         return $userCompanies->contains($client->company_id) && $user->can('delete-client', $client);
     }
 }

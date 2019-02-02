@@ -34,6 +34,7 @@ class ReceiptPolicy
     public function view(User $user, Receipt $receipt)
     {
         $userCompanies = $user->companies()->pluck('companies.id');
+
         return $userCompanies->contains($receipt->company_id) && $user->can('view-receipt', $receipt);
     }
 
@@ -60,6 +61,7 @@ class ReceiptPolicy
     public function update(User $user, Receipt $receipt)
     {
         $userCompanies = $user->companies()->pluck('companies.id');
+
         return $userCompanies->contains($receipt->company_id) && $user->can('update-receipt', $receipt);
     }
 
@@ -74,6 +76,7 @@ class ReceiptPolicy
     public function delete(User $user, Receipt $receipt)
     {
         $userCompanies = $user->companies()->pluck('companies.id');
+
         return $userCompanies->contains($receipt->company_id) && $user->can('delete-receipt', $receipt);
     }
 }

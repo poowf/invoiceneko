@@ -35,6 +35,7 @@ class QuotePolicy
     public function view(User $user, Quote $quote)
     {
         $userCompanies = $user->companies()->pluck('companies.id');
+
         return $userCompanies->contains($quote->company_id) && $user->can('view-quote', $quote);
     }
 
@@ -61,6 +62,7 @@ class QuotePolicy
     public function update(User $user, Quote $quote)
     {
         $userCompanies = $user->companies()->pluck('companies.id');
+
         return $userCompanies->contains($quote->company_id) && $user->can('update-quote', $quote);
     }
 
@@ -75,6 +77,7 @@ class QuotePolicy
     public function delete(User $user, Quote $quote)
     {
         $userCompanies = $user->companies()->pluck('companies.id');
+
         return $userCompanies->contains($quote->company_id) && $user->can('delete-quote', $quote);
     }
 }
