@@ -12,10 +12,10 @@ An open-source invoicing system built on a modern backend and developed for anyo
 
 ## Setup and Deployment
 ```bash
+cp .env.example .env
 composer install
 npm install
 npm run dev
-cp .env.example .env
 php artisan key:generate
 php artisan migrate
 php artisan db:seed
