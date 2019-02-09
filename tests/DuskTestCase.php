@@ -12,7 +12,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 abstract class DuskTestCase extends BaseTestCase
 {
     use CreatesApplication;
-    use DatabaseMigrations;
+//    use DatabaseMigrations;
 
     /**
      *  Notes for Dusk.
