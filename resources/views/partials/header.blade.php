@@ -6,7 +6,7 @@
                     <div class="col l12 no-padding">
                         <div class="nav-wrapper">
                             <a href="#" data-target="mobile-menu" class="sidenav-trigger"><span class="white-text">&#8801;</span></a>
-                            <a href="{{ route('main') }}" class="logo black-text"><img src="{{ asset('assets/img/logo.png') }}"><span class="logo-text">{{ config('app.name') }}</span></a>
+                            <a href="{{ route('main') }}" class="logo black-text"><img src="{{ asset('assets/img/logo.svg') }}" height="60"><span class="logo-text">{{ config('app.name') }}</span></a>
                             <ul class="left hide-on-med-and-down">
                             </ul>
 
@@ -65,9 +65,10 @@
                                         </li>
                                     </ul>
                                 @else
-                                    <li><a href="{{ route('community') }}">Community</a></li>
+                                    <li><a href="{{ route('pricing') }}">Pricing</a></li>
+                                    <li><a href="{{ route('features') }}">Features</a></li>
                                     <li><a href="{{ route('auth.show') }}">Sign In</a></li>
-                                    <li><a href="{{ route('start') }}">Start Here</a></li>
+                                    <li><a href="{{ route('start') }}" class="btn btn-link">Start Here</a></li>
                                 @endif
                             </ul>
                             <ul class="sidenav" id="mobile-menu">
@@ -141,8 +142,10 @@
                                         </li>
                                     </ul>
                                 @else
+                                    <li><a href="{{ route('start') }}" class="btn btn-link">Start Here</a></li>
                                     <li><a href="{{ route('auth.show') }}">Sign In</a></li>
-                                    <li><a href="{{ route('start') }}">Start Here</a></li>
+                                    <li><a href="{{ route('pricing') }}">Pricing</a></li>
+                                    <li><a href="{{ route('features') }}">Features</a></li>
                                 @endif
                             </ul>
                         </div>

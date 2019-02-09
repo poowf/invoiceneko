@@ -1,6 +1,7 @@
 @extends("layouts.default", ['page_title' => 'Dashboard'])
 
 @section("head")
+    <link href="{{ asset(mix('/assets/css/chartist.css')) }}" rel="stylesheet" type="text/css">
     <style>
     </style>
 @stop
@@ -14,13 +15,24 @@
             <div class="col s12 m4">
                 <h3>Welcome</h3>
                 <div class="card-panel">
-                    Hello {{ $user->full_name ?? '' }}
+                    <h5>Hello {{ $user->full_name ?? '' }}</h5>
+                    <h6>Today's date is {{ \Carbon\Carbon::now()->format('j F, Y') }}</h6>
+                    <h6 class="mtop20">Your company has created a total of:</h6>
+                    <dl>
+                        <dt>Invoices:</dt>
+                        <dd>{{ $total['invoices'] }}</dd>
+                        <dt>Quotes:</dt>
+                        <dd>{{ $total['quotes'] }}</dd>
+                        <dt>Payments:</dt>
+                        <dd>{{ $total['payments'] }}</dd>
+                    </dl>
                 </div>
             </div>
             <div class="col s12 m8">
-                <h3>Summary</h3>
+                <h3>Activity in the past week</h3>
                 <div class="card-panel">
-                    Hello {{ $user->full_name ?? '' }}
+                    <h5 class="center">Items Created</h5>
+                    <div id="summary-chart"></div>
                 </div>
             </div>
             <div class="col s12">
@@ -63,6 +75,24 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
+            new Chartist.Line('#summary-chart', {
+                labels: [@foreach($activity['dates'] as $date) {!! "'" . $date . "'," !!} @endforeach],
+                series: [
+                    [@foreach($activity['invoices'] as $invoice) {!! "'" . $invoice . "'," !!} @endforeach],
+                    [@foreach($activity['quotes'] as $quote) {!! "'" . $quote . "'," !!} @endforeach],
+                    [@foreach($activity['payments'] as $payment) {!! "'" . $payment . "'," !!} @endforeach],
+                ]
+            }, {
+                fullWidth: true,
+                chartPadding: {
+                    right: 40
+                },
+                plugins: [
+                    Chartist.plugins.legend({
+                        legendNames: ['Invoices', 'Quotes', 'Payments'],
+                    })
+                ]
+            });
         });
     </script>
 @stop

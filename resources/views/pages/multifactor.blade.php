@@ -10,10 +10,10 @@
         <div class="container content-main-authentication">
             <div class="login-container">
                 <div class="card-panel pall30">
-                    <div class="avatar">
-                        <img src="{{ asset('assets/img/avatar.png') }}" width="150" height="150">
+                    <div class="hero-logo-container circle">
+                        <img src="{{ asset('assets/img/logo.svg') }}" class="hero-logo-image">
                     </div>
-                    <hr><br>
+                    <hr class="mtop20"><br>
                     <div class="form-box">
                         <form id="multifactor-auth" method="post" action="{{ route('auth.multifactor.validate') }}">
                             <div class="input-field col s12">

@@ -10,8 +10,8 @@
         <div class="container content-main-authentication">
             <div class="login-container">
                 <div class="card-panel pall30">
-                    <div class="avatar">
-                        <img src="{{ asset('assets/img/avatar.png') }}">
+                    <div class="hero-logo-container circle">
+                        <img src="{{ asset('assets/img/logo.svg') }}" class="hero-logo-image">
                     </div>
                     <hr class="mbth30">
                     <div class="form-box">

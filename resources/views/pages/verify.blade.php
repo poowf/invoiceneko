@@ -1,4 +1,4 @@
-@extends("layouts.default", ['page_title' => 'Invoice Neko | Verify Your Email Address'])
+@extends("layouts.default", ['page_title' => 'Verify Your Email Address'])
 
 @section("head")
     <style>
@@ -10,10 +10,10 @@
         <div class="container content-main-authentication">
             <div class="login-container">
                 <div class="card-panel pall30">
-                    <div class="avatar">
-                        <img src="{{ asset('assets/img/avatar.png') }}" width="150" height="150">
+                    <div class="hero-logo-container circle">
+                        <img src="{{ asset('assets/img/logo.svg') }}" class="hero-logo-image">
                     </div>
-                    <hr><br>
+                    <hr class="mtop20"><br>
                     <div class="form-box">
                         <h6>Verify your email address</h6>
                         @if (session('resent'))

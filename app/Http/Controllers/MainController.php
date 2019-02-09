@@ -6,6 +6,8 @@ use App\Http\Requests\ContactRequest;
 use App\Library\Poowf\Unicorn;
 use App\Mail\ContactForm;
 use App\Models\Company;
+use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Mail;
 
 class MainController extends Controller
@@ -20,11 +22,21 @@ class MainController extends Controller
         return view('pages.about');
     }
 
-    public function community()
+    public function install()
+    {
+        return view('pages.install');
+    }
+
+    public function releases()
     {
         $releases = Unicorn::getGithubReleases();
 
-        return view('pages.community', compact('releases'));
+        return view('pages.releases', compact('releases'));
+    }
+
+    public function features()
+    {
+        return view('pages.features');
     }
 
     public function pricing()
@@ -75,7 +87,35 @@ class MainController extends Controller
             $overdueinvoices = null;
         }
 
-        return view('pages.dashboard', compact('user', 'overdueinvoices'));
+        $activity = [
+            'dates' => [],
+            'invoices' => [],
+            'quotes' => [],
+            'payments' => [],
+        ];
+
+
+        for($i = 0; $i < 7; $i++)
+        {
+            $today = Carbon::now();
+            $current = $today->subDays($i);
+            $invoiceCount = $company->invoices()->whereDate('created_at', $current)->count();
+            $quoteCount = $company->quotes()->whereDate('created_at', $current)->count();
+            $paymentCount = $company->payments()->whereDate('created_at', $current)->count();
+
+            array_push($activity['dates'], $current->format('d/M/Y'));
+            array_push($activity['invoices'], $invoiceCount);
+            array_push($activity['quotes'], $quoteCount);
+            array_push($activity['payments'], $paymentCount);
+        }
+
+        $total = [
+            'invoices' => $company->invoices->count(),
+            'quotes' => $company->quotes->count(),
+            'payments' => $company->payments->count(),
+        ];
+
+        return view('pages.dashboard', compact('user', 'overdueinvoices', 'activity', 'total'));
     }
 
     public function nocompany()

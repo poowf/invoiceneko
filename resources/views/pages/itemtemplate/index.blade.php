@@ -23,47 +23,48 @@
                 <div class="card-panel search-panel">
                     <input id="search-input" class="card-input" name="search-input" type="search" placeholder="Search">
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <div id="itemtemplate-container" class="card-panel flex">
+                    <table id="itemtemplates-table" class="responsive-table striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
 
-                <div id="itemtemplate-container" class="row">
-                    <div class="card-panel flex">
-                        <table id="itemtemplates-table" class="responsive-table striped">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Quantity</th>
-                                    <th>Price</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                @foreach($itemTemplates as $key => $itemTemplate)
-                                    <tr class="single-itemtemplate-row">
-                                        <td>{{ $itemTemplate->name  }}</td>
-                                        <td>{{ $itemTemplate->quantity }}</td>
-                                        <td>{{ $itemTemplate->price }}</td>
-                                        <td>
-                                            @can('view', $itemTemplate)
+                        <tbody>
+                            @foreach($itemTemplates as $key => $itemTemplate)
+                                <tr class="single-itemtemplate-row">
+                                    <td>{{ $itemTemplate->name  }}</td>
+                                    <td>{{ $itemTemplate->quantity }}</td>
+                                    <td>{{ $itemTemplate->price }}</td>
+                                    <td>
+                                        @can('view', $itemTemplate)
                                             <a href="{{ route('itemtemplate.show', [ 'itemtemplate' => $itemTemplate, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-tooltip="View Item Template"><i class="material-icons">remove_red_eye</i></a>
-                                            @endcan
-                                            @can('update', $itemTemplate)
+                                        @endcan
+                                        @can('update', $itemTemplate)
                                             <form method="post" action="{{ route('itemtemplate.duplicate', [ 'itemtemplate' => $itemTemplate, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="null-form tooltipped" data-position="top" data-tooltip="Duplicate Item Template">
                                                 {{ csrf_field() }}
                                                 <button class="null-btn" type="submit"><i class="material-icons">control_point_duplicate</i></button>
                                             </form>
-                                            @endcan
-                                            @can('update', $itemTemplate)
+                                        @endcan
+                                        @can('update', $itemTemplate)
                                             <a href="{{ route('itemtemplate.edit', [ 'itemtemplate' => $itemTemplate, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-tooltip="Edit Item Template"><i class="material-icons">mode_edit</i></a>
-                                            @endcan
-                                            @can('delete', $itemTemplate)
+                                        @endcan
+                                        @can('delete', $itemTemplate)
                                             <a href="#" data-id="{{ $itemTemplate->id }}" class="itemtemplate-delete-btn tooltipped" data-position="top" data-tooltip="Delete Item Template"><i class="material-icons">delete</i></a>
-                                            @endcan
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                                        @endcan
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

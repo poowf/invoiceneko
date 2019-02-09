@@ -43,10 +43,10 @@
                             @if($payments)
                                 @foreach($payments as $key => $payment)
                                     <tr class="single-payment-row">
-                                        <td>{{ $payment->invoice->nice_invoice_id }}</td>
-                                        <td>{{ $payment->client->companyname }}</td>
-                                        <td>${{ $payment->moneyformat }}</td>
-                                        <td>{{ $payment->receiveddate->format('d F, Y') }}</td>
+                                        <td>{{ $payment->invoice->nice_invoice_id ?? '-' }}</td>
+                                        <td>{{ $payment->getClient()->companyname ?? '-' }}</td>
+                                        <td>${{ $payment->moneyformat ?? '-' }}</td>
+                                        <td>{{ $payment->receiveddate->format('d F, Y') ?? '-' }}</td>
                                         <td>
                                             @can('view', $payment)
                                             <a href="{{ route('payment.show', [ 'payment' => $payment, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}" class="tooltipped" data-position="top" data-tooltip="View Payment"><i class="material-icons">remove_red_eye</i></a>

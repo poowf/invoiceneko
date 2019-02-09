@@ -1,4 +1,4 @@
-@extends("layouts.default", ['page_title' => 'Invoice Neko'])
+@extends("layouts.default", ['page_title' => 'Releases'])
 
 @section("head")
     <style>
@@ -6,6 +6,17 @@
 @stop
 
 @section("content")
+    <div class="row pall30" style="background-color: #585454;">
+        <div class="mini-container">
+            <div class="col s12 center">
+                <div class="hero-logo-container circle">
+                    <img src="{{ asset('assets/img/logo.svg') }}" class="hero-logo-image">
+                </div>
+                <h2 class="hero-header white-text no-margin">Releases</h2>
+                <p class="hero-description flow-text white-text mtop20">Current releases for {{ config('app.name') }}</p>
+            </div>
+        </div>
+    </div>
     <div class="container">
         <div class="row mtop30">
             <div class="col s12 m6">

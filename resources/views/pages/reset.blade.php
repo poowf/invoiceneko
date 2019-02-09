@@ -11,10 +11,10 @@
             <div class="login-container">
                 <div class="card-panel">
                     <div id="output"></div>
-                    <div class="avatar">
-                        <img src="{{ asset('assets/img/avatar.png') }}">
+                    <div class="hero-logo-container circle">
+                        <img src="{{ asset('assets/img/logo.svg') }}" class="hero-logo-image">
                     </div>
-                    <hr>
+                    <hr class="mtop20">
                     <div class="form-box">
                         <form id="reset" method="post">
                             <div class="row">

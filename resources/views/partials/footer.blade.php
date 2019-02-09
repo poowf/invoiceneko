@@ -12,7 +12,7 @@
                         <p class="grey-text text-lighten-3">{{ config('app.name') }}</p>
                         <ul>
                             <li><a class="grey-text text-lighten-3" href="{{ route('about') }}">About</a></li>
-                            <li><a class="grey-text text-lighten-3" href="{{ route('community') }}">Community</a></li>
+                            <li><a class="grey-text text-lighten-3" href="{{ route('releases') }}">Releases</a></li>
                             <li><a class="grey-text text-lighten-3" href="{{ route('terms') }}">Terms & Conditions</a></li>
                             <li><a class="grey-text text-lighten-3" href="{{ route('privacy') }}">Privacy Policy</a></li>
 

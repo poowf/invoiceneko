@@ -164,8 +164,8 @@
                             <tr>
                                 <td width="250">
                                     <span class="name quote-bold quote-text-larger">Prepared For: </span>
-                                    <span>{{ $quote->getClient()->companyname }}</span>
-                                    <span>@if($quote->getClient()->block){{ $quote->getClient()->block }} @endif {{ $quote->getClient()->street ?? 'No Street' }}</span>
+                                    <span>{{ $quote->getClient()->companyname ?? '-' }}</span>
+                                    <span>@if($quote->getClient()->block){{ $quote->getClient()->block ?? 'No Block' }} @endif {{ $quote->getClient()->street ?? 'No Street' }}</span>
                                     @if($quote->getClient()->unitnumber)<span>#{{ $quote->getClient()->unitnumber }}</span>@endif
                                     <span>{{ $quote->getClient()->country_code ?? 'No Country' }} {{ $quote->getClient()->postalcode ?? 'No Postal Code' }}</span>
                                 </td>

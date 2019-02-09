@@ -1,4 +1,4 @@
-@extends("layouts.default", ['page_title' => 'Invoice Neko'])
+@extends("layouts.default", ['page_title' => 'Privacy Policy'])
 
 @section("head")
     <style>

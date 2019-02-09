@@ -10,19 +10,6 @@
 
 An open-source invoicing system built on a modern backend and developed for anyone who needs to generate out an invoice and manage clients
 
-## Setup and Deployment
-```bash
-composer install
-npm install
-npm run dev
-cp .env.example .env
-php artisan key:generate
-php artisan migrate
-php artisan db:seed
-php artisan storage:link
-php artisan serve --host 0.0.0.0
-```
-
 ## Security
 If you discover a security vulnerability within this application, please send an e-mail to Zane J. Chua at zane@poowf.com. All security vulnerabilities will be addressed promptly.
 

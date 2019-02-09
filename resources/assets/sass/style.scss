@@ -735,6 +735,12 @@ mark {
   color: $primary-theme-color;
 }
 
+.tabs .tab a:focus,
+.tabs .tab a:focus.active {
+  background-color: rgba(77, 166, 166, 0.2);
+  outline: none;
+}
+
 .tabs .indicator {
   background-color: $primary-theme-color;
 }
@@ -1591,7 +1597,7 @@ label.rbtn-label.invalid::after {
 }
 
 .invoice-wrapper .tabs .tab a:hover,
-.tabs .tab a.active {
+.invoice-wrapper .tabs .tab a.active {
   color: $white-color;
 }
 
@@ -1722,8 +1728,17 @@ dl.releases-description-list dd {
   text-align: center;
 }
 
+.hero-logo-container {
+  margin: 0 auto;
+  background-color: #4da6a6;
+  width: 120px;
+  height: 120px;
+}
+
 .hero-logo-image {
   width: 120px;
+  height: 120px;
+  padding: 15px;
 }
 
 .hero-header {
@@ -1807,6 +1822,110 @@ dl.releases-description-list dd {
 
 .content-area label:hover {
   margin-left: -100%
+}
+
+/* Features */
+.single-feature-card .card-content .card-title {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.single-feature-card .card-content {
+  height: 150px;
+  overflow: hidden;
+}
+
+/* Prism */
+pre[class*="language-"] {
+  position: relative;
+  overflow: visible;
+  border-radius: 5px;
+}
+
+pre[class*="language-"] .copy {
+  content: "copy";
+  padding: 2px 10px 0;
+  position: absolute;
+  top: 35px;
+  right: 0;
+  transform: translate(-10px, -90%);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  color: white;
+  background: #272822;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+pre[class*="language-"]:hover .copy:hover {
+  color: gray;
+}
+
+code {
+  overflow: scroll;
+}
+
+/* Chartist Plugin */
+.ct-legend {
+  position: relative;
+  z-index: 10;
+  list-style: none;
+  text-align: center;
+}
+
+.ct-legend li {
+  position: relative;
+  padding-left: 23px;
+  margin-right: 10px;
+  margin-bottom: 3px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.ct-legend li:before {
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  top: 4px;
+  left: 0;
+  content: '';
+  border: 3px solid transparent;
+  border-radius: 2px;
+}
+
+.ct-legend li.inactive:before {
+  background: transparent;
+}
+
+.ct-legend.ct-legend-inside {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.ct-legend .ct-series-0:before {
+  background-color: #d70206;
+  border-color: #d70206;
+}
+
+.ct-legend .ct-series-1:before {
+  background-color: #f05b4f;
+  border-color: #f05b4f;
+}
+
+.ct-legend .ct-series-2:before {
+  background-color: #f4c63d;
+  border-color: #f4c63d;
+}
+
+.ct-legend .ct-series-3:before {
+  background-color: #d17905;
+  border-color: #d17905;
+}
+
+.ct-legend .ct-series-4:before {
+  background-color: #453d3f;
+  border-color: #453d3f;
 }
 
 /* Animations */
@@ -1924,9 +2043,19 @@ dl.releases-description-list dd {
   }
 }
 
+@media only screen and (min-width: 601px) {
+  .single-feature-card .card-content {
+    height: 200px;
+  }
+}
+
 @media only screen and (min-width: 768px) {
   img.force-image-size {
     height: 240px;
+  }
+
+  .single-feature-card .card-content {
+    height: 160px;
   }
 }
 
@@ -1951,8 +2080,18 @@ dl.releases-description-list dd {
     text-align: left;
   }
 
+  .hero-left-wrapper .hero-logo-container {
+    margin: 0;
+  }
+
+  .hero-logo-container {
+    width: 150px;
+    height: 150px;
+  }
+
   .hero-logo-image {
     width: 150px;
+    height: 150px;
   }
 }
 
@@ -1963,6 +2102,10 @@ dl.releases-description-list dd {
 
   .session-wrapper .session-description-list dd {
     margin-left: 20%;
+  }
+
+  .single-feature-card .card-content {
+    height: 200px;
   }
 }
 

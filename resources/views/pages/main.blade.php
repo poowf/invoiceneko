@@ -1,7 +1,10 @@
-@extends("layouts.default", ['page_title' => ''])
+@extends("layouts.default", ['page_title' => 'Invoice Neko'])
 
 @section("head")
     <style>
+        img {
+            max-width: 100%;
+        }
     </style>
 @stop
 
@@ -10,7 +13,9 @@
             <div class="mini-container">
                 <div class="col s12 l6">
                     <div class="hero-left-wrapper">
-                        <img src="{{ asset('assets/img/avatar.png') }}" class="hero-logo-image">
+                        <div class="hero-logo-container circle">
+                            <img src="{{ asset('assets/img/logo.svg') }}" class="hero-logo-image">
+                        </div>
                         <h2 class="hero-header white-text no-margin">Invoice Neko</h2>
                         <p class="hero-description flow-tex white-text mtop20">Invoice Neko is a self-hosted open sourced invoicing system built on a modern backend with a focus on delivering a good user experience throughout the application</p>
                         <a href="{{ route('start') }}" class="btn btn-large btn-theme mtop10">Start Here</a>

@@ -16,7 +16,7 @@ return [
     'docs'        => [
         'route'   => '/docs',
         'path'    => '/resources/docs',
-        'landing' => 'overview',
+        'landing' => 'requirements',
     ],
 
     /*
@@ -69,8 +69,8 @@ return [
     */
 
     'cache'       => [
-        'enabled' => false,
-        'period'  => 5,
+        'enabled' => true,
+        'period'  => 360,
     ],
 
     /*
@@ -111,7 +111,7 @@ return [
 
     'repository'   => [
         'provider' => 'github',
-        'url'      => 'https://github.com/saleem-hadad/larecipe',
+        'url'      => 'https://github.com/poowf/invoiceneko',
     ],
 
     /*
@@ -129,16 +129,16 @@ return [
 
     'ui'                 => [
         'show_app_name'  => true,
-        'logo'           => '', // e.g.: /images/logo.svg
-        'fav'            => '', // e.g.: /fav.png
-        'theme'          => 'light',
+        'logo'           => '/assets/img/logo.svg', // e.g.: /images/logo.svg
+        'fav'            => '/favicon.ico', // e.g.: /fav.png
+        'theme'          => 'dark',
         'code'           => 'dark',
         'back_to_top'    => true,
         'show_side_bar'  => true,
         'colors'         => [
-            'primary'    => '#787AF6',
-            'secondary'  => '#2b9cf2',
-            'selection'  => '#f4f5f7',
+            'primary'    => '#4da6a6',
+            'secondary'  => '#585454',
+            'selection'  => '#dce3e6',
         ],
         'additional_css' => [
             //'css/custom.css',
@@ -187,11 +187,11 @@ return [
    */
 
   'forum'                 => [
-        'enabled'           => false,
+        'enabled'           => true,
         'default'           => 'disqus',
         'services'          => [
             'disqus'        => [
-                'site_name' => '', // yoursite.disqus.com
+                'site_name' => 'invoiceneko', // yoursite.disqus.com
             ],
         ],
     ],

@@ -18,7 +18,9 @@ Route::get('/company/create', 'CompanyController@create')->name('company.create'
 Route::post('/company/create', 'CompanyController@store')->name('company.store');
 
 Route::get('/about', 'MainController@about')->name('about');
-Route::get('/community', 'MainController@community')->name('community');
+Route::get('/install', 'MainController@install')->name('install');
+Route::get('/releases', 'MainController@releases')->name('releases');
+Route::get('/features', 'MainController@features')->name('features');
 Route::get('/pricing', 'MainController@pricing')->name('pricing');
 Route::get('/terms', 'MainController@terms')->name('terms');
 Route::get('/privacy', 'MainController@privacy')->name('privacy');

@@ -31,6 +31,8 @@ const app = new Vue({
 window.$ = window.jQuery = require('jquery');
 window.Unicorn = require('./unicorn.js');
 window.LogRocket = require('logrocket');
+window.Clipboard = require('clipboard');
+window.Chartist = require('chartist');
 // window.Mark = require('mark.js');
 // window.Sentry = require('sentry/node');
 // window.Rollbar = require('rollbar');
@@ -42,3 +44,5 @@ require('selectize');
 require('parsleyjs');
 require('slick-carousel');
 require('trumbowyg');
+require('prismjs');
+require('chartist-plugin-legend');

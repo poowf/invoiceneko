@@ -58,7 +58,11 @@ mix
 
     .sass('node_modules/slick-carousel/slick/slick.scss', 'assets/css')
     .sass('node_modules/slick-carousel/slick/slick-theme.scss', 'assets/css')
+
+    .sass('node_modules/chartist/dist/scss/chartist.scss', 'assets/css')
+
     .less('node_modules/selectize/dist/less/selectize.less', 'public/assets/css')
+    .copy('node_modules/prismjs/themes/prism-okaidia.css', 'public/assets/css/prism-okaidia.css')
     .copy('node_modules/intl-tel-input/build/css/intlTelInput.css', 'public/assets/css/intlTelInput.css')
     .copy('node_modules/intl-tel-input/build/img/flags.png', 'public/assets/img/flags.png')
     .copy('node_modules/intl-tel-input/build/img/flags@2x.png', 'public/assets/img/flags@2x.png')
