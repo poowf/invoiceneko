@@ -7,7 +7,6 @@ use App\Library\Poowf\Unicorn;
 use App\Mail\ContactForm;
 use App\Models\Company;
 use Carbon\Carbon;
-use Illuminate\Support\Collection;
 use Mail;
 
 class MainController extends Controller
@@ -88,15 +87,13 @@ class MainController extends Controller
         }
 
         $activity = [
-            'dates' => [],
+            'dates'    => [],
             'invoices' => [],
-            'quotes' => [],
+            'quotes'   => [],
             'payments' => [],
         ];
 
-
-        for($i = 0; $i < 7; $i++)
-        {
+        for ($i = 0; $i < 7; $i++) {
             $today = Carbon::now();
             $current = $today->subDays($i);
             $invoiceCount = $company->invoices()->whereDate('created_at', $current)->count();
@@ -111,7 +108,7 @@ class MainController extends Controller
 
         $total = [
             'invoices' => $company->invoices->count(),
-            'quotes' => $company->quotes->count(),
+            'quotes'   => $company->quotes->count(),
             'payments' => $company->payments->count(),
         ];
 

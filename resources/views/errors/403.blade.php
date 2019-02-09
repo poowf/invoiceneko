@@ -1,7 +1,7 @@
 @extends("layouts/error")
 
 @section("head")
-
+    <title>{{ config('app.name') }}</title>
     <style>
     </style>
 @stop

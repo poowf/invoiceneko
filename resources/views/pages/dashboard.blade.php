@@ -16,7 +16,7 @@
                 <h3>Welcome</h3>
                 <div class="card-panel">
                     <h5>Hello {{ $user->full_name ?? '' }}</h5>
-                    <h6>Today's date is {{ \Carbon\Carbon::now()->format('j F, Y') }}</h6>
+                    <h6>Today is {{ \Carbon\Carbon::now()->format('j F, Y') }}</h6>
                     <h6 class="mtop20">Your company has created a total of:</h6>
                     <dl>
                         <dt>Invoices:</dt>

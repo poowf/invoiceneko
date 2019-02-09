@@ -113,8 +113,8 @@ Route::group(['middleware' => ['auth', '2fa', 'verified']], function () {
 
             /* CompanyUserRequest */
             Route::get('/company/requests', 'CompanyUserRequestController@index')->name('company.requests.index')->middleware('can:index, App\Models\CompanyUserRequest');
-            Route::post('/company/requests/{companyuserrequest}/approve', 'CompanyUserRequestController@approve')->name('company.requests.approve')->middleware('can:update, App\Models\CompanyUserRequest');
-            Route::post('/company/requests/{companyuserrequest}/reject', 'CompanyUserRequestController@reject')->name('company.requests.reject')->middleware('can:update, App\Models\CompanyUserRequest');
+            Route::post('/company/requests/{companyuserrequest}/approve', 'CompanyUserRequestController@approve')->name('company.requests.approve')->middleware('can:update,companyuserrequest');
+            Route::post('/company/requests/{companyuserrequest}/reject', 'CompanyUserRequestController@reject')->name('company.requests.reject')->middleware('can:update,companyuserrequest');
 
             /* Roles */
             Route::get('/company/roles', 'CompanyRoleController@index')->name('company.roles.index')->middleware('can:owner,company');

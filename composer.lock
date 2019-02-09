@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bd78552e5e880d55a469f8878af89188",
+    "content-hash": "1f5148f02fdc6fe7377a5267b5425ef1",
     "packages": [
         {
             "name": "arcanedev/no-captcha",
@@ -4703,16 +4703,16 @@
         },
         {
             "name": "silber/bouncer",
-            "version": "v1.0.0-rc.4",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/JosephSilber/bouncer.git",
-                "reference": "7c74184ba01e329e10cab7f80dbcf91ba535df1b"
+                "reference": "a8b7176136f7db83a57e7f8aa72019160a9f2d09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JosephSilber/bouncer/zipball/7c74184ba01e329e10cab7f80dbcf91ba535df1b",
-                "reference": "7c74184ba01e329e10cab7f80dbcf91ba535df1b",
+                "url": "https://api.github.com/repos/JosephSilber/bouncer/zipball/a8b7176136f7db83a57e7f8aa72019160a9f2d09",
+                "reference": "a8b7176136f7db83a57e7f8aa72019160a9f2d09",
                 "shasum": ""
             },
             "require": {
@@ -4769,7 +4769,7 @@
                 "permissions",
                 "roles"
             ],
-            "time": "2018-10-22T13:47:57+00:00"
+            "time": "2019-01-21T01:11:27+00:00"
         },
         {
             "name": "simplesoftwareio/simple-qrcode",
@@ -9792,7 +9792,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "poowf/otter": 20
+        "poowf/otter": 20,
+        "silber/bouncer": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
