@@ -22,6 +22,7 @@ steps:
 - script: |
     curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash -
     sudo apt-get install -y build-essential debconf-utils screen nodejs mysql-server google-chrome-stable
+    sudo apt-get install -y unzip xvfb autogen autoconf libtool pkg-config nasm
     sudo mysql -uroot -proot -e "use mysql; update user set authentication_string=PASSWORD('poowf') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
     sudo mysql -u root -ppoowf -e 'create database invoiceneko_test;'
   displayName: 'Installing System Dependencies'
@@ -31,19 +32,24 @@ steps:
   displayName: 'MySQL Version'
 
 - script: |
+    cp .env.travis .env
+  displayName: 'Environment Setup'
+
+- script: |
     sudo composer self-update
     composer install --no-interaction --prefer-dist --no-suggest
     composer --version
   displayName: 'Installing Package Dependencies'
 
 - script: |
-    cp .env.travis .env
-    php artisan migrate
     php artisan key:generate
-  displayName: 'Migrations and Environment Setup'
+    php artisan migrate
+  displayName: 'Running Migrations'
 
 - script: |
     sudo npm i -g npm
+    sudo chown -R vsts:vsts ~/.npm
+    sudo chown -R vsts:vsts ~/.config
     npm install
     npm run prod
     node -v
