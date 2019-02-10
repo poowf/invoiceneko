@@ -41,6 +41,18 @@ abstract class DuskTestCase extends BaseTestCase
     }
 
     /**
+     * Set Up method to clear all browser cookies.
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        foreach (static::$browsers as $browser) {
+            session()->flush();
+            $browser->driver->manage()->deleteAllCookies();
+        }
+    }
+
+    /**
      * Create the RemoteWebDriver instance.
      *
      * @return \Facebook\WebDriver\Remote\RemoteWebDriver

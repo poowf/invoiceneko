@@ -82,7 +82,11 @@ class PolicyTest extends DuskTestCase
                 ->assertPathIs('/' . $secondCompany->domain_name . '/dashboard')
                 ->visit('/' . $company->domain_name . '/invoice/' . $invoice->id)
                 ->assertSee('Error 401')
-                ->screenshot('view-another-company-invoice-test');
+                ->screenshot('view-another-company-invoice-test')
+                ->visit('/')
+                ->assertPathIs('/' . $secondCompany->domain_name . '/dashboard');
+            $browser->script('jQuery(".signmeout-btn").click()');
+            $browser->assertPathIs('/');
         });
     }
 
@@ -147,7 +151,11 @@ class PolicyTest extends DuskTestCase
                 ->assertPathIs('/' . $secondCompany->domain_name . '/dashboard')
                 ->visit('/' . $company->domain_name . '/quote/' . $quote->id)
                 ->assertSee('Error 401')
-                ->screenshot('view-another-company-invoice-test');
+                ->screenshot('view-another-company-quote-test')
+                ->visit('/')
+                ->assertPathIs('/' . $secondCompany->domain_name . '/dashboard');
+            $browser->script('jQuery(".signmeout-btn").click()');
+            $browser->assertPathIs('/');
         });
     }
 }
