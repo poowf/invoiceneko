@@ -2,10 +2,9 @@
 FROM ubuntu:18.04
 
 # Define ENV Variables
-ENV nginx_vhost /etc/nginx/sites-available/
-ENV php_conf /etc/php/7.3/fpm/php.ini
-ENV nginx_conf /etc/nginx/nginx.conf
-ENV supervisor_conf /etc/supervisor/supervisord.conf
+ENV NGINX_VHOST /etc/nginx/sites-available/
+ENV NGINX_CONF /etc/nginx/nginx.conf
+ENV SUPERVISOR_CONF /etc/supervisor/supervisord.conf
 ENV DEBIAN_FRONTEND noninteractive
 ENV TZ=UTC
 ENV INVOICENEKO_DIRECTORY /var/www/html/invoiceneko
@@ -74,11 +73,11 @@ VOLUME ["/etc/nginx/sites-enabled", "/etc/nginx/certs", "/etc/nginx/conf.d", "/v
 
 # Enable php-fpm on nginx virtualhost configuration
 ARG CACHE_BUST=0
-COPY docker/invoiceneko-nginx.conf ${nginx_vhost}/
-RUN echo "\ndaemon off;" >> ${nginx_conf}
+COPY docker/invoiceneko-nginx.conf ${NGINX_VHOST}/
+RUN echo "\ndaemon off;" >> ${NGINX_CONF}
 
 # Copy supervisor configuration
-COPY docker/supervisord.conf ${supervisor_conf}
+COPY docker/supervisord.conf ${SUPERVISOR_CONF}
 
 # Copy bootstrapper script
 COPY docker/bootstrapper.sh /usr/local/sbin/bootstrapper.sh
