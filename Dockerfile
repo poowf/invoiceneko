@@ -1,4 +1,4 @@
-#Download base image ubuntu 18.04
+# Download base image ubuntu 18.04
 FROM ubuntu:18.04
 
 # Define ENV Variables
@@ -31,7 +31,7 @@ RUN apt-get update && apt-get install -y software-properties-common curl apt-uti
 RUN add-apt-repository ppa:nginx/stable
 
 # Add NodeJS v11.x
-RUN curl -sL https://deb.nodesource.com/setup_11.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
 
 # Install nginx, php-fpm and supervisord from ubuntu repository
 RUN apt-get update && apt-get install -y nginx mysql-server supervisor git build-essential debconf-utils nodejs unzip xvfb autogen autoconf libtool pkg-config nasm \
@@ -40,15 +40,10 @@ RUN apt-get update && apt-get install -y nginx mysql-server supervisor git build
 # Install composer
 RUN curl https://getcomposer.org/composer.phar -o /usr/local/bin/composer && chmod +x /usr/local/bin/composer && composer self-update
 
-# Enable php-fpm on nginx virtualhost configuration
-COPY docker/invoiceneko-nginx.conf ${nginx_vhost}/
-RUN echo "\ndaemon off;" >> ${nginx_conf}
-RUN ln -s /etc/nginx/sites-available/invoiceneko-nginx.conf /etc/nginx/sites-enabled/invoiceneko-nginx.conf
-
-#Copy supervisor configuration
-COPY docker/supervisord.conf ${supervisor_conf}
-
+# Create the run-time directories
 RUN mkdir -p /run/php && \
+    mkdir -p /var/run/mysqld && \
+    chown -R mysql:mysql /var/run/mysqld && \
     chown -R www-data:www-data /var/www/html && \
     chown -R www-data:www-data /run/php
 
@@ -59,25 +54,37 @@ RUN git clone https://github.com/poowf/invoiceneko.git /var/www/html/invoiceneko
 COPY docker/.env.docker ${INVOICENEKO_DIRECTORY}/.env
 
 # Install package dependencies
-RUN cd $INVOICENEKO_DIRECTORY && composer install --no-dev --no-interaction --prefer-dist --no-suggest
+RUN cd $INVOICENEKO_DIRECTORY && composer install --no-dev --no-interaction --prefer-dist --no-suggest && php artisan key:generate && php artisan storage:link
 
 ## Generating build assets
-#RUN cd $INVOICENEKO_DIRECTORY && npm install && npm run prod
+RUN cd $INVOICENEKO_DIRECTORY && npm install && npm run prod
+
+# Set application permissions
+RUN chown -R www-data:www-data /var/www/html && \
+    find $INVOICENEKO_DIRECTORY -type f -exec chmod 664 {} \; && \
+    find $INVOICENEKO_DIRECTORY -type d -exec chmod 755 {} \; && \
+    chgrp -R www-data $INVOICENEKO_DIRECTORY/storage $INVOICENEKO_DIRECTORY/bootstrap/cache && \
+    chmod -R ug+rwx $INVOICENEKO_DIRECTORY/storage $INVOICENEKO_DIRECTORY/bootstrap/cache && \
+    chmod -R g+s $INVOICENEKO_DIRECTORY/storage $INVOICENEKO_DIRECTORY/bootstrap/cache && \
+    touch $INVOICENEKO_DIRECTORY/storage/logs/laravel.log && \
+    chmod 775 $INVOICENEKO_DIRECTORY/storage/logs/laravel.log
 
 # Volume configuration
 VOLUME ["/etc/nginx/sites-enabled", "/etc/nginx/certs", "/etc/nginx/conf.d", "/var/log/nginx", "/var/lib/mysql", "/var/www/html"]
 
-# Configure Services and Port
+# Enable php-fpm on nginx virtualhost configuration
 ARG CACHE_BUST=0
+COPY docker/invoiceneko-nginx.conf ${nginx_vhost}/
+RUN echo "\ndaemon off;" >> ${nginx_conf}
+
+# Copy supervisor configuration
+COPY docker/supervisord.conf ${supervisor_conf}
+
+# Copy bootstrapper script
+COPY docker/bootstrapper.sh /usr/local/sbin/bootstrapper.sh
+
+# Configure Services and Port
 COPY docker/start.sh /start.sh
 CMD ["./start.sh"]
-
-RUN mysql -e "CREATE DATABASE invoiceneko;"
-
-# Running migrations
-RUN cd $INVOICENEKO_DIRECTORY && php artisan key:generate && \
-    php artisan migrate --force && \
-    php artisan db:seed --force && \
-    php artisan storage:link
 
 EXPOSE 80 443
