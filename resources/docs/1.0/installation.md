@@ -15,10 +15,10 @@ git clone https://github.com/poowf/invoiceneko.git
 ##### Run set-up commands
 ```bash
 cd invoiceneko
+cp .env.example .env
 composer install --no-dev
 npm install
 npm run prod
-cp .env.example .env
 php artisan key:generate
 php artisan migrate
 php artisan db:seed

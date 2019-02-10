@@ -10,6 +10,9 @@
 
 An open-source invoicing system built on a modern backend and developed for anyone who needs to generate out an invoice and manage clients
 
+# Documentation
+Documentation can be found at https://invoiceneko.com/docs/
+
 ## Security
 If you discover a security vulnerability within this application, please send an e-mail to Zane J. Chua at zane@poowf.com. All security vulnerabilities will be addressed promptly.
 

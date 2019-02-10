@@ -81,10 +81,10 @@
                 <h6 class="mtop20">2. Run set-up commands</h6>
 <pre class="language-bash">
 cd invoiceneko
+cp .env.example .env
 composer install --no-dev
 npm install
 npm run prod
-cp .env.example .env
 php artisan key:generate
 php artisan migrate
 php artisan db:seed

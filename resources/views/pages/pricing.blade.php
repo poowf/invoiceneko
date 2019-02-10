@@ -22,7 +22,8 @@
         <div class="row">
             <div class="col s12">
                 <div class="card-panel center">
-                    <h3>Invoice Neko is currently free :)</h3>
+                    <i class="material-icons" style="font-size: 3em;">sentiment_very_satisfied</i>
+                    <p style="font-size: 15px; font-weight: 400; color: grey;">Invoice Neko is currently free</p>
                 </div>
             </div>
             <div class="col s12 m6">

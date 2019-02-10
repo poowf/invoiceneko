@@ -16,8 +16,8 @@
                             <li><a class="grey-text text-lighten-3" href="{{ route('terms') }}">Terms & Conditions</a></li>
                             <li><a class="grey-text text-lighten-3" href="{{ route('privacy') }}">Privacy Policy</a></li>
 
-                            <li><a class="grey-text text-lighten-3" href="{{ route('auth.show') }}">Sign In</a></li>
                             <li><a class="grey-text text-lighten-3" href="{{ route('start') }}">Start Here</a></li>
+                            <li><a class="grey-text text-lighten-3" href="{{ route('features') }}">Features</a></li>
                             <li><a class="grey-text text-lighten-3" href="{{ route('pricing') }}">Pricing</a></li>
                             <li><a class="grey-text text-lighten-3" href="{{ route('contact') }}">Contact</a></li>
                         </ul>
