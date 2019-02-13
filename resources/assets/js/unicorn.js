@@ -19,9 +19,10 @@ class Unicorn {
         });
     }
 
-    static initSelectize(selector)
+    static initSelectize(selector, allowCreation = false)
     {
         $(selector).selectize({
+            create: allowCreation,
             onChange: function(value, isOnInitialize) {
                 this.$input.parsley().validate();
             }

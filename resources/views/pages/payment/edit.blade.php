@@ -66,31 +66,12 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            $('#mode').selectize({
-                create: true,
-                sortField: 'text',
-                onChange: function(value, isOnInitialize) {
-                    this.$input.parsley().validate();
-                }
-            });
-
-            $('.datepicker').datepicker({
-                autoClose: 'false',
-                format: 'd mmmm, yyyy',
-                yearRange: [1950, 2018],
-                defaultDate: new Date("{{ $payment->receiveddate }}"),
-                setDefaultDate: true,
-                onSelect: function() {
-                    // var date = $(this)[0].formats.yyyy() + '-' + $(this)[0].formats.mm() + '-' + $(this)[0].formats.dd()
-                    // $('#receiveddate').val(date);
-                }
-            });
+            Unicorn.initDatepicker('#receiveddate', '1950', new Date("{{ Carbon\Carbon::now()->addYear()->toDateTimeString() }}").getFullYear(), new Date("{{ $payment->receiveddate }}"));
+            Unicorn.initParsleyValidation('#edit-payment');
 
             $('#amount').on('change', function(){
                 $(this).val(parseFloat($(this).val()).toFixed(2));
             });
-
-            Unicorn.initParsleyValidation('#edit-payment');
         });
     </script>
 @stop

@@ -85,32 +85,66 @@
                     </div>
                 </div>
                 <div id="invoice-items-container">
-                    <div id="invoice_item_0" class="card-panel">
-                        <div class="row">
-                            <div class="input-field col s12 l8">
-                                <select id="item_name_0" name="item_name[]" class="item-list-selector" data-parsley-required="true" data-parsley-trigger="change">
-                                    <option disabled="" selected="selected" value="">Pick an Item or Create a new one</option>
-                                </select>
-                                <label for="item_name_0" class="label-validation">Name</label>
-                                <span class="helper-text"></span>
+                    @if(old('item_name'))
+                        @foreach(old('item_name') as $key => $item)
+                        <div id="invoice_item_{{ $key }}" class="card-panel">
+                            <div class="row">
+                                <div class="input-field col s12 l8">
+                                    <input id="item_name_{{ $key }}" name="item_name[]" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('item_name.' . $key) }}" placeholder="Item Name">
+                                    <label for="item_name_{{ $key }}" class="label-validation">Name</label>
+                                    <span class="helper-text"></span>
+                                </div>
+                                <div class="input-field col s6 l2">
+                                    <input id="item_quantity_{{ $key }}" name="item_quantity[]" class="item-quantity-input" type="number" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('item_quantity.' . $key) }}" data-parsley-min="1" placeholder="Item Quantity">
+                                    <label for="item_quantity_{{ $key }}" class="label-validation">Quantity</label>
+                                    <span class="helper-text"></span>
+                                </div>
+                                <div class="input-field col s6 l2">
+                                    <input id="item_price_{{ $key }}" name="item_price[]" class="item-price-input" type="number" step="0.01" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('item_price.' . $key) }}" placeholder="Item Price">
+                                    <label for="item_price_{{ $key }}" class="label-validation">Price</label>
+                                    <span class="helper-text"></span>
+                                </div>
+                                <div class="input-field col s12 mtop30">
+                                    <textarea id="item_description_{{ $key }}" name="item_description[]" class="item-description-textarea trumbowyg-textarea" data-parsley-required="false" data-parsley-trigger="change" placeholder="Item Description">{{ old('item_description.' . $key) }}</textarea>
+                                    <label for="item_description_{{ $key }}" class="label-validation">Description</label>
+                                    <span class="helper-text"></span>
+                                </div>
                             </div>
-                            <div class="input-field col s6 l2">
-                                <input id="item_quantity_0" name="item_quantity[]" class="item-quantity-input" type="number" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('item_quantity') }}" data-parsley-min="1" placeholder="Item Quantity">
-                                <label for="item_quantity_0" class="label-validation">Quantity</label>
-                                <span class="helper-text"></span>
-                            </div>
-                            <div class="input-field col s6 l2">
-                                <input id="item_price_0" name="item_price[]" class="item-price-input" type="number" step="0.01" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('item_price') }}" placeholder="Item Price">
-                                <label for="item_price_0" class="label-validation">Price</label>
-                                <span class="helper-text"></span>
-                            </div>
-                            <div class="input-field col s12 mtop30">
-                                <textarea id="item_description_0" name="item_description[]" class="item-description-textarea trumbowyg-textarea" data-parsley-required="false" data-parsley-trigger="change" placeholder="Item Description">{{ old('item_description') }}</textarea>
-                                <label for="item_description_0" class="label-validation">Description</label>
-                                <span class="helper-text"></span>
+                            @if($key != 0)
+                                <div class="row">
+                                    <button data-id="false" data-count="{{ $key }}" class="invoice-item-delete-btn btn waves-effect waves-light col s12 m3 offset-m9 red">Delete</button>
+                                </div>
+                            @endif
+                        </div>
+                        @endforeach
+                    @else
+                        <div id="invoice_item_0" class="card-panel">
+                            <div class="row">
+                                <div class="input-field col s12 l8">
+                                    <select id="item_name_0" name="item_name[]" class="item-list-selector" data-parsley-required="true" data-parsley-trigger="change">
+                                        <option disabled="" selected="selected" value="">Pick an Item or Create a new one</option>
+                                    </select>
+                                    <label for="item_name_0" class="label-validation">Name</label>
+                                    <span class="helper-text"></span>
+                                </div>
+                                <div class="input-field col s6 l2">
+                                    <input id="item_quantity_0" name="item_quantity[]" class="item-quantity-input" type="number" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('item_quantity.0') }}" data-parsley-min="1" placeholder="Item Quantity">
+                                    <label for="item_quantity_0" class="label-validation">Quantity</label>
+                                    <span class="helper-text"></span>
+                                </div>
+                                <div class="input-field col s6 l2">
+                                    <input id="item_price_0" name="item_price[]" class="item-price-input" type="number" step="0.01" data-parsley-required="true" data-parsley-trigger="change" value="{{ old('item_price.0') }}" placeholder="Item Price">
+                                    <label for="item_price_0" class="label-validation">Price</label>
+                                    <span class="helper-text"></span>
+                                </div>
+                                <div class="input-field col s12 mtop30">
+                                    <textarea id="item_description_0" name="item_description[]" class="item-description-textarea trumbowyg-textarea" data-parsley-required="false" data-parsley-trigger="change" placeholder="Item Description">{{ old('item_description.0') }}</textarea>
+                                    <label for="item_description_0" class="label-validation">Description</label>
+                                    <span class="helper-text"></span>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
@@ -137,7 +171,7 @@
     <script type="text/javascript">
         "use strict";
         $(function() {
-            let invoiceitemcount = 0;
+            let invoiceitemcount = {{ old('item_name') ? (count (old('item_name')) - 1) : 0 }};
             let itemoptions = [ @foreach($itemtemplates as $itemtemplate){ id:'{{ $itemtemplate->id }}', name:'{{ $itemtemplate->name }}' },@endforeach ];
 
             Unicorn.initParsleyValidation('#create-invoice');

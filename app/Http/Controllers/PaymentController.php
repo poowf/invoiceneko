@@ -129,7 +129,7 @@ class PaymentController extends Controller
 
         $invoice = $invoice->fresh();
 
-        if ($invoice->calculateremainder() == '0.0') {
+        if ($invoice->calculateremainder() <= '0.0') {
             $invoice->status = Invoice::STATUS_CLOSED;
             $invoice->save();
         }
@@ -179,6 +179,13 @@ class PaymentController extends Controller
         $payment->fill($request->all());
         $payment->receiveddate = Carbon::createFromFormat('j F, Y', $request->input('receiveddate'))->startOfDay();
         $payment->save();
+
+        $invoice = $payment->invoice;
+
+        if ($invoice->calculateremainder() <= '0.0') {
+            $invoice->status = Invoice::STATUS_CLOSED;
+            $invoice->save();
+        }
 
         flash('Payment Updated', 'success');
 

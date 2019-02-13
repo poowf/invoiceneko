@@ -113,6 +113,8 @@ class ReceiptController extends Controller
             $invoice->receipt()->save($receipt);
         }
 
+        $invoice->refresh();
+
         return redirect()->route('receipt.show', ['company' => $company, 'receipt' => $invoice->receipt]);
     }
 

@@ -88,24 +88,24 @@
                             <div id="invoice_item_{{ $key }}" class="card-panel">
                                 <div class="row">
                                     <div class="input-field col s12 l8">
-                                        <input name="item_id[]" type="hidden" data-parsley-required="true" data-parsley-trigger="change" value="{{ $item->id ?? '' }}">
-                                        <input name="item_name[]" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ $item->name ?? '' }}" placeholder="Item Name">
-                                        <label for="item_name" class="label-validation">Name</label>
+                                        <input id="item_id_{{ $key }}" name="item_id[]" type="hidden" data-parsley-required="true" data-parsley-trigger="change" value="{{ $item->id ?? '' }}">
+                                        <input id="item_name_{{ $key }}" name="item_name[]" type="text" data-parsley-required="true" data-parsley-trigger="change" value="{{ $item->name ?? '' }}" placeholder="Item Name">
+                                        <label for="item_name_{{ $key }}" for="item_name" class="label-validation">Name</label>
                                         <span class="helper-text"></span>
                                     </div>
                                     <div class="input-field col s6 l2">
-                                        <input name="item_quantity[]" type="number" data-parsley-required="true" data-parsley-trigger="change" data-parsley-min="1" value="{{ $item->quantity ?? '' }}" placeholder="Item Quantity">
-                                        <label for="item_quantity" class="label-validation">Quantity</label>
+                                        <input id="item_quantity_{{ $key }}" name="item_quantity[]" type="number" data-parsley-required="true" data-parsley-trigger="change" data-parsley-min="1" value="{{ $item->quantity ?? '' }}" placeholder="Item Quantity">
+                                        <label for="item_quantity_{{ $key }}" class="label-validation">Quantity</label>
                                         <span class="helper-text"></span>
                                     </div>
                                     <div class="input-field col s6 l2">
-                                        <input name="item_price[]" type="number" step="0.01" data-parsley-required="true" data-parsley-trigger="change" value="{{ $item->price ?? '' }}" placeholder="Item Price">
-                                        <label for="item_price" class="label-validation">Price</label>
+                                        <input id="item_price_{{ $key }}" name="item_price[]" type="number" step="0.01" data-parsley-required="true" data-parsley-trigger="change" value="{{ $item->price ?? '' }}" placeholder="Item Price">
+                                        <label for="item_price_{{ $key }}" class="label-validation">Price</label>
                                         <span class="helper-text"></span>
                                     </div>
                                     <div class="input-field col s12 mtop30">
-                                        <textarea id="item_description" name="item_description[]" class="trumbowyg-textarea" data-parsley-required="false" data-parsley-trigger="change" placeholder="Item Description">{{ $item->description ?? '' }}</textarea>
-                                        <label for="item_description" class="label-validation">Description</label>
+                                        <textarea id="item_description_{{ $key }}" name="item_description[]" class="trumbowyg-textarea" data-parsley-required="false" data-parsley-trigger="change" placeholder="Item Description">{{ $item->description ?? '' }}</textarea>
+                                        <label for="item_description_{{ $key }}" class="label-validation">Description</label>
                                         <span class="helper-text"></span>
                                     </div>
                                 </div>
