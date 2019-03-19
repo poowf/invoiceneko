@@ -6,6 +6,7 @@ use App\Library\Poowf\Unicorn;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ResetPasswordController extends Controller
 {
@@ -24,7 +25,7 @@ class ResetPasswordController extends Controller
         //Remove Hash::make as the hashing is handled in the user model
         $user->password = $password;
 
-        $user->setRememberToken(str_random(60));
+        $user->setRememberToken(Str::random(60));
 
         $user->save();
 

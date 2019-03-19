@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Notifications\NewCompanyUserNotification;
 use DateTimeZone;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use PragmaRX\Countries\Package\Countries;
 use Silber\Bouncer\BouncerFacade as Bouncer;
 
@@ -59,7 +60,7 @@ class CompanyUserController extends Controller
      */
     public function store(CreateCompanyUserRequest $request, Company $company)
     {
-        $random_password = str_random(16);
+        $random_password = Str::random(16);
 
         $user = new User();
         $user->fill($request->all());

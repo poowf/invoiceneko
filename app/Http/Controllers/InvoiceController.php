@@ -19,7 +19,7 @@ use App\Notifications\InvoiceNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use PDF;
+use Illuminate\Support\Str;
 
 class InvoiceController extends Controller
 {
@@ -137,7 +137,7 @@ class InvoiceController extends Controller
 
         $pdf = $invoice->generatePDFView();
 
-        return $pdf->inline(str_slug($invoice->nice_invoice_id) . '.pdf');
+        return $pdf->inline(Str::slug($invoice->nice_invoice_id) . '.pdf');
     }
 
     /**
@@ -346,7 +346,7 @@ class InvoiceController extends Controller
     {
         $pdf = $invoice->generatePDFView();
 
-        return $pdf->inline(str_slug($invoice->nice_invoice_id) . '.pdf');
+        return $pdf->inline(Str::slug($invoice->nice_invoice_id) . '.pdf');
     }
 
     /**
@@ -361,7 +361,7 @@ class InvoiceController extends Controller
     {
         $pdf = $invoice->generatePDFView();
 
-        return $pdf->download(str_slug($invoice->nice_invoice_id) . '.pdf');
+        return $pdf->download(Str::slug($invoice->nice_invoice_id) . '.pdf');
     }
 
     /**

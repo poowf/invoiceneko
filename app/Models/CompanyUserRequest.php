@@ -6,6 +6,7 @@ use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class CompanyUserRequest extends Model implements Auditable
@@ -44,7 +45,7 @@ class CompanyUserRequest extends Model implements Auditable
         parent::boot();
 
         static::creating(function ($companyuserrequest) {
-            $companyuserrequest->token = str_random(30);
+            $companyuserrequest->token = Str::random(30);
         });
     }
 

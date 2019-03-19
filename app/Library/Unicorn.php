@@ -5,6 +5,7 @@ namespace App\Library\Poowf;
 use App\Models\Role;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
+use Illuminate\Support\Str;
 use Parsedown;
 use Recurr\Frequency;
 use Recurr\Rule;
@@ -203,17 +204,17 @@ class Unicorn
         Bouncer::useRoleModel(Role::class);
 
         $gadmin = Bouncer::role()->firstOrCreate([
-            'name'  => str_slug('Global Administrator'),
+            'name'  => Str::slug('Global Administrator'),
             'title' => 'Global Administrator',
         ]);
 
         $admin = Bouncer::role()->firstOrCreate([
-            'name'  => str_slug('Administrator'),
+            'name'  => Str::slug('Administrator'),
             'title' => 'Administrator',
         ]);
 
         $user = Bouncer::role()->firstOrCreate([
-            'name'  => str_slug('User'),
+            'name'  => Str::slug('User'),
             'title' => 'User',
         ]);
 
@@ -242,22 +243,22 @@ class Unicorn
         Bouncer::useRoleModel(Role::class);
 
         Bouncer::ability()->makeForModel($model, [
-            'name'  => 'view-' . str_slug(strtolower(self::getModelNiceName($model))),
+            'name'  => 'view-' . Str::slug(strtolower(self::getModelNiceName($model))),
             'title' => 'View ' . self::getModelNiceName($model),
         ])->save();
 
         Bouncer::ability()->makeForModel($model, [
-            'name'  => 'create-' . str_slug(strtolower(self::getModelNiceName($model))),
+            'name'  => 'create-' . Str::slug(strtolower(self::getModelNiceName($model))),
             'title' => 'Create ' . self::getModelNiceName($model),
         ])->save();
 
         Bouncer::ability()->makeForModel($model, [
-            'name'  => 'update-' . str_slug(strtolower(self::getModelNiceName($model))),
+            'name'  => 'update-' . Str::slug(strtolower(self::getModelNiceName($model))),
             'title' => 'Update ' . self::getModelNiceName($model),
         ])->save();
 
         Bouncer::ability()->makeForModel($model, [
-            'name'  => 'delete-' . str_slug(strtolower(self::getModelNiceName($model))),
+            'name'  => 'delete-' . Str::slug(strtolower(self::getModelNiceName($model))),
             'title' => 'Delete ' . self::getModelNiceName($model),
         ])->save();
     }
@@ -305,10 +306,10 @@ class Unicorn
 
         if ($modelClass === 'all') {
             foreach (self::$modelClasses as $key => $model) {
-                Bouncer::allow($role)->to($methodName . '-' . str_slug(strtolower(self::getModelNiceName($model))), $model);
+                Bouncer::allow($role)->to($methodName . '-' . Str::slug(strtolower(self::getModelNiceName($model))), $model);
             }
         } else {
-            Bouncer::allow($role)->to($methodName . '-' . str_slug(strtolower(self::getModelNiceName($modelClass))), $modelClass);
+            Bouncer::allow($role)->to($methodName . '-' . Str::slug(strtolower(self::getModelNiceName($modelClass))), $modelClass);
         }
     }
 

@@ -44,9 +44,10 @@ class Invoice extends OtterResource
     public static function relations()
     {
         return [
-            'client'  => ['Client', 'client_id'],
-            'company' => 'Company',
-            'items'   => 'InvoiceItem',
+            'client'   => ['Client', 'client_id'],
+            'company'  => 'Company',
+            'items'    => 'InvoiceItem',
+            'receipt'  => 'Receipt',
         ];
     }
 

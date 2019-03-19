@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Str;
+
 class SocialAuthController extends Controller
 {
     /**
@@ -27,9 +29,9 @@ class SocialAuthController extends Controller
 
         if (!$user) {
             $user = new User();
-            $user->username = preg_replace('/\s/', '', $socialuser->name) . '_' . str_random(5);
+            $user->username = preg_replace('/\s/', '', $socialuser->name) . '_' . Str::random(5);
             $user->email = $socialuser->email;
-            $user->password = str_random(10);
+            $user->password = Str::random(10);
             $user->full_name = $socialuser->name;
             $user->gender = $socialuser->user['gender'];
             $user->save();

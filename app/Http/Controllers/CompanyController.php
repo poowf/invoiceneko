@@ -10,7 +10,9 @@ use App\Models\Company;
 use App\Models\User;
 use DateTimeZone;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Image;
+use Log;
 use PragmaRX\Countries\Package\Countries;
 use Storage;
 
@@ -66,6 +68,7 @@ class CompanyController extends Controller
      */
     public function store(CreateCompanyRequest $request, Company $company)
     {
+        Log::info('Passed');
         if ($request->session()->has('user_id') || auth()->check()) {
             $company = new Company();
             $company->fill($request->all());
@@ -85,7 +88,7 @@ class CompanyController extends Controller
 
             if ($request->file('logo')) {
                 $file = $request->file('logo');
-                $uuid = str_random(25);
+                $uuid = Str::random(25);
                 $filename = $uuid . '.png';
 
                 if (!Storage::exists($storedirectory . 'logo_' . $filename)) {
@@ -102,7 +105,7 @@ class CompanyController extends Controller
 
             if ($request->file('smlogo')) {
                 $file = $request->file('smlogo');
-                $uuid = str_random(25);
+                $uuid = Str::random(25);
                 $filename = $uuid . '.png';
 
                 if (!Storage::exists($storedirectory . 'smlogo_' . $filename)) {
@@ -189,7 +192,7 @@ class CompanyController extends Controller
 
         if ($request->file('logo')) {
             $file = $request->file('logo');
-            $uuid = str_random(25);
+            $uuid = Str::random(25);
             $filename = $uuid . '.png';
 
             if (!Storage::exists($storedirectory . 'logo_' . $filename)) {
@@ -208,7 +211,7 @@ class CompanyController extends Controller
 
         if ($request->file('smlogo')) {
             $file = $request->file('smlogo');
-            $uuid = str_random(25);
+            $uuid = Str::random(25);
             $filename = $uuid . '.png';
 
             if (!Storage::exists($storedirectory . 'smlogo_' . $filename)) {

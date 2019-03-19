@@ -34,6 +34,11 @@ class Receipt extends Model implements Auditable
         return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
+    public function company()
+    {
+        return $this->belongsTo('App\Models\Company', 'company_id');
+    }
+
     public function invoice()
     {
         return $this->belongsTo('App\Models\Invoice', 'invoice_id');

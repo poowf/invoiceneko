@@ -44,6 +44,7 @@ class Company extends OtterResource
             'settings' => 'CompanySetting',
             'users'    => 'User',
             'invoices' => 'Invoice',
+            'receipts' => 'Receipt',
             'owner'    => 'User',
         ];
     }

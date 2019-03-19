@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use App\Models\OldInvoice;
 use Illuminate\Http\Request;
-use PDF;
+use Illuminate\Support\Str;
 
 class OldInvoiceController extends Controller
 {
@@ -73,7 +73,7 @@ class OldInvoiceController extends Controller
     {
         $pdf = $invoice->generatePDFView();
 
-        return $pdf->inline(str_slug($invoice->nice_invoice_id . ' - ' . $invoice->created_at) . '.pdf');
+        return $pdf->inline(Str::slug($invoice->nice_invoice_id . ' - ' . $invoice->created_at) . '.pdf');
     }
 
     /**
@@ -88,7 +88,7 @@ class OldInvoiceController extends Controller
     {
         $pdf = $invoice->generatePDFView();
 
-        return $pdf->download(str_slug($invoice->nice_invoice_id . ' - ' . $invoice->created_at) . '.pdf');
+        return $pdf->download(Str::slug($invoice->nice_invoice_id . ' - ' . $invoice->created_at) . '.pdf');
     }
 
     /**

@@ -32,11 +32,11 @@
                         <div class="row">
                             @for($i = 0; $i < $permissions->count(); $i++)
                                 @if($i != 0 && $permissions[$i]->type != $permissions[$i - 1]->type)
-                                    <div class="col s12 mtop20 all-permission-selector tooltipped" data-permission-type="{{ str_slug(strtolower($permissions[$i]->type)) }}" data-position="top" data-tooltip="Click here to turn on all permissions">
+                                    <div class="col s12 mtop20 all-permission-selector tooltipped" data-permission-type="{{ \Illuminate\Support\Str::slug(strtolower($permissions[$i]->type)) }}" data-position="top" data-tooltip="Click here to turn on all permissions">
                                         <h6>{{ $permissions[$i]->type }}</h6>
                                         {{--<div class="switch all-permissions mtop10">--}}
                                         {{--<label>--}}
-                                        {{--<input id="manage-{{ str_slug(strtolower($permissions[$i]->type)) }}" name="permissions[]" class="manage-{{ str_slug(strtolower($permissions[$i]->type)) }}" type="checkbox">--}}
+                                        {{--<input id="manage-{{ \Illuminate\Support\Str::slug(strtolower($permissions[$i]->type)) }}" name="permissions[]" class="manage-{{ \Illuminate\Support\Str::slug(strtolower($permissions[$i]->type)) }}" type="checkbox">--}}
                                         {{--<span class="lever"></span>--}}
                                         {{--Allow All--}}
                                         {{--</label>--}}
@@ -48,7 +48,7 @@
                                     <label for="permissions-{{ $permissions[$i]->name }}" class="label-validation">{{ $permissions[$i]->title }}</label>
                                     <div class="switch mtop20">
                                         <label>
-                                            <input id="permissions-{{ $permissions[$i]->name }}" name="permissions[]" data-permission-type="{{ str_slug(strtolower($permissions[$i]->type)) }}" type="checkbox" value="{{ $permissions[$i]->name }}" @foreach($rolePermissions as $rolePermission) @if(($permissions[$i]->name . $permissions[$i]->entity_type) == ($rolePermission->name . $rolePermission->entity_type)) checked @endif @endforeach>
+                                            <input id="permissions-{{ $permissions[$i]->name }}" name="permissions[]" data-permission-type="{{ \Illuminate\Support\Str::slug(strtolower($permissions[$i]->type)) }}" type="checkbox" value="{{ $permissions[$i]->name }}" @foreach($rolePermissions as $rolePermission) @if(($permissions[$i]->name . $permissions[$i]->entity_type) == ($rolePermission->name . $rolePermission->entity_type)) checked @endif @endforeach>
                                             <span class="lever"></span>
                                             Allow
                                         </label>

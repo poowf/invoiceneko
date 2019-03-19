@@ -6,6 +6,7 @@ use App\Http\Requests\CreateRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
 use App\Models\Company;
 use App\Models\Role;
+use Illuminate\Support\Str;
 use Silber\Bouncer\BouncerFacade as Bouncer;
 
 class CompanyRoleController extends Controller
@@ -63,7 +64,7 @@ class CompanyRoleController extends Controller
         $permissions = $request->input('permissions');
         $role = new Role();
         $role->title = $title;
-        $role->name = str_slug($title);
+        $role->name = Str::slug($title);
         $role->save();
 
         if (!empty($permissions)) {
@@ -123,7 +124,7 @@ class CompanyRoleController extends Controller
             $title = $request->input('title');
             $permissions = $request->input('permissions');
             $role->title = $title;
-            $role->name = str_slug($title);
+            $role->name = Str::slug($title);
             $role->save();
 
             if (!empty($permissions)) {

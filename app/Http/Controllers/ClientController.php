@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateClientRequest;
 use App\Models\Client;
 use App\Models\Company;
 use App\Models\Recipient;
+use Illuminate\Support\Str;
 use Image;
 use PragmaRX\Countries\Package\Countries;
 use Storage;
@@ -66,7 +67,7 @@ class ClientController extends Controller
 
         if ($request->file('logo')) {
             $file = $request->file('logo');
-            $uuid = str_random(25);
+            $uuid = Str::random(25);
             $filename = $uuid . '.png';
 
             if (!Storage::exists($storedirectory . 'logo_' . $filename)) {
@@ -148,7 +149,7 @@ class ClientController extends Controller
 
         if ($request->file('logo')) {
             $file = $request->file('logo');
-            $uuid = str_random(25);
+            $uuid = Str::random(25);
             $filename = $uuid . '.png';
 
             if (!Storage::exists($storedirectory . 'logo_' . $filename)) {

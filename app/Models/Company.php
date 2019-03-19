@@ -8,6 +8,7 @@ use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use OwenIt\Auditing\Contracts\Auditable;
 use Silber\Bouncer\BouncerFacade as Bouncer;
 use Silber\Bouncer\Database\HasRolesAndAbilities;
@@ -50,7 +51,7 @@ class Company extends Model implements Auditable
         parent::boot();
 
         static::saving(function ($company) {
-            $company->slug = str_slug($company->name);
+            $company->slug = Str::slug($company->name);
             static::generateSlug($company);
         });
 

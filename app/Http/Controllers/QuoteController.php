@@ -12,6 +12,7 @@ use App\Models\Quote;
 use App\Models\QuoteItem;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use PDF;
 use Uuid;
 
@@ -93,7 +94,7 @@ class QuoteController extends Controller
 
         $pdf = $quote->generatePDFView();
 
-        return $pdf->inline(str_slug($quote->nice_quote_id) . '.pdf');
+        return $pdf->inline(Str::slug($quote->nice_quote_id) . '.pdf');
     }
 
     /**
@@ -239,7 +240,7 @@ class QuoteController extends Controller
     {
         $pdf = $quote->generatePDFView();
 
-        return $pdf->inline(str_slug($quote->nice_quote_id) . 'quote.pdf');
+        return $pdf->inline(Str::slug($quote->nice_quote_id) . 'quote.pdf');
     }
 
     /**
@@ -254,7 +255,7 @@ class QuoteController extends Controller
     {
         $pdf = $quote->generatePDFView();
 
-        return $pdf->download(str_slug($quote->nice_quote_id) . '.pdf');
+        return $pdf->download(Str::slug($quote->nice_quote_id) . '.pdf');
     }
 
     /**

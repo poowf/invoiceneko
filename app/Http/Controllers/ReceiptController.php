@@ -130,7 +130,7 @@ class ReceiptController extends Controller
     {
         $pdf = $receipt->generatePDFView();
 
-        return $pdf->inline(str_slug($receipt->nice_receipt_id) . '.pdf');
+        return $pdf->inline(Str::slug($receipt->nice_receipt_id) . '.pdf');
     }
 
     /**
@@ -145,6 +145,6 @@ class ReceiptController extends Controller
     {
         $pdf = $receipt->generatePDFView();
 
-        return $pdf->download(str_slug($receipt->nice_receipt_id) . '.pdf');
+        return $pdf->download(Str::slug($receipt->nice_receipt_id) . '.pdf');
     }
 }

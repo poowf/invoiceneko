@@ -5,6 +5,7 @@ namespace App\Models;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class CompanySetting extends Model implements Auditable
@@ -39,9 +40,9 @@ class CompanySetting extends Model implements Auditable
         parent::boot();
 
         static::creating(function ($companySettings) {
-            $companySettings->invoice_prefix = str_slug($companySettings->company->name);
-            $companySettings->quote_prefix = str_slug($companySettings->company->name) . 'Q';
-            $companySettings->receipt_prefix = str_slug($companySettings->company->name) . 'R';
+            $companySettings->invoice_prefix = Str::slug($companySettings->company->name);
+            $companySettings->quote_prefix = Str::slug($companySettings->company->name) . 'Q';
+            $companySettings->receipt_prefix = Str::slug($companySettings->company->name) . 'R';
         });
     }
 
