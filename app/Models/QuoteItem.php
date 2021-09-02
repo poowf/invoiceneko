@@ -26,9 +26,9 @@ class QuoteItem extends Model implements Auditable
 
     public function moneyFormatPrice()
     {
-        setlocale(LC_MONETARY, 'en_US.UTF-8');
+        $amount = new \NumberFormatter( 'en_US.UTF-8', \NumberFormatter::PATTERN_DECIMAL, "* #####.00 ;(* #####.00)");
 
-        return money_format('%!.2n', $this->price);
+        return $amount->format($this->price);
     }
 
     public function scopeDuplicateCheck($query, $price, $quantity, $invoiceid)

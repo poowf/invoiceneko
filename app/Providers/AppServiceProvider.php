@@ -30,8 +30,7 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment('local', 'testing', 'staging', 'dusk')) {
             $this->app->register(DuskServiceProvider::class);
             $this->app->register(DuskBrowserServiceProvider::class);
-            $this->app->register(IdeHelperServiceProvider::class);
-            Route::get('decompose', '\Lubusin\Decomposer\Controllers\DecomposerController@index');
+//            $this->app->register(IdeHelperServiceProvider::class);
         }
 
         if ($this->app->environment('production', 'local', 'testing', 'staging')) {

@@ -297,10 +297,10 @@
         </div>
         <div class="row invoice-footer">
             <div class="col s12 center">
-                <a class="btn btn-lg btn-space btn-default" href="@if(isActiveRoute('invoice.show')){{ route('invoice.download', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}@else{{ route('invoice.old.download', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}@endif">
+                <a class="btn btn-lg btn-space btn-default" href="@if(Ekko::isActiveRoute('invoice.show')){{ route('invoice.download', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}@else{{ route('invoice.old.download', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}@endif">
                     Save PDF
                 </a>
-                <a class="btn btn-lg btn-space btn-default" href="@if(isActiveRoute('invoice.show')){{ route('invoice.printview', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}@else{{ route('invoice.old.printview', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}@endif">
+                <a class="btn btn-lg btn-space btn-default" href="@if(Ekko::isActiveRoute('invoice.show')){{ route('invoice.printview', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}@else{{ route('invoice.old.printview', [ 'invoice' => $invoice, 'company' => \App\Library\Poowf\Unicorn::getCompanyKey() ] ) }}@endif">
                     Print
                 </a>
                 {{--

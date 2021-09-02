@@ -112,9 +112,9 @@ class OldInvoice extends Model
         }
 
         if ($moneyformat) {
-            setlocale(LC_MONETARY, 'en_US.UTF-8');
+            $amount = new \NumberFormatter( 'en_US.UTF-8', \NumberFormatter::PATTERN_DECIMAL, "* #####.00 ;(* #####.00)");
 
-            return money_format('%!.2n', $total);
+            return $amount->format($total);
         } else {
             return $total;
         }
@@ -135,9 +135,9 @@ class OldInvoice extends Model
         $tax = ($subtotalWithTax != 0) ? $subtotalWithTax / 100 : 0;
 
         if ($moneyformat) {
-            setlocale(LC_MONETARY, 'en_US.UTF-8');
+            $amount = new \NumberFormatter( 'en_US.UTF-8', \NumberFormatter::PATTERN_DECIMAL, "* #####.00 ;(* #####.00)");
 
-            return money_format('%!.2n', $tax);
+            return $amount->format($tax);
         } else {
             return $tax;
         }
@@ -158,9 +158,9 @@ class OldInvoice extends Model
         $total = ($totalWithTax != 0) ? $totalWithTax / 100 : 0;
 
         if ($moneyformat) {
-            setlocale(LC_MONETARY, 'en_US.UTF-8');
+            $amount = new \NumberFormatter( 'en_US.UTF-8', \NumberFormatter::PATTERN_DECIMAL, "* #####.00 ;(* #####.00)");
 
-            return money_format('%!.2n', $total);
+            return $amount->format($total);
         } else {
             return $total;
         }

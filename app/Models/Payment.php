@@ -51,9 +51,9 @@ class Payment extends Model implements Auditable
      */
     public function getMoneyFormatAttribute()
     {
-        setlocale(LC_MONETARY, 'en_US.UTF-8');
+        $amount = new \NumberFormatter( 'en_US.UTF-8', \NumberFormatter::PATTERN_DECIMAL, "* #####.00 ;(* #####.00)");
 
-        return money_format('%!.2n', $this->amount);
+        return $amount->format($this->amount);
     }
 
     public function getPercentageAttribute()
@@ -65,7 +65,7 @@ class Payment extends Model implements Auditable
             $percentage = ($invoiceTotal != 0) ? ($this->amount / $invoiceTotal) * 100 : 0;
         }
 
-        return money_format('%!.2n', $percentage);
+        return $amount->format($percentage);
     }
 
     public function getCreatedAtAttribute($value)

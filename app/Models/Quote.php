@@ -79,9 +79,9 @@ class Quote extends Model implements Auditable
 
     public function getTotalMoneyFormatAttribute()
     {
-        setlocale(LC_MONETARY, 'en_US.UTF-8');
+        $amount = new \NumberFormatter( 'en_US.UTF-8', \NumberFormatter::PATTERN_DECIMAL, "* #####.00 ;(* #####.00)");
 
-        return money_format('%!.2n', $this->total);
+        return $amount->format($this->total);
     }
 
     public function getCreatedAtAttribute($value)
@@ -158,9 +158,9 @@ class Quote extends Model implements Auditable
         }
 
         if ($moneyformat) {
-            setlocale(LC_MONETARY, 'en_US.UTF-8');
+            $amount = new \NumberFormatter( 'en_US.UTF-8', \NumberFormatter::PATTERN_DECIMAL, "* #####.00 ;(* #####.00)");
 
-            return money_format('%!.2n', $total);
+            return $amount->format($total);
         } else {
             return $total;
         }
@@ -181,9 +181,9 @@ class Quote extends Model implements Auditable
         $tax = ($subtotalWithTax != 0) ? $subtotalWithTax / 100 : 0;
 
         if ($moneyformat) {
-            setlocale(LC_MONETARY, 'en_US.UTF-8');
+            $amount = new \NumberFormatter( 'en_US.UTF-8', \NumberFormatter::PATTERN_DECIMAL, "* #####.00 ;(* #####.00)");
 
-            return money_format('%!.2n', $tax);
+            return $amount->format($tax);
         } else {
             return $tax;
         }
@@ -204,9 +204,9 @@ class Quote extends Model implements Auditable
         $total = ($totalWithTax != 0) ? $totalWithTax / 100 : 0;
 
         if ($moneyformat) {
-            setlocale(LC_MONETARY, 'en_US.UTF-8');
+            $amount = new \NumberFormatter( 'en_US.UTF-8', \NumberFormatter::PATTERN_DECIMAL, "* #####.00 ;(* #####.00)");
 
-            return money_format('%!.2n', $total);
+            return $amount->format($total);
         } else {
             return $total;
         }
