@@ -26,7 +26,7 @@ class InvoiceItem extends Model implements Auditable
 
     public function moneyFormatPrice()
     {
-        $amount = new \NumberFormatter( 'en_US.UTF-8', \NumberFormatter::PATTERN_DECIMAL, "* #####.00 ;(* #####.00)");
+        $amount = new \NumberFormatter('en_US.UTF-8', \NumberFormatter::PATTERN_DECIMAL, '* #####.00 ;(* #####.00)');
 
         return $amount->format($this->price);
     }

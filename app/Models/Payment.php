@@ -51,7 +51,7 @@ class Payment extends Model implements Auditable
      */
     public function getMoneyFormatAttribute()
     {
-        $amount = new \NumberFormatter( 'en_US.UTF-8', \NumberFormatter::PATTERN_DECIMAL, "* #####.00 ;(* #####.00)");
+        $amount = new \NumberFormatter('en_US.UTF-8', \NumberFormatter::PATTERN_DECIMAL, '* #####.00 ;(* #####.00)');
 
         return $amount->format($this->amount);
     }

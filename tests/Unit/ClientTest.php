@@ -4,7 +4,6 @@ namespace Tests\Unit;
 
 use App\Models\Client;
 use App\Models\Company;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ClientTest extends TestCase

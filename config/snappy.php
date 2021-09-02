@@ -8,7 +8,7 @@ return [
         'timeout' => false,
         'options' => [
             'enable-local-file-access' => true,
-            'encoding'      => 'UTF-8'
+            'encoding'                 => 'UTF-8',
         ],
         'env'     => [],
     ],
@@ -18,7 +18,7 @@ return [
         'timeout' => false,
         'options' => [
             'enable-local-file-access' => true,
-            'encoding'      => 'UTF-8'
+            'encoding'                 => 'UTF-8',
         ],
         'env'     => [],
     ],
