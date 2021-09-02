@@ -23,10 +23,12 @@ mix
     })
     .webpackConfig({
         plugins: [
-            new CopyWebpackPlugin([{
-                from: 'resources/assets/images',
-                to: 'assets/img', // Laravel mix will place this in 'public/img'
-            }]),
+            new CopyWebpackPlugin({
+                patterns: [{
+                    from: 'resources/assets/images',
+                    to: 'assets/img', // Laravel mix will place this in 'public/img'
+                }]
+            }),
             new ImageminPlugin({
                 test: /\.(jpe?g|png|gif|svg)$/i,
                 plugins: [
