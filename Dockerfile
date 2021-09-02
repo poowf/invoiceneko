@@ -19,7 +19,6 @@ RUN apk add --no-cache \
     autoconf \
     automake \
     libtool \
-    make \
     tiff \
     jpeg \
     zlib \
@@ -30,8 +29,8 @@ RUN apk add --no-cache \
     musl-dev \
     libltdl \
     python2 \
-    make \
-    libc6-compat
+    xvfb-run \
+    wkhtmltopdf
 
 # Installing PHP
 RUN apk add --no-cache php7 \
@@ -62,7 +61,8 @@ RUN apk add --no-cache php7 \
     php7-gd \
     php7-pcntl \
     php7-posix \
-    php7-xmlreader
+    php7-xmlreader \
+    php7-intl
 
 # Installing composer
 RUN curl -sS https://getcomposer.org/installer -o composer-setup.php
@@ -95,7 +95,6 @@ RUN ln -sf /dev/stderr /var/log/nginx/error.log
 # Building process
 COPY --chown=nginx:nginx . .
 RUN composer install
-RUN yarn install
 
 # Configure Laravel logs
 RUN ln -sf /dev/stdout /srv/http/www/invoiceneko/storage/laravel.log
