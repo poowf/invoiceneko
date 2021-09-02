@@ -33,7 +33,6 @@ enabled:
   - method_visibility_required
   - native_function_casing
   - new_with_braces
-  - no_alias_functions
   - no_blank_lines_after_class_opening
   - no_blank_lines_after_phpdoc
   - no_blank_lines_after_throw
@@ -58,7 +57,6 @@ enabled:
   - no_trailing_whitespace
   - no_trailing_whitespace_in_comment
   - no_unneeded_control_parentheses
-  - no_unreachable_default_argument_value
   - no_unused_imports
   - no_useless_return
   - no_whitespace_before_comma_in_array
@@ -84,11 +82,8 @@ enabled:
   - post_increment
   - print_to_echo
   - property_visibility_required
-  - psr4
-  - self_accessor
   - short_array_syntax
   - short_scalar_cast
-  - simplified_null_return
   - single_blank_line_at_eof
   - single_blank_line_before_namespace
   - single_class_element_per_statement
