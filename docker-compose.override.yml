@@ -1,0 +1,54 @@
+version: '3.7'
+services:
+
+  #  App
+  app:
+    build:
+      target: base
+    volumes:
+      - ./:/srv/http/www/invoiceneko
+#      - ./storage/logs/nginx/:/var/log/nginx
+      - /srv/http/www/invoiceneko/vendor
+      - ./docker/nginx/conf.d/:/etc/nginx/http.d/
+      - ./docker/supervisor.d/:/etc/supervisor.d/
+    environment:
+      # Declaring environment variables here overwrites those in .env for the app
+      HOST: 0.0.0.0
+    ports:
+      - 8181:80
+    tty: true
+
+  phpmyadmin:
+    container_name: invoiceneko_phpmyadmin
+    depends_on:
+      - database
+    image: phpmyadmin:5.1.1
+    restart: always
+    ports:
+      - 8182:80
+    environment:
+      PMA_USER: root
+      PMA_PASSWORD: invoiceneko-root-password
+      PMA_HOST: database
+      MYSQL_ROOT_PASSWORD: invoiceneko-root-password
+    networks:
+      - app-network
+
+  redis:
+    ports:
+      - 6382:6379
+  redisinsight:
+    container_name: invoiceneko_redisinsight
+    depends_on:
+      - redis
+    image: redislabs/redisinsight:1.10.1
+    restart: always
+    volumes:
+      - redisinsight-storage:/var/lib/redisinsight
+    ports:
+      - 8183:8001
+    networks:
+      - app-network
+
+volumes:
+  redisinsight-storage:

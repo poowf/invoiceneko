@@ -1,37 +1,18 @@
-FROM node:14.17.6-alpine3.14 as base
+# Install dependencies only when needed
+FROM node:14.17.3-alpine as dependencies
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+#RUN apk add --no-cache libc6-compat
+WORKDIR /working
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile --production
+
+FROM node:14.17.3-alpine as base
+
 WORKDIR /srv/http/www/invoiceneko/
 
 # Essentials
 RUN echo "UTC" > /etc/timezone
-RUN apk add --no-cache \
-    zip \
-    unzip \
-    curl \
-    sqlite \
-    nginx \
-    supervisor \
-    git \
-    g++ \
-    make \
-    bash \
-    zlib-dev \
-    libpng-dev \
-    autoconf \
-    automake \
-    libtool \
-    make \
-    tiff \
-    jpeg \
-    zlib \
-    pkgconf \
-    nasm \
-    file \
-    gcc \
-    musl-dev \
-    libltdl \
-    python2 \
-    make \
-    libc6-compat
+RUN apk add --no-cache zip unzip curl sqlite nginx supervisor git
 
 # Installing PHP
 RUN apk add --no-cache php7 \
@@ -95,7 +76,6 @@ RUN ln -sf /dev/stderr /var/log/nginx/error.log
 # Building process
 COPY --chown=nginx:nginx . .
 RUN composer install
-RUN yarn install
 
 # Configure Laravel logs
 RUN ln -sf /dev/stdout /srv/http/www/invoiceneko/storage/laravel.log

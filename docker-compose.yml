@@ -1,0 +1,47 @@
+version: '3.7'
+services:
+
+  #  App
+  app:
+    container_name: invoiceneko
+    restart: always
+    build:
+      context: ./
+      target: base
+      dockerfile: Dockerfile
+    networks:
+      - app-network
+
+  # The Database
+  database:
+    container_name: invoiceneko_mysql_database
+    image: mariadb:10.6.3
+    restart: always
+    volumes:
+      - dbdata:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: invoiceneko
+      MYSQL_USER: invoiceneko_user
+      MYSQL_PASSWORD: invoiceneko_password
+      MYSQL_ROOT_PASSWORD: invoiceneko-root-password
+    ports:
+      - 33108:3306
+    networks:
+      - app-network
+
+  # Redis
+  redis:
+    container_name: invoiceneko_redis
+    image: redis:6.2.4-alpine
+    restart: always
+    networks:
+      - app-network
+
+volumes:
+  dbdata:
+networks:
+  nginx-proxy:
+    external: true
+    name: nginx-proxy
+  app-network:
+    driver: bridge
