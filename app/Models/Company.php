@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Library\Poowf\Unicorn;
 use App\Traits\UniqueSlug;
-use Iatstuti\Database\Support\CascadeSoftDeletes;
+use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
