@@ -26,7 +26,7 @@ class Role extends RoleBase implements Auditable
      *
      * @return \Illuminate\Database\Eloquent\Model|null
      */
-    public function resolveRouteBinding($value)
+    public function resolveRouteBinding($value, $field = NULL)
     {
         $role = $this->where($this->getRouteKeyName(), $value)->where('scope', app('request')->route('company')->id)->first();
 
