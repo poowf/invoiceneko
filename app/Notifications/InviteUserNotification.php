@@ -2,7 +2,6 @@
 
 namespace App\Notifications;
 
-use App\Models\Company;
 use App\Models\CompanyInvite;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;

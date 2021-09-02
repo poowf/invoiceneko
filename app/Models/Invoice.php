@@ -101,7 +101,7 @@ class Invoice extends Model implements Auditable
 
     public function getTotalMoneyFormatAttribute()
     {
-        $amount = new \NumberFormatter( 'en_US.UTF-8', \NumberFormatter::PATTERN_DECIMAL, "* #####.00 ;(* #####.00)");
+        $amount = new \NumberFormatter('en_US.UTF-8', \NumberFormatter::PATTERN_DECIMAL, '* #####.00 ;(* #####.00)');
 
         return $amount->format($this->total);
     }
@@ -247,7 +247,7 @@ class Invoice extends Model implements Auditable
         }
 
         if ($moneyformat) {
-            $amount = new \NumberFormatter( 'en_US.UTF-8', \NumberFormatter::PATTERN_DECIMAL, "* #####.00 ;(* #####.00)");
+            $amount = new \NumberFormatter('en_US.UTF-8', \NumberFormatter::PATTERN_DECIMAL, '* #####.00 ;(* #####.00)');
 
             return $amount->format($total);
         } else {
@@ -270,7 +270,7 @@ class Invoice extends Model implements Auditable
         $tax = ($subtotalWithTax != 0) ? $subtotalWithTax / 100 : 0;
 
         if ($moneyformat) {
-            $amount = new \NumberFormatter( 'en_US.UTF-8', \NumberFormatter::PATTERN_DECIMAL, "* #####.00 ;(* #####.00)");
+            $amount = new \NumberFormatter('en_US.UTF-8', \NumberFormatter::PATTERN_DECIMAL, '* #####.00 ;(* #####.00)');
 
             return $amount->format($tax);
         } else {
@@ -293,7 +293,7 @@ class Invoice extends Model implements Auditable
         $total = ($totalWithTax != 0) ? $totalWithTax / 100 : 0;
 
         if ($moneyformat) {
-            $amount = new \NumberFormatter( 'en_US.UTF-8', \NumberFormatter::PATTERN_DECIMAL, "* #####.00 ;(* #####.00)");
+            $amount = new \NumberFormatter('en_US.UTF-8', \NumberFormatter::PATTERN_DECIMAL, '* #####.00 ;(* #####.00)');
 
             return $amount->format($total);
         } else {
