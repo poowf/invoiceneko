@@ -30,9 +30,9 @@
                         <dt>Company Phone</dt>
                         <dd>{{ $company->phone ?? '-' }}</dd>
                         <dt>Company Logo</dt>
-                        <dd><img src="@if($company){{ \App\Library\Poowf\Unicorn::getStorageFile($company->logo, [420, 220]) }}@else{!! '//via.placeholder.com/420x220' !!}@endif" class="responsive-img"></dd>
+                        <dd><img src="@if($company){{ \App\Library\Poowf\Unicorn::getStorageFile($company->logo, [420, 220]) }}@else{!! 'https://via.placeholder.com/420x220' !!}@endif" class="responsive-img"></dd>
                         <dt>Company Small Logo</dt>
-                        <dd><img src="@if($company){{ \App\Library\Poowf\Unicorn::getStorageFile($company->smlogo, [200, 200]) }}@else{!! '//via.placeholder.com/200x200' !!}@endif" class="responsive-img"></dd>
+                        <dd><img src="@if($company){{ \App\Library\Poowf\Unicorn::getStorageFile($company->smlogo, [200, 200]) }}@else{!! 'https://via.placeholder.com/200x200' !!}@endif" class="responsive-img"></dd>
                     </dl>
                 </div>
             </div>

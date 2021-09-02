@@ -129,7 +129,7 @@ class Unicorn
      */
     public static function getStorageFile($path, $imagesize = [500, 500])
     {
-        $filepath = "//via.placeholder.com/{$imagesize[0]}x{$imagesize[1]}";
+        $filepath = "https://via.placeholder.com/{$imagesize[0]}x{$imagesize[1]}";
         if ($path) {
             try {
                 $filepath = Storage::url($path);
