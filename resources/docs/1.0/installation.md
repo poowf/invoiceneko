@@ -31,3 +31,10 @@ Set-up your email credentials in the .env file, configure the APP_URL variable t
 
 ##### Create a company and user
 Create a company and user by going through the start page and you'll be able to use Invoice Neko
+
+### Docker
+docker build -t invneko -f Dockerfile.production .
+docker run -p 8080:80 -e "ENV_DATA=$(<envData.json)" invneko
+
+#### Test
+docker run -e "ENV_DATA=$(<envData.json)" -it invneko sh
