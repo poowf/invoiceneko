@@ -1,18 +1,90 @@
+FROM surnet/alpine-wkhtmltopdf:3.13.5-0.12.6-full as wkhtmltopdf
 # Install dependencies only when needed
-FROM node:14.17.3-alpine as dependencies
+FROM node:14.17.6-alpine3.14 as dependencies
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 #RUN apk add --no-cache libc6-compat
 WORKDIR /working
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile --production
 
-FROM node:14.17.3-alpine as base
+# Using a hash to make sure the pull is an amd64 image as there
+# are issues compiling the resource bundle on M1 macs instead of
+# having to run docker buildx build --platform=linux/amd64 -t invneko -f Dockerfile.production .
+# Actual image is node:14.17.6-alpine3.14
+FROM node@sha256:3f4c922d5f29da10fc2a5f1ab6a9812e7aadfc88ecc9e150ef86066f449e55ec as jsbuild
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+#RUN apk add --no-cache libc6-compat
+WORKDIR /working
+
+RUN apk add --no-cache \
+    curl \
+    g++ \
+    make \
+    bash \
+    zlib-dev \
+    libpng-dev \
+    autoconf \
+    automake \
+    libtool \
+    tiff \
+    jpeg \
+    zlib \
+    pkgconf \
+    nasm \
+    file \
+    gcc \
+    musl-dev \
+    libltdl \
+    python2 \
+    libc6-compat
+
+COPY resources package.json yarn.lock webpack.mix.js ./
+COPY resources/ ./resources
+COPY --from=dependencies /working/node_modules ./node_modules
+RUN yarn install --frozen-lockfile
+RUN yarn run prod
+
+FROM alpine:3.14 as base
 
 WORKDIR /srv/http/www/invoiceneko/
 
 # Essentials
 RUN echo "UTC" > /etc/timezone
-RUN apk add --no-cache zip unzip curl sqlite nginx supervisor git
+RUN apk add --no-cache \
+    zip \
+    unzip \
+    curl \
+    nginx \
+    supervisor \
+    xvfb \
+    xvfb-run \
+    libstdc++ \
+    libx11 \
+    libxrender \
+    libxext \
+    libssl1.1 \
+    ca-certificates \
+    fontconfig \
+    freetype \
+    ttf-dejavu \
+    ttf-droid \
+    ttf-freefont \
+    ttf-liberation
+
+RUN apk add --no-cache --virtual .build-deps \
+    msttcorefonts-installer \
+    \
+    # Install microsoft fonts
+    && update-ms-fonts \
+    && fc-cache -f \
+    \
+    # Clean up when done
+    && rm -rf /tmp/* \
+    && apk del .build-deps
+
+COPY --from=wkhtmltopdf /bin/wkhtmltopdf /usr/bin/wkhtmltopdf
+COPY --from=wkhtmltopdf /bin/wkhtmltoimage /usr/bin/wkhtmltoimage
+COPY --from=wkhtmltopdf /bin/libwkhtmltox* /usr/bin/
 
 # Installing PHP
 RUN apk add --no-cache php8 \
@@ -43,15 +115,18 @@ RUN apk add --no-cache php8 \
     php8-gd \
     php8-pcntl \
     php8-posix \
-    php8-xmlreader
+    php8-xmlreader \
+    php8-intl
 
 # Installing composer
+RUN ln -s /usr/bin/php8 /usr/bin/php
 RUN curl -sS https://getcomposer.org/installer -o composer-setup.php
 RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 RUN rm -rf composer-setup.php
 
 # Configure supervisor
 RUN mkdir -p /etc/supervisor.d/
+COPY docker/supervisor.d/ /etc/supervisor.d/
 
 # Configure php-fpm
 RUN mkdir -p /run/php/
@@ -61,11 +136,13 @@ RUN sed -i 's~listen = 127.0.0.1:9000~listen = /run/php/php8.0-fpm.sock~g' /etc/
 RUN sed -i 's~;listen.owner = nobody~listen.owner = nginx~g' /etc/php8/php-fpm.d/www.conf
 RUN sed -i 's~;listen.group = nobody~listen.group = nginx~g' /etc/php8/php-fpm.d/www.conf
 RUN sed -i 's~;listen.mode = 0660~listen.mode = 0660~g' /etc/php8/php-fpm.d/www.conf
-#RUN sed -i 's~user = nobody~user = nginx~g' /etc/php8/php-fpm.d/www.conf
-#RUN sed -i 's~group = nobody~group = nginx~g' /etc/php8/php-fpm.d/www.conf
+RUN sed -i 's~user = nobody~user = nginx~g' /etc/php8/php-fpm.d/www.conf
+RUN sed -i 's~group = nobody~group = nginx~g' /etc/php8/php-fpm.d/www.conf
 
 # Configure nginx
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
+COPY docker/nginx/conf.d/ /etc/nginx/http.d/
+RUN rm /etc/nginx/http.d/default.conf
 
 RUN mkdir -p /run/nginx/
 RUN touch /run/nginx/nginx.pid
@@ -74,11 +151,24 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log
 RUN ln -sf /dev/stderr /var/log/nginx/error.log
 
 # Building process
-COPY --chown=nginx:nginx . .
-RUN composer install
+COPY --chown=nginx:nginx app ./app
+COPY --chown=nginx:nginx bootstrap ./bootstrap
+COPY --chown=nginx:nginx config ./config
+COPY --chown=nginx:nginx public ./public
+COPY --chown=nginx:nginx resources ./resources
+COPY --chown=nginx:nginx routes ./routes
+COPY --chown=nginx:nginx storage ./storage
+COPY --chown=nginx:nginx docker/buildEnvData.php composer.json composer.lock artisan ./
+COPY docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+COPY --chown=nginx:nginx --from=jsbuild /working/public ./public
+RUN composer install --no-dev
+RUN chown -R nginx:nginx vendor
 
 # Configure Laravel logs
 RUN ln -sf /dev/stdout /srv/http/www/invoiceneko/storage/laravel.log
 
+HEALTHCHECK CMD wget --no-verbose --tries=1 --spider http://localhost || exit 1
 EXPOSE 80
+ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["supervisord", "-c", "/etc/supervisor.d/supervisord.conf"]

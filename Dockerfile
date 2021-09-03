@@ -1,3 +1,4 @@
+FROM surnet/alpine-wkhtmltopdf:3.13.5-0.12.6-full as wkhtmltopdf
 FROM node:14.17.6-alpine3.14 as base
 WORKDIR /srv/http/www/invoiceneko/
 
@@ -10,7 +11,6 @@ RUN apk add --no-cache \
     sqlite \
     nginx \
     supervisor \
-    git \
     g++ \
     make \
     bash \
@@ -31,7 +31,33 @@ RUN apk add --no-cache \
     python2 \
     xvfb \
     xvfb-run \
-    wkhtmltopdf
+    libstdc++ \
+    libx11 \
+    libxrender \
+    libxext \
+    libssl1.1 \
+    ca-certificates \
+    fontconfig \
+    freetype \
+    ttf-dejavu \
+    ttf-droid \
+    ttf-freefont \
+    ttf-liberation
+
+RUN apk add --no-cache --virtual .build-deps \
+    msttcorefonts-installer \
+    \
+    # Install microsoft fonts
+    && update-ms-fonts \
+    && fc-cache -f \
+    \
+    # Clean up when done
+    && rm -rf /tmp/* \
+    && apk del .build-deps
+
+COPY --from=wkhtmltopdf /bin/wkhtmltopdf /usr/bin/wkhtmltopdf
+COPY --from=wkhtmltopdf /bin/wkhtmltoimage /usr/bin/wkhtmltoimage
+COPY --from=wkhtmltopdf /bin/libwkhtmltox* /usr/bin/
 
 # Installing PHP
 RUN apk add --no-cache php8 \
@@ -82,8 +108,8 @@ RUN sed -i 's~listen = 127.0.0.1:9000~listen = /run/php/php8.0-fpm.sock~g' /etc/
 RUN sed -i 's~;listen.owner = nobody~listen.owner = nginx~g' /etc/php8/php-fpm.d/www.conf
 RUN sed -i 's~;listen.group = nobody~listen.group = nginx~g' /etc/php8/php-fpm.d/www.conf
 RUN sed -i 's~;listen.mode = 0660~listen.mode = 0660~g' /etc/php8/php-fpm.d/www.conf
-#RUN sed -i 's~user = nobody~user = nginx~g' /etc/php8/php-fpm.d/www.conf
-#RUN sed -i 's~group = nobody~group = nginx~g' /etc/php8/php-fpm.d/www.conf
+RUN sed -i 's~user = nobody~user = nginx~g' /etc/php8/php-fpm.d/www.conf
+RUN sed -i 's~group = nobody~group = nginx~g' /etc/php8/php-fpm.d/www.conf
 
 # Configure nginx
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
