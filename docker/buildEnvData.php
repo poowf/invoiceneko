@@ -1,4 +1,5 @@
 <?php
+
 $filename = '.env';
 
 if (file_exists($filename)) {
@@ -9,9 +10,9 @@ if (file_exists($filename)) {
     if ($envData != null) {
         $decodedEnv = json_decode($envData, true);
 
-        $formattedEnv = "";
+        $formattedEnv = '';
 
-        foreach($decodedEnv as $envKey => $envValue) {
+        foreach ($decodedEnv as $envKey => $envValue) {
             $formattedEnv .= "$envKey=\"$envValue\"\n";
         }
 
@@ -26,4 +27,3 @@ if (file_exists($filename)) {
         chgrp($filename, 'nginx');
     }
 }
-?>
