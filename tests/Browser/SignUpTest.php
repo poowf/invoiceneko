@@ -5,6 +5,7 @@ namespace Tests\Browser;
 use Faker\Factory as Faker;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
+use Illuminate\Support\Str;
 
 class SignUpTest extends DuskTestCase
 {
@@ -22,7 +23,7 @@ class SignUpTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($faker) {
             $browser->maximize();
             $browser->visit('/user/create')
-                ->type('username', str_random(10))
+                ->type('username', Str::random(10))
                 ->type('email', $faker->unique()->safeEmail)
                 ->type('password', 'secret')
                 ->type('password_confirmation', 'secret')

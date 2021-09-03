@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 
 $factory->define(\App\Models\Company::class, function (Faker $faker) {
@@ -8,7 +9,7 @@ $factory->define(\App\Models\Company::class, function (Faker $faker) {
         'invoice_index' => $faker->randomDigit,
         'quote_index'   => $faker->randomDigit,
         'slug'          => $faker->slug,
-        'domain_name'   => str_random($faker->numberBetween($min = 1, $max = 63)) . $faker->randomElement(['.com', '.net', '.org']),
+        'domain_name'   => Str::random($faker->numberBetween($min = 1, $max = 63)) . $faker->randomElement(['.com', '.net', '.org']),
         'crn'           => $faker->ean8,
         'country_code'  => $faker->countryCode,
         'timezone'      => $faker->timezone,

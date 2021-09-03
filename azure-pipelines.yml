@@ -4,10 +4,10 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/php
 
 pool:
-  vmImage: 'Ubuntu 16.04'
+  vmImage: 'Ubuntu 20.04'
 
 variables:
-  phpVersion: 7.2
+  phpVersion: 8.0
 
 steps:
 - script: |
@@ -20,16 +20,20 @@ steps:
   displayName: 'Use PHP version $(phpVersion)'
 
 - script: |
-    curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash -
+    curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
     sudo apt-get install -y build-essential debconf-utils screen nodejs mysql-server google-chrome-stable
     sudo apt-get install -y unzip xvfb autogen autoconf libtool pkg-config nasm
-    sudo mysql -uroot -proot -e "use mysql; update user set authentication_string=PASSWORD('poowf') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
-    sudo mysql -u root -ppoowf -e 'create database invoiceneko_test;'
   displayName: 'Installing System Dependencies'
 
 - script: |
     mysql --version
   displayName: 'MySQL Version'
+
+- script: |
+    sudo service mysql start
+    sudo mysql -u root -proot -e "use mysql; ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'poowf'; FLUSH PRIVILEGES;"
+    sudo mysql -u root -ppoowf -e 'create database invoiceneko_test;'
+  displayName: 'Set MySQL credentials'
 
 - script: |
     cp .env.travis .env
@@ -47,15 +51,16 @@ steps:
   displayName: 'Running Migrations'
 
 - script: |
-    sudo npm i -g npm
+    npm install --global yarn
     sudo chown -R vsts:vsts ~/.npm
     sudo chown -R vsts:vsts ~/.config
-    npm install
-    npm run prod
+    yarn install
+    yarn run prod
     node -v
   displayName: 'Generating build assets'
 
 - script: |
+    google-chrome-stable --version
     screen -d -m google-chrome-stable --headless --disable-gpu --disable-dev-shm-usage --disable-software-rasterizer --remote-debugging-port=9222 http://localhost &
     screen -d -m php artisan serve &
   displayName: 'Starting Chrome and the Web Server'
@@ -65,6 +70,7 @@ steps:
   displayName: 'Running Unit Tests'
 
 - script: |
+    php artisan dusk:chrome-driver
     php artisan dusk --log-junit tests/Results/TEST-dusk-junit.xml
   displayName: 'Running Browser Tests'
 

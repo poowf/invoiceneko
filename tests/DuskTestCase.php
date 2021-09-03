@@ -2,11 +2,10 @@
 
 namespace Tests;
 
-use BeyondCode\DuskDashboard\Testing\TestCase as BaseTestCase;
 use Facebook\WebDriver\Chrome\ChromeOptions;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
-//use Laravel\Dusk\TestCase as BaseTestCase;
+use Laravel\Dusk\TestCase as BaseTestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 abstract class DuskTestCase extends BaseTestCase
@@ -43,7 +42,7 @@ abstract class DuskTestCase extends BaseTestCase
     /**
      * Set Up method to clear all browser cookies.
      */
-    protected function setUp()
+    protected function setUp() :void
     {
         parent::setUp();
         foreach (static::$browsers as $browser) {
