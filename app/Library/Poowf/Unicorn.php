@@ -356,28 +356,33 @@ class Unicorn
         return $url;
     }
 
-    public static function stripUnwantedTagsAndAttrs($html_str){
+    public static function stripUnwantedTagsAndAttrs($html_str)
+    {
         $xml = new DOMDocument();
         //Suppress warnings: proper error handling is beyond scope of example
         libxml_use_internal_errors(true);
         //List the tags you want to allow here, NOTE you MUST allow html and body otherwise entire string will be cleared
-        $allowed_tags = array("html", "body", "b", "strong", "sup", "sub", "h1", "h2", "h3", "h4", "blockquote", "br", "em", "del", "hr", "i", "li", "ol", "p", "s", "span", "table", "tr", "td", "u", "ul", "a", "img");
+        $allowed_tags = ['html', 'body', 'b', 'strong', 'sup', 'sub', 'h1', 'h2', 'h3', 'h4', 'blockquote', 'br', 'em', 'del', 'hr', 'i', 'li', 'ol', 'p', 's', 'span', 'table', 'tr', 'td', 'u', 'ul', 'a', 'img'];
+
         //List the attributes you want to allow here
-        $allowed_attrs = array ("class", "id", "style", "href", "title", "target", "alt");
-        if (!strlen($html_str)){return false;}
-        if ($xml->loadHTML($html_str, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD)){
-            foreach ($xml->getElementsByTagName("*") as $tag){
-                if (!in_array($tag->tagName, $allowed_tags)){
+        $allowed_attrs = ['class', 'id', 'style', 'href', 'title', 'target', 'alt'];
+        if (! strlen($html_str)) {
+            return false;
+        }
+        if ($xml->loadHTML($html_str, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD)) {
+            foreach ($xml->getElementsByTagName('*') as $tag) {
+                if (! in_array($tag->tagName, $allowed_tags)) {
                     $tag->parentNode->removeChild($tag);
                 } else {
-                    foreach ($tag->attributes as $attr){
-                        if (!in_array($attr->nodeName, $allowed_attrs)){
+                    foreach ($tag->attributes as $attr) {
+                        if (! in_array($attr->nodeName, $allowed_attrs)) {
                             $tag->removeAttribute($attr->nodeName);
                         }
                     }
                 }
             }
         }
+
         return $xml->saveHTML();
     }
 }
