@@ -2,10 +2,10 @@
 
 namespace Database\Factories;
 
-use Illuminate\Support\Str;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class CompanyFactory extends Factory
 {
@@ -28,11 +28,11 @@ class CompanyFactory extends Factory
             'invoice_index' => $this->faker->randomDigit,
             'quote_index'   => $this->faker->randomDigit,
             'slug'          => $this->faker->slug,
-            'domain_name'   => Str::random($this->faker->numberBetween($min = 1, $max = 63)) . $this->faker->randomElement(['.com', '.net', '.org']),
+            'domain_name'   => Str::random($this->faker->numberBetween($min = 1, $max = 63)).$this->faker->randomElement(['.com', '.net', '.org']),
             'crn'           => $this->faker->ean8,
             'country_code'  => $this->faker->countryCode,
             'timezone'      => $this->faker->timezone,
-            'phone'         => '+659' . $this->faker->numberBetween($min = 0, $max = 8) . $this->faker->randomNumber(6, true),
+            'phone'         => '+659'.$this->faker->numberBetween($min = 0, $max = 8).$this->faker->randomNumber(6, true),
             'email'         => $this->faker->unique()->companyEmail,
             'user_id'       => function () {
                 return User::factory()->create()->id;

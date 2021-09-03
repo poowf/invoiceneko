@@ -54,7 +54,7 @@ class NotificationController extends Controller
 
         // Can retrieve more info from server parameter
         // Log::info($_SERVER);
-        if (!$notification->read_at && $_SERVER['REQUEST_METHOD'] !== 'POST') {
+        if (! $notification->read_at && $_SERVER['REQUEST_METHOD'] !== 'POST') {
             $notification->read_at = Carbon::now();
             $notification->save();
         }

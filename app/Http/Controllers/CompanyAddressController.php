@@ -89,7 +89,7 @@ class CompanyAddressController extends Controller
     {
         $companyaddress = $company->address;
 
-        if (!$companyaddress) {
+        if (! $companyaddress) {
             $companyaddress = new CompanyAddress();
         }
 

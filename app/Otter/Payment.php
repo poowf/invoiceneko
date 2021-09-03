@@ -66,30 +66,30 @@ class Payment extends OtterResource
     public static function validations()
     {
         return [
-        'client' => [
-            'create' => [
-                /*
+            'client' => [
+                'create' => [
+                    /*
                 * Client side create resource validation
                 */
-            ],
-            'update' => [
-                /*
+                ],
+                'update' => [
+                    /*
                 * Client side update resource validation
                 */
+                ],
             ],
-        ],
-        'server' => [
-            'create' => [
-                /*
+            'server' => [
+                'create' => [
+                    /*
                 * Server side create resource validation
                 */
-            ],
-            'update' => [
-                /*
+                ],
+                'update' => [
+                    /*
                 * Server side update resource validation
                 */
+                ],
             ],
-        ],
-    ];
+        ];
     }
 }

@@ -74,9 +74,9 @@ class User extends OtterResource
                 ],
                 'update' => [
                     'full_name' => 'required|string|min:4',
-                    'username'  => 'required|string|min:4|unique:users,username,' . auth()->user()->id,
-                    'email'     => 'required|email|unique:users,email,' . auth()->user()->id,
-                    'phone'     => 'required|unique:users,phone,' . auth()->user()->id,
+                    'username'  => 'required|string|min:4|unique:users,username,'.auth()->user()->id,
+                    'email'     => 'required|email|unique:users,email,'.auth()->user()->id,
+                    'phone'     => 'required|unique:users,phone,'.auth()->user()->id,
                     'gender'    => 'required|in:male,female',
                 ],
             ],

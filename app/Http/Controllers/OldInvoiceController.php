@@ -73,7 +73,7 @@ class OldInvoiceController extends Controller
     {
         $pdf = $invoice->generatePDFView();
 
-        return $pdf->inline(Str::slug($invoice->nice_invoice_id . ' - ' . $invoice->created_at) . '.pdf');
+        return $pdf->inline(Str::slug($invoice->nice_invoice_id.' - '.$invoice->created_at).'.pdf');
     }
 
     /**
@@ -88,7 +88,7 @@ class OldInvoiceController extends Controller
     {
         $pdf = $invoice->generatePDFView();
 
-        return $pdf->download(Str::slug($invoice->nice_invoice_id . ' - ' . $invoice->created_at) . '.pdf');
+        return $pdf->download(Str::slug($invoice->nice_invoice_id.' - '.$invoice->created_at).'.pdf');
     }
 
     /**

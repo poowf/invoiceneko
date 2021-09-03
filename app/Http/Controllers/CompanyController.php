@@ -74,7 +74,7 @@ class CompanyController extends Controller
             $company->fill($request->all());
             $company->user_id = ($request->session()->has('user_id')) ? $request->session()->pull('user_id') : auth()->user()->id;
 
-            if (!is_null($request->input('country_code')) && is_null($request->input('timezone'))) {
+            if (! is_null($request->input('country_code')) && is_null($request->input('timezone'))) {
                 $timezone = DateTimeZone::listIdentifiers(DateTimeZone::PER_COUNTRY, $request->input('country_code'))[0];
                 $company->timezone = $timezone;
             } elseif (is_null($company->timezone)) {
@@ -82,23 +82,23 @@ class CompanyController extends Controller
             }
             $company->save();
 
-            $storedirectory = '/perm_store/company/' . $company->id . '/photos/';
+            $storedirectory = '/perm_store/company/'.$company->id.'/photos/';
 
             Storage::makeDirectory($storedirectory);
 
             if ($request->file('logo')) {
                 $file = $request->file('logo');
                 $uuid = Str::random(25);
-                $filename = $uuid . '.png';
+                $filename = $uuid.'.png';
 
-                if (!Storage::exists($storedirectory . 'logo_' . $filename)) {
+                if (! Storage::exists($storedirectory.'logo_'.$filename)) {
                     $image = Image::make($file)->fit(420, 220, function ($constraint) {
                         $constraint->upsize();
                     }, 'center');
-                    Storage::put($storedirectory . 'logo_' . $filename, $image->stream('jpg')->detach());
+                    Storage::put($storedirectory.'logo_'.$filename, $image->stream('jpg')->detach());
                 }
 
-                $filepath = $storedirectory . 'logo_' . $filename;
+                $filepath = $storedirectory.'logo_'.$filename;
 
                 $company->logo = $filepath;
             }
@@ -106,16 +106,16 @@ class CompanyController extends Controller
             if ($request->file('smlogo')) {
                 $file = $request->file('smlogo');
                 $uuid = Str::random(25);
-                $filename = $uuid . '.png';
+                $filename = $uuid.'.png';
 
-                if (!Storage::exists($storedirectory . 'smlogo_' . $filename)) {
+                if (! Storage::exists($storedirectory.'smlogo_'.$filename)) {
                     $image = Image::make($file)->fit(200, 200, function ($constraint) {
                         $constraint->upsize();
                     }, 'center');
-                    Storage::put($storedirectory . 'smlogo_' . $filename, $image->stream('jpg')->detach());
+                    Storage::put($storedirectory.'smlogo_'.$filename, $image->stream('jpg')->detach());
                 }
 
-                $filepath = $storedirectory . 'smlogo_' . $filename;
+                $filepath = $storedirectory.'smlogo_'.$filename;
 
                 $company->smlogo = $filepath;
             }
@@ -171,7 +171,7 @@ class CompanyController extends Controller
     public function update(UpdateCompanyRequest $request, Company $company)
     {
         $company->fill($request->all());
-        if ($request->has('country_code') && !is_null($request->input('country_code'))) {
+        if ($request->has('country_code') && ! is_null($request->input('country_code'))) {
             if ($request->has('timezone') && is_null($request->input('timezone'))) {
                 $timezone = DateTimeZone::listIdentifiers(DateTimeZone::PER_COUNTRY, $request->input('country_code'))[0];
                 $company->timezone = $timezone;
@@ -187,24 +187,24 @@ class CompanyController extends Controller
             }
         }
 
-        $storedirectory = '/perm_store/company/' . $company->id . '/photos/';
+        $storedirectory = '/perm_store/company/'.$company->id.'/photos/';
         Storage::makeDirectory($storedirectory);
 
         if ($request->file('logo')) {
             $file = $request->file('logo');
             $uuid = Str::random(25);
-            $filename = $uuid . '.png';
+            $filename = $uuid.'.png';
 
-            if (!Storage::exists($storedirectory . 'logo_' . $filename)) {
+            if (! Storage::exists($storedirectory.'logo_'.$filename)) {
                 $image = Image::make($file)
                     ->encode('png', 100)
                     ->fit(420, 220, function ($constraint) {
                         $constraint->upsize();
                     }, 'center');
-                Storage::put($storedirectory . 'logo_' . $filename, $image->stream('jpg')->detach());
+                Storage::put($storedirectory.'logo_'.$filename, $image->stream('jpg')->detach());
             }
 
-            $filepath = $storedirectory . 'logo_' . $filename;
+            $filepath = $storedirectory.'logo_'.$filename;
 
             $company->logo = $filepath;
         }
@@ -212,18 +212,18 @@ class CompanyController extends Controller
         if ($request->file('smlogo')) {
             $file = $request->file('smlogo');
             $uuid = Str::random(25);
-            $filename = $uuid . '.png';
+            $filename = $uuid.'.png';
 
-            if (!Storage::exists($storedirectory . 'smlogo_' . $filename)) {
+            if (! Storage::exists($storedirectory.'smlogo_'.$filename)) {
                 $image = Image::make($file)
                     ->encode('png', 100)
                     ->fit(200, 200, function ($constraint) {
                         $constraint->upsize();
                     }, 'center');
-                Storage::put($storedirectory . 'smlogo_' . $filename, $image->stream('jpg')->detach());
+                Storage::put($storedirectory.'smlogo_'.$filename, $image->stream('jpg')->detach());
             }
 
-            $filepath = $storedirectory . 'smlogo_' . $filename;
+            $filepath = $storedirectory.'smlogo_'.$filename;
 
             $company->smlogo = $filepath;
         }

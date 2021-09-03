@@ -28,7 +28,7 @@ class UpdateRecipientRequest extends FormRequest
             'salutation' => 'required|in:mr,mrs,mdm,miss,dr,prof,mx',
             'first_name' => 'required|string',
             'last_name'  => '',
-            'email'      => 'required|email|unique:recipients,email,' . $this->route('recipient')->id,
+            'email'      => 'required|email|unique:recipients,email,'.$this->route('recipient')->id,
             'phone'      => '',
         ];
     }

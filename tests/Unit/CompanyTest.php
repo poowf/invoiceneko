@@ -2,9 +2,9 @@
 
 namespace Tests\Unit;
 
-use App\Models\User;
 use App\Models\Company;
 use App\Models\CompanySetting;
+use App\Models\User;
 use Tests\TestCase;
 
 class CompanyTest extends TestCase

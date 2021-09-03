@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Str;
 use App\Models\User;
+use Illuminate\Support\Str;
 
 class SocialAuthController extends Controller
 {
@@ -28,9 +28,9 @@ class SocialAuthController extends Controller
 
         $user = User::where('email', $socialuser->email)->first();
 
-        if (!$user) {
+        if (! $user) {
             $user = new User();
-            $user->username = preg_replace('/\s/', '', $socialuser->name) . '_' . Str::random(5);
+            $user->username = preg_replace('/\s/', '', $socialuser->name).'_'.Str::random(5);
             $user->email = $socialuser->email;
             $user->password = Str::random(10);
             $user->full_name = $socialuser->name;

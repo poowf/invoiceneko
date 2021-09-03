@@ -17,10 +17,10 @@ class EnsureEmailIsVerified
      */
     public function handle($request, Closure $next)
     {
-        if (!$request->user() ||
+        if (! $request->user() ||
             ($request->user() instanceof MustVerifyEmail &&
-                !$request->user()->hasVerifiedEmail())) {
-            if (!$request->session()->has('notice')) {
+                ! $request->user()->hasVerifiedEmail())) {
+            if (! $request->session()->has('notice')) {
                 $request->session()->put('notice', [
                     'message'   => 'Verify your email address. Didn\'t receive a verification email? Click the Resend button to get a new one.',
                     'link.text' => 'Resend Verification Email',

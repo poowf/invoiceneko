@@ -44,7 +44,7 @@ abstract class DuskTestCase extends BaseTestCase
     /**
      * Set Up method to clear all browser cookies.
      */
-    protected function setUp() :void
+    protected function setUp(): void
     {
         parent::setUp();
         foreach (static::$browsers as $browser) {

@@ -49,9 +49,9 @@ class NewCompanyUserNotification extends Notification implements ShouldQueue
         $url = route('auth.show');
 
         return (new MailMessage())
-            ->subject('You have been added to a company on ' . config('app.name'))
+            ->subject('You have been added to a company on '.config('app.name'))
             ->greeting("Hello {$user->full_name}!")
-            ->line('A new account has been created for you on ' . config('app.name'))
+            ->line('A new account has been created for you on '.config('app.name'))
             ->line('You account details are: ')
             ->line("Username: {$user->username}")
             ->line("Password: {$password}")

@@ -13,7 +13,7 @@ class EmailChangedListener
      */
     public function process($event)
     {
-        if ($event->user instanceof MustVerifyEmail && !$event->user->hasVerifiedEmail()) {
+        if ($event->user instanceof MustVerifyEmail && ! $event->user->hasVerifiedEmail()) {
             $event->user->save();
             $event->user->sendEmailVerificationNotification();
         }

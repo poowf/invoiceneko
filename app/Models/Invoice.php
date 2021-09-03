@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Dyrynda\Database\Support\CascadeSoftDeletes;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Mail;
@@ -72,7 +72,7 @@ class Invoice extends Model implements Auditable
         parent::boot();
 
         static::saving(function ($invoice) {
-            if ($invoice->status == self::STATUS_DRAFT && !$invoice->generated) {
+            if ($invoice->status == self::STATUS_DRAFT && ! $invoice->generated) {
                 $invoice->status = self::STATUS_OPEN;
             }
             $date = clone $invoice->date;
@@ -136,7 +136,7 @@ class Invoice extends Model implements Auditable
 
     public function getPaymentCompleteDateAttribute($value)
     {
-        if (!is_null($value)) {
+        if (! is_null($value)) {
             $date = $this->asDateTime($value);
 
             return $date->timezone($this->company->timezone);
@@ -204,7 +204,7 @@ class Invoice extends Model implements Auditable
 
     public function isLocked()
     {
-        if (!is_null($this->payment_complete_date)) {
+        if (! is_null($this->payment_complete_date)) {
             $now = Carbon::now();
             if (date_diff($now, $this->payment_complete_date)->format('%a') >= '120') {
                 return true;
@@ -225,7 +225,7 @@ class Invoice extends Model implements Auditable
 
     public function hash()
     {
-        $hash = hash('sha512', serialize($this . $this->items));
+        $hash = hash('sha512', serialize($this.$this->items));
 
         return $hash;
     }

@@ -82,7 +82,7 @@ class UserController extends Controller
         $user = new User();
         $user->fill($request->all());
         $user->password = $request->input('password');
-        if ($request->has('country_code') && !is_null($request->input('country_code'))) {
+        if ($request->has('country_code') && ! is_null($request->input('country_code'))) {
             if ($request->has('timezone') && is_null($request->input('timezone'))) {
                 $timezone = DateTimeZone::listIdentifiers(DateTimeZone::PER_COUNTRY, $request->input('country_code'))[0];
                 $user->timezone = $timezone;
@@ -183,7 +183,7 @@ class UserController extends Controller
                 $user->email_verified_at = null;
             }
 
-            if ($request->has('country_code') && !is_null($request->input('country_code'))) {
+            if ($request->has('country_code') && ! is_null($request->input('country_code'))) {
                 if ($request->has('timezone') && is_null($request->input('timezone'))) {
                     $timezone = $this->countries
                         ->where('iso_3166_1_alpha2', $request->input('country_code'))
@@ -201,13 +201,14 @@ class UserController extends Controller
                 $user->password = $newpass;
             }
 
-            if (!$user->save()) {
+            if (! $user->save()) {
                 flash('Failed to Update Profile', 'error');
 
                 return redirect()->back();
             } else {
-                if ($emailChanged) : event(new ChangedEmail($user));
-                endif;
+                if ($emailChanged) {
+                    event(new ChangedEmail($user));
+                }
 
                 flash('Successfully Updated Profile', 'success');
 

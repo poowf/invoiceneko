@@ -2,11 +2,11 @@
 
 namespace Database\Factories;
 
-use Illuminate\Support\Str;
 use App\Models\Client;
 use App\Models\InvoiceRecurrence;
 use App\Models\InvoiceTemplate;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class InvoiceTemplateFactory extends Factory
 {

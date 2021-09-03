@@ -2,11 +2,11 @@
 
 namespace Database\Factories;
 
-use Illuminate\Support\Str;
 use App\Models\Client;
 use App\Models\Company;
 use App\Models\Quote;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class QuoteFactory extends Factory
 {
@@ -25,7 +25,7 @@ class QuoteFactory extends Factory
     public function definition()
     {
         return [
-            'nice_quote_id' => substr($this->faker->slug, 0, 20) . 'sasdf',
+            'nice_quote_id' => substr($this->faker->slug, 0, 20).'sasdf',
             'date'          => $this->faker->dateTime,
             'duedate'       => $this->faker->dateTime,
             'netdays'       => $this->faker->numberBetween($min = 1, $max = 60),

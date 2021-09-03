@@ -49,8 +49,8 @@ class RequestCompanyAccessNotification extends Notification implements ShouldQue
         $url = route('company.requests.index', ['company' => $company]);
 
         return (new MailMessage())
-            ->subject($companyUserRequest->full_name . ' has requested to be added to your company on ' . config('app.name'))
-            ->line('Please login to ' . config('app.name') . ' to approve/reject the user')
+            ->subject($companyUserRequest->full_name.' has requested to be added to your company on '.config('app.name'))
+            ->line('Please login to '.config('app.name').' to approve/reject the user')
             ->action('Sign In', $url)
             ->line('Thank you for using our application!');
     }

@@ -115,7 +115,7 @@ class InvoiceController extends Controller
      */
     public function sendnotification(Company $company, Invoice $invoice)
     {
-        if (!is_null($invoice->client_id)) {
+        if (! is_null($invoice->client_id)) {
             $invoice->notify(new InvoiceNotification($invoice));
             flash('An email notification has been sent to the client', 'success');
         }
@@ -137,7 +137,7 @@ class InvoiceController extends Controller
 
         $pdf = $invoice->generatePDFView();
 
-        return $pdf->inline(Str::slug($invoice->nice_invoice_id) . '.pdf');
+        return $pdf->inline(Str::slug($invoice->nice_invoice_id).'.pdf');
     }
 
     /**
@@ -346,7 +346,7 @@ class InvoiceController extends Controller
     {
         $pdf = $invoice->generatePDFView();
 
-        return $pdf->inline(Str::slug($invoice->nice_invoice_id) . '.pdf');
+        return $pdf->inline(Str::slug($invoice->nice_invoice_id).'.pdf');
     }
 
     /**
@@ -361,7 +361,7 @@ class InvoiceController extends Controller
     {
         $pdf = $invoice->generatePDFView();
 
-        return $pdf->download(Str::slug($invoice->nice_invoice_id) . '.pdf');
+        return $pdf->download(Str::slug($invoice->nice_invoice_id).'.pdf');
     }
 
     /**
@@ -569,8 +569,9 @@ class InvoiceController extends Controller
                 }
             }
         } else {
-            if ($recurrenceExists) : $invoice->recurrence->delete();
-            endif;
+            if ($recurrenceExists) {
+                $invoice->recurrence->delete();
+            }
         }
 
         flash('Invoice Updated', 'success');
