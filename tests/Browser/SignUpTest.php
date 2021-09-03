@@ -3,9 +3,9 @@
 namespace Tests\Browser;
 
 use Faker\Factory as Faker;
+use Illuminate\Support\Str;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
-use Illuminate\Support\Str;
 
 class SignUpTest extends DuskTestCase
 {
