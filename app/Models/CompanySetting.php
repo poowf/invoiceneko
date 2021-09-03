@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Library\Poowf\Unicorn;
 use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -35,6 +36,16 @@ class CompanySetting extends Model implements Auditable
         'quote_conditions'   => 'Terms & Conditions for your Quote',
         'tax'                => 0,
     ];
+
+    public function setInvoiceConditionsAttribute($description)
+    {
+        $this->attributes['invoice_conditions'] = Unicorn::stripUnwantedTagsAndAttrs($description, ENT_COMPAT, 'UTF-8');
+    }
+
+    public function setQuoteConditionsAttribute($description)
+    {
+        $this->attributes['quote_conditions'] = Unicorn::stripUnwantedTagsAndAttrs($description, ENT_COMPAT, 'UTF-8');
+    }
 
     protected static function boot()
     {

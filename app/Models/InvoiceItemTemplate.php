@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Library\Poowf\Unicorn;
 use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -31,6 +32,11 @@ class InvoiceItemTemplate extends Model implements Auditable
         'price',
         'description',
     ];
+
+    public function setDescriptionAttribute($description)
+    {
+        $this->attributes['description'] = Unicorn::stripUnwantedTagsAndAttrs($description, ENT_COMPAT, 'UTF-8');
+    }
 
     public function template()
     {
