@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\InvoiceResource;
-use App\Models\Invoice;
+use App\Http\Resources\NekoNotificationResource;
+use App\Http\Resources\PaymentResource;
 use Illuminate\Http\Request;
 
-class InvoiceController extends Controller
+class PaymentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        return InvoiceResource::collection(Invoice::all());
+        //
     }
 
     /**
@@ -34,11 +34,11 @@ class InvoiceController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return InvoiceResource|\Illuminate\Http\Response
+     * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        return new InvoiceResource($id);
+        return new PaymentResource($id);
     }
 
     /**
