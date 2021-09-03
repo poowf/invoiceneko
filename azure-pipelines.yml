@@ -31,8 +31,8 @@ steps:
 
 - script: |
     sudo service mysql start
-    sudo mysql -u root -proot -e "use mysql; ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'poowf'; FLUSH PRIVILEGES;"
-    sudo mysql -u root -ppoowf -e 'create database invoiceneko_test;'
+    sudo mysql -u root -proot -e "use mysql; ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'invoiceneko_password'; FLUSH PRIVILEGES;"
+    sudo mysql -u root -pinvoiceneko_password -e 'create database invoiceneko_test;'
   displayName: 'Set MySQL credentials'
 
 - script: |
