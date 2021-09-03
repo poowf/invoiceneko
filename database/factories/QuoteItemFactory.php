@@ -2,10 +2,10 @@
 
 namespace Database\Factories;
 
-use Illuminate\Support\Str;
 use App\Models\Quote;
 use App\Models\QuoteItem;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class QuoteItemFactory extends Factory
 {

@@ -49,10 +49,10 @@ class InviteUserNotification extends Notification implements ShouldQueue
         $url = route('company.invite.show', ['companyinvite' => $companyInvite->token]);
 
         return (new MailMessage())
-            ->subject('You have been invited to join ' . $company->name . ' on ' . config('app.name'))
-            ->line('Join ' . $company->name . ' on ' . config('app.name'))
+            ->subject('You have been invited to join '.$company->name.' on '.config('app.name'))
+            ->line('Join '.$company->name.' on '.config('app.name'))
             ->action('Accept Invite', $url)
-            ->line('Your invite code is : ' . $companyInvite->token)
+            ->line('Your invite code is : '.$companyInvite->token)
             ->line('This special invite link expires in 48 hours')
             ->line('Please contact the company owner for a new invite link if it has expired')
             ->line('Thank you for using our application!');

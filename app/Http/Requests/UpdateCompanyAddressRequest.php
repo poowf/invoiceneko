@@ -43,7 +43,7 @@ class UpdateCompanyAddressRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             $company = $this->route('company');
-            if (!$company) {
+            if (! $company) {
                 $validator->errors()->add('Company', 'Please fill in your company information first');
             }
         });

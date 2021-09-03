@@ -5,8 +5,8 @@ namespace App\Models;
 use App\Library\Poowf\Unicorn;
 use App\Traits\UniqueSlug;
 use Dyrynda\Database\Support\CascadeSoftDeletes;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
@@ -103,16 +103,16 @@ class Company extends Model implements Auditable
     public function generateNiceID($model, $letter)
     {
         $companySetting = $this->settings;
-        if ($companySetting->{$model . '_prefix'}) {
-            $generatedPrefix = $companySetting->{$model . '_prefix'} . '-';
+        if ($companySetting->{$model.'_prefix'}) {
+            $generatedPrefix = $companySetting->{$model.'_prefix'}.'-';
         } else {
-            $generatedPrefix = $this->slug . $letter . '-';
+            $generatedPrefix = $this->slug.$letter.'-';
         }
 
         //Retrieve latest version of the company model otherwise it will use the old index value
         $this->refresh();
 
-        return $generatedPrefix . sprintf('%06d', $this->{$model . '_index'});
+        return $generatedPrefix.sprintf('%06d', $this->{$model.'_index'});
     }
 
     public function isOwner($user)

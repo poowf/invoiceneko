@@ -27,15 +27,15 @@ class CreateInvoiceRequest extends FormRequest
         $messages = [];
 
         foreach ($this->request->get('item_name') as $key => $value) {
-            $messages['item_name.' . $key . '.required'] = 'Item Name #' . $key . '  is required';
+            $messages['item_name.'.$key.'.required'] = 'Item Name #'.$key.'  is required';
         }
 
         foreach ($this->request->get('item_quantity') as $key => $value) {
-            $messages['item_quantity.' . $key . '.required'] = 'Item Quantity #' . $key . '  is required';
+            $messages['item_quantity.'.$key.'.required'] = 'Item Quantity #'.$key.'  is required';
         }
 
         foreach ($this->request->get('item_price') as $key => $value) {
-            $messages['item_price.' . $key . '.required'] = 'Item Price #' . $key . '  is required';
+            $messages['item_price.'.$key.'.required'] = 'Item Price #'.$key.'  is required';
         }
 
         return $messages;

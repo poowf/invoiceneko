@@ -2,10 +2,10 @@
 
 namespace Database\Factories;
 
-use Illuminate\Support\Str;
 use App\Models\Company;
 use App\Models\CompanySetting;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class CompanySettingFactory extends Factory
 {

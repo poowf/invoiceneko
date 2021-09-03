@@ -67,7 +67,7 @@ class CompanyRoleController extends Controller
         $role->name = Str::slug($title);
         $role->save();
 
-        if (!empty($permissions)) {
+        if (! empty($permissions)) {
             $abilities = Bouncer::ability()->whereIn('name', $permissions)->pluck('id');
             $role->abilities()->sync($abilities);
         }
@@ -99,7 +99,7 @@ class CompanyRoleController extends Controller
      */
     public function edit(Company $company, Role $role)
     {
-        if (!in_array($role->name, $this->defaultRoles)) {
+        if (! in_array($role->name, $this->defaultRoles)) {
             $rolePermissions = $role->getAbilities();
             $permissions = self::getFormattedPermissions();
 
@@ -120,14 +120,14 @@ class CompanyRoleController extends Controller
      */
     public function update(UpdateRoleRequest $request, Company $company, Role $role)
     {
-        if (!in_array($role->name, $this->defaultRoles)) {
+        if (! in_array($role->name, $this->defaultRoles)) {
             $title = $request->input('title');
             $permissions = $request->input('permissions');
             $role->title = $title;
             $role->name = Str::slug($title);
             $role->save();
 
-            if (!empty($permissions)) {
+            if (! empty($permissions)) {
                 $abilities = Bouncer::ability()->whereIn('name', $permissions)->pluck('id');
                 $role->abilities()->sync($abilities);
             }
@@ -152,7 +152,7 @@ class CompanyRoleController extends Controller
      */
     public function destroy(Company $company, Role $role)
     {
-        if (!in_array($role->name, $this->defaultRoles)) {
+        if (! in_array($role->name, $this->defaultRoles)) {
             $role->delete();
         }
         flash('The Role has been deleted', 'success');

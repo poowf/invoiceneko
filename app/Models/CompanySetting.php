@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Dyrynda\Database\Support\CascadeSoftDeletes;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -42,8 +42,8 @@ class CompanySetting extends Model implements Auditable
 
         static::creating(function ($companySettings) {
             $companySettings->invoice_prefix = Str::slug($companySettings->company->name);
-            $companySettings->quote_prefix = Str::slug($companySettings->company->name) . 'Q';
-            $companySettings->receipt_prefix = Str::slug($companySettings->company->name) . 'R';
+            $companySettings->quote_prefix = Str::slug($companySettings->company->name).'Q';
+            $companySettings->receipt_prefix = Str::slug($companySettings->company->name).'R';
         });
     }
 

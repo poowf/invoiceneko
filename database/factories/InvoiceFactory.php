@@ -2,11 +2,11 @@
 
 namespace Database\Factories;
 
-use Illuminate\Support\Str;
-use App\Models\Invoice;
 use App\Models\Client;
 use App\Models\Company;
+use App\Models\Invoice;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class InvoiceFactory extends Factory
 {
@@ -25,7 +25,7 @@ class InvoiceFactory extends Factory
     public function definition()
     {
         return [
-            'nice_invoice_id' => substr($this->faker->slug, 0, 20) . 'sasdf',
+            'nice_invoice_id' => substr($this->faker->slug, 0, 20).'sasdf',
             'date'            => $this->faker->dateTime,
             'duedate'         => $this->faker->dateTime,
             'netdays'         => $this->faker->numberBetween($min = 1, $max = 60),

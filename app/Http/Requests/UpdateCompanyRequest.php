@@ -29,7 +29,7 @@ class UpdateCompanyRequest extends FormRequest
             'crn'         => 'required|string',
             'phone'       => 'required|string',
             'email'       => 'required|email',
-            'domain_name' => ['required', 'unique:companies,domain_name,' . $this->route('company')->id, new Hostname()],
+            'domain_name' => ['required', 'unique:companies,domain_name,'.$this->route('company')->id, new Hostname()],
             'logo'        => 'mimes:jpeg,bmp,png',
             'smlogo'      => 'mimes:jpeg,bmp,png',
         ];

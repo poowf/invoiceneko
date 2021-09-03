@@ -26,22 +26,22 @@ class ClientTest extends DuskTestCase
         $faker = Faker::create();
         $salutation = ['mr', 'mrs', 'mdm', 'miss'];
 
-        $this->browse(function (Browser $browser) use ($faker, $company, $salutation) {
+        $this->browse(function (Browser $browser) use ($faker, $company) {
             $browser->visit('/signin')
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/' . $company->domain_name . '/dashboard')
+                ->assertPathIs('/'.$company->domain_name.'/dashboard')
                 ->clickLink('Clients')
-                ->assertPathIs('/' . $company->domain_name . '/clients')
+                ->assertPathIs('/'.$company->domain_name.'/clients')
                 ->clickLink('Create')
-                ->assertPathIs('/' . $company->domain_name . '/client/create')
+                ->assertPathIs('/'.$company->domain_name.'/client/create')
                 ->type('companyname', $faker->company)
                 ->type('block', $faker->buildingNumber)
                 ->type('street', $faker->streetName)
                 ->type('contactfirstname', $faker->firstName)
                 ->type('contactemail', $faker->unique()->companyEmail)
-                ->type('contactphone', '+658' . $faker->numberBetween($min = 1, $max = 8) . $faker->randomNumber(6, true));
+                ->type('contactphone', '+658'.$faker->numberBetween($min = 1, $max = 8).$faker->randomNumber(6, true));
             $browser
                 ->script('jQuery("#contactsalutation").selectize()[0].selectize.setValue("mr");');
             $browser
@@ -65,14 +65,14 @@ class ClientTest extends DuskTestCase
         $faker = Faker::create();
         $salutation = ['mr', 'mrs', 'mdm', 'miss'];
 
-        $this->browse(function (Browser $browser) use ($faker, $company, $client, $salutation) {
+        $this->browse(function (Browser $browser) use ($faker, $company) {
             $browser->visit('/signin')
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/' . $company->domain_name . '/dashboard')
+                ->assertPathIs('/'.$company->domain_name.'/dashboard')
                 ->clickLink('Clients')
-                ->assertPathIs('/' . $company->domain_name . '/clients')
+                ->assertPathIs('/'.$company->domain_name.'/clients')
                 ->click('.activator')
                 ->pause('500')
                 ->clickLink('Edit')
@@ -81,12 +81,12 @@ class ClientTest extends DuskTestCase
                 ->type('street', $faker->streetName)
                 ->type('contactfirstname', $faker->firstName)
                 ->type('contactemail', $faker->unique()->companyEmail)
-                ->type('contactphone', '+658' . $faker->numberBetween($min = 1, $max = 8) . $faker->randomNumber(6, true));
+                ->type('contactphone', '+658'.$faker->numberBetween($min = 1, $max = 8).$faker->randomNumber(6, true));
             $browser
                 ->script('jQuery("#contactsalutation").selectize()[0].selectize.setValue("mr");');
             $browser
                 ->press('UPDATE')
-                ->assertPathBeginsWith('/' . $company->domain_name . '/client')
+                ->assertPathBeginsWith('/'.$company->domain_name.'/client')
                 ->assertSee('Client Details');
             $browser->script('jQuery(".signmeout-btn").click()');
             $browser->assertPathIs('/');
@@ -106,14 +106,14 @@ class ClientTest extends DuskTestCase
         $faker = Faker::create();
         $salutation = ['mr', 'mrs', 'mdm', 'miss'];
 
-        $this->browse(function (Browser $browser) use ($faker, $company, $client, $salutation) {
+        $this->browse(function (Browser $browser) use ($company) {
             $browser->visit('/signin')
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/' . $company->domain_name . '/dashboard')
+                ->assertPathIs('/'.$company->domain_name.'/dashboard')
                 ->clickLink('Clients')
-                ->assertPathIs('/' . $company->domain_name . '/clients')
+                ->assertPathIs('/'.$company->domain_name.'/clients')
                 ->click('.activator')
                 ->pause(500)
                 ->click('.client-delete-btn')
@@ -134,22 +134,22 @@ class ClientTest extends DuskTestCase
         $faker = Faker::create();
         $salutation = ['mr', 'mrs', 'mdm', 'miss'];
 
-        $this->browse(function (Browser $browser) use ($faker, $company, $salutation) {
+        $this->browse(function (Browser $browser) use ($faker, $company) {
             $browser->visit('/signin')
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/' . $company->domain_name . '/dashboard')
+                ->assertPathIs('/'.$company->domain_name.'/dashboard')
                 ->clickLink('Clients')
-                ->assertPathIs('/' . $company->domain_name . '/clients')
+                ->assertPathIs('/'.$company->domain_name.'/clients')
                 ->clickLink('Create')
-                ->assertPathIs('/' . $company->domain_name . '/client/create')
+                ->assertPathIs('/'.$company->domain_name.'/client/create')
                 ->type('companyname', $faker->company)
                 ->type('block', $faker->buildingNumber)
                 ->type('street', $faker->streetName)
                 ->type('contactfirstname', $faker->firstName)
                 ->type('contactemail', $faker->unique()->companyEmail)
-                ->type('contactphone', '+658' . $faker->numberBetween($min = 1, $max = 8) . $faker->randomNumber(6, true));
+                ->type('contactphone', '+658'.$faker->numberBetween($min = 1, $max = 8).$faker->randomNumber(6, true));
             $browser
                 ->script('jQuery("#contactsalutation").selectize()[0].selectize.setValue("mr");');
             $browser
@@ -163,15 +163,15 @@ class ClientTest extends DuskTestCase
                 ->type('street', $faker->streetName)
                 ->type('contactfirstname', $faker->firstName)
                 ->type('contactemail', $faker->unique()->companyEmail)
-                ->type('contactphone', '+658' . $faker->numberBetween($min = 1, $max = 8) . $faker->randomNumber(6, true));
+                ->type('contactphone', '+658'.$faker->numberBetween($min = 1, $max = 8).$faker->randomNumber(6, true));
             $browser
                 ->script('jQuery("#contactsalutation").selectize()[0].selectize.setValue("mr");');
             $browser
                 ->press('UPDATE')
-                ->assertPathBeginsWith('/' . $company->domain_name . '/client')
+                ->assertPathBeginsWith('/'.$company->domain_name.'/client')
                 ->assertSee('Client Details')
                 ->clickLink('Clients')
-                ->assertPathIs('/' . $company->domain_name . '/clients')
+                ->assertPathIs('/'.$company->domain_name.'/clients')
                 ->click('.activator')
                 ->pause(500)
                 ->click('.client-delete-btn')

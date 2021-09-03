@@ -2,10 +2,10 @@
 
 namespace Database\Factories;
 
-use Illuminate\Support\Str;
 use App\Models\Company;
 use App\Models\CompanyUserRequest;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class CompanyUserRequestFactory extends Factory
 {
@@ -26,7 +26,7 @@ class CompanyUserRequestFactory extends Factory
         return [
             'full_name'  => $this->faker->name,
             'email'      => $this->faker->unique()->safeEmail,
-            'phone'      => '+658' . $this->faker->numberBetween($min = 1, $max = 8) . $this->faker->randomNumber(6, true),
+            'phone'      => '+658'.$this->faker->numberBetween($min = 1, $max = 8).$this->faker->randomNumber(6, true),
             'token'      => Str::random(10),
             'status'     => $this->faker->numberBetween($min = 1, $max = 3),
             'company_id' => function () {

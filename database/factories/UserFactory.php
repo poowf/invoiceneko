@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use Illuminate\Support\Str;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class UserFactory extends Factory
 {
@@ -29,7 +29,7 @@ class UserFactory extends Factory
             'country_code'      => $this->faker->countryCode,
             'timezone'          => $this->faker->timezone,
             'password'          => 'secret',
-            'phone'             => '+658' . $this->faker->numberBetween($min = 1, $max = 8) . $this->faker->randomNumber(6, true),
+            'phone'             => '+658'.$this->faker->numberBetween($min = 1, $max = 8).$this->faker->randomNumber(6, true),
             'gender'            => 'male' | 'female',
             'remember_token'    => Str::random(10),
             'status'            => $this->faker->numberBetween($min = 1, $max = 3),

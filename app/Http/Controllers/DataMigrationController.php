@@ -34,13 +34,13 @@ class DataMigrationController extends Controller
                 try {
                     $client = Client::query();
                     $companyname = (is_null($row->company_name) ? $row->display_name : $row->company_name);
-                    if (!$client->duplicatecheck($companyname)->first()) {
+                    if (! $client->duplicatecheck($companyname)->first()) {
                         $client = new Client();
                         $client->companyname = $companyname;
                         $client->phone = $row->phone;
                         $client->website = $row->website;
                         $client->nickname = $row->display_name;
-                        $client->street = $row->billing_address . $row->billing_street2;
+                        $client->street = $row->billing_address.$row->billing_street2;
                         $client->postalcode = $row->billing_code;
                         $client->country = $row->billing_country;
                         $client->crn = (is_null($row->customfield_value1) ? null : $row->customfield_value1);
@@ -53,10 +53,10 @@ class DataMigrationController extends Controller
                         $client->company_id = auth()->user()->company_id;
                         $client->save();
                     } else {
-                        $errorscollection->push($row->emailid . ' could not be imported');
+                        $errorscollection->push($row->emailid.' could not be imported');
                     }
                 } catch (\Exception $e) {
-                    $errorscollection->push($row->emailid . ' could not be imported');
+                    $errorscollection->push($row->emailid.' could not be imported');
                     continue;
                     // All other exceptions
                     Log::info('Caught Exception la');
@@ -92,7 +92,7 @@ class DataMigrationController extends Controller
                     } else {
                         $companyname = $row->company_name;
 
-                        $client = Client::where('companyname', 'LIKE', '%' . $companyname . '%')->where('company_id', $auth_companyid)->first();
+                        $client = Client::where('companyname', 'LIKE', '%'.$companyname.'%')->where('company_id', $auth_companyid)->first();
 
                         $invoice = new Invoice();
                         $invoice->nice_invoice_id = $row->invoice_number;
@@ -130,7 +130,7 @@ class DataMigrationController extends Controller
 
                     $invoice->setInvoiceTotal();
                 } catch (Exception $e) {
-                    $errorscollection->push($row->invoice_number . ' could not be imported');
+                    $errorscollection->push($row->invoice_number.' could not be imported');
                     continue;
                     // All other exceptions
                     Log::info('Caught Exception la');
@@ -146,7 +146,7 @@ class DataMigrationController extends Controller
         $invoiceitem = InvoiceItem::query();
         $price = number_format($price, 3, '.', '');
         $quantity = intval($quantity);
-        if (!$invoiceitem->duplicatecheck($price, $quantity, $invoiceid)->first()) {
+        if (! $invoiceitem->duplicatecheck($price, $quantity, $invoiceid)->first()) {
             $invitem = new InvoiceItem();
             $invitem->name = (is_null($name) ? 'Item' : $name);
             $invitem->description = $description;
@@ -181,21 +181,21 @@ class DataMigrationController extends Controller
 
                     $amount = number_format($row->amount, 3, '.', '');
 
-                    if (!$payment->duplicatecheck($amount, $row->date, $invoice->id, $invoice->getClient()->id, $auth_companyid)->first()) {
+                    if (! $payment->duplicatecheck($amount, $row->date, $invoice->id, $invoice->getClient()->id, $auth_companyid)->first()) {
                         $payment = new Payment();
                         $payment->amount = $amount;
                         $payment->receiveddate = $row->date;
-                        $payment->notes = $row->description . ' ' . $row->reference_number;
+                        $payment->notes = $row->description.' '.$row->reference_number;
                         $payment->mode = $row->mode;
                         $payment->invoice_id = $invoice->id;
                         $payment->client_id = $invoice->getClient()->id;
                         $payment->company_id = $auth_companyid;
                         $payment->save();
                     } else {
-                        $errorscollection->push($row->invoice_number . ', ' . $row->date . ', $' . $row->amount . ' could not be imported');
+                        $errorscollection->push($row->invoice_number.', '.$row->date.', $'.$row->amount.' could not be imported');
                     }
                 } catch (\Exception $e) {
-                    $errorscollection->push($row->invoice_number . ', ' . $row->date . ', $' . $row->amount . ' could not be imported');
+                    $errorscollection->push($row->invoice_number.', '.$row->date.', $'.$row->amount.' could not be imported');
                     continue;
                     // All other exceptions
                     Log::info('Caught Exception la');

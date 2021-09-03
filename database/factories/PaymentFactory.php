@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
-use Illuminate\Support\Str;
-use App\Models\Invoice;
 use App\Models\Client;
 use App\Models\Company;
+use App\Models\Invoice;
 use App\Models\Payment;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class PaymentFactory extends Factory
 {

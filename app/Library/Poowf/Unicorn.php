@@ -39,7 +39,7 @@ class Unicorn
         if (config('app.github_token')) {
             $response = $client->request('GET', 'repos/poowf/invoiceneko/releases', [
                 'headers' => [
-                    'Authorization' => 'token ' . config('app.github_token'),
+                    'Authorization' => 'token '.config('app.github_token'),
                 ],
             ]);
         } else {
@@ -61,7 +61,7 @@ class Unicorn
                         $release->commit_data = self::getGithubCommitDataByTag($release->tag_name);
                         $release->body_html = $Parsedown->text($release->body);
                         $unstable = $release;
-                    } elseif (is_null($stable) && !$release->prerelease) {
+                    } elseif (is_null($stable) && ! $release->prerelease) {
                         $release->commit_data = self::getGithubCommitDataByTag($release->tag_name);
                         $release->body_html = $Parsedown->text($release->body);
                         $stable = $release;
@@ -85,13 +85,13 @@ class Unicorn
     {
         $client = new Client(['base_uri' => 'https://api.github.com/']);
         if (config('app.github_token')) {
-            $response = $client->request('GET', 'repos/poowf/invoiceneko/git/refs/tags/' . $tagname, [
+            $response = $client->request('GET', 'repos/poowf/invoiceneko/git/refs/tags/'.$tagname, [
                 'headers' => [
-                    'Authorization' => 'token ' . config('app.github_token'),
+                    'Authorization' => 'token '.config('app.github_token'),
                 ],
             ]);
         } else {
-            $response = $client->request('GET', 'repos/poowf/invoiceneko/git/refs/tags/' . $tagname);
+            $response = $client->request('GET', 'repos/poowf/invoiceneko/git/refs/tags/'.$tagname);
         }
 
         $body = json_decode($response->getBody()->getContents());
@@ -111,7 +111,7 @@ class Unicorn
         ];
 
         $validator = Validator::make($dataFormat, [
-           'value' => 'regex:([A-Za-z0-9,-]+)',
+            'value' => 'regex:([A-Za-z0-9,-]+)',
         ]);
 
         if ($validator->fails()) {
@@ -243,23 +243,23 @@ class Unicorn
         Bouncer::useRoleModel(Role::class);
 
         Bouncer::ability()->makeForModel($model, [
-            'name'  => 'view-' . Str::slug(strtolower(self::getModelNiceName($model))),
-            'title' => 'View ' . self::getModelNiceName($model),
+            'name'  => 'view-'.Str::slug(strtolower(self::getModelNiceName($model))),
+            'title' => 'View '.self::getModelNiceName($model),
         ])->save();
 
         Bouncer::ability()->makeForModel($model, [
-            'name'  => 'create-' . Str::slug(strtolower(self::getModelNiceName($model))),
-            'title' => 'Create ' . self::getModelNiceName($model),
+            'name'  => 'create-'.Str::slug(strtolower(self::getModelNiceName($model))),
+            'title' => 'Create '.self::getModelNiceName($model),
         ])->save();
 
         Bouncer::ability()->makeForModel($model, [
-            'name'  => 'update-' . Str::slug(strtolower(self::getModelNiceName($model))),
-            'title' => 'Update ' . self::getModelNiceName($model),
+            'name'  => 'update-'.Str::slug(strtolower(self::getModelNiceName($model))),
+            'title' => 'Update '.self::getModelNiceName($model),
         ])->save();
 
         Bouncer::ability()->makeForModel($model, [
-            'name'  => 'delete-' . Str::slug(strtolower(self::getModelNiceName($model))),
-            'title' => 'Delete ' . self::getModelNiceName($model),
+            'name'  => 'delete-'.Str::slug(strtolower(self::getModelNiceName($model))),
+            'title' => 'Delete '.self::getModelNiceName($model),
         ])->save();
     }
 
@@ -306,10 +306,10 @@ class Unicorn
 
         if ($modelClass === 'all') {
             foreach (self::$modelClasses as $key => $model) {
-                Bouncer::allow($role)->to($methodName . '-' . Str::slug(strtolower(self::getModelNiceName($model))), $model);
+                Bouncer::allow($role)->to($methodName.'-'.Str::slug(strtolower(self::getModelNiceName($model))), $model);
             }
         } else {
-            Bouncer::allow($role)->to($methodName . '-' . Str::slug(strtolower(self::getModelNiceName($modelClass))), $modelClass);
+            Bouncer::allow($role)->to($methodName.'-'.Str::slug(strtolower(self::getModelNiceName($modelClass))), $modelClass);
         }
     }
 

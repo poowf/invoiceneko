@@ -69,7 +69,7 @@ class InvoiceItemTest extends TestCase
     {
         $invoice = Invoice::factory()->create();
         $invoiceItem = InvoiceItem::factory()->create([
-                'invoice_id' => $invoice->id,
+            'invoice_id' => $invoice->id,
         ]);
 
         $this->assertInstanceOf(InvoiceItem::class, $invoiceItem);

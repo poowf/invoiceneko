@@ -2,10 +2,10 @@
 
 namespace Database\Factories;
 
-use Illuminate\Support\Str;
-use App\Models\InvoiceTemplate;
 use App\Models\InvoiceItemTemplate;
+use App\Models\InvoiceTemplate;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class InvoiceItemTemplateFactory extends Factory
 {

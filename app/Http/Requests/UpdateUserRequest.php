@@ -24,10 +24,10 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'username'    => 'required|string|min:4|unique:users,username,' . auth()->user()->id,
-            'email'       => 'required|email|unique:users,email,' . auth()->user()->id,
+            'username'    => 'required|string|min:4|unique:users,username,'.auth()->user()->id,
+            'email'       => 'required|email|unique:users,email,'.auth()->user()->id,
             'password'    => 'required',
-            'phone'       => 'required|unique:users,phone,' . auth()->user()->id,
+            'phone'       => 'required|unique:users,phone,'.auth()->user()->id,
             'gender'      => 'required|in:male,female',
             'full_name'   => 'required|string|min:4',
             'newpassword' => 'confirmed',

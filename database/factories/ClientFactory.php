@@ -2,10 +2,10 @@
 
 namespace Database\Factories;
 
-use Illuminate\Support\Str;
-use App\Models\Company;
 use App\Models\Client;
+use App\Models\Company;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class ClientFactory extends Factory
 {
@@ -25,7 +25,7 @@ class ClientFactory extends Factory
     {
         return [
             'companyname'       => $this->faker->company,
-            'phone'             => '+659' . $this->faker->numberBetween($min = 0, $max = 8) . $this->faker->randomNumber(6, true),
+            'phone'             => '+659'.$this->faker->numberBetween($min = 0, $max = 8).$this->faker->randomNumber(6, true),
             'block'             => $this->faker->buildingNumber,
             'street'            => $this->faker->streetName,
             'unitnumber'        => $this->faker->buildingNumber,
@@ -39,7 +39,7 @@ class ClientFactory extends Factory
             'contactlastname'   => $this->faker->lastName,
             'contactgender'     => 'male',
             'contactemail'      => $this->faker->unique()->companyEmail,
-            'contactphone'      => '+658' . $this->faker->numberBetween($min = 1, $max = 8) . $this->faker->randomNumber(6, true),
+            'contactphone'      => '+658'.$this->faker->numberBetween($min = 1, $max = 8).$this->faker->randomNumber(6, true),
             'company_id'        => function () {
                 return Company::factory()->create()->id;
             },

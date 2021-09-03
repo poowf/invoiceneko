@@ -47,14 +47,14 @@ class PolicyTest extends DuskTestCase
         $secondCompany = Company::factory()->create();
         $secondCompany->users()->attach($secondCompany->user_id);
 
-        $this->browse(function (Browser $browser) use ($faker, $client, $company, $secondCompany, $invoice, $itemTemplate, $salutation) {
+        $this->browse(function (Browser $browser) use ($faker, $client, $company, $secondCompany, $invoice) {
             $browser->visit('/signin')
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/' . $company->domain_name . '/dashboard')
+                ->assertPathIs('/'.$company->domain_name.'/dashboard')
                 ->clickLink('Invoices')
-                ->assertPathIs('/' . $company->domain_name . '/invoices')
+                ->assertPathIs('/'.$company->domain_name.'/invoices')
                 ->clickLink('Pending')
                 ->pause(500);
             $browser
@@ -65,9 +65,9 @@ class PolicyTest extends DuskTestCase
                 ->type('item_quantity[]', $faker->numberBetween($min = 1, $max = 999999999))
                 ->type('item_price[]', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999));
             $browser
-                ->script('jQuery("#client_id").selectize()[0].selectize.setValue(' . $client->id . ');');
+                ->script('jQuery("#client_id").selectize()[0].selectize.setValue('.$client->id.');');
             $browser
-                ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("' . Carbon::now()->format('j F, Y') . '");');
+                ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("'.Carbon::now()->format('j F, Y').'");');
             $browser
                 ->pause(2000)
                 ->press('UPDATE')
@@ -79,12 +79,12 @@ class PolicyTest extends DuskTestCase
                 ->type('username', $secondCompany->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/' . $secondCompany->domain_name . '/dashboard')
-                ->visit('/' . $company->domain_name . '/invoice/' . $invoice->id)
+                ->assertPathIs('/'.$secondCompany->domain_name.'/dashboard')
+                ->visit('/'.$company->domain_name.'/invoice/'.$invoice->id)
                 ->assertSee('Error 401')
                 ->screenshot('view-another-company-invoice-test')
                 ->visit('/')
-                ->assertPathIs('/' . $secondCompany->domain_name . '/dashboard');
+                ->assertPathIs('/'.$secondCompany->domain_name.'/dashboard');
             $browser->script('jQuery(".signmeout-btn").click()');
             $browser->assertPathIs('/');
         });
@@ -116,14 +116,14 @@ class PolicyTest extends DuskTestCase
         $secondCompany = Company::factory()->create();
         $secondCompany->users()->attach($secondCompany->user_id);
 
-        $this->browse(function (Browser $browser) use ($faker, $client, $company, $secondCompany, $quote, $itemTemplate, $salutation) {
+        $this->browse(function (Browser $browser) use ($faker, $client, $company, $secondCompany, $quote) {
             $browser->visit('/signin')
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/' . $company->domain_name . '/dashboard')
+                ->assertPathIs('/'.$company->domain_name.'/dashboard')
                 ->clickLink('Quotes')
-                ->assertPathIs('/' . $company->domain_name . '/quotes')
+                ->assertPathIs('/'.$company->domain_name.'/quotes')
                 ->clickLink('Pending')
                 ->pause(500);
             $browser
@@ -134,9 +134,9 @@ class PolicyTest extends DuskTestCase
                 ->type('item_quantity[]', $faker->numberBetween($min = 1, $max = 999999999))
                 ->type('item_price[]', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999));
             $browser
-                ->script('jQuery("#client_id").selectize()[0].selectize.setValue(' . $client->id . ');');
+                ->script('jQuery("#client_id").selectize()[0].selectize.setValue('.$client->id.');');
             $browser
-                ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("' . Carbon::now()->format('j F, Y') . '");');
+                ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("'.Carbon::now()->format('j F, Y').'");');
             $browser
                 ->pause(2000)
                 ->press('UPDATE')
@@ -148,12 +148,12 @@ class PolicyTest extends DuskTestCase
                 ->type('username', $secondCompany->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/' . $secondCompany->domain_name . '/dashboard')
-                ->visit('/' . $company->domain_name . '/quote/' . $quote->id)
+                ->assertPathIs('/'.$secondCompany->domain_name.'/dashboard')
+                ->visit('/'.$company->domain_name.'/quote/'.$quote->id)
                 ->assertSee('Error 401')
                 ->screenshot('view-another-company-quote-test')
                 ->visit('/')
-                ->assertPathIs('/' . $secondCompany->domain_name . '/dashboard');
+                ->assertPathIs('/'.$secondCompany->domain_name.'/dashboard');
             $browser->script('jQuery(".signmeout-btn").click()');
             $browser->assertPathIs('/');
         });
