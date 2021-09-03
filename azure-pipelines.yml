@@ -66,12 +66,12 @@ steps:
   displayName: 'Starting Chrome and the Web Server'
 
 - script: |
-    vendor/bin/phpunit --log-junit tests/Results/TEST-phpunit-junit.xml
+    composer run test
   displayName: 'Running Unit Tests'
 
 - script: |
-    php artisan dusk:chrome-driver
-    php artisan dusk --log-junit tests/Results/TEST-dusk-junit.xml
+    php artisan dusk:chrome-driver --detect
+    composer run test:dusk
   displayName: 'Running Browser Tests'
 
 # Publish Test Results to Azure Pipelines/TFS

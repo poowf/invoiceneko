@@ -43,7 +43,10 @@ RUN apk add --no-cache \
     ttf-dejavu \
     ttf-droid \
     ttf-freefont \
-    ttf-liberation
+    ttf-liberation \
+    dbus \
+    chromium \
+    chromium-chromedriver
 
 RUN apk add --no-cache --virtual .build-deps \
     msttcorefonts-installer \

@@ -6,6 +6,7 @@ use App\Library\Poowf\Unicorn;
 use App\Traits\UniqueSlug;
 use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
@@ -16,7 +17,7 @@ use Silber\Bouncer\Database\HasRolesAndAbilities;
 class Company extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
-    use HasRolesAndAbilities, Notifiable, SoftDeletes, CascadeSoftDeletes, UniqueSlug;
+    use HasRolesAndAbilities, HasFactory, Notifiable, SoftDeletes, CascadeSoftDeletes, UniqueSlug;
 
     /**
      * The database table used by the model.

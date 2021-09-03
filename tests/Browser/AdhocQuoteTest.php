@@ -18,10 +18,10 @@ class AdhocQuoteTest extends DuskTestCase
      */
     public function test_creating_an_adhoc_quote()
     {
-        $company = factory(Company::class)->create();
+        $company = Company::factory()->create();
         //Need to attach the company to the user
         $company->users()->attach($company->user_id);
-        $itemTemplate = factory(ItemTemplate::class)->create([
+        $itemTemplate = ItemTemplate::factory()->create([
             'company_id' => $company->id,
         ]);
 
@@ -62,10 +62,10 @@ class AdhocQuoteTest extends DuskTestCase
 
     public function test_updating_an_adhoc_quote()
     {
-        $company = factory(Company::class)->create();
+        $company = Company::factory()->create();
         //Need to attach the company to the user
         $company->users()->attach($company->user_id);
-        $itemTemplate = factory(ItemTemplate::class)->create([
+        $itemTemplate = ItemTemplate::factory()->create([
             'company_id' => $company->id,
         ]);
 
@@ -124,10 +124,10 @@ class AdhocQuoteTest extends DuskTestCase
 
     public function test_deleting_an_adhoc_quote()
     {
-        $company = factory(Company::class)->create();
+        $company = Company::factory()->create();
         //Need to attach the company to the user
         $company->users()->attach($company->user_id);
-        $itemTemplate = factory(ItemTemplate::class)->create([
+        $itemTemplate = ItemTemplate::factory()->create([
             'company_id' => $company->id,
         ]);
 
@@ -173,10 +173,10 @@ class AdhocQuoteTest extends DuskTestCase
 
     public function test_end_to_end_adhoc_quote()
     {
-        $company = factory(Company::class)->create();
+        $company = Company::factory()->create();
         //Need to attach the company to the user
         $company->users()->attach($company->user_id);
-        $itemTemplate = factory(ItemTemplate::class)->create([
+        $itemTemplate = ItemTemplate::factory()->create([
             'company_id' => $company->id,
         ]);
 

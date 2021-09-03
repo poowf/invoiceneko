@@ -20,7 +20,7 @@ class CompanyUsersManagementTest extends DuskTestCase
      */
     public function test_inviting_a_user_to_a_company()
     {
-        $company = factory(Company::class)->create();
+        $company = Company::factory()->create();
         //Need to attach the company to the user
         $company->users()->attach($company->user_id);
 
@@ -47,11 +47,11 @@ class CompanyUsersManagementTest extends DuskTestCase
 
     public function test_approve_user_request_to_join_company()
     {
-        $company = factory(Company::class)->create();
+        $company = Company::factory()->create();
         //Need to attach the company to the user
         $company->users()->attach($company->user_id);
 
-        $companyUserRequest = factory(CompanyUserRequest::class)->create([
+        $companyUserRequest = CompanyUserRequest::factory()->create([
             'status'     => CompanyUserRequest::STATUS_PENDING,
             'company_id' => $company->id,
         ]);
@@ -76,11 +76,11 @@ class CompanyUsersManagementTest extends DuskTestCase
 
     public function test_reject_user_request_to_join_company()
     {
-        $company = factory(Company::class)->create();
+        $company = Company::factory()->create();
         //Need to attach the company to the user
         $company->users()->attach($company->user_id);
 
-        $companyUserRequest = factory(CompanyUserRequest::class)->create([
+        $companyUserRequest = CompanyUserRequest::factory()->create([
             'status'     => CompanyUserRequest::STATUS_PENDING,
             'company_id' => $company->id,
         ]);

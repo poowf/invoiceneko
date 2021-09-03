@@ -7355,7 +7355,7 @@ https://highlightjs.org/
   } else if(globalObject) {
     // Export hljs globally even when using AMD for cases when this script
     // is loaded with others that may still expect a global hljs.
-    globalObject.hljs = factory({});
+    globalObject.hljs = {});
 
     // Finally register the global hljs with AMD.
     if(typeof define === 'function' && define.amd) {
@@ -38779,7 +38779,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 	/*global define*/
 	if (typeof module === 'object' && module.exports) {
-		module.exports = factory(__webpack_require__("./node_modules/moment/moment.js")); // Node
+		module.exports = __webpack_require__("./node_modules/moment/moment.js")); // Node
 	} else if (true) {
 		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__("./node_modules/moment/moment.js")], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
@@ -39170,7 +39170,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 	}
 
 	function getZone (name, caller) {
-		
+
 		name = normalizeName(name);
 
 		var zone = zones[name];
@@ -39394,9 +39394,9 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 /* WEBPACK VAR INJECTION */(function(module) {var require;//! moment.js
 
 ;(function (global, factory) {
-     true ? module.exports = factory() :
+     true ? module.exports = ) :
     typeof define === 'function' && define.amd ? define(factory) :
-    global.moment = factory()
+    global.moment = )
 }(this, (function () { 'use strict';
 
     var hookCallback;
@@ -60277,7 +60277,7 @@ function resolveAsyncComponent (
       }
     });
 
-    var res = factory(resolve, reject);
+    var res = resolve, reject);
 
     if (isObject(res)) {
       if (typeof res.then === 'function') {

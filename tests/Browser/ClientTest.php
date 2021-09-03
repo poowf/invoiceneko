@@ -19,7 +19,7 @@ class ClientTest extends DuskTestCase
      */
     public function test_create_a_client()
     {
-        $company = factory(Company::class)->create();
+        $company = Company::factory()->create();
         //Need to attach the company to the user
         $company->users()->attach($company->user_id);
 
@@ -54,11 +54,11 @@ class ClientTest extends DuskTestCase
 
     public function test_update_a_client()
     {
-        $company = factory(Company::class)->create();
+        $company = Company::factory()->create();
         //Need to attach the company to the user
         $company->users()->attach($company->user_id);
 
-        $client = factory(Client::class)->create([
+        $client = Client::factory()->create([
             'company_id' => $company->id,
         ]);
 
@@ -95,11 +95,11 @@ class ClientTest extends DuskTestCase
 
     public function test_delete_a_client()
     {
-        $company = factory(Company::class)->create();
+        $company = Company::factory()->create();
         //Need to attach the company to the user
         $company->users()->attach($company->user_id);
 
-        $client = factory(Client::class)->create([
+        $client = Client::factory()->create([
             'company_id' => $company->id,
         ]);
 
@@ -127,7 +127,7 @@ class ClientTest extends DuskTestCase
 
     public function test_end_to_end_client()
     {
-        $company = factory(Company::class)->create();
+        $company = Company::factory()->create();
         //Need to attach the company to the user
         $company->users()->attach($company->user_id);
 

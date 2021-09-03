@@ -22,8 +22,8 @@ class QuoteTest extends DuskTestCase
      */
     public function test_creating_a_quote()
     {
-        $client = factory(Client::class)->create();
-        $itemTemplate = factory(ItemTemplate::class)->create([
+        $client = Client::factory()->create();
+        $itemTemplate = ItemTemplate::factory()->create([
             'company_id' => $client->company->id,
         ]);
         $company = $client->company;
@@ -63,8 +63,8 @@ class QuoteTest extends DuskTestCase
 
     public function test_adding_a_second_quote_item()
     {
-        $client = factory(Client::class)->create();
-        $itemTemplates = factory(ItemTemplate::class, 5)->create([
+        $client = Client::factory()->create();
+        $itemTemplates = ItemTemplate::factory(5)->create([
             'company_id' => $client->company->id,
         ]);
         $company = $client->company;
@@ -108,21 +108,21 @@ class QuoteTest extends DuskTestCase
 
     public function test_update_a_quote()
     {
-        $client = factory(Client::class)->create();
+        $client = Client::factory()->create();
         $company = $client->company;
         //Need to attach the company to the user
         $company->users()->attach($company->user_id);
 
-        $quote = factory(Quote::class)->create([
+        $quote = Quote::factory()->create([
             'status'     => Quote::STATUS_OPEN,
             'archived'   => false,
             'client_id'  => $client->id,
             'company_id' => $company->id,
         ]);
-        $quoteItems = factory(QuoteItem::class, 3)->create([
+        $quoteItems = QuoteItem::factory(3)->create([
             'quote_id' => $quote->id,
         ]);
-        $itemTemplate = factory(ItemTemplate::class)->create([
+        $itemTemplate = ItemTemplate::factory()->create([
             'company_id' => $company->id,
         ]);
 
@@ -160,18 +160,18 @@ class QuoteTest extends DuskTestCase
 
     public function test_delete_a_quote()
     {
-        $client = factory(Client::class)->create();
+        $client = Client::factory()->create();
         $company = $client->company;
         //Need to attach the company to the user
         $company->users()->attach($company->user_id);
 
-        $quote = factory(Quote::class)->create([
+        $quote = Quote::factory()->create([
             'status'     => Quote::STATUS_OPEN,
             'archived'   => false,
             'client_id'  => $client->id,
             'company_id' => $company->id,
         ]);
-        $quoteItems = factory(QuoteItem::class, 3)->create([
+        $quoteItems = QuoteItem::factory(3)->create([
             'quote_id' => $quote->id,
         ]);
 
@@ -199,8 +199,8 @@ class QuoteTest extends DuskTestCase
 
     public function test_end_to_end_quote()
     {
-        $client = factory(Client::class)->create();
-        $itemTemplate = factory(ItemTemplate::class)->create([
+        $client = Client::factory()->create();
+        $itemTemplate = ItemTemplate::factory()->create([
             'company_id' => $client->company->id,
         ]);
         $company = $client->company;

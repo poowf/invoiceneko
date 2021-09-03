@@ -4,6 +4,7 @@
 /storage/*.key
 /vendor
 /.idea
+/.vscode
 /.vagrant
 /public/perm_store/*
 /public/mix-manifest.json
@@ -13,6 +14,7 @@ npm-debug.log
 yarn-error.log
 envData.json
 .env
+.env.backup
 .env.dusk.local
 .env.testing
 .phpunit.result.cache

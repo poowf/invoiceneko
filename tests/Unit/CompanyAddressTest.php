@@ -15,7 +15,7 @@ class CompanyAddressTest extends TestCase
      */
     public function test_create_company_address()
     {
-        $company = factory(Company::class)->create();
+        $company = Company::factory()->create();
 
         CompanyAddress::unguard();
 
@@ -36,8 +36,8 @@ class CompanyAddressTest extends TestCase
 
     public function test_update_company_address()
     {
-        $company = factory(Company::class)->create();
-        $companyAddress = factory(CompanyAddress::class)->create([
+        $company = Company::factory()->create();
+        $companyAddress = CompanyAddress::factory()->create([
             'company_id' => $company->id,
         ]);
 
@@ -68,8 +68,8 @@ class CompanyAddressTest extends TestCase
 
     public function test_delete_company_address()
     {
-        $company = factory(Company::class)->create();
-        $companyAddress = factory(CompanyAddress::class)->create([
+        $company = Company::factory()->create();
+        $companyAddress = CompanyAddress::factory()->create([
             'company_id' => $company->id,
         ]);
 

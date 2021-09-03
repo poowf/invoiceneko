@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Mail;
@@ -17,8 +18,7 @@ class Invoice extends Model implements Auditable
     public $generated = null;
 
     use \OwenIt\Auditing\Auditable;
-    use SoftDeletes, CascadeSoftDeletes;
-    use Notifiable;
+    use HasFactory, Notifiable, SoftDeletes, CascadeSoftDeletes;
 
     const STATUS_DRAFT = 1;
     const STATUS_OPEN = 2;

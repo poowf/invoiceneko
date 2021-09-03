@@ -20,8 +20,8 @@ class InvoiceTest extends DuskTestCase
      */
     public function test_creating_an_invoice()
     {
-        $client = factory(Client::class)->create();
-        $itemTemplate = factory(ItemTemplate::class)->create([
+        $client = Client::factory()->create();
+        $itemTemplate = ItemTemplate::factory()->create([
             'company_id' => $client->company->id,
         ]);
 
@@ -69,8 +69,8 @@ class InvoiceTest extends DuskTestCase
      */
     public function test_adding_a_second_invoice_item()
     {
-        $client = factory(Client::class)->create();
-        $itemTemplates = factory(ItemTemplate::class, 5)->create([
+        $client = Client::factory()->create();
+        $itemTemplates = ItemTemplate::factory(5)->create([
             'company_id' => $client->company->id,
         ]);
 
@@ -121,21 +121,21 @@ class InvoiceTest extends DuskTestCase
      */
     public function test_updating_an_invoice()
     {
-        $client = factory(Client::class)->create();
+        $client = Client::factory()->create();
         $company = $client->company;
         //Need to attach the company to the user
         $company->users()->attach($company->user_id);
 
-        $invoice = factory(Invoice::class)->create([
+        $invoice = Invoice::factory()->create([
             'status'     => Invoice::STATUS_OPEN,
             'archived'   => false,
             'client_id'  => $client->id,
             'company_id' => $company->id,
         ]);
-        $invoiceItems = factory(InvoiceItem::class, 3)->create([
+        $invoiceItems = InvoiceItem::factory(3)->create([
             'invoice_id' => $invoice->id,
         ]);
-        $itemTemplate = factory(ItemTemplate::class)->create([
+        $itemTemplate = ItemTemplate::factory()->create([
             'company_id' => $company->id,
         ]);
 
@@ -180,18 +180,18 @@ class InvoiceTest extends DuskTestCase
      */
     public function test_deleting_an_invoice()
     {
-        $client = factory(Client::class)->create();
+        $client = Client::factory()->create();
         $company = $client->company;
         //Need to attach the company to the user
         $company->users()->attach($company->user_id);
 
-        $invoice = factory(Invoice::class)->create([
+        $invoice = Invoice::factory()->create([
             'status'     => Invoice::STATUS_OPEN,
             'archived'   => false,
             'client_id'  => $client->id,
             'company_id' => $company->id,
         ]);
-        $invoiceItems = factory(InvoiceItem::class, 3)->create([
+        $invoiceItems = InvoiceItem::factory(3)->create([
             'invoice_id' => $invoice->id,
         ]);
 
@@ -226,21 +226,21 @@ class InvoiceTest extends DuskTestCase
      */
     public function test_invoice_log_payment()
     {
-        $client = factory(Client::class)->create();
+        $client = Client::factory()->create();
         $company = $client->company;
         //Need to attach the company to the user
         $company->users()->attach($company->user_id);
 
-        $invoice = factory(Invoice::class)->create([
+        $invoice = Invoice::factory()->create([
             'status'     => Invoice::STATUS_OPEN,
             'archived'   => false,
             'client_id'  => $client->id,
             'company_id' => $company->id,
         ]);
-        $invoiceItems = factory(InvoiceItem::class, 3)->create([
+        $invoiceItems = InvoiceItem::factory(3)->create([
             'invoice_id' => $invoice->id,
         ]);
-        $itemTemplate = factory(ItemTemplate::class)->create([
+        $itemTemplate = ItemTemplate::factory()->create([
             'company_id' => $company->id,
         ]);
 
@@ -284,8 +284,8 @@ class InvoiceTest extends DuskTestCase
      */
     public function test_end_to_end_invoice()
     {
-        $client = factory(Client::class)->create();
-        $itemTemplate = factory(ItemTemplate::class)->create([
+        $client = Client::factory()->create();
+        $itemTemplate = ItemTemplate::factory()->create([
             'company_id' => $client->company->id,
         ]);
 

@@ -18,7 +18,7 @@ class CompanyTest extends DuskTestCase
      */
     public function test_updating_a_company()
     {
-        $company = factory(Company::class)->create();
+        $company = Company::factory()->create();
         //Need to attach the company to the user
         $company->users()->attach($company->user_id);
 

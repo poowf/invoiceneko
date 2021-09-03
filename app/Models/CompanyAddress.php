@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class CompanyAddress extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
-    use SoftDeletes, CascadeSoftDeletes;
+    use SoftDeletes, HasFactory, CascadeSoftDeletes;
 
     /**
      * The database table used by the model.

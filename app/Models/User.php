@@ -6,16 +6,18 @@ use App\Notifications\ResetPasswordNotification;
 use App\Notifications\VerifyEmail;
 use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 use OwenIt\Auditing\Contracts\Auditable;
 use Silber\Bouncer\Database\HasRolesAndAbilities;
 
 class User extends Authenticatable implements MustVerifyEmail, Auditable
 {
     use \OwenIt\Auditing\Auditable;
-    use HasRolesAndAbilities, Notifiable, SoftDeletes, CascadeSoftDeletes;
+    use HasRolesAndAbilities, HasApiTokens, HasFactory, Notifiable, SoftDeletes, CascadeSoftDeletes;
 
     const STATUS_ACTIVE = 1;
     const STATUS_DISABLED = 2;
@@ -31,7 +33,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var string[]
      */
     protected $fillable = [
         'full_name',
@@ -44,7 +46,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     ];
 
     /**
-     * The attributes that should be hidden for arrays.
+     * The attributes that should be hidden for serialization.
      *
      * @var array
      */
@@ -55,6 +57,11 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
         'twofa_timestamp',
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
     protected $attributes = [
         'timezone' => 'UTC',
         'status'   => self::STATUS_ACTIVE,

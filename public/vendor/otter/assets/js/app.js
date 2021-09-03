@@ -2143,7 +2143,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   * (c) 2018 Abdelrahman Awad
   * @license MIT
   */
-// 
+//
 
 var isTextInput = function (el) {
   return includes(['text', 'password', 'search', 'email', 'tel', 'url', 'textarea', 'number'], el.type);
@@ -2753,7 +2753,7 @@ var isEmptyArray = function (arr) {
   return Array.isArray(arr) && arr.length === 0;
 };
 
-// 
+//
 
 var LOCALE = 'en';
 
@@ -2919,7 +2919,7 @@ DictionaryResolver.getDriver = function getDriver () {
   return drivers[currentDriver];
 };
 
-// 
+//
 
 var ErrorBag = function ErrorBag (errorBag, id) {
   if ( errorBag === void 0 ) errorBag = null;
@@ -3821,7 +3821,7 @@ RuleContainer.getValidatorMethod = function getValidatorMethod (ruleName) {
 
 Object.defineProperties( RuleContainer, staticAccessors );
 
-// 
+//
 
 var isEvent = function (evt) {
   return (typeof Event !== 'undefined' && isCallable(Event) && evt instanceof Event) || (evt && evt.srcElement);
@@ -3854,7 +3854,7 @@ var addEventListener = function (el, eventName, cb) {
   el.addEventListener(eventName, cb, supportsPassive ? { passive: true } : false);
 };
 
-// 
+//
 
 var DEFAULT_OPTIONS = {
   targetOf: null,
@@ -4555,7 +4555,7 @@ Field.prototype.destroy = function destroy () {
 
 Object.defineProperties( Field.prototype, prototypeAccessors$1 );
 
-// 
+//
 
 var FieldBag = function FieldBag (items) {
   if ( items === void 0 ) items = [];
@@ -4792,7 +4792,7 @@ ScopedValidator.prototype.flag = function flag () {
 
 Object.defineProperties( ScopedValidator.prototype, prototypeAccessors$3 );
 
-// 
+//
 
 /**
  * Checks if a parent validator instance was requested.
@@ -4883,7 +4883,7 @@ var mixin = {
   }
 };
 
-// 
+//
 
 /**
  * Finds the requested field by id from the context object.
@@ -4945,7 +4945,7 @@ var directive = {
   }
 };
 
-// 
+//
 
 var Validator = function Validator (validations, options) {
   if ( options === void 0 ) options = { fastExit: true };
@@ -5731,7 +5731,7 @@ Validator.prototype._validate = function _validate (field, value, ref) {
 Object.defineProperties( Validator.prototype, prototypeAccessors$4 );
 Object.defineProperties( Validator, staticAccessors$1 );
 
-// 
+//
 
 var normalize = function (fields) {
   if (Array.isArray(fields)) {
@@ -6366,7 +6366,7 @@ function withValidation (component, ctxToProps) {
   return hoc;
 }
 
-// 
+//
 
 var normalizeValue = function (value) {
   if (isObject(value)) {
@@ -6497,7 +6497,7 @@ I18nDictionary.prototype.setAttribute = function setAttribute (locale, key, valu
 
 Object.defineProperties( I18nDictionary.prototype, prototypeAccessors$5 );
 
-// 
+//
 
 var defaultConfig = {
   locale: 'en',
@@ -9422,7 +9422,7 @@ function cleanEscapedString$1 (input) {
 
 // This file is generated automatically by `scripts/build/indices.js`. Please, don't change it.
 
-// 
+//
 
 /**
  * Custom parse behavior on top of date-fns parse function.
@@ -14023,7 +14023,7 @@ function mergeOptions (
   normalizeProps(child, vm);
   normalizeInject(child, vm);
   normalizeDirectives(child);
-  
+
   // Apply extends and mixins on the child options,
   // but only if it is a raw options object that isn't
   // the result of another mergeOptions call.
@@ -14439,7 +14439,7 @@ function withMacroTask (fn) {
     try {
       return fn.apply(null, arguments)
     } finally {
-      useMacroTask = false;    
+      useMacroTask = false;
     }
   })
 }
@@ -14970,7 +14970,7 @@ function resolveAsyncComponent (
       }
     });
 
-    var res = factory(resolve, reject);
+    var res = resolve, reject);
 
     if (isObject(res)) {
       if (typeof res.then === 'function') {

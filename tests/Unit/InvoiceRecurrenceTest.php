@@ -16,7 +16,7 @@ class InvoiceRecurrenceTest extends TestCase
      */
     public function test_create_invoice_recurrence()
     {
-        $company = factory(Company::class)->create();
+        $company = Company::factory()->create();
 
         InvoiceRecurrence::unguard();
 
@@ -37,7 +37,7 @@ class InvoiceRecurrenceTest extends TestCase
 
     public function test_update_invoice_recurrence()
     {
-        $invoiceRecurrence = factory(InvoiceRecurrence::class)->create();
+        $invoiceRecurrence = InvoiceRecurrence::factory()->create();
 
         $this->assertInstanceOf(InvoiceRecurrence::class, $invoiceRecurrence);
 
@@ -70,8 +70,8 @@ class InvoiceRecurrenceTest extends TestCase
 
     public function test_delete_invoice_recurrence()
     {
-        $company = factory(Company::class)->create();
-        $invoiceRecurrence = factory(InvoiceRecurrence::class)->create([
+        $company = Company::factory()->create();
+        $invoiceRecurrence = InvoiceRecurrence::factory()->create([
             'company_id' => $company->id,
         ]);
 

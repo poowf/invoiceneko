@@ -19,6 +19,7 @@ services:
     restart: always
     volumes:
       - dbdata:/var/lib/mysql
+      - ./docker/init:/docker-entrypoint-initdb.d
     environment:
       MYSQL_DATABASE: invoiceneko
       MYSQL_USER: invoiceneko_user

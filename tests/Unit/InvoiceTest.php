@@ -15,7 +15,7 @@ class InvoiceTest extends TestCase
      */
     public function test_create_invoice()
     {
-        $client = factory(Client::class)->create();
+        $client = Client::factory()->create();
 
         Invoice::unguard();
 
@@ -41,7 +41,7 @@ class InvoiceTest extends TestCase
 
     public function test_update_invoice()
     {
-        $invoice = factory(Invoice::class)->create();
+        $invoice = Invoice::factory()->create();
         $this->assertInstanceOf(Invoice::class, $invoice);
 
         $invoice->total = '12312313.00';
@@ -68,7 +68,7 @@ class InvoiceTest extends TestCase
 
     public function test_delete_invoice()
     {
-        $invoice = factory(Invoice::class)->create();
+        $invoice = Invoice::factory()->create();
         $this->assertInstanceOf(Invoice::class, $invoice);
         $invoice = $invoice->delete();
 

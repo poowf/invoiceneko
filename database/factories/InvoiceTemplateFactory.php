@@ -1,17 +1,52 @@
 <?php
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(\App\Models\InvoiceTemplate::class, function (Faker $faker) {
-    return [
-        'date'      => $faker->dateTime,
-        'netdays'   => $faker->numberBetween($min = 1, $max = 60),
-        'notify'    => $faker->boolean,
-        'client_id' => function () {
-            return factory(\App\Models\Client::class)->create()->id;
-        },
-        'invoice_recurrence_id' => function () {
-            return factory(\App\Models\InvoiceRecurrence::class)->create()->id;
-        },
-    ];
-});
+use Illuminate\Support\Str;
+use App\Models\Client;
+use App\Models\InvoiceRecurrence;
+use App\Models\InvoiceTemplate;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class InvoiceTemplateFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = InvoiceTemplate::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'date'      => $this->faker->dateTime,
+            'netdays'   => $this->faker->numberBetween($min = 1, $max = 60),
+            'notify'    => $this->faker->boolean,
+            'client_id' => function () {
+                return Client::factory()->create()->id;
+            },
+            'invoice_recurrence_id' => function () {
+                return InvoiceRecurrence::factory()->create()->id;
+            },
+        ];
+    }
+
+    /**
+     * Indicate that the model's email address should be unverified.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function unverified()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+            ];
+        });
+    }
+}

@@ -19,7 +19,7 @@ class ItemTemplateTest extends DuskTestCase
      */
     public function test_create_an_item_template()
     {
-        $company = factory(Company::class)->create();
+        $company = Company::factory()->create();
         //Need to attach the company to the user
         $company->users()->attach($company->user_id);
 
@@ -49,8 +49,8 @@ class ItemTemplateTest extends DuskTestCase
 
     public function test_update_an_item_template()
     {
-        $company = factory(Company::class)->create();
-        $itemTemplate = factory(ItemTemplate::class)->create([
+        $company = Company::factory()->create();
+        $itemTemplate = ItemTemplate::factory()->create([
             'company_id' => $company->id,
         ]);
 
@@ -85,8 +85,8 @@ class ItemTemplateTest extends DuskTestCase
 
     public function test_delete_an_item_template()
     {
-        $company = factory(Company::class)->create();
-        $itemTemplate = factory(ItemTemplate::class)->create([
+        $company = Company::factory()->create();
+        $itemTemplate = ItemTemplate::factory()->create([
             'company_id' => $company->id,
         ]);
 
@@ -115,7 +115,7 @@ class ItemTemplateTest extends DuskTestCase
 
     public function test_end_to_end_item_template()
     {
-        $company = factory(Company::class)->create();
+        $company = Company::factory()->create();
         //Need to attach the company to the user
         $company->users()->attach($company->user_id);
 

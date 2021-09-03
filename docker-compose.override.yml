@@ -7,7 +7,6 @@ services:
       target: base
     volumes:
       - ./:/srv/http/www/invoiceneko
-#      - ./storage/logs/nginx/:/var/log/nginx
       - /srv/http/www/invoiceneko/vendor
       - ./docker/nginx/conf.d/:/etc/nginx/http.d/
       - ./docker/supervisor.d/:/etc/supervisor.d/

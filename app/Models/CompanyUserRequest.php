@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
@@ -12,7 +13,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 class CompanyUserRequest extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
-    use Notifiable, SoftDeletes, CascadeSoftDeletes;
+    use HasFactory, Notifiable, SoftDeletes, CascadeSoftDeletes;
 
     const STATUS_PENDING = 1;
     const STATUS_APPROVED = 2;

@@ -15,7 +15,7 @@ class InvoiceItemTemplateTest extends TestCase
      */
     public function test_create_invoice_item_template()
     {
-        $invoiceTemplate = factory(InvoiceTemplate::class)->create();
+        $invoiceTemplate = InvoiceTemplate::factory()->create();
 
         InvoiceItemTemplate::unguard();
 
@@ -35,9 +35,9 @@ class InvoiceItemTemplateTest extends TestCase
 
     public function test_update_invoice_item_template()
     {
-        $invoiceTemplate = factory(InvoiceTemplate::class)->create();
-        $invoiceTemplate2 = factory(InvoiceTemplate::class)->create();
-        $invoiceItemTemplate = factory(InvoiceItemTemplate::class)->create([
+        $invoiceTemplate = InvoiceTemplate::factory()->create();
+        $invoiceTemplate2 = InvoiceTemplate::factory()->create();
+        $invoiceItemTemplate = InvoiceItemTemplate::factory()->create([
             'invoice_template_id' => $invoiceTemplate->id,
         ]);
         $this->assertInstanceOf(InvoiceItemTemplate::class, $invoiceItemTemplate);
@@ -67,8 +67,8 @@ class InvoiceItemTemplateTest extends TestCase
 
     public function test_delete_invoice_item_template()
     {
-        $invoiceTemplate = factory(InvoiceTemplate::class)->create();
-        $invoiceItemTemplate = factory(InvoiceItemTemplate::class)->create([
+        $invoiceTemplate = InvoiceTemplate::factory()->create();
+        $invoiceItemTemplate = InvoiceItemTemplate::factory()->create([
             'invoice_template_id' => $invoiceTemplate->id,
         ]);
 

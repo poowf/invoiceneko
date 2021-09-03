@@ -16,7 +16,7 @@ class ClientTest extends TestCase
     public function test_create_client()
     {
         self::refreshDatabase();
-        $company = factory(Company::class)->create();
+        $company = Company::factory()->create();
 
         Client::unguard();
 
@@ -48,9 +48,9 @@ class ClientTest extends TestCase
 
     public function test_update_client()
     {
-        $company = factory(Company::class)->create();
-        $company2 = factory(Company::class)->create();
-        $client = factory(Client::class)->create([
+        $company = Company::factory()->create();
+        $company2 = Company::factory()->create();
+        $client = Client::factory()->create([
             'company_id' => $company->id,
         ]);
 
@@ -87,8 +87,8 @@ class ClientTest extends TestCase
 
     public function test_delete_client()
     {
-        $company = factory(Company::class)->create();
-        $client = factory(Client::class)->create([
+        $company = Company::factory()->create();
+        $client = Client::factory()->create([
             'company_id' => $company->id,
         ]);
 

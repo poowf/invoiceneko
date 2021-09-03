@@ -16,7 +16,7 @@ class QuoteItemTest extends TestCase
      */
     public function test_create_quote_item()
     {
-        $quote = factory(Quote::class)->create();
+        $quote = Quote::factory()->create();
 
         QuoteItem::unguard();
 
@@ -36,8 +36,8 @@ class QuoteItemTest extends TestCase
 
     public function test_update_quote_item()
     {
-        $quote = factory(Quote::class)->create();
-        $quoteItem = factory(QuoteItem::class)->create([
+        $quote = Quote::factory()->create();
+        $quoteItem = QuoteItem::factory()->create([
             'quote_id' => $quote->id,
         ]);
         $this->assertInstanceOf(QuoteItem::class, $quoteItem);
@@ -67,8 +67,8 @@ class QuoteItemTest extends TestCase
 
     public function test_delete_quote_item()
     {
-        $quote = factory(Quote::class)->create();
-        $quoteItem = factory(QuoteItem::class)->create([
+        $quote = Quote::factory()->create();
+        $quoteItem = QuoteItem::factory()->create([
             'quote_id' => $quote->id,
         ]);
 

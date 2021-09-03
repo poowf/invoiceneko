@@ -23,28 +23,28 @@ class PolicyTest extends DuskTestCase
      */
     public function test_accessing_another_company_invoice()
     {
-        $client = factory(Client::class)->create();
+        $client = Client::factory()->create();
         $company = $client->company;
         //Need to attach the company to the user
         $company->users()->attach($company->user_id);
 
-        $invoice = factory(Invoice::class)->create([
+        $invoice = Invoice::factory()->create([
             'status'     => Invoice::STATUS_OPEN,
             'archived'   => false,
             'client_id'  => $client->id,
             'company_id' => $company->id,
         ]);
-        $invoiceItems = factory(InvoiceItem::class, 3)->create([
+        $invoiceItems = InvoiceItem::factory(3)->create([
             'invoice_id' => $invoice->id,
         ]);
-        $itemTemplate = factory(ItemTemplate::class)->create([
+        $itemTemplate = ItemTemplate::factory()->create([
             'company_id' => $company->id,
         ]);
 
         $faker = Faker::create();
         $salutation = ['mr', 'mrs', 'mdm', 'miss'];
 
-        $secondCompany = factory(Company::class)->create();
+        $secondCompany = Company::factory()->create();
         $secondCompany->users()->attach($secondCompany->user_id);
 
         $this->browse(function (Browser $browser) use ($faker, $client, $company, $secondCompany, $invoice, $itemTemplate, $salutation) {
@@ -92,28 +92,28 @@ class PolicyTest extends DuskTestCase
 
     public function test_accessing_another_company_quote()
     {
-        $client = factory(Client::class)->create();
+        $client = Client::factory()->create();
         $company = $client->company;
         //Need to attach the company to the user
         $company->users()->attach($company->user_id);
 
-        $quote = factory(Quote::class)->create([
+        $quote = Quote::factory()->create([
             'status'     => Quote::STATUS_OPEN,
             'archived'   => false,
             'client_id'  => $client->id,
             'company_id' => $company->id,
         ]);
-        $quoteItems = factory(QuoteItem::class, 3)->create([
+        $quoteItems = QuoteItem::factory(3)->create([
             'quote_id' => $quote->id,
         ]);
-        $itemTemplate = factory(ItemTemplate::class)->create([
+        $itemTemplate = ItemTemplate::factory()->create([
             'company_id' => $company->id,
         ]);
 
         $faker = Faker::create();
         $salutation = ['mr', 'mrs', 'mdm', 'miss'];
 
-        $secondCompany = factory(Company::class)->create();
+        $secondCompany = Company::factory()->create();
         $secondCompany->users()->attach($secondCompany->user_id);
 
         $this->browse(function (Browser $browser) use ($faker, $client, $company, $secondCompany, $quote, $itemTemplate, $salutation) {

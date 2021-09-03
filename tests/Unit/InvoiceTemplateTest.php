@@ -17,11 +17,11 @@ class InvoiceTemplateTest extends TestCase
      */
     public function test_create_invoice_template()
     {
-        $company = factory(Company::class)->create();
-        $client = factory(Client::class)->create([
+        $company = Company::factory()->create();
+        $client = Client::factory()->create([
             'company_id' => $company->id,
         ]);
-        $invoiceEvent = factory(InvoiceRecurrence::class)->create([
+        $invoiceEvent = InvoiceRecurrence::factory()->create([
             'company_id' => $company->id,
         ]);
 
@@ -44,7 +44,7 @@ class InvoiceTemplateTest extends TestCase
 
     public function test_update_invoice_template()
     {
-        $invoiceTemplate = factory(InvoiceTemplate::class)->create();
+        $invoiceTemplate = InvoiceTemplate::factory()->create();
         $this->assertInstanceOf(InvoiceTemplate::class, $invoiceTemplate);
 
         $invoiceTemplate->netdays = '50';
@@ -73,7 +73,7 @@ class InvoiceTemplateTest extends TestCase
 
     public function test_delete_invoice_template()
     {
-        $invoiceTemplate = factory(InvoiceTemplate::class)->create();
+        $invoiceTemplate = InvoiceTemplate::factory()->create();
         $this->assertInstanceOf(InvoiceTemplate::class, $invoiceTemplate);
         $invoiceTemplate = $invoiceTemplate->delete();
 

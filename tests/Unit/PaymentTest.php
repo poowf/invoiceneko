@@ -17,11 +17,11 @@ class PaymentTest extends TestCase
      */
     public function test_create_payment()
     {
-        $company = factory(Company::class)->create();
-        $invoice = factory(Invoice::class)->create([
+        $company = Company::factory()->create();
+        $invoice = Invoice::factory()->create([
             'company_id' => $company->id,
         ]);
-        $client = factory(Client::class)->create([
+        $client = Client::factory()->create([
             'company_id' => $company->id,
         ]);
         Payment::unguard();
@@ -42,14 +42,14 @@ class PaymentTest extends TestCase
 
     public function test_update_payment()
     {
-        $company = factory(Company::class)->create();
-        $invoice = factory(Invoice::class)->create([
+        $company = Company::factory()->create();
+        $invoice = Invoice::factory()->create([
             'company_id' => $company->id,
         ]);
-        $client = factory(Client::class)->create([
+        $client = Client::factory()->create([
             'company_id' => $company->id,
         ]);
-        $payment = factory(Payment::class)->create([
+        $payment = Payment::factory()->create([
             'invoice_id' => $invoice->id,
             'client_id'  => $client->id,
             'company_id' => $company->id,
@@ -81,14 +81,14 @@ class PaymentTest extends TestCase
 
     public function test_delete_payment()
     {
-        $company = factory(Company::class)->create();
-        $invoice = factory(Invoice::class)->create([
+        $company = Company::factory()->create();
+        $invoice = Invoice::factory()->create([
             'company_id' => $company->id,
         ]);
-        $client = factory(Client::class)->create([
+        $client = Client::factory()->create([
             'company_id' => $company->id,
         ]);
-        $payment = factory(Payment::class)->create([
+        $payment = Payment::factory()->create([
             'invoice_id' => $invoice->id,
             'client_id'  => $client->id,
             'company_id' => $company->id,

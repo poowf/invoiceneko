@@ -15,7 +15,7 @@ class UserTest extends TestCase
      */
     public function test_create_user()
     {
-        $company = factory(Company::class)->create();
+        $company = Company::factory()->create();
 
         User::unguard();
 
@@ -39,8 +39,8 @@ class UserTest extends TestCase
 
     public function test_update_user()
     {
-        $user = factory(User::class)->create();
-        $company = factory(Company::class)->create();
+        $user = User::factory()->create();
+        $company = Company::factory()->create();
 
         $this->assertInstanceOf(User::class, $user);
 
@@ -75,7 +75,7 @@ class UserTest extends TestCase
 
     public function test_delete_user()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
         $this->assertInstanceOf(User::class, $user);
         $user = $user->delete();
 

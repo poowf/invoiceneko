@@ -20,7 +20,7 @@ class PaymentTest extends DuskTestCase
      */
     public function test_create_a_payment()
     {
-        $invoice = factory(Invoice::class)->create();
+        $invoice = Invoice::factory()->create();
         $company = $invoice->company;
         //Need to attach the company to the user
         $company->users()->attach($company->user_id);
@@ -55,12 +55,12 @@ class PaymentTest extends DuskTestCase
 
     public function test_update_a_payment()
     {
-        $invoice = factory(Invoice::class)->create();
+        $invoice = Invoice::factory()->create();
         $company = $invoice->company;
         //Need to attach the company to the user
         $company->users()->attach($company->user_id);
 
-        $payment = factory(Payment::class)->create([
+        $payment = Payment::factory()->create([
             'invoice_id' => $invoice->id,
             'company_id' => $invoice->company_id,
         ]);
@@ -96,12 +96,12 @@ class PaymentTest extends DuskTestCase
 
     public function test_delete_a_payment()
     {
-        $invoice = factory(Invoice::class)->create();
+        $invoice = Invoice::factory()->create();
         $company = $invoice->company;
         //Need to attach the company to the user
         $company->users()->attach($company->user_id);
 
-        $payment = factory(Payment::class)->create([
+        $payment = Payment::factory()->create([
             'invoice_id' => $invoice->id,
             'company_id' => $invoice->company_id,
         ]);
@@ -130,7 +130,7 @@ class PaymentTest extends DuskTestCase
 
     public function test_end_to_end_payment()
     {
-        $invoice = factory(Invoice::class)->create();
+        $invoice = Invoice::factory()->create();
         $company = $invoice->company;
         //Need to attach the company to the user
         $company->users()->attach($company->user_id);

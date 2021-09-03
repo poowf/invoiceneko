@@ -15,7 +15,7 @@ class ItemTemplateTest extends TestCase
      */
     public function test_create_item_template()
     {
-        $company = factory(Company::class)->create();
+        $company = Company::factory()->create();
 
         ItemTemplate::unguard();
 
@@ -35,9 +35,9 @@ class ItemTemplateTest extends TestCase
 
     public function test_update_item_template()
     {
-        $company = factory(Company::class)->create();
-        $company2 = factory(Company::class)->create();
-        $itemTemplate = factory(ItemTemplate::class)->create([
+        $company = Company::factory()->create();
+        $company2 = Company::factory()->create();
+        $itemTemplate = ItemTemplate::factory()->create([
             'company_id' => $company->id,
         ]);
         $this->assertInstanceOf(ItemTemplate::class, $itemTemplate);
@@ -67,8 +67,8 @@ class ItemTemplateTest extends TestCase
 
     public function test_delete_item_template()
     {
-        $company = factory(Company::class)->create();
-        $itemTemplate = factory(ItemTemplate::class)->create([
+        $company = Company::factory()->create();
+        $itemTemplate = ItemTemplate::factory()->create([
             'company_id' => $company->id,
         ]);
 

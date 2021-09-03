@@ -17,7 +17,7 @@ class LoginTest extends DuskTestCase
      */
     public function test_sign_in()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         $this->browse(function (Browser $browser) use ($user) {
             $browser->visit('/signin')

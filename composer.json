@@ -12,7 +12,6 @@
         "doctrine/dbal": "^3.1.1",
         "dyrynda/laravel-cascade-soft-deletes": "^4.1.0",
         "erusev/parsedown": "^1.7.4",
-        "facade/ignition": "^2.12.0",
         "fideloper/proxy": "^4.4.1",
         "fruitcake/laravel-cors": "^2.0.4",
         "geoip2/geoip2": "^2.11.0",
@@ -22,8 +21,8 @@
         "laracasts/flash": "^3.2",
         "laravel/framework": "^8.0",
         "laravel/horizon": "^5.7.12",
-        "laravel/legacy-factories": "^1.1.0",
         "laravel/telescope": "^4.6.2",
+        "laravel/sanctum": "^2.11.2",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.3.0",
         "laravelista/ekko": "^3.2.0",
@@ -44,12 +43,16 @@
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6.2",
         "beyondcode/laravel-dump-server": "^1.7.0",
+        "facade/ignition": "^2.12.0",
+        "fakerphp/faker": "^1.9.1",
         "filp/whoops": "^2.14.1",
-        "fzaninotto/faker": "^1.9.2",
         "laravel/dusk": "^6.18.0",
+        "laravel/sail": "^v1.10.1",
         "mockery/mockery": "^1.4.3",
         "nunomaduro/collision": "^5.9.0",
-        "phpunit/phpunit": "~9.5.9"
+        "nunomaduro/larastan": "^0.7.12",
+        "phpunit/phpunit": "~9.5.9",
+        "vimeo/psalm": "^4.9"
     },
     "autoload": {
         "psr-4": {
@@ -63,31 +66,45 @@
             "Tests\\": "tests/"
         }
     },
-    "extra": {
-        "laravel": {
-            "dont-discover": [
-            ]
-        }
-    },
     "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ],
+        "post-update-cmd": [
+            "Illuminate\\Foundation\\ComposerScripts::postUpdate",
+            "@php artisan vendor:publish --tag=laravel-assets --ansi"
+        ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ],
-        "post-update-cmd": [
-            "Illuminate\\Foundation\\ComposerScripts::postUpdate"
+        "phpstan": [
+            "phpstan analyse --memory-limit=500M"
         ],
-        "post-autoload-dump": [
-            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+        "psalm": [
+            "psalm"
+        ],
+        "test": [
+            "phpunit --log-junit tests/Results/TEST-phpunit-junit.xml"
+        ],
+        "test:dusk": [
+            "php artisan dusk --log-junit tests/Results/TEST-dusk-junit.xml"
         ]
     },
+    "extra": {
+        "laravel": {
+            "dont-discover": [
+                "laravel/telescope"
+            ]
+        }
+    },
     "config": {
+        "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true,
-        "optimize-autoloader": true
+        "sort-packages": true
     },
     "minimum-stability": "dev",
     "prefer-stable": true

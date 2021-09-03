@@ -15,7 +15,7 @@ class QuoteTest extends TestCase
      */
     public function test_create_quote()
     {
-        $client = factory(Client::class)->create();
+        $client = Client::factory()->create();
         Quote::unguard();
 
         $quote = Quote::create([
@@ -39,7 +39,7 @@ class QuoteTest extends TestCase
 
     public function test_update_quote()
     {
-        $quote = factory(Quote::class)->create();
+        $quote = Quote::factory()->create();
         $this->assertInstanceOf(Quote::class, $quote);
 
         $quote->total = '12312313.00';
@@ -66,7 +66,7 @@ class QuoteTest extends TestCase
 
     public function test_delete_quote()
     {
-        $quote = factory(Quote::class)->create();
+        $quote = Quote::factory()->create();
         $this->assertInstanceOf(Quote::class, $quote);
         $quote = $quote->delete();
 

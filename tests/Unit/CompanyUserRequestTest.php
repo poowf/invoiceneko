@@ -15,7 +15,7 @@ class CompanyUserRequestTest extends TestCase
      */
     public function test_create_company_user_request()
     {
-        $company = factory(Company::class)->create();
+        $company = Company::factory()->create();
 
         CompanyUserRequest::unguard();
 
@@ -36,8 +36,8 @@ class CompanyUserRequestTest extends TestCase
 
     public function test_update_company_user_request()
     {
-        $company = factory(Company::class)->create();
-        $companyUserRequest = factory(CompanyUserRequest::class)->create([
+        $company = Company::factory()->create();
+        $companyUserRequest = CompanyUserRequest::factory()->create([
             'company_id' => $company->id,
         ]);
 
@@ -70,8 +70,8 @@ class CompanyUserRequestTest extends TestCase
 
     public function test_delete_company_user_request()
     {
-        $company = factory(Company::class)->create();
-        $companyUserRequest = factory(CompanyUserRequest::class)->create([
+        $company = Company::factory()->create();
+        $companyUserRequest = CompanyUserRequest::factory()->create([
             'company_id' => $company->id,
         ]);
 

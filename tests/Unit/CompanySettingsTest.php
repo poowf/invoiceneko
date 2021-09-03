@@ -15,7 +15,7 @@ class CompanySettingsTest extends TestCase
      */
     public function test_create_company_settings()
     {
-        $company = factory(Company::class)->create();
+        $company = Company::factory()->create();
 
         CompanySetting::unguard();
 
@@ -36,8 +36,8 @@ class CompanySettingsTest extends TestCase
 
     public function test_update_company_settings()
     {
-        $company = factory(Company::class)->create();
-        $companySettings = factory(CompanySetting::class)->create([
+        $company = Company::factory()->create();
+        $companySettings = CompanySetting::factory()->create([
             'company_id' => $company->id,
         ]);
 
@@ -70,7 +70,7 @@ class CompanySettingsTest extends TestCase
 
     public function test_delete_company_settings()
     {
-        $company = factory(Company::class)->create();
+        $company = Company::factory()->create();
         $companySettings = $company->settings;
 
         $this->assertInstanceOf(CompanySetting::class, $companySettings);

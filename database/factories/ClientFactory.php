@@ -1,27 +1,61 @@
 <?php
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(\App\Models\Client::class, function (Faker $faker) {
-    return [
-        'companyname'       => $faker->company,
-        'phone'             => '+659' . $faker->numberBetween($min = 0, $max = 8) . $faker->randomNumber(6, true),
-        'block'             => $faker->buildingNumber,
-        'street'            => $faker->streetName,
-        'unitnumber'        => $faker->buildingNumber,
-        'postalcode'        => $faker->postcode,
-        'country_code'      => $faker->countryCode,
-        'nickname'          => $faker->name,
-        'crn'               => $faker->ean8,
-        'website'           => $faker->url,
-        'contactsalutation' => $faker->title,
-        'contactfirstname'  => $faker->firstName,
-        'contactlastname'   => $faker->lastName,
-        'contactgender'     => 'male',
-        'contactemail'      => $faker->unique()->companyEmail,
-        'contactphone'      => '+658' . $faker->numberBetween($min = 1, $max = 8) . $faker->randomNumber(6, true),
-        'company_id'        => function () {
-            return factory(\App\Models\Company::class)->create()->id;
-        },
-    ];
-});
+use Illuminate\Support\Str;
+use App\Models\Company;
+use App\Models\Client;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class ClientFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Client::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'companyname'       => $this->faker->company,
+            'phone'             => '+659' . $this->faker->numberBetween($min = 0, $max = 8) . $this->faker->randomNumber(6, true),
+            'block'             => $this->faker->buildingNumber,
+            'street'            => $this->faker->streetName,
+            'unitnumber'        => $this->faker->buildingNumber,
+            'postalcode'        => $this->faker->postcode,
+            'country_code'      => $this->faker->countryCode,
+            'nickname'          => $this->faker->name,
+            'crn'               => $this->faker->ean8,
+            'website'           => $this->faker->url,
+            'contactsalutation' => $this->faker->title,
+            'contactfirstname'  => $this->faker->firstName,
+            'contactlastname'   => $this->faker->lastName,
+            'contactgender'     => 'male',
+            'contactemail'      => $this->faker->unique()->companyEmail,
+            'contactphone'      => '+658' . $this->faker->numberBetween($min = 1, $max = 8) . $this->faker->randomNumber(6, true),
+            'company_id'        => function () {
+                return Company::factory()->create()->id;
+            },
+        ];
+    }
+
+    /**
+     * Indicate that the model's email address should be unverified.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function unverified()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+            ];
+        });
+    }
+}

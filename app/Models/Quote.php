@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use PDF;
@@ -12,7 +13,7 @@ use PDF;
 class Quote extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
-    use SoftDeletes, CascadeSoftDeletes;
+    use SoftDeletes, HasFactory, CascadeSoftDeletes;
 
     const STATUS_DRAFT = 1;
     const STATUS_OPEN = 2;

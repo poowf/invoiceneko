@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Str;
+use App\Models\User;
 
 class SocialAuthController extends Controller
 {

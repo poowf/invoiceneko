@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Models\User;
 use App\Models\Company;
 use App\Models\CompanySetting;
 use Tests\TestCase;
@@ -15,7 +16,7 @@ class CompanyTest extends TestCase
      */
     public function test_create_company()
     {
-        $user = factory(\App\Models\User::class)->create();
+        $user = User::factory()->create();
 
         Company::unguard();
 
@@ -38,8 +39,8 @@ class CompanyTest extends TestCase
 
     public function test_update_company()
     {
-        $user = factory(\App\Models\User::class)->create();
-        $company = factory(Company::class)->create();
+        $user = User::factory()->create();
+        $company = Company::factory()->create();
 
         $this->assertInstanceOf(Company::class, $company);
 
@@ -75,7 +76,7 @@ class CompanyTest extends TestCase
 
     public function test_delete_company()
     {
-        $company = factory(Company::class)->create();
+        $company = Company::factory()->create();
 
         $this->assertInstanceOf(Company::class, $company);
 
@@ -86,7 +87,7 @@ class CompanyTest extends TestCase
 
     public function test_company_has_a_company_settings_relationship()
     {
-        $company = factory(Company::class)->create();
+        $company = Company::factory()->create();
         //Need to attach the company to the user
 
         $this->assertTrue(isset($company->settings));
