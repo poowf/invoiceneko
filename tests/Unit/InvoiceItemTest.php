@@ -31,7 +31,7 @@ class InvoiceItemTest extends TestCase
         InvoiceItem::reguard();
 
         $this->assertEquals($invoiceItem->invoice->id, $invoice->id);
-        $this->assertEquals('asfdasfasfasfsf<p>asasdfasdfasfas</p>', $invoiceItem->description);
+        $this->assertEquals('<p>asfdasfasfasfsf<p>asasdfasdfasfas</p></p>\n', $invoiceItem->description);
     }
 
     public function test_update_invoice_item()

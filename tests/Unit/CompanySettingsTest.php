@@ -31,7 +31,7 @@ class CompanySettingsTest extends TestCase
         CompanySetting::reguard();
 
         $this->assertEquals($companySettings->company->name, $company->name);
-        $this->assertEquals('asdfasfdasfasfasdf <strong>asdfasdfasdf</strong> asfdassafas <p>asdfasdfasdfas</p>', $companySettings->invoice_conditions);
+        $this->assertEquals('<p>asdfasfdasfasfasdf <strong>asdfasdfasdf</strong> asfdassafas <p>asdfasdfasdfas</p></p>\n', $companySettings->invoice_conditions);
     }
 
     public function test_update_company_settings()
@@ -48,7 +48,7 @@ class CompanySettingsTest extends TestCase
         $companySettings->save();
         $companySettings->refresh();
 
-        $this->assertEquals('THIS IS SHTEASDF SACONDITIONS OF THE QUOTE OMGOMGOMGOGMG THESE ARE NOT THE DROIDS YOU ARE LOOKING FOR', $companySettings->quote_conditions);
+        $this->assertEquals('<p>THIS IS SHTEASDF SACONDITIONS OF THE QUOTE OMGOMGOMGOGMG THESE ARE NOT THE DROIDS YOU ARE LOOKING FOR</p>\n', $companySettings->quote_conditions);
         $this->assertEquals('12', $companySettings->tax);
 
         $data = [

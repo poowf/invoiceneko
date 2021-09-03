@@ -37,7 +37,7 @@ abstract class DuskTestCase extends BaseTestCase
     {
         // static::useChromedriver('/usr/local/bin/chromedriver');
         // Use local chrome driver due to aarch64 not being supported yet
-        static::useChromedriver('/usr/bin/chromedriver');
+        // static::useChromedriver('/usr/bin/chromedriver');
         static::startChromeDriver();
     }
 
