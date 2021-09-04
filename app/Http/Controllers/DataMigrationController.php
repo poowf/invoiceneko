@@ -33,17 +33,17 @@ class DataMigrationController extends Controller
             foreach ($results as $row) {
                 try {
                     $client = Client::query();
-                    $companyname = (is_null($row->company_name) ? $row->display_name : $row->company_name);
-                    if (! $client->duplicatecheck($companyname)->first()) {
+                    $companyname = is_null($row->company_name) ? $row->display_name : $row->company_name;
+                    if (!$client->duplicatecheck($companyname)->first()) {
                         $client = new Client();
                         $client->companyname = $companyname;
                         $client->phone = $row->phone;
                         $client->website = $row->website;
                         $client->nickname = $row->display_name;
-                        $client->street = $row->billing_address.$row->billing_street2;
+                        $client->street = $row->billing_address . $row->billing_street2;
                         $client->postalcode = $row->billing_code;
                         $client->country = $row->billing_country;
-                        $client->crn = (is_null($row->customfield_value1) ? null : $row->customfield_value1);
+                        $client->crn = is_null($row->customfield_value1) ? null : $row->customfield_value1;
                         $client->contactsalutation = $row->salutation;
                         $client->contactfirstname = $row->first_name;
                         $client->contactlastname = $row->last_name;
@@ -53,10 +53,10 @@ class DataMigrationController extends Controller
                         $client->company_id = auth()->user()->company_id;
                         $client->save();
                     } else {
-                        $errorscollection->push($row->emailid.' could not be imported');
+                        $errorscollection->push($row->emailid . ' could not be imported');
                     }
                 } catch (\Exception $e) {
-                    $errorscollection->push($row->emailid.' could not be imported');
+                    $errorscollection->push($row->emailid . ' could not be imported');
                     continue;
                     // All other exceptions
                     Log::info('Caught Exception la');
@@ -64,7 +64,9 @@ class DataMigrationController extends Controller
             }
         });
 
-        return redirect()->route('migration.create')->with(compact('errorscollection'));
+        return redirect()
+            ->route('migration.create')
+            ->with(compact('errorscollection'));
     }
 
     public function storeinvoice(Request $request, Company $company)
@@ -87,12 +89,18 @@ class DataMigrationController extends Controller
 
                     $auth_companyid = auth()->user()->company_id;
 
-                    if ($invoice = Invoice::where('nice_invoice_id', $row->invoice_number)->where('company_id', $auth_companyid)->first()) {
+                    if (
+                        $invoice = Invoice::where('nice_invoice_id', $row->invoice_number)
+                            ->where('company_id', $auth_companyid)
+                            ->first()
+                    ) {
                         self::createInvoiceItem($row->item_name, $row->item_desc, $row->item_price, $row->quantity, $invoice->id);
                     } else {
                         $companyname = $row->company_name;
 
-                        $client = Client::where('companyname', 'LIKE', '%'.$companyname.'%')->where('company_id', $auth_companyid)->first();
+                        $client = Client::where('companyname', 'LIKE', '%' . $companyname . '%')
+                            ->where('company_id', $auth_companyid)
+                            ->first();
 
                         $invoice = new Invoice();
                         $invoice->nice_invoice_id = $row->invoice_number;
@@ -130,7 +138,7 @@ class DataMigrationController extends Controller
 
                     $invoice->setInvoiceTotal();
                 } catch (Exception $e) {
-                    $errorscollection->push($row->invoice_number.' could not be imported');
+                    $errorscollection->push($row->invoice_number . ' could not be imported');
                     continue;
                     // All other exceptions
                     Log::info('Caught Exception la');
@@ -138,7 +146,9 @@ class DataMigrationController extends Controller
             }
         });
 
-        return redirect()->route('migration.create')->with(compact('errorscollection'));
+        return redirect()
+            ->route('migration.create')
+            ->with(compact('errorscollection'));
     }
 
     public function createInvoiceItem($name, $description, $price, $quantity, $invoiceid)
@@ -146,9 +156,9 @@ class DataMigrationController extends Controller
         $invoiceitem = InvoiceItem::query();
         $price = number_format($price, 3, '.', '');
         $quantity = intval($quantity);
-        if (! $invoiceitem->duplicatecheck($price, $quantity, $invoiceid)->first()) {
+        if (!$invoiceitem->duplicatecheck($price, $quantity, $invoiceid)->first()) {
             $invitem = new InvoiceItem();
-            $invitem->name = (is_null($name) ? 'Item' : $name);
+            $invitem->name = is_null($name) ? 'Item' : $name;
             $invitem->description = $description;
             $invitem->price = $price;
             $invitem->quantity = $quantity;
@@ -175,27 +185,29 @@ class DataMigrationController extends Controller
                 try {
                     $auth_companyid = auth()->user()->company_id;
 
-                    $invoice = Invoice::where('nice_invoice_id', $row->invoice_number)->where('company_id', $auth_companyid)->first();
+                    $invoice = Invoice::where('nice_invoice_id', $row->invoice_number)
+                        ->where('company_id', $auth_companyid)
+                        ->first();
 
                     $payment = Payment::query();
 
                     $amount = number_format($row->amount, 3, '.', '');
 
-                    if (! $payment->duplicatecheck($amount, $row->date, $invoice->id, $invoice->getClient()->id, $auth_companyid)->first()) {
+                    if (!$payment->duplicatecheck($amount, $row->date, $invoice->id, $invoice->getClient()->id, $auth_companyid)->first()) {
                         $payment = new Payment();
                         $payment->amount = $amount;
                         $payment->receiveddate = $row->date;
-                        $payment->notes = $row->description.' '.$row->reference_number;
+                        $payment->notes = $row->description . ' ' . $row->reference_number;
                         $payment->mode = $row->mode;
                         $payment->invoice_id = $invoice->id;
                         $payment->client_id = $invoice->getClient()->id;
                         $payment->company_id = $auth_companyid;
                         $payment->save();
                     } else {
-                        $errorscollection->push($row->invoice_number.', '.$row->date.', $'.$row->amount.' could not be imported');
+                        $errorscollection->push($row->invoice_number . ', ' . $row->date . ', $' . $row->amount . ' could not be imported');
                     }
                 } catch (\Exception $e) {
-                    $errorscollection->push($row->invoice_number.', '.$row->date.', $'.$row->amount.' could not be imported');
+                    $errorscollection->push($row->invoice_number . ', ' . $row->date . ', $' . $row->amount . ' could not be imported');
                     continue;
                     // All other exceptions
                     Log::info('Caught Exception la');
@@ -203,6 +215,8 @@ class DataMigrationController extends Controller
             }
         });
 
-        return redirect()->route('migration.create')->with(compact('errorscollection'));
+        return redirect()
+            ->route('migration.create')
+            ->with(compact('errorscollection'));
     }
 }

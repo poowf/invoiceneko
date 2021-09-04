@@ -14,8 +14,14 @@ class UpdatePaymentsTable extends Migration
     public function up()
     {
         Schema::table('payments', function (Blueprint $table) {
-            $table->text('notes')->nullable()->after('receiveddate');
-            $table->string('mode')->nullable()->after('receiveddate');
+            $table
+                ->text('notes')
+                ->nullable()
+                ->after('receiveddate');
+            $table
+                ->string('mode')
+                ->nullable()
+                ->after('receiveddate');
         });
     }
 

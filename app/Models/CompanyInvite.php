@@ -24,20 +24,14 @@ class CompanyInvite extends Model implements Auditable
      *
      * @var array
      */
-    protected $fillable = [
-    ];
+    protected $fillable = [];
 
     /**
      * The attributes that should be mutated to dates.
      *
      * @var array
      */
-    protected $dates = [
-        'expires_at',
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
+    protected $dates = ['expires_at', 'created_at', 'updated_at', 'deleted_at'];
 
     /**
      * Get the route key for the model.

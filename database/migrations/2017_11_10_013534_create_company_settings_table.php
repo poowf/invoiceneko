@@ -18,8 +18,10 @@ class CreateCompanySettingsTable extends Migration
             $table->string('invoice_prefix')->nullable();
             $table->text('invoice_conditions')->nullable();
             $table->integer('company_id')->unsigned();
-            $table->foreign('company_id')
-                ->references('id')->on('companies')
+            $table
+                ->foreign('company_id')
+                ->references('id')
+                ->on('companies')
                 ->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

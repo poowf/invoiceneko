@@ -14,7 +14,10 @@ class AddUniqueTokenToInvoicesTable extends Migration
     public function up()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            $table->string('share_token')->after('total')->nullable();
+            $table
+                ->string('share_token')
+                ->after('total')
+                ->nullable();
         });
     }
 

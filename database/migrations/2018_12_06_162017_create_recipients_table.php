@@ -24,7 +24,11 @@ class CreateRecipientsTable extends Migration
             $table->string('recipientable_type');
             $table->unique(['email', 'recipientable_id', 'recipientable_type'], 'recipients_unique');
             $table->unsignedInteger('company_id');
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+            $table
+                ->foreign('company_id')
+                ->references('id')
+                ->on('companies')
+                ->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

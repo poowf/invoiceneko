@@ -24,23 +24,23 @@ class ClientFactory extends Factory
     public function definition()
     {
         return [
-            'companyname'       => $this->faker->company,
-            'phone'             => '+659'.$this->faker->numberBetween($min = 0, $max = 8).$this->faker->randomNumber(6, true),
-            'block'             => $this->faker->buildingNumber,
-            'street'            => $this->faker->streetName,
-            'unitnumber'        => $this->faker->buildingNumber,
-            'postalcode'        => $this->faker->postcode,
-            'country_code'      => $this->faker->countryCode,
-            'nickname'          => $this->faker->name,
-            'crn'               => $this->faker->ean8,
-            'website'           => $this->faker->url,
+            'companyname' => $this->faker->company,
+            'phone' => '+659' . $this->faker->numberBetween($min = 0, $max = 8) . $this->faker->randomNumber(6, true),
+            'block' => $this->faker->buildingNumber,
+            'street' => $this->faker->streetName,
+            'unitnumber' => $this->faker->buildingNumber,
+            'postalcode' => $this->faker->postcode,
+            'country_code' => $this->faker->countryCode,
+            'nickname' => $this->faker->name,
+            'crn' => $this->faker->ean8,
+            'website' => $this->faker->url,
             'contactsalutation' => $this->faker->title,
-            'contactfirstname'  => $this->faker->firstName,
-            'contactlastname'   => $this->faker->lastName,
-            'contactgender'     => 'male',
-            'contactemail'      => $this->faker->unique()->companyEmail,
-            'contactphone'      => '+658'.$this->faker->numberBetween($min = 1, $max = 8).$this->faker->randomNumber(6, true),
-            'company_id'        => function () {
+            'contactfirstname' => $this->faker->firstName,
+            'contactlastname' => $this->faker->lastName,
+            'contactgender' => 'male',
+            'contactemail' => $this->faker->unique()->companyEmail,
+            'contactphone' => '+658' . $this->faker->numberBetween($min = 1, $max = 8) . $this->faker->randomNumber(6, true),
+            'company_id' => function () {
                 return Company::factory()->create()->id;
             },
         ];
@@ -54,8 +54,7 @@ class ClientFactory extends Factory
     public function unverified()
     {
         return $this->state(function (array $attributes) {
-            return [
-            ];
+            return [];
         });
     }
 }

@@ -38,9 +38,9 @@ class DatePicker extends BaseComponent
     {
         return [
             '@date-field' => 'input.datepicker',
-            '@year-list'  => 'div.select-year > select.orig-select-year',
+            '@year-list' => 'div.select-year > select.orig-select-year',
             '@month-list' => 'div.select-month > select.orig-select-month',
-            '@day-list'   => 'div.datepicker-table-wrapper > table.datepicker-table',
+            '@day-list' => 'div.datepicker-table-wrapper > table.datepicker-table',
         ];
     }
 }

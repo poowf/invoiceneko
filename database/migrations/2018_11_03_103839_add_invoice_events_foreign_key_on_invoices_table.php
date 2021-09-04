@@ -14,9 +14,15 @@ class AddInvoiceEventsForeignKeyOnInvoicesTable extends Migration
     public function up()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            $table->integer('invoice_event_id')->nullable()->unsigned()->after('company_id');
-            $table->foreign('invoice_event_id')
-                ->references('id')->on('invoice_events')
+            $table
+                ->integer('invoice_event_id')
+                ->nullable()
+                ->unsigned()
+                ->after('company_id');
+            $table
+                ->foreign('invoice_event_id')
+                ->references('id')
+                ->on('invoice_events')
                 ->onDelete('cascade');
         });
     }

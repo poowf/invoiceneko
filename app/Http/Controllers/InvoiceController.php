@@ -36,10 +36,30 @@ class InvoiceController extends Controller
      */
     public function index(Company $company)
     {
-        $overdue = $company->invoices()->with(['client'])->overdue()->notarchived()->get();
-        $pending = $company->invoices()->with(['client'])->pending()->notarchived()->get();
-        $draft = $company->invoices()->with(['client'])->draft()->notarchived()->get();
-        $paid = $company->invoices()->with(['client'])->paid()->notarchived()->get();
+        $overdue = $company
+            ->invoices()
+            ->with(['client'])
+            ->overdue()
+            ->notarchived()
+            ->get();
+        $pending = $company
+            ->invoices()
+            ->with(['client'])
+            ->pending()
+            ->notarchived()
+            ->get();
+        $draft = $company
+            ->invoices()
+            ->with(['client'])
+            ->draft()
+            ->notarchived()
+            ->get();
+        $paid = $company
+            ->invoices()
+            ->with(['client'])
+            ->paid()
+            ->notarchived()
+            ->get();
 
         return view('pages.invoice.index', compact('overdue', 'pending', 'draft', 'paid'));
     }
@@ -53,7 +73,11 @@ class InvoiceController extends Controller
      */
     public function index_archived(Company $company)
     {
-        $invoices = $company->invoices()->archived()->with(['client'])->get();
+        $invoices = $company
+            ->invoices()
+            ->archived()
+            ->with(['client'])
+            ->get();
 
         return view('pages.invoice.index_archived', compact('invoices'));
     }
@@ -115,7 +139,7 @@ class InvoiceController extends Controller
      */
     public function sendnotification(Company $company, Invoice $invoice)
     {
-        if (! is_null($invoice->client_id)) {
+        if (!is_null($invoice->client_id)) {
             $invoice->notify(new InvoiceNotification($invoice));
             flash('An email notification has been sent to the client', 'success');
         }
@@ -137,7 +161,7 @@ class InvoiceController extends Controller
 
         $pdf = $invoice->generatePDFView();
 
-        return $pdf->inline(Str::slug($invoice->nice_invoice_id).'.pdf');
+        return $pdf->inline(Str::slug($invoice->nice_invoice_id) . '.pdf');
     }
 
     /**
@@ -202,7 +226,9 @@ class InvoiceController extends Controller
         foreach ($request->input('item_name') as $key => $item) {
             $invoiceitem = new InvoiceItem();
             $invoiceitem->name = $item;
-            $invoiceitem->description = (array_key_exists($key, $request->input('item_description'))) ? $request->input('item_description')[$key] : null;
+            $invoiceitem->description = array_key_exists($key, $request->input('item_description'))
+                ? $request->input('item_description')[$key]
+                : null;
             $invoiceitem->quantity = $request->input('item_quantity')[$key];
             $invoiceitem->price = $request->input('item_price')[$key];
             $invoiceitem->invoice_id = $invoice->id;
@@ -230,13 +256,22 @@ class InvoiceController extends Controller
                         $repeatUntilMeta = $numberOfOccurences;
                         break;
                     case 'date':
-                        $repeatUntilMeta = Carbon::createFromFormat('j F, Y', $request->input('recurring-until-date-value'))->startOfDay()->toDateTimeString();
+                        $repeatUntilMeta = Carbon::createFromFormat('j F, Y', $request->input('recurring-until-date-value'))
+                            ->startOfDay()
+                            ->toDateTimeString();
                         break;
                 }
 
                 $startDate = $invoice->date;
                 $timezone = config('app.timezone');
-                $rruleString = Unicorn::generateRrule($startDate, $timezone, $repeatsEveryInterval, $repeatsEveryTimePeriod, $repeatUntilOption, $repeatUntilMeta);
+                $rruleString = Unicorn::generateRrule(
+                    $startDate,
+                    $timezone,
+                    $repeatsEveryInterval,
+                    $repeatsEveryTimePeriod,
+                    $repeatUntilOption,
+                    $repeatUntilMeta,
+                );
 
                 $invoiceRecurrence = new InvoiceRecurrence();
                 $invoiceRecurrence->time_interval = $repeatsEveryInterval;
@@ -325,7 +360,10 @@ class InvoiceController extends Controller
     public function show(Company $company, Invoice $invoice)
     {
         $client = $invoice->getClient();
-        $histories = $invoice->history()->orderBy('updated_at', 'desc')->get();
+        $histories = $invoice
+            ->history()
+            ->orderBy('updated_at', 'desc')
+            ->get();
         $payments = $invoice->payments;
         $recurrence = $invoice->recurrence;
         $siblings = $invoice->siblings();
@@ -346,7 +384,7 @@ class InvoiceController extends Controller
     {
         $pdf = $invoice->generatePDFView();
 
-        return $pdf->inline(Str::slug($invoice->nice_invoice_id).'.pdf');
+        return $pdf->inline(Str::slug($invoice->nice_invoice_id) . '.pdf');
     }
 
     /**
@@ -361,7 +399,7 @@ class InvoiceController extends Controller
     {
         $pdf = $invoice->generatePDFView();
 
-        return $pdf->download(Str::slug($invoice->nice_invoice_id).'.pdf');
+        return $pdf->download(Str::slug($invoice->nice_invoice_id) . '.pdf');
     }
 
     /**
@@ -386,7 +424,7 @@ class InvoiceController extends Controller
 
         $clients = $company->clients;
         $itemtemplates = $company->itemtemplates;
-        $recurrence = ($invoice->recurrence) ? $invoice->recurrence : null;
+        $recurrence = $invoice->recurrence ? $invoice->recurrence : null;
 
         return view('pages.invoice.edit', compact('invoice', 'clients', 'recurrence', 'itemtemplates'));
     }
@@ -422,7 +460,7 @@ class InvoiceController extends Controller
                 $request->input('item_name')[$key],
                 $request->input('item_description')[$key],
                 $request->input('item_quantity')[$key],
-                $request->input('item_price')[$key]
+                $request->input('item_price')[$key],
             );
 
             if ($ismodified) {
@@ -468,7 +506,9 @@ class InvoiceController extends Controller
                 $invoiceitem = new InvoiceItem();
             }
             $invoiceitem->name = $itemname;
-            $invoiceitem->description = (array_key_exists($key, $request->input('item_description'))) ? $request->input('item_description')[$key] : null;
+            $invoiceitem->description = array_key_exists($key, $request->input('item_description'))
+                ? $request->input('item_description')[$key]
+                : null;
             $invoiceitem->quantity = $request->input('item_quantity')[$key];
             $invoiceitem->price = $request->input('item_price')[$key];
             $invoiceitem->invoice_id = $invoice->id;
@@ -478,7 +518,7 @@ class InvoiceController extends Controller
         $invoice = $invoice->fresh();
         $invoice->setInvoiceTotal();
 
-        $recurrenceExists = ($invoice->recurrence) ? true : false;
+        $recurrenceExists = $invoice->recurrence ? true : false;
 
         if ($request->has('recurring-invoice-check')) {
             if ($request->input('recurring-invoice-check') === 'on' && $request->input('recurring-details') === 'standalone') {
@@ -509,15 +549,24 @@ class InvoiceController extends Controller
                         $repeatUntilMeta = $numberOfOccurences;
                         break;
                     case 'date':
-                        $repeatUntilMeta = Carbon::createFromFormat('j F, Y', $request->input('recurring-until-date-value'))->startOfDay()->toDateTimeString();
+                        $repeatUntilMeta = Carbon::createFromFormat('j F, Y', $request->input('recurring-until-date-value'))
+                            ->startOfDay()
+                            ->toDateTimeString();
                         break;
                 }
 
                 $startDate = $invoice->date;
                 $timezone = config('app.timezone');
-                $rruleString = Unicorn::generateRrule($startDate, $timezone, $repeatsEveryInterval, $repeatsEveryTimePeriod, $repeatUntilOption, $repeatUntilMeta);
+                $rruleString = Unicorn::generateRrule(
+                    $startDate,
+                    $timezone,
+                    $repeatsEveryInterval,
+                    $repeatsEveryTimePeriod,
+                    $repeatUntilOption,
+                    $repeatUntilMeta,
+                );
 
-                $invoiceRecurrence = ($recurrenceExists) ? $invoice->recurrence : new InvoiceRecurrence();
+                $invoiceRecurrence = $recurrenceExists ? $invoice->recurrence : new InvoiceRecurrence();
                 $invoiceRecurrence->time_interval = $repeatsEveryInterval;
                 $invoiceRecurrence->time_period = $repeatsEveryTimePeriod;
                 $invoiceRecurrence->until_type = $repeatUntilOption;
@@ -611,7 +660,10 @@ class InvoiceController extends Controller
     public function history(Company $company, Invoice $invoice)
     {
         $client = $invoice->getClient();
-        $histories = $invoice->history()->orderBy('created_at', 'desc')->get();
+        $histories = $invoice
+            ->history()
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         return view('pages.invoice.history', compact('invoice', 'client', 'histories'));
     }
@@ -626,7 +678,7 @@ class InvoiceController extends Controller
      */
     public function checkSiblings(Company $company, Invoice $invoice)
     {
-        $hasSiblings = ($invoice->siblings()) ? true : false;
+        $hasSiblings = $invoice->siblings() ? true : false;
 
         return response()->json(compact('hasSiblings'));
     }

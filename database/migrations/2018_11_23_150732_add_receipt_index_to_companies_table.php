@@ -14,7 +14,10 @@ class AddReceiptIndexToCompaniesTable extends Migration
     public function up()
     {
         Schema::table('companies', function (Blueprint $table) {
-            $table->integer('receipt_index')->after('quote_index')->nullable();
+            $table
+                ->integer('receipt_index')
+                ->after('quote_index')
+                ->nullable();
         });
     }
 

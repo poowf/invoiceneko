@@ -31,11 +31,7 @@ class CompanyUserRequest extends Model implements Auditable
      *
      * @var array
      */
-    protected $fillable = [
-        'full_name',
-        'email',
-        'phone',
-    ];
+    protected $fillable = ['full_name', 'email', 'phone'];
 
     protected $attributes = [
         'status' => self::STATUS_PENDING,

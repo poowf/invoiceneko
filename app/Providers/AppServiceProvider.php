@@ -29,13 +29,13 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment('local', 'testing', 'staging', 'dusk')) {
             $this->app->register(DuskServiceProvider::class);
             $this->app->register(DuskBrowserServiceProvider::class);
-//            $this->app->register(IdeHelperServiceProvider::class);
+            //            $this->app->register(IdeHelperServiceProvider::class);
         }
 
         if ($this->app->environment('production', 'local', 'testing', 'staging')) {
             $this->app->register(HorizonServiceProvider::class);
             $this->app->register(TelescopeServiceProvider::class);
-//            $this->app->register(OtterServiceProvider::class);
+            //            $this->app->register(OtterServiceProvider::class);
         }
 
         Bouncer::runAfterPolicies();

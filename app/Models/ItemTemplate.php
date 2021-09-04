@@ -21,12 +21,7 @@ class ItemTemplate extends Model implements Auditable
      *
      * @var array
      */
-    protected $fillable = [
-        'name',
-        'quantity',
-        'price',
-        'description',
-    ];
+    protected $fillable = ['name', 'quantity', 'price', 'description'];
 
     public function setDescriptionAttribute($description)
     {

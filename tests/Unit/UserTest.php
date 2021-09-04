@@ -20,12 +20,12 @@ class UserTest extends TestCase
         User::unguard();
 
         $user = User::create([
-            'full_name'      => 'Poowf Bunny',
-            'username'       => 'poowf',
-            'password'       => 'secret',
-            'email'          => 'bunny@poowf.com',
-            'phone'          => '+6579328669',
-            'gender'         => 'female',
+            'full_name' => 'Poowf Bunny',
+            'username' => 'poowf',
+            'password' => 'secret',
+            'email' => 'bunny@poowf.com',
+            'phone' => '+6579328669',
+            'gender' => 'female',
             'remember_token' => 'sadfaxsfie',
         ]);
 
@@ -53,12 +53,12 @@ class UserTest extends TestCase
         $this->assertEquals('bargabarbararba', $user->remember_token);
 
         $data = [
-            'username'     => 'NyanIndustries',
-            'email'        => 'nowaythiscannotbe@example.com',
-            'phone'        => '+659774123',
-            'gender'       => 'female',
+            'username' => 'NyanIndustries',
+            'email' => 'nowaythiscannotbe@example.com',
+            'phone' => '+659774123',
+            'gender' => 'female',
             'country_code' => 'SG',
-            'company_id'   => $company->id,
+            'company_id' => $company->id,
         ];
 
         $user->fill($data);

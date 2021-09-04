@@ -20,7 +20,8 @@ class LoginTest extends DuskTestCase
         $user = User::factory()->create();
 
         $this->browse(function (Browser $browser) use ($user) {
-            $browser->visit('/signin')
+            $browser
+                ->visit('/signin')
                 ->type('username', $user->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')

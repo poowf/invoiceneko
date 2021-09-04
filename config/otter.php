@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Otter Route Middleware
@@ -41,7 +40,7 @@ return [
     */
 
     'user' => [
-        'name'  => 'full_name',
+        'name' => 'full_name',
         'email' => 'email',
     ],
 ];

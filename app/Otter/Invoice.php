@@ -29,10 +29,10 @@ class Invoice extends OtterResource
     {
         return [
             'nice_invoice_id' => 'text',
-            'date'            => 'text',
-            'netdays'         => 'text',
-            'total'           => 'text',
-            'status'          => 'text',
+            'date' => 'text',
+            'netdays' => 'text',
+            'total' => 'text',
+            'status' => 'text',
         ];
     }
 
@@ -44,10 +44,10 @@ class Invoice extends OtterResource
     public static function relations()
     {
         return [
-            'client'   => ['Client', 'client_id'],
-            'company'  => 'Company',
-            'items'    => 'InvoiceItem',
-            'receipt'  => 'Receipt',
+            'client' => ['Client', 'client_id'],
+            'company' => 'Company',
+            'items' => 'InvoiceItem',
+            'receipt' => 'Receipt',
         ];
     }
 

@@ -15,8 +15,15 @@ class AddOriginalInvoiceIdToOldInvoicesTable extends Migration
     {
         Schema::table('old_invoices', function (Blueprint $table) {
             $table->renameColumn('invoiceid', 'nice_invoice_id');
-            $table->integer('invoice_id')->unsigned()->after('company_id');
-            $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
+            $table
+                ->integer('invoice_id')
+                ->unsigned()
+                ->after('company_id');
+            $table
+                ->foreign('invoice_id')
+                ->references('id')
+                ->on('invoices')
+                ->onDelete('cascade');
         });
     }
 

@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
-use App\Models\Invoice;
 use App\Http\Resources\InvoiceResource;
+use App\Models\Invoice;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------

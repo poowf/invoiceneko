@@ -21,11 +21,11 @@ class InvoiceItemTest extends TestCase
         InvoiceItem::unguard();
 
         $invoiceItem = InvoiceItem::create([
-            'name'        => 'This is an Invoice Item la',
-            'quantity'    => '250',
-            'price'       => '5.00',
+            'name' => 'This is an Invoice Item la',
+            'quantity' => '250',
+            'price' => '5.00',
             'description' => 'asfdasfasfasfsf<p>asasdfasdfasfas</p>',
-            'invoice_id'  => $invoice->id,
+            'invoice_id' => $invoice->id,
         ]);
 
         InvoiceItem::reguard();
@@ -51,7 +51,7 @@ class InvoiceItemTest extends TestCase
         $this->assertEquals('2000', $invoiceItem->quantity);
 
         $data = [
-            'price'    => '213131.00',
+            'price' => '213131.00',
             'quantity' => '25000',
         ];
 

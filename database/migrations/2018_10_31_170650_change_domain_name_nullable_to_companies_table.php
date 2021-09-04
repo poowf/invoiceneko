@@ -14,7 +14,10 @@ class ChangeDomainNameNullableToCompaniesTable extends Migration
     public function up()
     {
         Schema::table('companies', function (Blueprint $table) {
-            $table->string('domain_name')->nullable()->change();
+            $table
+                ->string('domain_name')
+                ->nullable()
+                ->change();
         });
     }
 
@@ -26,7 +29,10 @@ class ChangeDomainNameNullableToCompaniesTable extends Migration
     public function down()
     {
         Schema::table('companies', function (Blueprint $table) {
-            $table->string('domain_name')->nullable(false)->change();
+            $table
+                ->string('domain_name')
+                ->nullable(false)
+                ->change();
         });
     }
 }

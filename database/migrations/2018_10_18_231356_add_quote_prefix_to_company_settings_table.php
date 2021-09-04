@@ -14,7 +14,10 @@ class AddQuotePrefixToCompanySettingsTable extends Migration
     public function up()
     {
         Schema::table('company_settings', function (Blueprint $table) {
-            $table->string('quote_prefix')->after('invoice_prefix')->nullable();
+            $table
+                ->string('quote_prefix')
+                ->after('invoice_prefix')
+                ->nullable();
         });
     }
 

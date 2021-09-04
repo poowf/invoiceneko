@@ -14,7 +14,9 @@ class UpdateRoleRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->can('owner', $this->route('company'));
+        return auth()
+            ->user()
+            ->can('owner', $this->route('company'));
     }
 
     /**
@@ -27,8 +29,12 @@ class UpdateRoleRequest extends FormRequest
         return [
             'title' => [
                 'required',
-                Rule::unique('roles')->where('scope', $this->route('company')->id)->ignore($this->role->id),
-                Rule::unique('roles', 'name')->where('scope', $this->route('company')->id)->ignore($this->role->id),
+                Rule::unique('roles')
+                    ->where('scope', $this->route('company')->id)
+                    ->ignore($this->role->id),
+                Rule::unique('roles', 'name')
+                    ->where('scope', $this->route('company')->id)
+                    ->ignore($this->role->id),
             ],
             'permissions' => 'required|array',
         ];

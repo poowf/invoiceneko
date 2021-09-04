@@ -14,8 +14,15 @@ class AddClientDataFieldAndMakeClientIdNullableToQuotesTable extends Migration
     public function up()
     {
         Schema::table('quotes', function (Blueprint $table) {
-            $table->json('client_data')->nullable()->after('share_token');
-            $table->integer('client_id')->unsigned()->nullable()->change();
+            $table
+                ->json('client_data')
+                ->nullable()
+                ->after('share_token');
+            $table
+                ->integer('client_id')
+                ->unsigned()
+                ->nullable()
+                ->change();
         });
     }
 
@@ -28,7 +35,11 @@ class AddClientDataFieldAndMakeClientIdNullableToQuotesTable extends Migration
     {
         Schema::table('quotes', function (Blueprint $table) {
             $table->dropColumn('client_data');
-            $table->integer('client_id')->unsigned()->nullable(false)->change();
+            $table
+                ->integer('client_id')
+                ->unsigned()
+                ->nullable(false)
+                ->change();
         });
     }
 }

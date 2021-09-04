@@ -25,9 +25,9 @@ class InvoiceTemplateFactory extends Factory
     public function definition()
     {
         return [
-            'date'      => $this->faker->dateTime,
-            'netdays'   => $this->faker->numberBetween($min = 1, $max = 60),
-            'notify'    => $this->faker->boolean,
+            'date' => $this->faker->dateTime,
+            'netdays' => $this->faker->numberBetween($min = 1, $max = 60),
+            'notify' => $this->faker->boolean,
             'client_id' => function () {
                 return Client::factory()->create()->id;
             },
@@ -45,8 +45,7 @@ class InvoiceTemplateFactory extends Factory
     public function unverified()
     {
         return $this->state(function (array $attributes) {
-            return [
-            ];
+            return [];
         });
     }
 }

@@ -106,7 +106,7 @@ class ReceiptController extends Controller
 
     public function generate(Company $company, Invoice $invoice)
     {
-        if (! $invoice->receipt) {
+        if (!$invoice->receipt) {
             $receipt = new Receipt();
             $receipt->nice_receipt_id = $company->niceReceiptID();
             $receipt->company_id = $company->id;
@@ -130,7 +130,7 @@ class ReceiptController extends Controller
     {
         $pdf = $receipt->generatePDFView();
 
-        return $pdf->inline(Str::slug($receipt->nice_receipt_id).'.pdf');
+        return $pdf->inline(Str::slug($receipt->nice_receipt_id) . '.pdf');
     }
 
     /**
@@ -145,6 +145,6 @@ class ReceiptController extends Controller
     {
         $pdf = $receipt->generatePDFView();
 
-        return $pdf->download(Str::slug($receipt->nice_receipt_id).'.pdf');
+        return $pdf->download(Str::slug($receipt->nice_receipt_id) . '.pdf');
     }
 }

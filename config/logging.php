@@ -5,7 +5,6 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Log Channel
@@ -36,44 +35,44 @@ return [
 
     'channels' => [
         'stack' => [
-            'driver'   => 'stack',
+            'driver' => 'stack',
             'channels' => ['rollbar', 'single'],
             'ignore_exceptions' => false,
         ],
 
         'single' => [
             'driver' => 'single',
-            'path'   => storage_path('logs/laravel.log'),
+            'path' => storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
         ],
 
         'daily' => [
             'driver' => 'daily',
-            'path'   => storage_path('logs/laravel.log'),
+            'path' => storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
-            'days'   => 14,
+            'days' => 14,
         ],
 
         'rollbar' => [
-            'driver'       => 'monolog',
-            'handler'      => \Rollbar\Laravel\MonologHandler::class,
+            'driver' => 'monolog',
+            'handler' => \Rollbar\Laravel\MonologHandler::class,
             'access_token' => env('ROLLBAR_TOKEN'),
-            'level'        => env('LOG_LEVEL', 'debug'),
-            'person_fn'    => 'auth()->user()',
+            'level' => env('LOG_LEVEL', 'debug'),
+            'person_fn' => 'auth()->user()',
         ],
 
         'slack' => [
-            'driver'   => 'slack',
-            'url'      => env('LOG_SLACK_WEBHOOK_URL'),
+            'driver' => 'slack',
+            'url' => env('LOG_SLACK_WEBHOOK_URL'),
             'username' => 'Laravel Log',
-            'emoji'    => ':boom:',
-            'level'    => env('LOG_LEVEL', 'critical'),
+            'emoji' => ':boom:',
+            'level' => env('LOG_LEVEL', 'critical'),
         ],
 
         'papertrail' => [
-            'driver'       => 'monolog',
-            'level'        => env('LOG_LEVEL', 'debug'),
-            'handler'      => SyslogUdpHandler::class,
+            'driver' => 'monolog',
+            'level' => env('LOG_LEVEL', 'debug'),
+            'handler' => SyslogUdpHandler::class,
             'handler_with' => [
                 'host' => env('PAPERTRAIL_URL'),
                 'port' => env('PAPERTRAIL_PORT'),
@@ -81,10 +80,10 @@ return [
         ],
 
         'stderr' => [
-            'driver'  => 'monolog',
+            'driver' => 'monolog',
             'level' => env('LOG_LEVEL', 'debug'),
             'handler' => StreamHandler::class,
-            'with'    => [
+            'with' => [
                 'stream' => 'php://stderr',
             ],
         ],
@@ -108,5 +107,4 @@ return [
             'path' => storage_path('logs/laravel.log'),
         ],
     ],
-
 ];

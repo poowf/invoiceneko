@@ -26,7 +26,7 @@ class ContactRequest extends FormRequest
     {
         return [
             'g-recaptcha-response.required' => 'Captcha verification is required',
-            'g-recaptcha-response.captcha'  => 'Captcha verification has failed',
+            'g-recaptcha-response.captcha' => 'Captcha verification has failed',
         ];
     }
 
@@ -38,13 +38,10 @@ class ContactRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'                 => 'required',
-            'email'                => 'required|email',
-            'message'              => 'required',
-            'g-recaptcha-response' => [
-                'required',
-                new CaptchaRule(),
-            ],
+            'name' => 'required',
+            'email' => 'required|email',
+            'message' => 'required',
+            'g-recaptcha-response' => ['required', new CaptchaRule()],
         ];
     }
 }

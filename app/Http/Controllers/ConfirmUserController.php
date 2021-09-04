@@ -15,7 +15,7 @@ class ConfirmUserController extends Controller
 
     public function postConfirmEmail(Request $request, $token = null)
     {
-        if (! $token) {
+        if (!$token) {
             $token = $request->input('confirmation_token');
         }
 

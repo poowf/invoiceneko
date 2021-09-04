@@ -25,23 +25,14 @@ class Payment extends Model implements Auditable
      *
      * @var array
      */
-    protected $fillable = [
-        'amount',
-        'mode',
-        'notes',
-    ];
+    protected $fillable = ['amount', 'mode', 'notes'];
 
     /**
      * The attributes that should be mutated to dates.
      *
      * @var array
      */
-    protected $dates = [
-        'receiveddate',
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
+    protected $dates = ['receiveddate', 'created_at', 'updated_at', 'deleted_at'];
 
     /**
      * Get the price.
@@ -63,7 +54,7 @@ class Payment extends Model implements Auditable
         if ($invoiceTotal == 0 && $this->amount == 0) {
             $percentage = 100;
         } else {
-            $percentage = ($invoiceTotal != 0) ? ($this->amount / $invoiceTotal) * 100 : 0;
+            $percentage = $invoiceTotal != 0 ? ($this->amount / $invoiceTotal) * 100 : 0;
         }
 
         return $amount->format($percentage);
@@ -73,14 +64,14 @@ class Payment extends Model implements Auditable
     {
         $date = $this->asDateTime($value);
 
-        return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
+        return auth()->user() ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
     public function getUpdatedAtAttribute($value)
     {
         $date = $this->asDateTime($value);
 
-        return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
+        return auth()->user() ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
     public function getReceiveddateAttribute($value)
@@ -92,7 +83,7 @@ class Payment extends Model implements Auditable
 
     public function getClient()
     {
-        return ($this->client) ? $this->client : (object) json_decode($this->invoice->client_data);
+        return $this->client ? $this->client : (object) json_decode($this->invoice->client_data);
     }
 
     public function invoice()

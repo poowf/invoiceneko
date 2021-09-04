@@ -44,9 +44,7 @@ class Client extends Model implements Auditable
         'contactphone',
     ];
 
-    protected $cascadeDeletes = [
-        'invoices',
-    ];
+    protected $cascadeDeletes = ['invoices'];
 
     public function getContactNameAttribute()
     {
@@ -73,7 +71,6 @@ class Client extends Model implements Auditable
 
     public function scopeDuplicateCheck($query, $companyname)
     {
-        return $query
-            ->where('companyname', $companyname);
+        return $query->where('companyname', $companyname);
     }
 }

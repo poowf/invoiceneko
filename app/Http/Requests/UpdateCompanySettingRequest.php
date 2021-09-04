@@ -13,7 +13,9 @@ class UpdateCompanySettingRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->can('settings', $this->route('company'));
+        return auth()
+            ->user()
+            ->can('settings', $this->route('company'));
     }
 
     /**
@@ -24,11 +26,11 @@ class UpdateCompanySettingRequest extends FormRequest
     public function rules()
     {
         return [
-            'invoice_prefix'     => 'required|string',
-            'quote_prefix'       => 'required|string',
-            'receipt_prefix'     => 'required|string',
+            'invoice_prefix' => 'required|string',
+            'quote_prefix' => 'required|string',
+            'receipt_prefix' => 'required|string',
             'invoice_conditions' => 'required|string',
-            'quote_conditions'   => 'required|string',
+            'quote_conditions' => 'required|string',
         ];
     }
 
@@ -43,7 +45,7 @@ class UpdateCompanySettingRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             $company = $this->route('company');
-            if (! $company) {
+            if (!$company) {
                 $validator->errors()->add('Company', 'Please fill in your company information first');
             }
         });

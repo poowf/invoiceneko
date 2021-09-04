@@ -14,7 +14,10 @@ class AddBackupCodesToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('twofa_backup_codes', 800)->nullable()->after('twofa_timestamp');
+            $table
+                ->string('twofa_backup_codes', 800)
+                ->nullable()
+                ->after('twofa_timestamp');
         });
     }
 

@@ -29,10 +29,10 @@ class InvoiceRecurrence extends OtterResource
     {
         return [
             'time_interval' => 'text',
-            'time_period'   => 'text',
-            'until_type'    => 'text',
-            'until_meta'    => 'text',
-            'rule'          => 'text',
+            'time_period' => 'text',
+            'until_type' => 'text',
+            'until_meta' => 'text',
+            'rule' => 'text',
         ];
     }
 
@@ -43,8 +43,7 @@ class InvoiceRecurrence extends OtterResource
      */
     public static function hidden()
     {
-        return [
-        ];
+        return [];
     }
 
     /**
@@ -58,25 +57,25 @@ class InvoiceRecurrence extends OtterResource
             'client' => [
                 'create' => [
                     /*
-                * Client side create resource validation
-                */
+                     * Client side create resource validation
+                     */
                 ],
                 'update' => [
                     /*
-                * Client side update resource validation
-                */
+                     * Client side update resource validation
+                     */
                 ],
             ],
             'server' => [
                 'create' => [
                     /*
-                * Server side create resource validation
-                */
+                     * Server side create resource validation
+                     */
                 ],
                 'update' => [
                     /*
-                * Server side update resource validation
-                */
+                     * Server side update resource validation
+                     */
                 ],
             ],
         ];

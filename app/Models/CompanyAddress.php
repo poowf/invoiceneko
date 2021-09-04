@@ -22,13 +22,7 @@ class CompanyAddress extends Model implements Auditable
 
     public $timestamps = true;
 
-    protected $fillable = [
-        'block',
-        'street',
-        'unitnumber',
-        'postalcode',
-        'buildingtype',
-    ];
+    protected $fillable = ['block', 'street', 'unitnumber', 'postalcode', 'buildingtype'];
 
     const BUILDINGTYPE_RESIDENTIAL = 1;
     const BUILDINGTYPE_BUSINESS = 2;

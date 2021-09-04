@@ -14,11 +14,17 @@ class AddInTotalAmountToInvoiceTable extends Migration
     public function up()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            $table->double('total')->nullable()->after('duedate');
+            $table
+                ->double('total')
+                ->nullable()
+                ->after('duedate');
         });
 
         Schema::table('old_invoices', function (Blueprint $table) {
-            $table->double('total')->nullable()->after('duedate');
+            $table
+                ->double('total')
+                ->nullable()
+                ->after('duedate');
         });
     }
 

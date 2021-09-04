@@ -18,12 +18,16 @@ class CreateInvoiceTemplatesTable extends Migration
             $table->dateTime('date');
             $table->integer('netdays');
             $table->integer('client_id')->unsigned();
-            $table->foreign('client_id')
-                ->references('id')->on('clients')
+            $table
+                ->foreign('client_id')
+                ->references('id')
+                ->on('clients')
                 ->onDelete('cascade');
             $table->integer('invoice_event_id')->unsigned();
-            $table->foreign('invoice_event_id')
-                ->references('id')->on('invoice_events')
+            $table
+                ->foreign('invoice_event_id')
+                ->references('id')
+                ->on('invoice_events')
                 ->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

@@ -14,7 +14,9 @@ class CreateClientRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->can('create', Client::class);
+        return auth()
+            ->user()
+            ->can('create', Client::class);
     }
 
     /**
@@ -25,22 +27,22 @@ class CreateClientRequest extends FormRequest
     public function rules()
     {
         return [
-            'companyname'       => 'required|string',
-            'phone'             => '',
-            'block'             => '',
-            'street'            => '',
-            'unitnumber'        => '',
-            'postalcode'        => '',
-            'country_code'      => '',
-            'nickname'          => '',
-            'crn'               => '',
-            'website'           => '',
+            'companyname' => 'required|string',
+            'phone' => '',
+            'block' => '',
+            'street' => '',
+            'unitnumber' => '',
+            'postalcode' => '',
+            'country_code' => '',
+            'nickname' => '',
+            'crn' => '',
+            'website' => '',
             'contactsalutation' => 'required|in:mr,mrs,mdm,miss,dr,prof,mx',
-            'contactfirstname'  => 'required|string',
-            'contactlastname'   => '',
-            'contactgender'     => '',
-            'contactemail'      => 'required|email',
-            'contactphone'      => '',
+            'contactfirstname' => 'required|string',
+            'contactlastname' => '',
+            'contactgender' => '',
+            'contactemail' => 'required|email',
+            'contactphone' => '',
         ];
     }
 }

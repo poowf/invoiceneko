@@ -26,7 +26,11 @@ class QuoteController extends Controller
      */
     public function index(Company $company)
     {
-        $quotes = $company->quotes()->notarchived()->with(['client'])->get();
+        $quotes = $company
+            ->quotes()
+            ->notarchived()
+            ->with(['client'])
+            ->get();
 
         return view('pages.quote.index', compact('quotes'));
     }
@@ -40,7 +44,11 @@ class QuoteController extends Controller
      */
     public function index_archived(Company $company)
     {
-        $quotes = $company->quotes()->archived()->with(['client'])->get();
+        $quotes = $company
+            ->quotes()
+            ->archived()
+            ->with(['client'])
+            ->get();
 
         return view('pages.quote.index_archived', compact('quotes'));
     }
@@ -93,7 +101,7 @@ class QuoteController extends Controller
 
         $pdf = $quote->generatePDFView();
 
-        return $pdf->inline(Str::slug($quote->nice_quote_id).'.pdf');
+        return $pdf->inline(Str::slug($quote->nice_quote_id) . '.pdf');
     }
 
     /**
@@ -154,7 +162,9 @@ class QuoteController extends Controller
         foreach ($request->input('item_name') as $key => $item) {
             $quoteitem = new QuoteItem();
             $quoteitem->name = $item;
-            $quoteitem->description = (array_key_exists($key, $request->input('item_description'))) ? $request->input('item_description')[$key] : null;
+            $quoteitem->description = array_key_exists($key, $request->input('item_description'))
+                ? $request->input('item_description')[$key]
+                : null;
             $quoteitem->quantity = $request->input('item_quantity')[$key];
             $quoteitem->price = $request->input('item_price')[$key];
             $quoteitem->quote_id = $quote->id;
@@ -178,7 +188,9 @@ class QuoteController extends Controller
     {
         $invoice = new Invoice();
         $invoice->nice_invoice_id = $company->niceinvoiceid();
-        $duedate = Carbon::now()->addDays($quote->netdays)->startOfDay();
+        $duedate = Carbon::now()
+            ->addDays($quote->netdays)
+            ->startOfDay();
         $invoice->date = Carbon::now()->startOfDay();
         $invoice->netdays = $quote->netdays;
         $invoice->duedate = $duedate;
@@ -239,7 +251,7 @@ class QuoteController extends Controller
     {
         $pdf = $quote->generatePDFView();
 
-        return $pdf->inline(Str::slug($quote->nice_quote_id).'quote.pdf');
+        return $pdf->inline(Str::slug($quote->nice_quote_id) . 'quote.pdf');
     }
 
     /**
@@ -254,7 +266,7 @@ class QuoteController extends Controller
     {
         $pdf = $quote->generatePDFView();
 
-        return $pdf->download(Str::slug($quote->nice_quote_id).'.pdf');
+        return $pdf->download(Str::slug($quote->nice_quote_id) . '.pdf');
     }
 
     /**
@@ -300,7 +312,9 @@ class QuoteController extends Controller
                 $quoteitem = new QuoteItem();
             }
             $quoteitem->name = $itemname;
-            $quoteitem->description = (array_key_exists($key, $request->input('item_description'))) ? $request->input('item_description')[$key] : null;
+            $quoteitem->description = array_key_exists($key, $request->input('item_description'))
+                ? $request->input('item_description')[$key]
+                : null;
             $quoteitem->quantity = $request->input('item_quantity')[$key];
             $quoteitem->price = $request->input('item_price')[$key];
             $quoteitem->quote_id = $quote->id;

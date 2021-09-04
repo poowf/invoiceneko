@@ -29,10 +29,10 @@ class Quote extends OtterResource
     {
         return [
             'nice_quote_id' => 'text',
-            'date'          => 'text',
-            'netdays'       => 'text',
-            'total'         => 'text',
-            'status'        => 'text',
+            'date' => 'text',
+            'netdays' => 'text',
+            'total' => 'text',
+            'status' => 'text',
         ];
     }
 
@@ -43,8 +43,7 @@ class Quote extends OtterResource
      */
     public static function hidden()
     {
-        return [
-        ];
+        return [];
     }
 
     public function toArray($request)

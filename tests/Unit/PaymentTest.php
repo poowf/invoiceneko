@@ -27,11 +27,11 @@ class PaymentTest extends TestCase
         Payment::unguard();
 
         $payment = Payment::create([
-            'amount'       => '516556.52',
+            'amount' => '516556.52',
             'receiveddate' => '2018-11-01 00:00:00',
-            'invoice_id'   => $invoice->id,
-            'client_id'    => $client->id,
-            'company_id'   => $company->id,
+            'invoice_id' => $invoice->id,
+            'client_id' => $client->id,
+            'company_id' => $company->id,
         ]);
 
         Payment::reguard();
@@ -51,7 +51,7 @@ class PaymentTest extends TestCase
         ]);
         $payment = Payment::factory()->create([
             'invoice_id' => $invoice->id,
-            'client_id'  => $client->id,
+            'client_id' => $client->id,
             'company_id' => $company->id,
         ]);
         $this->assertInstanceOf(Payment::class, $payment);
@@ -65,8 +65,8 @@ class PaymentTest extends TestCase
         $this->assertEquals('asdfasfasfasdfasfsfaffsa', $payment->notes);
 
         $data = [
-            'amount'       => '12341451541.00',
-            'notes'        => 'sdfasfasdvcasd asodcnaio9sjecoamfoe[casmo;cnasi;cndik; andio;asno;asdcnio; asdnio;asdcno;asdncio;asdn;',
+            'amount' => '12341451541.00',
+            'notes' => 'sdfasfasdvcasd asodcnaio9sjecoamfoe[casmo;cnasi;cndik; andio;asno;asdcnio; asdnio;asdcno;asdncio;asdn;',
             'receiveddate' => '2018-12-01 00:00:00',
         ];
 
@@ -75,7 +75,10 @@ class PaymentTest extends TestCase
         $payment->refresh();
 
         $this->assertEquals('12341451541.00', $payment->amount);
-        $this->assertEquals('sdfasfasdvcasd asodcnaio9sjecoamfoe[casmo;cnasi;cndik; andio;asno;asdcnio; asdnio;asdcno;asdncio;asdn;', $payment->notes);
+        $this->assertEquals(
+            'sdfasfasdvcasd asodcnaio9sjecoamfoe[casmo;cnasi;cndik; andio;asno;asdcnio; asdnio;asdcno;asdncio;asdn;',
+            $payment->notes,
+        );
         $this->assertNotEquals('2018-12-01 00:00:00', $payment->receiveddate->format('Y-m-d H:i:s'));
     }
 
@@ -90,7 +93,7 @@ class PaymentTest extends TestCase
         ]);
         $payment = Payment::factory()->create([
             'invoice_id' => $invoice->id,
-            'client_id'  => $client->id,
+            'client_id' => $client->id,
             'company_id' => $company->id,
         ]);
 

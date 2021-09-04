@@ -14,7 +14,10 @@ class UpdateCrnNotNullableToCompaniesTable extends Migration
     public function up()
     {
         Schema::table('companies', function (Blueprint $table) {
-            $table->string('crn')->nullable(false)->change();
+            $table
+                ->string('crn')
+                ->nullable(false)
+                ->change();
         });
     }
 
@@ -26,7 +29,10 @@ class UpdateCrnNotNullableToCompaniesTable extends Migration
     public function down()
     {
         Schema::table('companies', function (Blueprint $table) {
-            $table->string('crn')->nullable()->change();
+            $table
+                ->string('crn')
+                ->nullable()
+                ->change();
         });
     }
 }

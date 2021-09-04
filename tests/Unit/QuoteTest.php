@@ -20,14 +20,14 @@ class QuoteTest extends TestCase
 
         $quote = Quote::create([
             'nice_quote_id' => 'PWFQ-000001',
-            'date'          => '2 August, 2018',
-            'netdays'       => '20',
-            'total'         => '650.50',
-            'share_token'   => '7e57d004-2b97-0e7a-b45f-5387367791cd',
-            'status'        => '2',
-            'archived'      => '0',
-            'client_id'     => $client->id,
-            'company_id'    => $client->company->id,
+            'date' => '2 August, 2018',
+            'netdays' => '20',
+            'total' => '650.50',
+            'share_token' => '7e57d004-2b97-0e7a-b45f-5387367791cd',
+            'status' => '2',
+            'archived' => '0',
+            'client_id' => $client->id,
+            'company_id' => $client->company->id,
         ]);
 
         Quote::reguard();
@@ -50,9 +50,9 @@ class QuoteTest extends TestCase
 
         //Testing fillable properties
         $data = [
-            'date'    => '1 January, 2018',
+            'date' => '1 January, 2018',
             'netdays' => '25',
-            'total'   => '19293313.00',
+            'total' => '19293313.00',
         ];
 
         $quote->fill($data);

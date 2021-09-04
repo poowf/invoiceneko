@@ -23,16 +23,16 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'full_name'         => $this->faker->name,
-            'username'          => $this->faker->userName,
-            'email'             => $this->faker->unique()->safeEmail,
-            'country_code'      => $this->faker->countryCode,
-            'timezone'          => $this->faker->timezone,
-            'password'          => 'secret',
-            'phone'             => '+658'.$this->faker->numberBetween($min = 1, $max = 8).$this->faker->randomNumber(6, true),
-            'gender'            => 'male' | 'female',
-            'remember_token'    => Str::random(10),
-            'status'            => $this->faker->numberBetween($min = 1, $max = 3),
+            'full_name' => $this->faker->name,
+            'username' => $this->faker->userName,
+            'email' => $this->faker->unique()->safeEmail,
+            'country_code' => $this->faker->countryCode,
+            'timezone' => $this->faker->timezone,
+            'password' => 'secret',
+            'phone' => '+658' . $this->faker->numberBetween($min = 1, $max = 8) . $this->faker->randomNumber(6, true),
+            'gender' => 'male' | 'female',
+            'remember_token' => Str::random(10),
+            'status' => $this->faker->numberBetween($min = 1, $max = 3),
             'email_verified_at' => now(),
         ];
     }

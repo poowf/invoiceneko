@@ -53,16 +53,16 @@ class InvoiceNotification extends Notification implements ShouldQueue
         $token = (string) $invoice->generateShareToken();
         $url = route('invoice.token', ['token' => $token]);
         $pixelRoute = route('notification.pixel', ['notification_id' => $this->id]);
-        $invoice_slug = Str::slug($invoice->nice_invoice_id).'.pdf';
+        $invoice_slug = Str::slug($invoice->nice_invoice_id) . '.pdf';
 
         return (new NekoMailMessage())
-                    ->subject("New Invoice #{$invoice->nice_invoice_id} from {$company->name}")
-                    ->greeting("Hello {$client->companyname}!")
-                    ->line("You have a new Invoice from {$company->name}")
-                    ->action('View Invoice', $url)
-                    ->line('Thank you for using our application!')
-                    ->content('<img src="'.$pixelRoute.'">')
-                    ->attachData($pdf->inline($invoice_slug), $invoice_slug);
+            ->subject("New Invoice #{$invoice->nice_invoice_id} from {$company->name}")
+            ->greeting("Hello {$client->companyname}!")
+            ->line("You have a new Invoice from {$company->name}")
+            ->action('View Invoice', $url)
+            ->line('Thank you for using our application!')
+            ->content('<img src="' . $pixelRoute . '">')
+            ->attachData($pdf->inline($invoice_slug), $invoice_slug);
     }
 
     /**
@@ -75,11 +75,11 @@ class InvoiceNotification extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'invoice_id'      => $this->invoice->id,
+            'invoice_id' => $this->invoice->id,
             'nice_invoice_id' => $this->invoice->nice_invoice_id,
-            'company_id'      => $this->invoice->company_id,
-            'clientname'      => $this->invoice->client->companyname,
-            'email'           => $this->invoice->client->contactemail,
+            'company_id' => $this->invoice->company_id,
+            'clientname' => $this->invoice->client->companyname,
+            'email' => $this->invoice->client->contactemail,
         ];
     }
 }

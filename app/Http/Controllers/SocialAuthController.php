@@ -28,9 +28,9 @@ class SocialAuthController extends Controller
 
         $user = User::where('email', $socialuser->email)->first();
 
-        if (! $user) {
+        if (!$user) {
             $user = new User();
-            $user->username = preg_replace('/\s/', '', $socialuser->name).'_'.Str::random(5);
+            $user->username = preg_replace('/\s/', '', $socialuser->name) . '_' . Str::random(5);
             $user->email = $socialuser->email;
             $user->password = Str::random(10);
             $user->full_name = $socialuser->name;
@@ -48,7 +48,6 @@ class SocialAuthController extends Controller
                 $smt->google_token = $socialuser->token;
                 break;
             default:
-
         }
 
         $smt->save();

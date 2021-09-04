@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
      * Auth container binding
      */
@@ -69,5 +68,4 @@ return [
      * Throw exceptions or just fire events?
      */
     'throw_exceptions' => true,
-
 ];

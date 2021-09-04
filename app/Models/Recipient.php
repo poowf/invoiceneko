@@ -24,13 +24,7 @@ class Recipient extends Model implements Auditable
      *
      * @var array
      */
-    protected $fillable = [
-        'salutation',
-        'first_name',
-        'last_name',
-        'email',
-        'phone',
-    ];
+    protected $fillable = ['salutation', 'first_name', 'last_name', 'email', 'phone'];
 
     public function getNameAttribute()
     {

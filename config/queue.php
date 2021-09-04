@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Queue Connection Name
@@ -29,23 +28,22 @@ return [
     */
 
     'connections' => [
-
         'sync' => [
             'driver' => 'sync',
         ],
 
         'database' => [
-            'driver'      => 'database',
-            'table'       => 'jobs',
-            'queue'       => 'default',
+            'driver' => 'database',
+            'table' => 'jobs',
+            'queue' => 'default',
             'retry_after' => 90,
             'after_commit' => false,
         ],
 
         'beanstalkd' => [
-            'driver'      => 'beanstalkd',
-            'host'        => 'localhost',
-            'queue'       => 'default',
+            'driver' => 'beanstalkd',
+            'host' => 'localhost',
+            'queue' => 'default',
             'retry_after' => 90,
             'block_for' => 0,
             'after_commit' => false,
@@ -63,14 +61,13 @@ return [
         ],
 
         'redis' => [
-            'driver'      => 'redis',
-            'connection'  => 'default',
-            'queue'       => 'default',
+            'driver' => 'redis',
+            'connection' => 'default',
+            'queue' => 'default',
             'retry_after' => 90,
-            'block_for'   => null,
+            'block_for' => null,
             'after_commit' => false,
         ],
-
     ],
 
     /*
@@ -87,7 +84,6 @@ return [
     'failed' => [
         'driver' => env('QUEUE_FAILED_DRIVER', 'database-uuids'),
         'database' => env('DB_CONNECTION', 'mysql'),
-        'table'    => 'failed_jobs',
+        'table' => 'failed_jobs',
     ],
-
 ];

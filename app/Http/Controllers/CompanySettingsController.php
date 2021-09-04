@@ -89,7 +89,7 @@ class CompanySettingsController extends Controller
     {
         $companySetting = $company->settings;
 
-        if (! $companySetting) {
+        if (!$companySetting) {
             $companySetting = new CompanySetting();
         }
 

@@ -14,7 +14,11 @@ class MakeClientIdNullableOnPaymentsTable extends Migration
     public function up()
     {
         Schema::table('payments', function (Blueprint $table) {
-            $table->integer('client_id')->unsigned()->nullable()->change();
+            $table
+                ->integer('client_id')
+                ->unsigned()
+                ->nullable()
+                ->change();
         });
     }
 
@@ -26,7 +30,11 @@ class MakeClientIdNullableOnPaymentsTable extends Migration
     public function down()
     {
         Schema::table('payments', function (Blueprint $table) {
-            $table->integer('client_id')->unsigned()->nullable(false)->change();
+            $table
+                ->integer('client_id')
+                ->unsigned()
+                ->nullable(false)
+                ->change();
         });
     }
 }

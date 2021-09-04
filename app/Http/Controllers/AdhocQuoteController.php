@@ -61,12 +61,12 @@ class AdhocQuoteController extends Controller
         $quote->company_id = $company->id;
 
         $client = [
-            'companyname'  => $request->input('companyname'),
+            'companyname' => $request->input('companyname'),
             'country_code' => $request->input('country_code'),
-            'block'        => $request->input('block'),
-            'street'       => $request->input('street'),
-            'unitnumber'   => $request->input('unitnumber'),
-            'postalcode'   => $request->input('postalcode'),
+            'block' => $request->input('block'),
+            'street' => $request->input('street'),
+            'unitnumber' => $request->input('unitnumber'),
+            'postalcode' => $request->input('postalcode'),
         ];
         $quote->client_data = json_encode($client);
 
@@ -75,7 +75,9 @@ class AdhocQuoteController extends Controller
         foreach ($request->input('item_name') as $key => $item) {
             $quoteitem = new QuoteItem();
             $quoteitem->name = $item;
-            $quoteitem->description = (array_key_exists($key, $request->input('item_description'))) ? $request->input('item_description')[$key] : null;
+            $quoteitem->description = array_key_exists($key, $request->input('item_description'))
+                ? $request->input('item_description')[$key]
+                : null;
             $quoteitem->quantity = $request->input('item_quantity')[$key];
             $quoteitem->price = $request->input('item_price')[$key];
             $quoteitem->quote_id = $quote->id;
@@ -131,12 +133,12 @@ class AdhocQuoteController extends Controller
         $quote->fill($request->all());
 
         $client = [
-            'companyname'  => $request->input('companyname'),
+            'companyname' => $request->input('companyname'),
             'country_code' => $request->input('country_code'),
-            'block'        => $request->input('block'),
-            'street'       => $request->input('street'),
-            'unitnumber'   => $request->input('unitnumber'),
-            'postalcode'   => $request->input('postalcode'),
+            'block' => $request->input('block'),
+            'street' => $request->input('street'),
+            'unitnumber' => $request->input('unitnumber'),
+            'postalcode' => $request->input('postalcode'),
         ];
 
         $quote->client_data = json_encode($client);
@@ -153,7 +155,9 @@ class AdhocQuoteController extends Controller
                 $quoteitem = new QuoteItem();
             }
             $quoteitem->name = $itemname;
-            $quoteitem->description = (array_key_exists($key, $request->input('item_description'))) ? $request->input('item_description')[$key] : null;
+            $quoteitem->description = array_key_exists($key, $request->input('item_description'))
+                ? $request->input('item_description')[$key]
+                : null;
             $quoteitem->quantity = $request->input('item_quantity')[$key];
             $quoteitem->price = $request->input('item_price')[$key];
             $quoteitem->quote_id = $quote->id;

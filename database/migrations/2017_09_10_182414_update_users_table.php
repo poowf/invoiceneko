@@ -14,9 +14,15 @@ class UpdateUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('company_id')->unsigned()->nullable()->after('remember_token');
-            $table->foreign('company_id')
-                ->references('id')->on('companies')
+            $table
+                ->integer('company_id')
+                ->unsigned()
+                ->nullable()
+                ->after('remember_token');
+            $table
+                ->foreign('company_id')
+                ->references('id')
+                ->on('companies')
                 ->onDelete('cascade');
         });
     }

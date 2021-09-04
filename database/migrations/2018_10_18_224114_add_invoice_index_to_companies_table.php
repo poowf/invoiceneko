@@ -14,7 +14,10 @@ class AddInvoiceIndexToCompaniesTable extends Migration
     public function up()
     {
         Schema::table('companies', function (Blueprint $table) {
-            $table->integer('invoice_index')->after('name')->nullable();
+            $table
+                ->integer('invoice_index')
+                ->after('name')
+                ->nullable();
         });
     }
 

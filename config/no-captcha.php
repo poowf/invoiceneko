@@ -1,13 +1,12 @@
 <?php
 
 return [
-
     /* -----------------------------------------------------------------
      |  Credentials
      | -----------------------------------------------------------------
      */
 
-    'secret'  => env('NOCAPTCHA_SECRET', 'no-captcha-secret'),
+    'secret' => env('NOCAPTCHA_SECRET', 'no-captcha-secret'),
     'sitekey' => env('NOCAPTCHA_SITEKEY', 'no-captcha-sitekey'),
 
     /* -----------------------------------------------------------------
@@ -24,8 +23,7 @@ return [
 
     'attributes' => [
         'data-theme' => 'light', // 'light', 'dark'
-        'data-type'  => 'image', // 'image', 'audio'
-        'data-size'  => 'normal', // 'normal', 'compact'
+        'data-type' => 'image', // 'image', 'audio'
+        'data-size' => 'normal', // 'normal', 'compact'
     ],
-
 ];

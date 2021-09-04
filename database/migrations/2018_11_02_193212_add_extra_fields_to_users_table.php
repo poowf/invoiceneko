@@ -14,8 +14,14 @@ class AddExtraFieldsToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('timezone')->nullable()->after('gender');
-            $table->string('country')->nullable()->after('gender');
+            $table
+                ->string('timezone')
+                ->nullable()
+                ->after('gender');
+            $table
+                ->string('country')
+                ->nullable()
+                ->after('gender');
         });
     }
 

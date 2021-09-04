@@ -20,8 +20,10 @@ class CreateInvoiceItemsTable extends Migration
             $table->integer('quantity');
             $table->double('price', 15, 3);
             $table->integer('invoice_id')->unsigned();
-            $table->foreign('invoice_id')
-                ->references('id')->on('invoices')
+            $table
+                ->foreign('invoice_id')
+                ->references('id')
+                ->on('invoices')
                 ->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

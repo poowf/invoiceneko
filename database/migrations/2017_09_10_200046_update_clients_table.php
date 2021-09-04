@@ -14,9 +14,15 @@ class UpdateClientsTable extends Migration
     public function up()
     {
         Schema::table('clients', function (Blueprint $table) {
-            $table->integer('company_id')->unsigned()->nullable()->after('contactphone');
-            $table->foreign('company_id')
-                ->references('id')->on('companies')
+            $table
+                ->integer('company_id')
+                ->unsigned()
+                ->nullable()
+                ->after('contactphone');
+            $table
+                ->foreign('company_id')
+                ->references('id')
+                ->on('companies')
                 ->onDelete('cascade');
         });
     }

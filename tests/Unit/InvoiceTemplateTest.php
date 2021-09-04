@@ -28,10 +28,10 @@ class InvoiceTemplateTest extends TestCase
         InvoiceTemplate::unguard();
 
         $invoiceTemplate = InvoiceTemplate::create([
-            'date'                  => '2018-11-01 00:00:00',
-            'netdays'               => '20',
-            'notify'                => '0',
-            'client_id'             => $client->id,
+            'date' => '2018-11-01 00:00:00',
+            'netdays' => '20',
+            'notify' => '0',
+            'client_id' => $client->id,
             'invoice_recurrence_id' => $invoiceEvent->id,
         ]);
 
@@ -57,9 +57,9 @@ class InvoiceTemplateTest extends TestCase
 
         //Testing fillable properties
         $data = [
-            'date'    => '2018-11-26 00:00:00',
+            'date' => '2018-11-26 00:00:00',
             'netdays' => '30',
-            'notify'  => '1',
+            'notify' => '1',
         ];
 
         $invoiceTemplate->fill($data);

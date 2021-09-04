@@ -14,7 +14,10 @@ class ChangeDomainNameUniqueToCompaniesTable extends Migration
     public function up()
     {
         Schema::table('companies', function (Blueprint $table) {
-            $table->string('domain_name')->unique()->change();
+            $table
+                ->string('domain_name')
+                ->unique()
+                ->change();
         });
     }
 

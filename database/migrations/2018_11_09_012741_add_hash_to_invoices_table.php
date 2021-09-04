@@ -14,7 +14,10 @@ class AddHashToInvoicesTable extends Migration
     public function up()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            $table->string('hash')->nullable()->after('archived');
+            $table
+                ->string('hash')
+                ->nullable()
+                ->after('archived');
         });
     }
 

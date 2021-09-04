@@ -56,10 +56,12 @@ class GenerateRecurringInvoices extends Command
             $template = $invoiceRecurrence->template;
             $templateItems = $template->items;
 
-            $constraintTime = $now->{$this->getDateAdditionOperator($invoiceRecurrence->time_period)}($invoiceRecurrence->time_interval + 3);
+            $constraintTime = $now->{$this->getDateAdditionOperator($invoiceRecurrence->time_period)}(
+                $invoiceRecurrence->time_interval + 3,
+            );
             $constraint = new BeforeConstraint($constraintTime);
 
-//            $rrule = Unicorn::generateRrule($invoiceRecurrence->created_at, $timezone, $invoiceRecurrence->time_interval, $invoiceRecurrence->time_period, $invoiceRecurrence->until_type, $invoiceRecurrence->until_meta, true);
+            //            $rrule = Unicorn::generateRrule($invoiceRecurrence->created_at, $timezone, $invoiceRecurrence->time_interval, $invoiceRecurrence->time_period, $invoiceRecurrence->until_type, $invoiceRecurrence->until_meta, true);
             $rrule = Rule::createFromString($invoiceRecurrence->rule, $template->date);
             $transformer = new ArrayTransformer();
 
@@ -73,7 +75,7 @@ class GenerateRecurringInvoices extends Command
                     break;
                 }
 
-//                $template->date = $template->date->{$this->getDateAdditionOperator($invoiceRecurrence->time_period)}(($invoiceRecurrence->time_interval * ($key + 1) ));
+                //                $template->date = $template->date->{$this->getDateAdditionOperator($invoiceRecurrence->time_period)}(($invoiceRecurrence->time_interval * ($key + 1) ));
 
                 $generatedInvoice = new Invoice();
                 $generatedInvoice->fill($template->toArray());
@@ -86,7 +88,7 @@ class GenerateRecurringInvoices extends Command
 
                 //Generate hash based on the serialized version of the invoice;
                 //Only retrieve the invoice data without any relations
-                $hash = hash('sha512', serialize(json_encode($generatedInvoice->getAttributes()).$templateItems));
+                $hash = hash('sha512', serialize(json_encode($generatedInvoice->getAttributes()) . $templateItems));
 
                 if (Invoice::where('hash', $hash)->count() == 1) {
                     print_r("Invoice already generated\n");

@@ -25,15 +25,15 @@ class QuoteFactory extends Factory
     public function definition()
     {
         return [
-            'nice_quote_id' => substr($this->faker->slug, 0, 20).'sasdf',
-            'date'          => $this->faker->dateTime,
-            'duedate'       => $this->faker->dateTime,
-            'netdays'       => $this->faker->numberBetween($min = 1, $max = 60),
-            'total'         => $this->faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999999.99),
-            'share_token'   => $this->faker->uuid,
-            'status'        => $this->faker->numberBetween($min = 1, $max = 7),
-            'archived'      => $this->faker->boolean,
-            'client_id'     => function () {
+            'nice_quote_id' => substr($this->faker->slug, 0, 20) . 'sasdf',
+            'date' => $this->faker->dateTime,
+            'duedate' => $this->faker->dateTime,
+            'netdays' => $this->faker->numberBetween($min = 1, $max = 60),
+            'total' => $this->faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999999.99),
+            'share_token' => $this->faker->uuid,
+            'status' => $this->faker->numberBetween($min = 1, $max = 7),
+            'archived' => $this->faker->boolean,
+            'client_id' => function () {
                 return Client::factory()->create()->id;
             },
             'company_id' => function () {
@@ -50,8 +50,7 @@ class QuoteFactory extends Factory
     public function unverified()
     {
         return $this->state(function (array $attributes) {
-            return [
-            ];
+            return [];
         });
     }
 }

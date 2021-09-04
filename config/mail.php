@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Mailer
@@ -73,10 +72,7 @@ return [
 
         'failover' => [
             'transport' => 'failover',
-            'mailers' => [
-                'smtp',
-                'log',
-            ],
+            'mailers' => ['smtp', 'log'],
         ],
     ],
 
@@ -93,7 +89,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name'    => env('MAIL_FROM_NAME', 'Example'),
+        'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
     /*
@@ -110,9 +106,6 @@ return [
     'markdown' => [
         'theme' => 'invoiceneko',
 
-        'paths' => [
-            resource_path('views/vendor/mail'),
-        ],
+        'paths' => [resource_path('views/vendor/mail')],
     ],
-
 ];

@@ -20,10 +20,10 @@ class InvoiceItemTemplateTest extends TestCase
         InvoiceItemTemplate::unguard();
 
         $invoiceItemTemplate = InvoiceItemTemplate::create([
-            'name'                => 'This is an Invoice Item Template la',
-            'quantity'            => '250',
-            'price'               => '5.00',
-            'description'         => 'asfdasfasfasfsf<p>asasdfasdfasfas</p>',
+            'name' => 'This is an Invoice Item Template la',
+            'quantity' => '250',
+            'price' => '5.00',
+            'description' => 'asfdasfasfasfsf<p>asasdfasdfasfas</p>',
             'invoice_template_id' => $invoiceTemplate->id,
         ]);
 
@@ -51,8 +51,8 @@ class InvoiceItemTemplateTest extends TestCase
         $this->assertEquals('2000', $invoiceItemTemplate->quantity);
 
         $data = [
-            'price'               => '213131.00',
-            'quantity'            => '25000',
+            'price' => '213131.00',
+            'quantity' => '25000',
             'invoice_template_id' => $invoiceTemplate2->id,
         ];
 

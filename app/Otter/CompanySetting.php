@@ -28,12 +28,12 @@ class CompanySetting extends OtterResource
     public static function fields()
     {
         return [
-            'invoice_prefix'     => 'text',
-            'quote_prefix'       => 'text',
-            'receipt_prefix'     => 'text',
+            'invoice_prefix' => 'text',
+            'quote_prefix' => 'text',
+            'receipt_prefix' => 'text',
             'invoice_conditions' => 'text',
-            'quote_conditions'   => 'text',
-            'tax'                => 'text',
+            'quote_conditions' => 'text',
+            'tax' => 'text',
         ];
     }
 
@@ -44,7 +44,6 @@ class CompanySetting extends OtterResource
      */
     public static function hidden()
     {
-        return [
-        ];
+        return [];
     }
 }

@@ -11,7 +11,7 @@ use Laravel\Dusk\TestCase as BaseTestCase;
 abstract class DuskTestCase extends BaseTestCase
 {
     use CreatesApplication;
-//    use DatabaseMigrations;
+    //    use DatabaseMigrations;
 
     /**
      *  Notes for Dusk.
@@ -60,24 +60,17 @@ abstract class DuskTestCase extends BaseTestCase
      */
     protected function driver()
     {
-        $options = (new ChromeOptions())->addArguments([
-            '--window-size=1024,768',
-            '--disable-gpu',
-            '--headless',
-            '--no-sandbox',
-        ]);
+        $options = (new ChromeOptions())->addArguments(['--window-size=1024,768', '--disable-gpu', '--headless', '--no-sandbox']);
 
         if (env('USE_SELENIUM', 'false') == 'true') {
             return RemoteWebDriver::create(
-                'http://selenium:4444/wd/hub', DesiredCapabilities::chrome()->setCapability(
-                ChromeOptions::CAPABILITY, $options
-            )
+                'http://selenium:4444/wd/hub',
+                DesiredCapabilities::chrome()->setCapability(ChromeOptions::CAPABILITY, $options),
             );
         } else {
             return RemoteWebDriver::create(
-                'http://localhost:9515', DesiredCapabilities::chrome()->setCapability(
-                ChromeOptions::CAPABILITY, $options
-            )
+                'http://localhost:9515',
+                DesiredCapabilities::chrome()->setCapability(ChromeOptions::CAPABILITY, $options),
             );
         }
     }

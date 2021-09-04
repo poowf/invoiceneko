@@ -14,8 +14,15 @@ class AddClientDataFieldAndMakeClientIdNullableToOldInvoicesTable extends Migrat
     public function up()
     {
         Schema::table('old_invoices', function (Blueprint $table) {
-            $table->json('client_data')->nullable()->after('status');
-            $table->integer('client_id')->unsigned()->nullable()->change();
+            $table
+                ->json('client_data')
+                ->nullable()
+                ->after('status');
+            $table
+                ->integer('client_id')
+                ->unsigned()
+                ->nullable()
+                ->change();
         });
     }
 
@@ -28,7 +35,11 @@ class AddClientDataFieldAndMakeClientIdNullableToOldInvoicesTable extends Migrat
     {
         Schema::table('old_invoices', function (Blueprint $table) {
             $table->dropColumn('client_data');
-            $table->integer('client_id')->unsigned()->nullable(false)->change();
+            $table
+                ->integer('client_id')
+                ->unsigned()
+                ->nullable(false)
+                ->change();
         });
     }
 }

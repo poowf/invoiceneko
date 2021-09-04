@@ -14,11 +14,17 @@ class AddDefaultValueForArchivedToQuotesAndInvoicesTable extends Migration
     public function up()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            $table->boolean('archived')->default(0)->change();
+            $table
+                ->boolean('archived')
+                ->default(0)
+                ->change();
         });
 
         Schema::table('quotes', function (Blueprint $table) {
-            $table->boolean('archived')->default(0)->change();
+            $table
+                ->boolean('archived')
+                ->default(0)
+                ->change();
         });
     }
 
@@ -30,11 +36,17 @@ class AddDefaultValueForArchivedToQuotesAndInvoicesTable extends Migration
     public function down()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            $table->boolean('archived')->default(null)->change();
+            $table
+                ->boolean('archived')
+                ->default(null)
+                ->change();
         });
 
         Schema::table('quotes', function (Blueprint $table) {
-            $table->boolean('archived')->default(null)->change();
+            $table
+                ->boolean('archived')
+                ->default(null)
+                ->change();
         });
     }
 }

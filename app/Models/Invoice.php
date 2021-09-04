@@ -39,44 +39,34 @@ class Invoice extends Model implements Auditable
      *
      * @var array
      */
-    protected $fillable = [
-        'date',
-        'netdays',
-    ];
+    protected $fillable = ['date', 'netdays'];
 
     /**
      * The attributes that should be mutated to dates.
      *
      * @var array
      */
-    protected $dates = [
-        'date',
-        'duedate',
-        'payment_complete_date',
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
+    protected $dates = ['date', 'duedate', 'payment_complete_date', 'created_at', 'updated_at', 'deleted_at'];
 
     protected $attributes = [
         'status' => self::STATUS_OPEN,
     ];
 
-    protected $cascadeDeletes = [
-        'items',
-        'payments',
-    ];
+    protected $cascadeDeletes = ['items', 'payments'];
 
     protected static function boot()
     {
         parent::boot();
 
         static::saving(function ($invoice) {
-            if ($invoice->status == self::STATUS_DRAFT && ! $invoice->generated) {
+            if ($invoice->status == self::STATUS_DRAFT && !$invoice->generated) {
                 $invoice->status = self::STATUS_OPEN;
             }
             $date = clone $invoice->date;
-            $invoice->duedate = $date->timezone(config('app.timezone'))->startOfDay()->addDays($invoice->netdays);
+            $invoice->duedate = $date
+                ->timezone(config('app.timezone'))
+                ->startOfDay()
+                ->addDays($invoice->netdays);
         });
 
         //Auto Increment of invoice_index per Company;
@@ -110,14 +100,14 @@ class Invoice extends Model implements Auditable
     {
         $date = $this->asDateTime($value);
 
-        return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
+        return auth()->user() ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
     public function getUpdatedAtAttribute($value)
     {
         $date = $this->asDateTime($value);
 
-        return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
+        return auth()->user() ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
     public function getDateAttribute($value)
@@ -136,7 +126,7 @@ class Invoice extends Model implements Auditable
 
     public function getPaymentCompleteDateAttribute($value)
     {
-        if (! is_null($value)) {
+        if (!is_null($value)) {
             $date = $this->asDateTime($value);
 
             return $date->timezone($this->company->timezone);
@@ -199,12 +189,12 @@ class Invoice extends Model implements Auditable
 
     public function getClient()
     {
-        return ($this->client) ? $this->client : (object) json_decode($this->client_data);
+        return $this->client ? $this->client : (object) json_decode($this->client_data);
     }
 
     public function isLocked()
     {
-        if (! is_null($this->payment_complete_date)) {
+        if (!is_null($this->payment_complete_date)) {
             $now = Carbon::now();
             if (date_diff($now, $this->payment_complete_date)->format('%a') >= '120') {
                 return true;
@@ -218,14 +208,14 @@ class Invoice extends Model implements Auditable
     {
         if ($this->recurrence) {
             if ($this->recurrence->invoices) {
-                return ($this->recurrence->invoices->except($this->id)->isNotEmpty()) ? $this->recurrence->invoices->except($this->id) : null;
+                return $this->recurrence->invoices->except($this->id)->isNotEmpty() ? $this->recurrence->invoices->except($this->id) : null;
             }
         }
     }
 
     public function hash()
     {
-        $hash = hash('sha512', serialize($this.$this->items));
+        $hash = hash('sha512', serialize($this . $this->items));
 
         return $hash;
     }
@@ -267,7 +257,7 @@ class Invoice extends Model implements Auditable
         $subtotal = $this->calculatesubtotal(false);
         $subtotalWithTax = $subtotal * $tax;
 
-        $tax = ($subtotalWithTax != 0) ? $subtotalWithTax / 100 : 0;
+        $tax = $subtotalWithTax != 0 ? $subtotalWithTax / 100 : 0;
 
         if ($moneyformat) {
             $amount = new \NumberFormatter('en_US.UTF-8', \NumberFormatter::PATTERN_DECIMAL, '* #####.00 ;(* #####.00)');
@@ -290,7 +280,7 @@ class Invoice extends Model implements Auditable
         $subtotal = $this->calculatesubtotal(false);
         $totalWithTax = $subtotal * (100 + $tax);
 
-        $total = ($totalWithTax != 0) ? $totalWithTax / 100 : 0;
+        $total = $totalWithTax != 0 ? $totalWithTax / 100 : 0;
 
         if ($moneyformat) {
             $amount = new \NumberFormatter('en_US.UTF-8', \NumberFormatter::PATTERN_DECIMAL, '* #####.00 ;(* #####.00)');
@@ -349,7 +339,7 @@ class Invoice extends Model implements Auditable
 
     public function duplicate($date = null)
     {
-        $date = ($date) ? $date : Carbon::now();
+        $date = $date ? $date : Carbon::now();
 
         $company = $this->company;
         $cloned = $this->replicate();
@@ -415,52 +405,43 @@ class Invoice extends Model implements Auditable
 
     public function scopeDateBetween($query, $startDate, $endDate)
     {
-        return $query
-            ->whereBetween('date', [$startDate, $endDate]);
+        return $query->whereBetween('date', [$startDate, $endDate]);
     }
 
     public function scopeNotifiable($query)
     {
-        return $query
-            ->where('notify', true);
+        return $query->where('notify', true);
     }
 
     public function scopeOverdue($query)
     {
         $now = Carbon::now();
 
-        return $query
-            ->where('duedate', '<=', $now)
-            ->whereIn('status', [self::STATUS_OPEN, self::STATUS_OVERDUE]);
+        return $query->where('duedate', '<=', $now)->whereIn('status', [self::STATUS_OPEN, self::STATUS_OVERDUE]);
     }
 
     public function scopePending($query)
     {
-        return $query
-            ->where('status', self::STATUS_OPEN);
+        return $query->where('status', self::STATUS_OPEN);
     }
 
     public function scopeDraft($query)
     {
-        return $query
-            ->where('status', self::STATUS_DRAFT);
+        return $query->where('status', self::STATUS_DRAFT);
     }
 
     public function scopePaid($query)
     {
-        return $query
-            ->where('status', self::STATUS_CLOSED);
+        return $query->where('status', self::STATUS_CLOSED);
     }
 
     public function scopeArchived($query)
     {
-        return $query
-            ->where('archived', true);
+        return $query->where('archived', true);
     }
 
     public function scopeNotArchived($query)
     {
-        return $query
-            ->where('archived', false);
+        return $query->where('archived', false);
     }
 }

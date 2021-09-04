@@ -48,10 +48,7 @@ class VerifyEmail extends Notification implements ShouldQueue
         return (new MailMessage())
             ->subject(Lang::get('Verify Email Address'))
             ->line(Lang::get('Please click the button below to verify your email address.'))
-            ->action(
-                Lang::get('Verify Email Address'),
-                $this->verificationUrl($notifiable)
-            )
+            ->action(Lang::get('Verify Email Address'), $this->verificationUrl($notifiable))
             ->line(Lang::get('If you did not create an account, no further action is required.'));
     }
 
@@ -64,9 +61,7 @@ class VerifyEmail extends Notification implements ShouldQueue
      */
     protected function verificationUrl($notifiable)
     {
-        return URL::temporarySignedRoute(
-            'verification.verify', Carbon::now()->addMinutes(60), ['id' => $notifiable->getKey()]
-        );
+        return URL::temporarySignedRoute('verification.verify', Carbon::now()->addMinutes(60), ['id' => $notifiable->getKey()]);
     }
 
     /**

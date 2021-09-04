@@ -24,11 +24,11 @@ class CompanyUserRequestFactory extends Factory
     public function definition()
     {
         return [
-            'full_name'  => $this->faker->name,
-            'email'      => $this->faker->unique()->safeEmail,
-            'phone'      => '+658'.$this->faker->numberBetween($min = 1, $max = 8).$this->faker->randomNumber(6, true),
-            'token'      => Str::random(10),
-            'status'     => $this->faker->numberBetween($min = 1, $max = 3),
+            'full_name' => $this->faker->name,
+            'email' => $this->faker->unique()->safeEmail,
+            'phone' => '+658' . $this->faker->numberBetween($min = 1, $max = 8) . $this->faker->randomNumber(6, true),
+            'token' => Str::random(10),
+            'status' => $this->faker->numberBetween($min = 1, $max = 3),
             'company_id' => function () {
                 return Company::factory()->create()->id;
             },
@@ -43,8 +43,7 @@ class CompanyUserRequestFactory extends Factory
     public function unverified()
     {
         return $this->state(function (array $attributes) {
-            return [
-            ];
+            return [];
         });
     }
 }

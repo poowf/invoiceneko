@@ -28,16 +28,17 @@ class AdhocQuoteTest extends DuskTestCase
         $faker = Faker::create();
 
         $this->browse(function (Browser $browser) use ($faker, $company, $itemTemplate) {
-            $browser->visit('/signin')
+            $browser
+                ->visit('/signin')
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/'.$company->domain_name.'/dashboard')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->clickLink('Quotes')
-                ->assertPathIs('/'.$company->domain_name.'/quotes')
+                ->assertPathIs('/' . $company->domain_name . '/quotes')
                 ->clickLink('Create Ad-Hoc')
-                ->assertPathIs('/'.$company->domain_name.'/quote/adhoc/create')
-                ->type('nice_quote_id', substr($faker->slug, 0, 20).'sasdf')
+                ->assertPathIs('/' . $company->domain_name . '/quote/adhoc/create')
+                ->type('nice_quote_id', substr($faker->slug, 0, 20) . 'sasdf')
                 ->type('companyname', $faker->company)
                 ->type('block', $faker->buildingNumber)
                 ->type('street', $faker->streetName)
@@ -46,10 +47,10 @@ class AdhocQuoteTest extends DuskTestCase
                 ->type('netdays', $faker->numberBetween($min = 1, $max = 60))
                 ->type('item_quantity[]', $faker->numberBetween($min = 1, $max = 999999999))
                 ->type('item_price[]', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999));
-            $browser
-                ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("'.Carbon::now()->format('j F, Y').'");');
-            $browser
-                ->script('jQuery("#item_name_0").selectize()[0].selectize.setValue("'.addslashes($itemTemplate->name).'");');
+            $browser->script(
+                'jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("' . Carbon::now()->format('j F, Y') . '");',
+            );
+            $browser->script('jQuery("#item_name_0").selectize()[0].selectize.setValue("' . addslashes($itemTemplate->name) . '");');
             $browser->pause(2000);
             $browser
                 ->press('CREATE')
@@ -72,16 +73,17 @@ class AdhocQuoteTest extends DuskTestCase
         $faker = Faker::create();
 
         $this->browse(function (Browser $browser) use ($faker, $company, $itemTemplate) {
-            $browser->visit('/signin')
+            $browser
+                ->visit('/signin')
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/'.$company->domain_name.'/dashboard')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->clickLink('Quotes')
-                ->assertPathIs('/'.$company->domain_name.'/quotes')
+                ->assertPathIs('/' . $company->domain_name . '/quotes')
                 ->clickLink('Create Ad-Hoc')
-                ->assertPathIs('/'.$company->domain_name.'/quote/adhoc/create')
-                ->type('nice_quote_id', substr($faker->slug, 0, 20).'sasdf')
+                ->assertPathIs('/' . $company->domain_name . '/quote/adhoc/create')
+                ->type('nice_quote_id', substr($faker->slug, 0, 20) . 'sasdf')
                 ->type('companyname', $faker->company)
                 ->type('block', $faker->buildingNumber)
                 ->type('street', $faker->streetName)
@@ -90,17 +92,17 @@ class AdhocQuoteTest extends DuskTestCase
                 ->type('netdays', $faker->numberBetween($min = 1, $max = 60))
                 ->type('item_quantity[]', $faker->numberBetween($min = 1, $max = 999999999))
                 ->type('item_price[]', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999));
-            $browser
-                ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("'.Carbon::now()->format('j F, Y').'");');
-            $browser
-                ->script('jQuery("#item_name_0").selectize()[0].selectize.setValue("'.addslashes($itemTemplate->name).'");');
+            $browser->script(
+                'jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("' . Carbon::now()->format('j F, Y') . '");',
+            );
+            $browser->script('jQuery("#item_name_0").selectize()[0].selectize.setValue("' . addslashes($itemTemplate->name) . '");');
             $browser->pause(2000);
             $browser
                 ->press('CREATE')
                 ->pause(2000)
                 ->assertPresent('#quote-action-container')
                 ->clickLink('Edit')
-                ->assertPathIs('/'.$company->domain_name.'/quote/adhoc/'.$company->quotes->first()->id.'/edit')
+                ->assertPathIs('/' . $company->domain_name . '/quote/adhoc/' . $company->quotes->first()->id . '/edit')
                 ->type('companyname', $faker->company)
                 ->type('block', $faker->buildingNumber)
                 ->type('street', $faker->streetName)
@@ -110,8 +112,9 @@ class AdhocQuoteTest extends DuskTestCase
                 ->type('item_name[]', 'The Turbo Ultra Turbonator')
                 ->type('item_quantity[]', $faker->numberBetween($min = 1, $max = 999999999))
                 ->type('item_price[]', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999));
-            $browser
-                ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("'.Carbon::now()->format('j F, Y').'");');
+            $browser->script(
+                'jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("' . Carbon::now()->format('j F, Y') . '");',
+            );
             $browser
                 ->pause(2000)
                 ->press('UPDATE')
@@ -134,16 +137,17 @@ class AdhocQuoteTest extends DuskTestCase
         $faker = Faker::create();
 
         $this->browse(function (Browser $browser) use ($faker, $company, $itemTemplate) {
-            $browser->visit('/signin')
+            $browser
+                ->visit('/signin')
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/'.$company->domain_name.'/dashboard')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->clickLink('Quotes')
-                ->assertPathIs('/'.$company->domain_name.'/quotes')
+                ->assertPathIs('/' . $company->domain_name . '/quotes')
                 ->clickLink('Create Ad-Hoc')
-                ->assertPathIs('/'.$company->domain_name.'/quote/adhoc/create')
-                ->type('nice_quote_id', substr($faker->slug, 0, 20).'sasdf')
+                ->assertPathIs('/' . $company->domain_name . '/quote/adhoc/create')
+                ->type('nice_quote_id', substr($faker->slug, 0, 20) . 'sasdf')
                 ->type('companyname', $faker->company)
                 ->type('block', $faker->buildingNumber)
                 ->type('street', $faker->streetName)
@@ -152,10 +156,10 @@ class AdhocQuoteTest extends DuskTestCase
                 ->type('netdays', $faker->numberBetween($min = 1, $max = 60))
                 ->type('item_quantity[]', $faker->numberBetween($min = 1, $max = 999999999))
                 ->type('item_price[]', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999));
-            $browser
-                ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("'.Carbon::now()->format('j F, Y').'");');
-            $browser
-                ->script('jQuery("#item_name_0").selectize()[0].selectize.setValue("'.addslashes($itemTemplate->name).'");');
+            $browser->script(
+                'jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("' . Carbon::now()->format('j F, Y') . '");',
+            );
+            $browser->script('jQuery("#item_name_0").selectize()[0].selectize.setValue("' . addslashes($itemTemplate->name) . '");');
             $browser->pause(2000);
             $browser
                 ->press('CREATE')
@@ -183,16 +187,17 @@ class AdhocQuoteTest extends DuskTestCase
         $faker = Faker::create();
 
         $this->browse(function (Browser $browser) use ($faker, $company, $itemTemplate) {
-            $browser->visit('/signin')
+            $browser
+                ->visit('/signin')
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/'.$company->domain_name.'/dashboard')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->clickLink('Quotes')
-                ->assertPathIs('/'.$company->domain_name.'/quotes')
+                ->assertPathIs('/' . $company->domain_name . '/quotes')
                 ->clickLink('Create Ad-Hoc')
-                ->assertPathIs('/'.$company->domain_name.'/quote/adhoc/create')
-                ->type('nice_quote_id', substr($faker->slug, 0, 20).'sasdf')
+                ->assertPathIs('/' . $company->domain_name . '/quote/adhoc/create')
+                ->type('nice_quote_id', substr($faker->slug, 0, 20) . 'sasdf')
                 ->type('companyname', $faker->company)
                 ->type('block', $faker->buildingNumber)
                 ->type('street', $faker->streetName)
@@ -201,17 +206,17 @@ class AdhocQuoteTest extends DuskTestCase
                 ->type('netdays', $faker->numberBetween($min = 1, $max = 60))
                 ->type('item_quantity[]', $faker->numberBetween($min = 1, $max = 999999999))
                 ->type('item_price[]', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999));
-            $browser
-                ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("'.Carbon::now()->format('j F, Y').'");');
-            $browser
-                ->script('jQuery("#item_name_0").selectize()[0].selectize.setValue("'.addslashes($itemTemplate->name).'");');
+            $browser->script(
+                'jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("' . Carbon::now()->format('j F, Y') . '");',
+            );
+            $browser->script('jQuery("#item_name_0").selectize()[0].selectize.setValue("' . addslashes($itemTemplate->name) . '");');
             $browser->pause(2000);
             $browser
                 ->press('CREATE')
                 ->pause(2000)
                 ->assertPresent('#quote-action-container')
                 ->clickLink('Edit')
-                ->assertPathIs('/'.$company->domain_name.'/quote/adhoc/'.$company->quotes->first()->id.'/edit')
+                ->assertPathIs('/' . $company->domain_name . '/quote/adhoc/' . $company->quotes->first()->id . '/edit')
                 ->type('companyname', $faker->company)
                 ->type('block', $faker->buildingNumber)
                 ->type('street', $faker->streetName)
@@ -221,16 +226,16 @@ class AdhocQuoteTest extends DuskTestCase
                 ->type('item_name[]', 'The Turbo Ultra Turbonator')
                 ->type('item_quantity[]', $faker->numberBetween($min = 1, $max = 999999999))
                 ->type('item_price[]', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999));
-            $browser
-                ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("'.Carbon::now()->format('j F, Y').'");');
+            $browser->script(
+                'jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("' . Carbon::now()->format('j F, Y') . '");',
+            );
             $browser
                 ->pause(2000)
                 ->press('UPDATE')
                 ->assertPresent('#quote-action-container')
                 ->assertSee('The Turbo Ultra Turbonator')
-                ->assertPathIs('/'.$company->domain_name.'/quote/'.$company->quotes->first()->id);
-            $browser
-                ->clickLink('Delete');
+                ->assertPathIs('/' . $company->domain_name . '/quote/' . $company->quotes->first()->id);
+            $browser->clickLink('Delete');
             $browser
                 ->pause(500)
                 ->press('DELETE')

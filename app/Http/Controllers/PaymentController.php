@@ -21,7 +21,10 @@ class PaymentController extends Controller
      */
     public function index(Company $company)
     {
-        $payments = $company->payments()->with(['invoice', 'client'])->get();
+        $payments = $company
+            ->payments()
+            ->with(['invoice', 'client'])
+            ->get();
 
         return view('pages.payment.index', compact('payments'));
     }

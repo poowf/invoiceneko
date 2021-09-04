@@ -12,9 +12,7 @@ class VerificationController extends Controller
 
     public function show(Request $request)
     {
-        return $request->user()->hasVerifiedEmail()
-            ? redirect($this->redirectPath())
-            : view('pages.verify');
+        return $request->user()->hasVerifiedEmail() ? redirect($this->redirectPath()) : view('pages.verify');
     }
 
     public function redirectTo()

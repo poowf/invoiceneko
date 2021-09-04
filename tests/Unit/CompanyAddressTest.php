@@ -20,12 +20,12 @@ class CompanyAddressTest extends TestCase
         CompanyAddress::unguard();
 
         $companyAddress = CompanyAddress::create([
-            'block'        => '123',
-            'street'       => '123 Street Name',
-            'unitnumber'   => '00-00',
-            'postalcode'   => '123456',
+            'block' => '123',
+            'street' => '123 Street Name',
+            'unitnumber' => '00-00',
+            'postalcode' => '123456',
             'buildingtype' => '1',
-            'company_id'   => $company->id,
+            'company_id' => $company->id,
         ]);
 
         CompanyAddress::reguard();
@@ -52,8 +52,8 @@ class CompanyAddressTest extends TestCase
         $this->assertEquals('234523', $companyAddress->postalcode);
 
         $data = [
-            'block'      => '1231',
-            'street'     => 'Monster Moon Street',
+            'block' => '1231',
+            'street' => 'Monster Moon Street',
             'unitnumber' => '#100-100',
         ];
 

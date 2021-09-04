@@ -64,12 +64,12 @@ class AdhocInvoiceController extends Controller
         $invoice->notify = $request->has('notify') ? 1 : 0;
 
         $client = [
-            'companyname'  => $request->input('companyname'),
+            'companyname' => $request->input('companyname'),
             'country_code' => $request->input('country_code'),
-            'block'        => $request->input('block'),
-            'street'       => $request->input('street'),
-            'unitnumber'   => $request->input('unitnumber'),
-            'postalcode'   => $request->input('postalcode'),
+            'block' => $request->input('block'),
+            'street' => $request->input('street'),
+            'unitnumber' => $request->input('unitnumber'),
+            'postalcode' => $request->input('postalcode'),
         ];
         $invoice->client_data = json_encode($client);
 
@@ -78,7 +78,9 @@ class AdhocInvoiceController extends Controller
         foreach ($request->input('item_name') as $key => $item) {
             $invoiceitem = new InvoiceItem();
             $invoiceitem->name = $item;
-            $invoiceitem->description = (array_key_exists($key, $request->input('item_description'))) ? $request->input('item_description')[$key] : null;
+            $invoiceitem->description = array_key_exists($key, $request->input('item_description'))
+                ? $request->input('item_description')[$key]
+                : null;
             $invoiceitem->quantity = $request->input('item_quantity')[$key];
             $invoiceitem->price = $request->input('item_price')[$key];
             $invoiceitem->invoice_id = $invoice->id;
@@ -154,7 +156,7 @@ class AdhocInvoiceController extends Controller
                 $request->input('item_name')[$key],
                 $request->input('item_description')[$key],
                 $request->input('item_quantity')[$key],
-                $request->input('item_price')[$key]
+                $request->input('item_price')[$key],
             );
 
             if ($ismodified) {
@@ -188,12 +190,12 @@ class AdhocInvoiceController extends Controller
         }
 
         $client = [
-            'companyname'  => $request->input('companyname'),
+            'companyname' => $request->input('companyname'),
             'country_code' => $request->input('country_code'),
-            'block'        => $request->input('block'),
-            'street'       => $request->input('street'),
-            'unitnumber'   => $request->input('unitnumber'),
-            'postalcode'   => $request->input('postalcode'),
+            'block' => $request->input('block'),
+            'street' => $request->input('street'),
+            'unitnumber' => $request->input('unitnumber'),
+            'postalcode' => $request->input('postalcode'),
         ];
 
         $invoice->client_data = json_encode($client);
@@ -211,7 +213,9 @@ class AdhocInvoiceController extends Controller
                 $invoiceitem = new InvoiceItem();
             }
             $invoiceitem->name = $itemname;
-            $invoiceitem->description = (array_key_exists($key, $request->input('item_description'))) ? $request->input('item_description')[$key] : null;
+            $invoiceitem->description = array_key_exists($key, $request->input('item_description'))
+                ? $request->input('item_description')[$key]
+                : null;
             $invoiceitem->quantity = $request->input('item_quantity')[$key];
             $invoiceitem->price = $request->input('item_price')[$key];
             $invoiceitem->invoice_id = $invoice->id;

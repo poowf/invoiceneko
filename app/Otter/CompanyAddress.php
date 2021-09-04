@@ -28,10 +28,10 @@ class CompanyAddress extends OtterResource
     public static function fields()
     {
         return [
-            'block'        => 'text',
-            'street'       => 'text',
-            'unitnumber'   => 'text',
-            'postalcode'   => 'text',
+            'block' => 'text',
+            'street' => 'text',
+            'unitnumber' => 'text',
+            'postalcode' => 'text',
             'buildingtype' => 'text',
         ];
     }
@@ -43,7 +43,6 @@ class CompanyAddress extends OtterResource
      */
     public static function hidden()
     {
-        return [
-        ];
+        return [];
     }
 }

@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Third Party Services
@@ -31,15 +30,14 @@ return [
     ],
 
     'facebook' => [
-        'client_id'     => env('SOCIALITE_FACEBOOK_CLIENTID'),
+        'client_id' => env('SOCIALITE_FACEBOOK_CLIENTID'),
         'client_secret' => env('SOCIALITE_FACEBOOK_SECRET'),
-        'redirect'      => env('SOCIALITE_FACEBOOK_REDIRECT'),
+        'redirect' => env('SOCIALITE_FACEBOOK_REDIRECT'),
     ],
 
     'google' => [
-        'client_id'     => env('SOCIALITE_GOOGLE_CLIENTID'),
+        'client_id' => env('SOCIALITE_GOOGLE_CLIENTID'),
         'client_secret' => env('SOCIALITE_GOOGLE_SECRET'),
-        'redirect'      => env('SOCIALITE_GOOGLE_REDIRECT'),
+        'redirect' => env('SOCIALITE_GOOGLE_REDIRECT'),
     ],
-
 ];

@@ -21,14 +21,14 @@ class CompanyTest extends TestCase
         Company::unguard();
 
         $company = Company::create([
-            'name'          => 'Poowf Labs',
+            'name' => 'Poowf Labs',
             'invoice_index' => '2342',
-            'quote_index'   => '12313',
-            'timezone'      => 'UTC',
-            'crn'           => '201810000A',
-            'phone'         => '+6579328669',
-            'email'         => 'bunny@poowf.com',
-            'user_id'       => $user->id,
+            'quote_index' => '12313',
+            'timezone' => 'UTC',
+            'crn' => '201810000A',
+            'phone' => '+6579328669',
+            'email' => 'bunny@poowf.com',
+            'user_id' => $user->id,
         ]);
 
         Company::reguard();
@@ -55,12 +55,12 @@ class CompanyTest extends TestCase
         $this->assertEquals('+6564142762', $company->phone);
 
         $data = [
-            'name'          => 'Nyan Industries',
-            'crn'           => 'CERRRANDFSADFS',
-            'domain_name'   => 'nekonyanyananannynayynaynaya.com',
-            'phone'         => '+659774123',
+            'name' => 'Nyan Industries',
+            'crn' => 'CERRRANDFSADFS',
+            'domain_name' => 'nekonyanyananannynayynaynaya.com',
+            'phone' => '+659774123',
             'invoice_index' => '2342',
-            'user_id'       => $user->id,
+            'user_id' => $user->id,
         ];
 
         $company->fill($data);

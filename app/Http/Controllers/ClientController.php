@@ -61,23 +61,28 @@ class ClientController extends Controller
         $client->company_id = $company->id;
         $client->save();
 
-        $storedirectory = '/perm_store/company/'.$client->company_id.'/clients/'.$client->id.'/photos/';
+        $storedirectory = '/perm_store/company/' . $client->company_id . '/clients/' . $client->id . '/photos/';
 
         Storage::makeDirectory($storedirectory);
 
         if ($request->file('logo')) {
             $file = $request->file('logo');
             $uuid = Str::random(25);
-            $filename = $uuid.'.png';
+            $filename = $uuid . '.png';
 
-            if (! Storage::exists($storedirectory.'logo_'.$filename)) {
-                $image = Image::make($file)->fit(500, 500, function ($constraint) {
-                    $constraint->upsize();
-                }, 'center');
-                Storage::put($storedirectory.'logo_'.$filename, $image->stream('jpg')->detach());
+            if (!Storage::exists($storedirectory . 'logo_' . $filename)) {
+                $image = Image::make($file)->fit(
+                    500,
+                    500,
+                    function ($constraint) {
+                        $constraint->upsize();
+                    },
+                    'center',
+                );
+                Storage::put($storedirectory . 'logo_' . $filename, $image->stream('jpg')->detach());
             }
 
-            $filepath = $storedirectory.'logo_'.$filename;
+            $filepath = $storedirectory . 'logo_' . $filename;
 
             $client->logo = $filepath;
         }
@@ -143,23 +148,28 @@ class ClientController extends Controller
         $client->fill($request->all());
         $client->save();
 
-        $storedirectory = '/perm_store/company/'.$client->company_id.'/clients/'.$client->id.'/photos/';
+        $storedirectory = '/perm_store/company/' . $client->company_id . '/clients/' . $client->id . '/photos/';
 
         Storage::makeDirectory($storedirectory);
 
         if ($request->file('logo')) {
             $file = $request->file('logo');
             $uuid = Str::random(25);
-            $filename = $uuid.'.png';
+            $filename = $uuid . '.png';
 
-            if (! Storage::exists($storedirectory.'logo_'.$filename)) {
-                $image = Image::make($file)->fit(500, 500, function ($constraint) {
-                    $constraint->upsize();
-                }, 'center');
-                Storage::put($storedirectory.'logo_'.$filename, $image->stream('jpg')->detach());
+            if (!Storage::exists($storedirectory . 'logo_' . $filename)) {
+                $image = Image::make($file)->fit(
+                    500,
+                    500,
+                    function ($constraint) {
+                        $constraint->upsize();
+                    },
+                    'center',
+                );
+                Storage::put($storedirectory . 'logo_' . $filename, $image->stream('jpg')->detach());
             }
 
-            $filepath = $storedirectory.'logo_'.$filename;
+            $filepath = $storedirectory . 'logo_' . $filename;
 
             $client->logo = $filepath;
         }
@@ -198,8 +208,10 @@ class ClientController extends Controller
      */
     public function invoicecreate(Company $company, Client $client)
     {
-        return redirect()->route('invoice.create', ['company' => $company])->withInput([
-            'client_id' => $client->id,
-        ]);
+        return redirect()
+            ->route('invoice.create', ['company' => $company])
+            ->withInput([
+                'client_id' => $client->id,
+            ]);
     }
 }

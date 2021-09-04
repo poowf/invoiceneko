@@ -21,11 +21,11 @@ class QuoteItemTest extends TestCase
         QuoteItem::unguard();
 
         $quoteItem = QuoteItem::create([
-            'name'        => 'This is a Quote Item la',
-            'quantity'    => '250',
-            'price'       => '5.00',
+            'name' => 'This is a Quote Item la',
+            'quantity' => '250',
+            'price' => '5.00',
             'description' => 'asfdasfasfasfsf<p>asasdfasdfasfas</p>',
-            'quote_id'    => $quote->id,
+            'quote_id' => $quote->id,
         ]);
 
         QuoteItem::reguard();
@@ -51,7 +51,7 @@ class QuoteItemTest extends TestCase
         $this->assertEquals('2000', $quoteItem->quantity);
 
         $data = [
-            'price'    => '213131.00',
+            'price' => '213131.00',
             'quantity' => '25000',
         ];
 

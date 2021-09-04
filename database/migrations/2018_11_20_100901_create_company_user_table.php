@@ -17,8 +17,16 @@ class CreateCompanyUserTable extends Migration
             $table->increments('id');
             $table->integer('company_id')->unsigned();
             $table->bigInteger('user_id')->unsigned();
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table
+                ->foreign('company_id')
+                ->references('id')
+                ->on('companies')
+                ->onDelete('cascade');
+            $table
+                ->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
             $table->unique(['company_id', 'user_id']);
             $table->timestamps();
         });

@@ -25,12 +25,7 @@ class InvoiceTemplate extends Model implements Auditable
      *
      * @var array
      */
-    protected $fillable = [
-        'date',
-        'netdays',
-        'notify',
-        'client_id',
-    ];
+    protected $fillable = ['date', 'netdays', 'notify', 'client_id'];
 
     public function getDateAttribute($value)
     {

@@ -14,7 +14,10 @@ class AddPaymentCompleteDateToInvoicesTable extends Migration
     public function up()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            $table->datetime('payment_complete_date')->nullable()->after('total');
+            $table
+                ->datetime('payment_complete_date')
+                ->nullable()
+                ->after('total');
         });
     }
 

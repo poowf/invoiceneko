@@ -35,27 +35,14 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      *
      * @var string[]
      */
-    protected $fillable = [
-        'full_name',
-        'username',
-        'email',
-        'phone',
-        'gender',
-        'country_code',
-        'timezone',
-    ];
+    protected $fillable = ['full_name', 'username', 'email', 'phone', 'gender', 'country_code', 'timezone'];
 
     /**
      * The attributes that should be hidden for serialization.
      *
      * @var array
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-        'twofa_secret',
-        'twofa_timestamp',
-    ];
+    protected $hidden = ['password', 'remember_token', 'twofa_secret', 'twofa_timestamp'];
 
     /**
      * The attributes that should be cast.
@@ -64,7 +51,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      */
     protected $attributes = [
         'timezone' => 'UTC',
-        'status'   => self::STATUS_ACTIVE,
+        'status' => self::STATUS_ACTIVE,
     ];
 
     /**
@@ -101,7 +88,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      */
     public function setTwofaSecretAttribute($value)
     {
-        $this->attributes['twofa_secret'] = ($value) ? encrypt($value) : null;
+        $this->attributes['twofa_secret'] = $value ? encrypt($value) : null;
     }
 
     /**
@@ -113,7 +100,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      */
     public function getTwofaSecretAttribute($value)
     {
-        return ($value) ? decrypt($value) : null;
+        return $value ? decrypt($value) : null;
     }
 
     /**
@@ -125,7 +112,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      */
     public function setTwofaBackupCodesAttribute($value)
     {
-        $this->attributes['twofa_backup_codes'] = ($value) ? encrypt($value) : null;
+        $this->attributes['twofa_backup_codes'] = $value ? encrypt($value) : null;
     }
 
     /**
@@ -137,7 +124,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      */
     public function getTwofaBackupCodesAttribute($value)
     {
-        return ($value) ? decrypt($value) : null;
+        return $value ? decrypt($value) : null;
     }
 
     /**
@@ -225,7 +212,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
 
     public function getFirstCompanyKey()
     {
-        return (is_null($this->companies->first())) ? null : $this->companies->first()->{(new Company())->getRouteKeyName()};
+        return is_null($this->companies->first()) ? null : $this->companies->first()->{(new Company())->getRouteKeyName()};
     }
 
     public function sessions()

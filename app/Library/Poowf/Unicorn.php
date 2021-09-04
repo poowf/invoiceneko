@@ -40,7 +40,7 @@ class Unicorn
         if (config('app.github_token')) {
             $response = $client->request('GET', 'repos/poowf/invoiceneko/releases', [
                 'headers' => [
-                    'Authorization' => 'token '.config('app.github_token'),
+                    'Authorization' => 'token ' . config('app.github_token'),
                 ],
             ]);
         } else {
@@ -62,7 +62,7 @@ class Unicorn
                         $release->commit_data = self::getGithubCommitDataByTag($release->tag_name);
                         $release->body_html = $Parsedown->text($release->body);
                         $unstable = $release;
-                    } elseif (is_null($stable) && ! $release->prerelease) {
+                    } elseif (is_null($stable) && !$release->prerelease) {
                         $release->commit_data = self::getGithubCommitDataByTag($release->tag_name);
                         $release->body_html = $Parsedown->text($release->body);
                         $stable = $release;
@@ -86,13 +86,13 @@ class Unicorn
     {
         $client = new Client(['base_uri' => 'https://api.github.com/']);
         if (config('app.github_token')) {
-            $response = $client->request('GET', 'repos/poowf/invoiceneko/git/refs/tags/'.$tagname, [
+            $response = $client->request('GET', 'repos/poowf/invoiceneko/git/refs/tags/' . $tagname, [
                 'headers' => [
-                    'Authorization' => 'token '.config('app.github_token'),
+                    'Authorization' => 'token ' . config('app.github_token'),
                 ],
             ]);
         } else {
-            $response = $client->request('GET', 'repos/poowf/invoiceneko/git/refs/tags/'.$tagname);
+            $response = $client->request('GET', 'repos/poowf/invoiceneko/git/refs/tags/' . $tagname);
         }
 
         $body = json_decode($response->getBody()->getContents());
@@ -205,17 +205,17 @@ class Unicorn
         Bouncer::useRoleModel(Role::class);
 
         $gadmin = Bouncer::role()->firstOrCreate([
-            'name'  => Str::slug('Global Administrator'),
+            'name' => Str::slug('Global Administrator'),
             'title' => 'Global Administrator',
         ]);
 
         $admin = Bouncer::role()->firstOrCreate([
-            'name'  => Str::slug('Administrator'),
+            'name' => Str::slug('Administrator'),
             'title' => 'Administrator',
         ]);
 
         $user = Bouncer::role()->firstOrCreate([
-            'name'  => Str::slug('User'),
+            'name' => Str::slug('User'),
             'title' => 'User',
         ]);
 
@@ -243,25 +243,33 @@ class Unicorn
         Bouncer::scope()->to($scopeId);
         Bouncer::useRoleModel(Role::class);
 
-        Bouncer::ability()->makeForModel($model, [
-            'name'  => 'view-'.Str::slug(strtolower(self::getModelNiceName($model))),
-            'title' => 'View '.self::getModelNiceName($model),
-        ])->save();
+        Bouncer::ability()
+            ->makeForModel($model, [
+                'name' => 'view-' . Str::slug(strtolower(self::getModelNiceName($model))),
+                'title' => 'View ' . self::getModelNiceName($model),
+            ])
+            ->save();
 
-        Bouncer::ability()->makeForModel($model, [
-            'name'  => 'create-'.Str::slug(strtolower(self::getModelNiceName($model))),
-            'title' => 'Create '.self::getModelNiceName($model),
-        ])->save();
+        Bouncer::ability()
+            ->makeForModel($model, [
+                'name' => 'create-' . Str::slug(strtolower(self::getModelNiceName($model))),
+                'title' => 'Create ' . self::getModelNiceName($model),
+            ])
+            ->save();
 
-        Bouncer::ability()->makeForModel($model, [
-            'name'  => 'update-'.Str::slug(strtolower(self::getModelNiceName($model))),
-            'title' => 'Update '.self::getModelNiceName($model),
-        ])->save();
+        Bouncer::ability()
+            ->makeForModel($model, [
+                'name' => 'update-' . Str::slug(strtolower(self::getModelNiceName($model))),
+                'title' => 'Update ' . self::getModelNiceName($model),
+            ])
+            ->save();
 
-        Bouncer::ability()->makeForModel($model, [
-            'name'  => 'delete-'.Str::slug(strtolower(self::getModelNiceName($model))),
-            'title' => 'Delete '.self::getModelNiceName($model),
-        ])->save();
+        Bouncer::ability()
+            ->makeForModel($model, [
+                'name' => 'delete-' . Str::slug(strtolower(self::getModelNiceName($model))),
+                'title' => 'Delete ' . self::getModelNiceName($model),
+            ])
+            ->save();
     }
 
     /**
@@ -307,10 +315,10 @@ class Unicorn
 
         if ($modelClass === 'all') {
             foreach (self::$modelClasses as $key => $model) {
-                Bouncer::allow($role)->to($methodName.'-'.Str::slug(strtolower(self::getModelNiceName($model))), $model);
+                Bouncer::allow($role)->to($methodName . '-' . Str::slug(strtolower(self::getModelNiceName($model))), $model);
             }
         } else {
-            Bouncer::allow($role)->to($methodName.'-'.Str::slug(strtolower(self::getModelNiceName($modelClass))), $modelClass);
+            Bouncer::allow($role)->to($methodName . '-' . Str::slug(strtolower(self::getModelNiceName($modelClass))), $modelClass);
         }
     }
 
@@ -321,7 +329,9 @@ class Unicorn
      */
     protected static function getModelNiceName($modelClass)
     {
-        $transformed = trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', str_replace('::class', '', str_replace('App\\Models\\', '', $modelClass))));
+        $transformed = trim(
+            preg_replace('/(?<!\ )[A-Z]/', ' $0', str_replace('::class', '', str_replace('App\\Models\\', '', $modelClass))),
+        );
 
         return $transformed;
     }
@@ -362,20 +372,49 @@ class Unicorn
         //Suppress warnings: proper error handling is beyond scope of example
         libxml_use_internal_errors(true);
         //List the tags you want to allow here, NOTE you MUST allow html and body otherwise entire string will be cleared
-        $allowed_tags = ['html', 'body', 'b', 'strong', 'sup', 'sub', 'h1', 'h2', 'h3', 'h4', 'blockquote', 'br', 'em', 'del', 'hr', 'i', 'li', 'ol', 'p', 's', 'span', 'table', 'tr', 'td', 'u', 'ul', 'a', 'img'];
+        $allowed_tags = [
+            'html',
+            'body',
+            'b',
+            'strong',
+            'sup',
+            'sub',
+            'h1',
+            'h2',
+            'h3',
+            'h4',
+            'blockquote',
+            'br',
+            'em',
+            'del',
+            'hr',
+            'i',
+            'li',
+            'ol',
+            'p',
+            's',
+            'span',
+            'table',
+            'tr',
+            'td',
+            'u',
+            'ul',
+            'a',
+            'img',
+        ];
 
         //List the attributes you want to allow here
         $allowed_attrs = ['class', 'id', 'style', 'href', 'title', 'target', 'alt'];
-        if (! strlen($html_str)) {
+        if (!strlen($html_str)) {
             return false;
         }
         if ($xml->loadHTML($html_str, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD)) {
             foreach ($xml->getElementsByTagName('*') as $tag) {
-                if (! in_array($tag->tagName, $allowed_tags)) {
+                if (!in_array($tag->tagName, $allowed_tags)) {
                     $tag->parentNode->removeChild($tag);
                 } else {
                     foreach ($tag->attributes as $attr) {
-                        if (! in_array($attr->nodeName, $allowed_attrs)) {
+                        if (!in_array($attr->nodeName, $allowed_attrs)) {
                             $tag->removeAttribute($attr->nodeName);
                         }
                     }

@@ -14,7 +14,10 @@ class AddTaxToCompanySettingsTable extends Migration
     public function up()
     {
         Schema::table('company_settings', function (Blueprint $table) {
-            $table->integer('tax')->after('quote_conditions')->nullable();
+            $table
+                ->integer('tax')
+                ->after('quote_conditions')
+                ->nullable();
         });
     }
 

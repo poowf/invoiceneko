@@ -42,7 +42,9 @@ class ProcessNotifiableInvoices extends Command
     {
         $startDate = Carbon::now()->subDay();
         $endDate = Carbon::now()->addDay();
-        $invoices = Invoice::datebetween($startDate, $endDate)->notifiable()->get();
+        $invoices = Invoice::datebetween($startDate, $endDate)
+            ->notifiable()
+            ->get();
         foreach ($invoices as $invoice) {
             $company = $invoice->company;
             $localDate = Carbon::now($company->timezone);

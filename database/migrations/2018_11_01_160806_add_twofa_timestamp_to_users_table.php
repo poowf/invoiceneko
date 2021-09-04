@@ -14,7 +14,10 @@ class AddTwofaTimestampToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('twofa_timestamp')->nullable()->after('twofa_secret');
+            $table
+                ->string('twofa_timestamp')
+                ->nullable()
+                ->after('twofa_secret');
         });
     }
 

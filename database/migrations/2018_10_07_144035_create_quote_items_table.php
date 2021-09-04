@@ -20,8 +20,10 @@ class CreateQuoteItemsTable extends Migration
             $table->integer('quantity');
             $table->double('price', 15, 3);
             $table->integer('quote_id')->unsigned();
-            $table->foreign('quote_id')
-                ->references('id')->on('quotes')
+            $table
+                ->foreign('quote_id')
+                ->references('id')
+                ->on('quotes')
                 ->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

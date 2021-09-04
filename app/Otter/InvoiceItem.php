@@ -28,9 +28,9 @@ class InvoiceItem extends OtterResource
     public static function fields()
     {
         return [
-            'name'     => 'text',
+            'name' => 'text',
             'quantity' => 'text',
-            'price'    => 'text',
+            'price' => 'text',
         ];
     }
 
@@ -41,7 +41,6 @@ class InvoiceItem extends OtterResource
      */
     public static function hidden()
     {
-        return [
-        ];
+        return [];
     }
 }

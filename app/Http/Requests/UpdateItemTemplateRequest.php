@@ -13,7 +13,9 @@ class UpdateItemTemplateRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->can('update', $this->route('itemtemplate'));
+        return auth()
+            ->user()
+            ->can('update', $this->route('itemtemplate'));
     }
 
     /**
@@ -24,9 +26,9 @@ class UpdateItemTemplateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'        => 'required|string',
-            'quantity'    => 'required|integer|min:1',
-            'price'       => 'required|numeric',
+            'name' => 'required|string',
+            'quantity' => 'required|integer|min:1',
+            'price' => 'required|numeric',
             'description' => 'string',
         ];
     }

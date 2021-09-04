@@ -24,11 +24,11 @@ class QuoteItemFactory extends Factory
     public function definition()
     {
         return [
-            'name'        => $this->faker->bs(),
-            'quantity'    => $this->faker->numberBetween($min = 1, $max = 999999999),
-            'price'       => $this->faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999),
+            'name' => $this->faker->bs(),
+            'quantity' => $this->faker->numberBetween($min = 1, $max = 999999999),
+            'price' => $this->faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999),
             'description' => $this->faker->text(200),
-            'quote_id'    => function () {
+            'quote_id' => function () {
                 return Quote::factory()->create()->id;
             },
         ];
@@ -42,8 +42,7 @@ class QuoteItemFactory extends Factory
     public function unverified()
     {
         return $this->state(function (array $attributes) {
-            return [
-            ];
+            return [];
         });
     }
 }

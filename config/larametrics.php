@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Models Watched
@@ -12,9 +11,7 @@ return [
     | If you would like no models watched, change this to an empty array.
     |
     */
-    'modelsWatched' => [
-        'App\Models\User',
-    ],
+    'modelsWatched' => ['App\Models\User'],
 
     /*
     |--------------------------------------------------------------------------
@@ -147,5 +144,4 @@ return [
         'email' => env('LARAMETRICS_NOTIFICATION_EMAIL', 'admin@localhost'),
         'slack' => env('LARAMETRICS_NOTIFICATION_SLACK_WEBHOOK', ''),
     ],
-
 ];

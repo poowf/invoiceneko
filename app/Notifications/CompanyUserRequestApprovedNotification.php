@@ -46,8 +46,8 @@ class CompanyUserRequestApprovedNotification extends Notification implements Sho
         $url = route('user.create', ['token' => $this->token]);
 
         return (new MailMessage())
-            ->subject('Your requested to be added to your company on '.config('app.name').' has been approved')
-            ->line('Please fill in the rest of your details on'.config('app.name'))
+            ->subject('Your requested to be added to your company on ' . config('app.name') . ' has been approved')
+            ->line('Please fill in the rest of your details on' . config('app.name'))
             ->action('Create Account', $url)
             ->line('Thank you for using our application!');
     }
@@ -62,7 +62,7 @@ class CompanyUserRequestApprovedNotification extends Notification implements Sho
     public function toArray($notifiable)
     {
         return [
-            //
+            // prettier-ignore
         ];
     }
 }

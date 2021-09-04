@@ -82,7 +82,7 @@ class UserController extends Controller
         $user = new User();
         $user->fill($request->all());
         $user->password = $request->input('password');
-        if ($request->has('country_code') && ! is_null($request->input('country_code'))) {
+        if ($request->has('country_code') && !is_null($request->input('country_code'))) {
             if ($request->has('timezone') && is_null($request->input('timezone'))) {
                 $timezone = DateTimeZone::listIdentifiers(DateTimeZone::PER_COUNTRY, $request->input('country_code'))[0];
                 $user->timezone = $timezone;
@@ -112,7 +112,7 @@ class UserController extends Controller
             flash('Sign in to accept the invite', 'success');
 
             return redirect()->route('auth.show');
-//            return redirect()->route('company.invite.show', [ 'companyinvite' => $request->input('companyinvite') ]);
+            //            return redirect()->route('company.invite.show', [ 'companyinvite' => $request->input('companyinvite') ]);
         }
 
         $request->session()->put('user_id', $user->id);
@@ -183,15 +183,13 @@ class UserController extends Controller
                 $user->email_verified_at = null;
             }
 
-            if ($request->has('country_code') && ! is_null($request->input('country_code'))) {
+            if ($request->has('country_code') && !is_null($request->input('country_code'))) {
                 if ($request->has('timezone') && is_null($request->input('timezone'))) {
                     $timezone = $this->countries
                         ->where('iso_3166_1_alpha2', $request->input('country_code'))
                         ->first()
                         ->hydrate('timezones')
-                        ->timezones
-                        ->first()
-                        ->zone_name;
+                        ->timezones->first()->zone_name;
                     $user->timezone = $timezone;
                 }
             }
@@ -201,7 +199,7 @@ class UserController extends Controller
                 $user->password = $newpass;
             }
 
-            if (! $user->save()) {
+            if (!$user->save()) {
                 flash('Failed to Update Profile', 'error');
 
                 return redirect()->back();
@@ -254,11 +252,7 @@ class UserController extends Controller
             return redirect()->route('user.security', ['company' => $company]);
         }
 
-        $twoFactorUrl = Google2FA::getQRCodeUrl(
-            config('app.name'),
-            $user->email,
-            $twofa_secret
-        );
+        $twoFactorUrl = Google2FA::getQRCodeUrl(config('app.name'), $user->email, $twofa_secret);
 
         return view('pages.user.multifactor.create', compact('twoFactorUrl', 'twofa_secret'));
     }
@@ -284,7 +278,9 @@ class UserController extends Controller
 
             flash('Multifactor Auth has been enabled for your account', 'success');
 
-            return redirect()->route('user.security', ['company' => $company])->with(compact('codes'));
+            return redirect()
+                ->route('user.security', ['company' => $company])
+                ->with(compact('codes'));
         } else {
             flash('Something went wrong, please try again', 'error');
 
@@ -326,7 +322,9 @@ class UserController extends Controller
 
         flash('Your backup codes have been regenerated', 'success');
 
-        return redirect()->route('user.security', ['company' => $company])->with(compact('codes'));
+        return redirect()
+            ->route('user.security', ['company' => $company])
+            ->with(compact('codes'));
     }
 
     public function multifactor_backup()
@@ -351,8 +349,8 @@ class UserController extends Controller
 
                 session()->put('multifactor_status', [
                     'otp_timestamp' => true,
-                    'auth_passed'   => true,
-                    'auth_time'     => Carbon::now(),
+                    'auth_passed' => true,
+                    'auth_time' => Carbon::now(),
                 ]);
 
                 return redirect()->route('dashboard', ['company' => $company]);

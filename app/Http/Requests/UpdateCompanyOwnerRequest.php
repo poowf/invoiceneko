@@ -13,7 +13,9 @@ class UpdateCompanyOwnerRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->can('owner', $this->route('company'));
+        return auth()
+            ->user()
+            ->can('owner', $this->route('company'));
     }
 
     /**

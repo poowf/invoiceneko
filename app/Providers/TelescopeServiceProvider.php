@@ -25,10 +25,10 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
                 return true;
             }
 
-//            return $entry->isReportableException() ||
-//                   $entry->isFailedJob() ||
-//                   $entry->isScheduledTask() ||
-//                   $entry->hasMonitoredTag();
+            //            return $entry->isReportableException() ||
+            //                   $entry->isFailedJob() ||
+            //                   $entry->isScheduledTask() ||
+            //                   $entry->hasMonitoredTag();
             return true;
         });
     }
@@ -46,11 +46,7 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
 
         Telescope::hideRequestParameters(['_token']);
 
-        Telescope::hideRequestHeaders([
-            'cookie',
-            'x-csrf-token',
-            'x-xsrf-token',
-        ]);
+        Telescope::hideRequestHeaders(['cookie', 'x-csrf-token', 'x-xsrf-token']);
     }
 
     /**
@@ -63,9 +59,7 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
     protected function gate()
     {
         Gate::define('viewTelescope', function ($user) {
-            return in_array($user->email, [
-                'zane@poowf.com',
-            ]);
+            return in_array($user->email, ['zane@poowf.com']);
         });
     }
 }

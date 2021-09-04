@@ -28,13 +28,13 @@ class Company extends OtterResource
     public static function fields()
     {
         return [
-            'name'         => 'text',
-            'crn'          => 'text',
-            'domain_name'  => 'text',
-            'phone'        => 'text',
-            'email'        => 'email',
+            'name' => 'text',
+            'crn' => 'text',
+            'domain_name' => 'text',
+            'phone' => 'text',
+            'email' => 'email',
             'country_code' => 'text',
-            'timezone'     => 'text',
+            'timezone' => 'text',
         ];
     }
 
@@ -42,10 +42,10 @@ class Company extends OtterResource
     {
         return [
             'settings' => 'CompanySetting',
-            'users'    => 'User',
+            'users' => 'User',
             'invoices' => 'Invoice',
             'receipts' => 'Receipt',
-            'owner'    => 'User',
+            'owner' => 'User',
         ];
     }
 }

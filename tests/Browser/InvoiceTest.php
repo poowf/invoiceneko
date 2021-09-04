@@ -33,25 +33,25 @@ class InvoiceTest extends DuskTestCase
         $faker = Faker::create();
 
         $this->browse(function (Browser $browser) use ($faker, $client, $company, $itemTemplate) {
-            $browser->visit('/signin')
+            $browser
+                ->visit('/signin')
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/'.$company->domain_name.'/dashboard')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->clickLink('Invoices')
-                ->assertPathIs('/'.$company->domain_name.'/invoices')
+                ->assertPathIs('/' . $company->domain_name . '/invoices')
                 ->clickLink('Create')
-                ->assertPathIs('/'.$company->domain_name.'/invoice/create')
-                ->type('nice_invoice_id', substr($faker->slug, 0, 20).'sasdf')
+                ->assertPathIs('/' . $company->domain_name . '/invoice/create')
+                ->type('nice_invoice_id', substr($faker->slug, 0, 20) . 'sasdf')
                 ->type('netdays', $faker->numberBetween($min = 1, $max = 60))
                 ->type('item_quantity[]', $faker->numberBetween($min = 1, $max = 999999999))
                 ->type('item_price[]', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999));
-            $browser
-                ->script('jQuery("#client_id").selectize()[0].selectize.setValue('.$client->id.');');
-            $browser
-                ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("'.Carbon::now()->format('j F, Y').'");');
-            $browser
-                ->script('jQuery("#item_name_0").selectize()[0].selectize.setValue("'.addslashes($itemTemplate->name).'");');
+            $browser->script('jQuery("#client_id").selectize()[0].selectize.setValue(' . $client->id . ');');
+            $browser->script(
+                'jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("' . Carbon::now()->format('j F, Y') . '");',
+            );
+            $browser->script('jQuery("#item_name_0").selectize()[0].selectize.setValue("' . addslashes($itemTemplate->name) . '");');
             $browser->pause(2000);
             $browser
                 ->press('CREATE')
@@ -82,33 +82,29 @@ class InvoiceTest extends DuskTestCase
         $faker = Faker::create();
 
         $this->browse(function (Browser $browser) use ($faker, $client, $company, $itemTemplates) {
-            $browser->visit('/signin')
+            $browser
+                ->visit('/signin')
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/'.$company->domain_name.'/dashboard')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->clickLink('Invoices')
-                ->assertPathIs('/'.$company->domain_name.'/invoices')
+                ->assertPathIs('/' . $company->domain_name . '/invoices')
                 ->clickLink('Create')
-                ->assertPathIs('/'.$company->domain_name.'/invoice/create')
-                ->type('nice_invoice_id', substr($faker->slug, 0, 20).'sasdf')
+                ->assertPathIs('/' . $company->domain_name . '/invoice/create')
+                ->type('nice_invoice_id', substr($faker->slug, 0, 20) . 'sasdf')
                 ->type('netdays', $faker->numberBetween($min = 1, $max = 60))
                 ->type('item_quantity[]', $faker->numberBetween($min = 1, $max = 999999999))
                 ->type('item_price[]', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999));
-            $browser
-                ->script('jQuery("#client_id").selectize()[0].selectize.setValue('.$client->id.');');
-            $browser
-                ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("'.Carbon::now()->format('j F, Y').'");');
-            $browser
-                ->script('jQuery("#item_name_0").selectize()[0].selectize.setValue("'.addslashes($itemTemplates[0]->name).'");');
-            $browser
-                ->click('a[id="invoice-item-add"]');
-            $browser
-                ->script('jQuery("#item_name_1").selectize()[0].selectize.setValue("'.addslashes($itemTemplates[1]->name).'");');
+            $browser->script('jQuery("#client_id").selectize()[0].selectize.setValue(' . $client->id . ');');
+            $browser->script(
+                'jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("' . Carbon::now()->format('j F, Y') . '");',
+            );
+            $browser->script('jQuery("#item_name_0").selectize()[0].selectize.setValue("' . addslashes($itemTemplates[0]->name) . '");');
+            $browser->click('a[id="invoice-item-add"]');
+            $browser->script('jQuery("#item_name_1").selectize()[0].selectize.setValue("' . addslashes($itemTemplates[1]->name) . '");');
             $browser->pause(2000);
-            $browser
-                ->press('CREATE')
-                ->assertPresent('#invoice-action-container');
+            $browser->press('CREATE')->assertPresent('#invoice-action-container');
             $browser->script('jQuery(".signmeout-btn").click()');
             $browser->assertPathIs('/');
         });
@@ -127,9 +123,9 @@ class InvoiceTest extends DuskTestCase
         $company->users()->attach($company->user_id);
 
         $invoice = Invoice::factory()->create([
-            'status'     => Invoice::STATUS_OPEN,
-            'archived'   => false,
-            'client_id'  => $client->id,
+            'status' => Invoice::STATUS_OPEN,
+            'archived' => false,
+            'client_id' => $client->id,
             'company_id' => $company->id,
         ]);
         $invoiceItems = InvoiceItem::factory(3)->create([
@@ -143,26 +139,26 @@ class InvoiceTest extends DuskTestCase
         $salutation = ['mr', 'mrs', 'mdm', 'miss'];
 
         $this->browse(function (Browser $browser) use ($faker, $client, $company, $invoice) {
-            $browser->visit('/signin')
+            $browser
+                ->visit('/signin')
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/'.$company->domain_name.'/dashboard')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->clickLink('Invoices')
-                ->assertPathIs('/'.$company->domain_name.'/invoices')
+                ->assertPathIs('/' . $company->domain_name . '/invoices')
                 ->clickLink('Pending')
                 ->pause(500);
-            $browser
-                ->script("jQuery(\"a[href='{$this->baseUrl()}/{$company->domain_name}/invoice/{$invoice->id}/edit'] > i\").click();");
+            $browser->script("jQuery(\"a[href='{$this->baseUrl()}/{$company->domain_name}/invoice/{$invoice->id}/edit'] > i\").click();");
             $browser
                 ->type('netdays', $faker->numberBetween($min = 1, $max = 60))
                 ->type('item_name[]', 'The Turbo Ultra Turbonator')
                 ->type('item_quantity[]', $faker->numberBetween($min = 1, $max = 999999999))
                 ->type('item_price[]', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999));
-            $browser
-                ->script('jQuery("#client_id").selectize()[0].selectize.setValue('.$client->id.');');
-            $browser
-                ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("'.Carbon::now()->format('j F, Y').'");');
+            $browser->script('jQuery("#client_id").selectize()[0].selectize.setValue(' . $client->id . ');');
+            $browser->script(
+                'jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("' . Carbon::now()->format('j F, Y') . '");',
+            );
             $browser
                 ->pause(2000)
                 ->press('UPDATE')
@@ -186,9 +182,9 @@ class InvoiceTest extends DuskTestCase
         $company->users()->attach($company->user_id);
 
         $invoice = Invoice::factory()->create([
-            'status'     => Invoice::STATUS_OPEN,
-            'archived'   => false,
-            'client_id'  => $client->id,
+            'status' => Invoice::STATUS_OPEN,
+            'archived' => false,
+            'client_id' => $client->id,
             'company_id' => $company->id,
         ]);
         $invoiceItems = InvoiceItem::factory(3)->create([
@@ -199,17 +195,17 @@ class InvoiceTest extends DuskTestCase
         $salutation = ['mr', 'mrs', 'mdm', 'miss'];
 
         $this->browse(function (Browser $browser) use ($company) {
-            $browser->visit('/signin')
+            $browser
+                ->visit('/signin')
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/'.$company->domain_name.'/dashboard')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->clickLink('Invoices')
-                ->assertPathIs('/'.$company->domain_name.'/invoices')
+                ->assertPathIs('/' . $company->domain_name . '/invoices')
                 ->clickLink('Pending')
                 ->pause(500);
-            $browser
-                ->script('jQuery(".invoice-delete-btn > i").click();');
+            $browser->script('jQuery(".invoice-delete-btn > i").click();');
             $browser
                 ->pause(500)
                 ->press('DELETE')
@@ -232,9 +228,9 @@ class InvoiceTest extends DuskTestCase
         $company->users()->attach($company->user_id);
 
         $invoice = Invoice::factory()->create([
-            'status'     => Invoice::STATUS_OPEN,
-            'archived'   => false,
-            'client_id'  => $client->id,
+            'status' => Invoice::STATUS_OPEN,
+            'archived' => false,
+            'client_id' => $client->id,
             'company_id' => $company->id,
         ]);
         $invoiceItems = InvoiceItem::factory(3)->create([
@@ -247,31 +243,33 @@ class InvoiceTest extends DuskTestCase
         $faker = Faker::create();
         $salutation = ['mr', 'mrs', 'mdm', 'miss'];
 
-        $this->browse(function (Browser $browser) use ($faker , $company) {
-            $browser->visit('/signin')
+        $this->browse(function (Browser $browser) use ($faker, $company) {
+            $browser
+                ->visit('/signin')
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/'.$company->domain_name.'/dashboard')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->clickLink('Invoices')
-                ->assertPathIs('/'.$company->domain_name.'/invoices')
+                ->assertPathIs('/' . $company->domain_name . '/invoices')
                 ->clickLink('Pending')
                 ->pause(500);
+            $browser->script("jQuery(\"a[data-tooltip='View Invoice'] > i\").click();");
             $browser
-                ->script("jQuery(\"a[data-tooltip='View Invoice'] > i\").click();");
-            $browser
-                ->assertPathBeginsWith('/'.$company->domain_name.'/invoice')
+                ->assertPathBeginsWith('/' . $company->domain_name . '/invoice')
                 ->clickLink('Log Payment')
                 ->type('amount', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999))
                 ->type('notes', $faker->text(50));
-            $browser
-                ->script('jQuery("#receiveddate").datepicker("setDate", new Date());jQuery("#receiveddate").val("'.Carbon::now()->format('j F, Y').'");');
-            $browser
-                ->script('jQuery("#mode").selectize()[0].selectize.setValue("Cheque");');
+            $browser->script(
+                'jQuery("#receiveddate").datepicker("setDate", new Date());jQuery("#receiveddate").val("' .
+                    Carbon::now()->format('j F, Y') .
+                    '");',
+            );
+            $browser->script('jQuery("#mode").selectize()[0].selectize.setValue("Cheque");');
             $browser
                 ->press('SUBMIT')
                 ->assertPresent('#invoice-action-container')
-                ->assertPathBeginsWith('/'.$company->domain_name.'/invoice');
+                ->assertPathBeginsWith('/' . $company->domain_name . '/invoice');
             $browser->script('jQuery(".signmeout-btn").click()');
             $browser->assertPathIs('/');
         });
@@ -296,78 +294,77 @@ class InvoiceTest extends DuskTestCase
         $faker = Faker::create();
 
         $this->browse(function (Browser $browser) use ($faker, $client, $company, $itemTemplate) {
-            $browser->visit('/signin')
+            $browser
+                ->visit('/signin')
                 ->type('username', $company->owner->email)
                 ->type('password', 'secret')
                 ->press('SIGN IN')
-                ->assertPathIs('/'.$company->domain_name.'/dashboard')
+                ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->clickLink('Invoices')
-                ->assertPathIs('/'.$company->domain_name.'/invoices')
+                ->assertPathIs('/' . $company->domain_name . '/invoices')
                 ->clickLink('Create')
-                ->assertPathIs('/'.$company->domain_name.'/invoice/create')
-                ->type('nice_invoice_id', substr($faker->slug, 0, 20).'sasdf')
+                ->assertPathIs('/' . $company->domain_name . '/invoice/create')
+                ->type('nice_invoice_id', substr($faker->slug, 0, 20) . 'sasdf')
                 ->type('netdays', $faker->numberBetween($min = 1, $max = 60))
                 ->type('item_quantity[]', $faker->numberBetween($min = 1, $max = 999999999))
                 ->type('item_price[]', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999));
-            $browser
-                ->script('jQuery("#client_id").selectize()[0].selectize.setValue('.$client->id.');');
-            $browser
-                ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("'.Carbon::now()->format('j F, Y').'");');
-            $browser
-                ->script('jQuery("#item_name_0").selectize()[0].selectize.setValue("'.addslashes($itemTemplate->name).'");');
+            $browser->script('jQuery("#client_id").selectize()[0].selectize.setValue(' . $client->id . ');');
+            $browser->script(
+                'jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("' . Carbon::now()->format('j F, Y') . '");',
+            );
+            $browser->script('jQuery("#item_name_0").selectize()[0].selectize.setValue("' . addslashes($itemTemplate->name) . '");');
             $browser->pause(2000);
             $browser
                 ->press('CREATE')
                 ->assertPresent('#invoice-action-container')
                 ->clickLink('Invoices')
-                ->assertPathIs('/'.$company->domain_name.'/invoices')
+                ->assertPathIs('/' . $company->domain_name . '/invoices')
                 ->clickLink('Pending')
                 ->pause(500);
-            $browser
-                ->script("jQuery(\"a[data-tooltip='Edit Invoice'] > i\").click();");
+            $browser->script("jQuery(\"a[data-tooltip='Edit Invoice'] > i\").click();");
             $browser
                 ->type('netdays', $faker->numberBetween($min = 1, $max = 60))
                 ->type('item_name[]', $faker->bs())
                 ->type('item_quantity[]', $faker->numberBetween($min = 1, $max = 999999999))
                 ->type('item_price[]', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999));
-            $browser
-                ->script('jQuery("#client_id").selectize()[0].selectize.setValue('.$client->id.');');
-            $browser
-                ->script('jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("'.Carbon::now()->format('j F, Y').'");');
+            $browser->script('jQuery("#client_id").selectize()[0].selectize.setValue(' . $client->id . ');');
+            $browser->script(
+                'jQuery("#date").datepicker("setDate", new Date());jQuery("#date").val("' . Carbon::now()->format('j F, Y') . '");',
+            );
             $browser
                 ->pause(2000)
                 ->press('UPDATE')
                 ->assertPresent('#invoice-action-container')
                 ->clickLink('Invoices')
-                ->assertPathIs('/'.$company->domain_name.'/invoices')
+                ->assertPathIs('/' . $company->domain_name . '/invoices')
                 ->clickLink('Pending')
                 ->pause(500);
+            $browser->script("jQuery(\"a[data-tooltip='View Invoice'] > i\").click();");
             $browser
-                ->script("jQuery(\"a[data-tooltip='View Invoice'] > i\").click();");
-            $browser
-                ->assertPathBeginsWith('/'.$company->domain_name.'/invoice')
+                ->assertPathBeginsWith('/' . $company->domain_name . '/invoice')
                 ->clickLink('Log Payment')
                 ->type('amount', $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999))
                 ->type('notes', $faker->text(50));
-            $browser
-                ->script('jQuery("#receiveddate").datepicker("setDate", new Date());jQuery("#receiveddate").val("'.Carbon::now()->format('j F, Y').'");');
-            $browser
-                ->script('jQuery("#mode").selectize()[0].selectize.setValue("Cheque");');
+            $browser->script(
+                'jQuery("#receiveddate").datepicker("setDate", new Date());jQuery("#receiveddate").val("' .
+                    Carbon::now()->format('j F, Y') .
+                    '");',
+            );
+            $browser->script('jQuery("#mode").selectize()[0].selectize.setValue("Cheque");');
             $browser
                 ->press('SUBMIT')
                 ->assertPresent('#invoice-action-container')
-                ->assertPathBeginsWith('/'.$company->domain_name.'/invoice')
+                ->assertPathBeginsWith('/' . $company->domain_name . '/invoice')
                 ->clickLink('Invoices')
-                ->assertPathIs('/'.$company->domain_name.'/invoices')
+                ->assertPathIs('/' . $company->domain_name . '/invoices')
                 ->clickLink('Pending')
                 ->pause(500);
-            $browser
-                ->script('jQuery(".invoice-delete-btn > i").click();');
+            $browser->script('jQuery(".invoice-delete-btn > i").click();');
             $browser
                 ->pause(500)
                 ->press('DELETE')
                 ->assertPresent('#invoice-container')
-                ->assertPathBeginsWith('/'.$company->domain_name.'/invoice');
+                ->assertPathBeginsWith('/' . $company->domain_name . '/invoice');
             $browser->script('jQuery(".signmeout-btn").click()');
             $browser->assertPathIs('/');
         });

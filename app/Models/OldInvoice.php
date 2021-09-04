@@ -27,52 +27,40 @@ class OldInvoice extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'nice_invoice_id',
-        'date',
-        'duedate',
-        'total',
-        'status',
-        'netdays',
-        'client_data',
-        'client_id',
-        'company_id',
-    ];
+    protected $fillable = ['nice_invoice_id', 'date', 'duedate', 'total', 'status', 'netdays', 'client_data', 'client_id', 'company_id'];
 
     protected $attributes = [
         'status' => self::STATUS_OPEN,
     ];
 
-    protected $cascadeDeletes = [
-        'olditems',
-    ];
+    protected $cascadeDeletes = ['olditems'];
 
     public function getCreatedAtAttribute($value)
     {
         $date = $this->asDateTime($value);
 
-        return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
+        return auth()->user() ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
     public function getUpdatedAtAttribute($value)
     {
         $date = $this->asDateTime($value);
 
-        return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
+        return auth()->user() ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
     public function getDateAttribute($value)
     {
         $date = $this->asDateTime($value);
 
-        return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
+        return auth()->user() ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
     public function getDuedateAttribute($value)
     {
         $date = $this->asDateTime($value);
 
-        return (auth()->user()) ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
+        return auth()->user() ? $date->timezone(auth()->user()->timezone) : $date->timezone(config('app.timezone'));
     }
 
     public function items()
@@ -97,7 +85,7 @@ class OldInvoice extends Model
 
     public function getClient()
     {
-        return ($this->client) ? $this->client : (object) json_decode($this->client_data);
+        return $this->client ? $this->client : (object) json_decode($this->client_data);
     }
 
     public function calculatesubtotal($moneyformat = true)
@@ -132,7 +120,7 @@ class OldInvoice extends Model
         $subtotal = $this->calculatesubtotal(false);
         $subtotalWithTax = $subtotal * $tax;
 
-        $tax = ($subtotalWithTax != 0) ? $subtotalWithTax / 100 : 0;
+        $tax = $subtotalWithTax != 0 ? $subtotalWithTax / 100 : 0;
 
         if ($moneyformat) {
             $amount = new \NumberFormatter('en_US.UTF-8', \NumberFormatter::PATTERN_DECIMAL, '* #####.00 ;(* #####.00)');
@@ -155,7 +143,7 @@ class OldInvoice extends Model
         $subtotal = $this->calculatesubtotal(false);
         $totalWithTax = $subtotal * (100 + $tax);
 
-        $total = ($totalWithTax != 0) ? $totalWithTax / 100 : 0;
+        $total = $totalWithTax != 0 ? $totalWithTax / 100 : 0;
 
         if ($moneyformat) {
             $amount = new \NumberFormatter('en_US.UTF-8', \NumberFormatter::PATTERN_DECIMAL, '* #####.00 ;(* #####.00)');

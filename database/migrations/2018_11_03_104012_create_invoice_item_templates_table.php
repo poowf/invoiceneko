@@ -20,8 +20,10 @@ class CreateInvoiceItemTemplatesTable extends Migration
             $table->integer('quantity');
             $table->double('price', 15, 3);
             $table->integer('invoice_template_id')->unsigned();
-            $table->foreign('invoice_template_id')
-                ->references('id')->on('invoice_templates')
+            $table
+                ->foreign('invoice_template_id')
+                ->references('id')
+                ->on('invoice_templates')
                 ->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

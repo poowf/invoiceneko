@@ -14,7 +14,10 @@ class AddQuoteConditionsToCompanySettingsTable extends Migration
     public function up()
     {
         Schema::table('company_settings', function (Blueprint $table) {
-            $table->text('quote_conditions')->after('invoice_conditions')->nullable();
+            $table
+                ->text('quote_conditions')
+                ->after('invoice_conditions')
+                ->nullable();
         });
     }
 

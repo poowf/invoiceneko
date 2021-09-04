@@ -14,7 +14,9 @@ class CreatePaymentRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->can('create', Payment::class);
+        return auth()
+            ->user()
+            ->can('create', Payment::class);
     }
 
     /**
@@ -25,9 +27,9 @@ class CreatePaymentRequest extends FormRequest
     public function rules()
     {
         return [
-            'amount'       => 'required|numeric',
+            'amount' => 'required|numeric',
             'receiveddate' => 'required|date_format:"j F, Y"',
-            'mode'         => 'required',
+            'mode' => 'required',
         ];
     }
 }

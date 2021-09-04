@@ -14,7 +14,9 @@ class UpdateCompanyRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->can('owner', $this->route('company'));
+        return auth()
+            ->user()
+            ->can('owner', $this->route('company'));
     }
 
     /**
@@ -25,13 +27,13 @@ class UpdateCompanyRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'        => 'required|string',
-            'crn'         => 'required|string',
-            'phone'       => 'required|string',
-            'email'       => 'required|email',
-            'domain_name' => ['required', 'unique:companies,domain_name,'.$this->route('company')->id, new Hostname()],
-            'logo'        => 'mimes:jpeg,bmp,png',
-            'smlogo'      => 'mimes:jpeg,bmp,png',
+            'name' => 'required|string',
+            'crn' => 'required|string',
+            'phone' => 'required|string',
+            'email' => 'required|email',
+            'domain_name' => ['required', 'unique:companies,domain_name,' . $this->route('company')->id, new Hostname()],
+            'logo' => 'mimes:jpeg,bmp,png',
+            'smlogo' => 'mimes:jpeg,bmp,png',
         ];
     }
 }

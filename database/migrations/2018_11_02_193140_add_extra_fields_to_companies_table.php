@@ -14,8 +14,14 @@ class AddExtraFieldsToCompaniesTable extends Migration
     public function up()
     {
         Schema::table('companies', function (Blueprint $table) {
-            $table->string('timezone')->default('UTC')->after('logo');
-            $table->string('country')->nullable()->after('logo');
+            $table
+                ->string('timezone')
+                ->default('UTC')
+                ->after('logo');
+            $table
+                ->string('country')
+                ->nullable()
+                ->after('logo');
         });
     }
 

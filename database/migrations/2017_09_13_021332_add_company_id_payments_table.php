@@ -14,9 +14,15 @@ class AddCompanyIdPaymentsTable extends Migration
     public function up()
     {
         Schema::table('payments', function (Blueprint $table) {
-            $table->integer('company_id')->unsigned()->nullable()->after('client_id');
-            $table->foreign('company_id')
-                ->references('id')->on('companies')
+            $table
+                ->integer('company_id')
+                ->unsigned()
+                ->nullable()
+                ->after('client_id');
+            $table
+                ->foreign('company_id')
+                ->references('id')
+                ->on('companies')
                 ->onDelete('cascade');
         });
     }

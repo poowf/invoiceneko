@@ -13,7 +13,9 @@ class UpdatePaymentRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->can('update', $this->route('payment'));
+        return auth()
+            ->user()
+            ->can('update', $this->route('payment'));
     }
 
     /**
@@ -24,9 +26,9 @@ class UpdatePaymentRequest extends FormRequest
     public function rules()
     {
         return [
-            'amount'       => 'required|numeric',
+            'amount' => 'required|numeric',
             'receiveddate' => 'required|date_format:"j F, Y"',
-            'mode'         => 'required',
+            'mode' => 'required',
         ];
     }
 }

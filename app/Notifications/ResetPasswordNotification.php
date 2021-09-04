@@ -62,7 +62,7 @@ class ResetPasswordNotification extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            //
+            // prettier-ignore
         ];
     }
 }

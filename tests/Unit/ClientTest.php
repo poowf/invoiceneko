@@ -21,23 +21,23 @@ class ClientTest extends TestCase
         Client::unguard();
 
         $client = Client::create([
-            'companyname'       => 'Poowf Labs',
-            'phone'             => '+6581234567',
-            'block'             => '123',
-            'street'            => '123 Street Name',
-            'unitnumber'        => '00-00',
-            'postalcode'        => '123456',
-            'country_code'      => 'SG',
-            'nickname'          => 'Poowf the Bunny',
-            'crn'               => '201810000A',
-            'website'           => 'http://poowf.com',
+            'companyname' => 'Poowf Labs',
+            'phone' => '+6581234567',
+            'block' => '123',
+            'street' => '123 Street Name',
+            'unitnumber' => '00-00',
+            'postalcode' => '123456',
+            'country_code' => 'SG',
+            'nickname' => 'Poowf the Bunny',
+            'crn' => '201810000A',
+            'website' => 'http://poowf.com',
             'contactsalutation' => 'Ms.',
-            'contactfirstname'  => 'Poowf',
-            'contactlastname'   => 'Bunny',
-            'contactgender'     => 'female',
-            'contactemail'      => 'bunny@poowf.com',
-            'contactphone'      => '+6579328669',
-            'company_id'        => $company->id,
+            'contactfirstname' => 'Poowf',
+            'contactlastname' => 'Bunny',
+            'contactgender' => 'female',
+            'contactemail' => 'bunny@poowf.com',
+            'contactphone' => '+6579328669',
+            'company_id' => $company->id,
         ]);
 
         Client::reguard();
@@ -65,12 +65,12 @@ class ClientTest extends TestCase
         $this->assertEquals('+6564142762', $client->phone);
 
         $data = [
-            'postalcode'   => '585151',
+            'postalcode' => '585151',
             'country_code' => 'SG',
-            'nickname'     => 'Shoop da Whoop',
-            'crn'          => 'C-ARE-AND',
-            'website'      => 'itsawebsite.com',
-            'company_id'   => $company2->id,
+            'nickname' => 'Shoop da Whoop',
+            'crn' => 'C-ARE-AND',
+            'website' => 'itsawebsite.com',
+            'company_id' => $company2->id,
         ];
 
         $client->fill($data);

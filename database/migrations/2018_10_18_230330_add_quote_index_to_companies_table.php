@@ -14,7 +14,10 @@ class AddQuoteIndexToCompaniesTable extends Migration
     public function up()
     {
         Schema::table('companies', function (Blueprint $table) {
-            $table->integer('quote_index')->after('invoice_index')->nullable();
+            $table
+                ->integer('quote_index')
+                ->after('invoice_index')
+                ->nullable();
         });
     }
 

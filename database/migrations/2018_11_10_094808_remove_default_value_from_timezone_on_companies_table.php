@@ -14,7 +14,10 @@ class RemoveDefaultValueFromTimezoneOnCompaniesTable extends Migration
     public function up()
     {
         Schema::table('companies', function (Blueprint $table) {
-            $table->string('timezone')->default(null)->change();
+            $table
+                ->string('timezone')
+                ->default(null)
+                ->change();
         });
     }
 
@@ -26,7 +29,10 @@ class RemoveDefaultValueFromTimezoneOnCompaniesTable extends Migration
     public function down()
     {
         Schema::table('companies', function (Blueprint $table) {
-            $table->string('timezone')->default('UTC')->change();
+            $table
+                ->string('timezone')
+                ->default('UTC')
+                ->change();
         });
     }
 }

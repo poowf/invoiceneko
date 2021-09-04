@@ -33,11 +33,10 @@ class ContactForm extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->markdown('emails.contact')
-            ->with([
-                'name'    => $this->name,
-                'email'   => $this->email,
-                'message' => $this->message,
-            ]);
+        return $this->markdown('emails.contact')->with([
+            'name' => $this->name,
+            'email' => $this->email,
+            'message' => $this->message,
+        ]);
     }
 }

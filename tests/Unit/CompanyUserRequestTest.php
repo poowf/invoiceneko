@@ -20,11 +20,11 @@ class CompanyUserRequestTest extends TestCase
         CompanyUserRequest::unguard();
 
         $companyUserRequest = CompanyUserRequest::create([
-            'full_name'  => 'Poowf Bunny',
-            'email'      => 'bunny@poowf.com',
-            'phone'      => '+6579328669',
-            'token'      => 'asdfounasifdnasfinasasdfasf',
-            'status'     => '1',
+            'full_name' => 'Poowf Bunny',
+            'email' => 'bunny@poowf.com',
+            'phone' => '+6579328669',
+            'token' => 'asdfounasifdnasfinasasdfasf',
+            'status' => '1',
             'company_id' => $company->id,
         ]);
 
@@ -53,9 +53,9 @@ class CompanyUserRequestTest extends TestCase
 
         $data = [
             'full_name' => 'NyanIndustries',
-            'email'     => 'nowaythiscannotbe@example.com',
-            'phone'     => '+659774123',
-            'token'     => 'asdfnasuifasuifnasidfas',
+            'email' => 'nowaythiscannotbe@example.com',
+            'phone' => '+659774123',
+            'token' => 'asdfnasuifasuifnasidfas',
         ];
 
         $companyUserRequest->fill($data);

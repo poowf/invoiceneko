@@ -28,14 +28,14 @@ class Client extends OtterResource
     public static function fields()
     {
         return [
-            'companyname'       => 'text',
-            'phone'             => 'text',
-            'crn'               => 'text',
+            'companyname' => 'text',
+            'phone' => 'text',
+            'crn' => 'text',
             'contactsalutation' => 'text',
-            'contactfirstname'  => 'text',
-            'contactlastname'   => 'text',
-            'contactemail'      => 'text',
-            'contactphone'      => 'text',
+            'contactfirstname' => 'text',
+            'contactlastname' => 'text',
+            'contactemail' => 'text',
+            'contactphone' => 'text',
         ];
     }
 
@@ -46,7 +46,6 @@ class Client extends OtterResource
      */
     public static function hidden()
     {
-        return [
-        ];
+        return [];
     }
 }

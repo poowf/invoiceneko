@@ -29,8 +29,8 @@ class Payment extends OtterResource
     {
         return [
             'amount' => 'text',
-            'mode'   => 'text',
-            'notes'  => 'text',
+            'mode' => 'text',
+            'notes' => 'text',
         ];
     }
 
@@ -41,8 +41,7 @@ class Payment extends OtterResource
      */
     public static function hidden()
     {
-        return [
-        ];
+        return [];
     }
 
     /**
@@ -69,25 +68,25 @@ class Payment extends OtterResource
             'client' => [
                 'create' => [
                     /*
-                * Client side create resource validation
-                */
+                     * Client side create resource validation
+                     */
                 ],
                 'update' => [
                     /*
-                * Client side update resource validation
-                */
+                     * Client side update resource validation
+                     */
                 ],
             ],
             'server' => [
                 'create' => [
                     /*
-                * Server side create resource validation
-                */
+                     * Server side create resource validation
+                     */
                 ],
                 'update' => [
                     /*
-                * Server side update resource validation
-                */
+                     * Server side update resource validation
+                     */
                 ],
             ],
         ];

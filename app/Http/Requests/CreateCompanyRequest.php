@@ -25,13 +25,13 @@ class CreateCompanyRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'        => 'required|string',
-            'crn'         => 'required|string',
-            'phone'       => 'required',
-            'email'       => 'required|email',
+            'name' => 'required|string',
+            'crn' => 'required|string',
+            'phone' => 'required',
+            'email' => 'required|email',
             'domain_name' => ['required', 'unique:companies', new Hostname()],
-            'logo'        => 'mimes:jpeg,bmp,png',
-            'smlogo'      => 'mimes:jpeg,bmp,png',
+            'logo' => 'mimes:jpeg,bmp,png',
+            'smlogo' => 'mimes:jpeg,bmp,png',
         ];
     }
 }

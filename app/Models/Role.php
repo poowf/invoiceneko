@@ -28,7 +28,9 @@ class Role extends RoleBase implements Auditable
      */
     public function resolveRouteBinding($value, $field = null)
     {
-        $role = $this->where($this->getRouteKeyName(), $value)->where('scope', app('request')->route('company')->id)->first();
+        $role = $this->where($this->getRouteKeyName(), $value)
+            ->where('scope', app('request')->route('company')->id)
+            ->first();
 
         return $role;
     }

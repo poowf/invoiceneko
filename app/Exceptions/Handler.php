@@ -22,11 +22,7 @@ class Handler extends ExceptionHandler
      *
      * @var array
      */
-    protected $dontFlash = [
-        'current_password',
-        'password',
-        'password_confirmation',
-    ];
+    protected $dontFlash = ['current_password', 'password', 'password_confirmation'];
 
     /**
      * Register the exception handling callbacks for the application.
@@ -57,8 +53,6 @@ class Handler extends ExceptionHandler
      */
     protected function unauthenticated($request, AuthenticationException $exception)
     {
-        return $request->expectsJson()
-            ? response()->json(['message' => 'Unauthenticated.'], 401)
-            : redirect()->guest(route('auth.show'));
+        return $request->expectsJson() ? response()->json(['message' => 'Unauthenticated.'], 401) : redirect()->guest(route('auth.show'));
     }
 }

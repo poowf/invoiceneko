@@ -22,12 +22,7 @@ class OldInvoiceItem extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'name',
-        'description',
-        'quantity',
-        'price',
-    ];
+    protected $fillable = ['name', 'description', 'quantity', 'price'];
 
     public function invoice()
     {

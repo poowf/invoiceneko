@@ -19,11 +19,15 @@ class CreatePaymentsTable extends Migration
             $table->dateTime('receiveddate');
             $table->integer('invoice_id')->unsigned();
             $table->integer('client_id')->unsigned();
-            $table->foreign('invoice_id')
-                ->references('id')->on('invoices')
+            $table
+                ->foreign('invoice_id')
+                ->references('id')
+                ->on('invoices')
                 ->onDelete('cascade');
-            $table->foreign('client_id')
-                ->references('id')->on('clients')
+            $table
+                ->foreign('client_id')
+                ->references('id')
+                ->on('clients')
                 ->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

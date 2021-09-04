@@ -22,11 +22,11 @@ class InvoiceRecurrenceTest extends TestCase
 
         $invoiceRecurrence = InvoiceRecurrence::create([
             'time_interval' => '1',
-            'time_period'   => 'month',
-            'until_type'    => 'never',
-            'until_meta'    => null,
-            'rule'          => 'FREQ=MONTHLY;INTERVAL=1',
-            'company_id'    => $company->id,
+            'time_period' => 'month',
+            'until_type' => 'never',
+            'until_meta' => null,
+            'rule' => 'FREQ=MONTHLY;INTERVAL=1',
+            'company_id' => $company->id,
         ]);
 
         InvoiceRecurrence::reguard();
@@ -51,9 +51,9 @@ class InvoiceRecurrenceTest extends TestCase
 
         $data = [
             'time_interval' => '3',
-            'time_period'   => 'year',
-            'until_type'    => 'date',
-            'until_meta'    => '2020-10-31 00:00:00',
+            'time_period' => 'year',
+            'until_type' => 'date',
+            'until_meta' => '2020-10-31 00:00:00',
         ];
 
         $this->expectException(MassAssignmentException::class);

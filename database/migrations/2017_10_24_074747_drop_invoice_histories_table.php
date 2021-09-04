@@ -27,11 +27,15 @@ class DropInvoiceHistoriesTable extends Migration
             $table->increments('id');
             $table->integer('invoice_id')->unsigned();
             $table->integer('oldinvoice_id')->unsigned();
-            $table->foreign('invoice_id')
-                ->references('id')->on('invoices')
+            $table
+                ->foreign('invoice_id')
+                ->references('id')
+                ->on('invoices')
                 ->onDelete('cascade');
-            $table->foreign('oldinvoice_id')
-                ->references('id')->on('old_invoices')
+            $table
+                ->foreign('oldinvoice_id')
+                ->references('id')
+                ->on('old_invoices')
                 ->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

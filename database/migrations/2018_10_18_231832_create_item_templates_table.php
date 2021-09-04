@@ -20,8 +20,10 @@ class CreateItemTemplatesTable extends Migration
             $table->integer('quantity');
             $table->double('price', 15, 3);
             $table->integer('company_id')->unsigned();
-            $table->foreign('company_id')
-                ->references('id')->on('companies')
+            $table
+                ->foreign('company_id')
+                ->references('id')
+                ->on('companies')
                 ->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

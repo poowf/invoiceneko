@@ -13,9 +13,9 @@ return [
     |
     */
 
-    'docs'        => [
-        'route'   => '/docs',
-        'path'    => '/resources/docs',
+    'docs' => [
+        'route' => '/docs',
+        'path' => '/resources/docs',
         'landing' => 'requirements',
     ],
 
@@ -31,11 +31,9 @@ return [
     |
     */
 
-    'versions'      => [
-        'default'   => '1.0',
-        'published' => [
-            '1.0',
-        ],
+    'versions' => [
+        'default' => '1.0',
+        'published' => ['1.0'],
     ],
 
     /*
@@ -51,7 +49,7 @@ return [
     */
 
     'settings' => [
-        'auth'  => false,
+        'auth' => false,
         'ga_id' => '',
     ],
 
@@ -68,9 +66,9 @@ return [
     |
     */
 
-    'cache'       => [
+    'cache' => [
         'enabled' => true,
-        'period'  => 360,
+        'period' => 360,
     ],
 
     /*
@@ -86,12 +84,12 @@ return [
     |
     */
 
-    'search'            => [
-        'enabled'       => false,
-        'default'       => 'algolia',
-        'engines'       => [
-            'algolia'   => [
-                'key'   => '',
+    'search' => [
+        'enabled' => false,
+        'default' => 'algolia',
+        'engines' => [
+            'algolia' => [
+                'key' => '',
                 'index' => '',
             ],
         ],
@@ -109,9 +107,9 @@ return [
     |
     */
 
-    'repository'   => [
+    'repository' => [
         'provider' => 'github',
-        'url'      => 'https://github.com/poowf/invoiceneko',
+        'url' => 'https://github.com/poowf/invoiceneko',
     ],
 
     /*
@@ -127,23 +125,23 @@ return [
     |
     */
 
-    'ui'                 => [
-        'show_app_name'  => true,
-        'logo'           => '/assets/img/logo.svg', // e.g.: /images/logo.svg
-        'fav'            => '/favicon.ico', // e.g.: /fav.png
-        'theme'          => 'dark',
-        'code'           => 'dark',
-        'back_to_top'    => true,
-        'show_side_bar'  => true,
-        'colors'         => [
-            'primary'    => '#4da6a6',
-            'secondary'  => '#585454',
-            'selection'  => '#dce3e6',
+    'ui' => [
+        'show_app_name' => true,
+        'logo' => '/assets/img/logo.svg', // e.g.: /images/logo.svg
+        'fav' => '/favicon.ico', // e.g.: /fav.png
+        'theme' => 'dark',
+        'code' => 'dark',
+        'back_to_top' => true,
+        'show_side_bar' => true,
+        'colors' => [
+            'primary' => '#4da6a6',
+            'secondary' => '#585454',
+            'selection' => '#dce3e6',
         ],
         'additional_css' => [
             //'css/custom.css',
         ],
-        'additional_js'  => [
+        'additional_js' => [
             //'js/custom.js',
         ],
     ],
@@ -160,15 +158,15 @@ return [
     |
     */
 
-    'seo'                 => [
-        'author'          => '',
-        'description'     => '',
-        'keywords'        => '',
-        'og'              => [
-            'title'       => '',
-            'type'        => 'article',
-            'url'         => '',
-            'image'       => '',
+    'seo' => [
+        'author' => '',
+        'description' => '',
+        'keywords' => '',
+        'og' => [
+            'title' => '',
+            'type' => 'article',
+            'url' => '',
+            'image' => '',
             'description' => '',
         ],
     ],
@@ -186,11 +184,11 @@ return [
    |
    */
 
-    'forum'                 => [
-        'enabled'           => true,
-        'default'           => 'disqus',
-        'services'          => [
-            'disqus'        => [
+    'forum' => [
+        'enabled' => true,
+        'default' => 'disqus',
+        'services' => [
+            'disqus' => [
                 'site_name' => 'invoiceneko', // yoursite.disqus.com
             ],
         ],

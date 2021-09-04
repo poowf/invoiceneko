@@ -14,7 +14,9 @@ class UpdateRecipientRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->can('create', Client::class);
+        return auth()
+            ->user()
+            ->can('create', Client::class);
     }
 
     /**
@@ -27,9 +29,9 @@ class UpdateRecipientRequest extends FormRequest
         return [
             'salutation' => 'required|in:mr,mrs,mdm,miss,dr,prof,mx',
             'first_name' => 'required|string',
-            'last_name'  => '',
-            'email'      => 'required|email|unique:recipients,email,'.$this->route('recipient')->id,
-            'phone'      => '',
+            'last_name' => '',
+            'email' => 'required|email|unique:recipients,email,' . $this->route('recipient')->id,
+            'phone' => '',
         ];
     }
 }

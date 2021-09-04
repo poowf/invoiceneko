@@ -34,7 +34,6 @@ class NotificationController extends Controller
             // the GIF should not be POSTed to, so do nothing...
             echo ' ';
         } else {
-
             // return 1x1 pixel transparent gif
             header('Content-type: image/gif');
             // needed to avoid cache time on browser side
@@ -44,7 +43,52 @@ class NotificationController extends Controller
             header('Last-Modified: Wed, 11 Jan 2006 12:59:00 GMT');
             header('Pragma: no-cache');
 
-            echo sprintf('%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%', 71, 73, 70, 56, 57, 97, 1, 0, 1, 0, 128, 255, 0, 192, 192, 192, 0, 0, 0, 33, 249, 4, 1, 0, 0, 0, 0, 44, 0, 0, 0, 0, 1, 0, 1, 0, 0, 2, 2, 68, 1, 0, 59);
+            echo sprintf(
+                '%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%',
+                71,
+                73,
+                70,
+                56,
+                57,
+                97,
+                1,
+                0,
+                1,
+                0,
+                128,
+                255,
+                0,
+                192,
+                192,
+                192,
+                0,
+                0,
+                0,
+                33,
+                249,
+                4,
+                1,
+                0,
+                0,
+                0,
+                0,
+                44,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                1,
+                0,
+                0,
+                2,
+                2,
+                68,
+                1,
+                0,
+                59,
+            );
         }
 
         // flush all output buffers. No reason to make the user wait for OWA.
@@ -54,7 +98,7 @@ class NotificationController extends Controller
 
         // Can retrieve more info from server parameter
         // Log::info($_SERVER);
-        if (! $notification->read_at && $_SERVER['REQUEST_METHOD'] !== 'POST') {
+        if (!$notification->read_at && $_SERVER['REQUEST_METHOD'] !== 'POST') {
             $notification->read_at = Carbon::now();
             $notification->save();
         }

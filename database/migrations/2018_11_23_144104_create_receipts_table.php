@@ -16,13 +16,20 @@ class CreateReceiptsTable extends Migration
         Schema::create('receipts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nice_receipt_id');
-            $table->integer('invoice_id')->unique()->unsigned();
-            $table->foreign('invoice_id')
-                ->references('id')->on('invoices')
+            $table
+                ->integer('invoice_id')
+                ->unique()
+                ->unsigned();
+            $table
+                ->foreign('invoice_id')
+                ->references('id')
+                ->on('invoices')
                 ->onDelete('cascade');
             $table->integer('company_id')->unsigned();
-            $table->foreign('company_id')
-                ->references('id')->on('companies')
+            $table
+                ->foreign('company_id')
+                ->references('id')
+                ->on('companies')
                 ->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

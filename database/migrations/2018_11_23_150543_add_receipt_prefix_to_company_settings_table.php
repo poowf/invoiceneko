@@ -14,7 +14,10 @@ class AddReceiptPrefixToCompanySettingsTable extends Migration
     public function up()
     {
         Schema::table('company_settings', function (Blueprint $table) {
-            $table->string('receipt_prefix')->after('quote_prefix')->nullable();
+            $table
+                ->string('receipt_prefix')
+                ->after('quote_prefix')
+                ->nullable();
         });
     }
 

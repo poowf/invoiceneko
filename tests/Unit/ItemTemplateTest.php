@@ -20,11 +20,11 @@ class ItemTemplateTest extends TestCase
         ItemTemplate::unguard();
 
         $itemTemplate = ItemTemplate::create([
-            'name'        => 'This is an Item Template la',
-            'quantity'    => '250',
-            'price'       => '5.00',
+            'name' => 'This is an Item Template la',
+            'quantity' => '250',
+            'price' => '5.00',
             'description' => 'asfdasfasfasfsf<p>asasdfasdfasfas</p>',
-            'company_id'  => $company->id,
+            'company_id' => $company->id,
         ]);
 
         ItemTemplate::reguard();
@@ -51,8 +51,8 @@ class ItemTemplateTest extends TestCase
         $this->assertEquals('2000', $itemTemplate->quantity);
 
         $data = [
-            'price'      => '213131.00',
-            'quantity'   => '25000',
+            'price' => '213131.00',
+            'quantity' => '25000',
             'company_id' => $company2->id,
         ];
 

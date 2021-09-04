@@ -14,9 +14,7 @@ class ResetPasswordController extends Controller
 
     public function show(Request $request, $token = null)
     {
-        return view('pages.reset')->with(
-            ['token' => $token, 'email' => $request->email]
-        );
+        return view('pages.reset')->with(['token' => $token, 'email' => $request->email]);
     }
 
     protected function resetPassword($user, $password)

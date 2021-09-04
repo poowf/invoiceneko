@@ -24,12 +24,12 @@ class CompanySettingFactory extends Factory
     public function definition()
     {
         return [
-            'invoice_prefix'     => $this->faker->domainWord,
-            'quote_prefix'       => $this->faker->domainWord,
+            'invoice_prefix' => $this->faker->domainWord,
+            'quote_prefix' => $this->faker->domainWord,
             'invoice_conditions' => $this->faker->realText($maxNbChars = 200, $indexSize = 2),
-            'quote_conditions'   => $this->faker->realText($maxNbChars = 200, $indexSize = 2),
-            'tax'                => $this->faker->numberBetween($min = 1, $max = 100),
-            'company_id'         => function () {
+            'quote_conditions' => $this->faker->realText($maxNbChars = 200, $indexSize = 2),
+            'tax' => $this->faker->numberBetween($min = 1, $max = 100),
+            'company_id' => function () {
                 return Company::factory()->create()->id;
             },
         ];
@@ -43,8 +43,7 @@ class CompanySettingFactory extends Factory
     public function unverified()
     {
         return $this->state(function (array $attributes) {
-            return [
-            ];
+            return [];
         });
     }
 }

@@ -25,11 +25,11 @@ class InvoiceRecurrenceFactory extends Factory
     {
         return [
             'time_interval' => '3',
-            'time_period'   => 'week',
-            'until_type'    => 'date',
-            'until_meta'    => '2020-10-31 00:00:00',
-            'rule'          => 'FREQ=WEEKLY;UNTIL=20201031T000000;INTERVAL=3',
-            'company_id'    => function () {
+            'time_period' => 'week',
+            'until_type' => 'date',
+            'until_meta' => '2020-10-31 00:00:00',
+            'rule' => 'FREQ=WEEKLY;UNTIL=20201031T000000;INTERVAL=3',
+            'company_id' => function () {
                 return Company::factory()->create()->id;
             },
         ];
@@ -43,8 +43,7 @@ class InvoiceRecurrenceFactory extends Factory
     public function unverified()
     {
         return $this->state(function (array $attributes) {
-            return [
-            ];
+            return [];
         });
     }
 }

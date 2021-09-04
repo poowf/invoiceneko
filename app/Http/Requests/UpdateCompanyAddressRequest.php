@@ -13,7 +13,9 @@ class UpdateCompanyAddressRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->can('address', $this->route('company'));
+        return auth()
+            ->user()
+            ->can('address', $this->route('company'));
     }
 
     /**
@@ -24,10 +26,10 @@ class UpdateCompanyAddressRequest extends FormRequest
     public function rules()
     {
         return [
-            'block'        => 'required|string',
-            'street'       => 'required|string',
-            'unitnumber'   => 'required|string',
-            'postalcode'   => 'required|string',
+            'block' => 'required|string',
+            'street' => 'required|string',
+            'unitnumber' => 'required|string',
+            'postalcode' => 'required|string',
             'buildingtype' => 'required|string',
         ];
     }
@@ -43,7 +45,7 @@ class UpdateCompanyAddressRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             $company = $this->route('company');
-            if (! $company) {
+            if (!$company) {
                 $validator->errors()->add('Company', 'Please fill in your company information first');
             }
         });

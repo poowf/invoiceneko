@@ -14,8 +14,14 @@ class AddLogoCompaniesTable extends Migration
     public function up()
     {
         Schema::table('companies', function (Blueprint $table) {
-            $table->string('logo')->nullable()->after('crn');
-            $table->string('smlogo')->nullable()->after('crn');
+            $table
+                ->string('logo')
+                ->nullable()
+                ->after('crn');
+            $table
+                ->string('smlogo')
+                ->nullable()
+                ->after('crn');
         });
     }
 

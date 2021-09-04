@@ -20,7 +20,7 @@ class QuotePolicy
 
     public function index(User $user)
     {
-//        dd($user->roles()->first()->getAbilities());
+        //        dd($user->roles()->first()->getAbilities());
         return $user->can('view-quote', Quote::class);
     }
 

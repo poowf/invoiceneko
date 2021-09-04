@@ -28,9 +28,9 @@ class ItemTemplate extends OtterResource
     public static function fields()
     {
         return [
-            'name'     => 'text',
+            'name' => 'text',
             'quantity' => 'text',
-            'price'    => 'text',
+            'price' => 'text',
         ];
     }
 
@@ -41,8 +41,7 @@ class ItemTemplate extends OtterResource
      */
     public static function hidden()
     {
-        return [
-        ];
+        return [];
     }
 
     /**
@@ -56,25 +55,25 @@ class ItemTemplate extends OtterResource
             'client' => [
                 'create' => [
                     /*
-                * Client side create resource validation
-                */
+                     * Client side create resource validation
+                     */
                 ],
                 'update' => [
                     /*
-                * Client side update resource validation
-                */
+                     * Client side update resource validation
+                     */
                 ],
             ],
             'server' => [
                 'create' => [
                     /*
-                * Server side create resource validation
-                */
+                     * Server side create resource validation
+                     */
                 ],
                 'update' => [
                     /*
-                * Server side update resource validation
-                */
+                     * Server side update resource validation
+                     */
                 ],
             ],
         ];

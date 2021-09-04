@@ -26,11 +26,11 @@ class PaymentFactory extends Factory
     public function definition()
     {
         return [
-            'amount'       => $this->faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999),
+            'amount' => $this->faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999999999),
             'receiveddate' => $this->faker->dateTime,
-            'mode'         => 'Cheque' | 'Bank Transfer',
-            'notes'        => $this->faker->realText(50, 2),
-            'invoice_id'   => function () {
+            'mode' => 'Cheque' | 'Bank Transfer',
+            'notes' => $this->faker->realText(50, 2),
+            'invoice_id' => function () {
                 return Invoice::factory()->create()->id;
             },
             'client_id' => function () {
@@ -50,8 +50,7 @@ class PaymentFactory extends Factory
     public function unverified()
     {
         return $this->state(function (array $attributes) {
-            return [
-            ];
+            return [];
         });
     }
 }

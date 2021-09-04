@@ -24,12 +24,12 @@ class CompanyAddressFactory extends Factory
     public function definition()
     {
         return [
-            'block'        => $this->faker->buildingNumber,
-            'street'       => $this->faker->streetName,
-            'unitnumber'   => $this->faker->buildingNumber,
-            'postalcode'   => $this->faker->postcode,
+            'block' => $this->faker->buildingNumber,
+            'street' => $this->faker->streetName,
+            'unitnumber' => $this->faker->buildingNumber,
+            'postalcode' => $this->faker->postcode,
             'buildingtype' => $this->faker->numberBetween($min = 1, $max = 2),
-            'company_id'   => function () {
+            'company_id' => function () {
                 return Company::factory()->create()->id;
             },
         ];
@@ -43,8 +43,7 @@ class CompanyAddressFactory extends Factory
     public function unverified()
     {
         return $this->state(function (array $attributes) {
-            return [
-            ];
+            return [];
         });
     }
 }

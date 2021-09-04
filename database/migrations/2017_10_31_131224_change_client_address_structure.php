@@ -17,7 +17,10 @@ class ChangeClientAddressStructure extends Migration
             $table->renameColumn('address', 'block');
             $table->renameColumn('address_second', 'street');
             $table->renameColumn('zipcode', 'postalcode');
-            $table->string('unitnumber')->nullable()->after('address_second');
+            $table
+                ->string('unitnumber')
+                ->nullable()
+                ->after('address_second');
         });
     }
 

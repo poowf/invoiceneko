@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Logging Configuration
@@ -50,43 +49,41 @@ return [
     */
 
     'services' => [
-
         'maxmind_database' => [
-            'class'         => \Torann\GeoIP\Services\MaxMindDatabase::class,
+            'class' => \Torann\GeoIP\Services\MaxMindDatabase::class,
             'database_path' => storage_path('app/geoip.mmdb'),
-            'update_url'    => 'https://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz',
-            'locales'       => ['en'],
+            'update_url' => 'https://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz',
+            'locales' => ['en'],
         ],
 
         'maxmind_api' => [
-            'class'       => \Torann\GeoIP\Services\MaxMindWebService::class,
-            'user_id'     => env('MAXMIND_USER_ID'),
+            'class' => \Torann\GeoIP\Services\MaxMindWebService::class,
+            'user_id' => env('MAXMIND_USER_ID'),
             'license_key' => env('MAXMIND_LICENSE_KEY'),
-            'locales'     => ['en'],
+            'locales' => ['en'],
         ],
 
         'ipapi' => [
-            'class'          => \Torann\GeoIP\Services\IPApi::class,
-            'secure'         => true,
-            'key'            => env('IPAPI_KEY'),
+            'class' => \Torann\GeoIP\Services\IPApi::class,
+            'secure' => true,
+            'key' => env('IPAPI_KEY'),
             'continent_path' => storage_path('app/continents.json'),
-            'lang'           => 'en',
+            'lang' => 'en',
         ],
 
         'ipgeolocation' => [
-            'class'          => \Torann\GeoIP\Services\IPGeoLocation::class,
-            'secure'         => true,
-            'key'            => env('IPGEOLOCATION_KEY'),
+            'class' => \Torann\GeoIP\Services\IPGeoLocation::class,
+            'secure' => true,
+            'key' => env('IPGEOLOCATION_KEY'),
             'continent_path' => storage_path('app/continents.json'),
-            'lang'           => 'en',
+            'lang' => 'en',
         ],
 
         'ipdata' => [
-            'class'  => \Torann\GeoIP\Services\IPData::class,
-            'key'    => env('IPDATA_API_KEY'),
+            'class' => \Torann\GeoIP\Services\IPData::class,
+            'key' => env('IPDATA_API_KEY'),
             'secure' => true,
         ],
-
     ],
 
     /*
@@ -140,19 +137,18 @@ return [
     */
 
     'default_location' => [
-        'ip'          => '127.0.0.0',
-        'iso_code'    => 'NekoC',
-        'country'     => 'NekoCountry',
-        'city'        => 'Invoice Neko',
-        'state'       => '',
-        'state_name'  => 'Poowf Labs',
+        'ip' => '127.0.0.0',
+        'iso_code' => 'NekoC',
+        'country' => 'NekoCountry',
+        'city' => 'Invoice Neko',
+        'state' => '',
+        'state_name' => 'Poowf Labs',
         'postal_code' => 'Poowf',
-        'lat'         => 1.31,
-        'lon'         => 103.77,
-        'timezone'    => 'Asia/NekoCountry',
-        'continent'   => 'NA',
-        'default'     => true,
-        'currency'    => 'NekoCoin',
+        'lat' => 1.31,
+        'lon' => 103.77,
+        'timezone' => 'Asia/NekoCountry',
+        'continent' => 'NA',
+        'default' => true,
+        'currency' => 'NekoCoin',
     ],
-
 ];
