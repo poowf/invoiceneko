@@ -2,6 +2,8 @@ preset: laravel
 version: 8
 disabled:
   - no_unused_imports
+  - concat_without_spaces
+  - not_operator_with_successor_space
 finder:
   not-name:
     - index.php
