@@ -1,5 +1,8 @@
 {
-  "private": true,
+  "name": "invoiceneko-core",
+  "version": "1.0.3",
+  "description": "Invoice Neko",
+  "repository": "https://github.com/poowf/invoiceneko",
   "scripts": {
     "dev": "yarn run development",
     "development": "mix",
@@ -8,27 +11,28 @@
     "hot": "mix watch --hot",
     "prod": "yarn run production",
     "production": "mix --production",
-    "format": "prettier --ignore-path .prettierignore \"./**/*.+(ts|js|tsx|jsx|php)\" --write"
+    "format": "prettier --ignore-path .prettierignore \"./**/*.+(ts|js|tsx|jsx|php)\" --write",
+    "commit": "cz",
+    "prepare": "husky install"
   },
-  "devDependencies": {
-    "@prettier/plugin-php": "^0.17.4",
-    "browser-sync": "^2.27.5",
-    "browser-sync-webpack-plugin": "^2.3.0",
-    "copy-webpack-plugin": "^9.0.1",
-    "cross-env": "^7.0.3",
-    "imagemin-mozjpeg": "^9.0.0",
-    "imagemin-webpack-plugin": "^2.4.2",
-    "jquery": "^3.6.0",
-    "laravel-mix": "^6.0.29",
-    "less": "^4.1.1",
-    "less-loader": "^10.0.1",
-    "postcss": "^8.3.6",
-    "prettier": "^2.3.2",
-    "resolve-url-loader": "^4.0.0",
-    "sass": "^1.39.0",
-    "sass-loader": "^12.1.0",
-    "webpack": "^5.51.2"
+  "lint-staged": {
+    "./**/*.{ts,js,tsx,jsx,php,css,json,md}": [
+      "yarn format"
+    ]
   },
+  "keywords": [
+    "invoiceneko"
+  ],
+  "author": "Zane J. Chua",
+  "contributors": [
+    {
+      "name": "Zane J. Chua",
+      "email": "hi@zanechua.com",
+      "url": "https://zanechua.com"
+    }
+  ],
+  "license": "AAL",
+  "private": false,
   "dependencies": {
     "@mdi/font": "^5.9.55",
     "@sentry/node": "^6.12.0",
@@ -47,5 +51,34 @@
     "selectize": "^0.12.6",
     "slick-carousel": "^1.8.1",
     "trumbowyg": "^2.25.1"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^13.1.0",
+    "@commitlint/config-conventional": "^13.1.0",
+    "@prettier/plugin-php": "^0.17.4",
+    "browser-sync": "^2.27.5",
+    "browser-sync-webpack-plugin": "^2.3.0",
+    "copy-webpack-plugin": "^9.0.1",
+    "cross-env": "^7.0.3",
+    "cz-conventional-changelog": "^3.3.0",
+    "husky": "^7.0.2",
+    "imagemin-mozjpeg": "^9.0.0",
+    "imagemin-webpack-plugin": "^2.4.2",
+    "jquery": "^3.6.0",
+    "laravel-mix": "^6.0.29",
+    "less": "^4.1.1",
+    "less-loader": "^10.0.1",
+    "lint-staged": "^11.1.2",
+    "postcss": "^8.3.6",
+    "prettier": "^2.3.2",
+    "resolve-url-loader": "^4.0.0",
+    "sass": "^1.39.0",
+    "sass-loader": "^12.1.0",
+    "webpack": "^5.51.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
