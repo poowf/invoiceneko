@@ -21,6 +21,7 @@ envData.json
 .phpstorm.meta.php
 _ide_helper.php
 _ide_helper_models.php
+.php-cs-fixer.php
 TEST-*.xml
 
 .DS_Store
