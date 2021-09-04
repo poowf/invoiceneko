@@ -7,9 +7,11 @@
     "watch-poll": "mix watch -- --watch-options-poll=1000",
     "hot": "mix watch --hot",
     "prod": "yarn run production",
-    "production": "mix --production"
+    "production": "mix --production",
+    "format": "prettier --ignore-path .prettierignore \"./**/*.+(ts|js|tsx|jsx|php)\" --write"
   },
   "devDependencies": {
+    "@prettier/plugin-php": "^0.17.4",
     "browser-sync": "^2.27.5",
     "browser-sync-webpack-plugin": "^2.3.0",
     "copy-webpack-plugin": "^9.0.1",
@@ -21,6 +23,7 @@
     "less": "^4.1.1",
     "less-loader": "^10.0.1",
     "postcss": "^8.3.6",
+    "prettier": "^2.3.2",
     "resolve-url-loader": "^4.0.0",
     "sass": "^1.39.0",
     "sass-loader": "^12.1.0",
