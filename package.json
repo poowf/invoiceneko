@@ -13,7 +13,9 @@
     "production": "mix --production",
     "format": "prettier --ignore-path .prettierignore \"./**/*.+(ts|js|tsx|jsx|php)\" --write",
     "commit": "cz",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "warning": "echo \"\\033[97;5;41m Please remember to push the release commit to the develop branch \\033[0m\"",
+    "release": "standard-version -a && yarn run warning"
   },
   "lint-staged": {
     "./**/*.{ts,js,tsx,jsx,php,css,json,md}": [
@@ -74,6 +76,7 @@
     "resolve-url-loader": "^4.0.0",
     "sass": "^1.39.0",
     "sass-loader": "^12.1.0",
+    "standard-version": "^9.3.1",
     "webpack": "^5.51.2"
   },
   "config": {
