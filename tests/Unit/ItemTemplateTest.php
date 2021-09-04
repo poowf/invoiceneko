@@ -30,7 +30,7 @@ class ItemTemplateTest extends TestCase
         ItemTemplate::reguard();
 
         $this->assertEquals($itemTemplate->company->id, $company->id);
-        $this->assertEquals('<p>asfdasfasfasfsf<p>asasdfasdfasfas</p></p>\n', $itemTemplate->description);
+        $this->assertEquals("<p>asfdasfasfasfsf<p>asasdfasdfasfas</p></p>\n", $itemTemplate->description);
     }
 
     public function test_update_item_template()

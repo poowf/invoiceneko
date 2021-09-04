@@ -31,7 +31,7 @@ class QuoteItemTest extends TestCase
         QuoteItem::reguard();
 
         $this->assertEquals($quoteItem->quote->id, $quote->id);
-        $this->assertEquals('<p>asfdasfasfasfsf<p>asasdfasdfasfas</p></p>\n', $quoteItem->description);
+        $this->assertEquals(serialize("<p>asfdasfasfasfsf<p>asasdfasdfasfas</p></p>\n"), serialize($quoteItem->description));
     }
 
     public function test_update_quote_item()

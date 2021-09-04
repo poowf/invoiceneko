@@ -32,7 +32,7 @@ class CompanySettingsTest extends TestCase
 
         $this->assertEquals($companySettings->company->name, $company->name);
         $this->assertEquals(
-            '<p>asdfasfdasfasfasdf <strong>asdfasdfasdf</strong> asfdassafas <p>asdfasdfasdfas</p></p>\n',
+            "<p>asdfasfdasfasfasdf <strong>asdfasdfasdf</strong> asfdassafas <p>asdfasdfasdfas</p></p>\n",
             $companySettings->invoice_conditions,
         );
     }
@@ -53,7 +53,7 @@ class CompanySettingsTest extends TestCase
         $companySettings->refresh();
 
         $this->assertEquals(
-            '<p>THIS IS SHTEASDF SACONDITIONS OF THE QUOTE OMGOMGOMGOGMG THESE ARE NOT THE DROIDS YOU ARE LOOKING FOR</p>\n',
+            "<p>THIS IS SHTEASDF SACONDITIONS OF THE QUOTE OMGOMGOMGOGMG THESE ARE NOT THE DROIDS YOU ARE LOOKING FOR</p>\n",
             $companySettings->quote_conditions,
         );
         $this->assertEquals('12', $companySettings->tax);
@@ -70,8 +70,8 @@ class CompanySettingsTest extends TestCase
         $companySettings->refresh();
 
         $this->assertEquals('OINKQ', $companySettings->quote_prefix);
-        $this->assertEquals('I TAWT I SAW A PUTTY TAT', $companySettings->invoice_conditions);
-        $this->assertEquals('THIS IS TEH CONDIXION.', $companySettings->quote_conditions);
+        $this->assertEquals("<p>I TAWT I SAW A PUTTY TAT</p>\n", $companySettings->invoice_conditions);
+        $this->assertEquals("<p>THIS IS TEH CONDIXION.</p>\n", $companySettings->quote_conditions);
         $this->assertEquals('5', $companySettings->tax);
     }
 
