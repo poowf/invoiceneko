@@ -1,6 +1,8 @@
 # .prettierignore
 # Vendor files
+bootstrap/cache
 public/vendor
+storage/framework
 
 # .gitignore
 /node_modules
