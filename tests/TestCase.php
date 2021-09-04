@@ -8,7 +8,8 @@ use ReflectionObject;
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication, RefreshDatabase;
+    use CreatesApplication;
+    use RefreshDatabase;
 
     public function tearDown(): void
     {

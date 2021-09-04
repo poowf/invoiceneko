@@ -11,7 +11,9 @@ use OwenIt\Auditing\Contracts\Auditable;
 class CompanyAddress extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
-    use SoftDeletes, HasFactory, CascadeSoftDeletes;
+    use SoftDeletes;
+    use HasFactory;
+    use CascadeSoftDeletes;
 
     /**
      * The database table used by the model.
@@ -24,8 +26,8 @@ class CompanyAddress extends Model implements Auditable
 
     protected $fillable = ['block', 'street', 'unitnumber', 'postalcode', 'buildingtype'];
 
-    const BUILDINGTYPE_RESIDENTIAL = 1;
-    const BUILDINGTYPE_BUSINESS = 2;
+    public const BUILDINGTYPE_RESIDENTIAL = 1;
+    public const BUILDINGTYPE_BUSINESS = 2;
 
     public function company()
     {

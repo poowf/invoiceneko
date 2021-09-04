@@ -11,7 +11,9 @@ use OwenIt\Auditing\Contracts\Auditable;
 class Client extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
-    use SoftDeletes, HasFactory, CascadeSoftDeletes;
+    use SoftDeletes;
+    use HasFactory;
+    use CascadeSoftDeletes;
 
     /**
      * The database table used by the model.

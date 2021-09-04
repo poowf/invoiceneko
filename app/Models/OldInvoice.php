@@ -9,11 +9,12 @@ use PDF;
 
 class OldInvoice extends Model
 {
-    use SoftDeletes, CascadeSoftDeletes;
+    use SoftDeletes;
+    use CascadeSoftDeletes;
 
-    const STATUS_OPEN = 0;
-    const STATUS_CLOSED = 1;
-    const STATUS_VOID = 5;
+    public const STATUS_OPEN = 0;
+    public const STATUS_CLOSED = 1;
+    public const STATUS_VOID = 5;
 
     /**
      * The database table used by the model.

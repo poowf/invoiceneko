@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OldInvoiceItem extends Model
 {
-    use SoftDeletes, CascadeSoftDeletes;
+    use SoftDeletes;
+    use CascadeSoftDeletes;
 
     /**
      * The database table used by the model.

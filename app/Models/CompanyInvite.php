@@ -10,7 +10,8 @@ use OwenIt\Auditing\Contracts\Auditable;
 class CompanyInvite extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
-    use Notifiable, SoftDeletes;
+    use Notifiable;
+    use SoftDeletes;
 
     /**
      * The database table used by the model.

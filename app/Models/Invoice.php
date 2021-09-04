@@ -15,17 +15,19 @@ use Uuid;
 
 class Invoice extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+    use HasFactory;
+    use Notifiable;
+    use SoftDeletes;
+    use CascadeSoftDeletes;
     public $generated = null;
 
-    use \OwenIt\Auditing\Auditable;
-    use HasFactory, Notifiable, SoftDeletes, CascadeSoftDeletes;
-
-    const STATUS_DRAFT = 1;
-    const STATUS_OPEN = 2;
-    const STATUS_CLOSED = 3;
-    const STATUS_OVERDUE = 4;
-    const STATUS_VOID = 5;
-    const STATUS_WRITTENOFF = 7;
+    public const STATUS_DRAFT = 1;
+    public const STATUS_OPEN = 2;
+    public const STATUS_CLOSED = 3;
+    public const STATUS_OVERDUE = 4;
+    public const STATUS_VOID = 5;
+    public const STATUS_WRITTENOFF = 7;
 
     /**
      * The database table used by the model.

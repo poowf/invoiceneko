@@ -13,12 +13,14 @@ use PDF;
 class Quote extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
-    use SoftDeletes, HasFactory, CascadeSoftDeletes;
+    use SoftDeletes;
+    use HasFactory;
+    use CascadeSoftDeletes;
 
-    const STATUS_DRAFT = 1;
-    const STATUS_OPEN = 2;
-    const STATUS_EXPIRED = 3;
-    const STATUS_COMPLETED = 4;
+    public const STATUS_DRAFT = 1;
+    public const STATUS_OPEN = 2;
+    public const STATUS_EXPIRED = 3;
+    public const STATUS_COMPLETED = 4;
 
     /**
      * The database table used by the model.

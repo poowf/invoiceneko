@@ -12,7 +12,9 @@ use OwenIt\Auditing\Contracts\Auditable;
 class ItemTemplate extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
-    use SoftDeletes, HasFactory, CascadeSoftDeletes;
+    use SoftDeletes;
+    use HasFactory;
+    use CascadeSoftDeletes;
 
     protected $table = 'item_templates';
 

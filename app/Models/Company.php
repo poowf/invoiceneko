@@ -17,7 +17,12 @@ use Silber\Bouncer\Database\HasRolesAndAbilities;
 class Company extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
-    use HasRolesAndAbilities, HasFactory, Notifiable, SoftDeletes, CascadeSoftDeletes, UniqueSlug;
+    use HasRolesAndAbilities;
+    use HasFactory;
+    use Notifiable;
+    use SoftDeletes;
+    use CascadeSoftDeletes;
+    use UniqueSlug;
 
     /**
      * The database table used by the model.

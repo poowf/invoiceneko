@@ -17,11 +17,16 @@ use Silber\Bouncer\Database\HasRolesAndAbilities;
 class User extends Authenticatable implements MustVerifyEmail, Auditable
 {
     use \OwenIt\Auditing\Auditable;
-    use HasRolesAndAbilities, HasApiTokens, HasFactory, Notifiable, SoftDeletes, CascadeSoftDeletes;
+    use HasRolesAndAbilities;
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
+    use SoftDeletes;
+    use CascadeSoftDeletes;
 
-    const STATUS_ACTIVE = 1;
-    const STATUS_DISABLED = 2;
-    const STATUS_BANNED = 3;
+    public const STATUS_ACTIVE = 1;
+    public const STATUS_DISABLED = 2;
+    public const STATUS_BANNED = 3;
 
     /**
      * The database table used by the model.

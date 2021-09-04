@@ -13,11 +13,14 @@ use OwenIt\Auditing\Contracts\Auditable;
 class CompanyUserRequest extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
-    use HasFactory, Notifiable, SoftDeletes, CascadeSoftDeletes;
+    use HasFactory;
+    use Notifiable;
+    use SoftDeletes;
+    use CascadeSoftDeletes;
 
-    const STATUS_PENDING = 1;
-    const STATUS_APPROVED = 2;
-    const STATUS_REJECTED = 3;
+    public const STATUS_PENDING = 1;
+    public const STATUS_APPROVED = 2;
+    public const STATUS_REJECTED = 3;
 
     /**
      * The database table used by the model.

@@ -11,7 +11,8 @@ use PDF;
 class Receipt extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
-    use SoftDeletes, CascadeSoftDeletes;
+    use SoftDeletes;
+    use CascadeSoftDeletes;
 
     /**
      * The database table used by the model.
