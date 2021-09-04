@@ -1,0 +1,27 @@
+endOfLine: 'lf'
+singleQuote: true
+printWidth: 100
+overrides:
+  - files:
+      - '*.php'
+    options:
+      phpVersion: '8.0'
+      trailingCommaPHP: true
+      tabWidth: 4
+      useTabs: false
+      braceStyle: 'psr-2'
+      printWidth: 140
+  - files:
+      - '*.ts'
+      - '*.js'
+      - '*.tsx'
+      - '*.jsx'
+      - '*.css'
+      - '*.json'
+      - '*.md'
+    options:
+      trailingComma: 'none'
+      arrowParens: 'avoid'
+      jsxSingleQuote: false
+      semi: true
+      jsxBracketSameLine: true
