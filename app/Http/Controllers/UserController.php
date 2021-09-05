@@ -89,8 +89,9 @@ class UserController extends Controller
             }
         }
         $user->save();
-        event(new Registered($user));
-
+        if (env('APP_ENV', 'local') !== 'testing') {
+            event(new Registered($user));
+        }
         if ($request->query->has('token')) {
             $token = $request->query->get('token');
             $companyUserRequest = CompanyUserRequest::where('token', $token)->first();

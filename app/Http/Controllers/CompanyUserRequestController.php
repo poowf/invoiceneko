@@ -62,9 +62,9 @@ class CompanyUserRequestController extends Controller
             $companyUserRequest = new CompanyUserRequest();
             $companyUserRequest->fill($request->all());
             $company->requests()->save($companyUserRequest);
-
-            $company->notify(new RequestCompanyAccessNotification($companyUserRequest));
-
+            if (env('APP_ENV', 'local') !== 'testing') {
+                $company->notify(new RequestCompanyAccessNotification($companyUserRequest));
+            }
             flash('The request has been sent to the current owner of the Company', 'success');
 
             return redirect()->route('main');
@@ -86,7 +86,9 @@ class CompanyUserRequestController extends Controller
         $companyUserRequest->status = CompanyUserRequest::STATUS_APPROVED;
         $companyUserRequest->save();
 
-        $companyUserRequest->notify(new CompanyUserRequestApprovedNotification($companyUserRequest->token));
+        if (env('APP_ENV', 'local') !== 'testing') {
+            $companyUserRequest->notify(new CompanyUserRequestApprovedNotification($companyUserRequest->token));
+        }
 
         return redirect()->route('company.requests.index', ['company' => $company]);
     }
@@ -102,7 +104,9 @@ class CompanyUserRequestController extends Controller
         $companyUserRequest->status = CompanyUserRequest::STATUS_REJECTED;
         $companyUserRequest->save();
 
-        $companyUserRequest->notify(new CompanyUserRequestRejectedNotification());
+        if (env('APP_ENV', 'local') !== 'testing') {
+            $companyUserRequest->notify(new CompanyUserRequestRejectedNotification());
+        }
 
         return redirect()->route('company.requests.index', ['company' => $company]);
     }

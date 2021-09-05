@@ -56,7 +56,9 @@ class CompanyInviteController extends Controller
                 $companyInvite->roles = json_encode($request->input('roles')[$key]);
                 $company->invites()->save($companyInvite);
 
-                $companyInvite->notify(new InviteUserNotification($companyInvite));
+                if (env('APP_ENV', 'local') !== 'testing') {
+                    $companyInvite->notify(new InviteUserNotification($companyInvite));
+                }
             }
         }
 
