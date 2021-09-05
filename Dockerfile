@@ -45,6 +45,7 @@ RUN apk add --no-cache \
     ttf-freefont \
     ttf-liberation \
     dbus \
+    screen \
     chromium \
     chromium-chromedriver
 
