@@ -30,3 +30,14 @@ php artisan storage:link
 ```
 
 Environment should be accessible at http://localhost:8181
+
+## Tests
+
+Uncomment the `static::useChromedriver('/usr/bin/chromedriver');` in `tests/DuskTestCase.php`
+
+```bash
+docker exec -it invoiceneko sh
+dbus-daemon --system
+screen -d -m chromium-browser --headless --disable-gpu --disable-dev-shm-usage --disable-software-rasterizer --remote-debugging-port=9222 --no-sandbox http://localhost &
+composer run test:dusk
+```
