@@ -2,7 +2,7 @@ FROM surnet/alpine-wkhtmltopdf:3.13.5-0.12.6-full as wkhtmltopdf
 # Install dependencies only when needed
 FROM node:14.17.6-alpine3.14 as dependencies
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-#RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache libc6-compat git
 WORKDIR /working
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile --production
@@ -17,6 +17,7 @@ FROM node@sha256:3f4c922d5f29da10fc2a5f1ab6a9812e7aadfc88ecc9e150ef86066f449e55e
 WORKDIR /working
 
 RUN apk add --no-cache \
+    git \
     curl \
     g++ \
     make \
