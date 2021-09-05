@@ -59,6 +59,8 @@ class Payment extends Model implements Auditable
             $percentage = $invoiceTotal != 0 ? ($this->amount / $invoiceTotal) * 100 : 0;
         }
 
+        $amount = new \NumberFormatter('en_US.UTF-8', \NumberFormatter::PATTERN_DECIMAL, '* #####.00 ;(* #####.00)');
+
         return $amount->format($percentage);
     }
 

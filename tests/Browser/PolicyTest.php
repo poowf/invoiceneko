@@ -126,7 +126,6 @@ class PolicyTest extends DuskTestCase
                 ->assertPathIs('/' . $company->domain_name . '/dashboard')
                 ->clickLink('Quotes')
                 ->assertPathIs('/' . $company->domain_name . '/quotes')
-                ->clickLink('Pending')
                 ->pause(500);
             $browser->script("jQuery(\"a[href='{$this->baseUrl()}/{$company->domain_name}/quote/{$quote->id}/edit'] > i\").click();");
             $browser
